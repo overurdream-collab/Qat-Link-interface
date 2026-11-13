@@ -1,106 +1,80 @@
+import 'package:decimal/decimal.dart';
+
 import '../models/app_models.dart';
 
-/// Pure accounting calculations for movements approved by BOTH parties.
-///
-/// Every result is scoped to one currency. This service intentionally does
-/// not convert currencies or store a customer balance.
+/// Pure financial calculations. Only fully approved movements are counted.
 abstract final class MovementCalculator {
-  static double customerBalance(
+  static Decimal customerBalance(
     Iterable<MovementModel> movements, {
     required String customerId,
     required CurrencyCode currency,
   }) {
     return movements
-        .where(
-          (movement) =>
-              movement.customerId == customerId &&
-              movement.currency == currency &&
-              movement.approval.isApproved,
-        )
-        .fold<double>(0, (balance, movement) {
-          return balance + _signedAmount(movement);
-        });
+        .where((m) =>
+            m.customerId == customerId &&
+            m.currency == currency &&
+            m.status == MovementStatus.approved)
+        .fold(Decimal.zero, (sum, m) => sum + _signed(m));
   }
 
-  static double approvedDebts(
+  static Decimal approvedDebts(
     Iterable<MovementModel> movements, {
     String? customerId,
     required CurrencyCode currency,
-  }) {
-    return _total(
-      movements,
-      customerId: customerId,
-      currency: currency,
-      type: MovementType.debt,
-      approvalStatus: ApprovalStatus.approved,
-    );
-  }
+  }) =>
+      _total(movements, customerId, currency, MovementType.debt,
+          MovementStatus.approved);
 
-  static double approvedPayments(
+  static Decimal approvedPayments(
     Iterable<MovementModel> movements, {
     String? customerId,
     required CurrencyCode currency,
-  }) {
-    return _total(
-      movements,
-      customerId: customerId,
-      currency: currency,
-      type: MovementType.payment,
-      approvalStatus: ApprovalStatus.approved,
-    );
-  }
+  }) =>
+      _total(movements, customerId, currency, MovementType.payment,
+          MovementStatus.approved);
 
-  static double pendingTotal(
+  static Decimal pendingTotal(
     Iterable<MovementModel> movements, {
     String? customerId,
     required CurrencyCode currency,
-  }) {
-    return movements
-        .where(
-          (movement) =>
-              movement.currency == currency &&
-              (customerId == null || movement.customerId == customerId) &&
-              movement.approval.isPending,
-        )
-        .fold<double>(0, (total, movement) => total + movement.amount);
-  }
+  }) =>
+      movements
+          .where((m) =>
+              m.currency == currency &&
+              (customerId == null || m.customerId == customerId) &&
+              m.status == MovementStatus.pending)
+          .fold(Decimal.zero, (sum, m) => sum + m.amount);
 
-  static Map<CurrencyCode, double> balancesByCurrency(
+  static Map<CurrencyCode, Decimal> balancesByCurrency(
     Iterable<MovementModel> movements, {
     required String customerId,
-  }) {
-    return {
-      for (final currency in CurrencyCode.values)
-        currency: customerBalance(
-          movements,
-          customerId: customerId,
-          currency: currency,
-        ),
-    };
-  }
+  }) =>
+      {
+        for (final currency in CurrencyCode.values)
+          currency: customerBalance(
+            movements,
+            customerId: customerId,
+            currency: currency,
+          ),
+      };
 
-  static double _total(
-    Iterable<MovementModel> movements, {
-    required String? customerId,
-    required CurrencyCode currency,
-    required MovementType type,
-    required ApprovalStatus approvalStatus,
-  }) {
-    return movements
-        .where(
-          (movement) =>
-              movement.currency == currency &&
-              (customerId == null || movement.customerId == customerId) &&
-              movement.type == type &&
-              movement.approval.status == approvalStatus,
-        )
-        .fold<double>(0, (total, movement) => total + movement.amount);
-  }
+  static Decimal _total(
+    Iterable<MovementModel> movements,
+    String? customerId,
+    CurrencyCode currency,
+    MovementType type,
+    MovementStatus status,
+  ) =>
+      movements
+          .where((m) =>
+              m.currency == currency &&
+              (customerId == null || m.customerId == customerId) &&
+              m.type == type &&
+              m.status == status)
+          .fold(Decimal.zero, (sum, m) => sum + m.amount);
 
-  static double _signedAmount(MovementModel movement) {
-    return switch (movement.type) {
-      MovementType.debt => movement.amount,
-      MovementType.payment => -movement.amount,
-    };
-  }
+  static Decimal _signed(MovementModel movement) =>
+      movement.type == MovementType.debt
+          ? movement.amount
+          : -movement.amount;
 }
