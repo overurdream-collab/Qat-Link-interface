@@ -1,168 +1,97 @@
+import 'package:decimal/decimal.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:qat_link/models/app_models.dart';
 import 'package:qat_link/services/app_state.dart';
 
 void main() {
   late AppState state;
-
+  final now = DateTime.utc(2026, 1, 1);
   setUp(() => state = AppState());
   tearDown(() => state.dispose());
 
-  CustomerModel customer({
-    String id = 'customer-1',
-    ApprovalState approval = const ApprovalState(),
-  }) {
-    return CustomerModel(
-      id: id,
-      name: '  محمد علي  ',
-      phone: ' 700000000 ',
-      primaryCurrency: CurrencyCode.yer,
-      approval: approval,
-    );
+  CustomerModel customer({String id = 'c1', String phone = '700000000'}) =>
+    CustomerModel(id: id, name: 'محمد علي', phone: phone,
+      primaryCurrency: CurrencyCode.yer, createdAt: now, updatedAt: now);
+
+  void addCustomer() => state.addCustomer(customer());
+
+  void approvedRelationship() {
+    addCustomer();
+    state.requestRelationship(id: 'r1', merchantId: 'm1', customerId: 'c1',
+      actorId: 'm1', actorRole: ParticipantRole.merchant, createdAt: now);
+    state.decideRelationship(relationshipId: 'r1', actorId: 'c1',
+      actorRole: ParticipantRole.customer, decision: ApprovalDecision.approved,
+      decidedAt: now.add(const Duration(minutes: 1)));
   }
 
-  MovementModel movement({
-    String id = 'movement-1',
-    String customerId = 'customer-1',
-    ApprovalState approval = const ApprovalState(),
-  }) {
-    return MovementModel(
-      id: id,
-      customerId: customerId,
-      amount: 500,
-      currency: CurrencyCode.yer,
-      type: MovementType.debt,
-      date: DateTime.utc(2026, 1, 1),
-      approval: approval,
-    );
-  }
+  MovementModel debt() => MovementModel(id: 'd1', relationshipId: 'r1',
+    customerId: 'c1', merchantId: 'm1', amount: Decimal.parse('12.50'),
+    currency: CurrencyCode.yer, type: MovementType.debt, createdBy: 'm1',
+    createdByRole: ParticipantRole.merchant, createdAt: now, approvals: [
+      ApprovalRecord(actorId: 'm1', role: ParticipantRole.merchant,
+        decision: ApprovalDecision.declared, decidedAt: now),
+    ]);
 
-  void addApprovedCustomer() {
-    state.addCustomer(customer());
-    state.approveCustomer('customer-1', ApprovalParty.merchant);
-    state.approveCustomer('customer-1', ApprovalParty.customer);
-  }
-
-  group('Customer approval workflow', () {
-    test('new customer is pending even if pre-approved model is supplied', () {
-      state.addCustomer(customer(
-        approval: const ApprovalState(
-          merchant: ApprovalStatus.approved,
-          customer: ApprovalStatus.approved,
-        ),
-      ));
-
-      expect(state.customers.value.single.approval.isPending, isTrue);
-      expect(state.customers.value.single.name, 'محمد علي');
-      expect(state.customers.value.single.phone, '700000000');
-    });
-
-    test('one approval does not activate a customer', () {
-      state.addCustomer(customer());
-
-      expect(
-        state.approveCustomer('customer-1', ApprovalParty.merchant),
-        isTrue,
-      );
-      expect(state.customers.value.single.isApproved, isFalse);
-      expect(state.pendingCustomers, hasLength(1));
-    });
-
-    test('customer becomes active only after both parties approve', () {
-      state.addCustomer(customer());
-      state.approveCustomer('customer-1', ApprovalParty.merchant);
-      state.approveCustomer('customer-1', ApprovalParty.customer);
-
-      expect(state.customers.value.single.isApproved, isTrue);
-      expect(state.approvedCustomers, hasLength(1));
-    });
-
-    test('rejection prevents approval and a second decision', () {
-      state.addCustomer(customer());
-      expect(
-        state.rejectCustomer('customer-1', ApprovalParty.customer),
-        isTrue,
-      );
-      expect(
-        state.approveCustomer('customer-1', ApprovalParty.merchant),
-        isFalse,
-      );
-      expect(state.customers.value.single.status, ApprovalStatus.rejected);
-    });
-
-    test('unknown IDs and duplicate IDs are rejected safely', () {
-      expect(
-        state.approveCustomer('missing', ApprovalParty.merchant),
-        isFalse,
-      );
-      state.addCustomer(customer());
-      expect(() => state.addCustomer(customer()), throwsStateError);
-    });
+  test('customer account exists independently of merchant relationships', () {
+    addCustomer();
+    expect(state.customers.value.single.accountStatus, AccountStatus.active);
+    expect(state.relationships.value, isEmpty);
   });
 
-  group('Movement approval workflow', () {
-    test('movement cannot be added for a pending or unknown customer', () {
-      state.addCustomer(customer());
-      expect(() => state.addMovement(movement()), throwsStateError);
-      expect(state.movements.value, isEmpty);
-    });
+  test('relationship requires creator declaration and other party approval', () {
+    addCustomer();
+    state.requestRelationship(id: 'r1', merchantId: 'm1', customerId: 'c1',
+      actorId: 'm1', actorRole: ParticipantRole.merchant, createdAt: now);
+    expect(state.relationships.value.single.status, RelationshipStatus.pending);
+    state.decideRelationship(relationshipId: 'r1', actorId: 'c1',
+      actorRole: ParticipantRole.customer, decision: ApprovalDecision.approved,
+      decidedAt: now);
+    expect(state.relationships.value.single.status, RelationshipStatus.approved);
+  });
 
-    test('new movement starts pending even if supplied as approved', () {
-      addApprovedCustomer();
-      state.addMovement(movement(
-        approval: const ApprovalState(
-          merchant: ApprovalStatus.approved,
-          customer: ApprovalStatus.approved,
-        ),
-      ));
+  test('creator cannot approve their own relationship request a second time', () {
+    addCustomer();
+    state.requestRelationship(id: 'r1', merchantId: 'm1', customerId: 'c1',
+      actorId: 'm1', actorRole: ParticipantRole.merchant, createdAt: now);
+    expect(() => state.decideRelationship(relationshipId: 'r1', actorId: 'm1',
+      actorRole: ParticipantRole.merchant, decision: ApprovalDecision.approved,
+      decidedAt: now), throwsStateError);
+  });
 
-      expect(state.movements.value.single.approval.isPending, isTrue);
-    });
+  test('movement cannot be created before relationship approval', () {
+    addCustomer();
+    state.requestRelationship(id: 'r1', merchantId: 'm1', customerId: 'c1',
+      actorId: 'm1', actorRole: ParticipantRole.merchant, createdAt: now);
+    expect(() => state.addMovement(debt()), throwsStateError);
+  });
 
-    test('one approval is not enough to approve a movement', () {
-      addApprovedCustomer();
-      state.addMovement(movement());
+  test('creator declaration plus other party approval finalizes movement', () {
+    approvedRelationship();
+    state.addMovement(debt());
+    expect(state.pendingMovements, hasLength(1));
+    state.decideMovement(movementId: 'd1', actorId: 'c1',
+      actorRole: ParticipantRole.customer, decision: ApprovalDecision.approved,
+      decidedAt: now.add(const Duration(minutes: 2)));
+    expect(state.movements.value.single.status, MovementStatus.approved);
+    expect(state.movements.value.single.approvals, hasLength(2));
+  });
 
-      state.approveMovement('movement-1', ApprovalParty.merchant);
-      expect(state.movements.value.single.status, MovementStatus.pending);
-      expect(state.pendingMovements, hasLength(1));
-    });
+  test('movement rejection is terminal and records its reason', () {
+    approvedRelationship();
+    state.addMovement(debt());
+    state.decideMovement(movementId: 'd1', actorId: 'c1',
+      actorRole: ParticipantRole.customer, decision: ApprovalDecision.rejected,
+      decidedAt: now, reason: 'Amount disputed');
+    expect(state.movements.value.single.status, MovementStatus.rejected);
+    expect(state.movements.value.single.rejectedReason, 'Amount disputed');
+    expect(() => state.decideMovement(movementId: 'd1', actorId: 'c1',
+      actorRole: ParticipantRole.customer, decision: ApprovalDecision.approved,
+      decidedAt: now), throwsStateError);
+  });
 
-    test('both parties must approve the movement', () {
-      addApprovedCustomer();
-      state.addMovement(movement());
-
-      state.approveMovement('movement-1', ApprovalParty.merchant);
-      state.approveMovement('movement-1', ApprovalParty.customer);
-
-      expect(state.movements.value.single.status, MovementStatus.approved);
-      expect(state.pendingMovements, isEmpty);
-    });
-
-    test('either party can reject and a rejected request is terminal', () {
-      addApprovedCustomer();
-      state.addMovement(movement());
-
-      state.rejectMovement('movement-1', ApprovalParty.customer);
-      expect(
-        state.approveMovement('movement-1', ApprovalParty.merchant),
-        isFalse,
-      );
-      expect(state.movements.value.single.status, MovementStatus.rejected);
-    });
-
-    test('a party cannot submit a second decision', () {
-      addApprovedCustomer();
-      state.addMovement(movement());
-
-      expect(
-        state.approveMovement('movement-1', ApprovalParty.merchant),
-        isTrue,
-      );
-      expect(
-        state.rejectMovement('movement-1', ApprovalParty.merchant),
-        isFalse,
-      );
-    });
+  test('duplicate customer phone is rejected', () {
+    addCustomer();
+    expect(() => state.addCustomer(customer(id: 'c2', phone: '700 000 000')),
+      throwsStateError);
   });
 }
