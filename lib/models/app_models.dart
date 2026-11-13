@@ -76,6 +76,28 @@ class MovementModel {
         ApprovalStatus.approved => MovementStatus.approved,
         ApprovalStatus.rejected => MovementStatus.rejected,
       };
+
+  MovementModel copyWith({
+    String? id,
+    String? customerId,
+    double? amount,
+    CurrencyCode? currency,
+    MovementType? type,
+    DateTime? date,
+    ApprovalState? approval,
+    String? description,
+  }) {
+    return MovementModel(
+      id: id ?? this.id,
+      customerId: customerId ?? this.customerId,
+      amount: amount ?? this.amount,
+      currency: currency ?? this.currency,
+      type: type ?? this.type,
+      date: date ?? this.date,
+      approval: approval ?? this.approval,
+      description: description ?? this.description,
+    );
+  }
 }
 
 class CustomerModel {
@@ -98,4 +120,20 @@ class CustomerModel {
 
   ApprovalStatus get status => approval.status;
   bool get isApproved => approval.isApproved;
+
+  CustomerModel copyWith({
+    String? id,
+    String? name,
+    String? phone,
+    CurrencyCode? primaryCurrency,
+    ApprovalState? approval,
+  }) {
+    return CustomerModel(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      phone: phone ?? this.phone,
+      primaryCurrency: primaryCurrency ?? this.primaryCurrency,
+      approval: approval ?? this.approval,
+    );
+  }
 }
