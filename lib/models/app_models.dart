@@ -1,139 +1,256 @@
+import 'package:decimal/decimal.dart';
+
 enum CurrencyCode { yer, sar, usd }
+
+enum AccountStatus { active, suspended, closed }
+
+enum ParticipantRole { merchant, customer }
+
+enum ApprovalDecision { declared, approved, rejected }
+
+enum RelationshipStatus {
+  pending,
+  approved,
+  rejected,
+  cancelled,
+  suspended,
+}
 
 enum MovementType { debt, payment }
 
-/// Overall movement status. It is derived from both parties' decisions.
 enum MovementStatus { pending, approved, rejected }
 
-/// Decision made independently by either party.
-enum ApprovalStatus { pending, approved, rejected }
-
-/// Holds the two mandatory decisions for any customer-created record or
-/// financial movement. A record is approved only after BOTH parties approve.
-class ApprovalState {
-  const ApprovalState({
-    this.merchant = ApprovalStatus.pending,
-    this.customer = ApprovalStatus.pending,
+/// One immutable, attributable event in the approval history.
+class ApprovalRecord {
+  const ApprovalRecord({
+    required this.actorId,
+    required this.role,
+    required this.decision,
+    required this.decidedAt,
+    this.reason,
   });
 
-  final ApprovalStatus merchant;
-  final ApprovalStatus customer;
-
-  /// Rejection by either party rejects the request.
-  /// Approval requires both decisions to be approved.
-  ApprovalStatus get status {
-    if (merchant == ApprovalStatus.rejected ||
-        customer == ApprovalStatus.rejected) {
-      return ApprovalStatus.rejected;
-    }
-    if (merchant == ApprovalStatus.approved &&
-        customer == ApprovalStatus.approved) {
-      return ApprovalStatus.approved;
-    }
-    return ApprovalStatus.pending;
-  }
-
-  bool get isApproved => status == ApprovalStatus.approved;
-  bool get isRejected => status == ApprovalStatus.rejected;
-  bool get isPending => status == ApprovalStatus.pending;
-
-  ApprovalState copyWith({
-    ApprovalStatus? merchant,
-    ApprovalStatus? customer,
-  }) {
-    return ApprovalState(
-      merchant: merchant ?? this.merchant,
-      customer: customer ?? this.customer,
-    );
-  }
+  final String actorId;
+  final ParticipantRole role;
+  final ApprovalDecision decision;
+  final DateTime decidedAt;
+  final String? reason;
 }
 
-class MovementModel {
-  const MovementModel({
-    required this.id,
-    required this.customerId,
-    required this.amount,
-    required this.currency,
-    required this.type,
-    required this.date,
-    this.approval = const ApprovalState(),
-    this.description,
-  }) : assert(amount > 0, 'Movement amount must be greater than zero.');
-
-  final String id;
-  final String customerId;
-  final double amount;
-  final CurrencyCode currency;
-  final MovementType type;
-  final DateTime date;
-  final ApprovalState approval;
-  final String? description;
-
-  /// Compatibility-friendly accounting status, always derived from the
-  /// two independent approvals (never manually assigned).
-  MovementStatus get status => switch (approval.status) {
-        ApprovalStatus.pending => MovementStatus.pending,
-        ApprovalStatus.approved => MovementStatus.approved,
-        ApprovalStatus.rejected => MovementStatus.rejected,
-      };
-
-  MovementModel copyWith({
-    String? id,
-    String? customerId,
-    double? amount,
-    CurrencyCode? currency,
-    MovementType? type,
-    DateTime? date,
-    ApprovalState? approval,
-    String? description,
+/// Approval is derived from append-only decision events:
+/// the creator declares the record, and the other participant approves it.
+abstract final class ApprovalPolicy {
+  static bool isApproved(
+    Iterable<ApprovalRecord> records, {
+    required String creatorId,
+    required ParticipantRole creatorRole,
   }) {
-    return MovementModel(
-      id: id ?? this.id,
-      customerId: customerId ?? this.customerId,
-      amount: amount ?? this.amount,
-      currency: currency ?? this.currency,
-      type: type ?? this.type,
-      date: date ?? this.date,
-      approval: approval ?? this.approval,
-      description: description ?? this.description,
+    final creatorDeclared = records.any(
+      (r) =>
+          r.actorId == creatorId &&
+          r.role == creatorRole &&
+          r.decision == ApprovalDecision.declared,
     );
+    final otherRole = creatorRole == ParticipantRole.merchant
+        ? ParticipantRole.customer
+        : ParticipantRole.merchant;
+    final otherApproved = records.any(
+      (r) =>
+          r.role == otherRole &&
+          r.decision == ApprovalDecision.approved,
+    );
+    final rejected = records.any((r) => r.decision == ApprovalDecision.rejected);
+    return creatorDeclared && otherApproved && !rejected;
   }
+
+  static bool isRejected(Iterable<ApprovalRecord> records) =>
+      records.any((r) => r.decision == ApprovalDecision.rejected);
+
+  static bool isPending(
+    Iterable<ApprovalRecord> records, {
+    required String creatorId,
+    required ParticipantRole creatorRole,
+  }) =>
+      !isApproved(
+        records,
+        creatorId: creatorId,
+        creatorRole: creatorRole,
+      ) &&
+      !isRejected(records);
 }
 
+/// Customer identity/profile is independent from every merchant relationship.
 class CustomerModel {
   const CustomerModel({
     required this.id,
     required this.name,
     required this.phone,
     required this.primaryCurrency,
-    this.approval = const ApprovalState(),
+    required this.createdAt,
+    required this.updatedAt,
+    this.accountStatus = AccountStatus.active,
+    this.profileData = const {},
   });
 
   final String id;
   final String name;
   final String phone;
   final CurrencyCode primaryCurrency;
-
-  /// A newly registered customer remains pending until merchant AND customer
-  /// approval have both been recorded.
-  final ApprovalState approval;
-
-  ApprovalStatus get status => approval.status;
-  bool get isApproved => approval.isApproved;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  final AccountStatus accountStatus;
+  final Map<String, Object?> profileData;
 
   CustomerModel copyWith({
-    String? id,
     String? name,
     String? phone,
     CurrencyCode? primaryCurrency,
-    ApprovalState? approval,
-  }) {
-    return CustomerModel(
-      id: id ?? this.id,
-      name: name ?? this.name,
-      phone: phone ?? this.phone,
-      primaryCurrency: primaryCurrency ?? this.primaryCurrency,
-      approval: approval ?? this.approval,
-    );
+    DateTime? updatedAt,
+    AccountStatus? accountStatus,
+    Map<String, Object?>? profileData,
+  }) =>
+      CustomerModel(
+        id: id,
+        name: name ?? this.name,
+        phone: phone ?? this.phone,
+        primaryCurrency: primaryCurrency ?? this.primaryCurrency,
+        createdAt: createdAt,
+        updatedAt: updatedAt ?? this.updatedAt,
+        accountStatus: accountStatus ?? this.accountStatus,
+        profileData: profileData ?? this.profileData,
+      );
+}
+
+class RelationshipModel {
+  RelationshipModel({
+    required this.id,
+    required this.merchantId,
+    required this.customerId,
+    required this.createdBy,
+    required this.createdByRole,
+    required this.createdAt,
+    required List<ApprovalRecord> approvals,
+    this.statusOverride,
+    this.rejectedReason,
+    this.updatedAt,
+  }) : approvals = List.unmodifiable(approvals);
+
+  final String id;
+  final String merchantId;
+  final String customerId;
+  final String createdBy;
+  final ParticipantRole createdByRole;
+  final DateTime createdAt;
+  final List<ApprovalRecord> approvals;
+  final RelationshipStatus? statusOverride;
+  final String? rejectedReason;
+  final DateTime? updatedAt;
+
+  RelationshipStatus get status {
+    if (statusOverride != null) return statusOverride!;
+    if (ApprovalPolicy.isRejected(approvals)) return RelationshipStatus.rejected;
+    if (ApprovalPolicy.isApproved(
+      approvals,
+      creatorId: createdBy,
+      creatorRole: createdByRole,
+    )) {
+      return RelationshipStatus.approved;
+    }
+    return RelationshipStatus.pending;
   }
+
+  RelationshipModel copyWith({
+    List<ApprovalRecord>? approvals,
+    RelationshipStatus? statusOverride,
+    String? rejectedReason,
+    DateTime? updatedAt,
+  }) =>
+      RelationshipModel(
+        id: id,
+        merchantId: merchantId,
+        customerId: customerId,
+        createdBy: createdBy,
+        createdByRole: createdByRole,
+        createdAt: createdAt,
+        approvals: approvals ?? this.approvals,
+        statusOverride: statusOverride ?? this.statusOverride,
+        rejectedReason: rejectedReason ?? this.rejectedReason,
+        updatedAt: updatedAt ?? this.updatedAt,
+      );
+}
+
+class MovementModel {
+  MovementModel({
+    required this.id,
+    required this.relationshipId,
+    required this.customerId,
+    required this.merchantId,
+    required this.amount,
+    required this.currency,
+    required this.type,
+    required this.createdBy,
+    required this.createdByRole,
+    required this.createdAt,
+    required List<ApprovalRecord> approvals,
+    this.description,
+    this.rejectedReason,
+    this.referenceMovementId,
+    this.updatedAt,
+  }) : approvals = List.unmodifiable(approvals) {
+    if (amount <= Decimal.zero) {
+      throw ArgumentError.value(amount, 'amount', 'Amount must be positive.');
+    }
+  }
+
+  final String id;
+  final String relationshipId;
+  final String customerId;
+  final String merchantId;
+  final Decimal amount;
+  final CurrencyCode currency;
+  final MovementType type;
+  final String createdBy;
+  final ParticipantRole createdByRole;
+  final DateTime createdAt;
+  final List<ApprovalRecord> approvals;
+  final String? description;
+  final String? rejectedReason;
+  final String? referenceMovementId;
+  final DateTime? updatedAt;
+
+  MovementStatus get status {
+    if (ApprovalPolicy.isRejected(approvals)) return MovementStatus.rejected;
+    if (ApprovalPolicy.isApproved(
+      approvals,
+      creatorId: createdBy,
+      creatorRole: createdByRole,
+    )) {
+      return MovementStatus.approved;
+    }
+    return MovementStatus.pending;
+  }
+
+  MovementModel copyWith({
+    List<ApprovalRecord>? approvals,
+    String? rejectedReason,
+    String? referenceMovementId,
+    DateTime? updatedAt,
+  }) =>
+      MovementModel(
+        id: id,
+        relationshipId: relationshipId,
+        customerId: customerId,
+        merchantId: merchantId,
+        amount: amount,
+        currency: currency,
+        type: type,
+        createdBy: createdBy,
+        createdByRole: createdByRole,
+        createdAt: createdAt,
+        approvals: approvals ?? this.approvals,
+        description: description,
+        rejectedReason: rejectedReason ?? this.rejectedReason,
+        referenceMovementId: referenceMovementId ?? this.referenceMovementId,
+        updatedAt: updatedAt ?? this.updatedAt,
+      );
 }
