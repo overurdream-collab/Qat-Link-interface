@@ -39,3 +39,18 @@ flutter analyze
 ```
 
 The UI and business logic are intentionally separated. Phase 1 does not implement persistence, authentication, or screens.
+
+## Phase 2 application state
+
+- Central in-memory `AppState` exposes customer and movement collections through `ValueNotifier`.
+- Customer registration requests are always created as pending.
+- Debt/payment requests are accepted only for customers approved by both parties.
+- A financial movement is always created as pending, regardless of approval values supplied by a caller.
+- Approval and rejection are recorded independently for the merchant and customer.
+- A participant can submit only one decision per request; rejection is terminal.
+- Immutable model copies are used when state changes.
+- Workflow tests cover creation, approval, rejection, duplicate IDs, and invalid customer references.
+
+### Security boundary for this phase
+
+`ApprovalParty` is a domain-level workflow input, not proof of identity. The future authenticated application/backend layer MUST derive the approving party from the verified signed-in account and must not accept a party identity selected by the client UI. This phase remains in-memory and is not production multi-user security or persistent audit logging.
