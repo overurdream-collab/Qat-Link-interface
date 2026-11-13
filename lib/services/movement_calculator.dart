@@ -1,6 +1,6 @@
 import '../models/app_models.dart';
 
-/// Pure accounting calculations for approved customer movements.
+/// Pure accounting calculations for movements approved by BOTH parties.
 ///
 /// Every result is scoped to one currency. This service intentionally does
 /// not convert currencies or store a customer balance.
@@ -15,7 +15,7 @@ abstract final class MovementCalculator {
           (movement) =>
               movement.customerId == customerId &&
               movement.currency == currency &&
-              movement.status == MovementStatus.approved,
+              movement.approval.isApproved,
         )
         .fold<double>(0, (balance, movement) {
           return balance + _signedAmount(movement);
@@ -32,7 +32,7 @@ abstract final class MovementCalculator {
       customerId: customerId,
       currency: currency,
       type: MovementType.debt,
-      status: MovementStatus.approved,
+      approvalStatus: ApprovalStatus.approved,
     );
   }
 
@@ -46,7 +46,7 @@ abstract final class MovementCalculator {
       customerId: customerId,
       currency: currency,
       type: MovementType.payment,
-      status: MovementStatus.approved,
+      approvalStatus: ApprovalStatus.approved,
     );
   }
 
@@ -60,7 +60,7 @@ abstract final class MovementCalculator {
           (movement) =>
               movement.currency == currency &&
               (customerId == null || movement.customerId == customerId) &&
-              movement.status == MovementStatus.pending,
+              movement.approval.isPending,
         )
         .fold<double>(0, (total, movement) => total + movement.amount);
   }
@@ -84,7 +84,7 @@ abstract final class MovementCalculator {
     required String? customerId,
     required CurrencyCode currency,
     required MovementType type,
-    required MovementStatus status,
+    required ApprovalStatus approvalStatus,
   }) {
     return movements
         .where(
@@ -92,7 +92,7 @@ abstract final class MovementCalculator {
               movement.currency == currency &&
               (customerId == null || movement.customerId == customerId) &&
               movement.type == type &&
-              movement.status == status,
+              movement.approval.status == approvalStatus,
         )
         .fold<double>(0, (total, movement) => total + movement.amount);
   }
