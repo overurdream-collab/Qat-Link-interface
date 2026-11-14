@@ -199,7 +199,7 @@ class _HomeScreenState extends State<HomeScreen> {
               radius: 20,
               backgroundColor: c.pale,
               child: Text(
-                _customerName(m.customerId).characters.first,
+                _customerName(m.customerId).substring(0, 1),
                 style: TextStyle(color: c.petrol, fontWeight: FontWeight.bold),
               ),
             ),
@@ -292,7 +292,7 @@ class _HomeScreenState extends State<HomeScreen> {
             CircleAvatar(
               radius: 18,
               backgroundColor: c.pale,
-              child: Text(_customerName(m.customerId).characters.first,
+              child: Text(_customerName(m.customerId).substring(0, 1),
                   style: TextStyle(color: c.petrol)),
             ),
             const SizedBox(width: 10),
