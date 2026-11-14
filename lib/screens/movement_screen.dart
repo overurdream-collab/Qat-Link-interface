@@ -332,7 +332,7 @@ class _MerchantMovementsTabState extends State<MerchantMovementsTab> {
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         itemCount: options.length,
-        separatorBuilder: (_, _) => const SizedBox(width: 7),
+        separatorBuilder: (context, index) => const SizedBox(width: 7),
         itemBuilder: (context, index) {
           final option = options[index];
           final selected = option.$1 == _currency;
