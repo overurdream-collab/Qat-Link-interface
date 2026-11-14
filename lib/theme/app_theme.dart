@@ -2,57 +2,57 @@ import 'package:flutter/material.dart';
 
 import 'app_colors.dart';
 
+/// Material 3 styling wired to the exact approved blue / sky / mint palette.
 abstract final class AppTheme {
   static ThemeData get light {
     const scheme = ColorScheme(
       brightness: Brightness.light,
-      primary: AppColors.emerald,
+      primary: AppColors.button,
       onPrimary: Colors.white,
-      primaryContainer: AppColors.mint,
-      onPrimaryContainer: AppColors.ink,
-      secondary: AppColors.inkSoft,
+      primaryContainer: Color(0xFFDAE7FB), // source .mini-icon
+      onPrimaryContainer: AppColors.navy,
+      secondary: AppColors.blueMid,
       onSecondary: Colors.white,
-      secondaryContainer: Color(0xFFE8EEEB),
-      onSecondaryContainer: AppColors.ink,
-      tertiary: AppColors.info,
-      onTertiary: Colors.white,
-      tertiaryContainer: Color(0xFFE4F0F8),
-      onTertiaryContainer: AppColors.ink,
+      secondaryContainer: AppColors.mint,
+      onSecondaryContainer: AppColors.navy,
+      tertiary: AppColors.green,
+      onTertiary: AppColors.navy,
+      tertiaryContainer: AppColors.lime,
+      onTertiaryContainer: AppColors.navy,
       error: AppColors.danger,
       onError: Colors.white,
-      errorContainer: Color(0xFFFCE8E7),
-      onErrorContainer: Color(0xFF641C1C),
+      errorContainer: AppColors.redBackground,
+      onErrorContainer: Color(0xFF7B2637),
       surface: AppColors.surface,
-      onSurface: AppColors.ink,
-      surfaceContainerHighest: Color(0xFFEDF2EF),
-      onSurfaceVariant: AppColors.muted,
-      outline: AppColors.outline,
-      outlineVariant: Color(0xFFD4DEDA),
+      onSurface: AppColors.navy,
+      surfaceContainerHighest: AppColors.section,
+      onSurfaceVariant: AppColors.inkSoft,
+      outline: AppColors.background,
+      outlineVariant: AppColors.background,
       shadow: Colors.black,
       scrim: Colors.black,
-      inverseSurface: AppColors.ink,
+      inverseSurface: AppColors.navy,
       onInverseSurface: Colors.white,
-      inversePrimary: AppColors.emeraldBright,
+      inversePrimary: AppColors.sky,
     );
-
-    return _buildTheme(scheme, AppColors.canvas);
+    return _buildTheme(scheme, AppColors.section);
   }
 
   static ThemeData get dark {
     const scheme = ColorScheme(
       brightness: Brightness.dark,
-      primary: AppColors.emeraldBright,
-      onPrimary: Color(0xFF062C27),
-      primaryContainer: Color(0xFF164B43),
-      onPrimaryContainer: Color(0xFFD7F6EC),
-      secondary: Color(0xFFB5C8C1),
-      onSecondary: AppColors.ink,
+      primary: AppColors.sky,
+      onPrimary: AppColors.navy,
+      primaryContainer: Color(0xFF244A85),
+      onPrimaryContainer: Colors.white,
+      secondary: AppColors.mint,
+      onSecondary: AppColors.navy,
       secondaryContainer: AppColors.darkSurfaceElevated,
       onSecondaryContainer: AppColors.darkText,
-      tertiary: Color(0xFF8FC5E8),
-      onTertiary: Color(0xFF102A3A),
-      tertiaryContainer: Color(0xFF24485D),
-      onTertiaryContainer: Color(0xFFD8EEFC),
+      tertiary: AppColors.iconGreen,
+      onTertiary: AppColors.navy,
+      tertiaryContainer: Color(0xFF234D47),
+      onTertiaryContainer: AppColors.darkText,
       error: Color(0xFFFF8A80),
       onError: Color(0xFF4A0909),
       errorContainer: Color(0xFF6B2525),
@@ -62,14 +62,13 @@ abstract final class AppTheme {
       surfaceContainerHighest: AppColors.darkSurfaceElevated,
       onSurfaceVariant: AppColors.darkMuted,
       outline: AppColors.darkOutline,
-      outlineVariant: Color(0xFF40535C),
+      outlineVariant: AppColors.darkOutline,
       shadow: Colors.black,
       scrim: Colors.black,
       inverseSurface: AppColors.darkText,
-      onInverseSurface: AppColors.ink,
-      inversePrimary: AppColors.emerald,
+      onInverseSurface: AppColors.navy,
+      inversePrimary: AppColors.blue,
     );
-
     return _buildTheme(scheme, AppColors.darkCanvas);
   }
 
@@ -80,7 +79,6 @@ abstract final class AppTheme {
       scaffoldBackgroundColor: scaffoldBackground,
       visualDensity: VisualDensity.standard,
     );
-
     return base.copyWith(
       appBarTheme: AppBarTheme(
         backgroundColor: scaffoldBackground,
@@ -93,15 +91,12 @@ abstract final class AppTheme {
         color: scheme.surface,
         elevation: 0,
         margin: EdgeInsets.zero,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(18),
-          side: BorderSide(color: scheme.outlineVariant.withValues(alpha: 0.55)),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
         fillColor: scheme.surface,
-        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 15),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(14),
           borderSide: BorderSide(color: scheme.outline),
@@ -115,15 +110,16 @@ abstract final class AppTheme {
           borderSide: BorderSide(color: scheme.primary, width: 1.5),
         ),
       ),
-      elevatedButtonTheme: ElevatedButtonThemeData(
-        style: ElevatedButton.styleFrom(
-          minimumSize: const Size(48, 50),
+      filledButtonTheme: FilledButtonThemeData(
+        style: FilledButton.styleFrom(
+          backgroundColor: scheme.primary,
+          foregroundColor: scheme.onPrimary,
+          minimumSize: const Size(48, 48),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
-          textStyle: const TextStyle(fontWeight: FontWeight.w600),
         ),
       ),
-      outlinedButtonTheme: OutlinedButtonThemeData(
-        style: OutlinedButton.styleFrom(
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
           minimumSize: const Size(48, 48),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
         ),
@@ -136,6 +132,13 @@ abstract final class AppTheme {
       snackBarTheme: SnackBarThemeData(
         behavior: SnackBarBehavior.floating,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+      ),
+      navigationBarTheme: NavigationBarThemeData(
+        backgroundColor: scheme.surface,
+        indicatorColor: scheme.primaryContainer,
+        labelTextStyle: WidgetStateProperty.all(
+          TextStyle(color: scheme.onSurface, fontSize: 11),
+        ),
       ),
     );
   }
