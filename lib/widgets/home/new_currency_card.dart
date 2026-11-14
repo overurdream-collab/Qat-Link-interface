@@ -162,7 +162,7 @@ class NewCurrencyCard extends StatelessWidget {
                   children: [
                     SizedBox.expand(
                       child: CircularProgressIndicator(
-                        value: data.collectionRate.clamp(0.0, 1.0),
+                        value: data.collectionRate.isFinite\n                            ? data.collectionRate.clamp(0.0, 1.0).toDouble()\n                            : 0.0,
                         strokeWidth: 9,
                         backgroundColor: Colors.white30,
                         valueColor: const AlwaysStoppedAnimation<Color>(
@@ -241,7 +241,7 @@ class _MiniKpi extends StatelessWidget {
             fit: BoxFit.scaleDown,
             alignment: Alignment.centerRight,
             child: Text(value, style: const TextStyle(
-              color: Colors.white, fontSize: 16, fontWeight: FontWeight.w850,
+              color: Colors.white, fontSize: 16, fontWeight: FontWeight.w800,
             )),
           ),
         ],
