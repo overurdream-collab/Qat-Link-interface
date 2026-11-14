@@ -2,140 +2,106 @@ import 'package:flutter/material.dart';
 
 import 'app_colors.dart';
 
+/// Single theme source for all RTL pages. Shared chrome is deliberately
+/// outside individual pages, so the Movement page can be replaced safely.
 abstract final class AppTheme {
-  static ThemeData get light {
-    const scheme = ColorScheme(
-      brightness: Brightness.light,
-      primary: AppColors.emerald,
-      onPrimary: Colors.white,
-      primaryContainer: AppColors.mint,
-      onPrimaryContainer: AppColors.ink,
-      secondary: AppColors.inkSoft,
-      onSecondary: Colors.white,
-      secondaryContainer: Color(0xFFE8EEEB),
-      onSecondaryContainer: AppColors.ink,
-      tertiary: AppColors.info,
-      onTertiary: Colors.white,
-      tertiaryContainer: Color(0xFFE4F0F8),
-      onTertiaryContainer: AppColors.ink,
-      error: AppColors.danger,
-      onError: Colors.white,
-      errorContainer: Color(0xFFFCE8E7),
-      onErrorContainer: Color(0xFF641C1C),
-      surface: AppColors.surface,
-      onSurface: AppColors.ink,
-      surfaceContainerHighest: Color(0xFFEDF2EF),
-      onSurfaceVariant: AppColors.muted,
-      outline: AppColors.outline,
-      outlineVariant: Color(0xFFD4DEDA),
-      shadow: Colors.black,
-      scrim: Colors.black,
-      inverseSurface: AppColors.ink,
-      onInverseSurface: Colors.white,
-      inversePrimary: AppColors.emeraldBright,
-    );
+  static ThemeData get light => _build(false);
+  static ThemeData get dark => _build(true);
 
-    return _buildTheme(scheme, AppColors.canvas);
-  }
-
-  static ThemeData get dark {
-    const scheme = ColorScheme(
-      brightness: Brightness.dark,
-      primary: AppColors.emeraldBright,
-      onPrimary: Color(0xFF062C27),
-      primaryContainer: Color(0xFF164B43),
-      onPrimaryContainer: Color(0xFFD7F6EC),
-      secondary: Color(0xFFB5C8C1),
+  static ThemeData _build(bool isDark) {
+    final c = isDark ? AppThemeColors.dark : AppThemeColors.light;
+    final scheme = ColorScheme(
+      brightness: isDark ? Brightness.dark : Brightness.light,
+      primary: isDark ? AppColors.darkPetrol : AppColors.petrol,
+      onPrimary: isDark ? AppColors.darkBackground : Colors.white,
+      primaryContainer: c.pale,
+      onPrimaryContainer: c.text,
+      secondary: isDark ? AppColors.darkMint : AppColors.mint,
       onSecondary: AppColors.ink,
-      secondaryContainer: AppColors.darkSurfaceElevated,
-      onSecondaryContainer: AppColors.darkText,
-      tertiary: Color(0xFF8FC5E8),
-      onTertiary: Color(0xFF102A3A),
-      tertiaryContainer: Color(0xFF24485D),
-      onTertiaryContainer: Color(0xFFD8EEFC),
-      error: Color(0xFFFF8A80),
-      onError: Color(0xFF4A0909),
-      errorContainer: Color(0xFF6B2525),
-      onErrorContainer: Color(0xFFFFDAD6),
-      surface: AppColors.darkSurface,
-      onSurface: AppColors.darkText,
-      surfaceContainerHighest: AppColors.darkSurfaceElevated,
-      onSurfaceVariant: AppColors.darkMuted,
-      outline: AppColors.darkOutline,
-      outlineVariant: Color(0xFF40535C),
+      secondaryContainer: c.pale,
+      onSecondaryContainer: c.text,
+      tertiary: isDark ? AppColors.darkCyan : AppColors.cyan,
+      onTertiary: AppColors.ink,
+      tertiaryContainer: c.pale,
+      onTertiaryContainer: c.text,
+      error: c.danger,
+      onError: isDark ? AppColors.ink : Colors.white,
+      errorContainer: c.pendingBackground,
+      onErrorContainer: c.pendingText,
+      surface: c.card,
+      onSurface: c.text,
+      surfaceContainerHighest: c.pale,
+      onSurfaceVariant: c.muted,
+      outline: c.cardBorder,
+      outlineVariant: c.cardBorder,
       shadow: Colors.black,
       scrim: Colors.black,
-      inverseSurface: AppColors.darkText,
-      onInverseSurface: AppColors.ink,
-      inversePrimary: AppColors.emerald,
+      inverseSurface: c.text,
+      onInverseSurface: c.card,
+      inversePrimary: isDark ? AppColors.mint : AppColors.petrol,
     );
-
-    return _buildTheme(scheme, AppColors.darkCanvas);
-  }
-
-  static ThemeData _buildTheme(ColorScheme scheme, Color scaffoldBackground) {
     final base = ThemeData(
       useMaterial3: true,
       colorScheme: scheme,
-      scaffoldBackgroundColor: scaffoldBackground,
+      brightness: scheme.brightness,
+      scaffoldBackgroundColor: c.background,
       visualDensity: VisualDensity.standard,
     );
-
     return base.copyWith(
       appBarTheme: AppBarTheme(
-        backgroundColor: scaffoldBackground,
-        foregroundColor: scheme.onSurface,
+        backgroundColor: c.background,
+        foregroundColor: c.text,
         elevation: 0,
         centerTitle: false,
         surfaceTintColor: Colors.transparent,
       ),
       cardTheme: CardThemeData(
-        color: scheme.surface,
+        color: c.card,
         elevation: 0,
         margin: EdgeInsets.zero,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(18),
-          side: BorderSide(color: scheme.outlineVariant.withValues(alpha: 0.55)),
+          borderRadius: BorderRadius.circular(16),
+          side: BorderSide(color: c.cardBorder),
         ),
       ),
+      dividerTheme: DividerThemeData(color: c.cardBorder, thickness: 1),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
-        fillColor: scheme.surface,
-        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 15),
+        fillColor: c.card,
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 14,
+          vertical: 13,
+        ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(14),
-          borderSide: BorderSide(color: scheme.outline),
+          borderSide: BorderSide(color: c.cardBorder),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(14),
-          borderSide: BorderSide(color: scheme.outline),
+          borderSide: BorderSide(color: c.cardBorder),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(14),
           borderSide: BorderSide(color: scheme.primary, width: 1.5),
         ),
       ),
-      elevatedButtonTheme: ElevatedButtonThemeData(
-        style: ElevatedButton.styleFrom(
-          minimumSize: const Size(48, 50),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
-          textStyle: const TextStyle(fontWeight: FontWeight.w600),
+      filledButtonTheme: FilledButtonThemeData(
+        style: FilledButton.styleFrom(
+          foregroundColor: scheme.onPrimary,
+          backgroundColor: scheme.primary,
+          minimumSize: const Size(48, 46),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
         ),
-      ),
-      outlinedButtonTheme: OutlinedButtonThemeData(
-        style: OutlinedButton.styleFrom(
-          minimumSize: const Size(48, 48),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
-        ),
-      ),
-      dividerTheme: DividerThemeData(
-        color: scheme.outlineVariant,
-        thickness: 1,
-        space: 1,
       ),
       snackBarTheme: SnackBarThemeData(
         behavior: SnackBarBehavior.floating,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+        backgroundColor: c.text,
+        contentTextStyle: TextStyle(color: c.card),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
       ),
     );
   }
