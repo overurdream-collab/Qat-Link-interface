@@ -54,6 +54,12 @@ void main() {
     await launch(tester);
     expect(find.text('قات حاشدي'),findsOneWidget);
     expect(find.byType(TextField),findsNothing);
+    expect(find.byKey(const Key('reminder_start_booking')),findsOneWidget);
+    expect(find.byKey(const Key('reminder_ignore')),findsOneWidget);
+    expect(find.byKey(const Key('reminder_quantity_plus')),findsNothing);
+    await tester.tap(find.byKey(const Key('reminder_start_booking')));
+    await tester.pump();
+    expect(find.text('كم ربطة تريد؟'),findsOneWidget);
     expect(find.text('1'),findsOneWidget);
     await tester.tap(find.byKey(const Key('reminder_quantity_plus')));
     await tester.pump();
@@ -70,8 +76,9 @@ void main() {
       (tester) async {
     await launch(tester, delivered:{},onConfirm:(_)=>true);
     final button=tester.widget<FilledButton>(
-      find.byKey(const Key('reminder_confirm_booking')));
+      find.byKey(const Key('reminder_start_booking')));
     expect(button.onPressed,isNull);
+    expect(find.byKey(const Key('reminder_quantity_plus')),findsNothing);
     expect(find.textContaining('لا يوجد تذكير موثّق'),findsOneWidget);
   });
 
@@ -82,8 +89,13 @@ void main() {
       received=request;
       return false; // Server did not confirm: must remain open.
     });
+    expect(received,isNull);
+    await tester.tap(find.byKey(const Key('reminder_start_booking')));
+    await tester.pump();
+    expect(received,isNull);
     await tester.tap(find.byKey(const Key('reminder_quantity_plus')));
     await tester.pump();
+    expect(received,isNull);
     await tester.tap(find.byKey(const Key('reminder_confirm_booking')));
     await tester.pumpAndSettle();
     expect(received,isNotNull);
@@ -94,4 +106,18 @@ void main() {
     expect(received!.pickupTime,'11:00');
     expect(find.textContaining('لم يؤكد الخادم الحجز'),findsOneWidget);
   });
+  testWidgets('ignore action is offered before quantity without committing a booking',
+      (tester) async {
+    var sent = false;
+    await launch(tester,onConfirm:(request){
+      sent = true;
+      return true;
+    });
+    expect(find.byKey(const Key('reminder_ignore')),findsOneWidget);
+    expect(find.byKey(const Key('reminder_confirm_booking')),findsNothing);
+    expect(find.byKey(const Key('reminder_quantity_plus')),findsNothing);
+    expect(sent,false);
+  });
+
+
 }
