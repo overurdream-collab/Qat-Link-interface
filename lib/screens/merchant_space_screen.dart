@@ -401,9 +401,65 @@ class _MerchantSpaceTabState extends State<MerchantSpaceTab> {
                           ),
                           validator: (v) {
                             if ((v ?? '').trim().isEmpty) return null;
-                            final amount = Decimal.tryParse(v!.trim());
-                            if (amount == null || amount <= Decimal.zero ||
-                                !RegExp(r'^\\d+(?:\\.\\d{1,2})?
+                            final input = v!.trim();
+                            if (!RegExp(r'^[0-9]+([.][0-9]{1,2})?$')
+                                .hasMatch(input)) {
+                              return 'سعر موجب حتى منزلتين';
+                            }
+                            final amount = Decimal.tryParse(input);
+                            if (amount == null || amount <= Decimal.zero) {
+                              return 'سعر موجب حتى منزلتين';
+                            }
+                            return null;
+                          },
+                        ),
+                      ),
+                      const SizedBox(width: 9),
+                      Expanded(
+                        child: DropdownButtonFormField<CurrencyCode>(
+                          key: const Key('booking_currency'),
+                          value: bookingCurrency,
+                          isExpanded: true,
+                          decoration: const InputDecoration(labelText: 'العملة'),
+                          items: [
+                            for (final curr in CurrencyCode.values)
+                              DropdownMenuItem(
+                                value: curr,
+                                child: Text(curr.name.toUpperCase()),
+                              ),
+                          ],
+                          onChanged: (value) => refresh(() {
+                            if (value != null) bookingCurrency = value;
+                          }),
+                        ),
+                      ),
+                    ]),
+                    const SizedBox(height: 12),
+                    DropdownButtonFormField<BookingSettlement>(
+                      key: const Key('booking_settlement'),
+                      value: settlement,
+                      decoration: const InputDecoration(labelText: 'حالة السداد'),
+                      items: const [
+                        DropdownMenuItem(
+                          value: BookingSettlement.unknown,
+                          child: Text('غير محدد بعد'),
+                        ),
+                        DropdownMenuItem(
+                          value: BookingSettlement.paid,
+                          child: Text('مسدد نقداً'),
+                        ),
+                        DropdownMenuItem(
+                          value: BookingSettlement.unpaid,
+                          child: Text('لم يسدد'),
+                        ),
+                      ],
+                      onChanged: (value) => refresh(() {
+                        if (value != null) settlement = value;
+                      }),
+                    ),
+                    const SizedBox(height: 11),
+                    TextFormField(
+                      controller: note, maxLength: 250,
                       decoration: const InputDecoration(
                         labelText: 'ملاحظات التجهيز (اختياري)',
                         prefixIcon: Icon(Icons.sticky_note_2_outlined)),
