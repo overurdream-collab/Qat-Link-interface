@@ -229,7 +229,7 @@ class _MerchantAppShellState extends State<MerchantAppShell> {
                           initialCurrency: _customerDetailCurrency,
                           onBack: () => setState(() => _selectedCustomer = null),
                         ),
-                  const MerchantSpaceTab(),
+                  MerchantSpaceTab(state: _state, merchantId: widget.merchantId),
                 ],
               ),
             ),
