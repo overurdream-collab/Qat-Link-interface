@@ -13,7 +13,7 @@ enum NightReminderAudience {
 extension NightReminderAudienceLabel on NightReminderAudience {
   String get label => switch (this) {
     NightReminderAudience.yesterdayConfirmed => 'حجوزات الأمس المؤكدة',
-    NightReminderAudience.previousSevenDays => 'عملاء آخر 7 أيام',
+    NightReminderAudience.previousSevenDays => 'عملاء الأسبوع الماضي',
     NightReminderAudience.allApproved => 'كل العملاء',
     NightReminderAudience.favorites => 'العملاء المفضلون',
   };
