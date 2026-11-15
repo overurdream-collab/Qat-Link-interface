@@ -8,6 +8,7 @@ import '../services/app_state.dart';
 import 'customer_details_screen.dart';
 import '../theme/app_colors.dart';
 import '../widgets/customers/customers_view_model.dart';
+import '../widgets/customers/merchant_debt_status_summary.dart';
 import '../widgets/finance_display.dart';
 import '../widgets/movement/movement_view_model.dart';
 import '../widgets/customers/customer_invitation_sheet.dart';
@@ -81,6 +82,13 @@ class _MerchantCustomersTabState extends State<MerchantCustomersTab> {
           filter: _filter,
           sort: _sort,
           search: _searchController.text,
+        );
+        final statusTotals = MerchantDebtStatusQuery.summarize(
+          merchantId: widget.merchantId,
+          contacts: widget.state.merchantContacts.value,
+          privateClaims: widget.state.merchantPendingDebts.value,
+          relationships: rels,
+          movements: movements,
         );
         final pending = CustomersViewModel.pendingRelationships(
           rels, merchantId: widget.merchantId,
@@ -175,6 +183,8 @@ class _MerchantCustomersTabState extends State<MerchantCustomersTab> {
             )),
             const SizedBox(height: 7),
             _currencyChips(c),
+            const SizedBox(height: 10),
+            _threeDebtStages(c, statusTotals),
             const SizedBox(height: 13),
             Text('الحالة:', style: TextStyle(
               color: c.muted, fontSize: 12, fontWeight: FontWeight.w800,
@@ -260,6 +270,89 @@ class _MerchantCustomersTabState extends State<MerchantCustomersTab> {
       },
     );
   }
+
+  Widget _threeDebtStages(AppThemeColors c,
+      Map<CurrencyCode, MerchantDebtStatusTotals> totals) {
+    final currencies = _currency == null
+        ? CurrencyCode.values
+        : [_currency!];
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Text('الأرصدة حسب حالة العميل', style: TextStyle(
+          color: c.petrol, fontSize: 13, fontWeight: FontWeight.w900)),
+        const SizedBox(height: 5),
+        Text('لا يُجمع رصيد خارج التطبيق أو طلب موافقة مع الرصيد المعتمد. '
+            'تُعرض العملات منفصلة.',
+          style: TextStyle(color: c.muted, fontSize: 10)),
+        const SizedBox(height: 8),
+        for (final currency in currencies) ...[
+          if (_currency == null)
+            Padding(
+              padding: const EdgeInsets.only(top: 7, bottom: 5),
+              child: Text(FinanceDisplay.currencyCode(currency),
+                style: TextStyle(color: c.petrol,
+                  fontWeight: FontWeight.w900, fontSize: 12))),
+          _stageBalanceRow(c, currency, totals[currency]),
+        ],
+      ],
+    );
+  }
+
+  Widget _stageBalanceRow(AppThemeColors c, CurrencyCode currency,
+      MerchantDebtStatusTotals? totals) {
+    final outside = totals?.outsideApp ?? Decimal.zero;
+    final awaiting = totals?.awaitingCustomerApproval ?? Decimal.zero;
+    final approved = totals?.approvedNet ?? Decimal.zero;
+    return Column(children: [
+      _stageLine(c,
+        key: Key('balance_outside_app_${currency.name}'),
+        title: 'رصيد انتظار تحميل التطبيق',
+        hint: 'عملاء خارج التطبيق / لم يُتحقق من انضمامهم',
+        amount: outside, currency: currency, color: c.pendingText),
+      const SizedBox(height: 5),
+      _stageLine(c,
+        key: Key('balance_awaiting_approval_${currency.name}'),
+        title: 'رصيد بانتظار موافقة العميل',
+        hint: 'الديون المعلقة بعد الارتباط',
+        amount: awaiting, currency: currency, color: c.pendingText),
+      const SizedBox(height: 5),
+      _stageLine(c,
+        key: Key('balance_approved_${currency.name}'),
+        title: 'الرصيد المعتمد',
+        hint: 'صافي الديون ناقص التسديدات المعتمدة',
+        amount: approved, currency: currency, color: c.petrol),
+    ]);
+  }
+
+  Widget _stageLine(AppThemeColors c, {
+    required Key key,
+    required String title,
+    required String hint,
+    required Decimal amount,
+    required CurrencyCode currency,
+    required Color color,
+  }) => Container(
+    key: key,
+    padding: const EdgeInsets.symmetric(horizontal: 11, vertical: 9),
+    decoration: BoxDecoration(
+      color: c.card, borderRadius: BorderRadius.circular(11),
+      border: Border.all(color: c.cardBorder)),
+    child: Row(children: [
+      Expanded(child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(title, style: TextStyle(
+            color: color, fontSize: 12, fontWeight: FontWeight.w900)),
+          Text(hint, style: TextStyle(color: c.muted, fontSize: 9)),
+        ],
+      )),
+      Text('${FinanceDisplay.amount(amount)} '
+          '${FinanceDisplay.currencyCode(currency)}',
+        style: TextStyle(color: color,
+          fontSize: 13, fontWeight: FontWeight.w900)),
+    ]),
+  );
 
   Widget _merchantPendingCard(
       AppThemeColors c, MerchantPendingContact contact) {
