@@ -535,6 +535,7 @@ class _MerchantSpaceTabState extends State<MerchantSpaceTab> {
           createdAt: DateTime.now(),
           note: note.text.trim(),
           customerId: linkedCustomerId,
+          merchantId: widget.merchantId,
           unitPrice: unitPrice.text.trim().isEmpty
               ? null : Decimal.parse(unitPrice.text.trim()),
           currency: bookingCurrency,
