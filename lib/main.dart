@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'screens/home_screen.dart';
+import 'screens/customer_details_screen.dart';
 import 'screens/login_screen.dart';
 import 'screens/merchant_tabs.dart';
 import 'services/app_state.dart';
@@ -78,6 +79,8 @@ class MerchantAppShell extends StatefulWidget {
 class _MerchantAppShellState extends State<MerchantAppShell> {
   final AppState _state = AppState();
   int _selectedIndex = 0;
+  CustomerModel? _selectedCustomer;
+  CurrencyCode _customerDetailCurrency = CurrencyCode.yer;
 
   @override
   void dispose() {
@@ -207,14 +210,37 @@ class _MerchantAppShellState extends State<MerchantAppShell> {
                 children: [
                   HomeScreen(state: _state),
                   MerchantMovementsTab(state: _state),
-                  MerchantCustomersTab(state: _state, merchantId: widget.merchantId),
+                  _selectedCustomer == null
+                      ? MerchantCustomersTab(
+                          state: _state,
+                          merchantId: widget.merchantId,
+                          onCustomerTap: (customer, currency) {
+                            setState(() {
+                              _selectedCustomer = customer;
+                              _customerDetailCurrency = currency;
+                            });
+                          },
+                        )
+                      : CustomerDetailsScreen(
+                          key: ValueKey('detail_${_selectedCustomer!.id}'),
+                          customer: _selectedCustomer!,
+                          state: _state,
+                          merchantId: widget.merchantId,
+                          initialCurrency: _customerDetailCurrency,
+                          onBack: () => setState(() => _selectedCustomer = null),
+                        ),
                   const MerchantSpaceTab(),
                 ],
               ),
             ),
             AppBottomBar(
               selectedIndex: _selectedIndex,
-              onSelect: (index) => setState(() => _selectedIndex = index),
+              onSelect: (index) => setState(() {
+                if (index != 3 || _selectedIndex == 3) {
+                  _selectedCustomer = null;
+                }
+                _selectedIndex = index;
+              }),
               onAdd: () { _showQuickAddSheet(); },
             ),
           ],
