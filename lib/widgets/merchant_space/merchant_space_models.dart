@@ -25,6 +25,8 @@ extension ReservationStatusLabels on ReservationStatus {
   };
 }
 
+enum BookingSettlement { unknown, paid, unpaid }
+
 class ReservationDraft {
   const ReservationDraft({
     required this.id,
@@ -37,7 +39,16 @@ class ReservationDraft {
     required this.createdAt,
     this.note = '',
     this.status = ReservationStatus.awaitingConfirmation,
-  });
+    this.customerId,
+    this.unitPrice,
+    this.currency = CurrencyCode.yer,
+    this.settlement = BookingSettlement.unknown,
+  }) {
+    if (bundles <= 0) throw ArgumentError('Bundles must be positive');
+    if (unitPrice != null && unitPrice! <= Decimal.zero) {
+      throw ArgumentError('Unit price must be positive');
+    }
+  }
 
   final String id;
   final String customerName;
@@ -49,12 +60,22 @@ class ReservationDraft {
   final DateTime createdAt;
   final String note;
   final ReservationStatus status;
+  /// Verified linked account ID, not a text name/phone guess.
+  final String? customerId;
+  /// Unit price is optional; missing price must not become a zero-value sale.
+  final Decimal? unitPrice;
+  final CurrencyCode currency;
+  final BookingSettlement settlement;
+
+  Decimal? get saleTotal => unitPrice == null
+      ? null : unitPrice! * Decimal.fromInt(bundles);
 
   ReservationDraft withStatus(ReservationStatus value) => ReservationDraft(
     id: id, customerName: customerName, phone: phone,
     item: item, bundles: bundles, day: day,
     pickupTime: pickupTime, createdAt: createdAt,
-    note: note, status: value,
+    note: note, status: value, customerId: customerId,
+    unitPrice: unitPrice, currency: currency, settlement: settlement,
   );
 }
 
