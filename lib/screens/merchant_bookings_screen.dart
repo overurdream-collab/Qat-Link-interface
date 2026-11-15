@@ -201,19 +201,14 @@ class _MerchantBookingsScreenState extends State<MerchantBookingsScreen> {
               Text('الساعة: ${_clock(_reminder.sendAtMinute)} بتوقيت صنعاء',
                 style: TextStyle(color: c.muted)),
               const SizedBox(height: 11),
-              Text(
-                campaign.canOfferQuickConfirm
-                  ? 'عملاءنا الكرام، يمكنكم تأكيد حجز '
-                    '${campaign.offeredItem} للغد، وتحديد عدد الربطات فقط.'
-                  : 'عملاءنا الكرام، يرجى حجز طلبات الغد مبكراً.',
+              Text('عملاءنا الكرام، احجزوا ${campaign.offeredItem} '
+                  'للغد. موعد الاستلام: ${campaign.pickupTime}.',
                 style: TextStyle(color: c.text, height: 1.55)),
               const SizedBox(height: 9),
-              Text(
-                campaign.canOfferQuickConfirm
-                    ? 'التأكيد السريع: الصنف ${campaign.offeredItem} • '
-                      'الاستلام ${campaign.pickupTime} • يختار العميل العدد فقط.'
-                    : 'لإتاحة التأكيد السريع أضف الصنف وموعد الاستلام.',
-                style: TextStyle(color: c.petrol, fontSize: 12)),
+              Text('عند فتح التذكير يظهر للعميل: «تأكيد الحجز» أو '
+                  '«تجاهل». التأكيد يفتح اختيار عدد الربطات فقط.',
+                style: TextStyle(color: c.petrol, fontSize: 12,
+                  fontWeight: FontWeight.w700)),
               const SizedBox(height: 10),
               Text('معاينة محلية فقط. لا يوجد إرسال أو جدولة ولا بيانات '
                 'قراءة مؤكدة دون خادم موثق. ستُطبّق صلاحيات الباقة '
@@ -360,12 +355,16 @@ class _MerchantBookingsScreenState extends State<MerchantBookingsScreen> {
             key: const Key('reminder_offered_item'),
             controller: _offeredItem,
             maxLength: 80,
+            onChanged: (_) => setState(() {}),
             decoration: const InputDecoration(
-              labelText: 'الصنف المقترح (اختياري)',
+              labelText: 'الصنف المطلوب للحجز (إلزامي)',
               hintText: 'مثال: قات حاشدي',
             ),
           ),
-          const SizedBox(height: 2),
+          Text('التذكير دعوة حجز مباشرة، وليس إشعاراً عاماً. '
+            'لن تُعتمد المعاينة بدون صنف محدد.',
+            style: TextStyle(color: c.muted, fontSize: 10)),
+          const SizedBox(height: 7),
           Row(children: [
             Expanded(child: OutlinedButton.icon(
               key: const Key('reminder_pickup_time'),
@@ -387,9 +386,10 @@ class _MerchantBookingsScreenState extends State<MerchantBookingsScreen> {
           SizedBox(width: double.infinity,
             child: FilledButton.icon(
               key: const Key('bookings_reminder_preview'),
-              onPressed: _previewReminder,
+              onPressed: _offeredItem.text.trim().isEmpty
+                  ? null : _previewReminder,
               icon: const Icon(Icons.visibility_outlined),
-              label: const Text('معاينة التذكير والحجز السريع'),
+              label: const Text('معاينة دعوة الحجز'),
             ),
           ),
           const SizedBox(height: 12),
@@ -822,14 +822,32 @@ class _MerchantBookingsScreenState extends State<MerchantBookingsScreen> {
               Expanded(child: Text('حجوزات الفترة',
                 style: TextStyle(color: c.text,
                   fontSize: 15, fontWeight: FontWeight.w900))),
+            ]),
+            Wrap(spacing: 5, runSpacing: 0, children: [
+              TextButton.icon(
+                key: const Key('bookings_select_all'),
+                onPressed: summary.orders.isEmpty ? null : () => setState(() {
+                  _selectedIds
+                    ..clear()
+                    ..addAll(summary.orders.map((order) => order.id));
+                }),
+                icon: const Icon(Icons.select_all_rounded, size: 17),
+                label: const Text('تحديد الكل'),
+              ),
               TextButton(
                 key: const Key('bookings_select_all_eligible'),
-                onPressed: () => setState(() {
+                onPressed: qualified.isEmpty ? null : () => setState(() {
                   _selectedIds
                     ..clear()
                     ..addAll(qualified);
                 }),
                 child: const Text('تحديد المؤهل'),
+              ),
+              TextButton(
+                key: const Key('bookings_clear_selection'),
+                onPressed: _selectedIds.isEmpty ? null
+                    : () => setState(() => _selectedIds.clear()),
+                child: const Text('إلغاء التحديد'),
               ),
             ]),
             const SizedBox(height: 4),
@@ -848,12 +866,13 @@ class _MerchantBookingsScreenState extends State<MerchantBookingsScreen> {
                 onPressed: _selectedIds.isEmpty
                     ? null : () => _reviewDebtConversion(summary.orders),
                 icon: const Icon(Icons.fact_check_outlined),
-                label: Text('مراجعة تحويل ${_selectedIds.length} حجز إلى ديون'),
+                label: Text('مراجعة طلب تحويل ${_selectedIds.length} حجز إلى ديون'),
               ),
             ),
             const SizedBox(height: 8),
-            Text('تُنشأ عند الربط طلبات منفصلة لكل عميل وعملة؛ '
-                'لا دين معتمداً قبل موافقة العميل.',
+            Text('اختيار الكل أو حجوزات أشخاص محددين لا ينشئ ديناً. '
+                'يصدر التاجر طلب الدين فقط بعد فحص الأهلية، '
+                'ولا يعتمد إلا بعد موافقة كل عميل.',
               style: TextStyle(color: c.muted, fontSize: 10)),
           ],
         )),

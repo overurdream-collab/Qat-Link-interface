@@ -34,23 +34,23 @@ class NightReminderCampaignDraft {
     required this.merchantId,
     required this.day,
     required this.audience,
-    this.offeredItem,
-    this.pickupTime,
+    required this.offeredItem,
+    required this.pickupTime,
   });
 
   final String id;
   final String merchantId;
   final DateTime day;
   final NightReminderAudience audience;
-  /// Only reminders with a fixed item and pickup slot may offer a one-field
-  /// confirm action. Generic reminders stay informational.
-  final String? offeredItem;
-  final String? pickupTime;
+  /// Every nightly booking reminder is an actionable reservation invitation.
+  /// Campaigns with missing item or pickup slot fail validation.
+  final String offeredItem;
+  final String pickupTime;
 
   bool get canOfferQuickConfirm =>
-      (offeredItem?.trim().isNotEmpty ?? false) &&
+      offeredItem.trim().isNotEmpty &&
       RegExp(r'^(?:[01][0-9]|2[0-3]):[0-5][0-9]$')
-          .hasMatch(pickupTime ?? '');
+          .hasMatch(pickupTime);
 }
 
 abstract final class NightReminderAudienceQuery {

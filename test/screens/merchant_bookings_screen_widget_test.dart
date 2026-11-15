@@ -61,4 +61,51 @@ void main() {
     await tester.tap(find.byKey(const Key('bookings_back_to_space')));
     expect(back, true);
   });
+  testWidgets('merchant selects all bookings or a specific person without creating debts',
+      (tester) async {
+    final date = DateTime(2026, 11, 15);
+    final data = [
+      for (final id in ['a', 'b'])
+        ReservationDraft(
+          id: id, merchantId: 'merchant1', customerId: id,
+          customerName: 'عميل $id', phone: '771234567',
+          item: 'قات حاشدي', bundles: 2,
+          pickupTime: '11:00', day: date, createdAt: date,
+          status: ReservationStatus.collected,
+          unitPrice: Decimal.parse('1000'),
+          settlement: BookingSettlement.unpaid,
+        ),
+    ];
+    await tester.pumpWidget(MaterialApp(
+      theme: AppTheme.light,
+      home: Scaffold(body: MerchantBookingsScreen(
+        state: state, bookings: data, day: date, storeName: 'متجري',
+        merchantId: 'merchant1', onDayChanged: (_) {},
+        onAddBooking: () {}, onUpdateBooking: (_, __) {},
+        onBack: () {},
+      )),
+    ));
+    await tester.scrollUntilVisible(
+      find.byKey(const Key('bookings_select_all')), 260,
+      scrollable: find.byType(Scrollable).first,
+    );
+    await tester.tap(find.byKey(const Key('bookings_select_all')));
+    await tester.pump();
+    await tester.ensureVisible(find.byKey(const Key('bookings_batch_debt')));
+    expect(find.text('مراجعة طلب تحويل 2 حجز إلى ديون'), findsOneWidget);
+    await tester.ensureVisible(find.byKey(const Key('bookings_clear_selection')));
+    await tester.tap(find.byKey(const Key('bookings_clear_selection')));
+    await tester.pump();
+    await tester.scrollUntilVisible(
+      find.byKey(const Key('bookings_select_a')), 220,
+      scrollable: find.byType(Scrollable).first,
+    );
+    await tester.tap(find.byKey(const Key('bookings_select_a')));
+    await tester.pump();
+    await tester.ensureVisible(find.byKey(const Key('bookings_batch_debt')));
+    expect(find.text('مراجعة طلب تحويل 1 حجز إلى ديون'), findsOneWidget);
+    expect(state.movements.value, isEmpty);
+  });
+
+
 }
