@@ -49,7 +49,7 @@ class AuthBrandHero extends StatelessWidget {
             width: compact ? 121 : 165,
             height: compact ? 153 : 220,
             child: _approvedImage(
-              'assets/images/maqwati_yemeni_mascot.png',
+              'assets/images/maqwati_yemeni_mascot.webp',
               icon: Icons.person_rounded,
               color: c.petrol,
             ),
@@ -60,7 +60,7 @@ class AuthBrandHero extends StatelessWidget {
             width: compact ? 87 : 128,
             height: compact ? 82 : 115,
             child: _approvedImage(
-              'assets/images/qat_bundles.png',
+              'assets/images/qat_bundles.webp',
               icon: Icons.eco_rounded,
               color: const Color(0xFF288153),
             ),
