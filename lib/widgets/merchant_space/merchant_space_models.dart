@@ -40,6 +40,7 @@ class ReservationDraft {
     this.note = '',
     this.status = ReservationStatus.awaitingConfirmation,
     this.customerId,
+    this.merchantId,
     this.unitPrice,
     this.currency = CurrencyCode.yer,
     this.settlement = BookingSettlement.unknown,
@@ -62,6 +63,8 @@ class ReservationDraft {
   final ReservationStatus status;
   /// Verified linked account ID, not a text name/phone guess.
   final String? customerId;
+  /// Scoped merchant of this operational reservation. Never infer tenant from name.
+  final String? merchantId;
   /// Unit price is optional; missing price must not become a zero-value financial entry.
   final Decimal? unitPrice;
   final CurrencyCode currency;
@@ -75,7 +78,7 @@ class ReservationDraft {
     item: item, bundles: bundles, day: day,
     pickupTime: pickupTime, createdAt: createdAt,
     note: note, status: value, customerId: customerId,
-    unitPrice: unitPrice, currency: currency, settlement: settlement,
+    merchantId: merchantId, unitPrice: unitPrice, currency: currency, settlement: settlement,
   );
 }
 
