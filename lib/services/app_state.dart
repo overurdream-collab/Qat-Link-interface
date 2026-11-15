@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import '../models/app_models.dart';
+import '../models/merchant_pending_models.dart';
 
 /// In-memory prototype only. Production authorization must derive identity
 /// and role from a verified server-side session.
@@ -7,11 +8,85 @@ class AppState {
   final ValueNotifier<List<CustomerModel>> customers = ValueNotifier(const []);
   final ValueNotifier<List<RelationshipModel>> relationships = ValueNotifier(const []);
   final ValueNotifier<List<MovementModel>> movements = ValueNotifier(const []);
+  /// Merchant-only entries; not verified CustomerModel or ledger data.
+  final ValueNotifier<List<MerchantPendingContact>> merchantContacts =
+      ValueNotifier(const []);
+  final ValueNotifier<List<MerchantPendingDebt>> merchantPendingDebts =
+      ValueNotifier(const []);
 
   List<RelationshipModel> get pendingRelationships => relationships.value
       .where((r) => r.status == RelationshipStatus.pending).toList(growable: false);
   List<MovementModel> get pendingMovements => movements.value
       .where((m) => m.status == MovementStatus.pending).toList(growable: false);
+
+
+  /// Locally records a private merchant contact before app installation.
+  /// Not a verified account, not a relationship, not a sent invitation.
+  void addMerchantContact(MerchantPendingContact contact) {
+    if (contact.merchantId.trim().isEmpty ||
+        contact.id.trim().isEmpty ||
+        contact.name.trim().length < 2) {
+      throw ArgumentError('Merchant, contact ID and name are required.');
+    }
+    final phone = _phone(contact.phone);
+    if (!RegExp(r'^\+?[0-9]{9,15}$').hasMatch(phone)) {
+      throw ArgumentError('A valid contact phone is required.');
+    }
+    _unique(merchantContacts.value.map((c) => c.id), contact.id,
+        'merchant contact');
+    if (merchantContacts.value.any((c) =>
+        c.merchantId == contact.merchantId && _phone(c.phone) == phone)) {
+      throw StateError('This merchant already has a contact with this phone.');
+    }
+    merchantContacts.value = List.unmodifiable([
+      ...merchantContacts.value,
+      MerchantPendingContact(
+        id: contact.id,
+        merchantId: contact.merchantId,
+        name: contact.name.trim(),
+        phone: phone,
+        createdAt: contact.createdAt,
+      ),
+    ]);
+  }
+
+  /// An unacknowledged merchant record. No approved financial movement.
+  void addMerchantPendingDebt(MerchantPendingDebt debt) {
+    if (debt.merchantId.trim().isEmpty) {
+      throw StateError('Merchant identity is required.');
+    }
+    final matches = merchantContacts.value.where((c) =>
+        c.id == debt.contactId && c.merchantId == debt.merchantId);
+    if (matches.length != 1) {
+      throw StateError('The contact does not belong to this merchant.');
+    }
+    _unique(merchantPendingDebts.value.map((d) => d.id), debt.id,
+        'merchant pending debt');
+    merchantPendingDebts.value =
+        List.unmodifiable([...merchantPendingDebts.value, debt]);
+    // movements intentionally untouched.
+  }
+
+  /// Scoped report for manual communication, not customer acknowledgment.
+  MerchantPendingStatement merchantPendingStatement({
+    required String? merchantId,
+    required String contactId,
+    required DateTime from,
+    required DateTime to,
+  }) {
+    final contacts = merchantContacts.value.where((c) =>
+        c.id == contactId && c.merchantId == merchantId);
+    if (contacts.length != 1) {
+      throw StateError('Contact not found under this merchant.');
+    }
+    return MerchantPendingDebtQuery.statement(
+      merchantId: merchantId,
+      contact: contacts.single,
+      debts: merchantPendingDebts.value,
+      from: from,
+      to: to,
+    );
+  }
 
   void addCustomer(CustomerModel customer) {
     _unique(customers.value.map((c) => c.id), customer.id, 'customer');
@@ -141,5 +216,7 @@ class AppState {
     customers.dispose();
     relationships.dispose();
     movements.dispose();
+    merchantContacts.dispose();
+    merchantPendingDebts.dispose();
   }
 }

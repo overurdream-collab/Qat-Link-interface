@@ -1,6 +1,8 @@
+import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:qat_link/models/app_models.dart';
+import 'package:qat_link/models/merchant_pending_models.dart';
 import 'package:qat_link/screens/customers_screen.dart';
 import 'package:qat_link/services/app_state.dart';
 import 'package:qat_link/theme/app_theme.dart';
@@ -61,14 +63,14 @@ void main() {
     expect(find.byKey(const Key('customer_c1_yer')), findsOneWidget);
   });
 
-  testWidgets('add client form cannot create an unapproved relationship or debt',
+  testWidgets('merchant can add an unregistered contact without approved relationship',
       (tester) async {
     await pumpCustomers(tester);
     await tester.tap(find.byKey(const Key('customers_add')));
     await tester.pumpAndSettle();
-    expect(find.text('طلب إضافة عميل'), findsOneWidget);
-    expect(find.text('إرسال طلب ارتباط'), findsOneWidget);
-    expect(find.textContaining('لا تُدخل أي مديونية أولية'), findsOneWidget);
+    expect(find.text('إضافة عميل إلى سجلي'), findsOneWidget);
+    expect(find.text('إضافة العميل إلى سجلي'), findsOneWidget);
+    expect(find.textContaining('بعد إضافة العميل'), findsOneWidget);
     expect(find.text('المديونية الأولية'), findsNothing);
     await tester.enterText(find.byKey(const Key('new_customer_name')), 'صالح أحمد');
     await tester.enterText(find.byKey(const Key('new_customer_phone')), '770123456');
@@ -78,5 +80,33 @@ void main() {
     expect(state.customers.value, isEmpty);
     expect(state.relationships.value, isEmpty);
     expect(state.movements.value, isEmpty);
+    expect(state.merchantContacts.value, hasLength(1));
+    expect(state.merchantContacts.value.single.name, 'صالح أحمد');
+    await tester.pumpAndSettle();
+    expect(find.text('عملاء في سجل التاجر — غير معتمدين'), findsOneWidget);
+    expect(find.byKey(
+      Key('merchant_pending_contact_${state.merchantContacts.value.single.id}')),
+      findsOneWidget);
+    expect(find.text('غير معتمد'), findsOneWidget);
+  });
+
+  testWidgets('a privately recorded pending debt stays separate from approved balances',
+      (tester) async {
+    final date = DateTime.now();
+    state.addMerchantContact(MerchantPendingContact(
+      id: 'p1', merchantId: 'm1', name: 'عميل لا يستخدم التطبيق',
+      phone: '777123456', createdAt: date));
+    state.addMerchantPendingDebt(MerchantPendingDebt(
+      id: 'd1', merchantId: 'm1', contactId: 'p1',
+      amount: Decimal.parse('40000'), currency: CurrencyCode.yer,
+      createdAt: date));
+    await pumpCustomers(tester);
+    expect(find.text('عميل لا يستخدم التطبيق'), findsOneWidget);
+    expect(find.text('ديون معلقة: 1'), findsOneWidget);
+    expect(find.byKey(const Key('pending_copy_statement_p1')),
+      findsOneWidget);
+    expect(state.movements.value, isEmpty);
+    expect(find.text('عملاء بمديونية'), findsOneWidget);
+    expect(find.byKey(const Key('customer_p1_yer')), findsNothing);
   });
 }

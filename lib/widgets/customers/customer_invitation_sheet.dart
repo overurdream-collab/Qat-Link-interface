@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 
 import '../../features/auth/auth_input_validation.dart';
-import '../../models/app_models.dart';
+import '../../models/merchant_pending_models.dart';
 import '../../services/app_state.dart';
 import '../../theme/app_colors.dart';
-import '../movement/movement_view_model.dart';
 
-/// Shared invitation form used by both Customers and the (+) quick menu.
-/// No synthetic financial debt and no fake success from a local-only screen.
+/// Shared merchant contact form; an unregistered customer can be noted locally.
+/// This is not account registration, confirmed invitation delivery or a ledger debt.
 class CustomerInvitationSheet extends StatefulWidget {
   const CustomerInvitationSheet({
     super.key,
@@ -37,27 +36,30 @@ class _CustomerInvitationSheetState extends State<CustomerInvitationSheet> {
 
   void _send() {
     if (!_formKey.currentState!.validate()) return;
-    final normalized = MovementQuery.normalizeSearch(
-      AuthInputValidation.normalizePhone(_phone.text),
-    );
-    final matched = widget.state.customers.value.where((customer) =>
-      MovementQuery.normalizeSearch(
-          AuthInputValidation.normalizePhone(customer.phone)) == normalized);
-    if (matched.isNotEmpty &&
-        widget.state.relationships.value.any((r) =>
-          r.customerId == matched.first.id &&
-          (widget.merchantId == null || r.merchantId == widget.merchantId) &&
-          r.status != RelationshipStatus.cancelled)) {
-      _notice('يوجد ارتباط أو طلب سابق لهذا العميل.');
+    final merchantId = widget.merchantId;
+    if (merchantId == null || merchantId.trim().isEmpty) {
+      _notice('هوية التاجر غير متاحة. لا يمكن حفظ بيانات خاصة '
+          'دون جلسة تاجر موثقة.');
       return;
     }
-    if (matched.isEmpty) {
-      _notice('لم يُعثر على حساب عميل موثق بهذا الرقم. '
-        'يلزم خادم للتأكد من الهوية وإرسال الدعوة.');
-      return;
+    final phone = AuthInputValidation.normalizePhone(_phone.text);
+    try {
+      final next = widget.state.merchantContacts.value.length + 1;
+      widget.state.addMerchantContact(MerchantPendingContact(
+        id: 'local-$merchantId-${DateTime.now().microsecondsSinceEpoch}-$next',
+        merchantId: merchantId,
+        name: _name.text.trim(),
+        phone: phone,
+        createdAt: DateTime.now(),
+      ));
+      _notice('أُضيف العميل إلى سجل التاجر المحلي بحالة غير معتمد. '
+          'يمكن تسجيل مبالغ معلقة عليه، ولا تُحتسب ديوناً معتمدة. '
+          'الإرسال والاحتفاظ الدائم ينتظران ربط الخادم.');
+      Navigator.of(context).pop();
+    } on Object catch (_) {
+      _notice('تعذر حفظ سجل العميل. تحقق من رقم الهاتف أو وجود '
+          'هذا العميل مسبقاً ضمن سجلك.');
     }
-    _notice('المدخلات جاهزة. يتطلب إرسال الدعوة جلسة تاجر موثقة '
-      'وخدمة ارتباطات آمنة. لم تُرسل أي دعوة بعد.');
   }
 
   void _notice(String message) => ScaffoldMessenger.of(context)
@@ -82,7 +84,7 @@ class _CustomerInvitationSheetState extends State<CustomerInvitationSheet> {
                   Icon(Icons.person_add_alt_1_rounded,
                       color: c.petrol, size: 22),
                   const SizedBox(width: 8),
-                  Expanded(child: Text('طلب إضافة عميل', style: TextStyle(
+                  Expanded(child: Text('إضافة عميل إلى سجلي', style: TextStyle(
                     color: c.text, fontSize: 16,
                     fontWeight: FontWeight.w900,
                   ))),
@@ -94,8 +96,9 @@ class _CustomerInvitationSheetState extends State<CustomerInvitationSheet> {
                 ]),
                 const SizedBox(height: 9),
                 Text(
-                  'يتطلب انضمام العميل موافقته. '
-                  'لن تُنشأ علاقة مالية قبل اعتماد الطرفين.',
+                  'يمكنك تسجيل العميل في سجلك حتى قبل تحميله التطبيق. '
+                  'سيبقى غير معتمد حتى يوافق على الارتباط، '
+                  'وتظل المبالغ التي تسجلها له معلقة.',
                   style: TextStyle(color: c.muted, fontSize: 11),
                 ),
                 const SizedBox(height: 15),
@@ -129,8 +132,9 @@ class _CustomerInvitationSheetState extends State<CustomerInvitationSheet> {
                   ),
                   padding: const EdgeInsets.all(11),
                   child: Text(
-                    'لا تُدخل أي مديونية أولية هنا؛ '
-                    'الديون والتسديدات عمليات مستقلة تتطلب الموافقة.',
+                    'بعد إضافة العميل يمكنك تسجيل مبالغ معلقة بشكل مستقل. '
+                    'لا يثبت هذا موافقة العميل، ولا تدخل المبالغ '
+                    'في الأرصدة المعتمدة حتى يوافق عليها.',
                     style: TextStyle(color: c.petrol, fontSize: 11),
                   ),
                 ),
@@ -141,7 +145,7 @@ class _CustomerInvitationSheetState extends State<CustomerInvitationSheet> {
                   style: FilledButton.styleFrom(
                     minimumSize: const Size.fromHeight(46),
                   ),
-                  child: const Text('إرسال طلب ارتباط',
+                  child: const Text('إضافة العميل إلى سجلي',
                       style: TextStyle(fontWeight: FontWeight.w800)),
                 ),
                 const SizedBox(height: 7),

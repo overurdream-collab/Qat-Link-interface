@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:qat_link/models/app_models.dart';
+import 'package:qat_link/models/merchant_pending_models.dart';
 import 'package:qat_link/services/app_state.dart';
 import 'package:qat_link/theme/app_theme.dart';
 import 'package:qat_link/widgets/quick_actions/quick_actions_sheet.dart';
@@ -147,5 +148,52 @@ void main() {
     expect(state.movements.value, isEmpty);
   });
 
+
+  testWidgets('unregistered merchant contact can receive a private pending debt',
+      (tester) async {
+    state.addMerchantContact(MerchantPendingContact(
+      id:'contact-1',merchantId:'m1',name:'عميل غير مشترك',
+      phone:'771123456',createdAt:now,
+    ));
+    await pumpSheet(tester,MovementType.debt);
+    await tester.tap(find.byKey(const Key('movement_select_pending_contact')));
+    await tester.pumpAndSettle();
+    expect(find.text('عميل غير مشترك'),findsOneWidget);
+    await tester.tap(find.byKey(const Key('pending_contact_contact-1')));
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byKey(const Key('movement_amount')),'7500.25');
+    await tester.ensureVisible(find.byKey(const Key('movement_save')));
+    await tester.tap(find.byKey(const Key('movement_save')));
+    await tester.pumpAndSettle();
+    expect(state.merchantPendingDebts.value,hasLength(1));
+    expect(state.merchantPendingDebts.value.single.contactId,'contact-1');
+    expect(state.merchantPendingDebts.value.single.amount.toString(),'7500.25');
+    expect(state.movements.value,isEmpty);
+  });
+
+  testWidgets('unapproved merchant contacts cannot be selected for payments',
+      (tester) async {
+    state.addMerchantContact(MerchantPendingContact(
+      id:'contact-2',merchantId:'m1',name:'غير مشترك',
+      phone:'771123456',createdAt:now,
+    ));
+    await pumpSheet(tester,MovementType.payment);
+    expect(find.byKey(const Key('movement_select_pending_contact')),
+      findsNothing);
+    expect(state.merchantPendingDebts.value,isEmpty);
+  });
+
+  testWidgets('pending contact selector never exposes another merchant',
+      (tester) async {
+    state.addMerchantContact(MerchantPendingContact(
+      id:'m2-contact',merchantId:'m2',name:'عميل تاجر ثان',
+      phone:'771123456',createdAt:now,
+    ));
+    await pumpSheet(tester,MovementType.debt);
+    await tester.tap(find.byKey(const Key('movement_select_pending_contact')));
+    await tester.pumpAndSettle();
+    expect(find.text('عميل تاجر ثان'),findsNothing);
+    expect(find.textContaining('لا يوجد عميل مطابق'),findsOneWidget);
+  });
 
 }
