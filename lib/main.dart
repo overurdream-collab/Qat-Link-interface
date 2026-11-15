@@ -8,6 +8,9 @@ import 'services/app_state.dart';
 import 'theme/app_colors.dart';
 import 'theme/app_theme.dart';
 import 'widgets/app_chrome.dart';
+import 'widgets/customers/customer_invitation_sheet.dart';
+import 'widgets/quick_actions/quick_actions_sheet.dart';
+import 'models/app_models.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -58,10 +61,15 @@ class MerchantAppShell extends StatefulWidget {
     super.key,
     required this.isDark,
     required this.onToggleTheme,
+    this.merchantId,
   });
 
   final bool isDark;
   final VoidCallback onToggleTheme;
+
+  /// Verified merchant ID is required to select financial customers.
+  /// Production obtains this from the authenticated server session.
+  final String? merchantId;
 
   @override
   State<MerchantAppShell> createState() => _MerchantAppShellState();
@@ -83,46 +91,33 @@ class _MerchantAppShellState extends State<MerchantAppShell> {
     );
   }
 
-  void _showQuickAddSheet() {
-    final c = context.colors;
-    showModalBottomSheet<void>(
+  Future<void> _showQuickAddSheet() async {
+    final action = await showModalBottomSheet<QuickActionKind>(
       context: context,
-      backgroundColor: c.card,
+      backgroundColor: context.colors.card,
+      showDragHandle: true,
+      builder: (_) => const QuickActionsSheet(),
+    );
+    if (!mounted || action == null) return;
+    if (action == QuickActionKind.addCustomer) {
+      await showCustomerInvitationSheet(
+        context,
+        state: _state,
+        merchantId: widget.merchantId,
+      );
+      return;
+    }
+    await showModalBottomSheet<void>(
+      context: context,
+      backgroundColor: context.colors.card,
       showDragHandle: true,
       isScrollControlled: true,
-      builder: (modalContext) => SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(18, 8, 18, 24),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Text('إضافة سريعة', style: TextStyle(
-                fontSize: 18, fontWeight: FontWeight.w800, color: c.petrol)),
-              const SizedBox(height: 8),
-              for (final action in const <(String, String, IconData)>[
-                ('إضافة عميل', 'يرسل طلب ارتباط للطرف الآخر', Icons.person_add_alt_1_rounded),
-                ('إضافة دين', 'تحتاج موافقة الطرفين', Icons.add_card_rounded),
-                ('تسجيل تسديد', 'تحتاج موافقة الطرفين', Icons.payments_rounded),
-              ])
-                ListTile(
-                  leading: CircleAvatar(
-                    backgroundColor: c.pale,
-                    child: Icon(action.$3, color: c.petrol),
-                  ),
-                  title: Text(action.$1, style: TextStyle(color: c.text)),
-                  subtitle: Text(action.$2, style: TextStyle(color: c.muted)),
-                  onTap: () {
-                    Navigator.pop(modalContext);
-                    _showMessage(action.$1);
-                  },
-                ),
-              const SizedBox(height: 10),
-              Text('لا تُعتمد العمليات ولا تؤثر على الأرصدة قبل موافقة الطرفين.',
-                  style: TextStyle(color: c.muted, fontSize: 11)),
-            ],
-          ),
-        ),
+      builder: (_) => MovementEntrySheet(
+        state: _state,
+        merchantId: widget.merchantId,
+        type: action == QuickActionKind.addDebt
+            ? MovementType.debt
+            : MovementType.payment,
       ),
     );
   }
@@ -218,7 +213,7 @@ class _MerchantAppShellState extends State<MerchantAppShell> {
                 children: [
                   HomeScreen(state: _state),
                   MerchantMovementsTab(state: _state),
-                  MerchantCustomersTab(state: _state),
+                  MerchantCustomersTab(state: _state, merchantId: widget.merchantId),
                   const MerchantSpaceTab(),
                 ],
               ),
@@ -226,7 +221,7 @@ class _MerchantAppShellState extends State<MerchantAppShell> {
             AppBottomBar(
               selectedIndex: _selectedIndex,
               onSelect: (index) => setState(() => _selectedIndex = index),
-              onAdd: _showQuickAddSheet,
+              onAdd: () { _showQuickAddSheet(); },
             ),
           ],
         ),
