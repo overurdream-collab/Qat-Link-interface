@@ -102,7 +102,8 @@ abstract final class NightReminderAudienceQuery {
     final result = <String>{};
     for (final booking in bookings) {
       final customer = booking.customerId;
-      if (customer == null || !base.contains(customer) ||
+      if (booking.merchantId != merchantId ||
+          customer == null || !base.contains(customer) ||
           !isConfirmed(booking.status)) continue;
       final bookingDay = DateTime.utc(booking.day.year,
           booking.day.month, booking.day.day);
