@@ -20,6 +20,49 @@ class MerchantPendingContact {
   final DateTime createdAt;
 }
 
+/// Link supplied ONLY by the authenticated server after verifying that
+/// the new customer owns the phone number of this private merchant contact.
+///
+/// It permits delivery of ALL historical claims into a *pending review inbox*,
+/// even when the merchant/customer relationship has not been approved.
+/// It does NOT indicate acceptance of the merchant's claims or relationship.
+class VerifiedCustomerContactMatch {
+  const VerifiedCustomerContactMatch({
+    required this.merchantId,
+    required this.contactId,
+    required this.customerId,
+    required this.verifiedAt,
+  });
+
+  final String merchantId;
+  final String contactId;
+  final String customerId;
+  final DateTime verifiedAt;
+}
+
+/// A separately recorded decision on a pre-registration claim. The server
+/// must authenticate customerId and make a UNIQUE (merchantId, claimId,
+/// customerId) decision. Acceptance here never creates an approved balance
+/// unless the relationship is also approved and a corresponding approved
+/// MovementModel is written by the backend.
+enum PreRegistrationClaimDecision { accept, reject }
+
+class VerifiedCustomerClaimDecision {
+  const VerifiedCustomerClaimDecision({
+    required this.merchantId,
+    required this.claimId,
+    required this.customerId,
+    required this.decision,
+    required this.decidedAt,
+  });
+
+  final String merchantId;
+  final String claimId;
+  final String customerId;
+  final PreRegistrationClaimDecision decision;
+  final DateTime decidedAt;
+}
+
 /// Merchant-authored, UNACKNOWLEDGED claim for a contact who may not have
 /// installed the app or accepted a relationship. It is never a MovementModel
 /// and it must never enter the customer's recognized/approved balance.
