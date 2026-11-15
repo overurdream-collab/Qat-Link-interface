@@ -1,11 +1,11 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:qat_link/main.dart';
+import '../helpers/merchant_shell_test_app.dart';
 
 void main() {
   testWidgets(
     'movement screen retains approved global header and bottom navigation',
     (tester) async {
-      await tester.pumpWidget(const QatLinkApp());
+      await tester.pumpWidget(const MerchantShellTestApp());
       await tester.tap(find.text('الحركة'));
       await tester.pumpAndSettle();
 
@@ -28,7 +28,7 @@ void main() {
   testWidgets(
     'movement tab keeps theme toggle and opens the report preview',
     (tester) async {
-      await tester.pumpWidget(const QatLinkApp());
+      await tester.pumpWidget(const MerchantShellTestApp());
       await tester.tap(find.text('الحركة'));
       await tester.pumpAndSettle();
 

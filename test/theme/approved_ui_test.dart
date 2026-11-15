@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:qat_link/main.dart';
+import '../helpers/merchant_shell_test_app.dart';
 import 'package:qat_link/theme/app_colors.dart';
 
 void main() {
@@ -36,7 +36,7 @@ void main() {
   });
 
   testWidgets('shared chrome has the five approved tabs and top buttons', (tester) async {
-    await tester.pumpWidget(const QatLinkApp());
+    await tester.pumpWidget(const MerchantShellTestApp());
     expect(find.text('الرئيسية'), findsOneWidget);
     expect(find.text('الحركة'), findsOneWidget);
     expect(find.text('العملاء'), findsOneWidget);
@@ -48,7 +48,7 @@ void main() {
   });
 
   testWidgets('theme toggle retains header and navigation', (tester) async {
-    await tester.pumpWidget(const QatLinkApp());
+    await tester.pumpWidget(const MerchantShellTestApp());
     await tester.tap(find.byTooltip('الوضع الليلي'));
     await tester.pumpAndSettle();
     expect(find.byTooltip('الوضع النهاري'), findsOneWidget);
@@ -58,7 +58,7 @@ void main() {
 
   testWidgets('quick add offers three actions but no automatic financial write',
       (tester) async {
-    await tester.pumpWidget(const QatLinkApp());
+    await tester.pumpWidget(const MerchantShellTestApp());
     await tester.tap(find.byTooltip('إضافة سريعة'));
     await tester.pumpAndSettle();
     expect(find.text('إضافة عميل'), findsOneWidget);

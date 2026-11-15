@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'screens/home_screen.dart';
+import 'screens/login_screen.dart';
 import 'screens/merchant_tabs.dart';
 import 'services/app_state.dart';
 import 'theme/app_colors.dart';
@@ -38,7 +39,7 @@ class _QatLinkAppState extends State<QatLinkApp> {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      home: MerchantAppShell(
+      home: LoginScreen(
         isDark: _themeMode == ThemeMode.dark,
         onToggleTheme: () => setState(() {
           _themeMode = _themeMode == ThemeMode.dark
@@ -50,7 +51,7 @@ class _QatLinkAppState extends State<QatLinkApp> {
   }
 }
 
-/// The only owner of top and bottom navigation across merchant pages.
+/// Merchant-only UI shell, reachable after future server authentication.\n/// Never wire a PIN-only client-side navigation to this shell.\n/// The only owner of top and bottom navigation across merchant pages.
 /// The future MovementScreen should replace MerchantMovementsTab body only.
 class MerchantAppShell extends StatefulWidget {
   const MerchantAppShell({
