@@ -31,8 +31,10 @@ MovementModel movement({
   required MovementStatus status,
   MovementType type = MovementType.debt,
   DateTime? approvedAt,
+  DateTime? initiatedAt,
 }) {
-  final created = DateTime.utc(2026,11,14,18);
+  final created = initiatedAt ?? (status == MovementStatus.pending
+      ? DateTime.utc(2026,11,15,10) : DateTime.utc(2026,11,14,18));
   return MovementModel(
     id:id, relationshipId:'r-$merchantId-$customerId',
     merchantId:merchantId, customerId:customerId,
@@ -89,7 +91,8 @@ void main() {
   });
 
   test('pending approval from yesterday remains excluded from today total', () {
-    final r=query([movement(id:'waiting',status:MovementStatus.pending)]);
+    final r=query([movement(id:'waiting',status:MovementStatus.pending,
+        initiatedAt:DateTime.utc(2026,11,14,18))]);
     expect(r.approvedCount,0);
     expect(r.approved,isEmpty);
     expect(r.pendingCount,0);
