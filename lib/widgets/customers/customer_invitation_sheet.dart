@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 
 import '../../features/auth/auth_input_validation.dart';
-import '../../models/app_models.dart';
 import '../../models/merchant_pending_models.dart';
 import '../../services/app_state.dart';
 import '../../theme/app_colors.dart';
-import '../movement/movement_view_model.dart';
 
 /// Shared merchant contact form; an unregistered customer can be noted locally.
 /// This is not account registration, confirmed invitation delivery or a ledger debt.
