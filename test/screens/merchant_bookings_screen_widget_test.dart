@@ -53,10 +53,11 @@ void main() {
     expect(state.movements.value, isEmpty);
     await tester.tap(find.byKey(const Key('booking_batch_close')));
     await tester.pumpAndSettle();
-    await tester.scrollUntilVisible(
-      find.byKey(const Key('bookings_back_to_space')), -280,
-      scrollable: find.byType(Scrollable).first,
-    );
+    await tester.drag(find.byType(Scrollable).first,
+        const Offset(0, 2500));
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(find.byKey(const Key('bookings_back_to_space')));
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(const Key('bookings_back_to_space')));
     expect(back, true);
   });
