@@ -12,6 +12,7 @@ import 'widgets/app_chrome.dart';
 import 'widgets/customers/customer_invitation_sheet.dart';
 import 'widgets/quick_actions/quick_actions_sheet.dart';
 import 'models/app_models.dart';
+import 'models/merchant_pending_models.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -63,6 +64,9 @@ class MerchantAppShell extends StatefulWidget {
     required this.isDark,
     required this.onToggleTheme,
     this.merchantId,
+    this.verifiedCustomerMatches = const [],
+    this.verifiedClaimDecisions = const [],
+    this.verifiedTransferredClaimIds = const <String>{},
   });
 
   final bool isDark;
@@ -71,6 +75,9 @@ class MerchantAppShell extends StatefulWidget {
   /// Verified merchant ID is required to select financial customers.
   /// Production obtains this from the authenticated server session.
   final String? merchantId;
+  final List<VerifiedCustomerContactMatch> verifiedCustomerMatches;
+  final List<VerifiedCustomerClaimDecision> verifiedClaimDecisions;
+  final Set<String> verifiedTransferredClaimIds;
 
   @override
   State<MerchantAppShell> createState() => _MerchantAppShellState();
@@ -214,6 +221,10 @@ class _MerchantAppShellState extends State<MerchantAppShell> {
                       ? MerchantCustomersTab(
                           state: _state,
                           merchantId: widget.merchantId,
+                          verifiedCustomerMatches: widget.verifiedCustomerMatches,
+                          verifiedClaimDecisions: widget.verifiedClaimDecisions,
+                          verifiedTransferredClaimIds:
+                              widget.verifiedTransferredClaimIds,
                           onCustomerTap: (customer, currency) {
                             setState(() {
                               _selectedCustomer = customer;
