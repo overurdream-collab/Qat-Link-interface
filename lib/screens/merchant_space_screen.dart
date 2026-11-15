@@ -227,6 +227,9 @@ class _MerchantSpaceTabState extends State<MerchantSpaceTab> {
       });
       _message('تم تعديل بيانات المعاينة المحلية؛ لم تُنشر على المتجر العام.');
     }
+    // The modal route remains mounted during its reverse animation.
+    // Keep input controllers alive until the sheet is fully removed.
+    await Future<void>.delayed(const Duration(milliseconds: 450));
     name.dispose();
     market.dispose();
     location.dispose();
@@ -380,6 +383,9 @@ class _MerchantSpaceTabState extends State<MerchantSpaceTab> {
       _message('أضيف الحجز إلى قائمة هذا الجهاز مؤقتاً. '
           'لم يُرسل إلى العميل أو الخادم.');
     }
+    // A popped bottom sheet still animates out; disposing immediately
+    // breaks TextFormField listeners during that transition.
+    await Future<void>.delayed(const Duration(milliseconds: 450));
     name.dispose(); phone.dispose(); item.dispose();
     bundles.dispose(); time.dispose(); note.dispose();
   }
