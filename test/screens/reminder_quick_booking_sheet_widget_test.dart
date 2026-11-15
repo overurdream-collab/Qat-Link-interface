@@ -55,7 +55,7 @@ void main() {
     await launch(tester);
     expect(find.text('قات حاشدي'),findsOneWidget);
     expect(find.text('حجز الغد من متجر الجبل'), findsOneWidget);
-    expect(find.text('من متجر متجر الجبل'), findsOneWidget);
+    expect(find.text('المتجر: متجر الجبل'), findsOneWidget);
     expect(find.byType(TextField),findsNothing);
     expect(find.byKey(const Key('reminder_start_booking')),findsOneWidget);
     expect(find.byKey(const Key('reminder_ignore')),findsOneWidget);
