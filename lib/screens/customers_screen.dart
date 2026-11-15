@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import '../models/app_models.dart';
 import '../services/app_state.dart';
 import '../theme/app_colors.dart';
-import '../widgets/app_chrome.dart';
 import '../widgets/customers/customers_view_model.dart';
 import '../widgets/finance_display.dart';
 import '../widgets/movement/movement_view_model.dart';
