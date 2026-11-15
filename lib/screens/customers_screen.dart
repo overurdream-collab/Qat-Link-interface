@@ -1,12 +1,15 @@
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../models/app_models.dart';
+import '../models/merchant_pending_models.dart';
 import '../services/app_state.dart';
 import 'customer_details_screen.dart';
 import '../theme/app_colors.dart';
 import '../widgets/customers/customers_view_model.dart';
 import '../widgets/finance_display.dart';
+import '../widgets/movement/movement_view_model.dart';
 import '../widgets/customers/customer_invitation_sheet.dart';
 
 /// The approved customers page body. The fixed top bar and bottom bar are
@@ -55,6 +58,8 @@ class _MerchantCustomersTabState extends State<MerchantCustomersTab> {
         widget.state.customers,
         widget.state.relationships,
         widget.state.movements,
+        widget.state.merchantContacts,
+        widget.state.merchantPendingDebts,
       ]),
       builder: (context, _) {
         final customers = widget.state.customers.value;
@@ -80,6 +85,14 @@ class _MerchantCustomersTabState extends State<MerchantCustomersTab> {
         final pending = CustomersViewModel.pendingRelationships(
           rels, merchantId: widget.merchantId,
         );
+        final merchantContacts = widget.state.merchantContacts.value.where(
+          (contact) => widget.merchantId != null &&
+              contact.merchantId == widget.merchantId &&
+              (MovementQuery.normalizeSearch(contact.name)
+                   .contains(MovementQuery.normalizeSearch(_searchController.text)) ||
+               MovementQuery.normalizeSearch(contact.phone)
+                   .contains(MovementQuery.normalizeSearch(_searchController.text)))
+        ).toList();
         final customerMap = {for (final customer in customers) customer.id: customer};
         final grouped = <CurrencyCode, List<CustomerCurrencyRow>>{};
         for (final entry in visible) {
@@ -168,6 +181,24 @@ class _MerchantCustomersTabState extends State<MerchantCustomersTab> {
             )),
             const SizedBox(height: 6),
             _statusFilters(c),
+            if (merchantContacts.isNotEmpty) ...[
+              const SizedBox(height: 17),
+              Row(children: [
+                Expanded(child: Text('عملاء في سجل التاجر — غير معتمدين',
+                  style: TextStyle(color: c.petrol, fontSize: 13,
+                    fontWeight: FontWeight.w900))),
+                _countBadge(c, merchantContacts.length),
+              ]),
+              const SizedBox(height: 5),
+              Text('يمكن تسجيل ديون معلقة قبل تحميل العميل التطبيق. '
+                  'هذه المبالغ من سجل التاجر وحده ولا تدخل الرصيد المعتمد.',
+                style: TextStyle(color: c.muted, fontSize: 11)),
+              const SizedBox(height: 9),
+              for (final contact in merchantContacts) ...[
+                _merchantPendingCard(c, contact),
+                const SizedBox(height: 8),
+              ],
+            ],
             if (pending.isNotEmpty) ...[
               const SizedBox(height: 17),
               Row(children: [
@@ -228,6 +259,87 @@ class _MerchantCustomersTabState extends State<MerchantCustomersTab> {
         );
       },
     );
+  }
+
+  Widget _merchantPendingCard(
+      AppThemeColors c, MerchantPendingContact contact) {
+    final sums = <CurrencyCode, Decimal>{};
+    var count = 0;
+    for (final claim in widget.state.merchantPendingDebts.value) {
+      if (claim.contactId != contact.id ||
+          claim.merchantId != widget.merchantId) continue;
+      count++;
+      sums.update(claim.currency, (old) => old + claim.amount,
+          ifAbsent: () => claim.amount);
+    }
+    return Container(
+      key: Key('merchant_pending_contact_${contact.id}'),
+      decoration: BoxDecoration(
+        color: c.card, borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: c.cardBorder),
+      ),
+      padding: const EdgeInsets.all(13),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Row(children: [
+          Icon(Icons.person_clock_outlined, color: c.pendingText, size: 22),
+          const SizedBox(width: 8),
+          Expanded(child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(contact.name, style: TextStyle(
+                color: c.text, fontWeight: FontWeight.w900)),
+              Text(contact.phone, textDirection: TextDirection.ltr,
+                style: TextStyle(color: c.muted, fontSize: 11)),
+            ],
+          )),
+          Text('غير معتمد', style: TextStyle(
+            color: c.pendingText, fontSize: 11,
+            fontWeight: FontWeight.w800)),
+        ]),
+        const SizedBox(height: 9),
+        Text('ديون معلقة: $count', style: TextStyle(
+          color: c.pendingText, fontWeight: FontWeight.w800, fontSize: 12)),
+        for (final currency in CurrencyCode.values)
+          if (sums[currency] != null)
+            Text('${FinanceDisplay.amount(sums[currency]!)} '
+                '${FinanceDisplay.currencyCode(currency)} — معلق',
+              style: TextStyle(color: c.text, fontSize: 12)),
+        const SizedBox(height: 8),
+        OutlinedButton.icon(
+          key: Key('pending_copy_statement_${contact.id}'),
+          onPressed: count == 0 ? null :
+              () => _copyPendingStatement(contact),
+          icon: const Icon(Icons.copy_rounded, size: 17),
+          label: const Text('نسخ كشف المبالغ لإرساله'),
+        ),
+        Text('يُنسخ بيان غير معتمد؛ اختر مستلمه بنفسك '
+            'عند إرساله عبر واتساب أو أي وسيلة.',
+          style: TextStyle(color: c.muted, fontSize: 10)),
+      ]),
+    );
+  }
+
+  Future<void> _copyPendingStatement(
+      MerchantPendingContact contact) async {
+    try {
+      final now = DateTime.now();
+      final report = widget.state.merchantPendingStatement(
+        merchantId: widget.merchantId,
+        contactId: contact.id,
+        from: DateTime(2000),
+        to: now,
+      );
+      await Clipboard.setData(ClipboardData(
+        text: MerchantPendingDebtQuery.shareText(report)));
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('تم نسخ بيان المبالغ المعلقة. الصقه في '
+            'واتساب بعد التحقق من مستلم الرسالة.')));
+    } on Object catch (_) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('تعذر نسخ البيان. تأكد من هوية التاجر.')));
+    }
   }
 
   Widget _countBadge(AppThemeColors c, int number) => Container(
