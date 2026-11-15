@@ -32,6 +32,7 @@ class NightReminderCampaignDraft {
   const NightReminderCampaignDraft({
     required this.id,
     required this.merchantId,
+    required this.merchantDisplayName,
     required this.day,
     required this.audience,
     required this.offeredItem,
@@ -40,6 +41,10 @@ class NightReminderCampaignDraft {
 
   final String id;
   final String merchantId;
+  /// Display name from the authenticated merchant's verified store record.
+  /// The notification service MUST resolve it server-side; never trust
+  /// merchantDisplayName in an arbitrary client-supplied payload.
+  final String merchantDisplayName;
   final DateTime day;
   final NightReminderAudience audience;
   /// Every nightly booking reminder is an actionable reservation invitation.
@@ -47,7 +52,18 @@ class NightReminderCampaignDraft {
   final String offeredItem;
   final String pickupTime;
 
+  /// Notification preview strings. The eventual server-backed push sender
+  /// must derive these from the verified merchant record and campaign.
+  String get notificationTitle =>
+      'حجز الغد من ${merchantDisplayName.trim()}';
+
+  String get notificationBody =>
+      'من ${merchantDisplayName.trim()}: احجز ${offeredItem.trim()} '
+      'للغد، والاستلام الساعة $pickupTime.';
+
   bool get canOfferQuickConfirm =>
+      merchantId.trim().isNotEmpty &&
+      merchantDisplayName.trim().isNotEmpty &&
       offeredItem.trim().isNotEmpty &&
       RegExp(r'^(?:[01][0-9]|2[0-3]):[0-5][0-9]$')
           .hasMatch(pickupTime);
