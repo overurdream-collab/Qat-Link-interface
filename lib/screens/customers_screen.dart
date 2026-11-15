@@ -6,7 +6,7 @@ import '../services/app_state.dart';
 import '../theme/app_colors.dart';
 import '../widgets/customers/customers_view_model.dart';
 import '../widgets/finance_display.dart';
-import '../widgets/movement/movement_view_model.dart';
+import '../widgets/customers/customer_invitation_sheet.dart';
 
 /// The approved customers page body. The fixed top bar and bottom bar are
 /// owned by MerchantAppShell, not duplicated here.
@@ -41,9 +41,6 @@ class _MerchantCustomersTabState extends State<MerchantCustomersTab> {
     _searchController.dispose();
     super.dispose();
   }
-
-  void _notice(String text) => ScaffoldMessenger.of(context)
-      .showSnackBar(SnackBar(content: Text(text)));
 
   @override
   Widget build(BuildContext context) {
@@ -653,128 +650,10 @@ class _MerchantCustomersTabState extends State<MerchantCustomersTab> {
     );
   }
 
-  void _openRequestModal() {
-    final formKey = GlobalKey<FormState>();
-    final name = TextEditingController();
-    final phone = TextEditingController();
-    final c = context.colors;
-    showModalBottomSheet<void>(
-      context: context,
-      backgroundColor: c.card,
-      isScrollControlled: true,
-      showDragHandle: true,
-      builder: (sheet) => Padding(
-        padding: EdgeInsets.fromLTRB(
-          19, 10, 19, MediaQuery.viewInsetsOf(sheet).bottom + 19,
-        ),
-        child: SafeArea(
-          child: Form(
-            key: formKey,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Row(children: [
-                  Icon(Icons.person_add_alt_1_rounded,
-                      color: c.petrol, size: 22),
-                  const SizedBox(width: 8),
-                  Text('طلب إضافة عميل', style: TextStyle(
-                    color: c.text, fontSize: 16,
-                    fontWeight: FontWeight.w900)),
-                ]),
-                const SizedBox(height: 9),
-                Text(
-                  'يتطلب انضمام العميل موافقته. '
-                  'لن تُنشأ علاقة مالية قبل اعتماد الطرفين.',
-                  style: TextStyle(color: c.muted, fontSize: 11)),
-                const SizedBox(height: 15),
-                TextFormField(
-                  key: const Key('new_customer_name'),
-                  controller: name,
-                  decoration: const InputDecoration(
-                    labelText: 'اسم العميل',
-                    prefixIcon: Icon(Icons.person_outline_rounded),
-                  ),
-                  validator: (v) => (v ?? '').trim().length < 3
-                      ? 'أدخل اسم العميل'
-                      : null,
-                ),
-                const SizedBox(height: 12),
-                TextFormField(
-                  key: const Key('new_customer_phone'),
-                  controller: phone,
-                  keyboardType: TextInputType.phone,
-                  decoration: const InputDecoration(
-                    labelText: 'رقم هاتف العميل',
-                    prefixIcon: Icon(Icons.phone_android_rounded),
-                  ),
-                  validator: (v) {
-                    final input = (v ?? '').replaceAll(
-                      RegExp(r'[\s\-\(\)]'), '');
-                    if (!RegExp(r'^\+?[0-9]{9,15}$').hasMatch(input)) {
-                      return 'أدخل رقم جوال صحيحاً';
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 12),
-                Container(
-                  decoration: BoxDecoration(
-                    color: c.pale, borderRadius: BorderRadius.circular(10)),
-                  padding: const EdgeInsets.all(11),
-                  child: Text(
-                    'لا تُدخل أي مديونية أولية هنا؛ '
-                    'الديون والتسديدات عمليات مستقلة تتطلب الموافقة.',
-                    style: TextStyle(
-                      color: c.petrol, fontSize: 11,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 16),
-                FilledButton(
-                  key: const Key('request_customer_link'),
-                  onPressed: () {
-                    if (!formKey.currentState!.validate()) return;
-                    final normalizedPhone = MovementQuery.normalizeSearch(
-                      phone.text);
-                    final customer = widget.state.customers.value.where(
-                      (existing) =>
-                        MovementQuery.normalizeSearch(existing.phone) ==
-                        normalizedPhone,
-                    );
-                    if (customer.isEmpty) {
-                      _notice('الرقم غير مرتبط بحساب عميل محمّل. '
-                          'يتطلب إرسال الدعوة التحقق من الحساب عبر الخادم.');
-                    } else if (widget.state.relationships.value.any(
-                        (r) => r.customerId == customer.first.id &&
-                            r.status != RelationshipStatus.cancelled)) {
-                      _notice('يوجد ارتباط أو طلب ارتباط سابق لهذا العميل.');
-                    } else {
-                      // A trusted authenticated merchant identity and the
-                      // backend request API are not available in this build.
-                      // Never fake a successful invitation locally.
-                      _notice('المدخلات جاهزة. إرسال الطلب يحتاج جلسة '
-                          'تاجر موثّقة وخدمة علاقات آمنة.');
-                    }
-                  },
-                  style: FilledButton.styleFrom(
-                    minimumSize: const Size.fromHeight(46)),
-                  child: const Text('إرسال طلب ارتباط',
-                    style: TextStyle(fontWeight: FontWeight.w800)),
-                ),
-                const SizedBox(height: 7),
-                OutlinedButton(
-                  onPressed: () => Navigator.of(sheet).pop(),
-                  child: const Text('إلغاء'),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    ).whenComplete(() {
-      name.dispose();
-      phone.dispose();
-    });
-  }
+  void _openRequestModal() => showCustomerInvitationSheet(
+    context,
+    state: widget.state,
+    merchantId: widget.merchantId,
+  );
+
 }
