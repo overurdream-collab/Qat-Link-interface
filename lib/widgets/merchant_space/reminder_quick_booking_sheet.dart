@@ -37,7 +37,6 @@ class ReminderQuickBookingSheet extends StatefulWidget {
 }
 
 class _ReminderQuickBookingSheetState extends State<ReminderQuickBookingSheet> {
-  bool _showQuantityStep = false;
   int _quantity = 1;
   bool _busy = false;
   ReminderBookingDecision get _policy => ReminderQuickBookingPolicy.check(
@@ -118,71 +117,53 @@ class _ReminderQuickBookingSheetState extends State<ReminderQuickBookingSheet> {
               const SizedBox(height: 5),
               Text('موعد الاستلام: ${widget.campaign.pickupTime}',
                 style: TextStyle(color: c.muted)),
+              const SizedBox(height: 16),
+              Text('كم ربطة تريد؟', style: TextStyle(
+                color: c.text, fontSize: 15, fontWeight: FontWeight.w800)),
+              const SizedBox(height: 10),
+              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                IconButton.filledTonal(
+                  key: const Key('reminder_quantity_minus'),
+                  tooltip: 'إنقاص العدد',
+                  onPressed: _quantity <= 1 || _busy ? null
+                      : () => setState(() => _quantity--),
+                  icon: const Icon(Icons.remove_rounded),
+                ),
+                const SizedBox(width: 18),
+                Semantics(
+                  label: 'عدد الربطات: $_quantity',
+                  liveRegion: true,
+                  child: Text('$_quantity',
+                    key: const Key('reminder_quantity'),
+                    style: TextStyle(color: c.petrol,
+                      fontSize: 34, fontWeight: FontWeight.w900)),
+                ),
+                const SizedBox(width: 18),
+                IconButton.filledTonal(
+                  key: const Key('reminder_quantity_plus'),
+                  tooltip: 'زيادة العدد',
+                  onPressed: _quantity >= 10000 || _busy ? null
+                      : () => setState(() => _quantity++),
+                  icon: const Icon(Icons.add_rounded),
+                ),
+              ]),
               const SizedBox(height: 12),
               if (!decision.allowed)
                 Padding(
-                  padding: const EdgeInsets.only(bottom: 10),
+                  padding: const EdgeInsets.only(bottom: 9),
                   child: Text(decision.reason,
                     textAlign: TextAlign.center,
                     style: TextStyle(color: c.danger, fontSize: 11)),
                 ),
-              if (!_showQuantityStep) ...[
-                Text('هل ترغب في تأكيد حجزك للغد؟',
-                  style: TextStyle(color: c.text,
-                    fontSize: 14, fontWeight: FontWeight.w800)),
-                const SizedBox(height: 16),
-                Row(children: [
-                  Expanded(child: FilledButton.icon(
-                    key: const Key('reminder_start_booking'),
-                    onPressed: decision.allowed && !_busy
-                        ? () => setState(() => _showQuantityStep = true)
-                        : null,
-                    icon: const Icon(Icons.check_rounded),
-                    label: const Text('تأكيد الحجز'),
-                  )),
-                  const SizedBox(width: 9),
-                  Expanded(child: OutlinedButton.icon(
-                    key: const Key('reminder_ignore'),
-                    onPressed: _busy
-                        ? null : () => Navigator.of(context).pop(false),
-                    icon: const Icon(Icons.close_rounded),
-                    label: const Text('تجاهل'),
-                  )),
-                ]),
-              ] else ...[
-                Text('كم ربطة تريد؟', style: TextStyle(
-                  color: c.text, fontWeight: FontWeight.w800)),
-                const SizedBox(height: 10),
-                Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  IconButton.filledTonal(
-                    key: const Key('reminder_quantity_minus'),
-                    tooltip: 'إنقاص العدد',
-                    onPressed: _quantity <= 1 || _busy ? null
-                        : () => setState(() => _quantity--),
-                    icon: const Icon(Icons.remove_rounded),
-                  ),
-                  const SizedBox(width: 18),
-                  Text('$_quantity', key: const Key('reminder_quantity'),
-                    style: TextStyle(color: c.petrol,
-                      fontSize: 34, fontWeight: FontWeight.w900)),
-                  const SizedBox(width: 18),
-                  IconButton.filledTonal(
-                    key: const Key('reminder_quantity_plus'),
-                    tooltip: 'زيادة العدد',
-                    onPressed: _quantity >= 10000 || _busy ? null
-                        : () => setState(() => _quantity++),
-                    icon: const Icon(Icons.add_rounded),
-                  ),
-                ]),
-                const SizedBox(height: 14),
-                if (decision.allowed && widget.onServerConfirm == null)
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 9),
-                    child: Text('التأكيد الفعلي ينتظر ربط خادم الحجوزات.',
-                      style: TextStyle(color: c.pendingText, fontSize: 11)),
-                  ),
-                SizedBox(
-                  width: double.infinity,
+              if (decision.allowed && widget.onServerConfirm == null)
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 9),
+                  child: Text('التأكيد الفعلي ينتظر ربط خادم الحجوزات.',
+                    style: TextStyle(color: c.pendingText, fontSize: 11)),
+                ),
+              Row(children: [
+                Expanded(
+                  flex: 2,
                   child: FilledButton.icon(
                     key: const Key('reminder_confirm_booking'),
                     onPressed: canConfirm ? _confirm : null,
@@ -190,14 +171,17 @@ class _ReminderQuickBookingSheetState extends State<ReminderQuickBookingSheet> {
                     label: Text(_busy ? 'جارٍ التأكيد' : 'تأكيد الحجز'),
                   ),
                 ),
-                TextButton(
-                  key: const Key('reminder_back_to_invitation'),
-                  onPressed: _busy ? null
-                      : () => setState(() => _showQuantityStep = false),
-                  child: const Text('العودة إلى التذكير'),
+                const SizedBox(width: 9),
+                Expanded(
+                  child: OutlinedButton(
+                    key: const Key('reminder_ignore'),
+                    onPressed: _busy ? null
+                        : () => Navigator.of(context).pop(false),
+                    child: const Text('تجاهل'),
+                  ),
                 ),
-              ],
-              const SizedBox(height: 6),
+              ]),
+              const SizedBox(height: 10),
               Text('الحجز لا ينشئ ديناً. أي دين لاحق يحتاج '
                   'طلباً من التاجر وموافقتك عليه.',
                 textAlign: TextAlign.center,
