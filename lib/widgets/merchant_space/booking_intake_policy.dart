@@ -132,13 +132,16 @@ class BookingNightReminderPreview {
 }
 
 /// Preview only. Real recurring scheduling requires a secure backend, customer
-/// notification preferences, rate limits, idempotency and permission checks.
+/// notification preferences, rate limits, idempotency and permission checks.\n/// Never treat the approved relationship itself as permission to send\n/// optional promotional booking reminders.
 abstract final class BookingNightReminderPolicy {
   static BookingNightReminderPreview preview({
     required BookingNightReminderSettings settings,
     required String? merchantId,
     required Iterable<CustomerModel> customers,
     required Iterable<RelationshipModel> relationships,
+    /// Server-verified customers currently opting into optional store alerts.
+    /// Unknown or missing preferences grant no permission.
+    required Set<String> consentedCustomerIds,
     required DateTime now,
   }) {
     final sanaa = BookingIntakePolicy.sanaaTime(now);
@@ -160,7 +163,8 @@ abstract final class BookingNightReminderPolicy {
     }
     final targets = customers.where((c) =>
         c.accountStatus == AccountStatus.active &&
-        approved.contains(c.id)).map((c) => c.id).toList()..sort();
+        approved.contains(c.id) &&
+        consentedCustomerIds.contains(c.id)).map((c) => c.id).toList()..sort();
     return BookingNightReminderPreview(
       recipientIds: List.unmodifiable(targets),
       sendAtSanaa: sendDate,

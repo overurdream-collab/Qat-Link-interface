@@ -30,6 +30,7 @@ class MerchantBookingsScreen extends StatefulWidget {
     this.onIntakeSettingsChanged,
     this.reminderSettings = const BookingNightReminderSettings(),
     this.onReminderSettingsChanged,
+    this.verifiedNotificationOptInCustomerIds = const <String>{},
   });
 
   final List<ReservationDraft> bookings;
@@ -45,6 +46,8 @@ class MerchantBookingsScreen extends StatefulWidget {
   final ValueChanged<BookingIntakeSettings>? onIntakeSettingsChanged;
   final BookingNightReminderSettings reminderSettings;
   final ValueChanged<BookingNightReminderSettings>? onReminderSettingsChanged;
+  /// Verified opt-ins from a server-backed preference service (not a local guess).
+  final Set<String> verifiedNotificationOptInCustomerIds;
 
   @override
   State<MerchantBookingsScreen> createState() => _MerchantBookingsScreenState();
@@ -118,6 +121,7 @@ class _MerchantBookingsScreenState extends State<MerchantBookingsScreen> {
       merchantId: widget.merchantId,
       customers: widget.state.customers.value,
       relationships: widget.state.relationships.value,
+      consentedCustomerIds: widget.verifiedNotificationOptInCustomerIds,
       now: DateTime.now(),
     );
     final c = context.colors;
@@ -136,7 +140,7 @@ class _MerchantBookingsScreenState extends State<MerchantBookingsScreen> {
             const SizedBox(height: 9),
             Text('الوقت المقترح: ${_clock(_reminder.sendAtMinute)} '
               'بتوقيت صنعاء', style: TextStyle(color: c.text)),
-            Text('العملاء المؤهلون: ${preview.recipientIds.length}',
+            Text('العملاء الموافقون على التذكير: ${preview.recipientIds.length}',
               style: TextStyle(color: c.petrol)),
             const SizedBox(height: 7),
             Text('رسالة مقترحة: عملاءنا الكرام، يرجى حجز طلبات الغد '
@@ -144,8 +148,9 @@ class _MerchantBookingsScreenState extends State<MerchantBookingsScreen> {
               style: TextStyle(color: c.text, height: 1.5)),
             const SizedBox(height: 9),
             Text('هذه معاينة فقط. لم تتم جدولة أو إرسال رسالة. '
-                'التنفيذ يتطلب خدمة خادم، وموافقة العميل على '
-                'الإشعارات، وحداً للتكرار وميزة الإلغاء.',
+                'العميل الذي لم تُتحقق موافقته على إشعارات المتجر '
+                'مستبعد افتراضياً. التنفيذ يتطلب خدمة خادم '
+                'وتفضيلات قابلة للإلغاء ومنع التكرار.',
               style: TextStyle(color: c.pendingText, fontSize: 11)),
             const SizedBox(height: 10),
             OutlinedButton(
