@@ -28,7 +28,7 @@ extension ReservationStatusLabels on ReservationStatus {
 enum BookingSettlement { unknown, paid, unpaid }
 
 class ReservationDraft {
-  const ReservationDraft({
+  ReservationDraft({
     required this.id,
     required this.customerName,
     required this.phone,
