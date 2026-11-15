@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'package:qat_link/models/app_models.dart';
 import 'package:qat_link/widgets/merchant_space/merchant_rating_policy.dart';
+import 'package:qat_link/widgets/merchant_space/store_discovery_ranking.dart';
 
 final now = DateTime(2026, 11, 15);
 CustomerModel customer(String id) => CustomerModel(
@@ -100,4 +101,33 @@ void main() {
     expect(summary.rankingScore, greaterThan(3.5));
     expect(MerchantReviewPolicy.summarize('empty', reviews).average, null);
   });
+  test('customer home most requested uses verified distinct buyers not fake volume', () {
+    final fiveBuyers = [
+      for (var i=0; i<5; i++)
+        VerifiedFulfillment(
+          merchantId: 'a', customerId: 'customer$i',
+          orderId: 'o$i', fulfilledAt: now),
+    ];
+    final duplicateBuyer = [
+      for (var i=0; i<50; i++)
+        VerifiedFulfillment(
+          merchantId: 'b', customerId: 'one',
+          orderId: 'b$i', fulfilledAt: now),
+    ];
+    final stale = VerifiedFulfillment(
+      merchantId: 'a', customerId: 'old',
+      orderId: 'old', fulfilledAt: now.subtract(const Duration(days: 60)));
+    final standings = StoreDiscoveryRanking.calculate(
+      merchantIds: ['a','b','c'], reviews: const [],
+      fulfillments: [...fiveBuyers, ...duplicateBuyer, stale],
+      now: now,
+    );
+    final most = StoreDiscoveryRanking.mostRequested(standings);
+    expect(most.map((r) => r.merchantId), ['a']);
+    expect(most.single.uniqueBuyers, 5);
+    expect(most.single.verifiedOrders, 5);
+    expect(StoreDiscoveryRanking.bestRated(standings), isEmpty);
+  });
+
+
 }
