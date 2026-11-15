@@ -132,4 +132,20 @@ void main() {
     expect(find.textContaining('لا يوجد عملاء مرتبطون'), findsOneWidget);
     expect(find.text('محمد أحمد'), findsNothing);
   });
+  testWidgets('ambiguous comma decimal input is rejected rather than reinterpreted',
+      (tester) async {
+    await pumpSheet(tester, MovementType.payment);
+    await tester.tap(find.byKey(const Key('movement_select_customer')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('picker_customer_c1')));
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byKey(const Key('movement_amount')), '1,5');
+    await tester.ensureVisible(find.byKey(const Key('movement_save')));
+    await tester.tap(find.byKey(const Key('movement_save')));
+    await tester.pump();
+    expect(find.textContaining('بمنزلتين عشريتين'), findsOneWidget);
+    expect(state.movements.value, isEmpty);
+  });
+
+
 }
