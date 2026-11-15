@@ -32,13 +32,14 @@ RelationshipModel relation(String id, String merchant,
 
 ReservationDraft booking(String id, {
   String? customerId = 'c1',
+  String merchantId = 'm1',
   ReservationStatus status = ReservationStatus.collected,
   BookingSettlement settlement = BookingSettlement.unpaid,
   CurrencyCode currency = CurrencyCode.yer,
   String? price = '45.25',
   int bundles = 2,
 }) => ReservationDraft(
-  id: id, customerName: 'عميل $id',
+  id: id, merchantId: merchantId, customerName: 'عميل $id',
   phone: '771234567',
   item: 'قات حاشدي',
   bundles: bundles, day: day,
@@ -128,4 +129,15 @@ void main() {
     expect(totals.unpaidByCurrency[CurrencyCode.sar], Decimal.parse('10'));
     expect(totals.byCurrency.containsKey(CurrencyCode.usd), false);
   });
+  test('cannot convert another merchant\'s booking even for the same client', () {
+    final result = plan([
+      booking('otherTenant', merchantId: 'm2'),
+      booking('ours'),
+    ], {'otherTenant', 'ours'});
+    expect(result.includedBookings, 1);
+    expect(result.skipped['otherTenant'], contains('لا ينتمي'));
+    expect(result.requests.single.bookingIds, ['ours']);
+  });
+
+
 }
