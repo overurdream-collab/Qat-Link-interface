@@ -34,6 +34,8 @@
 
 هذا القرار **ينسخ حصراً شرط عدم تسجيل أي مبلغ خاص في دفتر التاجر قبل الموافقة** في بعض الوثائق السابقة، لكنه لا ينسخ قاعدة FIN-02 بشأن اعتماد الدين. التنفيذ المحلي لا يخزن بعد إعادة تشغيل التطبيق؛ تفاصيل واجهة وخادم الإنتاج في [MERCHANT_PENDING_DEBTS_BEFORE_APP_AR.md](MERCHANT_PENDING_DEBTS_BEFORE_APP_AR.md). يُسجَّل PR/فحص GitHub بعد الدمج.
 
+**دليل تنفيذ FIN-08:** [PR #17 المدمج](https://github.com/overurdream-collab/Qat-Link-interface/pull/17)؛ Commit `f52a86a0d43b44adce1ae7b00ee0220d970349bc`؛ [فحص main ناجح](https://github.com/overurdream-collab/Qat-Link-interface/actions/runs/43701479844). العقد الخادمي التفصيلي [هنا](FIN08_JOINED_CUSTOMER_BACKEND_CONTRACT_AR.md)، وهو **غير مطبق إنتاجياً**.
+
 ### FIN-08 — استلام كل الطلبات السابقة بمجرد انضمام العميل (15 نوفمبر 2026)
 
 **المشكلة:** لا يجوز أن يفقد التاجر سجله لأن العميل لم يثبت التطبيق، ولا يجوز للعميل أن يفوته طلب قديم بمجرد انضمامه.
