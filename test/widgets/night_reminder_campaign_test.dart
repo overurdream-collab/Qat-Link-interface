@@ -147,8 +147,9 @@ void main() {
     expect(valid(quantity:10001).allowed,false);
     expect(valid(intake:const BookingIntakeSettings()).allowed,false);
     expect(valid(draft:NightReminderCampaignDraft(
-      id:'generic',merchantId:'m1',day:tomorrow,
-      audience:NightReminderAudience.allApproved)).allowed,false);
+      id:'incomplete',merchantId:'m1',day:tomorrow,
+      audience:NightReminderAudience.allApproved,
+      offeredItem:'',pickupTime:'11:00')).allowed,false);
     expect(MerchantSubscriptionFeature.values,hasLength(4));
   });
 }
