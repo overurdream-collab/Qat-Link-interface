@@ -87,6 +87,22 @@ void main() {
       customerId:'another')]), isEmpty);
   });
 
+  test('conflicting verified account ownership fails closed for the contact', () {
+    final contested = [
+      match('merchant1','local1'),
+      match('merchant1','local1',customerId:'another-account'),
+    ];
+    expect(inbox(matches:contested), isEmpty);
+    final totals=MerchantDebtStatusQuery.summarize(
+      merchantId:'merchant1',contacts:contacts,privateClaims:claims,
+      relationships:const [],movements:const [],
+      verifiedCustomerMatches:contested,
+    );
+    expect(totals[CurrencyCode.yer]!.outsideApp,
+      Decimal.parse('15000'));
+    expect(totals[CurrencyCode.yer]!.awaitingCustomerApproval,Decimal.zero);
+  });
+
   test('duplicate claims or matches never duplicate the customer inbox', () {
     final got = inbox(
       matches:[...links, links.first],
