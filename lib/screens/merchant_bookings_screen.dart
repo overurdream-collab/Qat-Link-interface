@@ -174,6 +174,8 @@ class _MerchantBookingsScreenState extends State<MerchantBookingsScreen> {
     final campaign = NightReminderCampaignDraft(
       id: 'preview-only',
       merchantId: widget.merchantId ?? '',
+      merchantDisplayName: widget.storeName.trim() == 'متجرك'
+          ? '' : widget.storeName.trim(),
       day: preview.bookingForDay,
       audience: _audience,
       offeredItem: _offeredItem.text.trim(),
@@ -192,8 +194,10 @@ class _MerchantBookingsScreenState extends State<MerchantBookingsScreen> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Text('معاينة تذكير حجوزات الغد', style: TextStyle(
-                color: c.petrol, fontSize: 18, fontWeight: FontWeight.w900)),
+              Text(campaign.notificationTitle,
+                key: const Key('reminder_preview_title'),
+                style: TextStyle(
+                  color: c.petrol, fontSize: 18, fontWeight: FontWeight.w900)),
               const SizedBox(height: 9),
               Text('الفئة: ${_audience.label}', style: TextStyle(color: c.text)),
               Text('العملاء الموافقون على التذكير: ${eligible.length}',
@@ -201,8 +205,8 @@ class _MerchantBookingsScreenState extends State<MerchantBookingsScreen> {
               Text('الساعة: ${_clock(_reminder.sendAtMinute)} بتوقيت صنعاء',
                 style: TextStyle(color: c.muted)),
               const SizedBox(height: 11),
-              Text('عملاءنا الكرام، احجزوا ${campaign.offeredItem} '
-                  'للغد. موعد الاستلام: ${campaign.pickupTime}.',
+              Text(campaign.notificationBody,
+                key: const Key('reminder_preview_body'),
                 style: TextStyle(color: c.text, height: 1.55)),
               const SizedBox(height: 9),
               Text('عند فتح التذكير يظهر للعميل: «تأكيد الحجز» أو '
@@ -361,8 +365,8 @@ class _MerchantBookingsScreenState extends State<MerchantBookingsScreen> {
               hintText: 'مثال: قات حاشدي',
             ),
           ),
-          Text('التذكير دعوة حجز مباشرة، وليس إشعاراً عاماً. '
-            'لن تُعتمد المعاينة بدون صنف محدد.',
+          Text('اسم المتجر يظهر في عنوان التذكير ونصه. '
+            'حدد اسم متجرك والصنف قبل المعاينة.',
             style: TextStyle(color: c.muted, fontSize: 10)),
           const SizedBox(height: 7),
           Row(children: [
@@ -386,7 +390,9 @@ class _MerchantBookingsScreenState extends State<MerchantBookingsScreen> {
           SizedBox(width: double.infinity,
             child: FilledButton.icon(
               key: const Key('bookings_reminder_preview'),
-              onPressed: _offeredItem.text.trim().isEmpty
+              onPressed: _offeredItem.text.trim().isEmpty ||
+                      widget.storeName.trim().isEmpty ||
+                      widget.storeName.trim() == 'متجرك'
                   ? null : _previewReminder,
               icon: const Icon(Icons.visibility_outlined),
               label: const Text('معاينة دعوة الحجز'),
