@@ -25,12 +25,20 @@ class MerchantCustomersTab extends StatefulWidget {
     required this.state,
     this.merchantId,
     this.onCustomerTap,
+    this.verifiedCustomerMatches = const [],
+    this.verifiedClaimDecisions = const [],
+    this.verifiedTransferredClaimIds = const <String>{},
   });
 
   final AppState state;
 
   /// Must be resolved from an authenticated server-side session in production.
   final String? merchantId;
+
+  /// Server-verified proof of account/contact match; do not infer via phone.
+  final List<VerifiedCustomerContactMatch> verifiedCustomerMatches;
+  final List<VerifiedCustomerClaimDecision> verifiedClaimDecisions;
+  final Set<String> verifiedTransferredClaimIds;
 
   /// Lets MerchantAppShell retain the shared top/bottom navigation.
   final void Function(CustomerModel customer, CurrencyCode currency)? onCustomerTap;
@@ -89,6 +97,9 @@ class _MerchantCustomersTabState extends State<MerchantCustomersTab> {
           privateClaims: widget.state.merchantPendingDebts.value,
           relationships: rels,
           movements: movements,
+          verifiedCustomerMatches: widget.verifiedCustomerMatches,
+          verifiedClaimDecisions: widget.verifiedClaimDecisions,
+          verifiedTransferredClaimIds: widget.verifiedTransferredClaimIds,
         );
         final pending = CustomersViewModel.pendingRelationships(
           rels, merchantId: widget.merchantId,
