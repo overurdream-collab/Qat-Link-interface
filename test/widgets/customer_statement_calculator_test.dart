@@ -4,7 +4,7 @@ import 'package:qat_link/models/app_models.dart';
 import 'package:qat_link/widgets/customers/customer_statement_calculator.dart';
 
 final _january = DateTime(2026, 1, 1);
-final _merchantId = 'merchant-1';
+const _merchantId = 'merchant-1';
 
 RelationshipModel _relationship(String customerId, String merchantId,
     {bool approved = true}) => RelationshipModel(
