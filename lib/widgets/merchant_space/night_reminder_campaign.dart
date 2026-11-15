@@ -171,10 +171,13 @@ abstract final class ReminderEngagementQuery {
       switch (event.type) {
         case ReminderEngagementType.delivered:
           delivered.add(event.customerId);
+          break;
         case ReminderEngagementType.opened:
           opened.add(event.customerId);
+          break;
         case ReminderEngagementType.confirmedBooking:
           confirmed.add(event.customerId);
+          break;
       }
     }
     return ReminderEngagementSummary(
