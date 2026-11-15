@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../models/app_models.dart';
 import '../services/app_state.dart';
+import 'customer_details_screen.dart';
 import '../theme/app_colors.dart';
 import '../widgets/customers/customers_view_model.dart';
 import '../widgets/finance_display.dart';
@@ -19,12 +20,16 @@ class MerchantCustomersTab extends StatefulWidget {
     super.key,
     required this.state,
     this.merchantId,
+    this.onCustomerTap,
   });
 
   final AppState state;
 
   /// Must be resolved from an authenticated server-side session in production.
   final String? merchantId;
+
+  /// Lets MerchantAppShell retain the shared top/bottom navigation.
+  final void Function(CustomerModel customer, CurrencyCode currency)? onCustomerTap;
 
   @override
   State<MerchantCustomersTab> createState() => _MerchantCustomersTabState();
@@ -434,7 +439,7 @@ class _MerchantCustomersTabState extends State<MerchantCustomersTab> {
       borderRadius: BorderRadius.circular(15),
       child: InkWell(
         key: Key('customer_${row.customer.id}_${row.currency.name}'),
-        onTap: () => _openClientDetails(row.customer),
+        onTap: () => _openClientDetails(row.customer, row.currency),
         borderRadius: BorderRadius.circular(15),
         child: Container(
           padding: const EdgeInsets.all(12),
@@ -601,53 +606,27 @@ class _MerchantCustomersTabState extends State<MerchantCustomersTab> {
     ]),
   );
 
-  void _openClientDetails(CustomerModel customer) {
-    final c = context.colors;
-    final balances = CustomersViewModel.rows(
-      customers: [customer],
-      relationships: widget.state.relationships.value,
-      movements: widget.state.movements.value,
-      currency: null,
-      merchantId: widget.merchantId,
-    );
-    showModalBottomSheet<void>(
-      context: context,
-      backgroundColor: c.card,
-      showDragHandle: true,
-      isScrollControlled: true,
-      builder: (sheet) => SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Text(customer.name, style: TextStyle(
-                color: c.petrol, fontSize: 18, fontWeight: FontWeight.w900)),
-              const SizedBox(height: 6),
-              Text(customer.phone, textDirection: TextDirection.ltr,
-                style: TextStyle(color: c.muted)),
-              const SizedBox(height: 14),
-              for (final row in balances) ...[
-                Text(FinanceDisplay.currencyName(row.currency),
-                  style: TextStyle(
-                    color: c.petrol, fontWeight: FontWeight.w800)),
-                const SizedBox(height: 4),
-                Text('الرصيد المعتمد: ${FinanceDisplay.amount(row.balance)}',
-                  style: TextStyle(color: c.text)),
-                Text('المعلق: ${FinanceDisplay.amount(row.pendingAmount)}',
-                  style: TextStyle(color: c.pendingText)),
-                const SizedBox(height: 10),
-              ],
-              Text(
-                'هذا ملخص قرائي؛ شاشة تفاصيل العميل الكاملة قيد التطوير.',
-                style: TextStyle(color: c.muted, fontSize: 11),
-              ),
-            ],
+  void _openClientDetails(
+    CustomerModel customer, CurrencyCode currency) {
+    if (widget.onCustomerTap != null) {
+      widget.onCustomerTap!(customer, currency);
+      return;
+    }
+    // Standalone widget previews/tests use a route; production shell supplies
+    // onCustomerTap to keep the fixed shared header and bottom navigation.
+    Navigator.of(context).push(MaterialPageRoute<void>(
+      builder: (routeContext) => Scaffold(
+        body: SafeArea(
+          child: CustomerDetailsScreen(
+            customer: customer,
+            state: widget.state,
+            merchantId: widget.merchantId,
+            initialCurrency: currency,
+            onBack: () => Navigator.of(routeContext).pop(),
           ),
         ),
       ),
-    );
+    ));
   }
 
   void _openRequestModal() => showCustomerInvitationSheet(
