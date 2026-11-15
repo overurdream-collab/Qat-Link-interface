@@ -101,32 +101,60 @@ void main() {
     expect(summary.rankingScore, greaterThan(3.5));
     expect(MerchantReviewPolicy.summarize('empty', reviews).average, null);
   });
-  test('customer home most requested uses verified distinct buyers not fake volume', () {
-    final fiveBuyers = [
-      for (var i=0; i<5; i++)
-        VerifiedFulfillment(
-          merchantId: 'a', customerId: 'customer$i',
-          orderId: 'o$i', fulfilledAt: now),
-    ];
-    final duplicateBuyer = [
-      for (var i=0; i<50; i++)
-        VerifiedFulfillment(
-          merchantId: 'b', customerId: 'one',
-          orderId: 'b$i', fulfilledAt: now),
-    ];
-    final stale = VerifiedFulfillment(
-      merchantId: 'a', customerId: 'old',
-      orderId: 'old', fulfilledAt: now.subtract(const Duration(days: 60)));
-    final standings = StoreDiscoveryRanking.calculate(
-      merchantIds: ['a','b','c'], reviews: const [],
-      fulfillments: [...fiveBuyers, ...duplicateBuyer, stale],
-      now: now,
+  test('most requested ranks distinct customers who approved debts, not sales', () {
+    final approvedAt = now;
+    RelationshipModel relationFor(String merchantId, String id) => RelationshipModel(
+      id:'r-$merchantId-$id', merchantId:merchantId, customerId:id,
+      createdBy:merchantId, createdByRole:ParticipantRole.merchant,
+      createdAt:now, approvals:[
+        ApprovalRecord(actorId:merchantId, role:ParticipantRole.merchant,
+          decision:ApprovalDecision.declared, decidedAt:now),
+        ApprovalRecord(actorId:id, role:ParticipantRole.customer,
+          decision:ApprovalDecision.approved, decidedAt:now),
+      ],
     );
-    final most = StoreDiscoveryRanking.mostRequested(standings);
-    expect(most.map((r) => r.merchantId), ['a']);
-    expect(most.single.uniqueBuyers, 5);
-    expect(most.single.verifiedOrders, 5);
-    expect(StoreDiscoveryRanking.bestRated(standings), isEmpty);
+    MovementModel debt(String merchantId, String customerId, String id,
+        {DateTime? decidedAt}) => MovementModel(
+      id:id, merchantId:merchantId, customerId:customerId,
+      relationshipId:'r-$merchantId-$customerId',
+      amount:Decimal.parse('10'), currency:CurrencyCode.yer,
+      type:MovementType.debt, createdBy:merchantId,
+      createdByRole:ParticipantRole.merchant,
+      createdAt:now, approvals:[
+        ApprovalRecord(actorId:merchantId, role:ParticipantRole.merchant,
+          decision:ApprovalDecision.declared, decidedAt:now),
+        ApprovalRecord(actorId:customerId, role:ParticipantRole.customer,
+          decision:ApprovalDecision.approved,
+          decidedAt:decidedAt ?? approvedAt),
+      ],
+    );
+    final customers = [
+      for(var i=0;i<5;i++) customer('a$i'),
+      customer('one'), customer('old'),
+    ];
+    final relations = [
+      for(var i=0;i<5;i++) relationFor('a','a$i'),
+      relationFor('b','one'), relationFor('a','old'),
+    ];
+    final debts = [
+      for(var i=0;i<5;i++) debt('a','a$i','a$i'),
+      for(var i=0;i<50;i++) debt('b','one','b$i'),
+      debt('a','old','stale',
+        decidedAt:now.subtract(const Duration(days: 60))),
+    ];
+    final result=StoreDiscoveryRanking.calculate(
+      merchantIds:['a','b','c'],
+      reviews:const [],
+      movements:debts,
+      relationships:relations,
+      customers:customers,
+      now:now,
+    );
+    final most=StoreDiscoveryRanking.mostRequested(result);
+    expect(most.map((v)=>v.merchantId), ['a']);
+    expect(most.single.uniqueCustomers, 5);
+    expect(most.single.approvedDebtMovements, 5);
+    expect(StoreDiscoveryRanking.bestRated(result), isEmpty);
   });
 
 
