@@ -62,12 +62,12 @@ class ReservationDraft {
   final ReservationStatus status;
   /// Verified linked account ID, not a text name/phone guess.
   final String? customerId;
-  /// Unit price is optional; missing price must not become a zero-value sale.
+  /// Unit price is optional; missing price must not become a zero-value financial entry.
   final Decimal? unitPrice;
   final CurrencyCode currency;
   final BookingSettlement settlement;
 
-  Decimal? get saleTotal => unitPrice == null
+  Decimal? get proposedDebtAmount => unitPrice == null
       ? null : unitPrice! * Decimal.fromInt(bundles);
 
   ReservationDraft withStatus(ReservationStatus value) => ReservationDraft(
