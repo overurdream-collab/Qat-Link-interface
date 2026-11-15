@@ -57,13 +57,24 @@ abstract final class JoinedCustomerClaimsQuery {
         '${contact.merchantId}|\u0001|${contact.id}',
     };
 
-    final matches = <String, VerifiedCustomerContactMatch>{};
+    // Fail closed if the server sends conflicting identities for a contact:
+    // never expose the same merchant's private claims to multiple accounts.
+    final verifiedOwners = <String, Set<String>>{};
     for (final match in verifiedMatches) {
-      if (match.customerId != authenticatedCustomerId ||
+      if (match.customerId.trim().isEmpty ||
           match.merchantId.trim().isEmpty ||
           match.contactId.trim().isEmpty) continue;
       final key = '${match.merchantId}|\u0001|${match.contactId}';
-      if (knownContactKeys.contains(key)) matches[key] = match;
+      if (knownContactKeys.contains(key)) {
+        verifiedOwners.putIfAbsent(key, () => <String>{}).add(match.customerId);
+      }
+    }
+    final matches = <String, String>{};
+    for (final entry in verifiedOwners.entries) {
+      if (entry.value.length == 1 &&
+          entry.value.single == authenticatedCustomerId) {
+        matches[entry.key] = authenticatedCustomerId;
+      }
     }
     if (matches.isEmpty) return const [];
 
