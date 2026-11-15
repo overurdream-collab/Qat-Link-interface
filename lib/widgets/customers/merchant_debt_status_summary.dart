@@ -55,13 +55,20 @@ abstract final class MerchantDebtStatusQuery {
     // Only server-verified account/contact links can transition a private
     // claim from "outside app" to "awaiting customer approval". A typed
     // phone number or merely registering an account is insufficient.
-    final verifiedContacts = <String, String>{};
+    final verifiedOwners = <String, Set<String>>{};
     for (final link in verifiedCustomerMatches) {
       if (link.merchantId != merchantId ||
           link.customerId.trim().isEmpty ||
           !contactIds.contains(link.contactId)) continue;
-      verifiedContacts[link.contactId] = link.customerId;
+      verifiedOwners.putIfAbsent(
+        link.contactId, () => <String>{}).add(link.customerId);
     }
+    // Two conflicting verified accounts are not safe to transition; keep
+    // claims in the outside-app bucket until backend identity resolution.
+    final verifiedContacts = <String, String>{
+      for (final entry in verifiedOwners.entries)
+        if (entry.value.length == 1) entry.key: entry.value.single,
+    };
     final rejectedClaims = <String>{};
     for (final decision in verifiedClaimDecisions) {
       if (decision.merchantId == merchantId &&
