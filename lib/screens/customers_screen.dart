@@ -194,8 +194,6 @@ class _MerchantCustomersTabState extends State<MerchantCustomersTab> {
             )),
             const SizedBox(height: 7),
             _currencyChips(c),
-            const SizedBox(height: 10),
-            _threeDebtStages(c, statusTotals),
             const SizedBox(height: 13),
             Text('الحالة:', style: TextStyle(
               color: c.muted, fontSize: 12, fontWeight: FontWeight.w800,
@@ -276,6 +274,8 @@ class _MerchantCustomersTabState extends State<MerchantCustomersTab> {
                   const SizedBox(height: 10),
                 ],
               ],
+            const SizedBox(height: 14),
+            _threeDebtStages(c, statusTotals),
           ],
         );
       },
