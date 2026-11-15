@@ -111,12 +111,14 @@ abstract final class BookingDebtPlanner {
       String? error;
       if (merchantId == null || merchantId.trim().isEmpty) {
         error = 'هوية التاجر الموثقة غير متوفرة';
+      } else if (b.merchantId != merchantId) {
+        error = 'الحجز لا ينتمي إلى هذا التاجر';
       } else if (alreadySubmittedBookingIds.contains(b.id)) {
         error = 'هذا الحجز مرتبط بطلب دين سابق';
       } else if (b.status != ReservationStatus.collected) {
         error = 'لم يُستلم الطلب بعد';
       } else if (b.settlement != BookingSettlement.unpaid) {
-        error = 'ليس مسجلاً كبيع غير مسدد';
+        error = 'الحجز مسدد أو حالة التسوية غير محددة';
       } else if (b.proposedDebtAmount == null || b.proposedDebtAmount! <= Decimal.zero) {
         error = 'السعر غير محدد';
       } else if (b.customerId == null ||
