@@ -85,12 +85,6 @@ class _MerchantAppShellState extends State<MerchantAppShell> {
     super.dispose();
   }
 
-  void _showMessage(String title) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('$title — يلزم ربط الحساب والموافقات قبل تفعيل هذه العملية.')),
-    );
-  }
-
   Future<void> _showQuickAddSheet() async {
     final action = await showModalBottomSheet<QuickActionKind>(
       context: context,
