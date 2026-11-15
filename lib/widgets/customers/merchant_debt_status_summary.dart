@@ -44,12 +44,32 @@ abstract final class MerchantDebtStatusQuery {
     required Iterable<RelationshipModel> relationships,
     required Iterable<MovementModel> movements,
     Set<String> verifiedTransferredClaimIds = const {},
+    Iterable<VerifiedCustomerContactMatch> verifiedCustomerMatches = const [],
+    Iterable<VerifiedCustomerClaimDecision> verifiedClaimDecisions = const [],
   }) {
     if (merchantId == null || merchantId.trim().isEmpty) return const {};
     final contactIds = contacts
         .where((c) => c.merchantId == merchantId)
         .map((c) => c.id)
         .toSet();
+    // Only server-verified account/contact links can transition a private
+    // claim from "outside app" to "awaiting customer approval". A typed
+    // phone number or merely registering an account is insufficient.
+    final verifiedContacts = <String, String>{};
+    for (final link in verifiedCustomerMatches) {
+      if (link.merchantId != merchantId ||
+          link.customerId.trim().isEmpty ||
+          !contactIds.contains(link.contactId)) continue;
+      verifiedContacts[link.contactId] = link.customerId;
+    }
+    final rejectedClaims = <String>{};
+    for (final decision in verifiedClaimDecisions) {
+      if (decision.merchantId == merchantId &&
+          decision.decision == PreRegistrationClaimDecision.reject &&
+          decision.customerId.trim().isNotEmpty) {
+        rejectedClaims.add('${decision.customerId}|\u0001|${decision.claimId}');
+      }
+    }
     final approvedRelationships = {
       for (final relationship in relationships)
         if (relationship.merchantId == merchantId &&
@@ -71,8 +91,18 @@ abstract final class MerchantDebtStatusQuery {
             !contactIds.contains(claim.contactId) ||
             claim.currency != currency ||
             verifiedTransferredClaimIds.contains(claim.id)) continue;
-        outside += claim.amount;
-        outsideCount++;
+        final verifiedCustomer = verifiedContacts[claim.contactId];
+        if (verifiedCustomer == null) {
+          outside += claim.amount;
+          outsideCount++;
+        } else if (!rejectedClaims.contains(
+            '$verifiedCustomer|\u0001|${claim.id}')) {
+          // Joined customer receives ALL historical claims; they remain
+          // pending until reviewed. Accepted claims also remain pending
+          // until the server safely posts a valid MovementModel.
+          awaiting += claim.amount;
+          awaitingCount++;
+        }
       }
 
       for (final movement in movements) {
