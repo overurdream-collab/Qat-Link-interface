@@ -158,7 +158,9 @@ class _MerchantBookingsScreenState extends State<MerchantBookingsScreen> {
   }
 
   Widget _intakeControls(AppThemeColors c) => AppSurface(
-    child: Column(
+    child: Material(
+      color: c.card,
+      child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text('استقبال الحجوزات', style: TextStyle(
@@ -215,10 +217,11 @@ class _MerchantBookingsScreenState extends State<MerchantBookingsScreen> {
           style: TextStyle(color: c.muted, fontSize: 10)),
       ],
     ),
-  );
-
+  ));
   Widget _reminderControls(AppThemeColors c) => AppSurface(
-    child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+    child: Material(
+      color: c.card,
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Text('تذكير ليلي بحجوزات الغد', style: TextStyle(
         color: c.petrol, fontSize: 15, fontWeight: FontWeight.w900)),
       const SizedBox(height: 5),
@@ -248,8 +251,7 @@ class _MerchantBookingsScreenState extends State<MerchantBookingsScreen> {
         )),
       ]),
     ]),
-  );
-
+  ));
   Future<void> _selectDate() async {
     final newDate = await showDatePicker(
       context: context, initialDate: widget.day,
