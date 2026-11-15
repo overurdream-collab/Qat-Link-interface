@@ -12,6 +12,7 @@ import 'merchant_bookings_screen.dart';
 import '../theme/app_colors.dart';
 import '../widgets/app_chrome.dart';
 import '../widgets/merchant_space/merchant_space_models.dart';
+import '../widgets/merchant_space/night_reminder_campaign.dart';
 import '../widgets/merchant_space/booking_intake_policy.dart';
 import '../widgets/merchant_space/merchant_rating_policy.dart';
 import '../widgets/quick_actions/approved_customer_picker_model.dart';
@@ -23,12 +24,20 @@ class MerchantSpaceTab extends StatefulWidget {
     required this.state,
     this.merchantId,
     this.verifiedNotificationOptInCustomerIds = const <String>{},
+    this.verifiedFavoriteCustomerIds = const <String>{},
+    this.verifiedReminderEvents,
+    this.verifiedReminderCampaignId,
+    this.verifiedReminderRecipientIds = const <String>{},
   });
 
   final AppState state;
   final String? merchantId;
   /// Defaults to no permission until the preference service is connected.
   final Set<String> verifiedNotificationOptInCustomerIds;
+  final Set<String> verifiedFavoriteCustomerIds;
+  final List<ReminderEngagementEvent>? verifiedReminderEvents;
+  final String? verifiedReminderCampaignId;
+  final Set<String> verifiedReminderRecipientIds;
 
   @override
   State<MerchantSpaceTab> createState() => _MerchantSpaceTabState();
@@ -535,6 +544,7 @@ class _MerchantSpaceTabState extends State<MerchantSpaceTab> {
           createdAt: DateTime.now(),
           note: note.text.trim(),
           customerId: linkedCustomerId,
+          merchantId: widget.merchantId,
           unitPrice: unitPrice.text.trim().isEmpty
               ? null : Decimal.parse(unitPrice.text.trim()),
           currency: bookingCurrency,
@@ -640,6 +650,10 @@ class _MerchantSpaceTabState extends State<MerchantSpaceTab> {
             setState(() => _reminderSettings = next),
         verifiedNotificationOptInCustomerIds:
             widget.verifiedNotificationOptInCustomerIds,
+        verifiedFavoriteCustomerIds: widget.verifiedFavoriteCustomerIds,
+        verifiedReminderEvents: widget.verifiedReminderEvents,
+        verifiedReminderCampaignId: widget.verifiedReminderCampaignId,
+        verifiedReminderRecipientIds: widget.verifiedReminderRecipientIds,
       );
     }
     return ListView(
