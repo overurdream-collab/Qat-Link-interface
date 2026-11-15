@@ -8,6 +8,7 @@ import '../../services/app_state.dart';
 import '../../theme/app_colors.dart';
 import '../finance_display.dart';
 import 'approved_customer_picker_model.dart';
+import '../movement/movement_view_model.dart';
 
 enum QuickActionKind { addCustomer, addDebt, addAmount }
 
@@ -136,8 +137,7 @@ class _MovementEntrySheetState extends State<MovementEntrySheet> {
 
   String? _validateAmount(String? raw) {
     final clean = AuthInputValidation.normalizeDigits(raw ?? '')
-        .replaceAll('٬', '')
-        .replaceAll(',', '')
+        .replaceAll('٫', '.')
         .trim();
     if (!RegExp(r'^\d+(?:\.\d{1,2})?$').hasMatch(clean)) {
       return 'أدخل مبلغاً صحيحاً، بمنزلتين عشريتين كحد أقصى';
@@ -333,9 +333,7 @@ class _MovementEntrySheetState extends State<MovementEntrySheet> {
                           textDirection: TextDirection.ltr,
                           textAlign: TextAlign.right,
                           inputFormatters: [
-                            FilteringTextInputFormatter.allow(
-                              RegExp(r'[0-9٠-٩۰-۹.,٬]'),
-                            ),
+                            LengthLimitingTextInputFormatter(22),
                           ],
                           decoration: const InputDecoration(
                             hintText: '0.00',
@@ -438,11 +436,12 @@ class _ApprovedCustomerSearchState extends State<_ApprovedCustomerSearch> {
   @override
   Widget build(BuildContext context) {
     final c = context.colors;
-    final query = _search.text.trim().toLowerCase()
-        .replaceAll(RegExp(r'[\s\-]'), '');
+    final query = MovementQuery.normalizeSearch(
+        AuthInputValidation.normalizeDigits(_search.text));
     final filtered = widget.options.where((item) {
-      final name = item.customer.name.toLowerCase();
-      final phone = item.customer.phone.replaceAll(RegExp(r'[\s\-]'), '');
+      final name = MovementQuery.normalizeSearch(item.customer.name);
+      final phone = MovementQuery.normalizeSearch(
+          AuthInputValidation.normalizeDigits(item.customer.phone));
       return query.isEmpty ||
           name.contains(query) ||
           phone.contains(query);
