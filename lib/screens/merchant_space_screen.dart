@@ -18,10 +18,17 @@ import '../widgets/quick_actions/approved_customer_picker_model.dart';
 import '../widgets/merchant_space/reservation_daily_pdf.dart';
 
 class MerchantSpaceTab extends StatefulWidget {
-  const MerchantSpaceTab({super.key, required this.state, this.merchantId});
+  const MerchantSpaceTab({
+    super.key,
+    required this.state,
+    this.merchantId,
+    this.verifiedNotificationOptInCustomerIds = const <String>{},
+  });
 
   final AppState state;
   final String? merchantId;
+  /// Defaults to no permission until the preference service is connected.
+  final Set<String> verifiedNotificationOptInCustomerIds;
 
   @override
   State<MerchantSpaceTab> createState() => _MerchantSpaceTabState();
@@ -631,6 +638,8 @@ class _MerchantSpaceTabState extends State<MerchantSpaceTab> {
         reminderSettings: _reminderSettings,
         onReminderSettingsChanged: (next) =>
             setState(() => _reminderSettings = next),
+        verifiedNotificationOptInCustomerIds:
+            widget.verifiedNotificationOptInCustomerIds,
       );
     }
     return ListView(
