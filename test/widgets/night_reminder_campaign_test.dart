@@ -124,7 +124,7 @@ void main() {
 
   test('quick confirm requires delivered linked active customer and open intake', () {
     final campaign=NightReminderCampaignDraft(
-      id:'c1',merchantId:'m1',day:tomorrow,
+      id:'c1',merchantId:'m1',merchantDisplayName:'متجر الحاشدي',day:tomorrow,
       audience:NightReminderAudience.yesterdayConfirmed,
       offeredItem:'قات حاشدي',pickupTime:'11:00');
     ReminderBookingDecision valid({
@@ -140,6 +140,13 @@ void main() {
       intakeSettings:intake,customers:clients,
       relationships:relationships,now:now);
     expect(valid().allowed,true);
+    expect(campaign.notificationTitle, 'حجز الغد من متجر الحاشدي');
+    expect(campaign.notificationBody, contains('متجر الحاشدي'));
+    expect(campaign.notificationBody, contains('قات حاشدي'));
+    expect(valid(draft:NightReminderCampaignDraft(
+      id:'unnamed',merchantId:'m1',merchantDisplayName:'',
+      day:tomorrow,audience:NightReminderAudience.allApproved,
+      offeredItem:'قات حاشدي',pickupTime:'11:00')).allowed,false);
     expect(valid(customerId:'c5').allowed,false);
     expect(valid(customerId:'c6',deliveries:{'c6'}).allowed,false);
     expect(valid(deliveries:{}).allowed,false);
@@ -147,7 +154,7 @@ void main() {
     expect(valid(quantity:10001).allowed,false);
     expect(valid(intake:const BookingIntakeSettings()).allowed,false);
     expect(valid(draft:NightReminderCampaignDraft(
-      id:'incomplete',merchantId:'m1',day:tomorrow,
+      id:'incomplete',merchantId:'m1',merchantDisplayName:'متجر الحاشدي',day:tomorrow,
       audience:NightReminderAudience.allApproved,
       offeredItem:'',pickupTime:'11:00')).allowed,false);
     expect(MerchantSubscriptionFeature.values,hasLength(4));

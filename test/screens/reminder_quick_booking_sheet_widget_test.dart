@@ -29,6 +29,7 @@ void main() {
   final tomorrow=DateTime(local.year,local.month,local.day+1);
   NightReminderCampaignDraft campaign()=>NightReminderCampaignDraft(
     id:'trusted-reminder',merchantId:'merchant1',
+    merchantDisplayName:'متجر الجبل',
     day:tomorrow,audience:NightReminderAudience.yesterdayConfirmed,
     offeredItem:'قات حاشدي',pickupTime:'11:00',
   );
@@ -53,6 +54,8 @@ void main() {
       (tester) async {
     await launch(tester);
     expect(find.text('قات حاشدي'),findsOneWidget);
+    expect(find.text('حجز الغد من متجر الجبل'), findsOneWidget);
+    expect(find.text('المتجر: متجر الجبل'), findsOneWidget);
     expect(find.byType(TextField),findsNothing);
     expect(find.byKey(const Key('reminder_start_booking')),findsOneWidget);
     expect(find.byKey(const Key('reminder_ignore')),findsOneWidget);
