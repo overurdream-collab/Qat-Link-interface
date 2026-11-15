@@ -111,7 +111,7 @@ void main() {
     expect(replay.requests.single.bookingIds, ['b']);
   });
 
-  test('sales count only collected orders with a price, per currency', () {
+  test('proposals count only collected orders with a price, per currency', () {
     final source = [
       booking('yer', price: '1.25', bundles: 3,
           settlement: BookingSettlement.paid),
@@ -119,7 +119,7 @@ void main() {
       booking('pending', status: ReservationStatus.confirmed, price: '999'),
       booking('missing', price: null),
     ];
-    final totals = BookingSalesQuery.calculate(source, day);
+    final totals = BookingProposalQuery.calculate(source, day);
     expect(totals.collectedCount, 3);
     expect(totals.missingPriceCount, 1);
     expect(totals.byCurrency[CurrencyCode.yer], Decimal.parse('3.75'));

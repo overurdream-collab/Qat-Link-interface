@@ -1,7 +1,6 @@
 import '../../models/app_models.dart';
 
-/// Public reviews MUST be tied to a server-verified completed purchase,
-/// not simply a visit, a pending booking, or an unpaid reminder.
+/// A review is earned by a customer-approved merchant-recorded debt, NOT\n/// a payment, booking, store visit or separate direct-sale transaction.
 enum ReviewModeration { pending, published, hidden }
 
 class MerchantReview {
@@ -48,9 +47,7 @@ abstract final class MerchantReviewPolicy {
   static const _priorCount = 10;
   static const _priorAverage = 3.5;
 
-  /// A customer may write one EDITABLE review for a merchant only after a
-  /// server-verified purchase. For the current model the proof is an approved
-  /// DEBT movement; payments/rejected/pending operations do not qualify.
+  /// An authenticated customer may rate a merchant after consenting to a\n  /// merchant-originated debt. The backend must verify that consent itself.\n  /// Pending/rejected movements, payments and bookings do not count.
   static bool canRateFromApprovedPurchase({
     required String merchantId,
     required String customerId,
@@ -72,7 +69,13 @@ abstract final class MerchantReviewPolicy {
         m.customerId == customerId &&
         relationshipIds.contains(m.relationshipId) &&
         m.type == MovementType.debt &&
-        m.status == MovementStatus.approved);
+        m.createdByRole == ParticipantRole.merchant &&
+        m.createdBy == merchantId &&
+        m.status == MovementStatus.approved &&
+        m.approvals.any((record) =>
+          record.role == ParticipantRole.customer &&
+          record.actorId == customerId &&
+          record.decision == ApprovalDecision.approved));
   }
 
   /// Ratings have one effective review per merchant/customer. A revised review

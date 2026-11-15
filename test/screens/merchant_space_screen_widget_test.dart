@@ -30,25 +30,13 @@ void main() {
     expect(find.text('مفتوح'), findsOneWidget);
   });
 
-  testWidgets('quick booking is a local operational draft, never a debt',
+  testWidgets('anonymous merchants cannot create any customer booking',
       (tester) async {
     await pumpSpace(tester);
     await tester.tap(find.byKey(const Key('booking_add_quick')));
-    await tester.pumpAndSettle();
-    expect(find.text('إضافة حجز سريع'), findsOneWidget);
-    await tester.enterText(
-        find.byKey(const Key('booking_customer')), 'صالح حسن');
-    await tester.enterText(
-        find.byKey(const Key('booking_item')), 'قات حاشدي');
-    await tester.enterText(
-        find.byKey(const Key('booking_bundles')), '3');
-    await tester.enterText(
-        find.byKey(const Key('booking_pickup')), '14:30');
-    await tester.ensureVisible(find.byKey(const Key('booking_save_draft')));
-    await tester.tap(find.byKey(const Key('booking_save_draft')));
-    await tester.pumpAndSettle();
-    expect(find.text('صالح حسن'), findsOneWidget);
-    expect(find.textContaining('3 ربطة'), findsWidgets);
+    await tester.pump();
+    expect(find.text('إضافة حجز سريع'), findsNothing);
+    expect(find.textContaining('لا يمكن تسجيل حجز بلا عميل'), findsOneWidget);
     expect(state.movements.value, isEmpty);
     expect(state.relationships.value, isEmpty);
   });

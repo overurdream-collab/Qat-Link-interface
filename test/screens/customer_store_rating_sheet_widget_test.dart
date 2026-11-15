@@ -46,7 +46,7 @@ void main() {
       )),
     ));
     expect(find.text('قيّم تجربتك مع المتجر'), findsOneWidget);
-    expect(find.textContaining('متاح بعد تعامل موثق'), findsOneWidget);
+    expect(find.textContaining('التقييم متاح بعد اعتمادك ديناً'), findsOneWidget);
     final button = tester.widget<FilledButton>(
       find.byKey(const Key('rating_submit')));
     expect(button.onPressed, isNull);

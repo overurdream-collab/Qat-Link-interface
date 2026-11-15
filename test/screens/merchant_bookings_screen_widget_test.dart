@@ -38,9 +38,9 @@ void main() {
     expect(find.text('إدارة الحجوزات'), findsOneWidget);
     expect(find.byKey(const Key('workers_share_pdf')), findsOneWidget);
     expect(find.byKey(const Key('workers_print_pdf')), findsOneWidget);
-    await tester.scrollUntilVisible(find.text('المبيعات اليومية'), 210,
+    await tester.scrollUntilVisible(find.text('ديون اليوم'), 210,
         scrollable: find.byType(Scrollable).first);
-    expect(find.text('المبيعات اليومية'), findsOneWidget);
+    expect(find.text('ديون اليوم'), findsOneWidget);
     await tester.scrollUntilVisible(find.byKey(const Key('bookings_select_b1')), 220,
         scrollable: find.byType(Scrollable).first);
     await tester.tap(find.byKey(const Key('bookings_select_b1')));
@@ -53,10 +53,11 @@ void main() {
     expect(state.movements.value, isEmpty);
     await tester.tap(find.byKey(const Key('booking_batch_close')));
     await tester.pumpAndSettle();
-    await tester.scrollUntilVisible(
-      find.byKey(const Key('bookings_back_to_space')), -280,
-      scrollable: find.byType(Scrollable).first,
-    );
+    await tester.drag(find.byType(Scrollable).first,
+        const Offset(0, 2500));
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(find.byKey(const Key('bookings_back_to_space')));
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(const Key('bookings_back_to_space')));
     expect(back, true);
   });

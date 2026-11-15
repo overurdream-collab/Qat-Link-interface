@@ -1,89 +1,100 @@
+import '../../models/app_models.dart';
 import 'merchant_rating_policy.dart';
-
-/// Verified server event. Local bookings and unconfirmed customer orders MUST
-/// NOT be used for public "most requested" rankings.
-class VerifiedFulfillment {
-  const VerifiedFulfillment({
-    required this.merchantId,
-    required this.customerId,
-    required this.orderId,
-    required this.fulfilledAt,
-  });
-
-  final String merchantId;
-  final String customerId;
-  final String orderId;
-  final DateTime fulfilledAt;
-}
 
 class StoreDiscoveryStanding {
   const StoreDiscoveryStanding({
     required this.merchantId,
     required this.reviews,
-    required this.verifiedOrders,
-    required this.uniqueBuyers,
+    required this.approvedDebtMovements,
+    required this.uniqueCustomers,
   });
   final String merchantId;
   final MerchantRatingSummary reviews;
-  final int verifiedOrders;
-  final int uniqueBuyers;
+  final int approvedDebtMovements;
+  final int uniqueCustomers;
 }
 
+/// Public customer-home rankings rely on server-verified customer-approved
+/// DEBTS, not "sales" or self-reported booking totals. The application has no
+/// separate direct-sales transaction type.
 abstract final class StoreDiscoveryRanking {
-  static const minimumDistinctBuyers = 5;
+  static const minimumDistinctCustomers = 5;
   static const recentDays = 30;
 
   static List<StoreDiscoveryStanding> calculate({
     required Iterable<String> merchantIds,
     required Iterable<MerchantReview> reviews,
-    required Iterable<VerifiedFulfillment> fulfillments,
+    required Iterable<MovementModel> movements,
+    required Iterable<RelationshipModel> relationships,
+    required Iterable<CustomerModel> customers,
     required DateTime now,
   }) {
-    final start = now.subtract(const Duration(days: recentDays));
+    final start = now.toUtc().subtract(const Duration(days: recentDays));
+    final end = now.toUtc();
+    final activeCustomers = customers.where((customer) =>
+        customer.accountStatus == AccountStatus.active)
+        .map((customer) => customer.id).toSet();
+
     final output = <StoreDiscoveryStanding>[];
-    for (final id in merchantIds.toSet()) {
-      final orders = <String, VerifiedFulfillment>{};
-      for (final item in fulfillments) {
-        if (item.merchantId != id ||
-            item.customerId.trim().isEmpty ||
-            item.orderId.trim().isEmpty ||
-            item.fulfilledAt.isBefore(start) ||
-            item.fulfilledAt.isAfter(now)) continue;
-        orders.putIfAbsent(item.orderId, () => item);
+    for (final merchantId in merchantIds.toSet()) {
+      final approvedRelations = {
+        for (final relation in relationships)
+          if (relation.merchantId == merchantId &&
+              relation.status == RelationshipStatus.approved &&
+              activeCustomers.contains(relation.customerId))
+            relation.id: relation.customerId,
+      };
+      final qualifying = <String, MovementModel>{};
+      for (final movement in movements) {
+        if (movement.merchantId != merchantId ||
+            movement.status != MovementStatus.approved ||
+            movement.type != MovementType.debt ||
+            movement.createdByRole != ParticipantRole.merchant ||
+            movement.createdBy != merchantId ||
+            approvedRelations[movement.relationshipId] !=
+                movement.customerId) continue;
+
+        final approvals = movement.approvals.where((record) =>
+            record.actorId == movement.customerId &&
+            record.role == ParticipantRole.customer &&
+            record.decision == ApprovalDecision.approved).toList();
+        if (approvals.isEmpty) continue;
+        final approvedAt = approvals.last.decidedAt.toUtc();
+        if (approvedAt.isBefore(start) || approvedAt.isAfter(end)) continue;
+        qualifying.putIfAbsent(movement.id, () => movement);
       }
+
       output.add(StoreDiscoveryStanding(
-        merchantId: id,
-        reviews: MerchantReviewPolicy.summarize(id, reviews),
-        verifiedOrders: orders.length,
-        uniqueBuyers: orders.values.map((o) => o.customerId).toSet().length,
+        merchantId: merchantId,
+        reviews: MerchantReviewPolicy.summarize(merchantId, reviews),
+        approvedDebtMovements: qualifying.length,
+        uniqueCustomers: qualifying.values.map((m) => m.customerId).toSet().length,
       ));
     }
     return List.unmodifiable(output);
   }
 
-  /// Customer Home: top-rated among qualified stores only.
   static List<StoreDiscoveryStanding> bestRated(
       Iterable<StoreDiscoveryStanding> stores) {
     return [...stores.where((s) => s.reviews.eligibleForRanking)]
-      ..sort((a,b) {
-        final byScore = b.reviews.rankingScore!
+      ..sort((a, b) {
+        final score = b.reviews.rankingScore!
             .compareTo(a.reviews.rankingScore!);
-        return byScore != 0 ? byScore
-            : a.merchantId.compareTo(b.merchantId);
+        return score != 0 ? score : a.merchantId.compareTo(b.merchantId);
       });
   }
 
-  /// Customer Home: popular by distinct verified buyers in recent period,
-  /// then completed order count as a tie-breaker; never by ad package.
+  /// A diversity-of-customers metric, not a sales-volume or spend ranking.
+  /// Subscription packages do not influence the organic ranking.
   static List<StoreDiscoveryStanding> mostRequested(
       Iterable<StoreDiscoveryStanding> stores) {
-    return [...stores.where((s) => s.uniqueBuyers >= minimumDistinctBuyers)]
-      ..sort((a,b) {
-        final byBuyers = b.uniqueBuyers.compareTo(a.uniqueBuyers);
-        if (byBuyers != 0) return byBuyers;
-        final byOrders = b.verifiedOrders.compareTo(a.verifiedOrders);
-        return byOrders != 0 ? byOrders
-            : a.merchantId.compareTo(b.merchantId);
+    return [...stores.where((s) =>
+        s.uniqueCustomers >= minimumDistinctCustomers)]
+      ..sort((a, b) {
+        final clients = b.uniqueCustomers.compareTo(a.uniqueCustomers);
+        if (clients != 0) return clients;
+        final records = b.approvedDebtMovements.compareTo(a.approvedDebtMovements);
+        return records != 0 ? records : a.merchantId.compareTo(b.merchantId);
       });
   }
 }

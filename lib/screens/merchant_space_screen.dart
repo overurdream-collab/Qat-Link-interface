@@ -12,6 +12,7 @@ import 'merchant_bookings_screen.dart';
 import '../theme/app_colors.dart';
 import '../widgets/app_chrome.dart';
 import '../widgets/merchant_space/merchant_space_models.dart';
+import '../widgets/merchant_space/booking_intake_policy.dart';
 import '../widgets/merchant_space/merchant_rating_policy.dart';
 import '../widgets/quick_actions/approved_customer_picker_model.dart';
 import '../widgets/merchant_space/reservation_daily_pdf.dart';
@@ -43,6 +44,9 @@ class _MerchantSpaceTabState extends State<MerchantSpaceTab> {
   bool _isOpen = false;
   bool _exporting = false;
   bool _bookingsOpen = false;
+  BookingIntakeSettings _bookingSettings = const BookingIntakeSettings();
+  BookingNightReminderSettings _reminderSettings =
+      const BookingNightReminderSettings();
   String _storeName = 'متجرك';
   String? _governorate;
   String _marketName = '';
@@ -270,6 +274,18 @@ class _MerchantSpaceTabState extends State<MerchantSpaceTab> {
       relationships: widget.state.relationships.value,
       merchantId: widget.merchantId,
     );
+    if (eligibleCustomers.isEmpty) {
+      _message('لا يمكن تسجيل حجز بلا عميل مرتبط بالتاجر بموافقة الطرفين.');
+      name.dispose(); phone.dispose(); item.dispose();
+      bundles.dispose(); time.dispose(); note.dispose(); unitPrice.dispose();
+      return;
+    }
+    if (!BookingIntakePolicy.isWindowOpen(_bookingSettings, DateTime.now())) {
+      _message('باب الحجوزات مغلق أو الوقت خارج ساعات الحجز المحددة.');
+      name.dispose(); phone.dispose(); item.dispose();
+      bundles.dispose(); time.dispose(); note.dispose(); unitPrice.dispose();
+      return;
+    }
     final added = await showModalBottomSheet<bool>(
       context: context,
       isScrollControlled: true,
@@ -296,52 +312,43 @@ class _MerchantSpaceTabState extends State<MerchantSpaceTab> {
                         'لا ينشئ عملية مالية أو موافقة من العميل.',
                         style: TextStyle(color: c.muted, fontSize: 11)),
                     const SizedBox(height: 13),
-                    TextFormField(
-                      key: const Key('booking_customer'),
-                      controller: name,
+                    DropdownButtonFormField<String>(
+                      key: const Key('booking_linked_customer'),
+                      value: linkedCustomerId,
+                      isExpanded: true,
                       decoration: const InputDecoration(
-                        labelText: 'اسم صاحب الحجز',
-                        prefixIcon: Icon(Icons.person_outline)),
-                      validator: (v) => (v ?? '').trim().length < 2
-                          ? 'أدخل اسم صاحب الحجز' : null,
-                    ),
-                    if (eligibleCustomers.isNotEmpty) ...[
-                      const SizedBox(height: 11),
-                      DropdownButtonFormField<String>(
-                        key: const Key('booking_linked_customer'),
-                        value: linkedCustomerId,
-                        isExpanded: true,
-                        decoration: const InputDecoration(
-                          labelText: 'العميل المرتبط (اختياري للتحويل إلى دين)',
-                          prefixIcon: Icon(Icons.verified_user_outlined),
-                        ),
-                        items: [
-                          for (final option in eligibleCustomers)
-                            DropdownMenuItem(
-                              value: option.customer.id,
-                              child: Text(option.customer.name,
-                                overflow: TextOverflow.ellipsis),
-                            ),
-                        ],
-                        onChanged: (value) {
-                          refresh(() => linkedCustomerId = value);
-                          if (value != null) {
-                            final chosen = eligibleCustomers.firstWhere(
-                              (x) => x.customer.id == value,
-                            ).customer;
-                            name.text = chosen.name;
-                            phone.text = chosen.phone;
-                          }
-                        },
+                        labelText: 'اختر العميل المعتمد (إلزامي)',
+                        prefixIcon: Icon(Icons.verified_user_outlined),
                       ),
-                    ],
+                      items: [
+                        for (final option in eligibleCustomers)
+                          DropdownMenuItem(
+                            value: option.customer.id,
+                            child: Text(option.customer.name,
+                              overflow: TextOverflow.ellipsis),
+                          ),
+                      ],
+                      validator: (value) =>
+                          value == null ? 'اختيار عميل مرتبط مطلوب' : null,
+                      onChanged: (value) {
+                        refresh(() => linkedCustomerId = value);
+                        if (value != null) {
+                          final chosen = eligibleCustomers.firstWhere(
+                            (x) => x.customer.id == value,
+                          ).customer;
+                          name.text = chosen.name;
+                          phone.text = chosen.phone;
+                        }
+                      },
+                    ),
                     const SizedBox(height: 11),
                     TextFormField(
                       key: const Key('booking_phone'),
                       controller: phone,
+                      readOnly: true,
                       keyboardType: TextInputType.phone,
                       decoration: const InputDecoration(
-                        labelText: 'رقم الجوال (اختياري)',
+                        labelText: 'رقم الجوال من الحساب المعتمد',
                         prefixIcon: Icon(Icons.phone_outlined)),
                     ),
                     const SizedBox(height: 11),
@@ -397,7 +404,7 @@ class _MerchantSpaceTabState extends State<MerchantSpaceTab> {
                             decimal: true,
                           ),
                           decoration: const InputDecoration(
-                            labelText: 'سعر الربطة (اختياري)',
+                            labelText: 'قيمة الربطة المقترحة (اختياري)',
                           ),
                           validator: (v) {
                             if ((v ?? '').trim().isEmpty) return null;
@@ -438,7 +445,7 @@ class _MerchantSpaceTabState extends State<MerchantSpaceTab> {
                     DropdownButtonFormField<BookingSettlement>(
                       key: const Key('booking_settlement'),
                       value: settlement,
-                      decoration: const InputDecoration(labelText: 'حالة السداد'),
+                      decoration: const InputDecoration(labelText: 'حالة التسوية قبل إنشاء دين'),
                       items: const [
                         DropdownMenuItem(
                           value: BookingSettlement.unknown,
@@ -446,7 +453,7 @@ class _MerchantSpaceTabState extends State<MerchantSpaceTab> {
                         ),
                         DropdownMenuItem(
                           value: BookingSettlement.paid,
-                          child: Text('مسدد نقداً'),
+                          child: Text('مسدد خارج التطبيق'),
                         ),
                         DropdownMenuItem(
                           value: BookingSettlement.unpaid,
@@ -467,9 +474,22 @@ class _MerchantSpaceTabState extends State<MerchantSpaceTab> {
                     FilledButton.icon(
                       key: const Key('booking_save_draft'),
                       onPressed: () {
-                        if (form.currentState?.validate() == true) {
-                          Navigator.of(sheet).pop(true);
+                        if (form.currentState?.validate() != true) return;
+                        final decision = BookingIntakePolicy.check(
+                          settings: _bookingSettings,
+                          merchantId: widget.merchantId,
+                          customerId: linkedCustomerId,
+                          customers: widget.state.customers.value,
+                          relationships: widget.state.relationships.value,
+                          now: DateTime.now(),
+                          bookingDay: _day,
+                        );
+                        if (!decision.allowed) {
+                          ScaffoldMessenger.of(sheet).showSnackBar(
+                            SnackBar(content: Text(decision.reason)));
+                          return;
                         }
+                        Navigator.of(sheet).pop(true);
                       },
                       icon: const Icon(Icons.playlist_add_check_rounded),
                       label: const Text('إضافة إلى كشف التجهيز المحلي'),
@@ -484,6 +504,18 @@ class _MerchantSpaceTabState extends State<MerchantSpaceTab> {
     );
     if (!mounted) return;
     if (added == true) {
+      final decision = BookingIntakePolicy.check(
+        settings: _bookingSettings,
+        merchantId: widget.merchantId,
+        customerId: linkedCustomerId,
+        customers: widget.state.customers.value,
+        relationships: widget.state.relationships.value,
+        now: DateTime.now(),
+        bookingDay: _day,
+      );
+      if (!decision.allowed) {
+        _message(decision.reason);
+      } else {
       setState(() {
         _draftBookings.add(ReservationDraft(
           id: 'local-${DateTime.now().microsecondsSinceEpoch}',
@@ -504,6 +536,7 @@ class _MerchantSpaceTabState extends State<MerchantSpaceTab> {
       });
       _message('أضيف الحجز إلى قائمة هذا الجهاز مؤقتاً. '
           'لم يُرسل إلى العميل أو الخادم.');
+      }
     }
     // A popped bottom sheet still animates out; disposing immediately
     // breaks TextFormField listeners during that transition.
@@ -592,6 +625,12 @@ class _MerchantSpaceTabState extends State<MerchantSpaceTab> {
         state: widget.state,
         merchantId: widget.merchantId,
         storeName: _storeName,
+        intakeSettings: _bookingSettings,
+        onIntakeSettingsChanged: (next) =>
+            setState(() => _bookingSettings = next),
+        reminderSettings: _reminderSettings,
+        onReminderSettingsChanged: (next) =>
+            setState(() => _reminderSettings = next),
       );
     }
     return ListView(
@@ -1211,7 +1250,7 @@ class _MerchantSpaceTabState extends State<MerchantSpaceTab> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _section(c, Icons.star_border_rounded, 'تقييمات المتجر',
-              'آراء مشترين حقيقيين بعد عملية شراء معتمدة'),
+              'تقييمات العملاء بعد اعتماد الدين'),
           const SizedBox(height: 12),
           Row(children: [
             Icon(Icons.star_rounded, color: c.pendingText, size: 27),
@@ -1226,7 +1265,7 @@ class _MerchantSpaceTabState extends State<MerchantSpaceTab> {
           ]),
           const SizedBox(height: 9),
           Text(
-            'بعد إتمام شراء حقيقي، يستطيع العميل تقييم التاجر من '
+            'بعد موافقة العميل على تسجيل دين، يمكنه تقييم التاجر من '
             'نجمة إلى خمس نجوم وكتابة مراجعة. تقييم واحد لكل عميل '
             'قابل للتحديث، وتُنشر النتائج بعد التحقق والمراجعة.',
             style: TextStyle(color: c.muted, fontSize: 11, height: 1.55),

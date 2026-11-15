@@ -32,8 +32,8 @@ class BookingDebtPlan {
       requests.fold<int>(0, (n, r) => n + r.bookingIds.length);
 }
 
-class BookingDailySales {
-  const BookingDailySales({
+class BookingDailyProposalAmounts {
+  const BookingDailyProposalAmounts({
     required this.byCurrency, required this.missingPriceCount,
     required this.collectedCount,
     required this.paidByCurrency, required this.unpaidByCurrency,
@@ -45,10 +45,10 @@ class BookingDailySales {
   final int collectedCount;
 }
 
-/// A collected booking is physical fulfilment, not an approved debt.
-/// These totals are draft sales, NOT authoritative ledger figures.
-abstract final class BookingSalesQuery {
-  static BookingDailySales calculate(
+/// A completed booking yields a PROPOSED amount only, not an approved debt.
+/// These totals are draft proposals, NOT authoritative ledger figures.
+abstract final class BookingProposalQuery {
+  static BookingDailyProposalAmounts calculate(
       Iterable<ReservationDraft> bookings, DateTime day) {
     final byCurrency = <CurrencyCode, Decimal>{};
     final paid = <CurrencyCode, Decimal>{};
@@ -61,7 +61,7 @@ abstract final class BookingSalesQuery {
           order.day.month != day.month ||
           order.day.day != day.day) continue;
       collected++;
-      final total = order.saleTotal;
+      final total = order.proposedDebtAmount;
       if (total == null) { missing++; continue; }
       byCurrency.update(order.currency, (n) => n + total,
           ifAbsent: () => total);
@@ -73,7 +73,7 @@ abstract final class BookingSalesQuery {
             ifAbsent: () => total);
       }
     }
-    return BookingDailySales(
+    return BookingDailyProposalAmounts(
       byCurrency: Map.unmodifiable(byCurrency),
       paidByCurrency: Map.unmodifiable(paid),
       unpaidByCurrency: Map.unmodifiable(unpaid),
@@ -117,7 +117,7 @@ abstract final class BookingDebtPlanner {
         error = 'لم يُستلم الطلب بعد';
       } else if (b.settlement != BookingSettlement.unpaid) {
         error = 'ليس مسجلاً كبيع غير مسدد';
-      } else if (b.saleTotal == null || b.saleTotal! <= Decimal.zero) {
+      } else if (b.proposedDebtAmount == null || b.proposedDebtAmount! <= Decimal.zero) {
         error = 'السعر غير محدد';
       } else if (b.customerId == null ||
           knownCustomers[b.customerId]?.accountStatus != AccountStatus.active ||
@@ -132,14 +132,14 @@ abstract final class BookingDebtPlanner {
         requests[key] = BookingDebtRequestDraft(
           merchantId: merchantId!, customerId: b.customerId!,
           relationshipId: rel.id, currency: b.currency,
-          bookingIds: [b.id], amount: b.saleTotal!,
+          bookingIds: [b.id], amount: b.proposedDebtAmount!,
         );
       } else {
         requests[key] = BookingDebtRequestDraft(
           merchantId: current.merchantId, customerId: current.customerId,
           relationshipId: current.relationshipId, currency: current.currency,
           bookingIds: [...current.bookingIds, b.id],
-          amount: current.amount + b.saleTotal!,
+          amount: current.amount + b.proposedDebtAmount!,
         );
       }
     }

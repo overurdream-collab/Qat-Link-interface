@@ -94,7 +94,7 @@ class _CustomerStoreRatingSheetState extends State<CustomerStoreRatingSheet> {
                 color: c.petrol, fontSize: 19,
                 fontWeight: FontWeight.w900)),
               const SizedBox(height: 6),
-              Text('تقييم صادق من نجمة إلى خمس نجوم بعد شراء موثق.',
+              Text('تقييم من نجمة إلى خمس نجوم بعد موافقتك على تسجيل دين لدى التاجر.',
                 style: TextStyle(color: c.muted, fontSize: 12)),
               const SizedBox(height: 15),
               Row(
@@ -129,7 +129,7 @@ class _CustomerStoreRatingSheetState extends State<CustomerStoreRatingSheet> {
               ),
               const SizedBox(height: 6),
               if (!eligible)
-                Text('التقييم متاح بعد تعامل موثق ومعتمد مع هذا المتجر.',
+                Text('التقييم متاح بعد اعتمادك ديناً سجله هذا التاجر، وليس لمجرد الحجز.',
                   style: TextStyle(color: c.pendingText, fontSize: 11)),
               if (eligible && widget.onVerifiedSubmit == null)
                 Text('تسجيل التقييم ينتظر ربط حساب العميل وخدمة مراجعة التقييمات.',
