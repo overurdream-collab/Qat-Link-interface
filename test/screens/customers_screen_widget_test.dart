@@ -1,0 +1,82 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:qat_link/models/app_models.dart';
+import 'package:qat_link/screens/customers_screen.dart';
+import 'package:qat_link/services/app_state.dart';
+import 'package:qat_link/theme/app_theme.dart';
+
+void main() {
+  late AppState state;
+  setUp(() => state = AppState());
+  tearDown(() => state.dispose());
+
+  Future<void> pumpCustomers(WidgetTester tester) => tester.pumpWidget(
+    MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: AppTheme.light,
+      home: Scaffold(body: MerchantCustomersTab(
+        state: state, merchantId: 'm1')),
+    ),
+  );
+
+  testWidgets('customers page has required CTA, search, metrics and filters',
+      (tester) async {
+    await pumpCustomers(tester);
+    expect(find.text('إضافة عميل جديد'), findsOneWidget);
+    expect(find.byKey(const Key('customers_search')), findsOneWidget);
+    expect(find.text('إجمالي العملاء'), findsOneWidget);
+    expect(find.text('عملاء بمديونية'), findsOneWidget);
+    expect(find.text('عمليات عالقة'), findsOneWidget);
+    expect(find.text('لا يوجد عملاء مطابقون للبحث أو الفلتر'), findsOneWidget);
+    expect(find.byKey(const Key('customers_sort')), findsOneWidget);
+  });
+
+  testWidgets('a customer without approved relationship stays off the list',
+      (tester) async {
+    final now = DateTime(2026, 11, 15);
+    state.addCustomer(CustomerModel(
+      id: 'c1', name: 'أحمد علي', phone: '777111222',
+      primaryCurrency: CurrencyCode.yer,
+      createdAt: now, updatedAt: now,
+    ));
+    await pumpCustomers(tester);
+    expect(find.text('أحمد علي'), findsNothing);
+
+    state.requestRelationship(
+      id: 'r1', merchantId: 'm1', customerId: 'c1',
+      actorId: 'm1', actorRole: ParticipantRole.merchant,
+      createdAt: now);
+    await tester.pump();
+    expect(find.text('أحمد علي'), findsOneWidget);
+    expect(find.text('طلبات ارتباط معلقة'), findsOneWidget);
+
+    state.decideRelationship(
+      relationshipId: 'r1', actorId: 'c1',
+      actorRole: ParticipantRole.customer,
+      decision: ApprovalDecision.approved,
+      decidedAt: now.add(const Duration(minutes: 1)),
+    );
+    await tester.pump();
+    expect(find.text('طلبات ارتباط معلقة'), findsNothing);
+    expect(find.byKey(const Key('customer_c1_yer')), findsOneWidget);
+  });
+
+  testWidgets('add client form cannot create an unapproved relationship or debt',
+      (tester) async {
+    await pumpCustomers(tester);
+    await tester.tap(find.byKey(const Key('customers_add')));
+    await tester.pumpAndSettle();
+    expect(find.text('طلب إضافة عميل'), findsOneWidget);
+    expect(find.text('إرسال طلب ارتباط'), findsOneWidget);
+    expect(find.textContaining('لا تُدخل أي مديونية أولية'), findsOneWidget);
+    expect(find.text('المديونية الأولية'), findsNothing);
+    await tester.enterText(find.byKey(const Key('new_customer_name')), 'صالح أحمد');
+    await tester.enterText(find.byKey(const Key('new_customer_phone')), '770123456');
+    await tester.ensureVisible(find.byKey(const Key('request_customer_link')));
+    await tester.tap(find.byKey(const Key('request_customer_link')));
+    await tester.pump();
+    expect(state.customers.value, isEmpty);
+    expect(state.relationships.value, isEmpty);
+    expect(state.movements.value, isEmpty);
+  });
+}
