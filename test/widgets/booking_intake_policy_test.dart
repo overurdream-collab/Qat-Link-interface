@@ -104,6 +104,7 @@ void main() {
       settings:config, merchantId:'m1',
       customers:[client('c1'), client('c2')],
       relationships:[link('c1'), link('c2', approved:false)],
+      consentedCustomerIds: {'c1','c2'},
       now:DateTime.utc(2026,11,15,17), // 20:00
     );
     expect(preview.recipientIds, ['c1']);
@@ -113,14 +114,35 @@ void main() {
       settings:const BookingNightReminderSettings(),
       merchantId:'m1',
       customers:[client('c1')],
-      relationships:[link('c1')], now:now,
+      relationships:[link('c1')],
+      consentedCustomerIds: {'c1'}, now:now,
     );
     expect(disabled.recipientIds, isEmpty);
     final anonymous = BookingNightReminderPolicy.preview(
       settings: config,
       merchantId:null, customers:[client('c1')],
-      relationships:[link('c1')], now:now,
+      relationships:[link('c1')],
+      consentedCustomerIds: {'c1'}, now:now,
     );
     expect(anonymous.recipientIds, isEmpty);
+  });
+
+  test('reminder denies opt-out or unknown consent even when relation approved', () {
+    const config = BookingNightReminderSettings(
+      enabled: true, sendAtMinute: 20 * 60,
+    );
+    BookingNightReminderPreview preview(Set<String> allowlist) =>
+        BookingNightReminderPolicy.preview(
+          settings: config,
+          merchantId: 'm1',
+          customers: [client('c1'), client('c2')],
+          relationships: [link('c1'), link('c2')],
+          consentedCustomerIds: allowlist,
+          now: now,
+        );
+    expect(preview({}).recipientIds, isEmpty);
+    expect(preview({'c1'}).recipientIds, ['c1']);
+    expect(preview({'c2'}).recipientIds, ['c2']);
+    expect(preview({'c1', 'c2'}).recipientIds, ['c1', 'c2']);
   });
 }
