@@ -292,40 +292,154 @@ class _MerchantBookingsScreenState extends State<MerchantBookingsScreen> {
       ],
     ),
   ));
-  Widget _reminderControls(AppThemeColors c) => AppSurface(
-    child: Material(
+  Widget _reminderControls(AppThemeColors c) {
+    final recipients = _audiencePreview();
+    ReminderEngagementSummary? stats;
+    if (widget.verifiedReminderEvents != null &&
+        widget.verifiedReminderCampaignId != null) {
+      stats = ReminderEngagementQuery.summarize(
+        campaignId: widget.verifiedReminderCampaignId!,
+        merchantId: widget.merchantId ?? '',
+        recipientIds: widget.verifiedReminderRecipientIds,
+        serverEvents: widget.verifiedReminderEvents!,
+      );
+    }
+    return AppSurface(child: Material(
       color: c.card,
-      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Text('تذكير ليلي بحجوزات الغد', style: TextStyle(
-        color: c.petrol, fontSize: 15, fontWeight: FontWeight.w900)),
-      const SizedBox(height: 5),
-      Text('للعملاء المرتبطين بالتاجر بموافقة الطرفين فقط.',
-        style: TextStyle(color: c.muted, fontSize: 11)),
-      SwitchListTile.adaptive(
-        key: const Key('bookings_reminder_toggle'),
-        contentPadding: EdgeInsets.zero,
-        title: const Text('تفعيل التذكير الليلي'),
-        value: _reminder.enabled,
-        onChanged: (value) => _setReminder(
-          _reminder.copyWith(enabled: value)),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('تذكير ليلي بحجوزات الغد', style: TextStyle(
+            color: c.petrol, fontSize: 16, fontWeight: FontWeight.w900)),
+          const SizedBox(height: 4),
+          Text('اختر الفئة، ثم ارفع فرصة تأكيد الحجز بضغطة واحدة.',
+            style: TextStyle(color: c.muted, fontSize: 11)),
+          SwitchListTile.adaptive(
+            key: const Key('bookings_reminder_toggle'),
+            contentPadding: EdgeInsets.zero,
+            title: const Text('تفعيل التذكير الليلي'),
+            value: _reminder.enabled,
+            onChanged: (value) => _setReminder(
+              _reminder.copyWith(enabled: value)),
+          ),
+          const SizedBox(height: 5),
+          DropdownButtonFormField<NightReminderAudience>(
+            key: const Key('reminder_audience'),
+            value: _audience,
+            isExpanded: true,
+            decoration: const InputDecoration(
+              labelText: 'إرسال التذكير إلى',
+              prefixIcon: Icon(Icons.groups_2_outlined),
+            ),
+            items: [
+              for (final audience in NightReminderAudience.values)
+                DropdownMenuItem(
+                  value: audience,
+                  child: Text(audience.label,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(fontSize: 12)),
+                ),
+            ],
+            onChanged: (selected) {
+              if (selected != null) setState(() => _audience = selected);
+            },
+          ),
+          const SizedBox(height: 9),
+          Text('المستهدفون المسموح لهم: ${recipients.length}',
+            key: const Key('reminder_audience_count'),
+            style: TextStyle(color: c.petrol, fontWeight: FontWeight.w800,
+              fontSize: 12)),
+          Text('العلاقات المعتمدة + موافقة الإشعارات + الفئة المختارة.',
+            style: TextStyle(color: c.muted, fontSize: 10)),
+          const SizedBox(height: 12),
+          Text('تأكيد الحجز مباشرة من التذكير',
+            style: TextStyle(color: c.text, fontWeight: FontWeight.w800,
+              fontSize: 12)),
+          const SizedBox(height: 8),
+          TextField(
+            key: const Key('reminder_offered_item'),
+            controller: _offeredItem,
+            maxLength: 80,
+            decoration: const InputDecoration(
+              labelText: 'الصنف المقترح (اختياري)',
+              hintText: 'مثال: قات حاشدي',
+            ),
+          ),
+          const SizedBox(height: 2),
+          Row(children: [
+            Expanded(child: OutlinedButton.icon(
+              key: const Key('reminder_pickup_time'),
+              onPressed: _pickCampaignPickupTime,
+              icon: const Icon(Icons.schedule_rounded, size: 17),
+              label: Text('وقت الاستلام: $_pickupTime',
+                style: const TextStyle(fontSize: 11)),
+            )),
+            const SizedBox(width: 7),
+            Expanded(child: OutlinedButton.icon(
+              key: const Key('bookings_reminder_time'),
+              onPressed: _pickReminderTime,
+              icon: const Icon(Icons.nights_stay_outlined, size: 17),
+              label: Text('التذكير: ${_clock(_reminder.sendAtMinute)}',
+                style: const TextStyle(fontSize: 11)),
+            )),
+          ]),
+          const SizedBox(height: 11),
+          SizedBox(width: double.infinity,
+            child: FilledButton.icon(
+              key: const Key('bookings_reminder_preview'),
+              onPressed: _previewReminder,
+              icon: const Icon(Icons.visibility_outlined),
+              label: const Text('معاينة التذكير والحجز السريع'),
+            ),
+          ),
+          const SizedBox(height: 12),
+          Divider(color: c.cardBorder),
+          const SizedBox(height: 7),
+          Text('تفاعل العملاء مع التذكير', style: TextStyle(
+            color: c.text, fontSize: 13, fontWeight: FontWeight.w900)),
+          const SizedBox(height: 9),
+          Row(children: [
+            _campaignMetric(c, 'وصل', stats?.deliveredCount),
+            const SizedBox(width: 6),
+            _campaignMetric(c, 'فتح', stats?.openedCount),
+            const SizedBox(width: 6),
+            _campaignMetric(c, 'أكد الحجز', stats?.confirmedCount),
+          ]),
+          const SizedBox(height: 5),
+          Text(
+            stats == null
+                ? 'لا تتوفر إحصاءات فعلية قبل اتصال خدمة الإشعارات.'
+                : 'نسبة الفتح من الرسائل الواصلة: '
+                  '${stats.openedPercent?.toStringAsFixed(1) ?? '—'}%',
+            style: TextStyle(color: c.muted, fontSize: 10),
+          ),
+          const SizedBox(height: 9),
+          Text('مزايا التذكير والفئات والتحليلات والتأكيد السريع '
+            'قابلة للتحكم في الباقات لاحقاً؛ لم تُحدد باقة أو تكلفة الآن.',
+            style: TextStyle(color: c.muted, fontSize: 10)),
+        ],
       ),
-      Row(children: [
-        Expanded(child: OutlinedButton.icon(
-          key: const Key('bookings_reminder_time'),
-          onPressed: _pickReminderTime,
-          icon: const Icon(Icons.nights_stay_outlined),
-          label: Text('الوقت: ${_clock(_reminder.sendAtMinute)}'),
-        )),
-        const SizedBox(width: 8),
-        Expanded(child: FilledButton.icon(
-          key: const Key('bookings_reminder_preview'),
-          onPressed: _previewReminder,
-          icon: const Icon(Icons.visibility_outlined),
-          label: const Text('معاينة الرسالة'),
-        )),
+    ));
+  }
+
+  Widget _campaignMetric(
+      AppThemeColors c, String title, int? count) => Expanded(
+    child: Container(
+      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 6),
+      decoration: BoxDecoration(
+        color: c.background,
+        border: Border.all(color: c.cardBorder),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Column(children: [
+        Text(count?.toString() ?? '—', style: TextStyle(
+          color: c.petrol, fontWeight: FontWeight.w900, fontSize: 19)),
+        const SizedBox(height: 3),
+        Text(title, style: TextStyle(color: c.muted, fontSize: 10)),
       ]),
-    ]),
-  ));
+    ),
+  );
+
   Future<void> _selectDate() async {
     final newDate = await showDatePicker(
       context: context, initialDate: widget.day,
