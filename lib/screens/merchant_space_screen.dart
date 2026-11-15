@@ -1,13 +1,19 @@
 import 'dart:typed_data';
 
+import 'package:decimal/decimal.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../services/app_state.dart';
+import '../models/app_models.dart';
+import 'merchant_bookings_screen.dart';
 import '../theme/app_colors.dart';
 import '../widgets/app_chrome.dart';
 import '../widgets/merchant_space/merchant_space_models.dart';
+import '../widgets/merchant_space/merchant_rating_policy.dart';
+import '../widgets/quick_actions/approved_customer_picker_model.dart';
 import '../widgets/merchant_space/reservation_daily_pdf.dart';
 
 class MerchantSpaceTab extends StatefulWidget {
@@ -36,6 +42,7 @@ class _MerchantSpaceTabState extends State<MerchantSpaceTab> {
   DateTime _day = DateTime.now();
   bool _isOpen = false;
   bool _exporting = false;
+  bool _bookingsOpen = false;
   String _storeName = 'متجرك';
   String? _governorate;
   String _marketName = '';
@@ -254,12 +261,21 @@ class _MerchantSpaceTabState extends State<MerchantSpaceTab> {
     final bundles = TextEditingController(text: '1');
     final time = TextEditingController(text: '11:00');
     final note = TextEditingController();
+    final unitPrice = TextEditingController();
+    String? linkedCustomerId;
+    var bookingCurrency = CurrencyCode.yer;
+    var settlement = BookingSettlement.unknown;
+    final eligibleCustomers = ApprovedCustomerPickerModel.available(
+      customers: widget.state.customers.value,
+      relationships: widget.state.relationships.value,
+      merchantId: widget.merchantId,
+    );
     final added = await showModalBottomSheet<bool>(
       context: context,
       isScrollControlled: true,
       backgroundColor: context.colors.card,
       showDragHandle: true,
-      builder: (sheet) {
+      builder: (sheet) => StatefulBuilder(builder: (sheet, refresh) {
         final c = sheet.colors;
         return Padding(
           padding: EdgeInsets.fromLTRB(
@@ -289,6 +305,36 @@ class _MerchantSpaceTabState extends State<MerchantSpaceTab> {
                       validator: (v) => (v ?? '').trim().length < 2
                           ? 'أدخل اسم صاحب الحجز' : null,
                     ),
+                    if (eligibleCustomers.isNotEmpty) ...[
+                      const SizedBox(height: 11),
+                      DropdownButtonFormField<String>(
+                        key: const Key('booking_linked_customer'),
+                        value: linkedCustomerId,
+                        isExpanded: true,
+                        decoration: const InputDecoration(
+                          labelText: 'العميل المرتبط (اختياري للتحويل إلى دين)',
+                          prefixIcon: Icon(Icons.verified_user_outlined),
+                        ),
+                        items: [
+                          for (final option in eligibleCustomers)
+                            DropdownMenuItem(
+                              value: option.customer.id,
+                              child: Text(option.customer.name,
+                                overflow: TextOverflow.ellipsis),
+                            ),
+                        ],
+                        onChanged: (value) {
+                          refresh(() => linkedCustomerId = value);
+                          if (value != null) {
+                            final chosen = eligibleCustomers.firstWhere(
+                              (x) => x.customer.id == value,
+                            ).customer;
+                            name.text = chosen.name;
+                            phone.text = chosen.phone;
+                          }
+                        },
+                      ),
+                    ],
                     const SizedBox(height: 11),
                     TextFormField(
                       key: const Key('booking_phone'),
@@ -340,6 +386,77 @@ class _MerchantSpaceTabState extends State<MerchantSpaceTab> {
                         ),
                       ),
                     ]),
+                    const SizedBox(height: 12),
+                    Row(children: [
+                      Expanded(
+                        flex: 2,
+                        child: TextFormField(
+                          key: const Key('booking_unit_price'),
+                          controller: unitPrice,
+                          keyboardType: const TextInputType.numberWithOptions(
+                            decimal: true,
+                          ),
+                          decoration: const InputDecoration(
+                            labelText: 'سعر الربطة (اختياري)',
+                          ),
+                          validator: (v) {
+                            if ((v ?? '').trim().isEmpty) return null;
+                            final input = v!.trim();
+                            if (!RegExp(r'^[0-9]+([.][0-9]{1,2})?$')
+                                .hasMatch(input)) {
+                              return 'سعر موجب حتى منزلتين';
+                            }
+                            final amount = Decimal.tryParse(input);
+                            if (amount == null || amount <= Decimal.zero) {
+                              return 'سعر موجب حتى منزلتين';
+                            }
+                            return null;
+                          },
+                        ),
+                      ),
+                      const SizedBox(width: 9),
+                      Expanded(
+                        child: DropdownButtonFormField<CurrencyCode>(
+                          key: const Key('booking_currency'),
+                          value: bookingCurrency,
+                          isExpanded: true,
+                          decoration: const InputDecoration(labelText: 'العملة'),
+                          items: [
+                            for (final curr in CurrencyCode.values)
+                              DropdownMenuItem(
+                                value: curr,
+                                child: Text(curr.name.toUpperCase()),
+                              ),
+                          ],
+                          onChanged: (value) => refresh(() {
+                            if (value != null) bookingCurrency = value;
+                          }),
+                        ),
+                      ),
+                    ]),
+                    const SizedBox(height: 12),
+                    DropdownButtonFormField<BookingSettlement>(
+                      key: const Key('booking_settlement'),
+                      value: settlement,
+                      decoration: const InputDecoration(labelText: 'حالة السداد'),
+                      items: const [
+                        DropdownMenuItem(
+                          value: BookingSettlement.unknown,
+                          child: Text('غير محدد بعد'),
+                        ),
+                        DropdownMenuItem(
+                          value: BookingSettlement.paid,
+                          child: Text('مسدد نقداً'),
+                        ),
+                        DropdownMenuItem(
+                          value: BookingSettlement.unpaid,
+                          child: Text('لم يسدد'),
+                        ),
+                      ],
+                      onChanged: (value) => refresh(() {
+                        if (value != null) settlement = value;
+                      }),
+                    ),
                     const SizedBox(height: 11),
                     TextFormField(
                       controller: note, maxLength: 250,
@@ -363,7 +480,7 @@ class _MerchantSpaceTabState extends State<MerchantSpaceTab> {
             ),
           ),
         );
-      },
+      }),
     );
     if (!mounted) return;
     if (added == true) {
@@ -378,6 +495,11 @@ class _MerchantSpaceTabState extends State<MerchantSpaceTab> {
           pickupTime: time.text.trim(),
           createdAt: DateTime.now(),
           note: note.text.trim(),
+          customerId: linkedCustomerId,
+          unitPrice: unitPrice.text.trim().isEmpty
+              ? null : Decimal.parse(unitPrice.text.trim()),
+          currency: bookingCurrency,
+          settlement: settlement,
         ));
       });
       _message('أضيف الحجز إلى قائمة هذا الجهاز مؤقتاً. '
@@ -387,7 +509,7 @@ class _MerchantSpaceTabState extends State<MerchantSpaceTab> {
     // breaks TextFormField listeners during that transition.
     await Future<void>.delayed(const Duration(milliseconds: 450));
     name.dispose(); phone.dispose(); item.dispose();
-    bundles.dispose(); time.dispose(); note.dispose();
+    bundles.dispose(); time.dispose(); note.dispose(); unitPrice.dispose();
   }
 
   Future<void> _exportBookings(ReservationDailySummary summary) async {
@@ -456,6 +578,22 @@ class _MerchantSpaceTabState extends State<MerchantSpaceTab> {
   Widget build(BuildContext context) {
     final c = context.colors;
     final summary = ReservationsQuery.forDay(_draftBookings, _day);
+    if (_bookingsOpen) {
+      return MerchantBookingsScreen(
+        bookings: _draftBookings,
+        day: _day,
+        onDayChanged: (day) => setState(() => _day = day),
+        onAddBooking: _addBooking,
+        onUpdateBooking: (id, status) => setState(() {
+          final at = _draftBookings.indexWhere((b) => b.id == id);
+          if (at >= 0) _draftBookings[at] = _draftBookings[at].withStatus(status);
+        }),
+        onBack: () => setState(() => _bookingsOpen = false),
+        state: widget.state,
+        merchantId: widget.merchantId,
+        storeName: _storeName,
+      );
+    }
     return ListView(
       key: const Key('merchant_space_scroll'),
       padding: const EdgeInsets.fromLTRB(14, 8, 14, 28),
@@ -496,6 +634,8 @@ class _MerchantSpaceTabState extends State<MerchantSpaceTab> {
         ),
         const SizedBox(height: 15),
         _engagement(c),
+        const SizedBox(height: 13),
+        _ratings(c),
         const SizedBox(height: 13),
         Text('كل التعديلات والحجوزات هنا مسودات محلية للتجربة؛ '
              'لا تُنشر ولا تصل للعملاء قبل ربط الخادم.',
@@ -669,7 +809,12 @@ class _MerchantSpaceTabState extends State<MerchantSpaceTab> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _section(c, Icons.event_note_outlined, 'حجوزات اليوم',
-          'كشف واحد لتجهيز الطلبات بدلاً من الاتصالات'),
+          'كشف واحد لتجهيز الطلبات بدلاً من الاتصالات',
+          action: TextButton(
+            key: const Key('open_bookings_screen'),
+            onPressed: () => setState(() => _bookingsOpen = true),
+            child: const Text('إدارة الكل'),
+          )),
         const SizedBox(height: 13),
         Row(children: [
           Expanded(child: OutlinedButton.icon(
@@ -1056,4 +1201,44 @@ class _MerchantSpaceTabState extends State<MerchantSpaceTab> {
       Text(title, style: TextStyle(color: c.muted, fontSize: 10)),
     ]),
   ));
+  Widget _ratings(AppThemeColors c) {
+    // Live scores are not present without authenticated, verified reviews.
+    final summary = MerchantReviewPolicy.summarize(
+        widget.merchantId ?? '', const <MerchantReview>[]);
+    return AppSurface(
+      padding: const EdgeInsets.all(13),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _section(c, Icons.star_border_rounded, 'تقييمات المتجر',
+              'آراء مشترين حقيقيين بعد عملية شراء معتمدة'),
+          const SizedBox(height: 12),
+          Row(children: [
+            Icon(Icons.star_rounded, color: c.pendingText, size: 27),
+            const SizedBox(width: 7),
+            Text(summary.average == null ? '—'
+                : summary.average!.toStringAsFixed(1),
+              style: TextStyle(color: c.text,
+                fontSize: 25, fontWeight: FontWeight.w900)),
+            const SizedBox(width: 9),
+            Text('${summary.publishedCount} تقييم موثق',
+              style: TextStyle(color: c.muted, fontSize: 12)),
+          ]),
+          const SizedBox(height: 9),
+          Text(
+            'بعد إتمام شراء حقيقي، يستطيع العميل تقييم التاجر من '
+            'نجمة إلى خمس نجوم وكتابة مراجعة. تقييم واحد لكل عميل '
+            'قابل للتحديث، وتُنشر النتائج بعد التحقق والمراجعة.',
+            style: TextStyle(color: c.muted, fontSize: 11, height: 1.55),
+          ),
+          const SizedBox(height: 8),
+          Text('الظهور في قائمة الأعلى تقييماً يحتاج 5 تقييمات '
+              'موثقة على الأقل؛ لا تأثير للباقات على النزاهة.',
+            style: TextStyle(color: c.petrol,
+              fontWeight: FontWeight.w700, fontSize: 11)),
+        ],
+      ),
+    );
+  }
+
 }
