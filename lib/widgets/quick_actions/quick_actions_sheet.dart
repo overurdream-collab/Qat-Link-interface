@@ -344,7 +344,7 @@ class _MovementEntrySheetState extends State<MovementEntrySheet> {
                       const SizedBox(width: 9),
                       Expanded(
                         child: DropdownButtonFormField<CurrencyCode>(
-                          key: const Key('movement_currency'),
+                          key: ValueKey('movement_currency_${_selection?.customer.id ?? 'none'}'),
                           value: _currency,
                           isExpanded: true,
                           decoration: const InputDecoration(
