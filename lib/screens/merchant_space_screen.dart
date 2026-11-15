@@ -404,7 +404,7 @@ class _MerchantSpaceTabState extends State<MerchantSpaceTab> {
                             decimal: true,
                           ),
                           decoration: const InputDecoration(
-                            labelText: 'سعر الربطة (اختياري)',
+                            labelText: 'قيمة الربطة المقترحة (اختياري)',
                           ),
                           validator: (v) {
                             if ((v ?? '').trim().isEmpty) return null;
@@ -445,7 +445,7 @@ class _MerchantSpaceTabState extends State<MerchantSpaceTab> {
                     DropdownButtonFormField<BookingSettlement>(
                       key: const Key('booking_settlement'),
                       value: settlement,
-                      decoration: const InputDecoration(labelText: 'حالة السداد'),
+                      decoration: const InputDecoration(labelText: 'حالة التسوية قبل إنشاء دين'),
                       items: const [
                         DropdownMenuItem(
                           value: BookingSettlement.unknown,
@@ -453,7 +453,7 @@ class _MerchantSpaceTabState extends State<MerchantSpaceTab> {
                         ),
                         DropdownMenuItem(
                           value: BookingSettlement.paid,
-                          child: Text('مسدد نقداً'),
+                          child: Text('مسدد خارج التطبيق'),
                         ),
                         DropdownMenuItem(
                           value: BookingSettlement.unpaid,
@@ -1250,7 +1250,7 @@ class _MerchantSpaceTabState extends State<MerchantSpaceTab> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _section(c, Icons.star_border_rounded, 'تقييمات المتجر',
-              'آراء العملاء بعد موافقتهم على تسجيل دين'),
+              'تقييمات العملاء بعد اعتماد الدين'),
           const SizedBox(height: 12),
           Row(children: [
             Icon(Icons.star_rounded, color: c.pendingText, size: 27),
@@ -1265,7 +1265,7 @@ class _MerchantSpaceTabState extends State<MerchantSpaceTab> {
           ]),
           const SizedBox(height: 9),
           Text(
-            'بعد اعتماد العميل لدين سجّله التاجر، يمكنه تقييمه من '
+            'بعد موافقة العميل على تسجيل دين، يمكنه تقييم التاجر من '
             'نجمة إلى خمس نجوم وكتابة مراجعة. تقييم واحد لكل عميل '
             'قابل للتحديث، وتُنشر النتائج بعد التحقق والمراجعة.',
             style: TextStyle(color: c.muted, fontSize: 11, height: 1.55),
