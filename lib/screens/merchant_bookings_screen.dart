@@ -7,6 +7,8 @@ import '../theme/app_colors.dart';
 import '../widgets/app_chrome.dart';
 import '../widgets/finance_display.dart';
 import '../widgets/merchant_space/booking_debt_planner.dart';
+import '../widgets/merchant_space/booking_intake_policy.dart';
+import '../widgets/merchant_space/daily_debt_query.dart';
 import '../widgets/merchant_space/merchant_space_models.dart';
 import '../widgets/merchant_space/worker_preparation_pdf.dart';
 
@@ -24,6 +26,10 @@ class MerchantBookingsScreen extends StatefulWidget {
     required this.state,
     required this.storeName,
     this.merchantId,
+    this.intakeSettings = const BookingIntakeSettings(),
+    this.onIntakeSettingsChanged,
+    this.reminderSettings = const BookingNightReminderSettings(),
+    this.onReminderSettingsChanged,
   });
 
   final List<ReservationDraft> bookings;
@@ -35,6 +41,10 @@ class MerchantBookingsScreen extends StatefulWidget {
   final AppState state;
   final String storeName;
   final String? merchantId;
+  final BookingIntakeSettings intakeSettings;
+  final ValueChanged<BookingIntakeSettings>? onIntakeSettingsChanged;
+  final BookingNightReminderSettings reminderSettings;
+  final ValueChanged<BookingNightReminderSettings>? onReminderSettingsChanged;
 
   @override
   State<MerchantBookingsScreen> createState() => _MerchantBookingsScreenState();
@@ -43,6 +53,202 @@ class MerchantBookingsScreen extends StatefulWidget {
 class _MerchantBookingsScreenState extends State<MerchantBookingsScreen> {
   final Set<String> _selectedIds = {};
   bool _exporting = false;
+  late BookingIntakeSettings _settings;
+  late BookingNightReminderSettings _reminder;
+
+  @override
+  void initState() {
+    super.initState();
+    _settings = widget.intakeSettings;
+    _reminder = widget.reminderSettings;
+  }
+
+  void _setSettings(BookingIntakeSettings next) {
+    setState(() => _settings = next);
+    widget.onIntakeSettingsChanged?.call(next);
+  }
+
+  void _setReminder(BookingNightReminderSettings next) {
+    setState(() => _reminder = next);
+    widget.onReminderSettingsChanged?.call(next);
+  }
+
+  static String _clock(int minutes) {
+    final h = (minutes ~/ 60).toString().padLeft(2, '0');
+    final m = (minutes % 60).toString().padLeft(2, '0');
+    return '$h:$m';
+  }
+
+  Future<void> _pickIntakeTime(bool start) async {
+    final current = start ? _settings.opensAtMinute : _settings.closesAtMinute;
+    final selected = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay(hour: current ~/ 60, minute: current % 60),
+      helpText: start ? 'بداية استقبال الحجوزات' : 'نهاية استقبال الحجوزات',
+    );
+    if (!mounted || selected == null) return;
+    final minute = selected.hour * 60 + selected.minute;
+    final next = start
+        ? _settings.copyWith(opensAtMinute: minute)
+        : _settings.copyWith(closesAtMinute: minute);
+    if (!next.valid) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('حدد وقتين مختلفين أو فعّل نظام 24 ساعة.')),
+      );
+      return;
+    }
+    _setSettings(next);
+  }
+
+  Future<void> _pickReminderTime() async {
+    final minute = _reminder.sendAtMinute;
+    final selected = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay(hour: minute ~/ 60, minute: minute % 60),
+      helpText: 'وقت التذكير الليلي بتوقيت صنعاء',
+    );
+    if (!mounted || selected == null) return;
+    _setReminder(_reminder.copyWith(
+      sendAtMinute: selected.hour * 60 + selected.minute));
+  }
+
+  void _previewReminder() {
+    final preview = BookingNightReminderPolicy.preview(
+      settings: _reminder,
+      merchantId: widget.merchantId,
+      customers: widget.state.customers.value,
+      relationships: widget.state.relationships.value,
+      now: DateTime.now(),
+    );
+    final c = context.colors;
+    showModalBottomSheet<void>(
+      context: context,
+      showDragHandle: true,
+      backgroundColor: c.card,
+      builder: (sheet) => SafeArea(child: Padding(
+        padding: const EdgeInsets.all(17),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text('تذكير حجوزات الغد', style: TextStyle(
+              color: c.petrol, fontWeight: FontWeight.w900, fontSize: 17)),
+            const SizedBox(height: 9),
+            Text('الوقت المقترح: ${_clock(_reminder.sendAtMinute)} '
+              'بتوقيت صنعاء', style: TextStyle(color: c.text)),
+            Text('العملاء المؤهلون: ${preview.recipientIds.length}',
+              style: TextStyle(color: c.petrol)),
+            const SizedBox(height: 7),
+            Text('رسالة مقترحة: عملاءنا الكرام، يرجى حجز طلبات الغد '
+                'مبكراً عبر المتجر أثناء ساعات استقبال الحجوزات.',
+              style: TextStyle(color: c.text, height: 1.5)),
+            const SizedBox(height: 9),
+            Text('هذه معاينة فقط. لم تتم جدولة أو إرسال رسالة. '
+                'التنفيذ يتطلب خدمة خادم، وموافقة العميل على '
+                'الإشعارات، وحداً للتكرار وميزة الإلغاء.',
+              style: TextStyle(color: c.pendingText, fontSize: 11)),
+            const SizedBox(height: 10),
+            OutlinedButton(
+              onPressed: () => Navigator.of(sheet).pop(),
+              child: const Text('إغلاق المعاينة')),
+          ],
+        ),
+      )),
+    );
+  }
+
+  Widget _intakeControls(AppThemeColors c) => AppSurface(
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text('استقبال الحجوزات', style: TextStyle(
+          color: c.petrol, fontSize: 16, fontWeight: FontWeight.w900)),
+        const SizedBox(height: 5),
+        Text('التحكم في استقبال طلبات العملاء المعتمدين فقط',
+          style: TextStyle(color: c.muted, fontSize: 11)),
+        SwitchListTile.adaptive(
+          key: const Key('bookings_accept_toggle'),
+          contentPadding: EdgeInsets.zero,
+          title: const Text('فتح باب الحجوزات'),
+          subtitle: Text(_settings.enabled ? 'مفتوح حسب ساعات الاستقبال' :
+              'مغلق أمام جميع الطلبات'),
+          value: _settings.enabled,
+          onChanged: (value) => _setSettings(
+            _settings.copyWith(enabled: value)),
+        ),
+        SwitchListTile.adaptive(
+          key: const Key('bookings_all_day_toggle'),
+          contentPadding: EdgeInsets.zero,
+          title: const Text('استقبال على مدار 24 ساعة'),
+          value: _settings.allDay,
+          onChanged: (value) =>
+              _setSettings(_settings.copyWith(allDay: value)),
+        ),
+        if (!_settings.allDay)
+          Row(children: [
+            Expanded(child: OutlinedButton.icon(
+              key: const Key('bookings_start_time'),
+              onPressed: () => _pickIntakeTime(true),
+              icon: const Icon(Icons.access_time),
+              label: Text('من ${_clock(_settings.opensAtMinute)}'),
+            )),
+            const SizedBox(width: 8),
+            Expanded(child: OutlinedButton.icon(
+              key: const Key('bookings_end_time'),
+              onPressed: () => _pickIntakeTime(false),
+              icon: const Icon(Icons.access_time_filled),
+              label: Text('إلى ${_clock(_settings.closesAtMinute)}'),
+            )),
+          ]),
+        const SizedBox(height: 7),
+        Text(
+          _settings.enabled
+            ? (BookingIntakePolicy.isWindowOpen(_settings, DateTime.now())
+              ? 'الاستقبال متاح الآن (بحسب توقيت صنعاء)'
+              : 'الاستقبال خارج الوقت المحدد الآن')
+            : 'لا يمكن تسجيل أي حجز جديد حتى فتح الباب.',
+          style: TextStyle(
+            color: _settings.enabled ? c.petrol : c.danger, fontSize: 11),
+        ),
+        Text('تسمح النافذة أيضاً بالفترات العابرة لمنتصف الليل. '
+            'لا يوجد نشر لهذه الإعدادات إلى الخادم بعد.',
+          style: TextStyle(color: c.muted, fontSize: 10)),
+      ],
+    ),
+  );
+
+  Widget _reminderControls(AppThemeColors c) => AppSurface(
+    child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      Text('تذكير ليلي بحجوزات الغد', style: TextStyle(
+        color: c.petrol, fontSize: 15, fontWeight: FontWeight.w900)),
+      const SizedBox(height: 5),
+      Text('للعملاء المرتبطين بالتاجر بموافقة الطرفين فقط.',
+        style: TextStyle(color: c.muted, fontSize: 11)),
+      SwitchListTile.adaptive(
+        key: const Key('bookings_reminder_toggle'),
+        contentPadding: EdgeInsets.zero,
+        title: const Text('تفعيل التذكير الليلي'),
+        value: _reminder.enabled,
+        onChanged: (value) => _setReminder(
+          _reminder.copyWith(enabled: value)),
+      ),
+      Row(children: [
+        Expanded(child: OutlinedButton.icon(
+          key: const Key('bookings_reminder_time'),
+          onPressed: _pickReminderTime,
+          icon: const Icon(Icons.nights_stay_outlined),
+          label: Text('الوقت: ${_clock(_reminder.sendAtMinute)}'),
+        )),
+        const SizedBox(width: 8),
+        Expanded(child: FilledButton.icon(
+          key: const Key('bookings_reminder_preview'),
+          onPressed: _previewReminder,
+          icon: const Icon(Icons.visibility_outlined),
+          label: const Text('معاينة الرسالة'),
+        )),
+      ]),
+    ]),
+  );
 
   Future<void> _selectDate() async {
     final newDate = await showDatePicker(
@@ -297,7 +503,12 @@ class _MerchantBookingsScreenState extends State<MerchantBookingsScreen> {
     final c = context.colors;
     final day = widget.day;
     final summary = ReservationsQuery.forDay(widget.bookings, day);
-    final sales = BookingSalesQuery.calculate(widget.bookings, day);
+    final debts = DailyDebtQuery.calculate(
+      merchantId: widget.merchantId,
+      day: day,
+      movements: widget.state.movements.value,
+      relationships: widget.state.relationships.value,
+    );
     final qualified = summary.orders.where((b) =>
       _plan([b], {b.id}).includedBookings > 0).map((b) => b.id).toSet();
 
@@ -316,7 +527,7 @@ class _MerchantBookingsScreenState extends State<MerchantBookingsScreen> {
             children: [
               Text('إدارة الحجوزات', style: TextStyle(
                 fontSize: 19, fontWeight: FontWeight.w900, color: c.text)),
-              Text('التجهيز والمبيعات في كشف واحد',
+              Text('التجهيز وديون اليوم في كشف واحد',
                 style: TextStyle(fontSize: 11, color: c.muted)),
             ],
           )),
@@ -345,7 +556,7 @@ class _MerchantBookingsScreenState extends State<MerchantBookingsScreen> {
             const SizedBox(width: 8),
             _metric(c, '${summary.totalBundles}', 'ربطة مطلوبة'),
             const SizedBox(width: 8),
-            _metric(c, '${sales.collectedCount}', 'تم استلامه'),
+            _metric(c, '${debts.approvedCount}', 'ديون معتمدة'),
           ]),
         ])),
         const SizedBox(height: 12),
@@ -377,14 +588,18 @@ class _MerchantBookingsScreenState extends State<MerchantBookingsScreen> {
           ],
         )),
         const SizedBox(height: 12),
+        _intakeControls(c),
+        const SizedBox(height: 12),
+        _reminderControls(c),
+        const SizedBox(height: 12),
         AppSurface(child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('المبيعات اليومية', style: TextStyle(
+            Text('ديون اليوم', style: TextStyle(
               color: c.petrol, fontSize: 16, fontWeight: FontWeight.w900)),
             const SizedBox(height: 5),
-            Text('المبيعات المسجلة كطلبات مستلمة مع سعر محدد؛ '
-                'هذه ليست أرصدة الديون.',
+            Text('الديون التي وافق العميل على تسجيلها في هذا اليوم فقط؛ '
+                'الحجوزات ليست ديوناً قبل الاعتماد.',
               style: TextStyle(color: c.muted, fontSize: 11)),
             const SizedBox(height: 9),
             for (final currency in CurrencyCode.values) ...[
@@ -394,17 +609,18 @@ class _MerchantBookingsScreenState extends State<MerchantBookingsScreen> {
                       fontWeight: FontWeight.w800)),
                 const Spacer(),
                 Text(FinanceDisplay.amount(
-                  sales.byCurrency[currency] ?? Decimal.zero),
+                  debts.approved[currency] ?? Decimal.zero),
                   style: TextStyle(color: c.petrol, fontSize: 15,
                     fontWeight: FontWeight.w900)),
               ]),
+              const SizedBox(height: 3),
+              Text('طلبات معلقة: ${FinanceDisplay.amount(
+                debts.pending[currency] ?? Decimal.zero)}',
+                style: TextStyle(color: c.pendingText, fontSize: 10)),
               Divider(color: c.cardBorder, height: 13),
             ],
-            if (sales.missingPriceCount > 0)
-              Text('${sales.missingPriceCount} عملية مستلمة بلا سعر، '
-                  'ولا تدخل في إجمالي المبيعات.',
-                  style: TextStyle(color: c.danger, fontSize: 10)),
-            Text('التحصيل النقدي والديون حسابات مستقلة تحتاج توثيق الخادم.',
+            Text('المبالغ المعلقة والمرفوضة لا تُضاف إلى المديونية '
+                 'المعتمدة، ولا تُجمع العملات المختلفة.',
                 style: TextStyle(color: c.muted, fontSize: 10)),
           ],
         )),
