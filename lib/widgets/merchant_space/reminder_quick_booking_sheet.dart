@@ -107,7 +107,7 @@ class _ReminderQuickBookingSheetState extends State<ReminderQuickBookingSheet> {
                     fontSize: 19, fontWeight: FontWeight.w900))),
               ]),
               const SizedBox(height: 7),
-              Text('من متجر ${widget.campaign.merchantDisplayName}',
+              Text('المتجر: ${widget.campaign.merchantDisplayName}',
                 key: const Key('reminder_merchant_name'),
                 style: TextStyle(color: c.muted,
                   fontSize: 13, fontWeight: FontWeight.w700)),
