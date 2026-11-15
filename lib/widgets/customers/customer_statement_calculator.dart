@@ -38,7 +38,7 @@ class CustomerStatement {
   int get visibleCount => rows.length;
 }
 
-/// Read-only calculations. No currency conversion, floating point, or writes.
+/// Read-only calculations. No currency conversion, floating point, or writes.\n/// Fails closed without an authenticated merchant ID; the backend must enforce\n/// tenant isolation and verify each operation before returning these rows.
 abstract final class CustomerStatementCalculator {
   static CustomerStatement calculate({
     required String customerId,
@@ -58,12 +58,14 @@ abstract final class CustomerStatementCalculator {
 
     final approved = relationships.where((r) =>
         r.customerId == customerId &&
-        (merchantId == null || r.merchantId == merchantId) &&
+        merchantId != null && merchantId.isNotEmpty &&
+        r.merchantId == merchantId &&
         r.status == RelationshipStatus.approved).toList();
     final relationIds = approved.map((r) => r.id).toSet();
     final eligible = movements.where((m) =>
         m.customerId == customerId &&
-        (merchantId == null || m.merchantId == merchantId) &&
+        merchantId != null && merchantId.isNotEmpty &&
+        m.merchantId == merchantId &&
         m.currency == currency &&
         relationIds.contains(m.relationshipId));
 
