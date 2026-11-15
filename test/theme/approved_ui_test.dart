@@ -63,6 +63,6 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('إضافة عميل'), findsOneWidget);
     expect(find.text('إضافة دين'), findsOneWidget);
-    expect(find.text('تسجيل تسديد'), findsOneWidget);
+    expect(find.text('إضافة مبلغ'), findsOneWidget);
   });
 }
