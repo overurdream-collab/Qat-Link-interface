@@ -432,7 +432,7 @@ class _MerchantBookingsScreenState extends State<MerchantBookingsScreen> {
       ));
 
   Widget _bookingCard(AppThemeColors c, ReservationDraft order) {
-    final amount = order.saleTotal;
+    final amount = order.proposedDebtAmount;
     return Container(
       key: Key('bookings_screen_row_${order.id}'),
       margin: const EdgeInsets.only(bottom: 7),
@@ -469,7 +469,7 @@ class _MerchantBookingsScreenState extends State<MerchantBookingsScreen> {
                 ? 'السعر غير محدد'
                 : '${FinanceDisplay.amount(amount)} '
                   '${FinanceDisplay.currencyCode(order.currency)}'
-                  ' • ${order.settlement == BookingSettlement.paid ? 'مسدد' : order.settlement == BookingSettlement.unpaid ? 'غير مسدد' : 'السداد غير محدد'}',
+                  ' • ${order.settlement == BookingSettlement.paid ? 'مسدد خارج التطبيق' : order.settlement == BookingSettlement.unpaid ? 'غير مسدد' : 'التسوية غير محددة'}',
               style: TextStyle(color: c.petrol, fontSize: 11)),
           ],
         )),
