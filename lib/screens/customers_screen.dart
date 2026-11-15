@@ -281,7 +281,7 @@ class _MerchantCustomersTabState extends State<MerchantCustomersTab> {
       padding: const EdgeInsets.all(13),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Row(children: [
-          Icon(Icons.person_clock_outlined, color: c.pendingText, size: 22),
+          Icon(Icons.hourglass_empty_rounded, color: c.pendingText, size: 22),
           const SizedBox(width: 8),
           Expanded(child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
