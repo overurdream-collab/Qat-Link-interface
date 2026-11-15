@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 
 import '../../features/auth/auth_input_validation.dart';
 import '../../models/app_models.dart';
+import '../../models/merchant_pending_models.dart';
 import '../../services/app_state.dart';
 import '../../theme/app_colors.dart';
 import '../finance_display.dart';
@@ -103,8 +104,9 @@ class QuickActionsSheet extends StatelessWidget {
   }
 }
 
-/// A single form for debt and payment. The selected customer MUST be a
-/// member of the merchant's approved list; no manual free-text customer.
+/// Payments require an approved customer. For debts, a separate merchant-only
+/// pending contact can be selected before account registration; it creates
+/// a private unacknowledged claim, NEVER an approved financial movement.
 class MovementEntrySheet extends StatefulWidget {
   const MovementEntrySheet({
     super.key,
@@ -126,6 +128,8 @@ class _MovementEntrySheetState extends State<MovementEntrySheet> {
   final _amount = TextEditingController();
   CurrencyCode _currency = CurrencyCode.yer;
   ApprovedCustomerOption? _selection;
+  MerchantPendingContact? _pendingContact;
+  final _pendingContactSelectorKey = GlobalKey<FormFieldState<ApprovedCustomerOption>>();
 
   @override
   void dispose() {
@@ -167,12 +171,70 @@ class _MovementEntrySheetState extends State<MovementEntrySheet> {
     field.didChange(selected);
     setState(() {
       _selection = selected;
+      _pendingContact = null;
       _currency = selected.customer.primaryCurrency;
+    });
+  }
+
+  Future<void> _choosePendingContact(
+      FormFieldState<ApprovedCustomerOption> field) async {
+    if (!_isDebt || widget.merchantId == null ||
+        widget.merchantId!.trim().isEmpty) {
+      return;
+    }
+    final contacts = widget.state.merchantContacts.value
+        .where((contact) => contact.merchantId == widget.merchantId)
+        .toList(growable: false);
+    final selected = await showModalBottomSheet<MerchantPendingContact>(
+      context: context,
+      isScrollControlled: true,
+      showDragHandle: true,
+      backgroundColor: context.colors.card,
+      builder: (_) => _MerchantPendingContactSearch(contacts: contacts),
+    );
+    if (!mounted || selected == null) return;
+    field.didChange(null);
+    setState(() {
+      _selection = null;
+      _pendingContact = selected;
     });
   }
 
   void _submit() {
     if (!_formKey.currentState!.validate()) return;
+    if (_isDebt && _pendingContact != null) {
+      final contact = _pendingContact!;
+      final stillAvailable = widget.merchantId != null &&
+          widget.state.merchantContacts.value.any((current) =>
+            current.id == contact.id &&
+            current.merchantId == widget.merchantId);
+      if (!stillAvailable) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('سجل العميل لم يعد متاحاً لهذا التاجر.')));
+        return;
+      }
+      final clean = AuthInputValidation.normalizeDigits(_amount.text)
+          .replaceAll('٫', '.').trim();
+      try {
+        widget.state.addMerchantPendingDebt(MerchantPendingDebt(
+          id: 'local-debt-${DateTime.now().microsecondsSinceEpoch}-'
+              '${widget.state.merchantPendingDebts.value.length + 1}',
+          merchantId: contact.merchantId,
+          contactId: contact.id,
+          amount: Decimal.parse(clean),
+          currency: _currency,
+          createdAt: DateTime.now(),
+        ));
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('سُجل المبلغ معلقاً في سجل التاجر المحلي. '
+              'لم يعتمد العميل الدين، ولا توجد مزامنة دائمة بعد.')));
+        Navigator.of(context).pop();
+      } on Object catch (_) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('تعذر تسجيل المبلغ المعلق. تحقق من بيانات العميل.')));
+      }
+      return;
+    }
     final eligible = ApprovedCustomerPickerModel.isStillEligible(
       selection: _selection,
       customers: widget.state.customers.value,
@@ -206,6 +268,7 @@ class _MovementEntrySheetState extends State<MovementEntrySheet> {
       animation: Listenable.merge([
         widget.state.customers,
         widget.state.relationships,
+        widget.state.merchantContacts,
       ]),
       builder: (context, _) => Padding(
         padding: EdgeInsets.fromLTRB(
@@ -250,9 +313,18 @@ class _MovementEntrySheetState extends State<MovementEntrySheet> {
                   Text('اختر العميل من قائمتك', style: TextStyle(
                     color: c.petrol, fontWeight: FontWeight.w800)),
                   const SizedBox(height: 6),
-                  FormField<ApprovedCustomerOption>(
+                  KeyedSubtree(
                     key: const Key('movement_customer_field'),
+                    child: FormField<ApprovedCustomerOption>(
+                    key: _pendingContactSelectorKey,
                     validator: (selected) {
+                      if (_isDebt && _pendingContact != null) {
+                        final exists = widget.merchantId != null &&
+                            widget.state.merchantContacts.value.any((c) =>
+                              c.id == _pendingContact!.id &&
+                              c.merchantId == widget.merchantId);
+                        return exists ? null : 'العميل غير متاح لهذا التاجر';
+                      }
                       if (selected == null) return 'اختيار العميل مطلوب';
                       if (!ApprovedCustomerPickerModel.isStillEligible(
                         selection: selected,
@@ -290,12 +362,13 @@ class _MovementEntrySheetState extends State<MovementEntrySheet> {
                                 const SizedBox(width: 10),
                                 Expanded(
                                   child: Text(
-                                    field.value?.customer.name ??
+                                    _pendingContact?.name ??
+                                      field.value?.customer.name ??
                                         'اختر عميلاً مرتبطاً',
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
-                                      color: field.value == null
+                                      color: field.value == null && _pendingContact == null
                                           ? c.muted : c.text,
                                       fontSize: 13,
                                     ),
@@ -316,6 +389,28 @@ class _MovementEntrySheetState extends State<MovementEntrySheet> {
                       ],
                     ),
                   ),
+                  ),
+                  if (_isDebt) ...[
+                    const SizedBox(height: 7),
+                    OutlinedButton.icon(
+                      key: const Key('movement_select_pending_contact'),
+                      onPressed: () {
+                        final field = _formKey.currentState;
+                        // Use the FormField context below to update selection
+                        // without creating a verified relationship.
+                        final selector = _pendingContactSelectorKey.currentState;
+                        if (field != null && selector != null) {
+                          _choosePendingContact(selector);
+                        }
+                      },
+                      icon: const Icon(Icons.person_outline_rounded),
+                      label: const Text('اختيار عميل غير منضم أو بانتظار الموافقة'),
+                    ),
+                    if (_pendingContact != null)
+                      Text('دين معلق في سجل التاجر، غير معتمد من العميل',
+                        style: TextStyle(
+                          color: c.pendingText, fontSize: 11)),
+                  ],
                   const SizedBox(height: 15),
                   Text('المبلغ والعملة', style: TextStyle(
                     color: c.petrol, fontWeight: FontWeight.w800)),
@@ -512,6 +607,81 @@ class _ApprovedCustomerSearchState extends State<_ApprovedCustomerSearch> {
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class _MerchantPendingContactSearch extends StatefulWidget {
+  const _MerchantPendingContactSearch({required this.contacts});
+  final List<MerchantPendingContact> contacts;
+
+  @override
+  State<_MerchantPendingContactSearch> createState() =>
+      _MerchantPendingContactSearchState();
+}
+
+class _MerchantPendingContactSearchState
+    extends State<_MerchantPendingContactSearch> {
+  final _search = TextEditingController();
+
+  @override
+  void dispose() {
+    _search.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final c = context.colors;
+    final query = MovementQuery.normalizeSearch(
+      AuthInputValidation.normalizeDigits(_search.text));
+    final rows = widget.contacts.where((contact) =>
+        query.isEmpty ||
+        MovementQuery.normalizeSearch(contact.name).contains(query) ||
+        MovementQuery.normalizeSearch(contact.phone).contains(query))
+        .toList();
+    return SafeArea(
+      child: Padding(
+        padding: EdgeInsets.fromLTRB(
+          16, 9, 16, MediaQuery.viewInsetsOf(context).bottom + 12),
+        child: SizedBox(
+          height: MediaQuery.sizeOf(context).height * .53,
+          child: Column(children: [
+            Text('العملاء في سجل التاجر — غير معتمدين',
+              style: TextStyle(color: c.petrol,
+                fontWeight: FontWeight.w900, fontSize: 16)),
+            const SizedBox(height: 9),
+            TextField(
+              key: const Key('pending_contact_search'),
+              controller: _search,
+              onChanged: (_) => setState(() {}),
+              decoration: const InputDecoration(
+                hintText: 'ابحث بالاسم أو الهاتف',
+                prefixIcon: Icon(Icons.search_rounded)),
+            ),
+            const SizedBox(height: 7),
+            Expanded(child: rows.isEmpty
+                ? Center(child: Text('لا يوجد عميل مطابق في سجلك. '
+                    'أضفه أولاً من زر إضافة عميل.',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: c.muted, fontSize: 12)))
+                : ListView.builder(
+                    itemCount: rows.length,
+                    itemBuilder: (ctx, index) {
+                      final item = rows[index];
+                      return ListTile(
+                        key: Key('pending_contact_${item.id}'),
+                        title: Text(item.name),
+                        subtitle: Text(item.phone,
+                          textDirection: TextDirection.ltr),
+                        trailing: const Text('غير معتمد'),
+                        onTap: () => Navigator.of(ctx).pop(item),
+                      );
+                    },
+                  )),
+          ]),
         ),
       ),
     );
