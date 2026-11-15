@@ -8,6 +8,7 @@ import '../widgets/app_chrome.dart';
 import '../widgets/finance_display.dart';
 import '../widgets/merchant_space/booking_debt_planner.dart';
 import '../widgets/merchant_space/booking_intake_policy.dart';
+import '../widgets/merchant_space/night_reminder_campaign.dart';
 import '../widgets/merchant_space/daily_debt_query.dart';
 import '../widgets/merchant_space/merchant_space_models.dart';
 import '../widgets/merchant_space/worker_preparation_pdf.dart';
@@ -31,6 +32,10 @@ class MerchantBookingsScreen extends StatefulWidget {
     this.reminderSettings = const BookingNightReminderSettings(),
     this.onReminderSettingsChanged,
     this.verifiedNotificationOptInCustomerIds = const <String>{},
+    this.verifiedFavoriteCustomerIds = const <String>{},
+    this.verifiedReminderEvents,
+    this.verifiedReminderCampaignId,
+    this.verifiedReminderRecipientIds = const <String>{},
   });
 
   final List<ReservationDraft> bookings;
@@ -48,6 +53,12 @@ class MerchantBookingsScreen extends StatefulWidget {
   final ValueChanged<BookingNightReminderSettings>? onReminderSettingsChanged;
   /// Verified opt-ins from a server-backed preference service (not a local guess).
   final Set<String> verifiedNotificationOptInCustomerIds;
+  /// Verified merchant-owned favorites, never generated from local text fields.
+  final Set<String> verifiedFavoriteCustomerIds;
+  /// Server telemetry for a sent campaign; null means analytics unavailable.
+  final List<ReminderEngagementEvent>? verifiedReminderEvents;
+  final String? verifiedReminderCampaignId;
+  final Set<String> verifiedReminderRecipientIds;
 
   @override
   State<MerchantBookingsScreen> createState() => _MerchantBookingsScreenState();
@@ -58,6 +69,9 @@ class _MerchantBookingsScreenState extends State<MerchantBookingsScreen> {
   bool _exporting = false;
   late BookingIntakeSettings _settings;
   late BookingNightReminderSettings _reminder;
+  NightReminderAudience _audience = NightReminderAudience.allApproved;
+  final TextEditingController _offeredItem = TextEditingController();
+  String _pickupTime = '11:00';
 
   @override
   void initState() {
@@ -65,6 +79,38 @@ class _MerchantBookingsScreenState extends State<MerchantBookingsScreen> {
     _settings = widget.intakeSettings;
     _reminder = widget.reminderSettings;
   }
+
+  @override
+  void dispose() {
+    _offeredItem.dispose();
+    super.dispose();
+  }
+
+  Future<void> _pickCampaignPickupTime() async {
+    final parts = _pickupTime.split(':');
+    final selected = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay(
+        hour: int.parse(parts[0]), minute: int.parse(parts[1])),
+      helpText: 'موعد استلام الطلب من التذكير',
+    );
+    if (mounted && selected != null) {
+      setState(() => _pickupTime = _clock(
+        selected.hour * 60 + selected.minute));
+    }
+  }
+
+  List<String> _audiencePreview() => NightReminderAudienceQuery.recipients(
+    audience: _audience,
+    merchantId: widget.merchantId,
+    now: DateTime.now(),
+    customers: widget.state.customers.value,
+    relationships: widget.state.relationships.value,
+    bookings: widget.bookings,
+    consentedCustomerIds: widget.verifiedNotificationOptInCustomerIds,
+    merchantFavoriteCustomerIds: widget.verifiedFavoriteCustomerIds,
+    settings: _reminder,
+  );
 
   void _setSettings(BookingIntakeSettings next) {
     setState(() => _settings = next);
@@ -116,6 +162,7 @@ class _MerchantBookingsScreenState extends State<MerchantBookingsScreen> {
   }
 
   void _previewReminder() {
+    final eligible = _audiencePreview();
     final preview = BookingNightReminderPolicy.preview(
       settings: _reminder,
       merchantId: widget.merchantId,
@@ -124,41 +171,63 @@ class _MerchantBookingsScreenState extends State<MerchantBookingsScreen> {
       consentedCustomerIds: widget.verifiedNotificationOptInCustomerIds,
       now: DateTime.now(),
     );
+    final campaign = NightReminderCampaignDraft(
+      id: 'preview-only',
+      merchantId: widget.merchantId ?? '',
+      day: preview.bookingForDay,
+      audience: _audience,
+      offeredItem: _offeredItem.text.trim(),
+      pickupTime: _pickupTime,
+    );
     final c = context.colors;
     showModalBottomSheet<void>(
       context: context,
       showDragHandle: true,
+      isScrollControlled: true,
       backgroundColor: c.card,
-      builder: (sheet) => SafeArea(child: Padding(
-        padding: const EdgeInsets.all(17),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text('تذكير حجوزات الغد', style: TextStyle(
-              color: c.petrol, fontWeight: FontWeight.w900, fontSize: 17)),
-            const SizedBox(height: 9),
-            Text('الوقت المقترح: ${_clock(_reminder.sendAtMinute)} '
-              'بتوقيت صنعاء', style: TextStyle(color: c.text)),
-            Text('العملاء الموافقون على التذكير: ${preview.recipientIds.length}',
-              style: TextStyle(color: c.petrol)),
-            const SizedBox(height: 7),
-            Text('رسالة مقترحة: عملاءنا الكرام، يرجى حجز طلبات الغد '
-                'مبكراً عبر المتجر أثناء ساعات استقبال الحجوزات.',
-              style: TextStyle(color: c.text, height: 1.5)),
-            const SizedBox(height: 9),
-            Text('هذه معاينة فقط. لم تتم جدولة أو إرسال رسالة. '
-                'العميل الذي لم تُتحقق موافقته على إشعارات المتجر '
-                'مستبعد افتراضياً. التنفيذ يتطلب خدمة خادم '
-                'وتفضيلات قابلة للإلغاء ومنع التكرار.',
-              style: TextStyle(color: c.pendingText, fontSize: 11)),
-            const SizedBox(height: 10),
-            OutlinedButton(
-              onPressed: () => Navigator.of(sheet).pop(),
-              child: const Text('إغلاق المعاينة')),
-          ],
+      builder: (sheet) => SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(17),
+          child: SingleChildScrollView(child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text('معاينة تذكير حجوزات الغد', style: TextStyle(
+                color: c.petrol, fontSize: 18, fontWeight: FontWeight.w900)),
+              const SizedBox(height: 9),
+              Text('الفئة: ${_audience.label}', style: TextStyle(color: c.text)),
+              Text('العملاء الموافقون على التذكير: ${eligible.length}',
+                  style: TextStyle(color: c.petrol)),
+              Text('الساعة: ${_clock(_reminder.sendAtMinute)} بتوقيت صنعاء',
+                style: TextStyle(color: c.muted)),
+              const SizedBox(height: 11),
+              Text(
+                campaign.canOfferQuickConfirm
+                  ? 'عملاءنا الكرام، يمكنكم تأكيد حجز '
+                    '${campaign.offeredItem} للغد، وتحديد عدد الربطات فقط.'
+                  : 'عملاءنا الكرام، يرجى حجز طلبات الغد مبكراً.',
+                style: TextStyle(color: c.text, height: 1.55)),
+              const SizedBox(height: 9),
+              Text(
+                campaign.canOfferQuickConfirm
+                    ? 'التأكيد السريع: الصنف ${campaign.offeredItem} • '
+                      'الاستلام ${campaign.pickupTime} • يختار العميل العدد فقط.'
+                    : 'لإتاحة التأكيد السريع أضف الصنف وموعد الاستلام.',
+                style: TextStyle(color: c.petrol, fontSize: 12)),
+              const SizedBox(height: 10),
+              Text('معاينة محلية فقط. لا يوجد إرسال أو جدولة ولا بيانات '
+                'قراءة مؤكدة دون خادم موثق. ستُطبّق صلاحيات الباقة '
+                'وقت التشغيل بعد اعتماد الباقات.',
+                style: TextStyle(color: c.pendingText,
+                  fontSize: 11, height: 1.5)),
+              const SizedBox(height: 11),
+              OutlinedButton(
+                onPressed: () => Navigator.of(sheet).pop(),
+                child: const Text('إغلاق المعاينة')),
+            ],
+          )),
         ),
-      )),
+      ),
     );
   }
 
