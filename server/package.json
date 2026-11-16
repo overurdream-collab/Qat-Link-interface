@@ -1,0 +1,9 @@
+{
+  "name": "qat-link-fin08-api",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {"node": ">=22"},
+  "scripts": {"start": "node src/index.mjs", "test": "node --test", "check": "node --check src/index.mjs && node --check src/store.mjs && node --check src/http.mjs && node --check src/auth.mjs && node --check src/validation.mjs"},
+  "dependencies": {"pg": "^8.16.3"}
+}
