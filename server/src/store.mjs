@@ -193,7 +193,7 @@ export class Fin08Store {
       throw new ApiError(422,'invalid_input','Cursor belongs to a different customer or list');
     }
     // Snapshot is server issued; never accept a user-supplied phone or identity.
-    const snapshot = parsed?.snapshot ?? new Date().toISOString();
+    const snapshot = parsed?.snapshot ?? (await this.pool.query('SELECT clock_timestamp()::text AS captured_at')).rows[0].captured_at;
     const {rows} = await this.pool.query(`SELECT cl.id,cl.merchant_id,mp.verified_display_name AS merchant_display_name,
         cl.contact_id,cl.amount::text,cl.currency,cl.description,cl.created_at,
         cl.created_at::text AS cursor_created_at,
