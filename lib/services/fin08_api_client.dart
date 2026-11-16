@@ -206,10 +206,24 @@ class Fin08RelationshipReceipt {
   final int newlyPostedDebts;
 }
 
+class Fin08ClaimCreditWarning {
+  const Fin08ClaimCreditWarning(this.currency,this.limit,this.projected);
+  final CurrencyCode currency;
+  final Decimal limit,projected;
+  factory Fin08ClaimCreditWarning.fromJson(Map<String,dynamic> json){
+    if(json['scope']!='approved_balance_plus_this_new_debt_not_pending_claims' ||
+       json['mode']!='warn')throw const FormatException('Unverified credit warning');
+    return Fin08ClaimCreditWarning(_currency(json['currency']),
+      Decimal.parse(_str(json,'limit_amount')),
+      Decimal.parse(_str(json,'projected_balance')));
+  }
+}
 class Fin08ClaimReceipt {
-  const Fin08ClaimReceipt({required this.claimId, required this.replayed});
+  const Fin08ClaimReceipt({required this.claimId, required this.replayed,
+    this.creditWarning});
   final String claimId;
   final bool replayed;
+  final Fin08ClaimCreditWarning? creditWarning;
 }
 
 class Fin08ClaimDecisionReceipt {
@@ -375,7 +389,10 @@ class Fin08HttpClaimsGateway implements Fin08ClaimsGateway {
     final value=await _request('POST','v1/merchant/claims',idempotencyKey:idempotencyKey,
         body:{'contact_id':contactId,'amount':amount.toString(),
           'currency':currency.name.toUpperCase(),'type':type.name,if(description!=null)'description':description});
-    return Fin08ClaimReceipt(claimId:_str(value,'id'),replayed:value['replayed']==true);
+    return Fin08ClaimReceipt(claimId:_str(value,'id'),replayed:value['replayed']==true,
+      creditWarning:value['credit_warning'] is Map
+        ?Fin08ClaimCreditWarning.fromJson(Map<String,dynamic>.from(value['credit_warning'] as Map))
+        :null);
   }
 
   @override
