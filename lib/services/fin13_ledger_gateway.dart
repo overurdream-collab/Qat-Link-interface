@@ -107,16 +107,36 @@ class Fin13Page {
       j['next_cursor'] as String?);
   }
 }
+class Fin13CreditWarning {
+  const Fin13CreditWarning(this.currency,this.approved,this.limit,this.projected);
+  final CurrencyCode currency;
+  final Decimal approved,limit,projected;
+  factory Fin13CreditWarning.fromJson(Map<String,dynamic> j){
+    if(j['scope']!='approved_balance_plus_this_new_debt_not_pending_claims'
+        ||j['mode']!='warn'){
+      throw const FormatException('Unverified credit warning');
+    }
+    return Fin13CreditWarning(_currency(j),
+      _amount(j,'approved_balance'),_amount(j,'limit_amount'),
+      _amount(j,'projected_balance'));
+  }
+}
+
 class Fin13Receipt {
-  const Fin13Receipt(this.id,this.status,this.replayed,this.posted,this.approvalMethod);
+  const Fin13Receipt(this.id,this.status,this.replayed,this.posted,this.approvalMethod,
+    {this.creditWarning});
   final String id,status;
   final bool replayed,posted;
   final String? approvalMethod;
+  final Fin13CreditWarning? creditWarning;
   factory Fin13Receipt.fromJson(Map<String,dynamic> j){
     final s=_value(j,'status');
     if(!['pending','approved','rejected'].contains(s))throw const FormatException('Invalid receipt');
     return Fin13Receipt(_value(j,'operation_id'),s,
-      j['replayed']==true,j['ledger_posted']==true,j['approval_method'] as String?);
+      j['replayed']==true,j['ledger_posted']==true,j['approval_method'] as String?,
+      creditWarning:j['credit_warning'] is Map
+        ?Fin13CreditWarning.fromJson(Map<String,dynamic>.from(j['credit_warning'] as Map))
+        :null);
   }
 }
 class Fin13Policy {
