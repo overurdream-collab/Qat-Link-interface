@@ -51,3 +51,5 @@
 - [تعليمات تشغيل وتكامل خادم FIN-08](../server/README_AR.md) — API وJWT والقيود والاختبارات.
 
 - [FIN-09 — استرجاع سجل التاجر وربط واجهات Flutter](FIN09_MERCHANT_RESTORE_AND_FLUTTER_GATEWAY_AR.md): طلبات REST موثقة، عرض مرحلي وتفاصيل فحوص، دون ادعاء وجود OTP.
+
+- [FIN-10 — طلبات الارتباط السابقة عند انضمام العميل](FIN10_VERIFIED_RELATIONSHIP_INBOX_AR.md): إنشاء pending آمن من مطابقة هاتف موثقة، Inbox لكل علاقة، وموافقات ديون مستقلة.
