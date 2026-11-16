@@ -179,3 +179,9 @@ flutter run
 ## FIN-11 — بيان التاجر اليدوي (2026-11-16)
 
 الملفات: `lib/services/fin08_pending_statement.dart`، `lib/screens/fin08_merchant_book_screen.dart`، `test/services/fin08_pending_statement_test.dart`، `test/screens/fin08_merchant_book_screen_test.dart`. يسترجع جميع مطالبات العميل من FIN-09 API دون استخدام أول صفحة فقط، ويمنع النسخ إذا فشل استرجاع أي صفحة أو تكررت المؤشرات؛ لا يدخل المعتمد والمرفوض في البيان ولا يضم التسديدات. ينسخ للتاجر بعد تأكيده، دون إرسال آلي. يحتاج جلسة تاجر موثقة وتوصيل Auth قبل اختبار الاستخدام الحقيقي. [المواصفات](FIN11_MANUAL_STATEMENT_AR.md).
+
+## FIN-15 — تسليم تعديل مبلغ الدين قبل الاعتماد (2026-11-17)
+- انتقل من FIN-14 إلى طلب العميل تعديل مبلغ دين غير معتمد، وتوثيق رد التاجر بالموافقة/الرفض؛ يحتفظ المحرك بالأصل وتاريخ العملية. تنشئ الموافقة سجلًا بديلًا مستقلاً وتلتزم موافقتي الطرفين، فلا يُعدّل financial_movements.
+- Migration: server/sql/003_fin15_amendments.sql بعد 001 و002. تحقق من إعداد قاعدة اختبار PostgreSQL في .github/workflows/fin08-api.yml.
+- API: server/src/amendments.mjs وserver/src/http.mjs؛ Flutter: lib/services/fin15_amendment_gateway.dart وlib/screens/fin15_amendments_screen.dart، مع مداخل على شاشات الديون والدفتر. واجهة Login لا تملك JWT موثقًا بعد.
+- اختبارات FIN-15 خادمية وواجهات؛ أعد فحص أحدث CI على GitHub قبل أي نشر. تبقى صلاحية الهاتف، والتشغيل على جهازين، النسخ الاحتياطي والاستعادة، تخصيص المدفوعات، الحدود الائتمانية، PDF الإنتاجي، والمزامنة خارج الشبكة أعمالًا لاحقة.
