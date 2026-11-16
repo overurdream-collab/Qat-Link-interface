@@ -31,7 +31,9 @@ enum Fin08Stage {
   acceptedAwaitingRelationship,
   acceptedAwaitingPosting,
   rejected,
-  approved;
+  approved,
+  amendmentPending,
+  superseded;
 
   static Fin08Stage fromWire(String value) => switch (value) {
         'outside_app' => outsideApp,
@@ -40,6 +42,8 @@ enum Fin08Stage {
         'accepted_awaiting_posting' => acceptedAwaitingPosting,
         'rejected' => rejected,
         'approved' => approved,
+        'amendment_pending' => amendmentPending,
+        'superseded' => superseded,
         _ => throw const FormatException('Unknown FIN-08 claim stage'),
       };
 
@@ -51,6 +55,8 @@ enum Fin08Stage {
           acceptedAwaitingPosting => 'الدفعة تنتظر الترحيل',
           rejected => 'دفعة مرفوضة — لا تؤثر على الرصيد',
           approved => 'دفعة معتمدة',
+          amendmentPending => 'العملية تنتظر رد التاجر على طلب تعديل',
+          superseded => 'تم استبدال العملية بسجل أحدث',
         }
       : label;
 
@@ -61,6 +67,8 @@ enum Fin08Stage {
         acceptedAwaitingPosting => 'بانتظار الترحيل الموثق',
         rejected => 'مرفوض — لا يدخل الرصيد',
         approved => 'دين معتمد',
+        amendmentPending => 'طلب تعديل مبلغ الدين قيد مراجعة التاجر',
+        superseded => 'دين أصلي مستبدل — لا يكرر احتسابه',
       };
 }
 
