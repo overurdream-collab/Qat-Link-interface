@@ -13,6 +13,7 @@ class MerchantGatewayFake implements Fin08ClaimsGateway {
   String? priorKey;
   int attempts=0;
   Decimal? lastAmount;
+  MovementType? lastType;
 
   @override
   Future<String> requestMerchantRelationship(String contactId) async => throw UnimplementedError();
@@ -41,6 +42,7 @@ class MerchantGatewayFake implements Fin08ClaimsGateway {
       required String idempotencyKey,String? description,MovementType type=MovementType.debt}) async {
     attempts++;
     lastAmount=amount;
+    lastType=type;
     if(priorKey==null)priorKey=idempotencyKey;
     else if(priorKey!=idempotencyKey)throw const Fin08ApiError('مفتاح مكرر غير ثابت');
     if(attempts==1) throw const Fin08ApiError('فشل مؤقت من الخادم');
@@ -164,6 +166,27 @@ void main(){
     await tester.pumpAndSettle();
     expect(find.textContaining('تعذر قراءة الصفحة الثانية'),findsOneWidget);
     expect(capturedStatement,isNull,reason:'Never copy a partial or unverified statement');
+  });
+
+  testWidgets('merchant explicitly registers a pending payment, not a debt', (tester) async {
+    final api=MerchantGatewayFake();
+    await tester.pumpWidget(MaterialApp(home:Fin08MerchantBookScreen(gateway:api)));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('fin08_contact_contact-1')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('fin13_add_pending_payment')));
+    await tester.pumpAndSettle();
+    expect(find.textContaining('دفعة مسجلة من طرف التاجر'),findsOneWidget);
+    await tester.enterText(find.byType(TextField).first,'10000');
+    await tester.tap(find.byKey(const Key('fin08_save_claim')));
+    await tester.pumpAndSettle();
+    expect(api.lastType,MovementType.payment);
+    expect(api.lastAmount,Decimal.parse('10000'));
+    expect(find.textContaining('فشل مؤقت من الخادم'),findsOneWidget);
+    await tester.tap(find.byKey(const Key('fin08_save_claim')));
+    await tester.pumpAndSettle();
+    expect(api.attempts,2);
+    expect(api.lastType,MovementType.payment);
   });
 
 }
