@@ -347,7 +347,209 @@ class Fin08HttpClaimsGateway implements Fin08ClaimsGateway {
     if((method!='GET' && method!='POST') ||
         !(path.startsWith('v1/relationships/') ||
           path.startsWith('v1/customer/relationships/') ||
-          path=='v1/customer/previous-claims/batch-decisions') ||
+          path=='v1/customer/previous-claims/batch-decisions' ||
+          RegExp(r'^v1/customer/previous-claims/[A-Za-z0-9_-]+/amount-adjustment
+        path.contains('..') || path.startsWith('/')) {
+      throw ArgumentError('Invalid financial request route');
+    }
+    return _request(method,path,query:query,body:body,idempotencyKey:idempotencyKey);
+  }
+
+  Fin08Page<T> _parsePage<T>(Map<String,dynamic> result,T Function(Map<String,dynamic>) parse) {
+    final raw=result['items'];
+    if(raw is! List) throw const Fin08ApiError('قائمة غير صالحة من الخادم.',code:'invalid_response');
+    try {
+      final values=raw.map((item)=>parse(Map<String,dynamic>.from(item as Map))).toList(growable:false);
+      final cursor=result['next_cursor'];
+      if(cursor!=null && cursor is! String) throw const FormatException('cursor');
+      return Fin08Page<T>(values,cursor as String?);
+    } on FormatException { throw const Fin08ApiError('بيانات غير صالحة من الخادم.',code:'invalid_response'); }
+      on TypeError { throw const Fin08ApiError('بيانات غير صالحة من الخادم.',code:'invalid_response'); }
+  }
+
+  Map<String,String> _pagination(String? cursor,int limit) => {
+    'limit':'$limit',if(cursor!=null)'cursor':cursor,
+  };
+
+  @override
+  Future<Fin08Page<Fin08MerchantContact>> merchantContacts({String? cursor,int limit=50}) async =>
+      _parsePage(await _request('GET','v1/merchant/contacts',query:_pagination(cursor,limit)),Fin08MerchantContact.fromJson);
+
+  @override
+  Future<Fin08Page<Fin08MerchantClaim>> merchantClaims(String contactId,{String? cursor,int limit=50}) async =>
+      _parsePage(await _request('GET','v1/merchant/contacts/${Uri.encodeComponent(contactId)}/claims',
+        query:_pagination(cursor,limit)),Fin08MerchantClaim.fromJson);
+
+  @override
+  Future<Fin08MerchantContact> createMerchantContact({required String name,required String phone}) async =>
+      Fin08MerchantContact.fromJson(await _request('POST','v1/merchant/contacts',body:{'name':name,'phone':phone}));
+
+  @override
+  Future<Fin08ClaimReceipt> createMerchantClaim({required String contactId,
+      required Decimal amount,required CurrencyCode currency,
+      required String idempotencyKey,String? description,
+      MovementType type=MovementType.debt}) async {
+    if(amount<=Decimal.zero) throw ArgumentError.value(amount,'amount','Must be positive');
+    final value=await _request('POST','v1/merchant/claims',idempotencyKey:idempotencyKey,
+        body:{'contact_id':contactId,'amount':amount.toString(),
+          'currency':currency.name.toUpperCase(),'type':type.name,if(description!=null)'description':description});
+    return Fin08ClaimReceipt(claimId:_str(value,'id'),replayed:value['replayed']==true);
+  }
+
+  @override
+  Future<List<Fin08CurrencyBuckets>> merchantClaimSummary() async {
+    final response=await _request('GET','v1/merchant/claims/summary');
+    if(response['approved_scope']!='pre_registration_claims_only_not_full_ledger') {
+      throw const Fin08ApiError('نطاق الرصيد غير موثق.',code:'invalid_response');
+    }
+    final raw=response['currencies'];
+    if(raw is! List) throw const Fin08ApiError('ملخص غير صالح من الخادم.',code:'invalid_response');
+    return raw.map((v)=>Fin08CurrencyBuckets.fromJson(Map<String,dynamic>.from(v as Map))).toList(growable:false);
+  }
+
+  @override
+  Future<String> requestMerchantRelationship(String contactId) async {
+    final data=await _request('POST','v1/merchant/relationship-requests',
+      body:{'contact_id':contactId});
+    final status=_str(data,'status');
+    if(status!='pending')throw const Fin08ApiError('حالة الارتباط غير مؤكدة.',code:'invalid_response');
+    return _str(data,'relationship_id');
+  }
+
+  @override
+  Future<Fin08Page<Fin08CustomerRelationship>> customerRelationships({String? cursor,int limit=50}) async =>
+    _parsePage(await _request('GET','v1/customer/relationships',query:_pagination(cursor,limit)),
+      Fin08CustomerRelationship.fromJson);
+
+  @override
+  Future<Fin08RelationshipReceipt> decideRelationship(String relationshipId,{required bool accept}) async {
+    final result=await _request('POST','v1/customer/relationships/${Uri.encodeComponent(relationshipId)}/decision',
+      body:{'decision':accept?'accept':'reject'});
+    final status=_str(result,'status');
+    if(status!=(accept?'approved':'rejected')) {
+      throw const Fin08ApiError('قرار العلاقة غير مؤكد.',code:'invalid_response');
+    }
+    return Fin08RelationshipReceipt(relationshipId:_str(result,'relationship_id'),
+      status:status,newlyPostedDebts:result['newly_posted_debts'] is int
+        ?result['newly_posted_debts'] as int:0);
+  }
+
+  @override
+  Future<Fin08Page<Fin08PreviousClaim>> customerPreviousClaims({String? cursor,int limit=50}) async =>
+      _parsePage(await _request('GET','v1/customer/previous-claims',query:_pagination(cursor,limit)),
+        Fin08PreviousClaim.fromJson);
+
+  @override
+  Future<Fin08ClaimDecisionReceipt> decidePreviousClaim(String claimId,{required bool accept}) async {
+    final result=await _request('POST','v1/customer/previous-claims/${Uri.encodeComponent(claimId)}/decision',
+      body:{'decision':accept?'accept':'reject'});
+    final decision=_str(result,'decision');
+    if(decision!=(accept?'accept':'reject')) throw const Fin08ApiError('القرار غير مؤكد من الخادم.',code:'invalid_response');
+    return Fin08ClaimDecisionReceipt(claimId:_str(result,'claim_id'),decision:decision,
+      recorded:result['recorded']==true,ledgerPosted:result['ledger_posted']==true);
+  }
+}).hasMatch(path) ||
+          RegExp(r'^v1/merchant/claim-adjustments/[A-Za-z0-9_-]+/decision
+        path.contains('..') || path.startsWith('/')) {
+      throw ArgumentError('Invalid financial request route');
+    }
+    return _request(method,path,query:query,body:body,idempotencyKey:idempotencyKey);
+  }
+
+  Fin08Page<T> _parsePage<T>(Map<String,dynamic> result,T Function(Map<String,dynamic>) parse) {
+    final raw=result['items'];
+    if(raw is! List) throw const Fin08ApiError('قائمة غير صالحة من الخادم.',code:'invalid_response');
+    try {
+      final values=raw.map((item)=>parse(Map<String,dynamic>.from(item as Map))).toList(growable:false);
+      final cursor=result['next_cursor'];
+      if(cursor!=null && cursor is! String) throw const FormatException('cursor');
+      return Fin08Page<T>(values,cursor as String?);
+    } on FormatException { throw const Fin08ApiError('بيانات غير صالحة من الخادم.',code:'invalid_response'); }
+      on TypeError { throw const Fin08ApiError('بيانات غير صالحة من الخادم.',code:'invalid_response'); }
+  }
+
+  Map<String,String> _pagination(String? cursor,int limit) => {
+    'limit':'$limit',if(cursor!=null)'cursor':cursor,
+  };
+
+  @override
+  Future<Fin08Page<Fin08MerchantContact>> merchantContacts({String? cursor,int limit=50}) async =>
+      _parsePage(await _request('GET','v1/merchant/contacts',query:_pagination(cursor,limit)),Fin08MerchantContact.fromJson);
+
+  @override
+  Future<Fin08Page<Fin08MerchantClaim>> merchantClaims(String contactId,{String? cursor,int limit=50}) async =>
+      _parsePage(await _request('GET','v1/merchant/contacts/${Uri.encodeComponent(contactId)}/claims',
+        query:_pagination(cursor,limit)),Fin08MerchantClaim.fromJson);
+
+  @override
+  Future<Fin08MerchantContact> createMerchantContact({required String name,required String phone}) async =>
+      Fin08MerchantContact.fromJson(await _request('POST','v1/merchant/contacts',body:{'name':name,'phone':phone}));
+
+  @override
+  Future<Fin08ClaimReceipt> createMerchantClaim({required String contactId,
+      required Decimal amount,required CurrencyCode currency,
+      required String idempotencyKey,String? description,
+      MovementType type=MovementType.debt}) async {
+    if(amount<=Decimal.zero) throw ArgumentError.value(amount,'amount','Must be positive');
+    final value=await _request('POST','v1/merchant/claims',idempotencyKey:idempotencyKey,
+        body:{'contact_id':contactId,'amount':amount.toString(),
+          'currency':currency.name.toUpperCase(),'type':type.name,if(description!=null)'description':description});
+    return Fin08ClaimReceipt(claimId:_str(value,'id'),replayed:value['replayed']==true);
+  }
+
+  @override
+  Future<List<Fin08CurrencyBuckets>> merchantClaimSummary() async {
+    final response=await _request('GET','v1/merchant/claims/summary');
+    if(response['approved_scope']!='pre_registration_claims_only_not_full_ledger') {
+      throw const Fin08ApiError('نطاق الرصيد غير موثق.',code:'invalid_response');
+    }
+    final raw=response['currencies'];
+    if(raw is! List) throw const Fin08ApiError('ملخص غير صالح من الخادم.',code:'invalid_response');
+    return raw.map((v)=>Fin08CurrencyBuckets.fromJson(Map<String,dynamic>.from(v as Map))).toList(growable:false);
+  }
+
+  @override
+  Future<String> requestMerchantRelationship(String contactId) async {
+    final data=await _request('POST','v1/merchant/relationship-requests',
+      body:{'contact_id':contactId});
+    final status=_str(data,'status');
+    if(status!='pending')throw const Fin08ApiError('حالة الارتباط غير مؤكدة.',code:'invalid_response');
+    return _str(data,'relationship_id');
+  }
+
+  @override
+  Future<Fin08Page<Fin08CustomerRelationship>> customerRelationships({String? cursor,int limit=50}) async =>
+    _parsePage(await _request('GET','v1/customer/relationships',query:_pagination(cursor,limit)),
+      Fin08CustomerRelationship.fromJson);
+
+  @override
+  Future<Fin08RelationshipReceipt> decideRelationship(String relationshipId,{required bool accept}) async {
+    final result=await _request('POST','v1/customer/relationships/${Uri.encodeComponent(relationshipId)}/decision',
+      body:{'decision':accept?'accept':'reject'});
+    final status=_str(result,'status');
+    if(status!=(accept?'approved':'rejected')) {
+      throw const Fin08ApiError('قرار العلاقة غير مؤكد.',code:'invalid_response');
+    }
+    return Fin08RelationshipReceipt(relationshipId:_str(result,'relationship_id'),
+      status:status,newlyPostedDebts:result['newly_posted_debts'] is int
+        ?result['newly_posted_debts'] as int:0);
+  }
+
+  @override
+  Future<Fin08Page<Fin08PreviousClaim>> customerPreviousClaims({String? cursor,int limit=50}) async =>
+      _parsePage(await _request('GET','v1/customer/previous-claims',query:_pagination(cursor,limit)),
+        Fin08PreviousClaim.fromJson);
+
+  @override
+  Future<Fin08ClaimDecisionReceipt> decidePreviousClaim(String claimId,{required bool accept}) async {
+    final result=await _request('POST','v1/customer/previous-claims/${Uri.encodeComponent(claimId)}/decision',
+      body:{'decision':accept?'accept':'reject'});
+    final decision=_str(result,'decision');
+    if(decision!=(accept?'accept':'reject')) throw const Fin08ApiError('القرار غير مؤكد من الخادم.',code:'invalid_response');
+    return Fin08ClaimDecisionReceipt(claimId:_str(result,'claim_id'),decision:decision,
+      recorded:result['recorded']==true,ledgerPosted:result['ledger_posted']==true);
+  }
+}).hasMatch(path)) ||
         path.contains('..') || path.startsWith('/')) {
       throw ArgumentError('Invalid financial request route');
     }
