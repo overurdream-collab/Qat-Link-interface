@@ -60,7 +60,7 @@ CREATE TRIGGER fin17_allocation_entry_immutable
   FOR EACH ROW EXECUTE FUNCTION fin17_immutable_allocation_entry();
 
 CREATE OR REPLACE FUNCTION fin17_allocation_request_transition()
-RETURNS trigger LANGUAGE plpgsql AS $
+RETURNS trigger LANGUAGE plpgsql AS $fin17$
 BEGIN
   IF TG_OP='DELETE' THEN
     RAISE EXCEPTION 'Allocation request history is immutable';
@@ -81,7 +81,7 @@ BEGIN
     RAISE EXCEPTION 'Allocation request facts are immutable';
   END IF;
   RETURN NEW;
-END;$;
+END;$fin17$;
 DROP TRIGGER IF EXISTS fin17_allocation_request_transition ON financial_payment_allocation_requests;
 CREATE TRIGGER fin17_allocation_request_transition
   BEFORE UPDATE OR DELETE ON financial_payment_allocation_requests
