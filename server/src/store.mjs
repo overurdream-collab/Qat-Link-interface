@@ -146,6 +146,39 @@ export class Fin08Store {
     return this.tx(async c => {
       const contact = await c.query('SELECT id FROM merchant_contacts WHERE id=$1 AND merchant_id=$2',[contactId,actor.id]);
       if (!contact.rowCount) throw missing();
+      // Idempotency replay must remain valid even if a later credit policy
+      // blocks *new* requests. Never change the fate of a saved claim.
+      const prior=await c.query(
+        'SELECT id,contact_id,amount::text,currency,description,operation_type AS type,created_at,occurred_at,request_digest '+
+        'FROM merchant_claims WHERE merchant_id=$1 AND idempotency_key=$2',
+        [actor.id,key]);
+      if(prior.rowCount){
+        if(prior.rows[0].request_digest!==hash)throw conflict('Idempotency-Key already used with different content');
+        const {request_digest:omitted,...claim}=prior.rows[0];
+        return {claim,replayed:true};
+      }
+      let creditWarning=null;
+      if(type==='debt'){
+        // Prevent bypassing the policy by calling the legacy merchant-claims
+        // endpoint after a relationship is approved. Pending/outside-app
+        // claims remain unilateral and do not turn into approved ledger debt.
+        const active=await c.query([
+          'SELECT id,customer_id FROM merchant_relationships',
+          'WHERE merchant_id=$1 AND contact_id=$2',
+          'AND status IN (\'pending\',\'approved\')',
+          'ORDER BY created_at DESC,id DESC LIMIT 2'
+        ].join(' '),[actor.id,contactId]);
+        if(active.rows.length>1)throw conflict('Multiple active relationships require identity review');
+        if(active.rowCount){
+          const rel=active.rows[0];
+          await this.lockRelationshipPair(c,actor.id,rel.customer_id);
+          const latest=await c.query(
+            'SELECT id,status FROM merchant_relationships WHERE id=$1 FOR UPDATE',[rel.id]);
+          if(latest.rows[0]?.status==='approved'){
+            creditWarning=await this.credit.evaluateNewDebt(c,rel.id,unit,amount);
+          }
+        }
+      }
       const id = randomUUID();
       const {rows} = await c.query(`INSERT INTO merchant_claims(id,merchant_id,contact_id,amount,currency,description,idempotency_key,request_digest,operation_type)
         VALUES($1,$2,$3,$4::numeric,$5,$6,$7,$8,$9)
@@ -153,7 +186,7 @@ export class Fin08Store {
         RETURNING id,contact_id,amount::text,currency,description,operation_type AS type,created_at,occurred_at`,[id,actor.id,contactId,amount,unit,description,key,hash,type]);
       if (rows.length) {
         await this.audit(c,actor.id,'merchant_claim',id,type==='payment'?'created_unacknowledged_payment':'created_unacknowledged_debt');
-        return {claim:rows[0],replayed:false};
+        return {claim:rows[0],replayed:false,credit_warning:creditWarning};
       }
       const replay = await c.query(`SELECT id,contact_id,amount::text,currency,description,operation_type AS type,created_at,occurred_at,request_digest
         FROM merchant_claims WHERE merchant_id=$1 AND idempotency_key=$2`,[actor.id,key]);
