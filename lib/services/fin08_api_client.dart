@@ -214,10 +214,13 @@ class Fin08ClaimDecisionReceipt {
 }
 
 class Fin08CurrencyBuckets {
-  const Fin08CurrencyBuckets({required this.currency,required this.outsideApp,
+  Fin08CurrencyBuckets({required this.currency,required this.outsideApp,
     required this.awaitingCustomer,required this.approvedFromClaims,
-    this.outsideAppPayments=Decimal.zero,this.awaitingPayments=Decimal.zero,
-    this.approvedPaymentsFromClaims=Decimal.zero});
+    Decimal? outsideAppPayments,Decimal? awaitingPayments,
+    Decimal? approvedPaymentsFromClaims})
+      : outsideAppPayments=outsideAppPayments??Decimal.zero,
+        awaitingPayments=awaitingPayments??Decimal.zero,
+        approvedPaymentsFromClaims=approvedPaymentsFromClaims??Decimal.zero;
   final CurrencyCode currency;
   final Decimal outsideApp;
   final Decimal outsideAppPayments;
