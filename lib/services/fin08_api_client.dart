@@ -318,7 +318,8 @@ class Fin08HttpClaimsGateway implements Fin08ClaimsGateway {
       {Map<String,String>? query,Object? body,String? idempotencyKey}) {
     if((method!='GET' && method!='POST') ||
         !(path.startsWith('v1/relationships/') ||
-          path.startsWith('v1/customer/relationships/')) ||
+          path.startsWith('v1/customer/relationships/') ||
+          path=='v1/customer/previous-claims/batch-decisions') ||
         path.contains('..') || path.startsWith('/')) {
       throw ArgumentError('Invalid financial request route');
     }
