@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:decimal/decimal.dart';
 import '../services/fin14_batch_gateway.dart';
+import '../services/fin15_claim_adjustment_gateway.dart';
 
 import '../services/fin08_api_client.dart';
 import '../models/app_models.dart';
@@ -11,9 +12,10 @@ import '../widgets/finance_display.dart';
 /// Attach only after real authenticated customer login; never from a locally
 /// validated phone, PIN or unverified mock account.
 class Fin08CustomerClaimsScreen extends StatefulWidget {
-  const Fin08CustomerClaimsScreen({super.key, required this.gateway,this.batchGateway});
+  const Fin08CustomerClaimsScreen({super.key, required this.gateway,this.batchGateway,this.adjustmentGateway});
   final Fin08ClaimsGateway gateway;
   final Fin14BatchGateway? batchGateway;
+  final Fin15ClaimAdjustmentGateway? adjustmentGateway;
 
   @override
   State<Fin08CustomerClaimsScreen> createState() => _Fin08CustomerClaimsScreenState();
@@ -120,6 +122,237 @@ class _Fin08CustomerClaimsScreenState extends State<Fin08CustomerClaimsScreen> {
         content:Text(e is Fin08ApiError?e.message:
           'تعذر تأكيد المجموعة؛ لم نؤكد حفظ أي قرار. راجع الحالة ثم أعد المحاولة.')));
     }finally{if(mounted)setState(()=>_batchBusy=false);}
+  }
+
+  Future<void> _requestAmountChange(Fin08PreviousClaim claim) async {
+    if(widget.adjustmentGateway==null || !claim.canReview ||
+       _submitting.contains(claim.id) || _batchBusy)return;
+    var amountText='';
+    var reasonText='';
+    var sending=false;
+    String? error;
+    final saved=await showDialog<bool>(
+      context:context,barrierDismissible:false,
+      builder:(ctx)=>StatefulBuilder(builder:(dialog,update)=>AlertDialog(
+        title:const Text('طلب تعديل مبلغ العملية'),
+        content:SingleChildScrollView(child:Column(
+          mainAxisSize:MainAxisSize.min,
+          children:[
+            Text('المبلغ الذي سجله التاجر: ${FinanceDisplay.amount(claim.amount)} '
+              '${claim.currency.name.toUpperCase()}'),
+            const Text('لا يتغير المبلغ الأصلي ولا الرصيد المعتمد. '
+              'إذا قبل التاجر الاقتراح، يُنشأ طلب جديد يحتاج موافقتك.'),
+            TextField(key:const Key('fin15_proposed_amount'),
+              keyboardType:const TextInputType.numberWithOptions(decimal:true),
+              onChanged:(value)=>amountText=value,
+              decoration:const InputDecoration(labelText:'المبلغ الصحيح المقترح')),
+            TextField(key:const Key('fin15_adjustment_reason'),
+              onChanged:(value)=>reasonText=value,maxLength:500,
+              decoration:const InputDecoration(labelText:'سبب طلب التعديل')),
+            if(error!=null)Text(error!,style:TextStyle(
+              color:Theme.of(dialog).colorScheme.error)),
+          ],
+        )),
+        actions:[
+          TextButton(onPressed:sending?null:()=>Navigator.pop(dialog,false),
+            child:const Text('إلغاء')),
+          FilledButton(key:const Key('fin15_submit_adjustment'),
+            onPressed:sending?null:() async {
+              final raw=amountText.trim();
+              if(!RegExp(r'^\d{1,16}(?:\.\d{1,4})?
+    if (_submitting.contains(claim.id) || !claim.canReview) return;
+    final confirmed = await showDialog<bool>(context:context,builder:(ctx)=>AlertDialog(
+      title:Text('${accept?'الموافقة':'رفض'} على ${claim.type==MovementType.payment?'هذه الدفعة':'هذا الدين'}؟'),
+      content:Text('${claim.type==MovementType.payment?'دفعة':'مطالبة دين'} من ${claim.merchantName} بمبلغ '
+        '${FinanceDisplay.amount(claim.amount)} '
+        '${FinanceDisplay.currencyCode(claim.currency)}. '
+        'يُسجّل قرارك لهذا الطلب وحده. '
+        'لا يُعتمد الدين قبل قبول العلاقة وترحيل الحركة لدى الخادم.'),
+      actions:[
+        TextButton(onPressed:()=>Navigator.pop(ctx,false),child:const Text('إلغاء')),
+        FilledButton(
+          key:const Key('fin08_confirm_claim_decision'),
+          onPressed:()=>Navigator.pop(ctx,true),
+          child:Text(accept?'أوافق على العملية':'أرفض العملية'),
+        ),
+      ],
+    ));
+    if (!mounted || confirmed != true) return;
+    setState(() => _submitting.add(claim.id));
+    try {
+      final result = await widget.gateway.decidePreviousClaim(claim.id,accept:accept);
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content:Text(
+        result.ledgerPosted ? 'أكد الخادم اعتماد هذه العملية بعد اكتمال الموافقتين.' :
+        accept ? 'سُجلت موافقتك على هذا الطلب فقط. قد يلزم إكمال اعتماد العلاقة.' :
+        'سُجل رفض هذا الطلب دون أثر على الرصيد المعتمد.',
+      )));
+      await _load();
+    } catch (error) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content:Text(
+        error is Fin08ApiError ? error.message :
+        'لم نؤكد حفظ القرار. راجع الحالة قبل إعادة المحاولة.',
+      )));
+    } finally {
+      if (mounted) setState(() => _submitting.remove(claim.id));
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final c=Theme.of(context).colorScheme;
+    return Scaffold(
+      appBar:AppBar(title:const Text('طلبات الديون السابقة')),
+      body:RefreshIndicator(
+        onRefresh:()=>_load(),
+        child:ListView(
+          padding:const EdgeInsets.all(16),
+          children:[
+            Text('ديون ودفعات سجّلها التجار قبل انضمامك',
+              style:Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight:FontWeight.w800)),
+            const SizedBox(height:6),
+            Text('كل طلب مستقل ويظل غير معتمد حتى تكتمل موافقتك '
+                'على الدين والعلاقة. لا توجد موافقة جماعية تلقائية.',
+                style:TextStyle(color:c.onSurfaceVariant)),
+            const SizedBox(height:10),
+            OutlinedButton.icon(
+              key:const Key('fin10_open_relationships'),
+              onPressed:() async {
+                await Navigator.of(context).push(MaterialPageRoute<void>(
+                  builder:(_)=>Fin08CustomerRelationshipsScreen(gateway:widget.gateway)));
+                if(mounted)await _load(); // Re-read posting after relationship decision.
+              },
+              icon:const Icon(Icons.handshake_outlined),
+              label:const Text('مراجعة طلبات الارتباط بالتجار'),
+            ),
+            const SizedBox(height:16),
+            if(widget.batchGateway!=null) ...[
+              Text('حدد العمليات التي تريد مراجعتها جماعياً — حتى 50 عملية.',
+                style:TextStyle(color:c.onSurfaceVariant)),
+              if(_selectedForBatch.isNotEmpty)Wrap(spacing:8,children:[
+                FilledButton(key:const Key('fin14_batch_accept'),
+                  onPressed:_batchBusy?null:()=>_batchDecision(true),
+                  child:Text('اعتماد المحدد ('+_selectedForBatch.length.toString()+')')),
+                OutlinedButton(key:const Key('fin14_batch_reject'),
+                  onPressed:_batchBusy?null:()=>_batchDecision(false),
+                  child:const Text('رفض المحدد')),
+              ]),
+              const SizedBox(height:8),
+            ],
+            if(_failure!=null) Padding(
+              padding:const EdgeInsets.only(bottom:12),
+              child:Column(crossAxisAlignment:CrossAxisAlignment.stretch,children:[
+                Text(_failure!,key:const Key('fin08_inbox_error'),style:TextStyle(color:c.error)),
+                TextButton(onPressed:_loading?null:()=>_load(),child:const Text('إعادة المحاولة')),
+              ]),
+            ),
+            if(_rows.isEmpty && _loading)
+              const Center(child:CircularProgressIndicator())
+            else if(_rows.isEmpty && _failure==null)
+              const Padding(padding:EdgeInsets.all(25),child:Text('لا توجد مطالبات سابقة لحسابك الموثق.')),
+            for(final claim in _rows) Card(
+              key:Key('fin08_claim_${claim.id}'),
+              margin:const EdgeInsets.only(bottom:10),
+              child:Padding(padding:const EdgeInsets.all(13),child:Column(
+                crossAxisAlignment:CrossAxisAlignment.stretch,children:[
+                  Text(claim.merchantName,style:const TextStyle(fontSize:15,fontWeight:FontWeight.w800)),
+                  const SizedBox(height:5),
+                  Text('${FinanceDisplay.amount(claim.amount)} ${FinanceDisplay.currencyCode(claim.currency)}',
+                    style:const TextStyle(fontSize:20,fontWeight:FontWeight.bold)),
+                  if(claim.stage==Fin08Stage.awaitingMerchantAdjustment && claim.proposedAmount!=null)
+                    Text('المبلغ المقترح: ${FinanceDisplay.amount(claim.proposedAmount!)} ${claim.currency.name.toUpperCase()}'),
+                  if(claim.stage==Fin08Stage.superseded)
+                    const Text('حُفظت المطالبة الأصلية. راجع الطلب الجديد بدلاً منها.'),
+                  if(claim.description!=null && claim.description!.isNotEmpty)
+                    Text(claim.description!,style:TextStyle(color:c.onSurfaceVariant)),
+                  const SizedBox(height:5),
+                  Text(claim.stage.labelFor(claim.type),style:TextStyle(
+                    color:claim.stage==Fin08Stage.approved?c.primary:c.onSurfaceVariant,
+                    fontWeight:FontWeight.w700)),
+                  if(claim.canReview && widget.adjustmentGateway!=null)
+                    OutlinedButton.icon(
+                      key:Key('fin15_request_adjustment_${claim.id}'),
+                      onPressed:_submitting.contains(claim.id)||_batchBusy?null:()=>_requestAmountChange(claim),
+                      icon:const Icon(Icons.edit_outlined),
+                      label:const Text('طلب تعديل المبلغ'),
+                    ),
+                  if(claim.canReview) ...[
+                    if(widget.batchGateway!=null)CheckboxListTile(
+                      key:Key('fin14_select_'+claim.id),
+                      title:const Text('تحديد للمراجعة الجماعية'),
+                      value:_selectedForBatch.contains(claim.id),
+                      onChanged:_batchBusy?null:(checked){setState((){
+                        if(checked==true && _selectedForBatch.length<50){
+                          _selectedForBatch.add(claim.id);
+                        }else if(checked==false){_selectedForBatch.remove(claim.id);}
+                      });},
+                    ),
+                    const SizedBox(height:12),
+                    Row(children:[
+                      Expanded(child:FilledButton(
+                        key:Key('fin08_accept_${claim.id}'),
+                        onPressed:_submitting.contains(claim.id)?null:()=>_decide(claim,true),
+                        child:const Text('موافقة'),
+                      )),
+                      const SizedBox(width:9),
+                      Expanded(child:OutlinedButton(
+                        key:Key('fin08_reject_${claim.id}'),
+                        onPressed:_submitting.contains(claim.id)?null:()=>_decide(claim,false),
+                        child:const Text('رفض'),
+                      )),
+                    ]),
+                  ],
+                ],
+              )),
+            ),
+            if(_loading && _rows.isNotEmpty)
+              const Center(child:Padding(padding:EdgeInsets.all(12),child:CircularProgressIndicator())),
+            if(_cursor!=null && !_loading)
+              TextButton(
+                key:const Key('fin08_load_more'),
+                onPressed:()=>_load(append:true),
+                child:const Text('عرض مطالبات أقدم'),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+}).hasMatch(raw) ||
+                  Decimal.parse(raw)<=Decimal.zero ||
+                  Decimal.parse(raw)==claim.amount ||
+                  reasonText.trim().length<2){
+                update(()=>error='أدخل مبلغاً مختلفاً وموجباً، وسبباً واضحاً للتعديل.');
+                return;
+              }
+              update((){sending=true;error=null;});
+              var success=false;
+              try{
+                final receipt=await widget.adjustmentGateway!.request(claim.id,
+                  proposedAmount:Decimal.parse(raw),reason:reasonText.trim());
+                if(receipt.status!='pending')throw const Fin08ApiError(
+                  'لم يثبت الخادم تعليق طلب التعديل.',code:'invalid_response');
+                if(!dialog.mounted)return;
+                success=true;
+                Navigator.pop(dialog,true);
+              }catch(e){
+                if(dialog.mounted)update(()=>error=e is Fin08ApiError
+                  ?e.message:'تعذر تأكيد طلب التعديل من الخادم.');
+              }finally{
+                if(!success && dialog.mounted)update(()=>sending=false);
+              }
+            },
+            child:const Text('إرسال طلب التعديل')),
+        ],
+      )),
+    );
+    if(saved==true && mounted){
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content:Text(
+        'حُفظ طلب التعديل لدى الخادم، وبانتظار التاجر. '
+        'لا تغيير في الرصيد المعتمد.')));
+      await _load();
+    }
   }
 
   Future<void> _decide(Fin08PreviousClaim claim, bool accept) async {
