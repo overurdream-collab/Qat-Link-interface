@@ -103,6 +103,9 @@ class _Fin15AmendmentsScreenState extends State<Fin15AmendmentsScreen>{
             key:Key('fin15_amendment_'+item.id),
             child:Padding(padding:const EdgeInsets.all(12),child:Column(
               crossAxisAlignment:CrossAxisAlignment.start,children:[
+                if(widget.forMerchant && item.customerName!=null)
+                  Text('العميل: '+item.customerName!,
+                    style:const TextStyle(fontWeight:FontWeight.w700)),
                 Text(item.isHistorical?'دين سابق':'دين داخل العلاقة',
                   style:Theme.of(context).textTheme.titleMedium),
                 Text('الأصلي: '+FinanceDisplay.amount(item.oldAmount)+' '+
