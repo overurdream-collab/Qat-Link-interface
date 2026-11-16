@@ -75,10 +75,10 @@ export class FinancialLedgerService {
       '(id,source_operation_id,relationship_id,merchant_id,customer_id,amount,currency,type,reversal_of_movement_id)',
       'SELECT $2,o.id,o.relationship_id,o.merchant_id,o.customer_id,o.amount,o.currency,',
       'o.operation_type,o.reversal_of_movement_id FROM relationship_operations o',
-      'JOIN merchant_relationships r ON r.id=o.relationship_id AND r.status=\\'approved\\'',
-      'WHERE o.id=$1 AND o.status=\\'approved\\'',
+      'JOIN merchant_relationships r ON r.id=o.relationship_id AND r.status=\'approved\'',
+      'WHERE o.id=$1 AND o.status=\'approved\'',
       'ON CONFLICT (source_operation_id) DO NOTHING RETURNING id'
-    ].join(' ').replaceAll("\\'","'"),[operationId,randomUUID()]);
+    ].join(' ').replaceAll("\'","'"),[operationId,randomUUID()]);
     if(rows.length) await this.store.audit(c,actorId,'operation',operationId,'posted_once_to_approved_ledger');
     return rows.length>0;
   }
@@ -225,9 +225,9 @@ export class FinancialLedgerService {
         [movementId,relId]);
       if(!original.rowCount) throw missing();
       const existing=await c.query([
-        'SELECT 1 FROM relationship_operations WHERE reversal_of_movement_id=$1 AND status<>\\'rejected\\'',
+        'SELECT 1 FROM relationship_operations WHERE reversal_of_movement_id=$1 AND status<>\'rejected\'',
         'UNION ALL SELECT 1 FROM financial_movements WHERE reversal_of_movement_id=$1 LIMIT 1'
-      ].join(' ').replaceAll("\\'","'"),[movementId]);
+      ].join(' ').replaceAll("\'","'"),[movementId]);
       if(existing.rowCount) throw conflict('A reversal already exists or is awaiting approval');
       const source=original.rows[0],id=randomUUID();
       const opposite=source.type==='debt'?'payment':'debt';
@@ -250,11 +250,11 @@ export class FinancialLedgerService {
       await this.relationship(c,actor,id);
       const {rows}=await c.query([
         'SELECT currency,',
-        'COALESCE(SUM(CASE WHEN type=\\'debt\\' THEN amount ELSE 0 END),0)::text AS approved_debts,',
-        'COALESCE(SUM(CASE WHEN type=\\'payment\\' THEN amount ELSE 0 END),0)::text AS approved_payments,',
-        'COALESCE(SUM(CASE WHEN type=\\'debt\\' THEN amount ELSE -amount END),0)::text AS balance',
+        'COALESCE(SUM(CASE WHEN type=\'debt\' THEN amount ELSE 0 END),0)::text AS approved_debts,',
+        'COALESCE(SUM(CASE WHEN type=\'payment\' THEN amount ELSE 0 END),0)::text AS approved_payments,',
+        'COALESCE(SUM(CASE WHEN type=\'debt\' THEN amount ELSE -amount END),0)::text AS balance',
         'FROM financial_movements WHERE relationship_id=$1 GROUP BY currency ORDER BY currency'
-      ].join(' ').replaceAll("\\'","'"),[id]);
+      ].join(' ').replaceAll("\'","'"),[id]);
       const map=new Map(rows.map(x=>[x.currency,x]));
       return {relationship_id:id,currencies:['YER','SAR','USD'].map(unit=>({
         currency:unit,approved_debts:map.get(unit)?.approved_debts??'0.0000',
@@ -272,10 +272,10 @@ export class FinancialLedgerService {
       await c.query('SET TRANSACTION ISOLATION LEVEL REPEATABLE READ, READ ONLY');
       await this.relationship(c,actor,id);
       const opening=await c.query([
-        'SELECT COALESCE(SUM(CASE WHEN type=\\'debt\\' THEN amount ELSE -amount END),0)::text AS balance',
+        'SELECT COALESCE(SUM(CASE WHEN type=\'debt\' THEN amount ELSE -amount END),0)::text AS balance',
         'FROM financial_movements WHERE relationship_id=$1 AND currency=$2',
         'AND (posted_at AT TIME ZONE \\u0027Asia/Aden\\u0027)::date<$3::date'
-      ].join(' ').replaceAll("\\'","'").replaceAll("\\u0027","'"),[id,code,from]);
+      ].join(' ').replaceAll("\'","'").replaceAll("\\u0027","'"),[id,code,from]);
       const q=await c.query([
         'SELECT id,amount::text,currency,type,posted_at,reversal_of_movement_id,',
         'source_claim_id,source_operation_id',
