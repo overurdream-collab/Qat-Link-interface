@@ -16,7 +16,7 @@ function packPage(rows, limit, snapshot, secret, actor, scope, map) {
   const tail = rows[limit - 1];
   const nextCursor = hasMore ? encodeCursor({
     scope, actor: actor.id, snapshot,
-    createdAt: new Date(tail.created_at).toISOString(), id: tail.id,
+    createdAt: tail.cursor_created_at, id: tail.id,
   }, secret) : null;
   return { items, next_cursor: nextCursor };
 }
@@ -24,9 +24,10 @@ function packPage(rows, limit, snapshot, secret, actor, scope, map) {
 export async function listMerchantContacts(pool, secret, actor, { limit, cursor }) {
   const count = page(limit);
   const parsed = cursorFor(cursor, secret, actor, 'merchant_contacts');
-  const snapshot = parsed?.snapshot ?? new Date().toISOString();
+  const snapshot = parsed?.snapshot ?? (await pool.query('SELECT clock_timestamp()::text AS captured_at')).rows[0].captured_at;
   const { rows } = await pool.query(`
-    SELECT id,display_name AS name,normalized_phone AS phone,created_at
+    SELECT id,display_name AS name,normalized_phone AS phone,created_at,
+      created_at::text AS cursor_created_at
     FROM merchant_contacts
     WHERE merchant_id=$1 AND created_at <= $2::timestamptz
       AND ($3::timestamptz IS NULL OR (created_at,id)<($3::timestamptz,$4::uuid))
@@ -42,12 +43,13 @@ export async function listMerchantContactClaims(pool, secret, actor, contactId, 
   const count = page(limit);
   const scope = `merchant_contact_claims:${id}`;
   const parsed = cursorFor(cursor, secret, actor, scope);
-  const snapshot = parsed?.snapshot ?? new Date().toISOString();
+  const snapshot = parsed?.snapshot ?? (await pool.query('SELECT clock_timestamp()::text AS captured_at')).rows[0].captured_at;
   const contact = await pool.query(`SELECT 1 FROM merchant_contacts WHERE id=$1 AND merchant_id=$2`,
     [id, actor.id]);
   if (!contact.rowCount) throw new ApiError(404,'not_found','Not found');
   const { rows } = await pool.query(`
     SELECT cl.id,cl.contact_id,cl.amount::text,cl.currency,cl.description,cl.created_at,
+      cl.created_at::text AS cursor_created_at,
       d.decision, r.status AS relationship_status, fm.id AS movement_id,
       (ev.id IS NOT NULL AND
         (SELECT COUNT(DISTINCT proof.customer_id) FROM customer_phone_evidence proof

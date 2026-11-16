@@ -8,10 +8,10 @@ export async function listCustomerRelationships(pool, secret, actor, {limit,curs
   if (decoded && (decoded.scope!=='customer_relationships' || decoded.actor!==actor.id)) {
     throw new ApiError(422,'invalid_input','Cursor is invalid for this account or list');
   }
-  const snapshot=decoded?.snapshot??new Date().toISOString();
+  const snapshot=decoded?.snapshot??(await pool.query('SELECT clock_timestamp()::text AS captured_at')).rows[0].captured_at;
   const {rows}=await pool.query(`
     SELECT r.id,r.merchant_id,mp.verified_display_name AS merchant_display_name,
-      r.status,date_trunc('milliseconds',r.created_at) AS created_at,r.decided_at
+      r.status,r.created_at,r.decided_at,r.created_at::text AS cursor_created_at
     FROM merchant_relationships r
     JOIN merchant_contacts c ON c.id=r.contact_id AND c.merchant_id=r.merchant_id
     JOIN verified_contact_links vl ON vl.contact_id=c.id
@@ -25,8 +25,8 @@ export async function listCustomerRelationships(pool, secret, actor, {limit,curs
         FROM customer_phone_evidence evidence
         WHERE evidence.normalized_phone=c.normalized_phone AND evidence.revoked_at IS NULL)=1
       AND r.created_at <= $2::timestamptz
-      AND ($3::timestamptz IS NULL OR (date_trunc('milliseconds',r.created_at),r.id)<($3::timestamptz,$4::uuid))
-    ORDER BY date_trunc('milliseconds',r.created_at) DESC,r.id DESC LIMIT $5`,
+      AND ($3::timestamptz IS NULL OR (r.created_at,r.id)<($3::timestamptz,$4::uuid))
+    ORDER BY r.created_at DESC,r.id DESC LIMIT $5`,
     [actor.id,snapshot,decoded?.createdAt??null,decoded?.id??null,n+1]);
   const more=rows.length>n;
   const items=rows.slice(0,n).map(row=>({
@@ -36,6 +36,6 @@ export async function listCustomerRelationships(pool, secret, actor, {limit,curs
   }));
   const last=rows[n-1];
   const next_cursor=more?encodeCursor({scope:'customer_relationships',actor:actor.id,
-    snapshot,createdAt:new Date(last.created_at).toISOString(),id:last.id},secret):null;
+    snapshot,createdAt:last.cursor_created_at,id:last.id},secret):null;
   return {items,next_cursor};
 }
