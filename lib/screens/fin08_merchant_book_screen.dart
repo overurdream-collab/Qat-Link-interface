@@ -78,6 +78,7 @@ class _Fin08MerchantBookScreenState extends State<Fin08MerchantBookScreen> {
     var phone='';
     var saving=false;
     String? failure;
+    Fin08ClaimReceipt? confirmedReceipt;
     final saved=await showDialog<bool>(
         context:context,barrierDismissible:false,
         builder:(dialogContext)=>StatefulBuilder(
@@ -155,7 +156,7 @@ class _Fin08MerchantBookScreenState extends State<Fin08MerchantBookScreen> {
                 setDialog((){saving=true;failure=null;});
                 var success=false;
                 try{
-                  await widget.gateway.createMerchantClaim(
+                  confirmedReceipt=await widget.gateway.createMerchantClaim(
                     contactId:contact.id,amount:money,currency:currency,type:type,
                     idempotencyKey:key,description:descriptionText.trim().isEmpty?null:descriptionText.trim());
                   if(!ctx.mounted)return;
@@ -168,7 +169,14 @@ class _Fin08MerchantBookScreenState extends State<Fin08MerchantBookScreen> {
           ),
         ),
       );
-      if(saved==true && mounted)await _select(contact);
+      if(saved==true && mounted){
+        await _select(contact);
+        final warning=confirmedReceipt?.creditWarning;
+        if(warning!=null && mounted){
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content:Text(
+            'تنبيه ائتماني: المبلغ المتوقع ${warning.projected} ${warning.currency.name.toUpperCase()} يتجاوز الحد ${warning.limit}. الدين مسجل كمطالبة ولا يُعتمد دون موافقة العميل.')));
+        }
+      }
 
   }
 
