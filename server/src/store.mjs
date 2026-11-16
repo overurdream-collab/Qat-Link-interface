@@ -4,6 +4,7 @@ import { listCustomerRelationships } from './customer_relationships.mjs';
 import { FinancialLedgerService } from './ledger.mjs';
 import { Fin14BatchService } from './batch.mjs';
 import { Fin15AmendmentService } from './amendments.mjs';
+import { Fin16CreditService } from './credit_limits.mjs';
 import { ApiError, assertText, claimDigest, currency, decision, idempotencyKey, money, normalizePhone, page, uuid, encodeCursor, decodeCursor } from './validation.mjs';
 
 const conflict = (message) => new ApiError(409, 'conflict', message);
@@ -28,6 +29,7 @@ export class Fin08Store {
     this.ledger = new FinancialLedgerService(this);
     this.batch = new Fin14BatchService(this);
     this.amendments = new Fin15AmendmentService(this);
+    this.credit = new Fin16CreditService(this);
   }
   async tx(fn) {
     const c = await this.pool.connect();
