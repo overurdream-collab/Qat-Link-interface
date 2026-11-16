@@ -53,7 +53,8 @@ export function createApi({store,verify}) {
       if(method==='POST' && path==='/v1/merchant/claims'){
         requireRole(actor,'merchant');
         const result=await store.createClaim(actor,body,req.headers['idempotency-key']);
-        return json(res,result.replayed?200:201,{...result.claim,replayed:result.replayed});
+        return json(res,result.replayed?200:201,{...result.claim,replayed:result.replayed,
+          credit_warning:result.credit_warning??null});
       }
       if(method==='POST' && path==='/v1/merchant/relationship-requests'){
         requireRole(actor,'merchant');return json(res,201,await store.requestRelationship(actor,body));
