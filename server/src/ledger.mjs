@@ -83,6 +83,15 @@ export class FinancialLedgerService {
     return rows.length>0;
   }
 
+  async activeAllocationAmount(c,movementId) {
+    const q=await c.query([
+      'SELECT COALESCE(SUM(CASE WHEN action=\\'allocate\\' THEN amount ELSE -amount END),0)::text AS amount',
+      'FROM financial_payment_allocation_entries',
+      'WHERE payment_movement_id=$1 OR debt_movement_id=$1'
+    ].join(' '),[movementId]);
+    return toTenThousandths(q.rows[0].amount);
+  }
+
   async createOperation(actor,relationshipId,body,key) {
     const id=uuid(relationshipId,'relationship_id');
     const amount=money(body.amount);
@@ -154,6 +163,10 @@ export class FinancialLedgerService {
         return {operation_id:opId,status:target,replayed:true,ledger_posted:false};
       }
       if(rel.status!=='approved') throw conflict('Relationship is not approved');
+      if(target==='approved' && op.reversal_of_movement_id &&
+         await this.activeAllocationAmount(c,op.reversal_of_movement_id)>0n) {
+        throw conflict('Release approved payment allocations before reversing this movement');
+      }
       const amendment=await c.query('SELECT 1 FROM financial_amendment_requests WHERE original_operation_id=$1 AND status=$2',[opId,'pending']);
       if(amendment.rowCount) throw conflict('Amount amendment awaits merchant response');
       await c.query('UPDATE relationship_operations SET status=$2,decided_at=clock_timestamp(),decided_by=$3 WHERE id=$1',
@@ -233,6 +246,9 @@ export class FinancialLedgerService {
         'UNION ALL SELECT 1 FROM financial_movements WHERE reversal_of_movement_id=$1 LIMIT 1'
       ].join(' ').replaceAll("\'","'"),[movementId]);
       if(existing.rowCount) throw conflict('A reversal already exists or is awaiting approval');
+      if(await this.activeAllocationAmount(c,movementId)>0n) {
+        throw conflict('Release approved payment allocations before requesting a reversal');
+      }
       const source=original.rows[0],id=randomUUID();
       const opposite=source.type==='debt'?'payment':'debt';
       await c.query([
