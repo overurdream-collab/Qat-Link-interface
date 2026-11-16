@@ -27,10 +27,10 @@ test('FIN-10: concurrent phone verification never loses invites and microsecond 
         store.verifyPhone(identity,{customer_id:customer.id,phone,
           proof_reference:'race-proof-'+suffix}),
       ]).then(results=>[results[0],results[1]]);
-      const links=await store.customerRelationships(customer,{limit:1});
+      const links=await store.listCustomerRelationships(customer,{limit:1});
       assert.equal(links.items.length,1);
       assert.ok(links.next_cursor);
-      const following=await store.customerRelationships(customer,{limit:1,cursor:links.next_cursor});
+      const following=await store.listCustomerRelationships(customer,{limit:1,cursor:links.next_cursor});
       assert.equal(following.items.length,1);
       assert.deepEqual(
         new Set([...links.items,...following.items].map(x=>x.merchant_id)),
@@ -74,7 +74,7 @@ test('FIN-10: concurrent phone verification never loses invites and microsecond 
       assert.deepEqual(
         new Set([...contactsFirst.items,...contactsSecond.items].map(x=>x.contact_id)),
         new Set([c1.id,secondContact.id]));
-      const unrelated=await store.customerRelationships(stranger,{});
+      const unrelated=await store.listCustomerRelationships(stranger,{});
       assert.equal(unrelated.items.length,0);
       assert.equal(c2.id.length>0,true);
     }finally{await pool.end();}
