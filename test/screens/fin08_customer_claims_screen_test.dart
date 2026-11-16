@@ -6,6 +6,10 @@ import 'package:qat_link/screens/fin08_customer_claims_screen.dart';
 import 'package:qat_link/services/fin08_api_client.dart';
 
 class FakeFin08Gateway implements Fin08ClaimsGateway {
+  @override
+  Future<Fin08BatchReceipt> decidePreviousClaimsBatch(List<String> claimIds,{required bool accept}) async =>
+    throw UnimplementedError('Only customer-batch fake implements the new operation');
+
   final first=Fin08PreviousClaim(
     id:'claim-one',merchantId:'merchant-one',merchantName:'متجر الأصالة',
     amount:Decimal.parse('1250'),currency:CurrencyCode.yer,
