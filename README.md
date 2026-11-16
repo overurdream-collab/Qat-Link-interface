@@ -83,3 +83,5 @@ flutter analyze
 **واجهة FIN-13:** lib/screens/fin13_relationship_ledger_screen.dart وشبكة lib/services/fin13_ledger_gateway.dart موجودتان للشاشة المحمية بعد تسجيل الدخول؛ لا توجد مصادقة إنتاجية موصولة بالواجهة.
 
 **FIN-14 (قيد التحقق):** إضافة قبول/رفض جماعي انتقائي للعمليات التي يراجعها الطرف المخول، دون اعتماد تلقائي أو جمع عملات. [المواصفات](docs/FIN14_SELECTIVE_BATCH_AR.md).
+
+**FIN-14 الواجهات:** اختيار ومراجعة العمليات المحددة في شاشتَي FIN-08 وFIN-13 اختياريًا عبر Fin14BatchGateway. لا يوجد تشغيل إنتاجي قبل ربط Login/OTP.
