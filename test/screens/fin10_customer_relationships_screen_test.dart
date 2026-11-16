@@ -27,7 +27,7 @@ class TestRelationshipsGateway implements Fin08RelationshipsGateway {
 
   @override
   Future<Fin08RelationshipDecisionReceipt> decideRelationship(
-    String relationshipId, {required bool accept},
+    String relationshipId, {required bool accept}
   ) async {
     decisions++;
     lastAccept = accept;
