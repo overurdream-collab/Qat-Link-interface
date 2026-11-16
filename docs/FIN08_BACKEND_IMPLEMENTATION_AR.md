@@ -1,6 +1,6 @@
 # متابعة FIN-08: طبقة Backend التنفيذية الأولية — 2026-11-16
 
-**الحالة:** أساس خادمي تجريبي في فرع مراجعة، **ليس خدمة إنتاجية متصلة بتطبيق Flutter**.
+**الحالة:** أساس خادمي تجريبي مدمج في main ضمن PR #19، **ليس خدمة إنتاجية متصلة بتطبيق Flutter**.
 
 ## المشكلة والحل
 
@@ -35,4 +35,4 @@
 **المرجع التنفيذي التفصيلي:** [server/README_AR.md](../server/README_AR.md). يحتفظ [عقد FIN-08](FIN08_JOINED_CUSTOMER_BACKEND_CONTRACT_AR.md) بالأحكام الملزمة ولا يستبدل.
 ## توثيق تحقق GitHub Actions — 2026-11-16
 
-تمت إعادة الاختبار بعد إضافة حالة التزامن وتجديد إثبات الهاتف في [تشغيل Backend #43845171641](https://github.com/overurdream-collab/Qat-Link-interface/actions/runs/43845171641): PostgreSQL 16 migrations نجحت، وكل **11 اختباراً نجح، 0 فشل، 0 متجاوز**. لم يتم تشغيل اختبار هاتفين أو OTP إنتاجي أو تكامل Flutter مع هذا الخادم. PR #19 لا يزال منفصلاً لحين مراجعة الدمج.
+تمت إعادة الاختبار بعد إضافة حالة التزامن وتجديد إثبات الهاتف في [تشغيل Backend #43845171641](https://github.com/overurdream-collab/Qat-Link-interface/actions/runs/43845171641): PostgreSQL 16 migrations نجحت، وكل **11 اختباراً نجح، 0 فشل، 0 متجاوز**. لم يتم تشغيل اختبار هاتفين أو OTP إنتاجي أو تكامل Flutter مع هذا الخادم. دُمج PR #19 في main (commit f883f8a) بعد نجاح Backend وFlutter CI على الفرع.
