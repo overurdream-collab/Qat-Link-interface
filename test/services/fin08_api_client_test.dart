@@ -150,4 +150,46 @@ void main() {
     expect(actions,3);
   });
 
+  test('atomic batch gateway sends only explicitly chosen claim IDs and checks receipt',() async{
+    late http.Request captured;
+    final api=Fin08HttpClaimsGateway(
+      baseUri:Uri.parse('https://qatlink.example/'),
+      accessToken:() async=>'trusted-customer-jwt',
+      client:MockClient((request) async {
+        captured=request;
+        return http.Response(jsonEncode({
+          'decision':'accept','selected_count':2,'newly_recorded_count':2,
+          'newly_posted_count':0,'totals_by_currency_and_type':[
+            {'currency':'YER','type':'debt','total_amount':'20000.0000','selected_count':1},
+            {'currency':'USD','type':'payment','total_amount':'5.2501','selected_count':1}
+          ],'outcomes':[]
+        }),200);
+      })
+    );
+    final receipt=await api.decidePreviousClaimsBatch(['id1','id2'],accept:true);
+    expect(captured.url.path,'/v1/customer/previous-claims/batch-decision');
+    expect(captured.headers['authorization'],'Bearer trusted-customer-jwt');
+    final payload=jsonDecode(captured.body) as Map<String,dynamic>;
+    expect(payload['claim_ids'],['id1','id2']);
+    expect(payload['decision'],'accept');
+    expect(receipt.selectedCount,2);
+    expect(receipt.postedCount,0);
+    expect(receipt.totals.last.amount,Decimal.parse('5.2501'));
+    expect(receipt.totals.last.type,MovementType.payment);
+    await expectLater(api.decidePreviousClaimsBatch(['x','x'],accept:true),
+      throwsArgumentError);
+  });
+  test('batch result count mismatch is rejected; never claims customer approved unverified list',() async{
+    final api=Fin08HttpClaimsGateway(
+      baseUri:Uri.parse('https://qatlink.example/'),
+      accessToken:() async=>'trusted-customer-jwt',
+      client:MockClient((_) async=>http.Response(jsonEncode({
+        'decision':'accept','selected_count':1,'newly_recorded_count':1,
+        'newly_posted_count':0,'totals_by_currency_and_type':[]
+      }),200))
+    );
+    await expectLater(api.decidePreviousClaimsBatch(['a','b'],accept:true),
+      throwsA(isA<Fin08ApiError>()));
+  });
+
 }
