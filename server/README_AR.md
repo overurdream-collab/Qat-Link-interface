@@ -64,3 +64,6 @@ CI الجديد `.github/workflows/fin08-api.yml` ينشئ PostgreSQL 16 مؤق�
 طبق server/sql/002_fin13_unified_ledger.sql بعد 001 داخل بيئة تجريبية. امتداد API للدفعات والعكس والتفويض وكشف الحساب موثق في [FIN13](../docs/FIN13_UNIFIED_LEDGER_AR.md). قيود financial_movements السابقة باقية؛ أي قيد معتمد غير قابل للـUPDATE/DELETE. **لا تنشر حتى فحص الترحيل على نسخة احتياطية والتحقق من OTP وإجراءات الاستعادة.**
 
 **FIN-14:** POST /v1/customer/previous-claims/batch-decisions وPOST /v1/relationships/{id}/operations/batch-decisions للمراجعات المختارة فقط داخل معاملة واحدة؛ راجع [المواصفات](../docs/FIN14_SELECTIVE_BATCH_AR.md).
+
+## FIN-15 — ترحيل طلبات تعديل المبالغ
+بعد 001 و002 طبّق sql/003_fin15_claim_adjustments.sql؛ لا يُغيَّر مبلغ مطالبة قديمة ولا قيد معتمد. API العميل لتقديم المقترح، وAPI التاجر لقبوله أو رفضه، موثقان في [FIN-15](../docs/FIN15_PENDING_CLAIM_ADJUSTMENT_AR.md).
