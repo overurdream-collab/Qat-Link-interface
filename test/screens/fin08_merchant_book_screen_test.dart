@@ -38,7 +38,7 @@ class MerchantGatewayFake implements Fin08ClaimsGateway {
   @override
   Future<Fin08ClaimReceipt> createMerchantClaim({required String contactId,
       required Decimal amount,required CurrencyCode currency,
-      required String idempotencyKey,String? description}) async {
+      required String idempotencyKey,String? description,MovementType type=MovementType.debt}) async {
     attempts++;
     lastAmount=amount;
     if(priorKey==null)priorKey=idempotencyKey;
