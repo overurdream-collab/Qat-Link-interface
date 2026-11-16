@@ -172,3 +172,8 @@ flutter run
 ## FIN-10 — استلام نسخة الموافقات الموثقة (2026-11-16)
 
 آخر مرجع مدمج: `89f1acf` في `main`. طلبات الارتباط بعد انضمام العميل من [PR #22](https://github.com/overurdream-collab/Qat-Link-interface/pull/22)، وتقوية مطابقة الهاتف والتصفح من [PR #25](https://github.com/overurdream-collab/Qat-Link-interface/pull/25). نجح فحص PostgreSQL على [#43854035515](https://github.com/overurdream-collab/Qat-Link-interface/actions/runs/43854035515) وFlutter على [#43854035626](https://github.com/overurdream-collab/Qat-Link-interface/actions/runs/43854035626). **المتبقي قبل الاستخدام الحقيقي:** مزود OTP وهوية JWT، ربط الدخول والواجهات بالجلسة وإعادة الجلب الخادمي، اختبار هواتف متعددة ونسخ احتياطي وتدقيق أمني. لا يُجمع أي رصيد عبر العملات ولا يعتمد دين بالموافقة على العلاقة وحدها.
+
+
+## FIN-11 — بيان التاجر اليدوي (2026-11-16)
+
+الملفات: `lib/services/fin08_pending_statement.dart`، `lib/screens/fin08_merchant_book_screen.dart`، `test/services/fin08_pending_statement_test.dart`، `test/screens/fin08_merchant_book_screen_test.dart`. يسترجع جميع مطالبات العميل من FIN-09 API دون استخدام أول صفحة فقط، ويمنع النسخ إذا فشل استرجاع أي صفحة أو تكررت المؤشرات؛ لا يدخل المعتمد والمرفوض في البيان ولا يضم التسديدات. ينسخ للتاجر بعد تأكيده، دون إرسال آلي. يحتاج جلسة تاجر موثقة وتوصيل Auth قبل اختبار الاستخدام الحقيقي. [المواصفات](FIN11_MANUAL_STATEMENT_AR.md).
