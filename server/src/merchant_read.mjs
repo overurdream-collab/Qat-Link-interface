@@ -49,8 +49,10 @@ export async function listMerchantContactClaims(pool, secret, actor, contactId, 
   if (!contact.rowCount) throw new ApiError(404,'not_found','Not found');
   const { rows } = await pool.query(`
     SELECT cl.id,cl.contact_id,cl.amount::text,cl.currency,cl.operation_type AS type,cl.description,cl.created_at,
+      cl.occurred_at,cl.source_claim_id,cl.superseded_by_claim_id,
       cl.created_at::text AS cursor_created_at,
       d.decision, r.status AS relationship_status, fm.id AS movement_id,
+      adjustment.id AS pending_adjustment_id, adjustment.proposed_amount::text AS proposed_amount,
       (ev.id IS NOT NULL AND
         (SELECT COUNT(DISTINCT proof.customer_id) FROM customer_phone_evidence proof
          WHERE proof.normalized_phone=mc.normalized_phone AND proof.revoked_at IS NULL)=1) AS verified
@@ -64,14 +66,19 @@ export async function listMerchantContactClaims(pool, secret, actor, contactId, 
     LEFT JOIN merchant_relationships r ON r.merchant_id=cl.merchant_id
       AND r.customer_id=vl.customer_id
     LEFT JOIN financial_movements fm ON fm.source_claim_id=cl.id
+    LEFT JOIN customer_claim_adjustment_requests adjustment ON adjustment.claim_id=cl.id AND adjustment.status='pending'
     WHERE cl.merchant_id=$1 AND cl.contact_id=$2 AND cl.created_at <= $3::timestamptz
       AND ($4::timestamptz IS NULL OR (cl.created_at,cl.id)<($4::timestamptz,$5::uuid))
     ORDER BY cl.created_at DESC,cl.id DESC LIMIT $6`,
     [actor.id,id,snapshot,parsed?.createdAt ?? null,parsed?.id ?? null,count + 1]);
   return packPage(rows,count,snapshot,secret,actor,scope,row=>({
     claim_id:row.id,contact_id:row.contact_id,amount:row.amount,currency:row.currency,type:row.type,
-    description:row.description,created_at:row.created_at,
+    description:row.description,created_at:row.created_at,occurred_at:row.occurred_at,
+    source_claim_id:row.source_claim_id,pending_adjustment_id:row.pending_adjustment_id,
+    proposed_amount:row.proposed_amount,
     stage: row.movement_id ? 'approved' :
+      row.superseded_by_claim_id ? 'superseded' :
+      row.pending_adjustment_id ? 'awaiting_merchant_adjustment' :
       row.decision==='reject' ? 'rejected' :
       !row.verified ? 'outside_app' :
       row.decision==='accept' && row.relationship_status==='approved' ? 'accepted_awaiting_posting' :
