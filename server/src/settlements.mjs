@@ -168,7 +168,7 @@ export class Fin17SettlementService {
       ].join(' '),[payId]);
       const pending=await c.query([
         'SELECT id,action,debt_movement_id,amount::text,requested_by,requested_by_role,requested_at',
-        'FROM financial_payment_allocation_requests WHERE payment_movement_id=$1 AND status=\\'pending\\'',
+        'FROM financial_payment_allocation_requests WHERE payment_movement_id=$1 AND status=\'pending\'',
         'ORDER BY requested_at,id'
       ].join(' '),[payId]);
       const current=new Map();
