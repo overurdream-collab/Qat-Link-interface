@@ -112,5 +112,9 @@ test('FIN-17 PostgreSQL: bilateral allocations, unallocated credit, releases and
         [rel.relationship_id])).rows[0].n,3);
       await assert.rejects(()=>pool.query(
         'UPDATE financial_payment_allocation_entries SET amount=1 WHERE request_id=$1',[first.request_id]),/immutable/i);
+      await assert.rejects(()=>pool.query(
+        'UPDATE financial_payment_allocation_requests SET amount=1 WHERE id=$1',[first.request_id]),/immutable/i);
+      await assert.rejects(()=>pool.query(
+        'DELETE FROM financial_payment_allocation_requests WHERE id=$1',[first.request_id]),/immutable/i);
     }finally{await pool.end();}
   });
