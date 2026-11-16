@@ -78,6 +78,10 @@ export function createApi({store,verify}) {
         requireRole(actor,'customer');
         return json(res,200,await store.listCustomerRelationships(actor,{limit:page(url.searchParams.get('limit')??undefined),cursor:url.searchParams.get('cursor')}));
       }
+      if(method==='POST' && path==='/v1/customer/previous-claims/batch-decision'){
+        requireRole(actor,'customer');
+        return json(res,200,await store.decideClaimsBatch(actor,body));
+      }
       const claim=path.match(/^\/v1\/customer\/previous-claims\/([\w-]+)\/decision$/);
       if(method==='POST' && claim){
         requireRole(actor,'customer');return json(res,200,await store.decideClaim(actor,claim[1],body));
