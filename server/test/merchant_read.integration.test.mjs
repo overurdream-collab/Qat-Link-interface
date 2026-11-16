@@ -55,11 +55,24 @@ test('FIN-09 merchant restores private contacts and every claim stage without cr
       await store.decideClaim(customer,a.id,{decision:'accept'});
       assert.equal((await store.listContactClaims(merchant,contact.id,{})).items.find(x=>x.claim_id===a.id).stage,'accepted_awaiting_relationship');
       const relationship = await store.requestRelationship(merchant,{contact_id:contact.id});
+      const requested=await store.listCustomerRelationships(customer,{limit:1});
+      assert.equal(requested.items.length,1);
+      assert.equal(requested.items[0].relationship_id,relationship.relationship_id);
+      assert.equal(requested.items[0].status,'pending');
+      assert.equal(requested.items[0].merchant_display_name,'M One');
+      assert.equal((await store.listCustomerRelationships({id:'unrelated-customer',role:'customer'},{})).items.length,0);
+      await assert.rejects(()=>store.listCustomerRelationships({id:'unrelated-customer',role:'customer'},{
+        cursor: (await store.listCustomerRelationships(customer,{limit:1})).next_cursor ?? 'invalid-cursor'
+      }),{status:422});
       await store.decideRelationship(customer,relationship.relationship_id,{decision:'accept'});
+      assert.equal((await store.listCustomerRelationships(customer,{})).items[0].status,'approved');
       const after = await store.listContactClaims(merchant,contact.id,{});
       assert.equal(after.items.find(x=>x.claim_id===a.id).stage,'approved');
       assert.equal(after.items.find(x=>x.claim_id===b.id).stage,'rejected');
       assert.equal((await store.listContactClaims(merchant,another.id,{})).items[0].stage,'outside_app');
       assert.equal((await store.listContacts(other,{})).items.length,1);
+      await store.verifyPhone(identity,{customer_id:'conflicting-customer-'+suffix,
+        phone,proof_reference:'conflict-proof-'+suffix});
+      assert.equal((await store.listCustomerRelationships(customer,{})).items.length,0);
     } finally { await pool.end(); }
   });
