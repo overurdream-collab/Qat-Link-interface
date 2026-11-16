@@ -9,6 +9,18 @@ abstract final class Fin08PendingStatement {
   static bool isPending(Fin08MerchantClaim c) =>
       c.stage != Fin08Stage.approved && c.stage != Fin08Stage.rejected;
 
+  /// Display at least two fractional digits without rounding or converting
+  /// Decimal to binary floating point. Preserve higher precision when present.
+  static String formatSubtotal(Decimal amount) {
+    final raw = amount.toString();
+    final separator = raw.indexOf('.');
+    if (separator < 0) return '$raw.00';
+    final fractionalDigits = raw.length - separator - 1;
+    return fractionalDigits >= 2
+        ? raw
+        : '${raw}${'0' * (2 - fractionalDigits)}';
+  }
+
   static String compose({
     required Fin08MerchantContact contact,
     required Iterable<Fin08MerchantClaim> claims,
@@ -37,7 +49,7 @@ abstract final class Fin08PendingStatement {
     text.writeln('---');
     for(final currency in CurrencyCode.values){
       final sum=totals[currency];
-      if(sum!=null)text.writeln('مجموع المبالغ المعلقة (${currency.name.toUpperCase()}): $sum');
+      if(sum!=null)text.writeln('مجموع المبالغ المعلقة (${currency.name.toUpperCase()}): ${formatSubtotal(sum)}');
     }
     text.writeln('تنبيه: هذا بيان صادر من سجل التاجر وحده، لا يُعد إقراراً من العميل '
       'ولا يتضمن المبالغ المرفوضة أو المعتمدة أو المدفوعات. '
