@@ -9,13 +9,14 @@ class Fin15Amendment {
     required this.oldAmount,required this.proposedAmount,
     required this.currency,required this.reason,required this.createdAt,
     this.originalClaimId,this.originalOperationId,this.replacementClaimId,
-    this.replacementOperationId,this.ledgerPosted=false,this.replayed=false});
+    this.replacementOperationId,this.customerName,
+    this.ledgerPosted=false,this.replayed=false});
   final String id,status,reason;
   final Decimal oldAmount,proposedAmount;
   final CurrencyCode currency;
   final DateTime createdAt;
   final String? originalClaimId,originalOperationId,
-      replacementClaimId,replacementOperationId;
+      replacementClaimId,replacementOperationId,customerName;
   final bool ledgerPosted,replayed;
 
   bool get pending=>status=='pending';
@@ -47,6 +48,7 @@ class Fin15Amendment {
       currency:unit,reason:required('reason'),
       createdAt:DateTime.parse(required('recorded_at')),
       originalClaimId:claim,originalOperationId:operation,
+      customerName:j['customer_name'] as String?,
       replacementClaimId:j['replacement_claim_id'] as String?,
       replacementOperationId:j['replacement_operation_id'] as String?,
       ledgerPosted:j['ledger_posted']==true,replayed:j['replayed']==true);
