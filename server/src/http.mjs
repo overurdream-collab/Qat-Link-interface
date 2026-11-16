@@ -65,6 +65,13 @@ export function createApi({store,verify}) {
       if(method==='GET' && path==='/v1/merchant/claims/summary'){
         requireRole(actor,'merchant');return json(res,200,await store.summary(actor));
       }
+      if(method==='GET' && path==='/v1/customer/relationships'){
+        requireRole(actor,'customer');
+        return json(res,200,await store.customerRelationships(actor,{
+          limit:page(url.searchParams.get('limit')??undefined),
+          cursor:url.searchParams.get('cursor')
+        }));
+      }
       if(method==='GET' && path==='/v1/customer/previous-claims'){
         requireRole(actor,'customer');
         return json(res,200,await store.claimsInbox(actor,{limit:page(url.searchParams.get('limit')??undefined),cursor:url.searchParams.get('cursor')}));
