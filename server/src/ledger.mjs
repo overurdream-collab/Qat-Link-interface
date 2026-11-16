@@ -152,6 +152,8 @@ export class FinancialLedgerService {
         return {operation_id:opId,status:target,replayed:true,ledger_posted:false};
       }
       if(rel.status!=='approved') throw conflict('Relationship is not approved');
+      const amendment=await c.query('SELECT 1 FROM financial_amendment_requests WHERE original_operation_id=$1 AND status=$2',[opId,'pending']);
+      if(amendment.rowCount) throw conflict('Amount amendment awaits merchant response');
       await c.query('UPDATE relationship_operations SET status=$2,decided_at=clock_timestamp(),decided_by=$3 WHERE id=$1',
         [opId,target,actor.id]);
       await this.store.audit(c,actor.id,'operation',opId,
@@ -319,7 +321,7 @@ export class FinancialLedgerService {
       const q=await c.query([
         'SELECT id,operation_type,amount::text,currency,description,occurred_at,created_at,',
         'created_at::text AS cursor_created_at,created_by,created_by_role,status,decided_at,',
-        'decided_by,approval_method,auto_policy_version,reversal_of_movement_id',
+        'decided_by,approval_method,auto_policy_version,reversal_of_movement_id,replaces_operation_id',
         'FROM relationship_operations WHERE relationship_id=$1 AND created_at<=$2::timestamptz',
         'AND ($3::timestamptz IS NULL OR (created_at,id)<($3::timestamptz,$4::uuid))',
         'ORDER BY created_at DESC,id DESC LIMIT $5'
