@@ -1,5 +1,6 @@
 import { randomUUID } from 'node:crypto';
 import { listMerchantContacts, listMerchantContactClaims } from './merchant_read.mjs';
+import { listCustomerRelationships } from './customer_relationships.mjs';
 import { ApiError, assertText, claimDigest, currency, decision, idempotencyKey, money, normalizePhone, page, uuid, encodeCursor, decodeCursor } from './validation.mjs';
 
 const conflict = (message) => new ApiError(409, 'conflict', message);
@@ -266,6 +267,9 @@ export class Fin08Store {
     });
   }
   // FIN-09 restoration reads use authenticated merchant identity, never client-supplied tenant IDs.
+  async listCustomerRelationships(actor, opts) {
+    return listCustomerRelationships(this.pool,this.cursorSecret,actor,opts);
+  }
   async listContacts(actor, opts) {
     return listMerchantContacts(this.pool, this.cursorSecret, actor, opts);
   }
