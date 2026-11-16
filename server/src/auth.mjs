@@ -20,7 +20,11 @@ export function createVerifier({ publicKey, issuer, audience, maxAgeSeconds = 36
       header = JSON.parse(Buffer.from(chunks[0], 'base64url'));
       claims = JSON.parse(Buffer.from(chunks[1], 'base64url'));
     } catch { throw new ApiError(401, 'unauthorized', 'Invalid session'); }
-    if (header?.alg !== 'RS256' || (header.typ && header.typ !== 'JWT')) throw new ApiError(401, 'unauthorized', 'Invalid session');
+    if (!claims || typeof claims !== 'object' || Array.isArray(claims) ||
+        !header || typeof header !== 'object' || Array.isArray(header) ||
+        header.alg !== 'RS256' || (header.typ && header.typ !== 'JWT')) {
+      throw new ApiError(401, 'unauthorized', 'Invalid session');
+    }
     const verifier = createVerify('RSA-SHA256');
     verifier.update(`${chunks[0]}.${chunks[1]}`);
     verifier.end();
