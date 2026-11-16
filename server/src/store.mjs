@@ -70,8 +70,8 @@ export class Fin08Store {
     });
   }
   async reconcilePhone(c, phone) {
-    // ON CONFLICT does not change a previously bound account automatically:
-    // a recycled/contested number requires explicit identity resolution.
+    // An owner change is NEVER automatic. Refresh a stale proof only when the
+    // same verified customer remains the sole current owner of this number.
     await c.query(`INSERT INTO verified_contact_links(merchant_id,contact_id,customer_id,proof_reference)
       SELECT mc.merchant_id,mc.id,MIN(e.customer_id),MIN(e.proof_reference)
       FROM merchant_contacts mc JOIN customer_phone_evidence e
@@ -79,7 +79,14 @@ export class Fin08Store {
       WHERE mc.normalized_phone=$1
       GROUP BY mc.merchant_id,mc.id
       HAVING COUNT(DISTINCT e.customer_id)=1
-      ON CONFLICT (merchant_id,contact_id) DO NOTHING`,[phone]);
+      ON CONFLICT (merchant_id,contact_id) DO UPDATE
+        SET proof_reference=EXCLUDED.proof_reference,linked_at=now()
+        WHERE verified_contact_links.customer_id=EXCLUDED.customer_id
+          AND NOT EXISTS (
+            SELECT 1 FROM customer_phone_evidence old
+            WHERE old.proof_reference=verified_contact_links.proof_reference
+              AND old.revoked_at IS NULL
+          )`,[phone]);
   }
   async createClaim(actor, body, requestKey) {
     const contactId = uuid(body.contact_id, 'contact_id');
