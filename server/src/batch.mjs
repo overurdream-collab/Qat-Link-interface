@@ -109,6 +109,10 @@ export class Fin14BatchService {
           throw new ApiError(403,'forbidden','Cannot decide own financial request');
         }
         selectedRows.push({currency:op.currency,amount:op.amount,type:op.operation_type});
+        if(op.status==='pending'){
+          const amendment=await c.query('SELECT 1 FROM financial_amendment_requests WHERE original_operation_id=$1 AND status=$2',[op.id,'pending']);
+          if(amendment.rowCount)throw conflict('A selected operation is awaiting amendment response');
+        }
         const wanted=choice.decision==='accept'?'approved':'rejected';
         if(op.status!=='pending'){
           if(op.status!==wanted||op.approval_method!=='manual'){
