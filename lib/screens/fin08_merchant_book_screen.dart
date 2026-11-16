@@ -68,12 +68,11 @@ class _Fin08MerchantBookScreenState extends State<Fin08MerchantBookScreen> {
     'تعذر الاتصال بالخادم. لم نؤكد حفظ البيانات.';
 
   Future<void> _addContact() async {
-    final name=TextEditingController();
-    final phone=TextEditingController();
+    var name='';
+    var phone='';
     var saving=false;
     String? failure;
-    try {
-      final saved=await showDialog<bool>(
+    final saved=await showDialog<bool>(
         context:context,barrierDismissible:false,
         builder:(dialogContext)=>StatefulBuilder(
           builder:(ctx,setDialog)=>AlertDialog(
@@ -81,8 +80,8 @@ class _Fin08MerchantBookScreenState extends State<Fin08MerchantBookScreen> {
             title:const Text('إضافة عميل إلى سجل التاجر'),
             content:Column(mainAxisSize:MainAxisSize.min,children:[
               const Text('جهة اتصال خاصة، وليست حساباً أو مديونية معتمدة.'),
-              TextField(controller:name,decoration:const InputDecoration(labelText:'اسم العميل')),
-              TextField(controller:phone,keyboardType:TextInputType.phone,
+              TextField(onChanged:(v)=>name=v,decoration:const InputDecoration(labelText:'اسم العميل')),
+              TextField(onChanged:(v)=>phone=v,keyboardType:TextInputType.phone,
                 decoration:const InputDecoration(labelText:'رقم الجوال')),
               if(failure!=null)Text(failure!,style:TextStyle(color:Theme.of(ctx).colorScheme.error)),
             ]),
@@ -93,7 +92,7 @@ class _Fin08MerchantBookScreenState extends State<Fin08MerchantBookScreen> {
                   setDialog((){saving=true;failure=null;});
                   var success=false;
                   try{
-                    await widget.gateway.createMerchantContact(name:name.text.trim(),phone:phone.text.trim());
+                    await widget.gateway.createMerchantContact(name:name.trim(),phone:phone.trim());
                     if(!ctx.mounted)return;
                     success=true;
                     Navigator.pop(ctx,true);
@@ -106,14 +105,14 @@ class _Fin08MerchantBookScreenState extends State<Fin08MerchantBookScreen> {
       );
       // Refresh AFTER the route has closed; never mutate a disposed dialog.
       if(saved==true && mounted)await _loadContacts();
-    } finally {name.dispose();phone.dispose();}
+
   }
 
   Future<void> _addClaim() async {
     final contact=_selected;
     if(contact==null)return;
-    final amount=TextEditingController();
-    final description=TextEditingController();
+    var amountText='';
+    var descriptionText='';
     CurrencyCode currency=CurrencyCode.yer;
     // Keep same key throughout retries of THIS request, including timeout.
     final random=Random.secure();
@@ -121,8 +120,7 @@ class _Fin08MerchantBookScreenState extends State<Fin08MerchantBookScreen> {
       .map((n)=>n.toRadixString(16).padLeft(2,'0')).join();
     var saving=false;
     String? failure;
-    try{
-      final saved=await showDialog<bool>(
+    final saved=await showDialog<bool>(
         context:context,barrierDismissible:false,
         builder:(dialogContext)=>StatefulBuilder(
           builder:(ctx,setDialog)=>AlertDialog(
@@ -130,13 +128,13 @@ class _Fin08MerchantBookScreenState extends State<Fin08MerchantBookScreen> {
             title:Text('مطالبة معلقة — ${contact.name}'),
             content:Column(mainAxisSize:MainAxisSize.min,children:[
               const Text('لا تُضاف إلى الرصيد المعتمد قبل موافقة العميل والعلاقة.'),
-              TextField(controller:amount,keyboardType:const TextInputType.numberWithOptions(decimal:true),
+              TextField(onChanged:(v)=>amountText=v,keyboardType:const TextInputType.numberWithOptions(decimal:true),
                 decoration:const InputDecoration(labelText:'المبلغ')),
               DropdownButton<CurrencyCode>(value:currency,isExpanded:true,
                 items:CurrencyCode.values.map((c)=>DropdownMenuItem(
                   value:c,child:Text(c.name.toUpperCase()))).toList(),
                 onChanged:saving?null:(next){if(next!=null)setDialog(()=>currency=next);}),
-              TextField(controller:description,
+              TextField(onChanged:(v)=>descriptionText=v,
                 decoration:const InputDecoration(labelText:'الوصف (اختياري)')),
               if(failure!=null)Text(failure!,style:TextStyle(color:Theme.of(ctx).colorScheme.error)),
             ]),
@@ -144,14 +142,14 @@ class _Fin08MerchantBookScreenState extends State<Fin08MerchantBookScreen> {
               TextButton(onPressed:saving?null:()=>Navigator.pop(ctx,false),child:const Text('إلغاء')),
               FilledButton(key:const Key('fin08_save_claim'),onPressed:saving?null:() async {
                 Decimal money;
-                try{money=Decimal.parse(amount.text.trim());}
+                try{money=Decimal.parse(amountText.trim());}
                 catch(_){setDialog(()=>failure='أدخل مبلغاً عشرياً صحيحاً.');return;}
                 setDialog((){saving=true;failure=null;});
                 var success=false;
                 try{
                   await widget.gateway.createMerchantClaim(
                     contactId:contact.id,amount:money,currency:currency,
-                    idempotencyKey:key,description:description.text.trim().isEmpty?null:description.text.trim());
+                    idempotencyKey:key,description:descriptionText.trim().isEmpty?null:descriptionText.trim());
                   if(!ctx.mounted)return;
                   success=true;
                   Navigator.pop(ctx,true);
@@ -163,7 +161,7 @@ class _Fin08MerchantBookScreenState extends State<Fin08MerchantBookScreen> {
         ),
       );
       if(saved==true && mounted)await _select(contact);
-    }finally{amount.dispose();description.dispose();}
+
   }
 
   @override
