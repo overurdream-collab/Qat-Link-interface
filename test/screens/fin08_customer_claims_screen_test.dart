@@ -4,6 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:qat_link/models/app_models.dart';
 import 'package:qat_link/screens/fin08_customer_claims_screen.dart';
 import 'package:qat_link/services/fin08_api_client.dart';
+import 'package:qat_link/services/fin15_claim_adjustment_gateway.dart';
 import 'package:qat_link/services/fin14_batch_gateway.dart';
 
 class FakeFin08Gateway implements Fin08ClaimsGateway {
@@ -77,6 +78,24 @@ class FakeFin14Batch implements Fin14BatchGateway {
   }
   @override
   Future<Fin14BatchResult> decideRelationship(String relationship,Map<String,bool> values) async =>
+    throw UnimplementedError();
+}
+
+class FakeFin15CustomerAdjustment implements Fin15ClaimAdjustmentGateway {
+  int requests=0;
+  Decimal? amount;
+  String? reason;
+  bool fail=false;
+  @override
+  Future<Fin15AdjustmentReceipt> request(String id,{
+      required Decimal proposedAmount,required String reason}) async {
+    requests++;amount=proposedAmount;this.reason=reason;
+    if(fail)throw const Fin08ApiError('تعذر حفظ مقترح التعديل');
+    return const Fin15AdjustmentReceipt(id:'adj1',status:'pending',
+      replayed:false,sourceClaimId:'claim-one');
+  }
+  @override
+  Future<Fin15AdjustmentReceipt> decide(String id,{required bool accept}) async =>
     throw UnimplementedError();
 }
 
@@ -163,6 +182,41 @@ void main() {
     expect(batch.selected,{'claim-one':false});
     expect(find.byKey(const Key('fin14_batch_accept')),findsOneWidget);
     expect(find.textContaining('تعذر حفظ مجموعة القرارات'),findsWidgets);
+  });
+
+  testWidgets('FIN-15 customer submits amount proposal without approving old claim', (tester) async {
+    final api=FakeFin08Gateway();
+    final adjust=FakeFin15CustomerAdjustment();
+    await tester.pumpWidget(MaterialApp(home:Fin08CustomerClaimsScreen(
+      gateway:api,adjustmentGateway:adjust)));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('fin15_request_adjustment_claim-one')));
+    await tester.pumpAndSettle();
+    expect(adjust.requests,0);
+    await tester.enterText(find.byKey(const Key('fin15_proposed_amount')),'950.2501');
+    await tester.enterText(find.byKey(const Key('fin15_adjustment_reason')),
+      'المبلغ الصحيح بحسب الفاتورة');
+    await tester.tap(find.byKey(const Key('fin15_submit_adjustment')));
+    await tester.pumpAndSettle();
+    expect(adjust.requests,1);
+    expect(adjust.amount,Decimal.parse('950.2501'));
+    expect(api.submitted,0);
+    expect(find.textContaining('بانتظار التاجر'),findsWidgets);
+  });
+  testWidgets('FIN-15 failed proposal never claims an approved movement', (tester) async {
+    final api=FakeFin08Gateway();
+    final adjust=FakeFin15CustomerAdjustment()..fail=true;
+    await tester.pumpWidget(MaterialApp(home:Fin08CustomerClaimsScreen(
+      gateway:api,adjustmentGateway:adjust)));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('fin15_request_adjustment_claim-one')));
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byKey(const Key('fin15_proposed_amount')),'900');
+    await tester.enterText(find.byKey(const Key('fin15_adjustment_reason')),'تصحيح قيمة الفاتورة');
+    await tester.tap(find.byKey(const Key('fin15_submit_adjustment')));
+    await tester.pumpAndSettle();
+    expect(find.text('تعذر حفظ مقترح التعديل'),findsOneWidget);
+    expect(api.submitted,0);
   });
 
 }
