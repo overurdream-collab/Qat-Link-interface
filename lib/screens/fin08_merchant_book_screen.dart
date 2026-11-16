@@ -164,6 +164,34 @@ class _Fin08MerchantBookScreenState extends State<Fin08MerchantBookScreen> {
 
   }
 
+  Future<void> _requestRelationship() async {
+    final contact=_selected;
+    if(contact==null || _loading)return;
+    final approved=await showDialog<bool>(context:context,builder:(ctx)=>AlertDialog(
+      title:const Text('إرسال طلب الارتباط؟'),
+      content:Text('يمكن طلب الارتباط مع ${contact.name} بعد التحقق الخادمي من انضمامه. '
+        'لن تصبح ديونه معتمدة بمجرد إرسال الطلب. موافقة العميل مستقلة لكل دين.'),
+      actions:[
+        TextButton(onPressed:()=>Navigator.pop(ctx,false),child:const Text('إلغاء')),
+        FilledButton(key:const Key('fin10_confirm_merchant_request'),
+          onPressed:()=>Navigator.pop(ctx,true),child:const Text('إرسال الطلب')),
+      ],
+    ));
+    if(approved!=true || !mounted)return;
+    try{
+      await widget.gateway.requestMerchantRelationship(contact.id);
+      if(!mounted)return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content:Text('حُفظ طلب الارتباط لدى الخادم بانتظار العميل.')));
+    }catch(e){
+      if(!mounted)return;
+      final message=e is Fin08ApiError && e.statusCode==404
+        ?'لا تتوفر مطابقة هوية موثقة لهذا العميل حتى الآن. لم يُرسل طلب الارتباط.'
+        :_message(e);
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content:Text(message)));
+    }
+  }
+
   @override
   Widget build(BuildContext context){
     final c=Theme.of(context).colorScheme;
@@ -182,6 +210,15 @@ class _Fin08MerchantBookScreenState extends State<Fin08MerchantBookScreen> {
           Text('هذا سجل مطالبات التاجر. لا تُعد المبالغ المعلقة إقراراً من العميل.',
             style:TextStyle(color:c.onSurfaceVariant)),
           const SizedBox(height:12),
+          if(_selected!=null) ...[
+            OutlinedButton.icon(
+              key:const Key('fin10_request_relationship'),
+              onPressed:_loading?null:_requestRelationship,
+              icon:const Icon(Icons.handshake_outlined),
+              label:const Text('طلب ارتباط مع العميل'),
+            ),
+            const SizedBox(height:12),
+          ],
           if(_selected==null) ...[
             for(final bucket in _summary) Card(child:Padding(
               padding:const EdgeInsets.all(12),child:Column(crossAxisAlignment:CrossAxisAlignment.start,children:[
