@@ -19,6 +19,8 @@
 | خدمة الهوية فقط | `POST /v1/internal/verified-phones` | تقديم إثبات هاتف بعد OTP حقيقي تم في جهة الهوية |
 | خدمة الهوية فقط | `POST /v1/internal/revoke-phone-proof` | إلغاء الإثبات عند فقدان/نقل ملكية الرقم |
 | تاجر | `POST /v1/merchant/contacts` | حفظ عميل في سجل التاجر فقط |
+| تاجر | `GET /v1/merchant/contacts?limit=50&cursor=` | استرجاع جهات اتصاله الخاصة بترقيم صفحات موقع ومقيد بالتاجر |
+| تاجر | `GET /v1/merchant/contacts/{uuid}/claims?limit=50&cursor=` | استرجاع المطالبات السابقة وحالاتها فقط من دفتر التاجر؛ لا ترحيل مالي |
 | تاجر | `POST /v1/merchant/claims` | دين معلق، يجب Header `Idempotency-Key` ومبلغ decimal string |
 | تاجر | `POST /v1/merchant/relationship-requests` | طلب ارتباط لعميل تأكدت مطابقته |
 | تاجر | `GET /v1/merchant/claims/summary` | أرصدة الادعاءات الثلاثة بحسب العملة، وليس الرصيد المالي الكامل |
