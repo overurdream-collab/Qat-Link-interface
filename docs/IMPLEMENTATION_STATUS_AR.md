@@ -1,5 +1,10 @@
 # حالة التنفيذ الفعلية — مقوتي لنك
 
+
+**FIN-11 — واجهة مشاركة يدويّة قابلة للاختبار (2026-11-16):** خدمة Flutter تجمّع المطالبات المعلقة من خادم التاجر بفصل العملات بعد استرجاع جميع الصفحات، وتمنع نسخ كشف جزئي أو مشاركة تلقائية. البيانات المعتمدة والمرفوضة مستبعدة، والتحذير إلزامي قبل نسخ النص إلى الحافظة. **هذه ليست مشاركة واتساب آلية أو كشف رصيد معتمد، ولا يمكن تشغيلها على مستخدمين حقيقيين دون جلسة Auth/OTP موثقة.** [الوثيقة](FIN11_MANUAL_STATEMENT_AR.md).
+
+
+
 **آخر حالة مثبتة (2026-11-16):** دُمج FIN-10 في [PR #22](https://github.com/overurdream-collab/Qat-Link-interface/pull/22)، ثم إصلاح استمرارية الاتصال والصفحات في [PR #25](https://github.com/overurdream-collab/Qat-Link-interface/pull/25). commit الأخير `89f1acf695ac3ab6d9479a27db67f90412a1fd22` نجح في [Backend/PostgreSQL CI #43854035515](https://github.com/overurdream-collab/Qat-Link-interface/actions/runs/43854035515) و[Flutter CI #43854035626](https://github.com/overurdream-collab/Qat-Link-interface/actions/runs/43854035626). **هذا لا يثبت اتصال OTP أو العمل على جهازين؛ الخدمة غير جاهزة للإنتاج بعد.**
 
 
