@@ -60,6 +60,9 @@ test('FIN-12 rejects malformed JWT time claims and oversized bearer values',()=>
  const good={iss:'fin12-issuer',aud:'fin12-audience',
    iat:now-20,exp:now+500,nbf:now-10,role:'merchant',sub:'merchant_1'};
  assert.deepEqual(verify('Bearer '+sign(good)),{id:'merchant_1',role:'merchant'});
+ for(const invalidPayload of [null, [], 1, 'text']) {
+   assert.throws(()=>verify('Bearer '+sign(invalidPayload)),{status:401});
+ }
  for(const changes of [
    {nbf:'not-a-date'},{nbf:String(now-10)},{nbf:null},{nbf:false},
    {nbf:now+90},{nbf:now+500},
