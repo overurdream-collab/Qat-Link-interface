@@ -140,6 +140,54 @@ class Fin08PreviousClaim {
       );
 }
 
+enum Fin08RelationshipStatus {
+  pending, approved, rejected;
+  static Fin08RelationshipStatus fromWire(String value) => switch(value) {
+    'pending' => pending,
+    'approved' => approved,
+    'rejected' => rejected,
+    _ => throw const FormatException('Unknown relationship status'),
+  };
+  String get label => switch(this) {
+    pending => 'بانتظار موافقة العميل',
+    approved => 'ارتباط معتمد',
+    rejected => 'تم رفض الارتباط',
+  };
+}
+
+class Fin08RelationshipInvite {
+  const Fin08RelationshipInvite({required this.id,required this.merchantId,
+    required this.merchantName,required this.status,required this.createdAt});
+  final String id;
+  final String merchantId;
+  final String merchantName;
+  final Fin08RelationshipStatus status;
+  final DateTime createdAt;
+  bool get canReview => status == Fin08RelationshipStatus.pending;
+  factory Fin08RelationshipInvite.fromJson(Map<String,dynamic> data) =>
+      Fin08RelationshipInvite(
+        id:_str(data,'relationship_id'),
+        merchantId:_str(data,'merchant_id'),
+        merchantName:_str(data,'merchant_display_name'),
+        status:Fin08RelationshipStatus.fromWire(_str(data,'status')),
+        createdAt:_date(data,'created_at'),
+      );
+}
+
+class Fin08RelationshipDecisionReceipt {
+  const Fin08RelationshipDecisionReceipt({required this.id,required this.status,
+    required this.newlyPostedDebts});
+  final String id;
+  final Fin08RelationshipStatus status;
+  final int newlyPostedDebts;
+}
+
+/// Separate interface keeps FIN-08 financial mocks and old UIs compatible.
+/// Requires real, server-issued customer JWT at the transport boundary.
+abstract class Fin08RelationshipsGateway {
+  Future<Fin08Page<Fin08RelationshipInvite>> customerRelationships({String? cursor,int limit=50});
+  Future<Fin08RelationshipDecisionReceipt> decideRelationship(String relationshipId,{required bool accept});
+}
 class Fin08ClaimReceipt {
   const Fin08ClaimReceipt({required this.claimId, required this.replayed});
   final String claimId;
@@ -184,7 +232,7 @@ abstract class Fin08ClaimsGateway {
   Future<Fin08ClaimDecisionReceipt> decidePreviousClaim(String claimId,{required bool accept});
 }
 
-class Fin08HttpClaimsGateway implements Fin08ClaimsGateway {
+class Fin08HttpClaimsGateway implements Fin08ClaimsGateway, Fin08RelationshipsGateway {
   Fin08HttpClaimsGateway({required this.baseUri,required this.client,
     required this.accessToken, this.timeout=const Duration(seconds:20)}) {
     final secure=baseUri.scheme=='https';
@@ -290,6 +338,26 @@ class Fin08HttpClaimsGateway implements Fin08ClaimsGateway {
     return raw.map((v)=>Fin08CurrencyBuckets.fromJson(Map<String,dynamic>.from(v as Map))).toList(growable:false);
   }
 
+  @override
+  Future<Fin08Page<Fin08RelationshipInvite>> customerRelationships({String? cursor,int limit=50}) async =>
+    _parsePage(await _request('GET','v1/customer/relationships',
+      query:_pagination(cursor,limit)),Fin08RelationshipInvite.fromJson);
+
+  @override
+  Future<Fin08RelationshipDecisionReceipt> decideRelationship(String relationshipId,{required bool accept}) async {
+    final response=await _request('POST',
+      'v1/customer/relationships/${Uri.encodeComponent(relationshipId)}/decision',
+      body:{'decision':accept?'accept':'reject'});
+    final id=_str(response,'relationship_id');
+    if(id!=relationshipId) throw const Fin08ApiError('لم يؤكد الخادم هوية العلاقة.',code:'invalid_response');
+    final status=Fin08RelationshipStatus.fromWire(_str(response,'status'));
+    if(status!=(accept?Fin08RelationshipStatus.approved:Fin08RelationshipStatus.rejected)) {
+      throw const Fin08ApiError('لم يؤكد الخادم القرار.',code:'invalid_response');
+    }
+    final count=response['newly_posted_debts'];
+    if(count is! int || count<0) throw const Fin08ApiError('رد غير صالح من الخادم.',code:'invalid_response');
+    return Fin08RelationshipDecisionReceipt(id:id,status:status,newlyPostedDebts:count);
+  }
   @override
   Future<Fin08Page<Fin08PreviousClaim>> customerPreviousClaims({String? cursor,int limit=50}) async =>
       _parsePage(await _request('GET','v1/customer/previous-claims',query:_pagination(cursor,limit)),
