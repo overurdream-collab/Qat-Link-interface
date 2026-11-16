@@ -4,6 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:qat_link/models/app_models.dart';
 import 'package:qat_link/screens/fin13_relationship_ledger_screen.dart';
 import 'package:qat_link/services/fin13_ledger_gateway.dart';
+import 'package:qat_link/services/fin14_batch_gateway.dart';
 
 class FakeLedger implements Fin13LedgerGateway {
   int decisions=0,creations=0,policies=0;
@@ -49,6 +50,29 @@ class FakeLedger implements Fin13LedgerGateway {
     Fin13Statement(unit,from,to,Decimal.zero,Decimal.zero,
       Decimal.zero,Decimal.zero,const []);
 }
+class FakeOperationBatch implements Fin14BatchGateway {
+  int submitted=0;
+  bool failure=false;
+  String? relationship;
+  Map<String,bool>? decisions;
+  @override
+  Future<Fin14BatchResult> decideHistorical(Map<String,bool> selected) async =>
+      throw UnimplementedError();
+  @override
+  Future<Fin14BatchResult> decideRelationship(String id,Map<String,bool> selected) async {
+    submitted++;
+    relationship=id;
+    decisions=selected;
+    if(failure)throw const FormatException('Server declined batch');
+    return Fin14BatchResult(1,'selected_relationship_operations_only',[
+      for(final entry in selected.entries) {
+        'id':entry.key,'status':entry.value?'approved':'rejected'
+      }
+    ],[Fin14ReviewTotal(CurrencyCode.yer,Decimal.parse('15000'),Decimal.zero,
+      Decimal.parse('15000'))]);
+  }
+}
+
 void main(){
   testWidgets('customer ledger displays server credit, approves only other party and controls future policy',(tester) async{
     final fake=FakeLedger();
@@ -97,4 +121,47 @@ void main(){
     // Merchant must not decide the debt he just created.
     expect(find.text('موافقة'),findsNothing);
   });
+  testWidgets('FIN-14 selects registered operation and requires explicit confirmation',(tester) async {
+    final ledger=FakeLedger();
+    final batch=FakeOperationBatch();
+    await tester.pumpWidget(MaterialApp(home:Fin13RelationshipLedgerScreen(
+      gateway:ledger,batchGateway:batch,relationshipId:'rel-1',
+      actorId:'customer-1',role:ParticipantRole.customer)));
+    await tester.pumpAndSettle();
+    final select=find.byKey(const Key('fin14_select_operation_op-1'));
+    await tester.drag(find.byType(ListView),const Offset(0,-320));
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(select);
+    await tester.pumpAndSettle();
+    await tester.tap(select);
+    await tester.pumpAndSettle();
+    await tester.drag(find.byType(ListView),const Offset(0,280));
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(find.byKey(const Key('fin14_operation_batch_accept')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('fin14_operation_batch_accept')));
+    await tester.pumpAndSettle();
+    expect(batch.submitted,0);
+    expect(find.textContaining('صافي تقديري غير معتمد'),findsWidgets);
+    await tester.tap(find.byKey(const Key('fin14_confirm_operation_batch')));
+    await tester.pumpAndSettle();
+    expect(batch.submitted,1);
+    expect(batch.relationship,'rel-1');
+    expect(batch.decisions,{'op-1':true});
+    expect(find.byKey(const Key('fin14_operation_batch_accept')),findsNothing);
+    expect(ledger.decisions,0);
+  });
+
+  testWidgets('FIN-14 creator cannot check/select own pending operation',(tester) async {
+    final ledger=FakeLedger();
+    final batch=FakeOperationBatch();
+    await tester.pumpWidget(MaterialApp(home:Fin13RelationshipLedgerScreen(
+      gateway:ledger,batchGateway:batch,relationshipId:'rel-1',
+      actorId:'merchant-1',role:ParticipantRole.merchant)));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const Key('fin14_select_operation_op-1')),findsNothing);
+    expect(find.byKey(const Key('fin14_operation_batch_accept')),findsNothing);
+    expect(batch.submitted,0);
+  });
+
 }
