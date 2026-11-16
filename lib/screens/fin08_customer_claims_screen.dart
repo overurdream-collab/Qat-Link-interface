@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:decimal/decimal.dart';
+import '../services/fin14_batch_gateway.dart';
 
 import '../services/fin08_api_client.dart';
 import '../models/app_models.dart';
@@ -9,8 +11,9 @@ import '../widgets/finance_display.dart';
 /// Attach only after real authenticated customer login; never from a locally
 /// validated phone, PIN or unverified mock account.
 class Fin08CustomerClaimsScreen extends StatefulWidget {
-  const Fin08CustomerClaimsScreen({super.key, required this.gateway});
+  const Fin08CustomerClaimsScreen({super.key, required this.gateway,this.batchGateway});
   final Fin08ClaimsGateway gateway;
+  final Fin14BatchGateway? batchGateway;
 
   @override
   State<Fin08CustomerClaimsScreen> createState() => _Fin08CustomerClaimsScreenState();
@@ -22,6 +25,8 @@ class _Fin08CustomerClaimsScreenState extends State<Fin08CustomerClaimsScreen> {
   String? _failure;
   bool _loading = false;
   final Set<String> _submitting = {};
+  final Set<String> _selectedForBatch={};
+  bool _batchBusy=false;
 
   @override
   void initState() {
@@ -48,6 +53,73 @@ class _Fin08CustomerClaimsScreenState extends State<Fin08CustomerClaimsScreen> {
     } finally {
       if (mounted) setState(() => _loading = false);
     }
+  }
+
+  Future<void> _batchDecision(bool accept) async {
+    if(widget.batchGateway==null || _batchBusy || _loading ||
+        _submitting.isNotEmpty || _selectedForBatch.isEmpty ||
+        _selectedForBatch.length>50)return;
+    final selected=_rows.where((r)=>r.canReview &&
+      _selectedForBatch.contains(r.id)).toList(growable:false);
+    if(selected.length!=_selectedForBatch.length){
+      setState(()=>_failure='تغيّرت الطلبات المحددة؛ أعد مراجعة العناصر أولاً.');
+      return;
+    }
+    final debtTotals={for(final unit in CurrencyCode.values) unit:Decimal.zero};
+    final paymentTotals={for(final unit in CurrencyCode.values) unit:Decimal.zero};
+    for(final row in selected){
+      final totals=row.type==MovementType.payment?paymentTotals:debtTotals;
+      totals[row.currency]=totals[row.currency]!+row.amount;
+    }
+    final confirmed=await showDialog<bool>(context:context,builder:(ctx)=>AlertDialog(
+      title:Text(accept?'مراجعة اعتماد العمليات المحددة':'مراجعة رفض العمليات المحددة'),
+      content:SizedBox(width:420,child:SingleChildScrollView(child:Column(
+        crossAxisAlignment:CrossAxisAlignment.start,mainAxisSize:MainAxisSize.min,
+        children:[
+          Text('عدد العمليات المختارة: '+selected.length.toString()+
+            ' — القرار لا يشمل أي عملية غير مختارة.'),
+          const Divider(),
+          for(final item in selected)Text(
+            item.merchantName+' • '+(item.type==MovementType.debt?'دين':'دفعة')+
+            ' • '+item.amount.toString()+' '+item.currency.name.toUpperCase()),
+          const Divider(),
+          for(final unit in CurrencyCode.values)
+            if(debtTotals[unit]!=Decimal.zero||paymentTotals[unit]!=Decimal.zero)
+              Text(unit.name.toUpperCase()+' — ديون: '+
+                debtTotals[unit].toString()+' / دفعات: '+
+                paymentTotals[unit].toString()+' / صافي تقديري غير معتمد: '+
+                (debtTotals[unit]!-paymentTotals[unit]!).toString()),
+          const SizedBox(height:8),
+          const Text('تؤكد هذه العملية القرارات المختارة فقط. لا تنشأ قيود معتمدة قبل اكتمال شروط العلاقة والموافقة.',
+            style:TextStyle(fontWeight:FontWeight.w700)),
+        ]))),
+      actions:[
+        TextButton(onPressed:()=>Navigator.pop(ctx,false),child:const Text('إلغاء')),
+        FilledButton(key:const Key('fin14_confirm_batch'),
+          onPressed:()=>Navigator.pop(ctx,true),child:Text(accept?'اعتماد المحدد':'رفض المحدد')),
+      ]));
+    if(!mounted||confirmed!=true)return;
+    setState(()=>_batchBusy=true);
+    try{
+      final result=await widget.batchGateway!.decideHistorical({
+        for(final row in selected)row.id:accept,
+      });
+      final ids=result.items.map((x)=>x['id']).toSet();
+      if(ids.length!=selected.length ||
+         !selected.every((x)=>ids.contains(x.id))) {
+        throw const Fin08ApiError('لم يؤكد الخادم جميع القرارات المحددة.',code:'invalid_response');
+      }
+      if(!mounted)return;
+      setState(()=>_selectedForBatch.clear());
+      await _load();
+      if(mounted)ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content:Text('أكد الخادم قرارات '+selected.length.toString()+
+          ' عملية محددة؛ قيود معتمدة جديدة: '+result.newlyPosted.toString())));
+    }catch(e){
+      if(mounted)ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content:Text(e is Fin08ApiError?e.message:
+          'تعذر تأكيد المجموعة؛ لم نؤكد حفظ أي قرار. راجع الحالة ثم أعد المحاولة.')));
+    }finally{if(mounted)setState(()=>_batchBusy=false);}
   }
 
   Future<void> _decide(Fin08PreviousClaim claim, bool accept) async {
@@ -118,6 +190,19 @@ class _Fin08CustomerClaimsScreenState extends State<Fin08CustomerClaimsScreen> {
               label:const Text('مراجعة طلبات الارتباط بالتجار'),
             ),
             const SizedBox(height:16),
+            if(widget.batchGateway!=null) ...[
+              Text('حدد العمليات التي تريد مراجعتها جماعياً — حتى 50 عملية.',
+                style:TextStyle(color:c.onSurfaceVariant)),
+              if(_selectedForBatch.isNotEmpty)Wrap(spacing:8,children:[
+                FilledButton(key:const Key('fin14_batch_accept'),
+                  onPressed:_batchBusy?null:()=>_batchDecision(true),
+                  child:Text('اعتماد المحدد ('+_selectedForBatch.length.toString()+')')),
+                OutlinedButton(key:const Key('fin14_batch_reject'),
+                  onPressed:_batchBusy?null:()=>_batchDecision(false),
+                  child:const Text('رفض المحدد')),
+              ]),
+              const SizedBox(height:8),
+            ],
             if(_failure!=null) Padding(
               padding:const EdgeInsets.only(bottom:12),
               child:Column(crossAxisAlignment:CrossAxisAlignment.stretch,children:[
@@ -145,6 +230,16 @@ class _Fin08CustomerClaimsScreenState extends State<Fin08CustomerClaimsScreen> {
                     color:claim.stage==Fin08Stage.approved?c.primary:c.onSurfaceVariant,
                     fontWeight:FontWeight.w700)),
                   if(claim.canReview) ...[
+                    if(widget.batchGateway!=null)CheckboxListTile(
+                      key:Key('fin14_select_'+claim.id),
+                      title:const Text('تحديد للمراجعة الجماعية'),
+                      value:_selectedForBatch.contains(claim.id),
+                      onChanged:_batchBusy?null:(checked){setState((){
+                        if(checked==true && _selectedForBatch.length<50){
+                          _selectedForBatch.add(claim.id);
+                        }else if(checked==false){_selectedForBatch.remove(claim.id);}
+                      });},
+                    ),
                     const SizedBox(height:12),
                     Row(children:[
                       Expanded(child:FilledButton(
