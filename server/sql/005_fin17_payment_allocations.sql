@@ -67,7 +67,7 @@ BEGIN
   END IF;
   IF OLD.status <> 'pending' OR NEW.status NOT IN ('approved','rejected')
      OR NEW.decided_by IS NULL OR NEW.decided_at IS NULL THEN
-    RAISE EXCEPTION 'Allocation requests allow one pending-to-final decision only';
+    RAISE EXCEPTION 'Allocation request history is immutable; only one pending-to-final transition is allowed';
   END IF;
   IF ROW(NEW.id,NEW.relationship_id,NEW.merchant_id,NEW.customer_id,NEW.action,
          NEW.payment_movement_id,NEW.debt_movement_id,NEW.allocation_id,NEW.amount,
