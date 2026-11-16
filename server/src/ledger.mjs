@@ -104,6 +104,8 @@ export class FinancialLedgerService {
         return {operation_id:prior.rows[0].id,status:prior.rows[0].status,replayed:true,ledger_posted:prior.rows[0].movement_id!=null};
       }
       if(rel.status!=='approved') throw conflict('An approved relationship is required');
+      const creditWarning=type==='debt'
+        ?await this.store.credit.evaluateNewDebt(c,id,unit,amount):null;
       const policy=await c.query('SELECT enabled,version FROM relationship_auto_approval_policies WHERE relationship_id=$1',
         [id]);
       const auto=type==='debt' && actor.role==='merchant' && policy.rows[0]?.enabled===true;
@@ -127,7 +129,7 @@ export class FinancialLedgerService {
       return {operation_id:oid,status:auto?'approved':'pending',
         approval_method:auto?'delegated_policy':'manual',
         auto_policy_version:auto?policy.rows[0].version:null,
-        ledger_posted:posted,replayed:false};
+        ledger_posted:posted,replayed:false,credit_warning:creditWarning};
     });
   }
 

@@ -67,3 +67,6 @@ CI الجديد `.github/workflows/fin08-api.yml` ينشئ PostgreSQL 16 مؤق�
 
 ## FIN-15 — تعديل المبالغ قبل الاعتماد
 طبّق sql/003_fin15_amendments.sql بعد 001 ثم 002. API المقترح للعميل وقرار التاجر موثق في [FIN15](../docs/FIN15_AMOUNT_AMENDMENTS_AR.md). لا تُغيّر قيود financial_movements المعتمدة؛ البديل يكون بموافقة الطرفين وبعد التحقق من الهوية.
+
+## FIN-16 — Migration 004 وسياسة الائتمان
+طبق sql/004_fin16_credit_limits.sql بعد 001 ثم 002 ثم 003. GET/POST /v1/relationships/{id}/credit-limits مع مصادقة JWT؛ لا تُنشأ دفاتر مستقلة. التعليمات المالية [FIN-16](../docs/FIN16_CREDIT_LIMITS_AR.md). يحتاج التطبيق اختبار ترقية/استعادة قبل الإنتاج.

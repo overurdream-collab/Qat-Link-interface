@@ -53,7 +53,8 @@ export function createApi({store,verify}) {
       if(method==='POST' && path==='/v1/merchant/claims'){
         requireRole(actor,'merchant');
         const result=await store.createClaim(actor,body,req.headers['idempotency-key']);
-        return json(res,result.replayed?200:201,{...result.claim,replayed:result.replayed});
+        return json(res,result.replayed?200:201,{...result.claim,replayed:result.replayed,
+          credit_warning:result.credit_warning??null});
       }
       if(method==='POST' && path==='/v1/merchant/relationship-requests'){
         requireRole(actor,'merchant');return json(res,201,await store.requestRelationship(actor,body));
@@ -144,6 +145,16 @@ export function createApi({store,verify}) {
         requireParticipant(actor);
         const result=await store.ledger.requestReversal(actor,reversal[1],body,req.headers['idempotency-key']);
         return json(res,result.replayed?200:201,result);
+      }
+      const credit=path.match(/^\/v1\/relationships\/([\w-]+)\/credit-limits$/);
+      if(credit){
+        requireParticipant(actor);
+        if(method==='GET'){
+          return json(res,200,await store.credit.getSnapshot(actor,credit[1]));
+        }
+        if(method==='POST'){
+          return json(res,200,await store.credit.setPolicy(actor,credit[1],body));
+        }
       }
       const balances=path.match(/^\/v1\/relationships\/([\w-]+)\/balances$/);
       if(method==='GET' && balances){

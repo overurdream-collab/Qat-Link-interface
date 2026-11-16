@@ -8,6 +8,8 @@ import '../services/fin08_api_client.dart';
 import '../services/fin13_ledger_gateway.dart';
 import '../services/fin14_batch_gateway.dart';
 import '../services/fin15_amendment_gateway.dart';
+import '../services/fin16_credit_gateway.dart';
+import 'fin16_credit_limits_screen.dart';
 import 'fin15_amendments_screen.dart';
 
 /// Authenticated FIN-13 ledger view. Only mount after trusted JWT login;
@@ -15,10 +17,11 @@ import 'fin15_amendments_screen.dart';
 class Fin13RelationshipLedgerScreen extends StatefulWidget {
   const Fin13RelationshipLedgerScreen({super.key,required this.gateway,
     required this.relationshipId,required this.actorId,required this.role,
-    this.batchGateway,this.amendmentGateway});
+    this.batchGateway,this.amendmentGateway,this.creditGateway});
   final Fin13LedgerGateway gateway;
   final Fin14BatchGateway? batchGateway;
   final Fin15AmendmentGateway? amendmentGateway;
+  final Fin16CreditGateway? creditGateway;
   final String relationshipId,actorId;
   final ParticipantRole role;
   @override
@@ -125,9 +128,11 @@ class _Fin13RelationshipLedgerScreenState extends State<Fin13RelationshipLedgerS
                 Navigator.pop(ctx,true);
                 if(mounted){
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content:Text(
-                    result.status=='approved'
-                     ?'أكد الخادم اعتماد العملية وفق تفويض العميل المسجل.'
-                     :'حُفظ الطلب لدى الخادم بانتظار موافقة الطرف الآخر.')));
+                    result.creditWarning!=null
+                      ?'تنبيه ائتماني: الرصيد المتوقع ${result.creditWarning!.projected} ${result.creditWarning!.currency.name.toUpperCase()} يتجاوز الحد ${result.creditWarning!.limit}. العملية محفوظة وفق سياسة التنبيه.'
+                      : result.status=='approved'
+                        ?'أكد الخادم اعتماد العملية وفق تفويض العميل المسجل.'
+                        :'حُفظ الطلب لدى الخادم بانتظار موافقة الطرف الآخر.')));
                 }
               }catch(e){if(ctx.mounted)update(()=>failure=_errorText(e));}
               finally{if(!success&&ctx.mounted)update(()=>saving=false);}
@@ -387,6 +392,22 @@ class _Fin13RelationshipLedgerScreenState extends State<Fin13RelationshipLedgerS
             icon:const Icon(Icons.receipt_long_outlined),
             label:const Text('كشف الحساب المعتمد')),
         ]),
+        if(widget.creditGateway!=null) ...[
+          const SizedBox(height:9),
+          OutlinedButton.icon(
+            key:const Key('fin16_open_credit_limits'),
+            onPressed:_loading||_acting?null:() async{
+              await Navigator.of(context).push(MaterialPageRoute<void>(
+                builder:(_)=>Fin16CreditLimitsScreen(
+                  gateway:widget.creditGateway!,
+                  relationshipId:widget.relationshipId,
+                  merchantCanEdit:widget.role==ParticipantRole.merchant)));
+              if(mounted)await _load();
+            },
+            icon:const Icon(Icons.account_balance_wallet_outlined),
+            label:const Text('حدود الائتمان والمخاطر المعلقة'),
+          ),
+        ],
         if(widget.amendmentGateway!=null) ...[
           const SizedBox(height:9),
           OutlinedButton.icon(
