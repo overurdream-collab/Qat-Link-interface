@@ -8,7 +8,7 @@ export async function listCustomerRelationships(pool, secret, actor, {limit,curs
   if (decoded && (decoded.scope!=='customer_relationships' || decoded.actor!==actor.id)) {
     throw new ApiError(422,'invalid_input','Cursor is invalid for this account or list');
   }
-  const snapshot=decoded?.snapshot??new Date().toISOString();
+  const snapshot=decoded?.snapshot??(await pool.query('SELECT clock_timestamp()::text AS captured_at')).rows[0].captured_at;
   const {rows}=await pool.query(`
     SELECT r.id,r.merchant_id,mp.verified_display_name AS merchant_display_name,
       r.status,r.created_at,r.decided_at,r.created_at::text AS cursor_created_at
