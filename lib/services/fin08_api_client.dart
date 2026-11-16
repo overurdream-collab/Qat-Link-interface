@@ -30,6 +30,8 @@ enum Fin08Stage {
   awaitingReview,
   acceptedAwaitingRelationship,
   acceptedAwaitingPosting,
+  awaitingMerchantAdjustment,
+  superseded,
   rejected,
   approved;
 
@@ -38,6 +40,8 @@ enum Fin08Stage {
         'awaiting_review' => awaitingReview,
         'accepted_awaiting_relationship' => acceptedAwaitingRelationship,
         'accepted_awaiting_posting' => acceptedAwaitingPosting,
+        'awaiting_merchant_adjustment' => awaitingMerchantAdjustment,
+        'superseded' => superseded,
         'rejected' => rejected,
         'approved' => approved,
         _ => throw const FormatException('Unknown FIN-08 claim stage'),
@@ -49,6 +53,8 @@ enum Fin08Stage {
           awaitingReview => 'دفعة بانتظار موافقة العميل — غير معتمدة',
           acceptedAwaitingRelationship => 'وافق العميل على الدفعة — العلاقة معلقة',
           acceptedAwaitingPosting => 'الدفعة تنتظر الترحيل',
+          awaitingMerchantAdjustment => 'طلب تعديل الدفعة بانتظار التاجر',
+          superseded => 'استُبدلت الدفعة بطلب جديد للمراجعة',
           rejected => 'دفعة مرفوضة — لا تؤثر على الرصيد',
           approved => 'دفعة معتمدة',
         }
@@ -59,6 +65,8 @@ enum Fin08Stage {
         awaitingReview => 'بانتظار موافقة العميل — غير معتمد',
         acceptedAwaitingRelationship => 'وافق العميل — الارتباط معلق',
         acceptedAwaitingPosting => 'بانتظار الترحيل الموثق',
+        awaitingMerchantAdjustment => 'طلب تعديل المبلغ بانتظار التاجر',
+        superseded => 'استُبدل الدين بطلب جديد للمراجعة',
         rejected => 'مرفوض — لا يدخل الرصيد',
         approved => 'دين معتمد',
       };
@@ -116,7 +124,8 @@ class Fin08MerchantContact {
 class Fin08MerchantClaim {
   const Fin08MerchantClaim({required this.id, required this.contactId,
     required this.amount, required this.currency, required this.createdAt,
-    required this.stage, this.description, this.type=MovementType.debt});
+    required this.stage, this.description, this.type=MovementType.debt,
+    this.pendingAdjustmentId,this.proposedAmount,this.sourceClaimId,this.occurredAt});
   final String id;
   final String contactId;
   final Decimal amount;
@@ -125,6 +134,9 @@ class Fin08MerchantClaim {
   final DateTime createdAt;
   final Fin08Stage stage;
   final MovementType type;
+  final String? pendingAdjustmentId,sourceClaimId;
+  final Decimal? proposedAmount;
+  final DateTime? occurredAt;
 
   factory Fin08MerchantClaim.fromJson(Map<String, dynamic> json) =>
       Fin08MerchantClaim(
@@ -136,6 +148,12 @@ class Fin08MerchantClaim {
         createdAt: _date(json, 'created_at'),
         stage: Fin08Stage.fromWire(_str(json, 'stage')),
         type: _movementType(json['type']),
+        pendingAdjustmentId:json['pending_adjustment_id'] as String?,
+        proposedAmount:json['proposed_amount'] is String? 
+          ?(json['proposed_amount'] is String ? Decimal.parse(json['proposed_amount'] as String):null):null,
+        sourceClaimId:json['source_claim_id'] as String?,
+        occurredAt:json['occurred_at'] is String? 
+          ?(json['occurred_at'] is String ? DateTime.parse(json['occurred_at'] as String):null):null,
       );
 }
 
@@ -143,7 +161,8 @@ class Fin08PreviousClaim {
   const Fin08PreviousClaim({required this.id, required this.merchantId,
     required this.merchantName, required this.amount, required this.currency,
     required this.createdAt, required this.stage, this.description,
-    this.type=MovementType.debt});
+    this.type=MovementType.debt,this.pendingAdjustmentId,this.proposedAmount,
+    this.sourceClaimId,this.occurredAt});
   final String id;
   final String merchantId;
   final String merchantName;
@@ -153,6 +172,9 @@ class Fin08PreviousClaim {
   final String? description;
   final Fin08Stage stage;
   final MovementType type;
+  final String? pendingAdjustmentId,sourceClaimId;
+  final Decimal? proposedAmount;
+  final DateTime? occurredAt;
   bool get canReview => stage == Fin08Stage.awaitingReview;
 
   factory Fin08PreviousClaim.fromJson(Map<String, dynamic> json) =>
@@ -166,6 +188,12 @@ class Fin08PreviousClaim {
         createdAt: _date(json, 'created_at'),
         stage: Fin08Stage.fromWire(_str(json, 'stage')),
         type: _movementType(json['type']),
+        pendingAdjustmentId:json['pending_adjustment_id'] as String?,
+        proposedAmount:json['proposed_amount'] is String
+          ?Decimal.parse(json['proposed_amount'] as String):null,
+        sourceClaimId:json['source_claim_id'] as String?,
+        occurredAt:json['occurred_at'] is String
+          ?DateTime.parse(json['occurred_at'] as String):null,
       );
 }
 
