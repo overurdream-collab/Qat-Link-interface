@@ -127,7 +127,11 @@ class _Fin13RelationshipLedgerScreenState extends State<Fin13RelationshipLedgerS
             },child:const Text('إرسال الطلب')),
           ],
         )));
-    amount.dispose();description.dispose();
+    // Keep input controllers alive until the dialog widgets finish unmounting.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      amount.dispose();
+      description.dispose();
+    });
     if(saved==true&&mounted)await _load();
   }
 
@@ -235,7 +239,10 @@ class _Fin13RelationshipLedgerScreenState extends State<Fin13RelationshipLedgerS
         TextButton(onPressed:()=>Navigator.pop(ctx,false),child:const Text('إلغاء')),
         FilledButton(onPressed:()=>Navigator.pop(ctx,true),child:const Text('إرسال طلب العكس')),
       ]));
-    if(ok!=true || !mounted){reason.dispose();return;}
+    if(ok!=true || !mounted){
+      WidgetsBinding.instance.addPostFrameCallback((_)=>reason.dispose());
+      return;
+    }
     try{
       await widget.gateway.reverse(widget.relationshipId,movementId,
         reason:reason.text.trim(),idempotencyKey:key);
@@ -245,7 +252,7 @@ class _Fin13RelationshipLedgerScreenState extends State<Fin13RelationshipLedgerS
         await _load();
       }
     }catch(e){if(mounted)_showError(e);}
-    finally{reason.dispose();}
+    finally{WidgetsBinding.instance.addPostFrameCallback((_)=>reason.dispose());}
   }
 
   @override
