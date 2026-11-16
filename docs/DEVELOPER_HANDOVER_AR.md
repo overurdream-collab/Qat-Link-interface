@@ -168,3 +168,7 @@ flutter run
 - تحديث مرجع الميزة و[سجل القرارات](DECISION_LOG_AR.md) و[سجل التقدم](IMPLEMENTATION_STATUS_AR.md)؛ إزالة التعارض من الفهرس أو وسم الأقدم بالتاريخ.
 
 **لا يُغلق العمل بعبارة «انتهى» ما لم توثق نتيجة الفحص الفعلي ومكان الكود وقيود التشغيل.**
+
+## FIN-10 — متابعة انضمام العميل ومراجعة الارتباط (2026-11-16)
+
+أضيف `Fin08Store.customerRelationships` ومسار `GET /v1/customer/relationships`، وإنشاء علاقات `pending` تلقائياً عند مطابقة الهاتف الموثقة في `reconcilePhone`، ونموذج/بوابة Flutter `Fin08RelationshipsGateway` مع شاشة `Fin10CustomerRelationshipsScreen`. **يظل دخول العميل والتجار في التطبيق غير موصول بـ OTP/JWT الحقيقي**؛ لا تستخدم شاشة المراجعة من Login قبل التحقق الآمن. الفحوص: `server/test/customer_join_relationships.integration.test.mjs` و`test/screens/fin10_customer_relationships_screen_test.dart`. التوضيح الكامل في [FIN-10](FIN10_VERIFIED_RELATIONSHIP_INBOX_AR.md).
