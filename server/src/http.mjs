@@ -179,6 +179,11 @@ export function createApi({store,verify}) {
       if(method==='GET' && balances){
         requireParticipant(actor);return json(res,200,await store.ledger.balances(actor,balances[1]));
       }
+      const pendingStatement=path.match(/^\\/v1\\/relationships\\/([\\w-]+)\\/pending-statement$/);
+      if(method==='GET' && pendingStatement){
+        requireParticipant(actor);return json(res,200,await store.ledger.pendingStatement(actor,pendingStatement[1],{
+          currency:url.searchParams.get('currency'),from:url.searchParams.get('from'),to:url.searchParams.get('to')}));
+      }
       const statement=path.match(/^\/v1\/relationships\/([\w-]+)\/statement$/);
       if(method==='GET' && statement){
         requireParticipant(actor);return json(res,200,await store.ledger.statement(actor,statement[1],{
