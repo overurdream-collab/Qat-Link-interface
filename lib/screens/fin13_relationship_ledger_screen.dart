@@ -68,8 +68,8 @@ class _Fin13RelationshipLedgerScreenState extends State<Fin13RelationshipLedgerS
 
   Future<void> _newOperation(MovementType kind) async {
     if(_acting)return;
-    final amount=TextEditingController();
-    final description=TextEditingController();
+    var amountText='';
+    var descriptionText='';
     final key=_newIdempotency(); // stable for retries within this dialog
     CurrencyCode currency=_currency;
     var saving=false;
@@ -83,7 +83,7 @@ class _Fin13RelationshipLedgerScreenState extends State<Fin13RelationshipLedgerS
               ?'لا يزيد الدين الرصيد المعتمد قبل موافقة العميل أو سريان تفويضه للديون الجديدة.'
               :'لا تنقص الدفعة الرصيد المعتمد قبل موافقة الطرف الآخر.'),
             const SizedBox(height:12),
-            TextField(key:const Key('fin13_amount'),controller:amount,
+            TextField(key:const Key('fin13_amount'),onChanged:(value)=>amountText=value,
               keyboardType:const TextInputType.numberWithOptions(decimal:true),
               decoration:const InputDecoration(labelText:'المبلغ')),
             DropdownButton<CurrencyCode>(
@@ -91,7 +91,7 @@ class _Fin13RelationshipLedgerScreenState extends State<Fin13RelationshipLedgerS
               onChanged:saving?null:(v){if(v!=null)update(()=>currency=v);},
               items:CurrencyCode.values.map((v)=>DropdownMenuItem(
                 value:v,child:Text(v.name.toUpperCase()))).toList()),
-            TextField(controller:description,decoration:const InputDecoration(
+            TextField(onChanged:(value)=>descriptionText=value,decoration:const InputDecoration(
               labelText:'الوصف (اختياري)')),
             if(failure!=null)Text(failure!,
               style:TextStyle(color:Theme.of(ctx).colorScheme.error)),
@@ -100,7 +100,7 @@ class _Fin13RelationshipLedgerScreenState extends State<Fin13RelationshipLedgerS
             TextButton(onPressed:saving?null:()=>Navigator.pop(ctx,false),
               child:const Text('إلغاء')),
             FilledButton(key:const Key('fin13_submit_operation'),onPressed:saving?null:() async{
-              final raw=amount.text.trim();
+              final raw=amountText.trim();
               if(!RegExp(r'^\d{1,16}(?:\.\d{1,4})?$').hasMatch(raw) ||
                   Decimal.parse(raw)<=Decimal.zero){
                 update(()=>failure='المبلغ يجب أن يكون موجباً وبدقة لا تتجاوز 4 منازل.');
@@ -111,8 +111,8 @@ class _Fin13RelationshipLedgerScreenState extends State<Fin13RelationshipLedgerS
               try {
                 final result=await widget.gateway.create(widget.relationshipId,
                   type:kind,amount:Decimal.parse(raw),currency:currency,
-                  idempotencyKey:key,description:description.text.trim().isEmpty?
-                    null:description.text.trim());
+                  idempotencyKey:key,description:descriptionText.trim().isEmpty?
+                    null:descriptionText.trim());
                 if(!ctx.mounted)return;
                 success=true;
                 Navigator.pop(ctx,true);
@@ -127,11 +127,6 @@ class _Fin13RelationshipLedgerScreenState extends State<Fin13RelationshipLedgerS
             },child:const Text('إرسال الطلب')),
           ],
         )));
-    // Keep input controllers alive until the dialog widgets finish unmounting.
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      amount.dispose();
-      description.dispose();
-    });
     if(saved==true&&mounted)await _load();
   }
 
@@ -229,30 +224,27 @@ class _Fin13RelationshipLedgerScreenState extends State<Fin13RelationshipLedgerS
 
   Future<void> _requestReversal(String movementId) async {
     // No immediate posting: request becomes pending until the other approves.
-    final reason=TextEditingController();
+    var reasonText='';
     final key=_newIdempotency();
     final ok=await showDialog<bool>(context:context,builder:(ctx)=>AlertDialog(
       title:const Text('طلب عكس قيد معتمد'),
-      content:TextField(controller:reason,maxLength:500,
+      content:TextField(onChanged:(value)=>reasonText=value,maxLength:500,
         decoration:const InputDecoration(labelText:'سبب العكس')),
       actions:[
         TextButton(onPressed:()=>Navigator.pop(ctx,false),child:const Text('إلغاء')),
         FilledButton(onPressed:()=>Navigator.pop(ctx,true),child:const Text('إرسال طلب العكس')),
       ]));
-    if(ok!=true || !mounted){
-      WidgetsBinding.instance.addPostFrameCallback((_)=>reason.dispose());
-      return;
-    }
+    if(ok!=true || !mounted)return;
     try{
       await widget.gateway.reverse(widget.relationshipId,movementId,
-        reason:reason.text.trim(),idempotencyKey:key);
+        reason:reasonText.trim(),idempotencyKey:key);
       if(mounted){
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content:Text('سُجل طلب عكس معلق. لا يتغير الرصيد حتى موافقة الطرف الآخر.')));
         await _load();
       }
     }catch(e){if(mounted)_showError(e);}
-    finally{WidgetsBinding.instance.addPostFrameCallback((_)=>reason.dispose());}
+
   }
 
   @override
