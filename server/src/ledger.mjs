@@ -325,6 +325,47 @@ export class FinancialLedgerService {
     });
   }
 
+  async pendingStatement(actor,relationshipId,{currency:unit,from,to}) {
+    const id=uuid(relationshipId,'relationship_id');
+    const code=currency(unit);
+    statementPeriod(from,to);
+    return this.store.tx(async c=>{
+      const rel=await this.relationship(c,actor,id);
+      const q=await c.query([
+        'SELECT source_id,source,type,amount,currency,description,occurred_at,created_at,created_by,status',
+        'FROM (',
+        'SELECT cl.id AS source_id,\\'merchant_claim\\' AS source,cl.operation_type AS type,',
+        'cl.amount::text AS amount,cl.currency,cl.description,cl.occurred_at,cl.created_at,',
+        'cl.merchant_id AS created_by,CASE WHEN d.decision=\\'accept\\' THEN \\'awaiting_relationship\\' ELSE \\'awaiting_customer\\' END AS status',
+        'FROM merchant_claims cl',
+        'JOIN merchant_relationships r ON r.id=$1 AND r.merchant_id=cl.merchant_id AND r.contact_id=cl.contact_id',
+        'LEFT JOIN customer_claim_decisions d ON d.claim_id=cl.id',
+        'LEFT JOIN financial_movements fm ON fm.source_claim_id=cl.id',
+        'WHERE cl.currency=$2 AND cl.superseded_by_claim_id IS NULL AND fm.id IS NULL',
+        'AND d.decision IS DISTINCT FROM \\'reject\\'',
+        'AND (cl.occurred_at AT TIME ZONE \\'Asia/Aden\\')::date BETWEEN $3::date AND $4::date',
+        'UNION ALL',
+        'SELECT op.id AS source_id,\\'relationship_operation\\' AS source,op.operation_type AS type,',
+        'op.amount::text AS amount,op.currency,op.description,op.occurred_at,op.created_at,',
+        'op.created_by,op.status',
+        'FROM relationship_operations op WHERE op.relationship_id=$1 AND op.currency=$2 AND op.status=\\'pending\\'',
+        'AND (op.occurred_at AT TIME ZONE \\'Asia/Aden\\')::date BETWEEN $3::date AND $4::date',
+        ') requests ORDER BY occurred_at,source_id LIMIT 501'
+      ].join(' '),[id,code,from,to]);
+      if(q.rows.length>500) throw new ApiError(413,'statement_too_large',
+        'Pending statement contains more than 500 entries; use a narrower date period');
+      let debts=0n,payments=0n;
+      for(const row of q.rows){
+        if(row.type==='debt') debts+=toTenThousandths(row.amount);
+        else payments+=toTenThousandths(row.amount);
+      }
+      return {relationship_id:id,currency:code,from,to,time_zone:'Asia/Aden',
+        pending_debts:fromTenThousandths(debts),pending_payments:fromTenThousandths(payments),
+        pending_net_estimate:fromTenThousandths(debts-payments),
+        items:q.rows,scope:'unapproved_requests_only_not_an_account_balance'};
+    });
+  }
+
   async operations(actor,relationshipId,{limit,cursor}) {
     const id=uuid(relationshipId,'relationship_id');
     const count=page(limit);
