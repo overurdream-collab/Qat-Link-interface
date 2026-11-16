@@ -53,6 +53,15 @@ export function createApi({store,verify}) {
       if(method==='POST' && path==='/v1/merchant/relationship-requests'){
         requireRole(actor,'merchant');return json(res,201,await store.requestRelationship(actor,body));
       }
+      if(method==='GET' && path==='/v1/merchant/contacts'){
+        requireRole(actor,'merchant');
+        return json(res,200,await store.listContacts(actor,{limit:page(url.searchParams.get('limit')??undefined),cursor:url.searchParams.get('cursor')}));
+      }
+      const merchantContactClaims=path.match(/^\\/v1\\/merchant\\/contacts\\/([\\w-]+)\\/claims$/);
+      if(method==='GET' && merchantContactClaims){
+        requireRole(actor,'merchant');
+        return json(res,200,await store.listContactClaims(actor,merchantContactClaims[1],{limit:page(url.searchParams.get('limit')??undefined),cursor:url.searchParams.get('cursor')}));
+      }
       if(method==='GET' && path==='/v1/merchant/claims/summary'){
         requireRole(actor,'merchant');return json(res,200,await store.summary(actor));
       }
