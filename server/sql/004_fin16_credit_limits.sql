@@ -9,6 +9,7 @@ CREATE TABLE IF NOT EXISTS relationship_credit_limits (
   currency text NOT NULL CHECK (currency IN ('YER','SAR','USD')),
   limit_amount numeric(20,4) NOT NULL CHECK(limit_amount >= 0),
   mode text NOT NULL CHECK (mode IN ('warn','block')),
+  enabled boolean NOT NULL DEFAULT true,
   version integer NOT NULL DEFAULT 1 CHECK (version > 0),
   updated_by text NOT NULL,
   updated_at timestamptz NOT NULL DEFAULT clock_timestamp(),
