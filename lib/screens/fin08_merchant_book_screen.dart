@@ -111,7 +111,7 @@ class _Fin08MerchantBookScreenState extends State<Fin08MerchantBookScreen> {
 
   }
 
-  Future<void> _addClaim() async {
+  Future<void> _addClaim({MovementType type=MovementType.debt}) async {
     final contact=_selected;
     if(contact==null)return;
     var amountText='';
@@ -128,9 +128,11 @@ class _Fin08MerchantBookScreenState extends State<Fin08MerchantBookScreen> {
         builder:(dialogContext)=>StatefulBuilder(
           builder:(ctx,setDialog)=>AlertDialog(
             scrollable:true,
-            title:Text('مطالبة معلقة — ${contact.name}'),
+            title:Text('${type==MovementType.payment?'دفعة':'دين'} معلق — ${contact.name}'),
             content:Column(mainAxisSize:MainAxisSize.min,children:[
-              const Text('لا تُضاف إلى الرصيد المعتمد قبل موافقة العميل والعلاقة.'),
+              Text(type==MovementType.payment
+                ?'هذه دفعة مسجلة من طرف التاجر؛ لا تخصم من الرصيد المعتمد قبل موافقة العميل والعلاقة.'
+                :'لا يُضاف الدين إلى الرصيد المعتمد قبل موافقة العميل والعلاقة.'),
               TextField(onChanged:(v)=>amountText=v,keyboardType:const TextInputType.numberWithOptions(decimal:true),
                 decoration:const InputDecoration(labelText:'المبلغ')),
               DropdownButton<CurrencyCode>(value:currency,isExpanded:true,
@@ -151,14 +153,14 @@ class _Fin08MerchantBookScreenState extends State<Fin08MerchantBookScreen> {
                 var success=false;
                 try{
                   await widget.gateway.createMerchantClaim(
-                    contactId:contact.id,amount:money,currency:currency,
+                    contactId:contact.id,amount:money,currency:currency,type:type,
                     idempotencyKey:key,description:descriptionText.trim().isEmpty?null:descriptionText.trim());
                   if(!ctx.mounted)return;
                   success=true;
                   Navigator.pop(ctx,true);
                 }catch(e){if(ctx.mounted)setDialog(()=>failure=_message(e));}
                 finally{if(!success && ctx.mounted)setDialog(()=>saving=false);}
-              },child:const Text('حفظ كمطالبة معلقة')),
+              },child:Text(type==MovementType.payment?'حفظ كدفعة معلقة':'حفظ كدين معلق')),
             ],
           ),
         ),
@@ -205,7 +207,7 @@ class _Fin08MerchantBookScreenState extends State<Fin08MerchantBookScreen> {
       builder:(dialog)=>AlertDialog(
         title:const Text('نسخ بيان المطالبات المعلقة؟'),
         content:const Text(
-          'سيتم نسخ مبلغ المطالبات غير المعتمدة من سجل التاجر فقط. '
+          'سيتم نسخ الديون والدفعات غير المعتمدة من سجل التاجر، كل نوع منفصل. '
           'هذا ليس إقراراً من العميل ولا كشفاً للديون المعتمدة. '
           'راجع رقم المستلم وبيانات العميل قبل إرسال البيان عبر واتساب أو غيره. '
           'لن يرسل التطبيق أي رسالة تلقائياً.'),
@@ -278,6 +280,13 @@ class _Fin08MerchantBookScreenState extends State<Fin08MerchantBookScreen> {
           const SizedBox(height:12),
           if(_selected!=null) ...[
             OutlinedButton.icon(
+              key:const Key('fin13_add_pending_payment'),
+              onPressed:_loading?null:()=>_addClaim(type:MovementType.payment),
+              icon:const Icon(Icons.payments_outlined),
+              label:const Text('تسجيل دفعة معلقة من العميل'),
+            ),
+            const SizedBox(height:8),
+            OutlinedButton.icon(
               key:const Key('fin11_copy_pending_statement'),
               onPressed:(_loading || _statementLoading)?null:_copyPendingStatement,
               icon:const Icon(Icons.copy_all_outlined),
@@ -296,9 +305,12 @@ class _Fin08MerchantBookScreenState extends State<Fin08MerchantBookScreen> {
             for(final bucket in _summary) Card(child:Padding(
               padding:const EdgeInsets.all(12),child:Column(crossAxisAlignment:CrossAxisAlignment.start,children:[
                 Text(bucket.currency.name.toUpperCase(),style:const TextStyle(fontWeight:FontWeight.bold)),
-                Text('خارج التطبيق: ${FinanceDisplay.amount(bucket.outsideApp)}'),
-                Text('بانتظار الموافقات: ${FinanceDisplay.amount(bucket.awaitingCustomer)}'),
-                Text('معتمد من هذه المطالبات فقط: ${FinanceDisplay.amount(bucket.approvedFromClaims)}'),
+                Text('ديون خارج التطبيق غير معتمدة: ${FinanceDisplay.amount(bucket.outsideApp)}'),
+                Text('دفعات خارج التطبيق غير معتمدة: ${FinanceDisplay.amount(bucket.outsideAppPayments)}'),
+                Text('ديون تنتظر الموافقات: ${FinanceDisplay.amount(bucket.awaitingCustomer)}'),
+                Text('دفعات تنتظر الموافقات: ${FinanceDisplay.amount(bucket.awaitingPayments)}'),
+                Text('معتمد من هذه المطالبات فقط: ${FinanceDisplay.amount(bucket.approvedFromClaims-bucket.approvedPaymentsFromClaims)}'),
+                Text('هذا صافي المطالبات التاريخية فقط وليس الرصيد المالي الشامل.',style:TextStyle(color:c.onSurfaceVariant,fontSize:11)),
               ]))),
             const SizedBox(height:12),
             if(!_loading && _contacts.isEmpty && _error==null)
@@ -317,7 +329,7 @@ class _Fin08MerchantBookScreenState extends State<Fin08MerchantBookScreen> {
               key:Key('fin08_merchant_claim_${claim.id}'),
               child:ListTile(
                 title:Text('${FinanceDisplay.amount(claim.amount)} ${FinanceDisplay.currencyCode(claim.currency)}'),
-                subtitle:Text('${claim.description??'مبلغ سجله التاجر'}\n${claim.stage.label}'),
+                subtitle:Text('${claim.type==MovementType.payment?'دفعة':'دين'} | ${claim.description??'مبلغ سجله التاجر'}\n${claim.stage.labelFor(claim.type)}'),
               ),
             ),
             if(!_loading && _claims.isEmpty && _error==null)
