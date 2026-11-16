@@ -11,7 +11,7 @@ export async function listCustomerRelationships(pool, secret, actor, {limit,curs
   const snapshot=decoded?.snapshot??new Date().toISOString();
   const {rows}=await pool.query(`
     SELECT r.id,r.merchant_id,mp.verified_display_name AS merchant_display_name,
-      r.status,r.created_at,r.decided_at
+      r.status,date_trunc('milliseconds',r.created_at) AS created_at,r.decided_at
     FROM merchant_relationships r
     JOIN merchant_contacts c ON c.id=r.contact_id AND c.merchant_id=r.merchant_id
     JOIN verified_contact_links vl ON vl.contact_id=c.id
@@ -25,8 +25,8 @@ export async function listCustomerRelationships(pool, secret, actor, {limit,curs
         FROM customer_phone_evidence evidence
         WHERE evidence.normalized_phone=c.normalized_phone AND evidence.revoked_at IS NULL)=1
       AND r.created_at <= $2::timestamptz
-      AND ($3::timestamptz IS NULL OR (r.created_at,r.id)<($3::timestamptz,$4::uuid))
-    ORDER BY r.created_at DESC,r.id DESC LIMIT $5`,
+      AND ($3::timestamptz IS NULL OR (date_trunc('milliseconds',r.created_at),r.id)<($3::timestamptz,$4::uuid))
+    ORDER BY date_trunc('milliseconds',r.created_at) DESC,r.id DESC LIMIT $5`,
     [actor.id,snapshot,decoded?.createdAt??null,decoded?.id??null,n+1]);
   const more=rows.length>n;
   const items=rows.slice(0,n).map(row=>({
