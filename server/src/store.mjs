@@ -313,14 +313,17 @@ export class Fin08Store {
         await c.query('UPDATE merchant_relationships SET status=$2,decided_at=now() WHERE id=$1',[id,wanted]);
         await this.audit(c,actor.id,'relationship',id,`customer_${selected}`);
       }
-      let posted=0;
+      let posted=0,postedDebts=0;
       if (wanted==='approved') {
-        const claimed=await c.query(`SELECT cl.id FROM merchant_claims cl
+        const claimed=await c.query(`SELECT cl.id,cl.operation_type FROM merchant_claims cl
           JOIN customer_claim_decisions d ON d.claim_id=cl.id AND d.decision='accept'
           WHERE cl.merchant_id=$1 AND d.customer_id=$2`,[current.merchant_id,actor.id]);
-        for(const claim of claimed.rows) if(await this.postClaim(c,claim.id,actor.id)) posted++;
+        for(const claim of claimed.rows) if(await this.postClaim(c,claim.id,actor.id)) {
+          posted++;
+          if(claim.operation_type==='debt')postedDebts++;
+        }
       }
-      return {relationship_id:id,status:wanted,newly_posted_debts:posted};
+      return {relationship_id:id,status:wanted,newly_posted_debts:postedDebts,newly_posted_movements:posted};
     });
   }
   // FIN-09 restoration reads use authenticated merchant identity, never client-supplied tenant IDs.
