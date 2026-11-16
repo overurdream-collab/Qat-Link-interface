@@ -69,7 +69,7 @@ test('FIN-13 PostgreSQL: legacy debts+payments, bilateral approval, exact ledger
         {type:'payment',amount:'20000.0000',currency:'YER'},key('registered-payment'));
       assert.equal(pay2.status,'pending');
       assert.equal(pay2.ledger_posted,false);
-      assert.equal((await store.ledger.balances(customer,rel.relationship_id)).currencies[2].balance,'10000.0000');
+      assert.equal((await store.ledger.balances(customer,rel.relationship_id)).currencies.find(x=>x.currency==='YER').balance,'10000.0000');
       await assert.rejects(()=>store.ledger.decideOperation(customer,rel.relationship_id,
         pay2.operation_id,{decision:'accept'}),{status:403});
       const pm=await store.ledger.decideOperation(merchant,rel.relationship_id,
