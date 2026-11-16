@@ -24,6 +24,7 @@
 | تاجر | `POST /v1/merchant/claims` | دين معلق، يجب Header `Idempotency-Key` ومبلغ decimal string |
 | تاجر | `POST /v1/merchant/relationship-requests` | طلب ارتباط لعميل تأكدت مطابقته |
 | تاجر | `GET /v1/merchant/claims/summary` | أرصدة الادعاءات الثلاثة بحسب العملة، وليس الرصيد المالي الكامل |
+| عميل | `GET /v1/customer/relationships?limit=50&cursor=` | استرجاع علاقات التجار الموثقة وحالتها؛ لا موافقة تلقائية على الديون |
 | عميل | `GET /v1/customer/previous-claims?limit=50&cursor=` | جميع طلبات التجار السابقة بحسب الإثبات |
 | عميل | `POST /v1/customer/previous-claims/{uuid}/decision` | `{ "decision":"accept" }` أو `reject` |
 | عميل | `POST /v1/customer/relationships/{uuid}/decision` | قرار مستقل على العلاقة |
