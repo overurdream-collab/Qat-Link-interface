@@ -33,3 +33,6 @@
 أجري محلياً `node --check` و`node --test`؛ اختبارات Postgres لا يمكن تشغيلها دون قاعدة PostgreSQL، وتتولى GitHub Actions اختبارها في PR. لا تدّعي جاهزية الإنتاج إلا بعد نجاح CI ثم ربط خدمة هوية حقيقية وFlutter واختبار جهازين واستمرارية البيانات ونسخ احتياطية.
 
 **المرجع التنفيذي التفصيلي:** [server/README_AR.md](../server/README_AR.md). يحتفظ [عقد FIN-08](FIN08_JOINED_CUSTOMER_BACKEND_CONTRACT_AR.md) بالأحكام الملزمة ولا يستبدل.
+## توثيق تحقق GitHub Actions — 2026-11-16
+
+تمت إعادة الاختبار بعد إضافة حالة التزامن وتجديد إثبات الهاتف في [تشغيل Backend #43845171641](https://github.com/overurdream-collab/Qat-Link-interface/actions/runs/43845171641): PostgreSQL 16 migrations نجحت، وكل **11 اختباراً نجح، 0 فشل، 0 متجاوز**. لم يتم تشغيل اختبار هاتفين أو OTP إنتاجي أو تكامل Flutter مع هذا الخادم. PR #19 لا يزال منفصلاً لحين مراجعة الدمج.
