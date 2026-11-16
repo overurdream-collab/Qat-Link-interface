@@ -60,6 +60,24 @@ test('FIN-08 PostgreSQL E2E: historic claims, independent consent, durable ledge
       assert.equal(summary.currencies.find(r=>r.currency==='YER').approved_from_claims,'1250.0000');
       assert.match(summary.currencies.find(r=>r.currency==='YER').outside_app,/^0(?:\.0+)?$/);
       assert.match((await store.summary(m2)).currencies.find(r=>r.currency==='SAR').approved_from_claims,/^0(?:\.0+)?$/);
+      // Concurrent approvals in opposite order must never strand a claim
+      // or create a duplicate movement after both approvals are committed.
+      const m3={id:`merchant-${suffix}-C`,role:'merchant'};
+      await store.onboardMerchant(identity,{merchant_id:m3.id,verified_display_name:'Merchant Three'});
+      const c3=await store.createContact(m3,{name:'Customer Registered',phone});
+      const d=await create(m3,c3.id,`claim-${suffix}-d`,'42.25','USD');
+      const rel3=await store.requestRelationship(m3,{contact_id:c3.id});
+      await Promise.all([
+        store.decideClaim(customer,d.claim.id,{decision:'accept'}),
+        store.decideRelationship(customer,rel3.relationship_id,{decision:'accept'})
+      ]);
+      assert.equal(await countMovements(pool,d.claim.id),1);
+      // New proof for SAME account, followed by revocation of the old proof:
+      // the trusted link refreshes without exposing it to any different owner.
+      await store.verifyPhone(identity,{customer_id:customer.id,phone,proof_reference:`proof-new-${suffix}`});
+      await store.revokeProof(identity,{proof_reference:`proof-${suffix}`});
+      await store.verifyPhone(identity,{customer_id:customer.id,phone,proof_reference:`proof-new-${suffix}`});
+      assert.ok((await store.claimsInbox(customer,{})).items.some(x=>x.claim_id===a.claim.id));
       // A second distinct verified account now claims the SAME phone: no
       // customer gets the old private inbox until identity conflict resolved.
       await store.verifyPhone(identity,{customer_id:impostor.id,phone,proof_reference:`proof-impostor-${suffix}`});
