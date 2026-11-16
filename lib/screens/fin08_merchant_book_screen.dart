@@ -78,7 +78,6 @@ class _Fin08MerchantBookScreenState extends State<Fin08MerchantBookScreen> {
     var phone='';
     var saving=false;
     String? failure;
-    Fin08ClaimReceipt? confirmedReceipt;
     final saved=await showDialog<bool>(
         context:context,barrierDismissible:false,
         builder:(dialogContext)=>StatefulBuilder(
@@ -127,6 +126,7 @@ class _Fin08MerchantBookScreenState extends State<Fin08MerchantBookScreen> {
       .map((n)=>n.toRadixString(16).padLeft(2,'0')).join();
     var saving=false;
     String? failure;
+    Fin08ClaimReceipt? confirmedReceipt;
     final saved=await showDialog<bool>(
         context:context,barrierDismissible:false,
         builder:(dialogContext)=>StatefulBuilder(
