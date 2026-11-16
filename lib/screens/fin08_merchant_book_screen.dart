@@ -2,9 +2,11 @@ import 'dart:math';
 
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../models/app_models.dart';
 import '../services/fin08_api_client.dart';
+import '../services/fin08_pending_statement.dart';
 import '../widgets/finance_display.dart';
 
 /// Restores durable merchant-only contacts/claims from FIN-09 server API.
@@ -26,6 +28,7 @@ class _Fin08MerchantBookScreenState extends State<Fin08MerchantBookScreen> {
   Fin08MerchantContact? _selected;
   String? _error;
   bool _loading=false;
+  bool _statementLoading=false;
 
   @override
   void initState(){super.initState();_loadContacts();}
@@ -192,6 +195,69 @@ class _Fin08MerchantBookScreenState extends State<Fin08MerchantBookScreen> {
     }
   }
 
+  /// Fetches ALL pages again from authenticated merchant API before copying.
+  /// No partial or stale local UI list is ever represented as a complete statement.
+  Future<void> _copyPendingStatement() async {
+    final contact=_selected;
+    if(contact==null || _loading || _statementLoading)return;
+    final confirmed=await showDialog<bool>(
+      context:context,
+      builder:(dialog)=>AlertDialog(
+        title:const Text('نسخ بيان المطالبات المعلقة؟'),
+        content:const Text(
+          'سيتم نسخ مبلغ المطالبات غير المعتمدة من سجل التاجر فقط. '
+          'هذا ليس إقراراً من العميل ولا كشفاً للديون المعتمدة. '
+          'راجع رقم المستلم وبيانات العميل قبل إرسال البيان عبر واتساب أو غيره. '
+          'لن يرسل التطبيق أي رسالة تلقائياً.'),
+        actions:[
+          TextButton(onPressed:()=>Navigator.of(dialog).pop(false),child:const Text('إلغاء')),
+          FilledButton(key:const Key('fin11_confirm_copy_pending'),
+            onPressed:()=>Navigator.of(dialog).pop(true),
+            child:const Text('نسخ البيان فقط')),
+        ],
+      ),
+    );
+    if(!mounted || confirmed!=true)return;
+    setState(()=>_statementLoading=true);
+    try {
+      final all=<Fin08MerchantClaim>[];
+      final seenClaims=<String>{};
+      final seenCursors=<String>{};
+      String? cursor;
+      // A pathological page stream must fail, never silently copy an incomplete report.
+      for(var pageCount=0;pageCount<1000;pageCount++){
+        final page=await widget.gateway.merchantClaims(contact.id,cursor:cursor);
+        for(final row in page.items){
+          if(row.contactId!=contact.id || !seenClaims.add(row.id)){
+            throw const Fin08ApiError('نتائج الخادم غير متسقة. لم يُنسخ الكشف.');
+          }
+          all.add(row);
+        }
+        cursor=page.nextCursor;
+        if(cursor==null)break;
+        if(page.items.isEmpty || !seenCursors.add(cursor)){
+          throw const Fin08ApiError('لم يكتمل استرجاع جميع المطالبات. لم يُنسخ الكشف.');
+        }
+      }
+      if(cursor!=null){
+        throw const Fin08ApiError('عدد المطالبات كبير جداً لاسترجاعه كاملاً. لم يُنسخ الكشف.');
+      }
+      final statement=Fin08PendingStatement.compose(contact:contact,claims:all);
+      await Clipboard.setData(ClipboardData(text:statement));
+      if(!mounted)return;
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content:Text('نُسخ البيان غير المعتمد. راجع رقم المستلم قبل المشاركة.'),
+      ));
+    }catch(e){
+      if(!mounted)return;
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content:Text(e is Fin08ApiError?e.message:'تعذر إعداد كشف كامل من الخادم؛ لم يُنسخ أي بيان.'),
+      ));
+    }finally{
+      if(mounted)setState(()=>_statementLoading=false);
+    }
+  }
+
   @override
   Widget build(BuildContext context){
     final c=Theme.of(context).colorScheme;
@@ -211,6 +277,13 @@ class _Fin08MerchantBookScreenState extends State<Fin08MerchantBookScreen> {
             style:TextStyle(color:c.onSurfaceVariant)),
           const SizedBox(height:12),
           if(_selected!=null) ...[
+            OutlinedButton.icon(
+              key:const Key('fin11_copy_pending_statement'),
+              onPressed:(_loading || _statementLoading)?null:_copyPendingStatement,
+              icon:const Icon(Icons.copy_all_outlined),
+              label:Text(_statementLoading?'جاري تجهيز البيان الكامل...':'نسخ كشف المطالبات المعلقة'),
+            ),
+            const SizedBox(height:8),
             OutlinedButton.icon(
               key:const Key('fin10_request_relationship'),
               onPressed:_loading?null:_requestRelationship,
