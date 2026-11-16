@@ -73,32 +73,39 @@ class _Fin08MerchantBookScreenState extends State<Fin08MerchantBookScreen> {
     var saving=false;
     String? failure;
     try {
-      await showDialog<void>(context:context,builder:(dialogContext)=>StatefulBuilder(
-        builder:(ctx,setDialog)=>AlertDialog(
-          title:const Text('إضافة عميل إلى سجل التاجر'),
-          content:Column(mainAxisSize:MainAxisSize.min,children:[
-            const Text('جهة اتصال خاصة، وليست حساباً أو مديونية معتمدة.'),
-            TextField(controller:name,decoration:const InputDecoration(labelText:'اسم العميل')),
-            TextField(controller:phone,keyboardType:TextInputType.phone,
-              decoration:const InputDecoration(labelText:'رقم الجوال')),
-            if(failure!=null)Text(failure!,style:TextStyle(color:Theme.of(ctx).colorScheme.error)),
-          ]),
-          actions:[
-            TextButton(onPressed:saving?null:()=>Navigator.pop(ctx),child:const Text('إلغاء')),
-            FilledButton(key:const Key('fin08_save_contact'),
-              onPressed:saving?null:() async {
-                setDialog((){saving=true;failure=null;});
-                try{
-                  await widget.gateway.createMerchantContact(name:name.text.trim(),phone:phone.text.trim());
-                  if(!ctx.mounted)return;
-                  Navigator.pop(ctx);
-                  await _loadContacts();
-                }catch(e){if(ctx.mounted)setDialog(()=>failure=_message(e));}
-                finally{if(ctx.mounted)setDialog(()=>saving=false);}
-              },child:const Text('حفظ لدى الخادم')),
-          ],
+      final saved=await showDialog<bool>(
+        context:context,barrierDismissible:false,
+        builder:(dialogContext)=>StatefulBuilder(
+          builder:(ctx,setDialog)=>AlertDialog(
+            scrollable:true,
+            title:const Text('إضافة عميل إلى سجل التاجر'),
+            content:Column(mainAxisSize:MainAxisSize.min,children:[
+              const Text('جهة اتصال خاصة، وليست حساباً أو مديونية معتمدة.'),
+              TextField(controller:name,decoration:const InputDecoration(labelText:'اسم العميل')),
+              TextField(controller:phone,keyboardType:TextInputType.phone,
+                decoration:const InputDecoration(labelText:'رقم الجوال')),
+              if(failure!=null)Text(failure!,style:TextStyle(color:Theme.of(ctx).colorScheme.error)),
+            ]),
+            actions:[
+              TextButton(onPressed:saving?null:()=>Navigator.pop(ctx,false),child:const Text('إلغاء')),
+              FilledButton(key:const Key('fin08_save_contact'),
+                onPressed:saving?null:() async {
+                  setDialog((){saving=true;failure=null;});
+                  var success=false;
+                  try{
+                    await widget.gateway.createMerchantContact(name:name.text.trim(),phone:phone.text.trim());
+                    if(!ctx.mounted)return;
+                    success=true;
+                    Navigator.pop(ctx,true);
+                  }catch(e){if(ctx.mounted)setDialog(()=>failure=_message(e));}
+                  finally{if(!success && ctx.mounted)setDialog(()=>saving=false);}
+                },child:const Text('حفظ لدى الخادم')),
+            ],
+          ),
         ),
-      ));
+      );
+      // Refresh AFTER the route has closed; never mutate a disposed dialog.
+      if(saved==true && mounted)await _loadContacts();
     } finally {name.dispose();phone.dispose();}
   }
 
@@ -108,49 +115,54 @@ class _Fin08MerchantBookScreenState extends State<Fin08MerchantBookScreen> {
     final amount=TextEditingController();
     final description=TextEditingController();
     CurrencyCode currency=CurrencyCode.yer;
-    // Retain one secure random idempotency key for this ENTIRE dialog lifetime.
-    // On network failure the same key is reused, avoiding double posting.
+    // Keep same key throughout retries of THIS request, including timeout.
     final random=Random.secure();
     final key='claim-'+List<int>.generate(20,(_)=>random.nextInt(256))
       .map((n)=>n.toRadixString(16).padLeft(2,'0')).join();
     var saving=false;
     String? failure;
     try{
-      await showDialog<void>(context:context,builder:(dialogContext)=>StatefulBuilder(
-        builder:(ctx,setDialog)=>AlertDialog(
-          title:Text('مطالبة معلقة — ${contact.name}'),
-          content:Column(mainAxisSize:MainAxisSize.min,children:[
-            const Text('لا تُضاف إلى الرصيد المعتمد قبل موافقة العميل والعلاقة.'),
-            TextField(controller:amount,keyboardType:const TextInputType.numberWithOptions(decimal:true),
-              decoration:const InputDecoration(labelText:'المبلغ')),
-            DropdownButton<CurrencyCode>(value:currency,isExpanded:true,
-              items:CurrencyCode.values.map((c)=>DropdownMenuItem(
-                value:c,child:Text(c.name.toUpperCase()))).toList(),
-              onChanged:saving?null:(next){if(next!=null)setDialog(()=>currency=next);}),
-            TextField(controller:description,
-              decoration:const InputDecoration(labelText:'الوصف (اختياري)')),
-            if(failure!=null)Text(failure!,style:TextStyle(color:Theme.of(ctx).colorScheme.error)),
-          ]),
-          actions:[
-            TextButton(onPressed:saving?null:()=>Navigator.pop(ctx),child:const Text('إلغاء')),
-            FilledButton(key:const Key('fin08_save_claim'),onPressed:saving?null:() async {
-              Decimal money;
-              try{money=Decimal.parse(amount.text.trim());}
-              catch(_){setDialog(()=>failure='أدخل مبلغاً عشرياً صحيحاً.');return;}
-              setDialog((){saving=true;failure=null;});
-              try{
-                await widget.gateway.createMerchantClaim(
-                  contactId:contact.id,amount:money,currency:currency,
-                  idempotencyKey:key,description:description.text.trim().isEmpty?null:description.text.trim());
-                if(!ctx.mounted)return;
-                Navigator.pop(ctx);
-                await _select(contact);
-              }catch(e){if(ctx.mounted)setDialog(()=>failure=_message(e));}
-              finally{if(ctx.mounted)setDialog(()=>saving=false);}
-            },child:const Text('حفظ كمطالبة معلقة')),
-          ],
+      final saved=await showDialog<bool>(
+        context:context,barrierDismissible:false,
+        builder:(dialogContext)=>StatefulBuilder(
+          builder:(ctx,setDialog)=>AlertDialog(
+            scrollable:true,
+            title:Text('مطالبة معلقة — ${contact.name}'),
+            content:Column(mainAxisSize:MainAxisSize.min,children:[
+              const Text('لا تُضاف إلى الرصيد المعتمد قبل موافقة العميل والعلاقة.'),
+              TextField(controller:amount,keyboardType:const TextInputType.numberWithOptions(decimal:true),
+                decoration:const InputDecoration(labelText:'المبلغ')),
+              DropdownButton<CurrencyCode>(value:currency,isExpanded:true,
+                items:CurrencyCode.values.map((c)=>DropdownMenuItem(
+                  value:c,child:Text(c.name.toUpperCase()))).toList(),
+                onChanged:saving?null:(next){if(next!=null)setDialog(()=>currency=next);}),
+              TextField(controller:description,
+                decoration:const InputDecoration(labelText:'الوصف (اختياري)')),
+              if(failure!=null)Text(failure!,style:TextStyle(color:Theme.of(ctx).colorScheme.error)),
+            ]),
+            actions:[
+              TextButton(onPressed:saving?null:()=>Navigator.pop(ctx,false),child:const Text('إلغاء')),
+              FilledButton(key:const Key('fin08_save_claim'),onPressed:saving?null:() async {
+                Decimal money;
+                try{money=Decimal.parse(amount.text.trim());}
+                catch(_){setDialog(()=>failure='أدخل مبلغاً عشرياً صحيحاً.');return;}
+                setDialog((){saving=true;failure=null;});
+                var success=false;
+                try{
+                  await widget.gateway.createMerchantClaim(
+                    contactId:contact.id,amount:money,currency:currency,
+                    idempotencyKey:key,description:description.text.trim().isEmpty?null:description.text.trim());
+                  if(!ctx.mounted)return;
+                  success=true;
+                  Navigator.pop(ctx,true);
+                }catch(e){if(ctx.mounted)setDialog(()=>failure=_message(e));}
+                finally{if(!success && ctx.mounted)setDialog(()=>saving=false);}
+              },child:const Text('حفظ كمطالبة معلقة')),
+            ],
+          ),
         ),
-      ));
+      );
+      if(saved==true && mounted)await _select(contact);
     }finally{amount.dispose();description.dispose();}
   }
 
