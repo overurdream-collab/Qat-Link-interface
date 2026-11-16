@@ -92,6 +92,58 @@ void main() {
       throwsA(isA<Fin08ApiError>().having((e)=>e.statusCode,'status',409)));
   });
 
+  test('FIN-10 customer sees relationship invitations, approves only chosen link', () async {
+    var approvals = 0;
+    final api = Fin08HttpClaimsGateway(
+      baseUri: Uri.parse('https://qatlink.example/'),
+      accessToken: () async => 'customer-verified-jwt',
+      client: MockClient((request) async {
+        expect(request.headers['authorization'], 'Bearer customer-verified-jwt');
+        if (request.method == 'GET') {
+          expect(request.url.path, '/v1/customer/relationships');
+          return http.Response(jsonEncode({
+            'items': [{
+              'relationship_id':'rel-one',
+              'merchant_id':'merchant-one',
+              'merchant_display_name':'متجر الأصالة',
+              'status':'pending',
+              'created_at':'2026-11-16T11:00:00.000Z',
+              'decided_at':null,
+            }],
+            'next_cursor':null,
+          }),200);
+        }
+        expect(request.method,'POST');
+        expect(request.url.path,'/v1/customer/relationships/rel-one/decision');
+        expect((jsonDecode(request.body) as Map<String,dynamic>)['decision'],'accept');
+        approvals++;
+        return http.Response(jsonEncode({
+          'relationship_id':'rel-one','status':'approved','newly_posted_debts':0,
+        }),200);
+      }),
+    );
+    final page=await api.customerRelationships();
+    expect(page.items.single.merchantName,'متجر الأصالة');
+    expect(page.items.single.canReview,true);
+    expect(approvals,0);
+    final receipt=await api.decideRelationship('rel-one',accept:true);
+    expect(receipt.status,Fin08RelationshipStatus.approved);
+    expect(receipt.newlyPostedDebts,0);
+    expect(approvals,1);
+  });
+
+  test('FIN-10 rejects mismatched server relationship decision response', () async {
+    final api=Fin08HttpClaimsGateway(
+      baseUri:Uri.parse('https://qatlink.example/'),
+      accessToken:() async=>'customer-verified-jwt',
+      client:MockClient((request) async=>http.Response(jsonEncode({
+        'relationship_id':'different-link','status':'approved','newly_posted_debts':0,
+      }),200)),
+    );
+    await expectLater(api.decideRelationship('rel-one',accept:true),
+      throwsA(isA<Fin08ApiError>()));
+  });
+
   test('merchant summary remains separate per currency and cannot pretend to be full ledger', () async {
     final api=Fin08HttpClaimsGateway(
       baseUri:Uri.parse('https://qatlink.example/'),
