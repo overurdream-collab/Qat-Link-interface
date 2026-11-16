@@ -37,6 +37,12 @@ export class Fin08Store {
       throw err;
     } finally { c.release(); }
   }
+  async lockPhone(c, phone) {
+    // Prevent a registration/contact-create race from missing each other's
+    // uncommitted row, leaving historical merchant requests undelivered.
+    await c.query('SELECT pg_advisory_xact_lock(hashtextextended($1::text,0))',
+      [`fin08-phone:${phone}`]);
+  }
   async lockRelationshipPair(c, merchantId, customerId) {
     // Same serializable guard whether the relationship row exists yet or not.
     await c.query('SELECT pg_advisory_xact_lock(hashtextextended($1::text,0))',
@@ -63,6 +69,7 @@ export class Fin08Store {
     if (displayName.length < 2) throw new ApiError(422, 'invalid_input', 'Contact name is too short');
     const phone = normalizePhone(body.phone);
     return this.tx(async c => {
+      await this.lockPhone(c,phone);
       const id = randomUUID();
       const {rows} = await c.query(`INSERT INTO merchant_contacts(id,merchant_id,display_name,normalized_phone)
         VALUES($1,$2,$3,$4) RETURNING id,display_name AS name,normalized_phone AS phone,created_at`,[id,actor.id,displayName,phone]);
@@ -151,6 +158,7 @@ export class Fin08Store {
     const proofRef = assertText(body.proof_reference,'proof_reference',240);
     // Only the identity service calls this AFTER its independent OTP/ownership checks.
     return this.tx(async c => {
+      await this.lockPhone(c,phone);
       const result = await c.query(`INSERT INTO customer_phone_evidence
         (id,customer_id,normalized_phone,proof_reference) VALUES($1,$2,$3,$4)
         ON CONFLICT (proof_reference) DO NOTHING RETURNING id`,[randomUUID(),customerId,phone,proofRef]);
@@ -167,6 +175,10 @@ export class Fin08Store {
   async revokeProof(actor, body) {
     const proofRef = assertText(body.proof_reference,'proof_reference',240);
     return this.tx(async c => {
+      const proof=await c.query(
+        'SELECT normalized_phone FROM customer_phone_evidence WHERE proof_reference=$1',[proofRef]);
+      if(!proof.rowCount) return {revoked:false};
+      await this.lockPhone(c,proof.rows[0].normalized_phone);
       const r = await c.query(`UPDATE customer_phone_evidence SET revoked_at=now()
         WHERE proof_reference=$1 AND revoked_at IS NULL RETURNING normalized_phone`,[proofRef]);
       if (r.rowCount) await this.audit(c,actor.id,'phone_proof',proofRef,'revoked');
@@ -177,6 +189,9 @@ export class Fin08Store {
   async claimsInbox(actor, {limit, cursor}) {
     const count = page(limit);
     const parsed = decodeCursor(cursor,this.cursorSecret);
+    if(parsed && (parsed.scope!=='customer_previous_claims' || parsed.actor!==actor.id)) {
+      throw new ApiError(422,'invalid_input','Cursor belongs to a different customer or list');
+    }
     // Snapshot is server issued; never accept a user-supplied phone or identity.
     const snapshot = parsed?.snapshot ?? new Date().toISOString();
     const {rows} = await this.pool.query(`SELECT cl.id,cl.merchant_id,mp.verified_display_name AS merchant_display_name,
@@ -203,7 +218,7 @@ export class Fin08Store {
         row.decision==='accept' ? 'accepted_awaiting_relationship' : 'awaiting_review'
     }));
     const last=rows[count-1];
-    const nextCursor=hasNext ? encodeCursor({snapshot,createdAt:last.cursor_created_at,id:last.id},this.cursorSecret):null;
+    const nextCursor=hasNext ? encodeCursor({scope:'customer_previous_claims',actor:actor.id,snapshot,createdAt:last.cursor_created_at,id:last.id},this.cursorSecret):null;
     return {items,next_cursor:nextCursor};
   }
   async ensureEligible(c,claimId,customerId) {
