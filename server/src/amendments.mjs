@@ -22,7 +22,7 @@ function receipt(row,{replayed=false,ledgerPosted=false}={}){
     original_amount:row.original_amount,
     proposed_amount:row.proposed_amount,
     currency:row.currency,
-    reason:row.reason,
+    reason:row.reason,customer_name:row.customer_name??null,
     replacement_claim_id:row.replacement_claim_id??null,
     replacement_operation_id:row.replacement_operation_id??null,
     recorded_at:row.requested_at,decided_at:row.decided_at??null,
@@ -265,14 +265,20 @@ export class Fin15AmendmentService {
     }
     return this.store.tx(async c=>{
       const snapshot=parsed?.snapshot??(await c.query('SELECT clock_timestamp()::text AS t')).rows[0].t;
-      const property=actor.role==='merchant'?'merchant_id':'customer_id';
+      const property=actor.role==='merchant'?'a.merchant_id':'a.customer_id';
       // Column name comes from the server role enum, not user-supplied data.
       const q=await c.query([
-        'SELECT *,original_amount::text AS old_money,proposed_amount::text AS new_money,',
-        'requested_at::text AS cursor_date FROM financial_amendment_requests',
-        'WHERE '+property+'=$1 AND requested_at<=$2::timestamptz',
-        'AND ($3::timestamptz IS NULL OR (requested_at,id)<($3::timestamptz,$4::uuid))',
-        'ORDER BY requested_at DESC,id DESC LIMIT $5'
+        'SELECT a.*,a.original_amount::text AS old_money,a.proposed_amount::text AS new_money,',
+        'a.requested_at::text AS cursor_date, c.display_name AS customer_name',
+        'FROM financial_amendment_requests a',
+        'LEFT JOIN merchant_claims historical ON historical.id=a.original_claim_id',
+        'LEFT JOIN relationship_operations op ON op.id=a.original_operation_id',
+        'LEFT JOIN merchant_relationships rel ON rel.id=op.relationship_id',
+        'LEFT JOIN merchant_contacts c ON c.id=COALESCE(historical.contact_id,rel.contact_id)',
+        'AND c.merchant_id=a.merchant_id',
+        'WHERE '+property+'=$1 AND a.requested_at<=$2::timestamptz',
+        'AND ($3::timestamptz IS NULL OR (a.requested_at,a.id)<($3::timestamptz,$4::uuid))',
+        'ORDER BY a.requested_at DESC,a.id DESC LIMIT $5'
       ].join(' '),[actor.id,snapshot,parsed?.createdAt??null,parsed?.id??null,count+1]);
       const rows=q.rows.slice(0,count);
       const last=rows[rows.length-1];
