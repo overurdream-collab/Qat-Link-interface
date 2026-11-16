@@ -20,6 +20,11 @@ async function readBody(req) {
     return body;
   } catch {throw new ApiError(400,'invalid_json','Expected a JSON object');}
 }
+function requireParticipant(actor){
+  if(!actor || !['merchant','customer'].includes(actor.role)) {
+    throw new ApiError(403,'forbidden','Financial participant role required');
+  }
+}
 export function createApi({store,verify}) {
   if(typeof verify!=='function') throw new Error('Verified authentication provider required');
   const handler=async (req,res)=>{
@@ -80,6 +85,47 @@ export function createApi({store,verify}) {
       const relationship=path.match(/^\/v1\/customer\/relationships\/([\w-]+)\/decision$/);
       if(method==='POST' && relationship){
         requireRole(actor,'customer');return json(res,200,await store.decideRelationship(actor,relationship[1],body));
+      }
+      // FIN-13: one authoritative APPROVED ledger for both legacy claims and
+      // registered two-party requests. All identities come from JWT.
+      const relOpDecision=path.match(/^\/v1\/relationships\/([\w-]+)\/operations\/([\w-]+)\/decision$/);
+      if(method==='POST' && relOpDecision){
+        requireParticipant(actor);
+        return json(res,200,await store.ledger.decideOperation(actor,relOpDecision[1],relOpDecision[2],body));
+      }
+      const relOps=path.match(/^\/v1\/relationships\/([\w-]+)\/operations$/);
+      if(relOps){
+        requireParticipant(actor);
+        if(method==='POST'){
+          const result=await store.ledger.createOperation(actor,relOps[1],body,req.headers['idempotency-key']);
+          return json(res,result.replayed?200:201,result);
+        }
+        if(method==='GET')return json(res,200,await store.ledger.operations(actor,relOps[1],{
+          limit:page(url.searchParams.get('limit')??undefined),cursor:url.searchParams.get('cursor')}));
+      }
+      const reversal=path.match(/^\/v1\/relationships\/([\w-]+)\/reversals$/);
+      if(method==='POST' && reversal){
+        requireParticipant(actor);
+        const result=await store.ledger.requestReversal(actor,reversal[1],body,req.headers['idempotency-key']);
+        return json(res,result.replayed?200:201,result);
+      }
+      const balances=path.match(/^\/v1\/relationships\/([\w-]+)\/balances$/);
+      if(method==='GET' && balances){
+        requireParticipant(actor);return json(res,200,await store.ledger.balances(actor,balances[1]));
+      }
+      const statement=path.match(/^\/v1\/relationships\/([\w-]+)\/statement$/);
+      if(method==='GET' && statement){
+        requireParticipant(actor);return json(res,200,await store.ledger.statement(actor,statement[1],{
+          currency:url.searchParams.get('currency'),from:url.searchParams.get('from'),to:url.searchParams.get('to')}));
+      }
+      const customerPolicy=path.match(/^\/v1\/customer\/relationships\/([\w-]+)\/auto-approval$/);
+      if(method==='POST' && customerPolicy){
+        requireRole(actor,'customer');
+        return json(res,200,await store.ledger.setAutoApproval(actor,customerPolicy[1],body));
+      }
+      const policy=path.match(/^\/v1\/relationships\/([\w-]+)\/auto-approval$/);
+      if(method==='GET' && policy){
+        requireParticipant(actor);return json(res,200,await store.ledger.getAutoApproval(actor,policy[1]));
       }
       throw new ApiError(404,'not_found','Not found');
     }catch(err){
