@@ -321,7 +321,9 @@ export class FinancialLedgerService {
       const q=await c.query([
         'SELECT id,operation_type,amount::text,currency,description,occurred_at,created_at,',
         'created_at::text AS cursor_created_at,created_by,created_by_role,status,decided_at,',
-        'decided_by,approval_method,auto_policy_version,reversal_of_movement_id,replaces_operation_id',
+        'decided_by,approval_method,auto_policy_version,reversal_of_movement_id,replaces_operation_id,',
+        '(SELECT EXISTS(SELECT 1 FROM financial_amendment_requests a',
+        'WHERE a.original_operation_id=relationship_operations.id AND a.status=\'pending\')) AS amendment_pending',
         'FROM relationship_operations WHERE relationship_id=$1 AND created_at<=$2::timestamptz',
         'AND ($3::timestamptz IS NULL OR (created_at,id)<($3::timestamptz,$4::uuid))',
         'ORDER BY created_at DESC,id DESC LIMIT $5'
