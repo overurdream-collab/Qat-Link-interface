@@ -1,6 +1,7 @@
 import { randomUUID } from 'node:crypto';
 import { listMerchantContacts, listMerchantContactClaims } from './merchant_read.mjs';
 import { listCustomerRelationships } from './customer_relationships.mjs';
+import { FinancialLedgerService } from './ledger.mjs';
 import { ApiError, assertText, claimDigest, currency, decision, idempotencyKey, money, normalizePhone, page, uuid, encodeCursor, decodeCursor } from './validation.mjs';
 
 const conflict = (message) => new ApiError(409, 'conflict', message);
@@ -22,6 +23,7 @@ export class Fin08Store {
     if (!cursorSecret || cursorSecret.length < 32) throw new Error('CURSOR_SECRET must have at least 32 characters');
     this.pool = pool;
     this.cursorSecret = cursorSecret;
+    this.ledger = new FinancialLedgerService(this);
   }
   async tx(fn) {
     const c = await this.pool.connect();
@@ -130,22 +132,24 @@ export class Fin08Store {
     const contactId = uuid(body.contact_id, 'contact_id');
     const amount = money(body.amount);
     const unit = currency(body.currency);
+    const type = body.type ?? 'debt';
+    if(type !== 'debt' && type !== 'payment') throw new ApiError(422,'invalid_input','type must be debt or payment');
     const description = body.description == null ? null : assertText(body.description, 'description', 500);
     const key = idempotencyKey(requestKey);
-    const hash = claimDigest({contactId,amount,currency:unit,description});
+    const hash = claimDigest({contactId,amount,currency:unit,description,type});
     return this.tx(async c => {
       const contact = await c.query('SELECT id FROM merchant_contacts WHERE id=$1 AND merchant_id=$2',[contactId,actor.id]);
       if (!contact.rowCount) throw missing();
       const id = randomUUID();
-      const {rows} = await c.query(`INSERT INTO merchant_claims(id,merchant_id,contact_id,amount,currency,description,idempotency_key,request_digest)
-        VALUES($1,$2,$3,$4::numeric,$5,$6,$7,$8)
+      const {rows} = await c.query(`INSERT INTO merchant_claims(id,merchant_id,contact_id,amount,currency,description,idempotency_key,request_digest,operation_type)
+        VALUES($1,$2,$3,$4::numeric,$5,$6,$7,$8,$9)
         ON CONFLICT (merchant_id,idempotency_key) DO NOTHING
-        RETURNING id,contact_id,amount::text,currency,description,created_at`,[id,actor.id,contactId,amount,unit,description,key,hash]);
+        RETURNING id,contact_id,amount::text,currency,description,operation_type AS type,created_at,occurred_at`,[id,actor.id,contactId,amount,unit,description,key,hash,type]);
       if (rows.length) {
-        await this.audit(c,actor.id,'merchant_claim',id,'created_unacknowledged');
+        await this.audit(c,actor.id,'merchant_claim',id,type==='payment'?'created_unacknowledged_payment':'created_unacknowledged_debt');
         return {claim:rows[0],replayed:false};
       }
-      const replay = await c.query(`SELECT id,contact_id,amount::text,currency,description,created_at,request_digest
+      const replay = await c.query(`SELECT id,contact_id,amount::text,currency,description,operation_type AS type,created_at,occurred_at,request_digest
         FROM merchant_claims WHERE merchant_id=$1 AND idempotency_key=$2`,[actor.id,key]);
       if (!replay.rowCount || replay.rows[0].request_digest !== hash) throw conflict('Idempotency-Key already used with different content');
       const {request_digest: omitted, ...claim} = replay.rows[0];
@@ -195,7 +199,7 @@ export class Fin08Store {
     // Snapshot is server issued; never accept a user-supplied phone or identity.
     const snapshot = parsed?.snapshot ?? (await this.pool.query('SELECT clock_timestamp()::text AS captured_at')).rows[0].captured_at;
     const {rows} = await this.pool.query(`SELECT cl.id,cl.merchant_id,mp.verified_display_name AS merchant_display_name,
-        cl.contact_id,cl.amount::text,cl.currency,cl.description,cl.created_at,
+        cl.contact_id,cl.amount::text,cl.currency,cl.operation_type AS type,cl.description,cl.created_at,
         cl.created_at::text AS cursor_created_at,
         d.decision, r.status AS relationship_status, fm.id AS movement_id
       FROM merchant_claims cl
@@ -212,7 +216,7 @@ export class Fin08Store {
     const hasNext=rows.length>count;
     const items=rows.slice(0,count).map(row=>({
       claim_id:row.id,merchant_id:row.merchant_id,merchant_display_name:row.merchant_display_name,
-      amount:row.amount,currency:row.currency,description:row.description,created_at:row.created_at,
+      amount:row.amount,currency:row.currency,type:row.type,description:row.description,created_at:row.created_at,
       stage:row.movement_id ? 'approved' : row.decision==='reject' ? 'rejected' :
         row.decision==='accept' && row.relationship_status==='approved' ? 'accepted_awaiting_posting' :
         row.decision==='accept' ? 'accepted_awaiting_relationship' : 'awaiting_review'
@@ -234,8 +238,8 @@ export class Fin08Store {
     // Single atomic ledger insertion, possible ONLY after independent claim
     // consent and the merchant/customer relationship has been approved.
     const {rows}=await c.query(`INSERT INTO financial_movements
-      (id,source_claim_id,relationship_id,merchant_id,customer_id,amount,currency)
-      SELECT $2,cl.id,r.id,cl.merchant_id,d.customer_id,cl.amount,cl.currency
+      (id,source_claim_id,relationship_id,merchant_id,customer_id,amount,currency,type)
+      SELECT $2,cl.id,r.id,cl.merchant_id,d.customer_id,cl.amount,cl.currency,cl.operation_type
       FROM merchant_claims cl
       JOIN customer_claim_decisions d ON d.claim_id=cl.id AND d.decision='accept'
       JOIN merchant_relationships r ON r.merchant_id=cl.merchant_id
@@ -309,14 +313,17 @@ export class Fin08Store {
         await c.query('UPDATE merchant_relationships SET status=$2,decided_at=now() WHERE id=$1',[id,wanted]);
         await this.audit(c,actor.id,'relationship',id,`customer_${selected}`);
       }
-      let posted=0;
+      let posted=0,postedDebts=0;
       if (wanted==='approved') {
-        const claimed=await c.query(`SELECT cl.id FROM merchant_claims cl
+        const claimed=await c.query(`SELECT cl.id,cl.operation_type FROM merchant_claims cl
           JOIN customer_claim_decisions d ON d.claim_id=cl.id AND d.decision='accept'
           WHERE cl.merchant_id=$1 AND d.customer_id=$2`,[current.merchant_id,actor.id]);
-        for(const claim of claimed.rows) if(await this.postClaim(c,claim.id,actor.id)) posted++;
+        for(const claim of claimed.rows) if(await this.postClaim(c,claim.id,actor.id)) {
+          posted++;
+          if(claim.operation_type==='debt')postedDebts++;
+        }
       }
-      return {relationship_id:id,status:wanted,newly_posted_debts:posted};
+      return {relationship_id:id,status:wanted,newly_posted_debts:postedDebts,newly_posted_movements:posted};
     });
   }
   // FIN-09 restoration reads use authenticated merchant identity, never client-supplied tenant IDs.
@@ -330,30 +337,38 @@ export class Fin08Store {
     return listMerchantContactClaims(this.pool, this.cursorSecret, actor, contactId, opts);
   }
   async summary(actor) {
-    const {rows}=await this.pool.query(`SELECT cl.currency,
-      COALESCE(SUM(CASE WHEN fm.id IS NULL AND d.decision IS DISTINCT FROM 'reject'
-        AND NOT EXISTS (SELECT 1 FROM verified_contact_links vl
-          JOIN merchant_contacts c ON c.merchant_id=vl.merchant_id AND c.id=vl.contact_id
-          JOIN customer_phone_evidence ev ON ev.proof_reference=vl.proof_reference
-            AND ev.customer_id=vl.customer_id AND ev.normalized_phone=c.normalized_phone AND ev.revoked_at IS NULL
-          WHERE vl.merchant_id=cl.merchant_id AND vl.contact_id=cl.contact_id
-            AND (SELECT COUNT(DISTINCT owner.customer_id) FROM customer_phone_evidence owner
-              WHERE owner.normalized_phone=c.normalized_phone AND owner.revoked_at IS NULL)=1)
-        THEN cl.amount ELSE 0 END),0)::text AS outside_app,
-      COALESCE(SUM(CASE WHEN fm.id IS NULL AND d.decision IS DISTINCT FROM 'reject'
-        AND EXISTS (SELECT 1 FROM verified_contact_links vl
-          JOIN merchant_contacts c ON c.merchant_id=vl.merchant_id AND c.id=vl.contact_id
-          JOIN customer_phone_evidence ev ON ev.proof_reference=vl.proof_reference
-            AND ev.customer_id=vl.customer_id AND ev.normalized_phone=c.normalized_phone AND ev.revoked_at IS NULL
-          WHERE vl.merchant_id=cl.merchant_id AND vl.contact_id=cl.contact_id
-            AND (SELECT COUNT(DISTINCT owner.customer_id) FROM customer_phone_evidence owner
-              WHERE owner.normalized_phone=c.normalized_phone AND owner.revoked_at IS NULL)=1)
-        THEN cl.amount ELSE 0 END),0)::text AS awaiting_customer_or_relationship,
-      COALESCE(SUM(CASE WHEN fm.id IS NOT NULL THEN cl.amount ELSE 0 END),0)::text AS approved_from_claims
-      FROM merchant_claims cl
-      LEFT JOIN customer_claim_decisions d ON d.claim_id=cl.id
-      LEFT JOIN financial_movements fm ON fm.source_claim_id=cl.id
-      WHERE cl.merchant_id=$1 GROUP BY cl.currency ORDER BY cl.currency`,[actor.id]);
+    // Separate debts and payments in every pending/approved bucket. These
+    // are historic merchant claims only, never the complete ledger balance.
+    const {rows}=await this.pool.query([
+      'WITH classified AS (SELECT cl.currency,cl.amount,cl.operation_type,',
+      'd.decision,fm.id AS movement_id,fm.amount AS posted_amount,fm.type AS posted_type,',
+      'EXISTS (SELECT 1 FROM verified_contact_links vl',
+      'JOIN merchant_contacts c ON c.merchant_id=vl.merchant_id AND c.id=vl.contact_id',
+      'JOIN customer_phone_evidence ev ON ev.proof_reference=vl.proof_reference',
+      'AND ev.customer_id=vl.customer_id AND ev.normalized_phone=c.normalized_phone',
+      'AND ev.revoked_at IS NULL',
+      'WHERE vl.merchant_id=cl.merchant_id AND vl.contact_id=cl.contact_id',
+      'AND (SELECT COUNT(DISTINCT owner.customer_id) FROM customer_phone_evidence owner',
+      'WHERE owner.normalized_phone=c.normalized_phone AND owner.revoked_at IS NULL)=1) AS joined',
+      'FROM merchant_claims cl',
+      'LEFT JOIN customer_claim_decisions d ON d.claim_id=cl.id',
+      'LEFT JOIN financial_movements fm ON fm.source_claim_id=cl.id',
+      'WHERE cl.merchant_id=$1)',
+      'SELECT currency,',
+      'COALESCE(SUM(CASE WHEN movement_id IS NULL AND decision IS DISTINCT FROM \'reject\'',
+      'AND NOT joined AND operation_type=\'debt\' THEN amount ELSE 0 END),0)::text AS outside_app,',
+      'COALESCE(SUM(CASE WHEN movement_id IS NULL AND decision IS DISTINCT FROM \'reject\'',
+      'AND NOT joined AND operation_type=\'payment\' THEN amount ELSE 0 END),0)::text AS outside_app_payments,',
+      'COALESCE(SUM(CASE WHEN movement_id IS NULL AND decision IS DISTINCT FROM \'reject\'',
+      'AND joined AND operation_type=\'debt\' THEN amount ELSE 0 END),0)::text AS awaiting_customer_or_relationship,',
+      'COALESCE(SUM(CASE WHEN movement_id IS NULL AND decision IS DISTINCT FROM \'reject\'',
+      'AND joined AND operation_type=\'payment\' THEN amount ELSE 0 END),0)::text AS awaiting_payments,',
+      'COALESCE(SUM(CASE WHEN movement_id IS NOT NULL AND posted_type=\'debt\'',
+      'THEN posted_amount ELSE 0 END),0)::text AS approved_from_claims,',
+      'COALESCE(SUM(CASE WHEN movement_id IS NOT NULL AND posted_type=\'payment\'',
+      'THEN posted_amount ELSE 0 END),0)::text AS approved_payments_from_claims',
+      'FROM classified GROUP BY currency ORDER BY currency'
+    ].join(' '),[actor.id]);
     return {currencies:rows,approved_scope:'pre_registration_claims_only_not_full_ledger'};
   }
 }

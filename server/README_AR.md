@@ -59,3 +59,6 @@ CI الجديد `.github/workflows/fin08-api.yml` ينشئ PostgreSQL 16 مؤق�
 ## ضبط استمرارية FIN-10 بعد الاختبارات
 
 أُضيف اختبار `fin10_join_race_and_pagination.integration.test.mjs` للتأكد من عدم فقد طلبات الارتباط عند تعارض توقيت إضافة جهات الاتصال وإثبات الهاتف، وعدم إسقاط صفوف لها نفس `created_at` بالدقة الميكروثانية. تقييد cursor المطالبات بحساب العميل الموثّق جزء من الحماية. يلزم فحص GitHub Actions PostgreSQL وFlutter على SHA الدمج قبل الإطلاق.
+
+## FIN-13 — ترقية مالية إضافية بعد 001
+طبق server/sql/002_fin13_unified_ledger.sql بعد 001 داخل بيئة تجريبية. امتداد API للدفعات والعكس والتفويض وكشف الحساب موثق في [FIN13](../docs/FIN13_UNIFIED_LEDGER_AR.md). قيود financial_movements السابقة باقية؛ أي قيد معتمد غير قابل للـUPDATE/DELETE. **لا تنشر حتى فحص الترحيل على نسخة احتياطية والتحقق من OTP وإجراءات الاستعادة.**

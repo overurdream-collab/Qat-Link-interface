@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../services/fin08_api_client.dart';
+import '../models/app_models.dart';
 import 'fin08_customer_relationships_screen.dart';
 import '../widgets/finance_display.dart';
 
@@ -52,8 +53,8 @@ class _Fin08CustomerClaimsScreenState extends State<Fin08CustomerClaimsScreen> {
   Future<void> _decide(Fin08PreviousClaim claim, bool accept) async {
     if (_submitting.contains(claim.id) || !claim.canReview) return;
     final confirmed = await showDialog<bool>(context:context,builder:(ctx)=>AlertDialog(
-      title:Text(accept?'الموافقة على هذا الدين؟':'رفض هذا الدين؟'),
-      content:Text('مطالبة من ${claim.merchantName} بمبلغ '
+      title:Text('${accept?'الموافقة':'رفض'} على ${claim.type==MovementType.payment?'هذه الدفعة':'هذا الدين'}؟'),
+      content:Text('${claim.type==MovementType.payment?'دفعة':'مطالبة دين'} من ${claim.merchantName} بمبلغ '
         '${FinanceDisplay.amount(claim.amount)} '
         '${FinanceDisplay.currencyCode(claim.currency)}. '
         'يُسجّل قرارك لهذا الطلب وحده. '
@@ -63,7 +64,7 @@ class _Fin08CustomerClaimsScreenState extends State<Fin08CustomerClaimsScreen> {
         FilledButton(
           key:const Key('fin08_confirm_claim_decision'),
           onPressed:()=>Navigator.pop(ctx,true),
-          child:Text(accept?'أوافق على الدين':'أرفض الدين'),
+          child:Text(accept?'أوافق على العملية':'أرفض العملية'),
         ),
       ],
     ));
@@ -73,7 +74,7 @@ class _Fin08CustomerClaimsScreenState extends State<Fin08CustomerClaimsScreen> {
       final result = await widget.gateway.decidePreviousClaim(claim.id,accept:accept);
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content:Text(
-        result.ledgerPosted ? 'أكد الخادم اعتماد هذا الدين بعد اكتمال الموافقتين.' :
+        result.ledgerPosted ? 'أكد الخادم اعتماد هذه العملية بعد اكتمال الموافقتين.' :
         accept ? 'سُجلت موافقتك على هذا الطلب فقط. قد يلزم إكمال اعتماد العلاقة.' :
         'سُجل رفض هذا الطلب دون أثر على الرصيد المعتمد.',
       )));
@@ -99,7 +100,7 @@ class _Fin08CustomerClaimsScreenState extends State<Fin08CustomerClaimsScreen> {
         child:ListView(
           padding:const EdgeInsets.all(16),
           children:[
-            Text('مطالبات سجّلها التجار قبل انضمامك',
+            Text('ديون ودفعات سجّلها التجار قبل انضمامك',
               style:Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight:FontWeight.w800)),
             const SizedBox(height:6),
             Text('كل طلب مستقل ويظل غير معتمد حتى تكتمل موافقتك '
@@ -140,7 +141,7 @@ class _Fin08CustomerClaimsScreenState extends State<Fin08CustomerClaimsScreen> {
                   if(claim.description!=null && claim.description!.isNotEmpty)
                     Text(claim.description!,style:TextStyle(color:c.onSurfaceVariant)),
                   const SizedBox(height:5),
-                  Text(claim.stage.label,style:TextStyle(
+                  Text(claim.stage.labelFor(claim.type),style:TextStyle(
                     color:claim.stage==Fin08Stage.approved?c.primary:c.onSurfaceVariant,
                     fontWeight:FontWeight.w700)),
                   if(claim.canReview) ...[
