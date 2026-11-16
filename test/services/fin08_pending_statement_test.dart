@@ -11,6 +11,13 @@ void main(){
     Fin08MerchantClaim(id:id,contactId:'c',amount:Decimal.parse(amount),
       currency:currency,createdAt:t,stage:stage);
 
+  test('money subtotal keeps exact decimal precision without binary float or rounding',(){
+    expect(Fin08PendingStatement.formatSubtotal(Decimal.parse('120')),'120.00');
+    expect(Fin08PendingStatement.formatSubtotal(Decimal.parse('12.5')),'12.50');
+    expect(Fin08PendingStatement.formatSubtotal(Decimal.parse('0.0001')),'0.0001');
+    expect(Fin08PendingStatement.formatSubtotal(Decimal.parse('999999999999.9999')),'999999999999.9999');
+  });
+
   test('unacknowledged ledger statement has explicit disclaimer and no currency mixing',(){
     final result=Fin08PendingStatement.compose(contact:contact,claims:[
       row('a','150.25',CurrencyCode.yer,Fin08Stage.outsideApp),
