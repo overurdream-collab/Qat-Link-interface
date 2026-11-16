@@ -62,3 +62,6 @@ CI الجديد `.github/workflows/fin08-api.yml` ينشئ PostgreSQL 16 مؤق�
 
 ## FIN-13 — ترقية مالية إضافية بعد 001
 طبق server/sql/002_fin13_unified_ledger.sql بعد 001 داخل بيئة تجريبية. امتداد API للدفعات والعكس والتفويض وكشف الحساب موثق في [FIN13](../docs/FIN13_UNIFIED_LEDGER_AR.md). قيود financial_movements السابقة باقية؛ أي قيد معتمد غير قابل للـUPDATE/DELETE. **لا تنشر حتى فحص الترحيل على نسخة احتياطية والتحقق من OTP وإجراءات الاستعادة.**
+
+## FIN-14 — قرار جماعي اختياري للعميل
+POST /v1/customer/previous-claims/batch-decision: من 1 إلى 50 UUID دون تكرار، موافقة/رفض في معاملة PostgreSQL واحدة مع تدقيق الملكية وسلامة القيد. [التفاصيل](../docs/FIN14_CUSTOMER_SELECTED_BATCH_AR.md). لا تحتاج Migration إضافية فوق FIN-13.
