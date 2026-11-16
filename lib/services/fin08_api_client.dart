@@ -312,6 +312,19 @@ class Fin08HttpClaimsGateway implements Fin08ClaimsGateway {
       on Exception { throw const Fin08ApiError('تعذر الاتصال بالخادم. لم نؤكد تسجيل العملية.',code:'network'); }
   }
 
+  /// Reuses the verified session and HTTPS policy for FIN-13 financial endpoints.
+  /// This is transport only: every authorization decision remains on the server.
+  Future<Map<String,dynamic>> sendFinancial(String method,String path,
+      {Map<String,String>? query,Object? body,String? idempotencyKey}) {
+    if((method!='GET' && method!='POST') ||
+        !(path.startsWith('v1/relationships/') ||
+          path.startsWith('v1/customer/relationships/')) ||
+        path.contains('..') || path.startsWith('/')) {
+      throw ArgumentError('Invalid financial request route');
+    }
+    return _request(method,path,query:query,body:body,idempotencyKey:idempotencyKey);
+  }
+
   Fin08Page<T> _parsePage<T>(Map<String,dynamic> result,T Function(Map<String,dynamic>) parse) {
     final raw=result['items'];
     if(raw is! List) throw const Fin08ApiError('قائمة غير صالحة من الخادم.',code:'invalid_response');
