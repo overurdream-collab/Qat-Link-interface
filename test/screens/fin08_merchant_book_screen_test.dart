@@ -14,6 +14,14 @@ class MerchantGatewayFake implements Fin08ClaimsGateway {
   Decimal? lastAmount;
 
   @override
+  Future<String> requestMerchantRelationship(String contactId) async => throw UnimplementedError();
+  @override
+  Future<Fin08Page<Fin08CustomerRelationship>> customerRelationships({String? cursor,int limit=50}) async =>
+    const Fin08Page<Fin08CustomerRelationship>([],null);
+  @override
+  Future<Fin08RelationshipReceipt> decideRelationship(String relationshipId,{required bool accept}) async =>
+    throw UnimplementedError();
+  @override
   Future<Fin08Page<Fin08MerchantContact>> merchantContacts({String? cursor,int limit=50}) async =>
     Fin08Page([contact],null);
   @override
