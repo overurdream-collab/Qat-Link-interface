@@ -59,4 +59,32 @@ CREATE TRIGGER fin17_allocation_entry_immutable
   BEFORE UPDATE OR DELETE ON financial_payment_allocation_entries
   FOR EACH ROW EXECUTE FUNCTION fin17_immutable_allocation_entry();
 
+CREATE OR REPLACE FUNCTION fin17_allocation_request_transition()
+RETURNS trigger LANGUAGE plpgsql AS $
+BEGIN
+  IF TG_OP='DELETE' THEN
+    RAISE EXCEPTION 'Allocation request history is immutable';
+  END IF;
+  IF OLD.status <> 'pending' OR NEW.status NOT IN ('approved','rejected')
+     OR NEW.decided_by IS NULL OR NEW.decided_at IS NULL THEN
+    RAISE EXCEPTION 'Allocation requests allow one pending-to-final decision only';
+  END IF;
+  IF ROW(NEW.id,NEW.relationship_id,NEW.merchant_id,NEW.customer_id,NEW.action,
+         NEW.payment_movement_id,NEW.debt_movement_id,NEW.allocation_id,NEW.amount,
+         NEW.requested_by,NEW.requested_by_role,NEW.requested_at,NEW.idempotency_key,
+         NEW.request_digest)
+     IS DISTINCT FROM
+     ROW(OLD.id,OLD.relationship_id,OLD.merchant_id,OLD.customer_id,OLD.action,
+         OLD.payment_movement_id,OLD.debt_movement_id,OLD.allocation_id,OLD.amount,
+         OLD.requested_by,OLD.requested_by_role,OLD.requested_at,OLD.idempotency_key,
+         OLD.request_digest) THEN
+    RAISE EXCEPTION 'Allocation request facts are immutable';
+  END IF;
+  RETURN NEW;
+END;$;
+DROP TRIGGER IF EXISTS fin17_allocation_request_transition ON financial_payment_allocation_requests;
+CREATE TRIGGER fin17_allocation_request_transition
+  BEFORE UPDATE OR DELETE ON financial_payment_allocation_requests
+  FOR EACH ROW EXECUTE FUNCTION fin17_allocation_request_transition();
+
 COMMIT;
