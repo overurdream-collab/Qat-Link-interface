@@ -1,5 +1,5 @@
 import { createHash, randomUUID } from 'node:crypto';
-import { ApiError, currency, idempotencyKey, money, uuid } from './validation.mjs';
+import { ApiError, idempotencyKey, money, uuid } from './validation.mjs';
 import { fromTenThousandths, toTenThousandths } from './decimal.mjs';
 
 const missing=()=>new ApiError(404,'not_found','Payment, debt, or allocation not found');
@@ -166,6 +166,11 @@ export class Fin17SettlementService {
         'FROM financial_payment_allocation_entries e JOIN financial_payment_allocation_requests r ON r.id=e.request_id',
         'WHERE e.payment_movement_id=$1 ORDER BY e.created_at,e.id'
       ].join(' '),[payId]);
+      const pending=await c.query([
+        'SELECT id,action,debt_movement_id,amount::text,requested_by,requested_by_role,requested_at',
+        'FROM financial_payment_allocation_requests WHERE payment_movement_id=$1 AND status=\\'pending\\'',
+        'ORDER BY requested_at,id'
+      ].join(' '),[payId]);
       const current=new Map();
       const history=events.rows.map(e=>{
         const value=toTenThousandths(e.amount);
@@ -181,7 +186,7 @@ export class Fin17SettlementService {
         approved_payment_amount:payment.amount,available_after_reversals:fromTenThousandths(effective),
         allocated_amount:fromTenThousandths(allocated),
         unallocated_credit:fromTenThousandths(effective-allocated),
-        allocations:active,history,scope:'approved_payment_allocations_do_not_change_ledger_balance'};
+        allocations:active,pending_requests:pending.rows,history,scope:'approved_payment_allocations_do_not_change_ledger_balance'};
     });
   }
 }
