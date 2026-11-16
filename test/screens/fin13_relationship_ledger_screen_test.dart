@@ -129,10 +129,16 @@ void main(){
       actorId:'customer-1',role:ParticipantRole.customer)));
     await tester.pumpAndSettle();
     final select=find.byKey(const Key('fin14_select_operation_op-1'));
+    await tester.drag(find.byType(ListView),const Offset(0,-320));
+    await tester.pumpAndSettle();
     await tester.ensureVisible(select);
+    await tester.pumpAndSettle();
     await tester.tap(select);
     await tester.pumpAndSettle();
+    await tester.drag(find.byType(ListView),const Offset(0,280));
+    await tester.pumpAndSettle();
     await tester.ensureVisible(find.byKey(const Key('fin14_operation_batch_accept')));
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(const Key('fin14_operation_batch_accept')));
     await tester.pumpAndSettle();
     expect(batch.submitted,0);
