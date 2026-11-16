@@ -4,6 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:qat_link/models/app_models.dart';
 import 'package:qat_link/screens/fin15_amendments_screen.dart';
 import 'package:qat_link/services/fin15_amendment_gateway.dart';
+import 'package:qat_link/widgets/finance_display.dart';
 
 class FakeAmendmentGateway implements Fin15AmendmentGateway {
   int customerRequests=0,merchantDecisions=0;
@@ -47,7 +48,7 @@ void main(){
       Fin15AmendmentsScreen(gateway:api,forMerchant:true)));
     await tester.pumpAndSettle();
     expect(find.textContaining('عميل معروف للتاجر'),findsOneWidget);
-    expect(find.textContaining('18000.5'),findsWidgets);
+    expect(find.textContaining(FinanceDisplay.amount(Decimal.parse('18000.5'))),findsWidgets);
     await tester.tap(find.byKey(const Key('fin15_accept_amend-1')));
     await tester.pumpAndSettle();
     expect(api.merchantDecisions,0);
