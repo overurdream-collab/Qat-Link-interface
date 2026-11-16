@@ -11,6 +11,7 @@ const store={
   claimsInbox:async(a)=>({items:[{claim_id:'previous-claim',customer:a.id}],next_cursor:null}),
   listCustomerRelationships:async(a)=>({items:[{relationship_id:'relation',customer:a.id}],next_cursor:null}),
   decideClaim:async(a,id,b)=>({customer:a.id,claim_id:id,decision:b.decision,ledger_posted:false}),
+  decideClaimsBatch:async(a,b)=>({customer:a.id,selected:b.claim_ids,decision:b.decision}),
   listContacts:async(a)=>({items:[{contact_id:'sample',merchant:a.id}],next_cursor:null}),
   listContactClaims:async(a,id)=>({items:[{claim_id:'x',contact_id:id,merchant:a.id}],next_cursor:null}),
   summary:async(a)=>({currencies:[],merchant:a.id}),
@@ -80,5 +81,21 @@ test('relationship inbox belongs to authenticated customer, never merchant',asyn
   });
   await withApi(merchant,async base=>{
     const r=await request(base,'/v1/customer/relationships');assert.equal(r.status,403);
+  });
+});
+
+test('FIN-14 batch decision is customer-only; claimed customer identity is never trusted',async()=>{
+  const route='/v1/customer/previous-claims/batch-decision';
+  const payload={claim_ids:['claim-1','claim-2'],decision:'accept',customer_id:'forged'};
+  await withApi(merchant,async base=>{
+    const r=await request(base,route,post(payload));
+    assert.equal(r.status,403);
+  });
+  await withApi(customer,async base=>{
+    const r=await request(base,route,post(payload));
+    assert.equal(r.status,200);
+    const out=await r.json();
+    assert.equal(out.customer,customer.id);
+    assert.deepEqual(out.selected,payload.claim_ids);
   });
 });
