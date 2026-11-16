@@ -373,16 +373,17 @@ class _Fin08MerchantBookScreenState extends State<Fin08MerchantBookScreen> {
                 title:Text('${FinanceDisplay.amount(claim.amount)} ${FinanceDisplay.currencyCode(claim.currency)}'),
                 subtitle:Text('${claim.type==MovementType.payment?'دفعة':'دين'} | ${claim.description??'مبلغ سجله التاجر'}\n${claim.stage.labelFor(claim.type)}${claim.proposedAmount==null?'':'\nالمبلغ المقترح: ${claim.proposedAmount}'}'),
                 trailing:claim.pendingAdjustmentId!=null && widget.adjustmentGateway!=null
-                  ?Column(mainAxisSize:MainAxisSize.min,children:[
-                    TextButton(key:Key('fin15_merchant_accept_${claim.id}'),
-                      onPressed:_adjustingClaims.contains(claim.id)?null:
-                        ()=>_decideAmountChange(claim,true),
-                      child:const Text('قبول التعديل')),
-                    TextButton(key:Key('fin15_merchant_reject_${claim.id}'),
-                      onPressed:_adjustingClaims.contains(claim.id)?null:
-                        ()=>_decideAmountChange(claim,false),
-                      child:const Text('رفض التعديل')),
-                  ]):null,
+                  ?PopupMenuButton<bool>(
+                    key:Key('fin15_merchant_adjustment_${claim.id}'),
+                    tooltip:'قرار تعديل المبلغ',
+                    enabled:!_adjustingClaims.contains(claim.id),
+                    icon:const Icon(Icons.rule_outlined),
+                    onSelected:(accept)=>_decideAmountChange(claim,accept),
+                    itemBuilder:(ctx)=>const [
+                      PopupMenuItem(value:true,child:Text('قبول التعديل')),
+                      PopupMenuItem(value:false,child:Text('رفض التعديل')),
+                    ],
+                  ):null,
               ),
             ),
             if(!_loading && _claims.isEmpty && _error==null)
