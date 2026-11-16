@@ -61,6 +61,38 @@ class FakeFin08Gateway implements Fin08ClaimsGateway {
       throw UnimplementedError();
 }
 
+class BatchGatewayFake extends FakeFin08Gateway {
+  int batchCalls=0;
+  bool batchFailure=false;
+  List<String>? chosenIds;
+  bool? chosenAccept;
+  final pendingPayment=Fin08PreviousClaim(
+    id:'payment-pending',merchantId:'merchant-one',merchantName:'متجر الأصالة',
+    amount:Decimal.parse('10.50'),currency:CurrencyCode.usd,
+    createdAt:DateTime.utc(2026,11,16),stage:Fin08Stage.awaitingReview,
+    type:MovementType.payment,
+  );
+  @override
+  Future<Fin08Page<Fin08PreviousClaim>> customerPreviousClaims({
+      String? cursor,int limit=50}) async =>
+    Fin08Page([first,pendingPayment],null);
+  @override
+  Future<Fin08BatchReceipt> decidePreviousClaimsBatch(
+      List<String> claimIds,{required bool accept}) async {
+    batchCalls++;
+    chosenIds=claimIds;
+    chosenAccept=accept;
+    if(batchFailure)throw const Fin08ApiError('فشل ذري من الخادم',statusCode:409);
+    return Fin08BatchReceipt(accept?'accept':'reject',claimIds.length,
+      claimIds.length,0,[
+        Fin08BatchCurrencyTotal(CurrencyCode.yer,MovementType.debt,
+          Decimal.parse('1250'),1),
+        Fin08BatchCurrencyTotal(CurrencyCode.usd,MovementType.payment,
+          Decimal.parse('10.50'),1),
+      ]);
+  }
+}
+
 void main() {
   Future<void> launch(WidgetTester tester,FakeFin08Gateway api) async {
     await tester.pumpWidget(MaterialApp(home:Fin08CustomerClaimsScreen(gateway:api)));
@@ -100,4 +132,47 @@ void main() {
     expect(find.textContaining('رفض الخادم الحفظ'),findsWidgets);
     expect(find.byKey(const Key('fin08_accept_claim-one')),findsOneWidget);
   });
+  testWidgets('batch requires explicit item selection, previews each currency and never approves relation', (tester) async {
+    final api=BatchGatewayFake();
+    await launch(tester,api);
+    await tester.tap(find.byKey(const Key('fin14_batch_toggle')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const Key('fin14_select_claim-one')),findsOneWidget);
+    expect(find.byKey(const Key('fin14_select_payment-pending')),findsOneWidget);
+    expect(api.batchCalls,0);
+    await tester.tap(find.byKey(const Key('fin14_select_claim-one')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('fin14_select_payment-pending')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('fin14_batch_accept')));
+    await tester.pumpAndSettle();
+    expect(api.batchCalls,0);
+    expect(find.textContaining('ديون YER'),findsWidgets);
+    expect(find.textContaining('دفعات USD'),findsWidgets);
+    expect(find.textContaining('متجر الأصالة'),findsWidgets);
+    await tester.tap(find.byKey(const Key('fin14_confirm_batch_decision')));
+    await tester.pumpAndSettle();
+    expect(api.batchCalls,1);
+    expect(api.chosenAccept,true);
+    expect(api.chosenIds!.toSet(),{'claim-one','payment-pending'});
+    expect(find.byKey(const Key('fin14_batch_accept')),findsNothing);
+  });
+
+  testWidgets('failed batch does not clear selection or show local approval', (tester) async {
+    final api=BatchGatewayFake()..batchFailure=true;
+    await launch(tester,api);
+    await tester.tap(find.byKey(const Key('fin14_batch_toggle')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('fin14_select_claim-one')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('fin14_batch_reject')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('fin14_confirm_batch_decision')));
+    await tester.pumpAndSettle();
+    expect(api.batchCalls,1);
+    expect(find.textContaining('فشل ذري من الخادم'),findsWidgets);
+    expect(find.byKey(const Key('fin14_batch_reject')),findsOneWidget);
+    expect(find.byKey(const Key('fin14_select_claim-one')),findsOneWidget);
+  });
+
 }
