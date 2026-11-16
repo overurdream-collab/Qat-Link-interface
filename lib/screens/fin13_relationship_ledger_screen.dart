@@ -128,9 +128,11 @@ class _Fin13RelationshipLedgerScreenState extends State<Fin13RelationshipLedgerS
                 Navigator.pop(ctx,true);
                 if(mounted){
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content:Text(
-                    result.status=='approved'
-                     ?'أكد الخادم اعتماد العملية وفق تفويض العميل المسجل.'
-                     :'حُفظ الطلب لدى الخادم بانتظار موافقة الطرف الآخر.')));
+                    result.creditWarning!=null
+                      ?'تنبيه ائتماني: الرصيد المتوقع ${result.creditWarning!.projected} ${result.creditWarning!.currency.name.toUpperCase()} يتجاوز الحد ${result.creditWarning!.limit}. العملية محفوظة وفق سياسة التنبيه.'
+                      : result.status=='approved'
+                        ?'أكد الخادم اعتماد العملية وفق تفويض العميل المسجل.'
+                        :'حُفظ الطلب لدى الخادم بانتظار موافقة الطرف الآخر.')));
                 }
               }catch(e){if(ctx.mounted)update(()=>failure=_errorText(e));}
               finally{if(!success&&ctx.mounted)update(()=>saving=false);}
