@@ -83,7 +83,7 @@ class Fin13Operation {
   bool get pending=>status=='pending';
   factory Fin13Operation.fromJson(Map<String,dynamic> j){
     final s=_value(j,'status');
-    if(!['pending','approved','rejected'].contains(s))throw const FormatException('Invalid status');
+    if(!['pending','approved','rejected','superseded'].contains(s))throw const FormatException('Invalid status');
     return Fin13Operation(_value(j,'id'),_type(_value(j,'operation_type')),
       _amount(j,'amount'),_currency(j),s,_value(j,'created_by'),
       _value(j,'created_by_role'),DateTime.parse(_value(j,'created_at')),
