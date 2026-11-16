@@ -272,6 +272,67 @@ export class Fin08Store {
       return {claim_id:id,decision:selected,ledger_posted:posted,recorded: Boolean(r.rowCount)};
     });
   }
+  // FIN-14: explicit customer-selected claims, one ACID transaction. Never
+  // imply that accepting a claim also accepts a relationship or other claims.
+  async decideClaimsBatch(actor, body) {
+    if (!Array.isArray(body.claim_ids) || body.claim_ids.length < 1 ||
+        body.claim_ids.length > 50) {
+      throw new ApiError(422, 'invalid_input', 'Select 1-50 claim IDs');
+    }
+    const ids = body.claim_ids.map(id => uuid(id,'claim_id'));
+    if (new Set(ids).size !== ids.length) {
+      throw new ApiError(422, 'invalid_input', 'Claim IDs must be unique');
+    }
+    const chosen = decision(body.decision);
+    return this.tx(async c => {
+      const owners = await c.query(
+        'SELECT id, merchant_id FROM merchant_claims WHERE id = ANY($1::uuid[])',
+        [ids]);
+      // Do not leak or partially process a batch containing a foreign ID.
+      if (owners.rows.length !== ids.length) throw missing();
+      // All merchant/customer advisory locks are obtained in consistent order
+      // before locking individual rows to avoid cross-merchant deadlocks.
+      const merchantIds=[...new Set(owners.rows.map(row => row.merchant_id))].sort();
+      for (const merchantId of merchantIds) {
+        await this.lockRelationshipPair(c,merchantId,actor.id);
+      }
+      const outcomes = [];
+      for (const id of ids.slice().sort()) {
+        const claim = await this.ensureEligible(c,id,actor.id);
+        const selected = await c.query(
+          'INSERT INTO customer_claim_decisions(claim_id,merchant_id,customer_id,decision) '+
+          'VALUES($1,$2,$3,$4) ON CONFLICT(claim_id) DO NOTHING RETURNING decision',
+          [id,claim.merchant_id,actor.id,chosen]);
+        if (!selected.rowCount) {
+          const previous = await c.query(
+            'SELECT customer_id,decision FROM customer_claim_decisions WHERE claim_id=$1',[id]);
+          if (!previous.rowCount || previous.rows[0].customer_id !== actor.id ||
+              previous.rows[0].decision !== chosen) {
+            throw conflict('One of the selected claims already has a different decision');
+          }
+        } else {
+          await this.audit(c,actor.id,'merchant_claim',id,'customer_'+chosen+'_from_explicit_batch');
+        }
+        const posted=chosen==='accept' ? await this.postClaim(c,id,actor.id) : false;
+        outcomes.push({claim_id:id,recorded:!!selected.rowCount,ledger_posted:posted});
+      }
+      const totals = await c.query(
+        'SELECT currency, operation_type AS type, SUM(amount)::text AS total_amount, '+
+        'COUNT(*)::int AS selected_count FROM merchant_claims '+
+        'WHERE id=ANY($1::uuid[]) GROUP BY currency,operation_type '+
+        'ORDER BY currency,operation_type',
+        [ids]);
+      return {
+        decision:chosen,
+        selected_count:ids.length,
+        newly_recorded_count:outcomes.filter(x=>x.recorded).length,
+        newly_posted_count:outcomes.filter(x=>x.ledger_posted).length,
+        totals_by_currency_and_type:totals.rows,
+        outcomes
+      };
+    });
+  }
+
   async requestRelationship(actor, body) {
     const contactId=uuid(body.contact_id,'contact_id');
     return this.tx(async c=>{
