@@ -24,7 +24,7 @@ function packPage(rows, limit, snapshot, secret, actor, scope, map) {
 export async function listMerchantContacts(pool, secret, actor, { limit, cursor }) {
   const count = page(limit);
   const parsed = cursorFor(cursor, secret, actor, 'merchant_contacts');
-  const snapshot = parsed?.snapshot ?? new Date().toISOString();
+  const snapshot = parsed?.snapshot ?? (await pool.query('SELECT clock_timestamp()::text AS captured_at')).rows[0].captured_at;
   const { rows } = await pool.query(`
     SELECT id,display_name AS name,normalized_phone AS phone,created_at,
       created_at::text AS cursor_created_at
@@ -43,7 +43,7 @@ export async function listMerchantContactClaims(pool, secret, actor, contactId, 
   const count = page(limit);
   const scope = `merchant_contact_claims:${id}`;
   const parsed = cursorFor(cursor, secret, actor, scope);
-  const snapshot = parsed?.snapshot ?? new Date().toISOString();
+  const snapshot = parsed?.snapshot ?? (await pool.query('SELECT clock_timestamp()::text AS captured_at')).rows[0].captured_at;
   const contact = await pool.query(`SELECT 1 FROM merchant_contacts WHERE id=$1 AND merchant_id=$2`,
     [id, actor.id]);
   if (!contact.rowCount) throw new ApiError(404,'not_found','Not found');
