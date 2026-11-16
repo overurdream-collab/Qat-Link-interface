@@ -22,7 +22,7 @@ test('FIN-09 merchant restores private contacts and every claim stage without cr
       await store.onboardMerchant(identity,{ merchant_id: other.id,verified_display_name:'M Two' });
       const contact = await store.createContact(merchant,{ name:'Client Before App',phone });
       const another = await store.createContact(merchant,{ name:'Client No App',phone:otherPhone });
-      await store.createContact(other,{ name:'Foreign Client',phone });
+      const foreignContact = await store.createContact(other,{ name:'Foreign Client',phone });
       const a = (await store.createClaim(merchant,{ contact_id:contact.id,amount:'100.50',currency:'YER' },`fin09-${suffix}-a`)).claim;
       const b = (await store.createClaim(merchant,{ contact_id:contact.id,amount:'5.75',currency:'USD' },`fin09-${suffix}-b`)).claim;
       const c = (await store.createClaim(merchant,{ contact_id:another.id,amount:'300.00',currency:'SAR' },`fin09-${suffix}-c`)).claim;
@@ -48,18 +48,42 @@ test('FIN-09 merchant restores private contacts and every claim stage without cr
       assert.equal(claimPage2.items.length,1);
       await assert.rejects(()=>store.listContactClaims(merchant,another.id,{limit:1,cursor:claimPage.next_cursor}),{status:422});
       await store.verifyPhone(identity,{ customer_id:customer.id,phone,proof_reference:`proof-${suffix}` });
+      const automatic=await store.listCustomerRelationships(customer,{});
+      assert.deepEqual(new Set(automatic.items.map(x=>x.merchant_id)),new Set([merchant.id,other.id]));
+      assert.ok(automatic.items.every(x=>x.status==='pending'));
       const joined = await store.listContactClaims(merchant,contact.id,{});
       assert.ok(joined.items.every(row=>row.stage==='awaiting_review'));
       await store.decideClaim(customer,b.id,{decision:'reject'});
       assert.equal((await store.listContactClaims(merchant,contact.id,{})).items.find(x=>x.claim_id===b.id).stage,'rejected');
       await store.decideClaim(customer,a.id,{decision:'accept'});
       assert.equal((await store.listContactClaims(merchant,contact.id,{})).items.find(x=>x.claim_id===a.id).stage,'accepted_awaiting_relationship');
+      await store.requestRelationship(other,{contact_id:foreignContact.id});
       const relationship = await store.requestRelationship(merchant,{contact_id:contact.id});
+      const requested=await store.listCustomerRelationships(customer,{limit:1});
+      assert.equal(requested.items.length,1);
+      assert.equal(requested.items[0].status,'pending');
+      assert.equal((await store.listCustomerRelationships({id:'unrelated-customer',role:'customer'},{})).items.length,0);
+      assert.ok(requested.next_cursor);
+      const older=await store.listCustomerRelationships(customer,{limit:1,cursor:requested.next_cursor});
+      assert.equal(older.items.length,1);
+      const twoRows=[...requested.items,...older.items];
+      assert.deepEqual(new Set(twoRows.map(row=>row.merchant_id)),new Set([merchant.id,other.id]));
+      const merchantRelation=twoRows.find(row=>row.merchant_id===merchant.id);
+      assert.equal(merchantRelation.relationship_id,relationship.relationship_id);
+      assert.equal(merchantRelation.merchant_display_name,'M One');
+      await assert.rejects(()=>store.listCustomerRelationships({id:'unrelated-customer',role:'customer'},{
+        limit:1,cursor:requested.next_cursor
+      }),{status:422});
       await store.decideRelationship(customer,relationship.relationship_id,{decision:'accept'});
+      assert.equal((await store.listCustomerRelationships(customer,{})).items
+        .find(row=>row.merchant_id===merchant.id).status,'approved');
       const after = await store.listContactClaims(merchant,contact.id,{});
       assert.equal(after.items.find(x=>x.claim_id===a.id).stage,'approved');
       assert.equal(after.items.find(x=>x.claim_id===b.id).stage,'rejected');
       assert.equal((await store.listContactClaims(merchant,another.id,{})).items[0].stage,'outside_app');
       assert.equal((await store.listContacts(other,{})).items.length,1);
+      await store.verifyPhone(identity,{customer_id:'conflicting-customer-'+suffix,
+        phone,proof_reference:'conflict-proof-'+suffix});
+      assert.equal((await store.listCustomerRelationships(customer,{})).items.length,0);
     } finally { await pool.end(); }
   });

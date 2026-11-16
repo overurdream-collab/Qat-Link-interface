@@ -9,6 +9,7 @@ const store={
   createContact:async(a,b)=>({merchant:a.id,name:b.name}),
   createClaim:async(a,b,key)=>({claim:{merchant:a.id,currency:b.currency,amount:b.amount,key},replayed:false}),
   claimsInbox:async(a)=>({items:[{claim_id:'previous-claim',customer:a.id}],next_cursor:null}),
+  listCustomerRelationships:async(a)=>({items:[{relationship_id:'relation',customer:a.id}],next_cursor:null}),
   decideClaim:async(a,id,b)=>({customer:a.id,claim_id:id,decision:b.decision,ledger_posted:false}),
   listContacts:async(a)=>({items:[{contact_id:'sample',merchant:a.id}],next_cursor:null}),
   listContactClaims:async(a,id)=>({items:[{claim_id:'x',contact_id:id,merchant:a.id}],next_cursor:null}),
@@ -67,5 +68,17 @@ test('merchant restoration list is scoped to verified actor and restricted to me
   await withApi(customer,async base=>{
     const r=await request(base,'/v1/merchant/contacts');assert.equal(r.status,403);
     const detail=await request(base,'/v1/merchant/contacts/sample/claims');assert.equal(detail.status,403);
+  });
+});
+
+
+test('relationship inbox belongs to authenticated customer, never merchant',async()=>{
+  await withApi(customer,async base=>{
+    const r=await request(base,'/v1/customer/relationships?customer_id=someone-else');
+    assert.equal(r.status,200);
+    assert.equal((await r.json()).items[0].customer,'customer-B');
+  });
+  await withApi(merchant,async base=>{
+    const r=await request(base,'/v1/customer/relationships');assert.equal(r.status,403);
   });
 });

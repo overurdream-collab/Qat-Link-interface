@@ -140,6 +140,35 @@ class Fin08PreviousClaim {
       );
 }
 
+class Fin08CustomerRelationship {
+  const Fin08CustomerRelationship({required this.id,required this.merchantId,
+    required this.merchantName,required this.status,required this.createdAt});
+  final String id;
+  final String merchantId;
+  final String merchantName;
+  final String status;
+  final DateTime createdAt;
+  bool get canDecide => status=='pending';
+  factory Fin08CustomerRelationship.fromJson(Map<String,dynamic> json) {
+    final state=_str(json,'status');
+    if(!['pending','approved','rejected'].contains(state)) {
+      throw const FormatException('Unknown relationship status');
+    }
+    return Fin08CustomerRelationship(id:_str(json,'relationship_id'),
+      merchantId:_str(json,'merchant_id'),
+      merchantName:_str(json,'merchant_display_name'),
+      status:state,createdAt:_date(json,'created_at'));
+  }
+}
+
+class Fin08RelationshipReceipt {
+  const Fin08RelationshipReceipt({required this.relationshipId,required this.status,
+    required this.newlyPostedDebts});
+  final String relationshipId;
+  final String status;
+  final int newlyPostedDebts;
+}
+
 class Fin08ClaimReceipt {
   const Fin08ClaimReceipt({required this.claimId, required this.replayed});
   final String claimId;
@@ -180,6 +209,9 @@ abstract class Fin08ClaimsGateway {
   Future<Fin08ClaimReceipt> createMerchantClaim({required String contactId,required Decimal amount,
     required CurrencyCode currency,required String idempotencyKey,String? description});
   Future<List<Fin08CurrencyBuckets>> merchantClaimSummary();
+  Future<String> requestMerchantRelationship(String contactId);
+  Future<Fin08Page<Fin08CustomerRelationship>> customerRelationships({String? cursor,int limit=50});
+  Future<Fin08RelationshipReceipt> decideRelationship(String relationshipId,{required bool accept});
   Future<Fin08Page<Fin08PreviousClaim>> customerPreviousClaims({String? cursor,int limit=50});
   Future<Fin08ClaimDecisionReceipt> decidePreviousClaim(String claimId,{required bool accept});
 }
@@ -288,6 +320,33 @@ class Fin08HttpClaimsGateway implements Fin08ClaimsGateway {
     final raw=response['currencies'];
     if(raw is! List) throw const Fin08ApiError('ملخص غير صالح من الخادم.',code:'invalid_response');
     return raw.map((v)=>Fin08CurrencyBuckets.fromJson(Map<String,dynamic>.from(v as Map))).toList(growable:false);
+  }
+
+  @override
+  Future<String> requestMerchantRelationship(String contactId) async {
+    final data=await _request('POST','v1/merchant/relationship-requests',
+      body:{'contact_id':contactId});
+    final status=_str(data,'status');
+    if(status!='pending')throw const Fin08ApiError('حالة الارتباط غير مؤكدة.',code:'invalid_response');
+    return _str(data,'relationship_id');
+  }
+
+  @override
+  Future<Fin08Page<Fin08CustomerRelationship>> customerRelationships({String? cursor,int limit=50}) async =>
+    _parsePage(await _request('GET','v1/customer/relationships',query:_pagination(cursor,limit)),
+      Fin08CustomerRelationship.fromJson);
+
+  @override
+  Future<Fin08RelationshipReceipt> decideRelationship(String relationshipId,{required bool accept}) async {
+    final result=await _request('POST','v1/customer/relationships/${Uri.encodeComponent(relationshipId)}/decision',
+      body:{'decision':accept?'accept':'reject'});
+    final status=_str(result,'status');
+    if(status!=(accept?'approved':'rejected')) {
+      throw const Fin08ApiError('قرار العلاقة غير مؤكد.',code:'invalid_response');
+    }
+    return Fin08RelationshipReceipt(relationshipId:_str(result,'relationship_id'),
+      status:status,newlyPostedDebts:result['newly_posted_debts'] is int
+        ?result['newly_posted_debts'] as int:0);
   }
 
   @override

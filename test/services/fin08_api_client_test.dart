@@ -110,4 +110,44 @@ void main() {
     expect(byCurrency.last.currency,CurrencyCode.usd);
     expect(byCurrency.last.approvedFromClaims,Decimal.parse('20'));
   });
+  test('relation request and customer decision use independent authenticated endpoints',() async {
+    var actions=0;
+    final api=Fin08HttpClaimsGateway(
+      baseUri:Uri.parse('https://qatlink.example/'),
+      accessToken:() async=>'verified-token',
+      client:MockClient((req) async {
+        expect(req.headers['authorization'],'Bearer verified-token');
+        if(req.url.path=='/v1/customer/relationships' && req.method=='GET'){
+          actions++;
+          return http.Response(jsonEncode({'items':[{
+            'relationship_id':'relationship-1','merchant_id':'merchant-1',
+            'merchant_display_name':'متجر القمة','status':'pending',
+            'created_at':'2026-11-16T00:00:00Z',
+          }],'next_cursor':null}),200,headers:{'content-type':'application/json; charset=utf-8'});
+        }
+        if(req.url.path=='/v1/customer/relationships/relationship-1/decision'){
+          actions++;
+          expect(jsonDecode(req.body)['decision'],'accept');
+          return http.Response(jsonEncode({'relationship_id':'relationship-1',
+            'status':'approved','newly_posted_debts':1}),200);
+        }
+        if(req.url.path=='/v1/merchant/relationship-requests'){
+          actions++;
+          expect(jsonDecode(req.body)['contact_id'],'contact-1');
+          return http.Response(jsonEncode({'relationship_id':'relationship-2','status':'pending'}),201);
+        }
+        return http.Response('{}',404);
+      }),
+    );
+    final list=await api.customerRelationships();
+    expect(list.items.single.canDecide,true);
+    expect(list.items.single.merchantName,'متجر القمة');
+    final decision=await api.decideRelationship('relationship-1',accept:true);
+    expect(decision.status,'approved');
+    expect(decision.newlyPostedDebts,1);
+    final requested=await api.requestMerchantRelationship('contact-1');
+    expect(requested,'relationship-2');
+    expect(actions,3);
+  });
+
 }

@@ -1,5 +1,6 @@
 import { randomUUID } from 'node:crypto';
 import { listMerchantContacts, listMerchantContactClaims } from './merchant_read.mjs';
+import { listCustomerRelationships } from './customer_relationships.mjs';
 import { ApiError, assertText, claimDigest, currency, decision, idempotencyKey, money, normalizePhone, page, uuid, encodeCursor, decodeCursor } from './validation.mjs';
 
 const conflict = (message) => new ApiError(409, 'conflict', message);
@@ -88,7 +89,36 @@ export class Fin08Store {
             WHERE old.proof_reference=verified_contact_links.proof_reference
               AND old.revoked_at IS NULL
           )`,[phone]);
+    await this.queueVerifiedRelationships(c,phone);
   }
+  async queueVerifiedRelationships(c, phone) {
+    // Merchant's saved contact is its unilateral invitation; verification
+    // creates a PENDING relationship request automatically, never approval.
+    // No invitation is created for disputed phone ownership.
+    const {rows}=await c.query(`
+      SELECT mc.merchant_id,mc.id AS contact_id,vl.customer_id
+      FROM merchant_contacts mc
+      JOIN verified_contact_links vl ON vl.merchant_id=mc.merchant_id AND vl.contact_id=mc.id
+      JOIN customer_phone_evidence ev ON ev.proof_reference=vl.proof_reference
+        AND ev.customer_id=vl.customer_id AND ev.normalized_phone=mc.normalized_phone
+        AND ev.revoked_at IS NULL
+      WHERE mc.normalized_phone=$1
+        AND (SELECT COUNT(DISTINCT owner.customer_id)
+             FROM customer_phone_evidence owner
+             WHERE owner.normalized_phone=$1 AND owner.revoked_at IS NULL)=1`,[phone]);
+    for(const row of rows){
+      const saved=await c.query(`INSERT INTO merchant_relationships
+        (id,merchant_id,customer_id,contact_id)
+        VALUES($1,$2,$3,$4)
+        ON CONFLICT (merchant_id,customer_id) DO NOTHING RETURNING id`,
+        [randomUUID(),row.merchant_id,row.customer_id,row.contact_id]);
+      if(saved.rowCount){
+        await this.audit(c,row.merchant_id,'relationship',saved.rows[0].id,
+          'merchant_private_contact_invitation_delivered_pending');
+      }
+    }
+  }
+
   async createClaim(actor, body, requestKey) {
     const contactId = uuid(body.contact_id, 'contact_id');
     const amount = money(body.amount);
@@ -232,7 +262,15 @@ export class Fin08Store {
       const customerId=rows[0].customer_id;
       const saved=await c.query(`INSERT INTO merchant_relationships(id,merchant_id,customer_id,contact_id)
         VALUES($1,$2,$3,$4) ON CONFLICT(merchant_id,customer_id) DO NOTHING RETURNING id,status`,[randomUUID(),actor.id,customerId,contactId]);
-      if (!saved.rowCount) throw conflict('Relationship already exists for this customer');
+      if (!saved.rowCount) {
+        const prior=await c.query('SELECT id,status,contact_id FROM merchant_relationships WHERE merchant_id=$1 AND customer_id=$2',
+          [actor.id,customerId]);
+        if(prior.rowCount && prior.rows[0].status==='pending' &&
+           prior.rows[0].contact_id===contactId) {
+          return {relationship_id:prior.rows[0].id,status:'pending',replayed:true};
+        }
+        throw conflict('Relationship already exists for this customer');
+      }
       await this.audit(c,actor.id,'relationship',saved.rows[0].id,'merchant_requested');
       return {relationship_id:saved.rows[0].id,status:'pending'};
     });
@@ -266,6 +304,9 @@ export class Fin08Store {
     });
   }
   // FIN-09 restoration reads use authenticated merchant identity, never client-supplied tenant IDs.
+  async listCustomerRelationships(actor, opts) {
+    return listCustomerRelationships(this.pool,this.cursorSecret,actor,opts);
+  }
   async listContacts(actor, opts) {
     return listMerchantContacts(this.pool, this.cursorSecret, actor, opts);
   }

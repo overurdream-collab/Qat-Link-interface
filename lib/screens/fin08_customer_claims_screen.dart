@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../services/fin08_api_client.dart';
+import 'fin08_customer_relationships_screen.dart';
 import '../widgets/finance_display.dart';
 
 /// Server-backed customer inbox for historical merchant debt CLAIMS.
@@ -104,6 +105,17 @@ class _Fin08CustomerClaimsScreenState extends State<Fin08CustomerClaimsScreen> {
             Text('كل طلب مستقل ويظل غير معتمد حتى تكتمل موافقتك '
                 'على الدين والعلاقة. لا توجد موافقة جماعية تلقائية.',
                 style:TextStyle(color:c.onSurfaceVariant)),
+            const SizedBox(height:10),
+            OutlinedButton.icon(
+              key:const Key('fin10_open_relationships'),
+              onPressed:() async {
+                await Navigator.of(context).push(MaterialPageRoute<void>(
+                  builder:(_)=>Fin08CustomerRelationshipsScreen(gateway:widget.gateway)));
+                if(mounted)await _load(); // Re-read posting after relationship decision.
+              },
+              icon:const Icon(Icons.handshake_outlined),
+              label:const Text('مراجعة طلبات الارتباط بالتجار'),
+            ),
             const SizedBox(height:16),
             if(_failure!=null) Padding(
               padding:const EdgeInsets.only(bottom:12),
