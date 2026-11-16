@@ -6,6 +6,10 @@ import 'package:qat_link/screens/fin08_customer_relationships_screen.dart';
 import 'package:qat_link/services/fin08_api_client.dart';
 
 class RelationshipGatewayFake implements Fin08ClaimsGateway {
+  @override
+  Future<Fin08BatchReceipt> decidePreviousClaimsBatch(List<String> claimIds,{required bool accept}) async =>
+    throw UnimplementedError('Only customer-batch fake implements the new operation');
+
   int decisions=0;
   bool failure=false;
   bool? accepted;
