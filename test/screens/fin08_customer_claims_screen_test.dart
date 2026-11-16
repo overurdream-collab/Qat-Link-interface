@@ -54,7 +54,7 @@ class FakeFin08Gateway implements Fin08ClaimsGateway {
       throw UnimplementedError();
   @override
   Future<Fin08ClaimReceipt> createMerchantClaim({required String contactId,required Decimal amount,
-    required CurrencyCode currency,required String idempotencyKey,String? description}) async =>
+    required CurrencyCode currency,required String idempotencyKey,String? description,MovementType type=MovementType.debt}) async =>
       throw UnimplementedError();
   @override
   Future<List<Fin08CurrencyBuckets>> merchantClaimSummary() async =>
