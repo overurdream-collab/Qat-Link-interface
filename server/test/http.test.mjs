@@ -14,7 +14,11 @@ const store={
   listContacts:async(a)=>({items:[{contact_id:'sample',merchant:a.id}],next_cursor:null}),
   listContactClaims:async(a,id)=>({items:[{claim_id:'x',contact_id:id,merchant:a.id}],next_cursor:null}),
   summary:async(a)=>({currencies:[],merchant:a.id}),
-  verifyPhone:async()=>({linked:true,conflict:false})
+  verifyPhone:async()=>({linked:true,conflict:false}),
+  adjustments:{
+    request:async(actor,id,body)=>({actor:actor.id,claim_id:id,proposed_amount:body.proposed_amount,status:'pending'}),
+    decide:async(actor,id,body)=>({actor:actor.id,adjustment_id:id,decision:body.decision})
+  }
 };
 const withApi=async(actor,action)=>{
  const server=createApi({store,verify:()=>actor});
@@ -80,5 +84,27 @@ test('relationship inbox belongs to authenticated customer, never merchant',asyn
   });
   await withApi(merchant,async base=>{
     const r=await request(base,'/v1/customer/relationships');assert.equal(r.status,403);
+  });
+});
+
+test('FIN-15 amount proposals and merchant decisions use independent roles and verified actor IDs',async()=>{
+  const requestPath='/v1/customer/previous-claims/00000000-0000-4000-8000-000000000001/amount-adjustment';
+  const merchantPath='/v1/merchant/claim-adjustments/00000000-0000-4000-8000-000000000002/decision';
+  await withApi(merchant,async base=>{
+    const r=await request(base,requestPath,post({proposed_amount:'200',reason:'Correction'}));
+    assert.equal(r.status,403);
+  });
+  await withApi(customer,async base=>{
+    const r=await request(base,requestPath,post({
+      proposed_amount:'200',reason:'Correction',customer_id:'spoofed'}));
+    assert.equal(r.status,201);
+    assert.equal((await r.json()).actor,customer.id);
+    const blocked=await request(base,merchantPath,post({decision:'accept'}));
+    assert.equal(blocked.status,403);
+  });
+  await withApi(merchant,async base=>{
+    const r=await request(base,merchantPath,post({decision:'accept',merchant_id:'spoofed'}));
+    assert.equal(r.status,200);
+    assert.equal((await r.json()).actor,merchant.id);
   });
 });
