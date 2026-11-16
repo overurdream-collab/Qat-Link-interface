@@ -7,14 +7,16 @@ import 'package:flutter/services.dart';
 import '../models/app_models.dart';
 import '../services/fin08_api_client.dart';
 import '../services/fin08_pending_statement.dart';
+import '../services/fin15_claim_adjustment_gateway.dart';
 import '../widgets/finance_display.dart';
 
 /// Restores durable merchant-only contacts/claims from FIN-09 server API.
 /// Requires a real merchant JWT from trusted authentication. Not the full
 /// approved financial ledger; never labels claim sums as total debt balance.
 class Fin08MerchantBookScreen extends StatefulWidget {
-  const Fin08MerchantBookScreen({super.key,required this.gateway});
+  const Fin08MerchantBookScreen({super.key,required this.gateway,this.adjustmentGateway});
   final Fin08ClaimsGateway gateway;
+  final Fin15ClaimAdjustmentGateway? adjustmentGateway;
   @override
   State<Fin08MerchantBookScreen> createState() => _Fin08MerchantBookScreenState();
 }
@@ -29,6 +31,7 @@ class _Fin08MerchantBookScreenState extends State<Fin08MerchantBookScreen> {
   String? _error;
   bool _loading=false;
   bool _statementLoading=false;
+  final Set<String> _adjustingClaims={};
 
   @override
   void initState(){super.initState();_loadContacts();}
@@ -197,6 +200,45 @@ class _Fin08MerchantBookScreenState extends State<Fin08MerchantBookScreen> {
     }
   }
 
+  Future<void> _decideAmountChange(Fin08MerchantClaim claim,bool accept) async {
+    final adjustment=claim.pendingAdjustmentId;
+    if(widget.adjustmentGateway==null || adjustment==null ||
+        _adjustingClaims.contains(claim.id) || _loading)return;
+    final confirmed=await showDialog<bool>(context:context,builder:(dialog)=>AlertDialog(
+      title:Text(accept?'قبول مبلغ العميل المقترح؟':'رفض مبلغ العميل المقترح؟'),
+      content:Text('المبلغ الأصلي: ${claim.amount} ${claim.currency.name.toUpperCase()}\n'
+        'المبلغ المقترح: ${claim.proposedAmount} ${claim.currency.name.toUpperCase()}\n'
+        'إذا قبلت، تُحفظ المطالبة الأصلية دون تغيير مبلغها، '
+        'ويُنشأ طلب جديد بانتظار موافقة العميل. لا يُضاف شيء للرصيد المعتمد تلقائياً.'),
+      actions:[
+        TextButton(onPressed:()=>Navigator.pop(dialog,false),child:const Text('إلغاء')),
+        FilledButton(key:const Key('fin15_confirm_merchant_adjustment'),
+          onPressed:()=>Navigator.pop(dialog,true),
+          child:Text(accept?'أقبل المقترح':'أرفض المقترح')),
+      ],
+    ));
+    if(!mounted||confirmed!=true)return;
+    setState(()=>_adjustingClaims.add(claim.id));
+    try{
+      final result=await widget.adjustmentGateway!.decide(adjustment,accept:accept);
+      if(result.status!=(accept?'accepted':'rejected') ||
+          (accept && result.replacementClaimId==null)){
+        throw const Fin08ApiError('قرار التعديل غير مؤكد من الخادم.',code:'invalid_response');
+      }
+      if(!mounted)return;
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content:Text(accept
+        ?'حُفظ الطلب البديل معلقاً بانتظار مراجعة العميل. لا أثر مالي بعد.'
+        :'رُفض تعديل المبلغ، وتظل المطالبة الأصلية للمراجعة.')));
+      await _select(_selected);
+    }catch(e){
+      if(!mounted)return;
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content:Text(_message(e))));
+    }finally{
+      if(mounted)setState(()=>_adjustingClaims.remove(claim.id));
+    }
+  }
+
   /// Fetches ALL pages again from authenticated merchant API before copying.
   /// No partial or stale local UI list is ever represented as a complete statement.
   Future<void> _copyPendingStatement() async {
@@ -329,7 +371,18 @@ class _Fin08MerchantBookScreenState extends State<Fin08MerchantBookScreen> {
               key:Key('fin08_merchant_claim_${claim.id}'),
               child:ListTile(
                 title:Text('${FinanceDisplay.amount(claim.amount)} ${FinanceDisplay.currencyCode(claim.currency)}'),
-                subtitle:Text('${claim.type==MovementType.payment?'دفعة':'دين'} | ${claim.description??'مبلغ سجله التاجر'}\n${claim.stage.labelFor(claim.type)}'),
+                subtitle:Text('${claim.type==MovementType.payment?'دفعة':'دين'} | ${claim.description??'مبلغ سجله التاجر'}\n${claim.stage.labelFor(claim.type)}${claim.proposedAmount==null?'':'\nالمبلغ المقترح: ${claim.proposedAmount}'}'),
+                trailing:claim.pendingAdjustmentId!=null && widget.adjustmentGateway!=null
+                  ?Column(mainAxisSize:MainAxisSize.min,children:[
+                    TextButton(key:Key('fin15_merchant_accept_${claim.id}'),
+                      onPressed:_adjustingClaims.contains(claim.id)?null:
+                        ()=>_decideAmountChange(claim,true),
+                      child:const Text('قبول التعديل')),
+                    TextButton(key:Key('fin15_merchant_reject_${claim.id}'),
+                      onPressed:_adjustingClaims.contains(claim.id)?null:
+                        ()=>_decideAmountChange(claim,false),
+                      child:const Text('رفض التعديل')),
+                  ]):null,
               ),
             ),
             if(!_loading && _claims.isEmpty && _error==null)
