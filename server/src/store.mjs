@@ -170,6 +170,7 @@ export class Fin08Store {
     const snapshot = parsed?.snapshot ?? new Date().toISOString();
     const {rows} = await this.pool.query(`SELECT cl.id,cl.merchant_id,mp.verified_display_name AS merchant_display_name,
         cl.contact_id,cl.amount::text,cl.currency,cl.description,cl.created_at,
+        cl.created_at::text AS cursor_created_at,
         d.decision, r.status AS relationship_status, fm.id AS movement_id
       FROM merchant_claims cl
       JOIN merchant_contacts c ON c.id=cl.contact_id AND c.merchant_id=cl.merchant_id
@@ -191,7 +192,7 @@ export class Fin08Store {
         row.decision==='accept' ? 'accepted_awaiting_relationship' : 'awaiting_review'
     }));
     const last=rows[count-1];
-    const nextCursor=hasNext ? encodeCursor({snapshot,createdAt:new Date(last.created_at).toISOString(),id:last.id},this.cursorSecret):null;
+    const nextCursor=hasNext ? encodeCursor({snapshot,createdAt:last.cursor_created_at,id:last.id},this.cursorSecret):null;
     return {items,next_cursor:nextCursor};
   }
   async ensureEligible(c,claimId,customerId) {
@@ -273,7 +274,7 @@ export class Fin08Store {
     const snapshot=parsed?.snapshot ?? new Date().toISOString();
     const {rows}=await this.pool.query(`SELECT r.id,r.merchant_id,
         mp.verified_display_name AS merchant_display_name,
-        r.status,r.created_at,r.decided_at
+        r.status,r.created_at,r.decided_at,r.created_at::text AS cursor_created_at
       FROM merchant_relationships r
       JOIN merchant_contacts c ON c.id=r.contact_id AND c.merchant_id=r.merchant_id
       ${verifiedJoin}
@@ -292,7 +293,7 @@ export class Fin08Store {
     const last=rows[count-1];
     const next_cursor=hasNext?encodeCursor({
       scope:'customer_relationships',actor:actor.id,snapshot,
-      createdAt:new Date(last.created_at).toISOString(),id:last.id
+      createdAt:last.cursor_created_at,id:last.id
     },this.cursorSecret):null;
     return {items,next_cursor};
   }
