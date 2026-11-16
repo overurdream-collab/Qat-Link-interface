@@ -146,6 +146,25 @@ export function createApi({store,verify}) {
         const result=await store.ledger.requestReversal(actor,reversal[1],body,req.headers['idempotency-key']);
         return json(res,result.replayed?200:201,result);
       }
+      // FIN-17: allocation is an audited, bilateral classification of an
+      // already-approved payment; it never creates a second financial movement.
+      const allocationDecision=path.match(/^\\/v1\\/relationships\\/([\\w-]+)\\/payment-allocations\\/([\\w-]+)\\/decision$/);
+      if(method==='POST' && allocationDecision){
+        requireParticipant(actor);
+        return json(res,200,await store.settlements.decide(actor,allocationDecision[1],allocationDecision[2],body));
+      }
+      const allocations=path.match(/^\\/v1\\/relationships\\/([\\w-]+)\\/payment-allocations$/);
+      if(allocations){
+        requireParticipant(actor);
+        if(method==='POST'){
+          const result=await store.settlements.request(actor,allocations[1],body,req.headers['idempotency-key']);
+          return json(res,result.replayed?200:201,result);
+        }
+        if(method==='GET'){
+          return json(res,200,await store.settlements.forPayment(actor,allocations[1],
+            url.searchParams.get('payment_movement_id')));
+        }
+      }
       const credit=path.match(/^\/v1\/relationships\/([\w-]+)\/credit-limits$/);
       if(credit){
         requireParticipant(actor);
