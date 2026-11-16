@@ -92,6 +92,7 @@ void main(){
     expect(gateway.mode,'block');
     expect(find.textContaining('500.2501'),findsWidgets);
     await tester.ensureVisible(find.byKey(const Key('fin16_disable_credit')));
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(const Key('fin16_disable_credit')));
     await tester.pumpAndSettle();
     expect(gateway.saves,1);
