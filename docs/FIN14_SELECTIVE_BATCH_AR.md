@@ -44,3 +44,8 @@
 ## الباقي بعد FIN-14
 
 طلبات تعديل مبلغ pending (قبل الاعتماد)، حدود الائتمان، كشوف PDF الخادمية المتكاملة، تخصيص الدفعات دون ازدواج، مزامنة offline، UAT جهازين ومزود هوية.
+
+## واجهات مراجعة FIN-14 (Flutter)
+تم وصل خدمة اختيار عناصر خادمية بحقن Fin14BatchGateway اختيارياً في شاشتَي: lib/screens/fin08_customer_claims_screen.dart للمطالبات القديمة وlib/screens/fin13_relationship_ledger_screen.dart لعمليات الدفتر الجديدة. توجد مربعات تحديد للعناصر المعلقة التي يملك المستخدم صلاحية قرارها فقط، وحد أقصى 50؛ تظهر في حوار التأكيد تفاصيل كل عنصر ونوعه ومبلغه، وإجمالي ديون/دفعات/صافي **تقديري غير معتمد** لكل عملة؛ لا يحصل استدعاء للخادم قبل تأكيد منفصل. يفشل الطلب دون عرض نجاح مصطنع. الـGateways لا تُفعَّل من Login الحالي دون جلسة JWT حقيقية.
+- lib/services/fin14_batch_gateway.dart يعيد استخدام الاتصال الموثق مع FIN-08/13.
+- test/services/fin14_batch_gateway_test.dart وtest/screens/fin08_customer_claims_screen_test.dart وtest/screens/fin13_relationship_ledger_screen_test.dart تشمل تأكيد الاختيار وعدم انتحال قرار منشئ العملية.
