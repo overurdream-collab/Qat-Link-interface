@@ -41,8 +41,11 @@ export function idempotencyKey(value) {
   if (typeof value !== 'string' || !/^[A-Za-z0-9_.:-]{8,128}$/.test(value)) throw invalid('Idempotency-Key must be 8-128 safe characters');
   return value;
 }
-export function claimDigest({contactId, amount, currency: unit, description}) {
-  return createHash('sha256').update(JSON.stringify([contactId, amount, unit, description ?? ''])).digest('hex');
+export function claimDigest({contactId, amount, currency: unit, description, type = 'debt'}) {
+  // Preserve the original FIN-08 digest for every existing debt replay.
+  const fields=[contactId, amount, unit, description ?? ''];
+  if(type==='payment') fields.push('payment');
+  return createHash('sha256').update(JSON.stringify(fields)).digest('hex');
 }
 export function page(value) {
   if (value === undefined || value === null) return 50;
