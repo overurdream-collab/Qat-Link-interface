@@ -6,13 +6,16 @@ import 'package:flutter/material.dart';
 import '../models/app_models.dart';
 import '../services/fin08_api_client.dart';
 import '../services/fin13_ledger_gateway.dart';
+import '../services/fin14_batch_gateway.dart';
 
 /// Authenticated FIN-13 ledger view. Only mount after trusted JWT login;
 /// tenant authorization and consent are ALWAYS checked by the server.
 class Fin13RelationshipLedgerScreen extends StatefulWidget {
   const Fin13RelationshipLedgerScreen({super.key,required this.gateway,
-    required this.relationshipId,required this.actorId,required this.role});
+    required this.relationshipId,required this.actorId,required this.role,
+    this.batchGateway});
   final Fin13LedgerGateway gateway;
+  final Fin14BatchGateway? batchGateway;
   final String relationshipId,actorId;
   final ParticipantRole role;
   @override
@@ -26,6 +29,7 @@ class _Fin13RelationshipLedgerScreenState extends State<Fin13RelationshipLedgerS
   List<Fin13Operation> _operations=const [];
   String? _cursor,_error;
   bool _loading=false,_acting=false;
+  final Set<String> _selectedForBatch={};
 
   @override
   void initState(){super.initState();_load();}
@@ -158,6 +162,73 @@ class _Fin13RelationshipLedgerScreenState extends State<Fin13RelationshipLedgerS
   void _showError(Object error) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content:Text(_errorText(error))));
+  }
+
+  Future<void> _batchDecide(bool accept) async {
+    if(widget.batchGateway==null || _acting || _loading ||
+       _selectedForBatch.isEmpty || _selectedForBatch.length>50)return;
+    final eligible=_operations.where((x)=>x.pending &&
+      x.createdBy!=widget.actorId && _selectedForBatch.contains(x.id))
+      .toList(growable:false);
+    if(eligible.length!=_selectedForBatch.length) {
+      _showError(const Fin08ApiError('تغيّرت صلاحيات الطلبات. حدّث القائمة ثم أعد التحديد.'));
+      return;
+    }
+    final debt={for(final currency in CurrencyCode.values)currency:Decimal.zero};
+    final payment={for(final currency in CurrencyCode.values)currency:Decimal.zero};
+    for(final op in eligible){
+      final bucket=op.type==MovementType.payment?payment:debt;
+      bucket[op.currency]=bucket[op.currency]!+op.amount;
+    }
+    final yes=await showDialog<bool>(context:context,builder:(ctx)=>AlertDialog(
+      title:Text(accept?'اعتماد العمليات المحددة؟':'رفض العمليات المحددة؟'),
+      content:SizedBox(width:420,child:SingleChildScrollView(child:Column(
+        crossAxisAlignment:CrossAxisAlignment.start,mainAxisSize:MainAxisSize.min,
+        children:[
+          Text('عدد الطلبات التي اخترتها: '+eligible.length.toString()),
+          const Divider(),
+          for(final op in eligible)Text(
+            (op.type==MovementType.debt?'دين':'دفعة')+' — '+
+            op.amount.toString()+' '+op.currency.name.toUpperCase()),
+          const Divider(),
+          for(final unit in CurrencyCode.values)
+            if(debt[unit]!=Decimal.zero || payment[unit]!=Decimal.zero)
+              Text(unit.name.toUpperCase()+' | ديون: '+debt[unit].toString()+
+                ' | دفعات: '+payment[unit].toString()+
+                ' | صافي تقديري غير معتمد: '+
+                (debt[unit]!-payment[unit]!).toString()),
+          const SizedBox(height:8),
+          const Text('القرار يخص العناصر المحددة فقط. لا يدخل الرصيد المعتمد قبل تأكيد الخادم.',
+            style:TextStyle(fontWeight:FontWeight.w600)),
+        ]))),
+      actions:[
+        TextButton(onPressed:()=>Navigator.pop(ctx,false),child:const Text('إلغاء')),
+        FilledButton(key:const Key('fin14_confirm_operation_batch'),
+          onPressed:()=>Navigator.pop(ctx,true),
+          child:Text(accept?'اعتماد المحدد':'رفض المحدد')),
+      ]));
+    if(!mounted || yes!=true)return;
+    setState(()=>_acting=true);
+    try{
+      final result=await widget.batchGateway!.decideRelationship(widget.relationshipId,{
+        for(final op in eligible)op.id:accept,
+      });
+      final returned=result.items.map((x)=>x['id']).toSet();
+      if(result.scope!='selected_relationship_operations_only' ||
+        returned.length!=eligible.length ||
+        !eligible.every((x)=>returned.contains(x.id))) {
+        throw const Fin08ApiError('لم يؤكد الخادم قرارات كل العناصر المحددة.',code:'invalid_response');
+      }
+      if(!mounted)return;
+      setState(()=>_selectedForBatch.clear());
+      await _load();
+      if(mounted){
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content:Text(
+          'حفظ الخادم قرارات '+eligible.length.toString()+
+          ' طلبات محددة؛ قيود معتمدة جديدة: '+result.newlyPosted.toString())));
+      }
+    }catch(e){if(mounted)_showError(e);}
+    finally{if(mounted)setState(()=>_acting=false);}
   }
 
   Future<void> _setAuto(bool enabled) async {
@@ -298,6 +369,19 @@ class _Fin13RelationshipLedgerScreenState extends State<Fin13RelationshipLedgerS
         const SizedBox(height:18),
         Text('العمليات الجديدة والمعلقة',style:Theme.of(context).textTheme.titleMedium),
         const SizedBox(height:8),
+        if(widget.batchGateway!=null) ...[
+          Text('حدد عمليات الطرف الآخر المراد اتخاذ قرار جماعي بشأنها. الحد 50.',
+            style:TextStyle(color:palette.onSurfaceVariant)),
+          if(_selectedForBatch.isNotEmpty)Wrap(spacing:8,children:[
+            FilledButton(key:const Key('fin14_operation_batch_accept'),
+              onPressed:_acting?null:()=>_batchDecide(true),
+              child:Text('اعتماد المحدد ('+_selectedForBatch.length.toString()+')')),
+            OutlinedButton(key:const Key('fin14_operation_batch_reject'),
+              onPressed:_acting?null:()=>_batchDecide(false),
+              child:const Text('رفض المحدد')),
+          ]),
+          const SizedBox(height:8),
+        ],
         if(_operations.isEmpty && !_loading && _error==null)
           const Text('لا توجد عمليات جديدة في هذه العلاقة.'),
         for(final op in _operations.where((x)=>x.currency==_currency)) Card(
@@ -315,6 +399,17 @@ class _Fin13RelationshipLedgerScreenState extends State<Fin13RelationshipLedgerS
               if(op.approvalMethod=='delegated_policy')
                 const Text('اعتماد آلي بتفويض العميل'),
               if(op.description!=null)Text(op.description!),
+              if(op.pending && op.createdBy!=widget.actorId && widget.batchGateway!=null)
+                CheckboxListTile(
+                  key:Key('fin14_select_operation_'+op.id),
+                  title:const Text('تحديد للمراجعة الجماعية'),
+                  value:_selectedForBatch.contains(op.id),
+                  onChanged:_acting?null:(checked){setState((){
+                    if(checked==true&&_selectedForBatch.length<50){
+                      _selectedForBatch.add(op.id);
+                    }else if(checked==false){_selectedForBatch.remove(op.id);}
+                  });},
+                ),
               if(op.pending && op.createdBy!=widget.actorId && !_acting)
                 Row(children:[
                   TextButton(onPressed:()=>_decide(op,true),child:const Text('موافقة')),
