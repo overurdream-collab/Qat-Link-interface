@@ -85,7 +85,7 @@ export class FinancialLedgerService {
 
   async activeAllocationAmount(c,movementId) {
     const q=await c.query([
-      'SELECT COALESCE(SUM(CASE WHEN action=\\'allocate\\' THEN amount ELSE -amount END),0)::text AS amount',
+      'SELECT COALESCE(SUM(CASE WHEN action=\'allocate\' THEN amount ELSE -amount END),0)::text AS amount',
       'FROM financial_payment_allocation_entries',
       'WHERE payment_movement_id=$1 OR debt_movement_id=$1'
     ].join(' '),[movementId]);
