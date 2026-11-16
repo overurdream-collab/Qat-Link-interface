@@ -42,4 +42,6 @@ jobs:
         run: psql -v ON_ERROR_STOP=1 -h 127.0.0.1 -U fin08 -d qatlink_test -f sql/001_fin08.sql
       - name: Apply FIN13 additive ledger migration
         run: psql -v ON_ERROR_STOP=1 -h 127.0.0.1 -U fin08 -d qatlink_test -f sql/002_fin13_unified_ledger.sql
+      - name: Apply FIN15 claim-adjustment migration
+        run: psql -v ON_ERROR_STOP=1 -h 127.0.0.1 -U fin08 -d qatlink_test -f sql/003_fin15_claim_adjustments.sql
       - run: npm test
