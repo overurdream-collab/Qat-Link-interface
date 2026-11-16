@@ -18,7 +18,7 @@ abstract final class Fin08PendingStatement {
     final fractionalDigits = raw.length - separator - 1;
     return fractionalDigits >= 2
         ? raw
-        : '${raw}${'0' * (2 - fractionalDigits)}';
+        : '${raw.substring(0, separator + 1)}${raw.substring(separator + 1).padRight(2, '0')}';
   }
 
   static String compose({
