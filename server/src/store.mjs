@@ -341,7 +341,7 @@ export class Fin08Store {
     // are historic merchant claims only, never the complete ledger balance.
     const {rows}=await this.pool.query([
       'WITH classified AS (SELECT cl.currency,cl.amount,cl.operation_type,',
-      'd.decision,fm.id AS movement_id,',
+      'd.decision,fm.id AS movement_id,fm.amount AS posted_amount,fm.type AS posted_type,',
       'EXISTS (SELECT 1 FROM verified_contact_links vl',
       'JOIN merchant_contacts c ON c.merchant_id=vl.merchant_id AND c.id=vl.contact_id',
       'JOIN customer_phone_evidence ev ON ev.proof_reference=vl.proof_reference',
@@ -363,10 +363,10 @@ export class Fin08Store {
       'AND joined AND operation_type=\'debt\' THEN amount ELSE 0 END),0)::text AS awaiting_customer_or_relationship,',
       'COALESCE(SUM(CASE WHEN movement_id IS NULL AND decision IS DISTINCT FROM \'reject\'',
       'AND joined AND operation_type=\'payment\' THEN amount ELSE 0 END),0)::text AS awaiting_payments,',
-      'COALESCE(SUM(CASE WHEN movement_id IS NOT NULL AND operation_type=\'debt\'',
-      'THEN amount ELSE 0 END),0)::text AS approved_from_claims,',
-      'COALESCE(SUM(CASE WHEN movement_id IS NOT NULL AND operation_type=\'payment\'',
-      'THEN amount ELSE 0 END),0)::text AS approved_payments_from_claims',
+      'COALESCE(SUM(CASE WHEN movement_id IS NOT NULL AND posted_type=\'debt\'',
+      'THEN posted_amount ELSE 0 END),0)::text AS approved_from_claims,',
+      'COALESCE(SUM(CASE WHEN movement_id IS NOT NULL AND posted_type=\'payment\'',
+      'THEN posted_amount ELSE 0 END),0)::text AS approved_payments_from_claims',
       'FROM classified GROUP BY currency ORDER BY currency'
     ].join(' '),[actor.id]);
     return {currencies:rows,approved_scope:'pre_registration_claims_only_not_full_ledger'};
