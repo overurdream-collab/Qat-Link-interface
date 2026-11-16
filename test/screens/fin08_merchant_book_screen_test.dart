@@ -5,6 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:qat_link/models/app_models.dart';
 import 'package:qat_link/screens/fin08_merchant_book_screen.dart';
 import 'package:qat_link/services/fin08_api_client.dart';
+import 'package:qat_link/services/fin15_claim_adjustment_gateway.dart';
 
 class MerchantGatewayFake implements Fin08ClaimsGateway {
   final contact=Fin08MerchantContact(
@@ -80,6 +81,31 @@ class MultiPageStatementGateway extends MerchantGatewayFake {
         amount:Decimal.parse('7'),currency:CurrencyCode.usd,
         stage:Fin08Stage.acceptedAwaitingRelationship,createdAt:DateTime.utc(2026,11,16)),
     ],null);
+  }
+}
+
+class PendingAdjustmentMerchantGateway extends MerchantGatewayFake {
+  @override
+  Future<Fin08Page<Fin08MerchantClaim>> merchantClaims(String contactId,{String? cursor,int limit=50}) async =>
+    Fin08Page([Fin08MerchantClaim(id:'pending-change',contactId:contactId,
+      amount:Decimal.parse('20000'),currency:CurrencyCode.yer,
+      createdAt:DateTime.utc(2026,11,16),
+      stage:Fin08Stage.awaitingMerchantAdjustment,
+      proposedAmount:Decimal.parse('15000'),pendingAdjustmentId:'adjustment-id')],null);
+}
+class FakeMerchantAdjustment implements Fin15ClaimAdjustmentGateway {
+  int decisions=0;
+  bool? accepted;
+  @override
+  Future<Fin15AdjustmentReceipt> request(String id,{required Decimal proposedAmount,
+    required String reason}) async =>throw UnimplementedError();
+  @override
+  Future<Fin15AdjustmentReceipt> decide(String id,{required bool accept}) async {
+    decisions++;
+    accepted=accept;
+    return Fin15AdjustmentReceipt(id:id,status:accept?'accepted':'rejected',
+      replayed:false,sourceClaimId:'pending-change',
+      replacementClaimId:accept?'new-unapproved':null);
   }
 }
 
@@ -187,6 +213,28 @@ void main(){
     await tester.pumpAndSettle();
     expect(api.attempts,2);
     expect(api.lastType,MovementType.payment);
+  });
+
+  testWidgets('FIN-15 merchant accepts proposed amount only after dialog, replacement stays pending', (tester) async {
+    final claims=PendingAdjustmentMerchantGateway();
+    final adjustment=FakeMerchantAdjustment();
+    await tester.pumpWidget(MaterialApp(home:Fin08MerchantBookScreen(
+      gateway:claims,adjustmentGateway:adjustment)));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('fin08_contact_contact-1')));
+    await tester.pumpAndSettle();
+    final menu=find.byKey(const Key('fin15_merchant_adjustment_pending-change'));
+    await tester.ensureVisible(menu);
+    await tester.tap(menu);
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('قبول التعديل'));
+    await tester.pumpAndSettle();
+    expect(adjustment.decisions,0);
+    expect(find.textContaining('15000'),findsWidgets);
+    await tester.tap(find.byKey(const Key('fin15_confirm_merchant_adjustment')));
+    await tester.pumpAndSettle();
+    expect(adjustment.decisions,1);
+    expect(adjustment.accepted,true);
   });
 
 }
