@@ -82,6 +82,24 @@ class MultiPageStatementGateway extends MerchantGatewayFake {
 }
 
 void main(){
+  // The widget test does not use the device clipboard plugin. Capture calls
+  // synchronously via the platform channel and prove failed pagination never
+  // publishes a partial financial statement.
+  String? capturedStatement;
+  setUp(() {
+    capturedStatement = null;
+    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+        .setMockMethodCallHandler(SystemChannels.platform, (call) async {
+      if (call.method == 'Clipboard.setData') {
+        capturedStatement = (call.arguments as Map)['text'] as String?;
+      }
+      return null;
+    });
+  });
+  tearDown(() {
+    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+        .setMockMethodCallHandler(SystemChannels.platform, null);
+  });
   testWidgets('restores merchant contacts and shows pending amounts as non-approved', (tester) async {
     final api=MerchantGatewayFake();
     await tester.pumpWidget(MaterialApp(home:Fin08MerchantBookScreen(gateway:api)));
@@ -125,8 +143,7 @@ void main(){
     expect(find.textContaining('راجع رقم المستلم'),findsWidgets);
     await tester.tap(find.byKey(const Key('fin11_confirm_copy_pending')));
     await tester.pumpAndSettle();
-    final copied=await Clipboard.getData(Clipboard.kTextPlain);
-    final contents=copied?.text ?? '';
+    final contents=capturedStatement ?? '';
     expect(contents,contains('معلقة وغير معتمدة'));
     expect(contents,contains('مجموع المبالغ المعلقة (YER): 120.00'));
     expect(contents,contains('مجموع المبالغ المعلقة (USD): 7'));
@@ -136,7 +153,6 @@ void main(){
 
   testWidgets('failed subsequent page does not replace clipboard with incomplete statement', (tester) async {
     final api=MultiPageStatementGateway();
-    await Clipboard.setData(const ClipboardData(text:'clipboard remains unchanged'));
     await tester.pumpWidget(MaterialApp(home:Fin08MerchantBookScreen(gateway:api)));
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const Key('fin08_contact_contact-1')));
@@ -147,8 +163,7 @@ void main(){
     await tester.tap(find.byKey(const Key('fin11_confirm_copy_pending')));
     await tester.pumpAndSettle();
     expect(find.textContaining('تعذر قراءة الصفحة الثانية'),findsOneWidget);
-    final previous=await Clipboard.getData(Clipboard.kTextPlain);
-    expect(previous?.text,'clipboard remains unchanged');
+    expect(capturedStatement,isNull,reason:'Never copy a partial or unverified statement');
   });
 
 }
