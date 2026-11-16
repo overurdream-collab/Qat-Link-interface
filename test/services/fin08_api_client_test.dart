@@ -111,7 +111,7 @@ void main() {
               'decided_at':null,
             }],
             'next_cursor':null,
-          }),200);
+          }),200,headers:{'content-type':'application/json; charset=utf-8'});
         }
         expect(request.method,'POST');
         expect(request.url.path,'/v1/customer/relationships/rel-one/decision');
