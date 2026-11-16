@@ -52,8 +52,8 @@ export class Fin15AmendmentService {
       'SELECT 1 FROM customer_claim_decisions WHERE claim_id=$1',
       'UNION ALL SELECT 1 FROM financial_movements WHERE source_claim_id=$1',
       'UNION ALL SELECT 1 FROM financial_amendment_requests',
-      'WHERE original_claim_id=$1 AND status=\\'pending\\' LIMIT 1'
-    ].join(' ').replaceAll("\\'","'"),[id]);
+      'WHERE original_claim_id=$1 AND status=\'pending\' LIMIT 1'
+    ].join(' ').replaceAll("\'","'"),[id]);
     if(q.rowCount)throw conflict('Claim was decided, posted or is being amended');
   }
 
@@ -213,24 +213,24 @@ export class Fin15AmendmentService {
           [original.id,claimId]);
         await c.query([
           'INSERT INTO customer_claim_decisions(claim_id,merchant_id,customer_id,decision)',
-          'VALUES($1,$2,$3,\\'accept\\')'
-        ].join(' ').replaceAll("\\'","'"),[claimId,original.merchant_id,amendment.customer_id]);
+          'VALUES($1,$2,$3,\'accept\')'
+        ].join(' ').replaceAll("\'","'"),[claimId,original.merchant_id,amendment.customer_id]);
         await this.store.audit(c,amendment.customer_id,'merchant_claim',claimId,
           'customer_consented_by_amount_amendment_request',{amendment_id:id});
       }else{
         operationId=randomUUID();
         const digest=hash(['fin15 replacement',id,meta.original_operation_id,amendment.new_money]);
         await c.query([
-          'UPDATE relationship_operations SET status=\\'superseded\\' WHERE id=$1'
-        ].join(' ').replaceAll("\\'","'"),[original.id]);
+          'UPDATE relationship_operations SET status=\'superseded\' WHERE id=$1'
+        ].join(' ').replaceAll("\'","'"),[original.id]);
         await c.query([
           'INSERT INTO relationship_operations',
           '(id,relationship_id,merchant_id,customer_id,created_by,created_by_role,',
           'operation_type,amount,currency,description,occurred_at,status,',
           'decided_by,decided_at,approval_method,idempotency_key,request_digest,replaces_operation_id)',
-          'VALUES($1,$2,$3,$4,$5,\\'merchant\\',\\'debt\\',$6::numeric,$7,$8,$9,',
-          '\\'approved\\',$4,clock_timestamp(),\\'manual\\',$10,$11,$12)'
-        ].join(' ').replaceAll("\\'","'"),[
+          'VALUES($1,$2,$3,$4,$5,\'merchant\',\'debt\',$6::numeric,$7,$8,$9,',
+          '\'approved\',$4,clock_timestamp(),\'manual\',$10,$11,$12)'
+        ].join(' ').replaceAll("\'","'"),[
           operationId,original.relationship_id,original.merchant_id,
           original.customer_id,original.created_by,amendment.new_money,
           original.currency,original.description,original.occurred_at,
@@ -240,10 +240,10 @@ export class Fin15AmendmentService {
           'customer_consented_by_amount_amendment_request',{amendment_id:id});
       }
       const updated=await c.query([
-        'UPDATE financial_amendment_requests SET status=\\'accepted\\',decided_at=clock_timestamp(),',
+        'UPDATE financial_amendment_requests SET status=\'accepted\',decided_at=clock_timestamp(),',
         'decided_by=$2,replacement_claim_id=$3,replacement_operation_id=$4 WHERE id=$1',
         'RETURNING *,original_amount::text AS old_money,proposed_amount::text AS new_money'
-      ].join(' ').replaceAll("\\'","'"),[id,actor.id,claimId,operationId]);
+      ].join(' ').replaceAll("\'","'"),[id,actor.id,claimId,operationId]);
       await this.store.audit(c,actor.id,'financial_amendment',id,
         'merchant_accepted_customer_amount_proposal',{replacement_claim_id:claimId,
           replacement_operation_id:operationId});
