@@ -97,11 +97,11 @@ export class FinancialLedgerService {
     }
     return this.store.tx(async c=>{
       const rel=await this.relationship(c,actor,id,{lock:true,write:true});
-      const prior=await c.query('SELECT id,status,request_digest FROM relationship_operations WHERE created_by=$1 AND idempotency_key=$2',
+      const prior=await c.query('SELECT o.id,o.status,o.request_digest,fm.id AS movement_id FROM relationship_operations o LEFT JOIN financial_movements fm ON fm.source_operation_id=o.id WHERE o.created_by=$1 AND o.idempotency_key=$2',
         [actor.id,idempotency]);
       if(prior.rowCount){
         if(prior.rows[0].request_digest!==requestDigest) throw conflict('Idempotency-Key reused with different operation');
-        return {operation_id:prior.rows[0].id,status:prior.rows[0].status,replayed:true,ledger_posted:false};
+        return {operation_id:prior.rows[0].id,status:prior.rows[0].status,replayed:true,ledger_posted:prior.rows[0].movement_id!=null};
       }
       if(rel.status!=='approved') throw conflict('An approved relationship is required');
       const policy=await c.query('SELECT enabled,version FROM relationship_auto_approval_policies WHERE relationship_id=$1',
@@ -214,7 +214,7 @@ export class FinancialLedgerService {
     const requestDigest=digest([relId,'reversal',movementId,reason]);
     return this.store.tx(async c=>{
       const rel=await this.relationship(c,actor,relId,{lock:true,write:true});
-      const prior=await c.query('SELECT id,status,request_digest FROM relationship_operations WHERE created_by=$1 AND idempotency_key=$2',
+      const prior=await c.query('SELECT o.id,o.status,o.request_digest,fm.id AS movement_id FROM relationship_operations o LEFT JOIN financial_movements fm ON fm.source_operation_id=o.id WHERE o.created_by=$1 AND o.idempotency_key=$2',
         [actor.id,idempotency]);
       if(prior.rowCount){
         if(prior.rows[0].request_digest!==requestDigest) throw conflict('Idempotency-Key reused with different reversal');
