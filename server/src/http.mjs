@@ -86,6 +86,18 @@ export function createApi({store,verify}) {
       if(method==='POST' && relationship){
         requireRole(actor,'customer');return json(res,200,await store.decideRelationship(actor,relationship[1],body));
       }
+      // FIN-15: customer proposals have no financial effect; the merchant may
+      // accept a proposed replacement only as a NEW unapproved claim.
+      const claimAdjustment=path.match(/^\/v1\/customer\/previous-claims\/([\w-]+)\/amount-adjustment$/);
+      if(method==='POST' && claimAdjustment){
+        requireRole(actor,'customer');
+        return json(res,201,await store.adjustments.request(actor,claimAdjustment[1],body));
+      }
+      const merchantAdjustment=path.match(/^\/v1\/merchant\/claim-adjustments\/([\w-]+)\/decision$/);
+      if(method==='POST' && merchantAdjustment){
+        requireRole(actor,'merchant');
+        return json(res,200,await store.adjustments.decide(actor,merchantAdjustment[1],body));
+      }
       // FIN-13: one authoritative APPROVED ledger for both legacy claims and
       // registered two-party requests. All identities come from JWT.
       if(method==='POST' && path==='/v1/customer/previous-claims/batch-decisions'){
