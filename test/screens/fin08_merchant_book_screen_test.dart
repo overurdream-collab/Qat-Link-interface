@@ -7,6 +7,10 @@ import 'package:qat_link/screens/fin08_merchant_book_screen.dart';
 import 'package:qat_link/services/fin08_api_client.dart';
 
 class MerchantGatewayFake implements Fin08ClaimsGateway {
+  @override
+  Future<Fin08BatchReceipt> decidePreviousClaimsBatch(List<String> claimIds,{required bool accept}) async =>
+    throw UnimplementedError('Only customer-batch fake implements the new operation');
+
   final contact=Fin08MerchantContact(
     id:'contact-1',name:'عميل التاجر',phone:'+967771234567',
     createdAt:DateTime.utc(2026,11,16));
