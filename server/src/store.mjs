@@ -3,6 +3,7 @@ import { listMerchantContacts, listMerchantContactClaims } from './merchant_read
 import { listCustomerRelationships } from './customer_relationships.mjs';
 import { FinancialLedgerService } from './ledger.mjs';
 import { Fin14BatchService } from './batch.mjs';
+import { Fin15ClaimAdjustments } from './claim_adjustments.mjs';
 import { ApiError, assertText, claimDigest, currency, decision, idempotencyKey, money, normalizePhone, page, uuid, encodeCursor, decodeCursor } from './validation.mjs';
 
 const conflict = (message) => new ApiError(409, 'conflict', message);
@@ -26,6 +27,7 @@ export class Fin08Store {
     this.cursorSecret = cursorSecret;
     this.ledger = new FinancialLedgerService(this);
     this.batch = new Fin14BatchService(this);
+    this.adjustments = new Fin15ClaimAdjustments(this);
   }
   async tx(fn) {
     const c = await this.pool.connect();
@@ -202,8 +204,10 @@ export class Fin08Store {
     const snapshot = parsed?.snapshot ?? (await this.pool.query('SELECT clock_timestamp()::text AS captured_at')).rows[0].captured_at;
     const {rows} = await this.pool.query(`SELECT cl.id,cl.merchant_id,mp.verified_display_name AS merchant_display_name,
         cl.contact_id,cl.amount::text,cl.currency,cl.operation_type AS type,cl.description,cl.created_at,
+        cl.occurred_at,cl.source_claim_id,cl.superseded_by_claim_id,
         cl.created_at::text AS cursor_created_at,
-        d.decision, r.status AS relationship_status, fm.id AS movement_id
+        d.decision, r.status AS relationship_status, fm.id AS movement_id,
+        adjustment.id AS pending_adjustment_id,adjustment.proposed_amount::text AS proposed_amount
       FROM merchant_claims cl
       JOIN merchant_contacts c ON c.id=cl.contact_id AND c.merchant_id=cl.merchant_id
       ${verifiedJoin}
@@ -211,6 +215,7 @@ export class Fin08Store {
       LEFT JOIN customer_claim_decisions d ON d.claim_id=cl.id AND d.customer_id=vl.customer_id
       LEFT JOIN merchant_relationships r ON r.merchant_id=cl.merchant_id AND r.customer_id=vl.customer_id
       LEFT JOIN financial_movements fm ON fm.source_claim_id=cl.id AND fm.customer_id=vl.customer_id
+      LEFT JOIN customer_claim_adjustment_requests adjustment ON adjustment.claim_id=cl.id AND adjustment.status='pending'
       WHERE vl.customer_id=$1 AND cl.created_at <= $2::timestamptz
         AND ($3::timestamptz IS NULL OR (cl.created_at,cl.id)<($3::timestamptz,$4::uuid))
       ORDER BY cl.created_at DESC,cl.id DESC LIMIT $5`,
@@ -219,7 +224,10 @@ export class Fin08Store {
     const items=rows.slice(0,count).map(row=>({
       claim_id:row.id,merchant_id:row.merchant_id,merchant_display_name:row.merchant_display_name,
       amount:row.amount,currency:row.currency,type:row.type,description:row.description,created_at:row.created_at,
-      stage:row.movement_id ? 'approved' : row.decision==='reject' ? 'rejected' :
+      occurred_at:row.occurred_at,source_claim_id:row.source_claim_id,
+      pending_adjustment_id:row.pending_adjustment_id,proposed_amount:row.proposed_amount,
+      stage:row.movement_id ? 'approved' : row.superseded_by_claim_id ? 'superseded' :
+        row.pending_adjustment_id ? 'awaiting_merchant_adjustment' : row.decision==='reject' ? 'rejected' :
         row.decision==='accept' && row.relationship_status==='approved' ? 'accepted_awaiting_posting' :
         row.decision==='accept' ? 'accepted_awaiting_relationship' : 'awaiting_review'
     }));
@@ -227,13 +235,19 @@ export class Fin08Store {
     const nextCursor=hasNext ? encodeCursor({scope:'customer_previous_claims',actor:actor.id,snapshot,createdAt:last.cursor_created_at,id:last.id},this.cursorSecret):null;
     return {items,next_cursor:nextCursor};
   }
-  async ensureEligible(c,claimId,customerId) {
-    const {rows}=await c.query(`SELECT cl.id,cl.merchant_id,cl.contact_id,cl.amount,cl.currency
+  async ensureEligible(c,claimId,customerId,{allowAdjustment=false}={}) {
+    const {rows}=await c.query(`SELECT cl.id,cl.merchant_id,cl.contact_id,cl.amount,cl.currency,
+      cl.superseded_by_claim_id,cl.operation_type
       FROM merchant_claims cl
       JOIN merchant_contacts c ON c.id=cl.contact_id AND c.merchant_id=cl.merchant_id
       ${verifiedJoin}
       WHERE cl.id=$1 AND vl.customer_id=$2 FOR UPDATE OF cl`,[claimId,customerId]);
     if (!rows.length) throw missing();
+    if(rows[0].superseded_by_claim_id) throw conflict('This claim was replaced by a new request');
+    if(!allowAdjustment){
+      const active=await c.query("SELECT 1 FROM customer_claim_adjustment_requests WHERE claim_id=$1 AND status='pending'",[claimId]);
+      if(active.rowCount) throw conflict('Amount change awaits merchant decision');
+    }
     return rows[0];
   }
   async postClaim(c,claimId,actorId) {
@@ -248,9 +262,9 @@ export class Fin08Store {
         AND r.customer_id=d.customer_id AND r.status='approved'
       JOIN merchant_contacts c ON c.id=cl.contact_id AND c.merchant_id=cl.merchant_id
       ${verifiedJoin}
-      WHERE cl.id=$1 AND vl.customer_id=d.customer_id
+      WHERE cl.id=$1 AND vl.customer_id=d.customer_id AND cl.superseded_by_claim_id IS NULL
       ON CONFLICT (source_claim_id) DO NOTHING RETURNING id`,[claimId,randomUUID()]);
-    if (rows.length) await this.audit(c,actorId,'merchant_claim',claimId,'posted_once_as_approved_debt');
+    if (rows.length) await this.audit(c,actorId,'merchant_claim',claimId,'posted_once_as_approved_movement');
     return rows.length>0;
   }
   async decideClaim(actor, claimId, body) {
@@ -355,7 +369,7 @@ export class Fin08Store {
       'FROM merchant_claims cl',
       'LEFT JOIN customer_claim_decisions d ON d.claim_id=cl.id',
       'LEFT JOIN financial_movements fm ON fm.source_claim_id=cl.id',
-      'WHERE cl.merchant_id=$1)',
+      'WHERE cl.merchant_id=$1 AND cl.superseded_by_claim_id IS NULL)',
       'SELECT currency,',
       'COALESCE(SUM(CASE WHEN movement_id IS NULL AND decision IS DISTINCT FROM \'reject\'',
       'AND NOT joined AND operation_type=\'debt\' THEN amount ELSE 0 END),0)::text AS outside_app,',
