@@ -65,12 +65,12 @@ export class Fin08Store {
       const id = randomUUID();
       const {rows} = await c.query(`INSERT INTO merchant_contacts(id,merchant_id,display_name,normalized_phone)
         VALUES($1,$2,$3,$4) RETURNING id,display_name AS name,normalized_phone AS phone,created_at`,[id,actor.id,displayName,phone]);
-      await this.reconcilePhone(c, phone);
+      await this.reconcilePhone(c, phone, actor.id);
       await this.audit(c, actor.id, 'merchant_contact', id, 'created');
       return rows[0];
     });
   }
-  async reconcilePhone(c, phone) {
+  async reconcilePhone(c, phone, actorId) {
     // An owner change is NEVER automatic. Refresh a stale proof only when the
     // same verified customer remains the sole current owner of this number.
     await c.query(`INSERT INTO verified_contact_links(merchant_id,contact_id,customer_id,proof_reference)
@@ -88,6 +88,25 @@ export class Fin08Store {
             WHERE old.proof_reference=verified_contact_links.proof_reference
               AND old.revoked_at IS NULL
           )`,[phone]);
+    // A private merchant contact is a declaration, not an approved relationship.
+    // Only a uniquely verified account may receive a pending relationship request.
+    const invitations=await c.query(`INSERT INTO merchant_relationships
+      (id,merchant_id,customer_id,contact_id)
+      SELECT gen_random_uuid(),vl.merchant_id,vl.customer_id,vl.contact_id
+      FROM verified_contact_links vl
+      JOIN merchant_contacts mc ON mc.id=vl.contact_id AND mc.merchant_id=vl.merchant_id
+      JOIN customer_phone_evidence proof ON proof.proof_reference=vl.proof_reference
+        AND proof.customer_id=vl.customer_id AND proof.normalized_phone=mc.normalized_phone
+        AND proof.revoked_at IS NULL
+      WHERE mc.normalized_phone=$1
+        AND (SELECT COUNT(DISTINCT e.customer_id) FROM customer_phone_evidence e
+          WHERE e.normalized_phone=mc.normalized_phone AND e.revoked_at IS NULL)=1
+      ON CONFLICT (merchant_id,customer_id) DO NOTHING
+      RETURNING id,merchant_id,customer_id`,[phone]);
+    for(const item of invitations.rows) {
+      await this.audit(c,actorId,'relationship',item.id,'pending_invitation_created_from_verified_contact',
+        {merchant_id:item.merchant_id,customer_id:item.customer_id});
+    }
   }
   async createClaim(actor, body, requestKey) {
     const contactId = uuid(body.contact_id, 'contact_id');
@@ -128,7 +147,7 @@ export class Fin08Store {
         const prior = await c.query('SELECT customer_id,normalized_phone FROM customer_phone_evidence WHERE proof_reference=$1',[proofRef]);
         if (!prior.rowCount || prior.rows[0].customer_id!==customerId || prior.rows[0].normalized_phone!==phone) throw conflict('Proof reference already assigned');
       } else await this.audit(c,actor.id,'phone_proof',proofRef,'verified_evidence_added',{customer_id:customerId});
-      await this.reconcilePhone(c,phone);
+      await this.reconcilePhone(c,phone,actor.id);
       const owners = await c.query(`SELECT COUNT(DISTINCT customer_id)::int AS count FROM customer_phone_evidence
         WHERE normalized_phone=$1 AND revoked_at IS NULL`,[phone]);
       return { linked: Number(owners.rows[0].count)===1, conflict: Number(owners.rows[0].count)!==1 };
@@ -232,10 +251,50 @@ export class Fin08Store {
       const customerId=rows[0].customer_id;
       const saved=await c.query(`INSERT INTO merchant_relationships(id,merchant_id,customer_id,contact_id)
         VALUES($1,$2,$3,$4) ON CONFLICT(merchant_id,customer_id) DO NOTHING RETURNING id,status`,[randomUUID(),actor.id,customerId,contactId]);
-      if (!saved.rowCount) throw conflict('Relationship already exists for this customer');
+      // Historical verified contacts already create pending invitations.
+      // Repeating a request must not recreate or reset accepted/rejected links.
+      if(!saved.rowCount) {
+        const prior=await c.query(
+          'SELECT id,status FROM merchant_relationships WHERE merchant_id=$1 AND customer_id=$2',
+          [actor.id,customerId]);
+        if(!prior.rowCount) throw conflict('Relationship could not be created');
+        return {relationship_id:prior.rows[0].id,status:prior.rows[0].status,already_exists:true};
+      }
       await this.audit(c,actor.id,'relationship',saved.rows[0].id,'merchant_requested');
-      return {relationship_id:saved.rows[0].id,status:'pending'};
+      return {relationship_id:saved.rows[0].id,status:'pending',already_exists:false};
     });
+  }
+  async customerRelationships(actor, {limit,cursor}) {
+    const count=page(limit);
+    const parsed=decodeCursor(cursor,this.cursorSecret);
+    if(parsed && (parsed.scope!=='customer_relationships' || parsed.actor!==actor.id)) {
+      throw new ApiError(422,'invalid_input','Cursor is not valid for this customer');
+    }
+    const snapshot=parsed?.snapshot ?? new Date().toISOString();
+    const {rows}=await this.pool.query(`SELECT r.id,r.merchant_id,
+        mp.verified_display_name AS merchant_display_name,
+        r.status,r.created_at,r.decided_at
+      FROM merchant_relationships r
+      JOIN merchant_contacts c ON c.id=r.contact_id AND c.merchant_id=r.merchant_id
+      ${verifiedJoin}
+      JOIN merchant_profiles mp ON mp.merchant_id=r.merchant_id
+      WHERE r.customer_id=$1 AND vl.customer_id=r.customer_id
+        AND r.created_at<=$2::timestamptz
+        AND ($3::timestamptz IS NULL OR (r.created_at,r.id)<($3::timestamptz,$4::uuid))
+      ORDER BY r.created_at DESC,r.id DESC LIMIT $5`,
+      [actor.id,snapshot,parsed?.createdAt??null,parsed?.id??null,count+1]);
+    const hasNext=rows.length>count;
+    const items=rows.slice(0,count).map(row=>({
+      relationship_id:row.id,merchant_id:row.merchant_id,
+      merchant_display_name:row.merchant_display_name,
+      status:row.status,created_at:row.created_at,decided_at:row.decided_at,
+    }));
+    const last=rows[count-1];
+    const next_cursor=hasNext?encodeCursor({
+      scope:'customer_relationships',actor:actor.id,snapshot,
+      createdAt:new Date(last.created_at).toISOString(),id:last.id
+    },this.cursorSecret):null;
+    return {items,next_cursor};
   }
   async decideRelationship(actor, relationshipId, body) {
     const id=uuid(relationshipId,'relationship_id');
