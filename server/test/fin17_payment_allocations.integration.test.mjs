@@ -4,6 +4,12 @@ import { randomUUID } from 'node:crypto';
 import { Fin08Store } from '../src/store.mjs';
 
 const url=process.env.FIN08_TEST_DATABASE_URL;
+function adenToday(){
+  const parts=Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Aden',
+    year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());
+  const get=x=>parts.find(p=>p.type===x).value;
+  return get('year')+'-'+get('month')+'-'+get('day');
+}
 
 test('FIN-17 PostgreSQL: bilateral allocations, unallocated credit, releases and reversal traceability',
   {skip:!url},async()=>{
@@ -26,6 +32,16 @@ test('FIN-17 PostgreSQL: bilateral allocations, unallocated credit, releases and
       await store.decideRelationship(customer,rel.relationship_id,{decision:'accept'});
       await store.decideClaim(customer,debt.id,{decision:'accept'});
       await store.decideClaim(customer,payment.id,{decision:'accept'});
+      const pendingDebt=(await store.createClaim(merchant,{contact_id:contact.id,amount:'5.25',currency:'YER',type:'debt'},key('pending-debt'))).claim;
+      const pendingPayment=await store.ledger.createOperation(customer,rel.relationship_id,
+        {type:'payment',amount:'7.50',currency:'YER'},key('pending-payment'));
+      assert.equal(pendingPayment.status,'pending');
+      const pendingStatement=await store.ledger.pendingStatement(merchant,rel.relationship_id,
+        {currency:'YER',from:adenToday(),to:adenToday()});
+      assert.equal(pendingStatement.pending_debts,'5.2500');
+      assert.equal(pendingStatement.pending_payments,'7.5000');
+      assert.equal(pendingStatement.items.length,2);
+      assert.equal(pendingStatement.scope,'unapproved_requests_only_not_an_account_balance');
       const movements=(await pool.query(
         'SELECT id,type FROM financial_movements WHERE relationship_id=$1',[rel.relationship_id])).rows;
       const debtMovement=movements.find(x=>x.type==='debt').id;
