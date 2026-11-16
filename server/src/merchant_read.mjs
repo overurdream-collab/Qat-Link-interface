@@ -51,6 +51,8 @@ export async function listMerchantContactClaims(pool, secret, actor, contactId, 
     SELECT cl.id,cl.contact_id,cl.amount::text,cl.currency,cl.operation_type AS type,cl.description,cl.created_at,
       cl.created_at::text AS cursor_created_at,
       d.decision, r.status AS relationship_status, fm.id AS movement_id,
+      cl.superseded_by_claim_id,
+      EXISTS(SELECT 1 FROM financial_amendment_requests ar WHERE ar.original_claim_id=cl.id AND ar.status='pending') AS amendment_pending,
       (ev.id IS NOT NULL AND
         (SELECT COUNT(DISTINCT proof.customer_id) FROM customer_phone_evidence proof
          WHERE proof.normalized_phone=mc.normalized_phone AND proof.revoked_at IS NULL)=1) AS verified
@@ -71,7 +73,9 @@ export async function listMerchantContactClaims(pool, secret, actor, contactId, 
   return packPage(rows,count,snapshot,secret,actor,scope,row=>({
     claim_id:row.id,contact_id:row.contact_id,amount:row.amount,currency:row.currency,type:row.type,
     description:row.description,created_at:row.created_at,
-    stage: row.movement_id ? 'approved' :
+    stage: row.superseded_by_claim_id ? 'superseded' :
+      row.amendment_pending ? 'amendment_pending' :
+      row.movement_id ? 'approved' :
       row.decision==='reject' ? 'rejected' :
       !row.verified ? 'outside_app' :
       row.decision==='accept' && row.relationship_status==='approved' ? 'accepted_awaiting_posting' :
