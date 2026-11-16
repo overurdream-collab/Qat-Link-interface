@@ -7,15 +7,18 @@ import '../models/app_models.dart';
 import '../services/fin08_api_client.dart';
 import '../services/fin13_ledger_gateway.dart';
 import '../services/fin14_batch_gateway.dart';
+import '../services/fin15_amendment_gateway.dart';
+import 'fin15_amendments_screen.dart';
 
 /// Authenticated FIN-13 ledger view. Only mount after trusted JWT login;
 /// tenant authorization and consent are ALWAYS checked by the server.
 class Fin13RelationshipLedgerScreen extends StatefulWidget {
   const Fin13RelationshipLedgerScreen({super.key,required this.gateway,
     required this.relationshipId,required this.actorId,required this.role,
-    this.batchGateway});
+    this.batchGateway,this.amendmentGateway});
   final Fin13LedgerGateway gateway;
   final Fin14BatchGateway? batchGateway;
+  final Fin15AmendmentGateway? amendmentGateway;
   final String relationshipId,actorId;
   final ParticipantRole role;
   @override
@@ -132,6 +135,24 @@ class _Fin13RelationshipLedgerScreenState extends State<Fin13RelationshipLedgerS
           ],
         )));
     if(saved==true&&mounted)await _load();
+  }
+
+  Future<void> _proposeDebtChange(Fin13Operation operation) async {
+    if(widget.amendmentGateway==null ||
+       widget.role!=ParticipantRole.customer ||
+       operation.type!=MovementType.debt || !operation.pending ||
+       operation.createdBy==widget.actorId || _acting || _loading)return;
+    final saved=await showDialog<bool>(context:context,
+      barrierDismissible:false,
+      builder:(_)=>Fin15AmountProposalDialog(
+        gateway:widget.amendmentGateway!,
+        relationshipId:widget.relationshipId,operationId:operation.id,
+        originalAmount:operation.amount,currency:operation.currency));
+    if(saved==true && mounted){
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content:Text('سُجل طلب تعديل مبلغ الدين، وينتظر قرار التاجر.')));
+      await _load();
+    }
   }
 
   Future<void> _decide(Fin13Operation operation,bool accept) async {
@@ -366,6 +387,21 @@ class _Fin13RelationshipLedgerScreenState extends State<Fin13RelationshipLedgerS
             icon:const Icon(Icons.receipt_long_outlined),
             label:const Text('كشف الحساب المعتمد')),
         ]),
+        if(widget.amendmentGateway!=null) ...[
+          const SizedBox(height:9),
+          OutlinedButton.icon(
+            key:const Key('fin15_relationship_amendments'),
+            onPressed:_loading?null:() async{
+              await Navigator.of(context).push(MaterialPageRoute<void>(
+                builder:(_)=>Fin15AmendmentsScreen(
+                  gateway:widget.amendmentGateway!,
+                  forMerchant:widget.role==ParticipantRole.merchant)));
+              if(mounted)await _load();
+            },
+            icon:const Icon(Icons.edit_note_outlined),
+            label:const Text('طلبات تعديل مبالغ الديون'),
+          ),
+        ],
         const SizedBox(height:18),
         Text('العمليات الجديدة والمعلقة',style:Theme.of(context).textTheme.titleMedium),
         const SizedBox(height:8),
@@ -394,11 +430,22 @@ class _Fin13RelationshipLedgerScreenState extends State<Fin13RelationshipLedgerS
               Text(switch(op.status){
                 'approved'=>'معتمد',
                 'rejected'=>'مرفوض',
-                _=>'معلق — بانتظار موافقة الطرف الآخر'
+                'superseded'=>'سجل أصلي مستبدل — لا يدخل الرصيد',
+                _=>op.amendmentPending?'بانتظار رد التاجر على تعديل المبلغ':'معلق — بانتظار موافقة الطرف الآخر'
               },style:TextStyle(color:palette.onSurfaceVariant)),
               if(op.approvalMethod=='delegated_policy')
                 const Text('اعتماد آلي بتفويض العميل'),
               if(op.description!=null)Text(op.description!),
+              if(widget.amendmentGateway!=null &&
+                 widget.role==ParticipantRole.customer &&
+                 op.pending && op.type==MovementType.debt &&
+                 op.createdBy!=widget.actorId)
+                OutlinedButton.icon(
+                  key:Key('fin15_amend_operation_'+op.id),
+                  icon:const Icon(Icons.edit_outlined),
+                  onPressed:()=>_proposeDebtChange(op),
+                  label:const Text('طلب تعديل المبلغ'),
+                ),
               if(op.pending && op.createdBy!=widget.actorId && widget.batchGateway!=null)
                 CheckboxListTile(
                   key:Key('fin14_select_operation_'+op.id),
