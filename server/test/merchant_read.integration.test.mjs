@@ -22,7 +22,7 @@ test('FIN-09 merchant restores private contacts and every claim stage without cr
       await store.onboardMerchant(identity,{ merchant_id: other.id,verified_display_name:'M Two' });
       const contact = await store.createContact(merchant,{ name:'Client Before App',phone });
       const another = await store.createContact(merchant,{ name:'Client No App',phone:otherPhone });
-      await store.createContact(other,{ name:'Foreign Client',phone });
+      const foreignContact = await store.createContact(other,{ name:'Foreign Client',phone });
       const a = (await store.createClaim(merchant,{ contact_id:contact.id,amount:'100.50',currency:'YER' },`fin09-${suffix}-a`)).claim;
       const b = (await store.createClaim(merchant,{ contact_id:contact.id,amount:'5.75',currency:'USD' },`fin09-${suffix}-b`)).claim;
       const c = (await store.createClaim(merchant,{ contact_id:another.id,amount:'300.00',currency:'SAR' },`fin09-${suffix}-c`)).claim;
@@ -54,6 +54,7 @@ test('FIN-09 merchant restores private contacts and every claim stage without cr
       assert.equal((await store.listContactClaims(merchant,contact.id,{})).items.find(x=>x.claim_id===b.id).stage,'rejected');
       await store.decideClaim(customer,a.id,{decision:'accept'});
       assert.equal((await store.listContactClaims(merchant,contact.id,{})).items.find(x=>x.claim_id===a.id).stage,'accepted_awaiting_relationship');
+      await store.requestRelationship(other,{contact_id:foreignContact.id});
       const relationship = await store.requestRelationship(merchant,{contact_id:contact.id});
       const requested=await store.listCustomerRelationships(customer,{limit:1});
       assert.equal(requested.items.length,1);
@@ -61,8 +62,12 @@ test('FIN-09 merchant restores private contacts and every claim stage without cr
       assert.equal(requested.items[0].status,'pending');
       assert.equal(requested.items[0].merchant_display_name,'M One');
       assert.equal((await store.listCustomerRelationships({id:'unrelated-customer',role:'customer'},{})).items.length,0);
+      assert.ok(requested.next_cursor);
+      const older=await store.listCustomerRelationships(customer,{limit:1,cursor:requested.next_cursor});
+      assert.equal(older.items.length,1);
+      assert.equal(older.items[0].merchant_id,other.id);
       await assert.rejects(()=>store.listCustomerRelationships({id:'unrelated-customer',role:'customer'},{
-        cursor: (await store.listCustomerRelationships(customer,{limit:1})).next_cursor ?? 'invalid-cursor'
+        limit:1,cursor:requested.next_cursor
       }),{status:422});
       await store.decideRelationship(customer,relationship.relationship_id,{decision:'accept'});
       assert.equal((await store.listCustomerRelationships(customer,{})).items[0].status,'approved');
