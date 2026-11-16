@@ -48,7 +48,7 @@ export async function listMerchantContactClaims(pool, secret, actor, contactId, 
     [id, actor.id]);
   if (!contact.rowCount) throw new ApiError(404,'not_found','Not found');
   const { rows } = await pool.query(`
-    SELECT cl.id,cl.contact_id,cl.amount::text,cl.currency,cl.description,cl.created_at,
+    SELECT cl.id,cl.contact_id,cl.amount::text,cl.currency,cl.operation_type AS type,cl.description,cl.created_at,
       cl.created_at::text AS cursor_created_at,
       d.decision, r.status AS relationship_status, fm.id AS movement_id,
       (ev.id IS NOT NULL AND
@@ -69,7 +69,7 @@ export async function listMerchantContactClaims(pool, secret, actor, contactId, 
     ORDER BY cl.created_at DESC,cl.id DESC LIMIT $6`,
     [actor.id,id,snapshot,parsed?.createdAt ?? null,parsed?.id ?? null,count + 1]);
   return packPage(rows,count,snapshot,secret,actor,scope,row=>({
-    claim_id:row.id,contact_id:row.contact_id,amount:row.amount,currency:row.currency,
+    claim_id:row.id,contact_id:row.contact_id,amount:row.amount,currency:row.currency,type:row.type,
     description:row.description,created_at:row.created_at,
     stage: row.movement_id ? 'approved' :
       row.decision==='reject' ? 'rejected' :
