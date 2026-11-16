@@ -65,6 +65,15 @@ test('FIN-16: merchant currency limits block only new debts, retain pending risk
 
       await assert.rejects(()=>operation(merchant,'debt','100.0001','YER','over-limit'),{
         status:409,code:'credit_limit_exceeded'});
+      // The legacy contact claim endpoint must not bypass an approved
+      // relationship's blocking policy. Previously saved claims still replay.
+      await assert.rejects(()=>store.createClaim(merchant,{
+        contact_id:contact.id,type:'debt',amount:'100.0001',currency:'YER'},
+        key('legacy-block')),{status:409,code:'credit_limit_exceeded'});
+      const replayHistoric=await store.createClaim(merchant,{
+        contact_id:contact.id,type:'debt',amount:'100',currency:'YER'},
+        key('historic-risk'));
+      assert.equal(replayHistoric.replayed,true);
       assert.equal((await store.ledger.balances(customer,id)).currencies.find(
         x=>x.currency==='YER').balance,'400.0000');
       const exact=await operation(merchant,'debt','100','YER','at-limit');
@@ -88,6 +97,11 @@ test('FIN-16: merchant currency limits block only new debts, retain pending risk
       assert.equal(warned.credit_warning.mode,'warn');
       assert.equal(warned.credit_warning.projected_balance,'7.2501');
       assert.equal(warned.credit_warning.approved_balance,'0.0000');
+      const oldApiWarning=await store.createClaim(merchant,{
+        contact_id:contact.id,type:'debt',amount:'6.0001',currency:'SAR'},
+        key('legacy-warn'));
+      assert.equal(oldApiWarning.credit_warning.mode,'warn');
+      assert.equal(oldApiWarning.credit_warning.currency,'SAR');
       await store.ledger.decideOperation(customer,id,warned.operation_id,{decision:'accept'});
       const sar=(await store.credit.getSnapshot(customer,id)).currencies.find(x=>x.currency==='SAR');
       assert.equal(sar.approved_balance,'7.2501');
