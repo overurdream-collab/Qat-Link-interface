@@ -48,6 +48,9 @@ test('FIN-09 merchant restores private contacts and every claim stage without cr
       assert.equal(claimPage2.items.length,1);
       await assert.rejects(()=>store.listContactClaims(merchant,another.id,{limit:1,cursor:claimPage.next_cursor}),{status:422});
       await store.verifyPhone(identity,{ customer_id:customer.id,phone,proof_reference:`proof-${suffix}` });
+      const automatic=await store.listCustomerRelationships(customer,{});
+      assert.deepEqual(new Set(automatic.items.map(x=>x.merchant_id)),new Set([merchant.id,other.id]));
+      assert.ok(automatic.items.every(x=>x.status==='pending'));
       const joined = await store.listContactClaims(merchant,contact.id,{});
       assert.ok(joined.items.every(row=>row.stage==='awaiting_review'));
       await store.decideClaim(customer,b.id,{decision:'reject'});
