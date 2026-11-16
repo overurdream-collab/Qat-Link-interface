@@ -23,3 +23,7 @@
 - مؤشر الصفحة الموقّع يحتفظ الآن **بسلسلة التاريخ كاملة بدقة PostgreSQL microseconds** من `created_at::text`، وليس بتحويل `Date.toISOString()` الذي يقطع أجزاء الميكروثانية ويُسقط أحياناً العمليات المسجلة بالتاريخ نفسه. يشمل ذلك شاشة العميل ومطالبات الديون وسجلات جهات اتصال التاجر.
 - أُضيف ربط `cursor` الخاص بمطالبات العميل بحسابه الموثق واسم القائمة، وليس بالتوقيع وحده، مع رفض إعادة استعماله من حساب مختلف.
 - تحقق اختبارات PostgreSQL من إنشاء العلاقات المتزامن والصفحات ذات أزمنة متطابقة، دون موافقات أو أرصدة تلقائية.
+
+## دليل الإغلاق الفني — 2026-11-16
+
+دُمجت واجهات طلبات الارتباط وموافقاتها المنفصلة في [PR #22](https://github.com/overurdream-collab/Qat-Link-interface/pull/22) (merge `5622319`)، ثم أُصلحت حالة سباق تسجيل رقم الهاتف وفقد البيانات بين صفحات `timestamptz` في [PR #25](https://github.com/overurdream-collab/Qat-Link-interface/pull/25) (merge `89f1acf`). نجح فحص Backend/PostgreSQL [#43854035515](https://github.com/overurdream-collab/Qat-Link-interface/actions/runs/43854035515) وفحص Flutter [#43854035626](https://github.com/overurdream-collab/Qat-Link-interface/actions/runs/43854035626) على آخر `main`. ما يزال مطلوباً OTP حقيقي وتسجيل دخول آمن ومزامنة واختبار جهازين؛ نجاح الاختبارات لا يمثل إطلاقاً إنتاجياً.
