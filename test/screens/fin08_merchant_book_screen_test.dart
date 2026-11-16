@@ -1,5 +1,6 @@
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:qat_link/models/app_models.dart';
 import 'package:qat_link/screens/fin08_merchant_book_screen.dart';
@@ -53,6 +54,33 @@ class MerchantGatewayFake implements Fin08ClaimsGateway {
   Future<Fin08ClaimDecisionReceipt> decidePreviousClaim(String claimId,{required bool accept}) async =>throw UnimplementedError();
 }
 
+class MultiPageStatementGateway extends MerchantGatewayFake {
+  bool failSecondPage=false;
+  int restoreCalls=0;
+
+  @override
+  Future<Fin08Page<Fin08MerchantClaim>> merchantClaims(String contactId,{String? cursor,int limit=50}) async {
+    restoreCalls++;
+    if(cursor==null)return Fin08Page([
+      Fin08MerchantClaim(id:'pending-a',contactId:contactId,
+        amount:Decimal.parse('100.25'),currency:CurrencyCode.yer,
+        stage:Fin08Stage.outsideApp,createdAt:DateTime.utc(2026,11,15)),
+      Fin08MerchantClaim(id:'approved-old',contactId:contactId,
+        amount:Decimal.parse('990'),currency:CurrencyCode.yer,
+        stage:Fin08Stage.approved,createdAt:DateTime.utc(2026,11,15)),
+    ],'next-cursor');
+    if(failSecondPage)throw const Fin08ApiError('تعذر قراءة الصفحة الثانية');
+    return Fin08Page([
+      Fin08MerchantClaim(id:'pending-b',contactId:contactId,
+        amount:Decimal.parse('19.75'),currency:CurrencyCode.yer,
+        stage:Fin08Stage.awaitingReview,createdAt:DateTime.utc(2026,11,16)),
+      Fin08MerchantClaim(id:'pending-usd',contactId:contactId,
+        amount:Decimal.parse('7'),currency:CurrencyCode.usd,
+        stage:Fin08Stage.acceptedAwaitingRelationship,createdAt:DateTime.utc(2026,11,16)),
+    ],null);
+  }
+}
+
 void main(){
   testWidgets('restores merchant contacts and shows pending amounts as non-approved', (tester) async {
     final api=MerchantGatewayFake();
@@ -86,4 +114,41 @@ void main(){
     expect(api.priorKey,isNotNull);
     expect(find.byKey(const Key('fin08_merchant_claim_claim-1')),findsOneWidget);
   });
+  testWidgets('copy pending statement requires confirmation and fetches ALL pages without approved rows', (tester) async {
+    final api=MultiPageStatementGateway();
+    await tester.pumpWidget(MaterialApp(home:Fin08MerchantBookScreen(gateway:api)));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('fin08_contact_contact-1')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('fin11_copy_pending_statement')));
+    await tester.pumpAndSettle();
+    expect(find.textContaining('راجع رقم المستلم'),findsWidgets);
+    await tester.tap(find.byKey(const Key('fin11_confirm_copy_pending')));
+    await tester.pumpAndSettle();
+    final copied=await Clipboard.getData(Clipboard.kTextPlain);
+    final contents=copied?.text ?? '';
+    expect(contents,contains('معلقة وغير معتمدة'));
+    expect(contents,contains('مجموع المبالغ المعلقة (YER): 120.00'));
+    expect(contents,contains('مجموع المبالغ المعلقة (USD): 7'));
+    expect(contents,isNot(contains('990 YER')));
+    expect(api.restoreCalls,3);
+  });
+
+  testWidgets('failed subsequent page does not replace clipboard with incomplete statement', (tester) async {
+    final api=MultiPageStatementGateway();
+    await Clipboard.setData(const ClipboardData(text:'clipboard remains unchanged'));
+    await tester.pumpWidget(MaterialApp(home:Fin08MerchantBookScreen(gateway:api)));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('fin08_contact_contact-1')));
+    await tester.pumpAndSettle();
+    api.failSecondPage=true;
+    await tester.tap(find.byKey(const Key('fin11_copy_pending_statement')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('fin11_confirm_copy_pending')));
+    await tester.pumpAndSettle();
+    expect(find.textContaining('تعذر قراءة الصفحة الثانية'),findsOneWidget);
+    final previous=await Clipboard.getData(Clipboard.kTextPlain);
+    expect(previous?.text,'clipboard remains unchanged');
+  });
+
 }
