@@ -123,7 +123,7 @@ void main() {
             'relationship_id':'relationship-1','merchant_id':'merchant-1',
             'merchant_display_name':'متجر القمة','status':'pending',
             'created_at':'2026-11-16T00:00:00Z',
-          }],'next_cursor':null}),200);
+          }],'next_cursor':null}),200,headers:{'content-type':'application/json; charset=utf-8'});
         }
         if(req.url.path=='/v1/customer/relationships/relationship-1/decision'){
           actions++;
