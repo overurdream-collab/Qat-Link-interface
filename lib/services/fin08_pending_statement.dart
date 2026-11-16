@@ -7,7 +7,8 @@ import 'fin08_api_client.dart';
 /// It is NOT an approved ledger statement and never changes balances.
 abstract final class Fin08PendingStatement {
   static bool isPending(Fin08MerchantClaim c) =>
-      c.stage != Fin08Stage.approved && c.stage != Fin08Stage.rejected;
+      c.stage != Fin08Stage.approved && c.stage != Fin08Stage.rejected &&
+      c.stage != Fin08Stage.superseded;
 
   /// Display at least two fractional digits without rounding or converting
   /// Decimal to binary floating point. Preserve higher precision when present.

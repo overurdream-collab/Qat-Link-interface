@@ -14,6 +14,12 @@ const store={
   listContacts:async(a)=>({items:[{contact_id:'sample',merchant:a.id}],next_cursor:null}),
   listContactClaims:async(a,id)=>({items:[{claim_id:'x',contact_id:id,merchant:a.id}],next_cursor:null}),
   summary:async(a)=>({currencies:[],merchant:a.id}),
+  amendments:{
+    requestHistorical:async(actor,id,body,key)=>({actor:actor.id,id,amount:body.proposed_amount,key,status:'pending',replayed:false}),
+    requestOperation:async(actor,rid,oid,body,key)=>({actor:actor.id,rid,oid,status:'pending',replayed:false}),
+    decideMerchant:async(actor,id,body)=>({actor:actor.id,id,decision:body.decision,status:'accepted'}),
+    list:async(actor)=>({items:[{actor:actor.id}],next_cursor:null})
+  },
   verifyPhone:async()=>({linked:true,conflict:false})
 };
 const withApi=async(actor,action)=>{
@@ -80,5 +86,40 @@ test('relationship inbox belongs to authenticated customer, never merchant',asyn
   });
   await withApi(merchant,async base=>{
     const r=await request(base,'/v1/customer/relationships');assert.equal(r.status,403);
+  });
+});
+
+test('FIN-15 route ownership: only verified customer requests changes and only merchant responds',async()=>{
+  const claimId='11111111-1111-4111-8111-111111111111';
+  const amendId='22222222-2222-4222-8222-222222222222';
+  const body={proposed_amount:'25.0001',reason:'Wrong quantity',customer_id:'spoofed'};
+  await withApi(merchant,async base=>{
+    const r=await request(base,'/v1/customer/previous-claims/'+claimId+'/amendments',
+      post(body,{'Idempotency-Key':'fin15-test-request-01'}));
+    assert.equal(r.status,403);
+    const accepted=await request(base,'/v1/merchant/amendments/'+amendId+'/decision',
+      post({decision:'accept'}));
+    assert.equal(accepted.status,200);
+    assert.equal((await accepted.json()).actor,merchant.id);
+  });
+  await withApi(customer,async base=>{
+    const r=await request(base,'/v1/customer/previous-claims/'+claimId+'/amendments',
+      post(body,{'Idempotency-Key':'fin15-test-request-01'}));
+    assert.equal(r.status,201);
+    const payload=await r.json();
+    assert.equal(payload.actor,customer.id);
+    assert.equal(payload.amount,'25.0001');
+    assert.equal(payload.key,'fin15-test-request-01');
+    const forbidden=await request(base,'/v1/merchant/amendments/'+amendId+'/decision',
+      post({decision:'accept'}));
+    assert.equal(forbidden.status,403);
+    const inbox=await request(base,'/v1/customer/amendments');
+    assert.equal(inbox.status,200);
+    assert.equal((await inbox.json()).items[0].actor,customer.id);
+  });
+  await withApi(null,async base=>{
+    const r=await request(base,'/v1/customer/previous-claims/'+claimId+'/amendments',
+      post(body,{'Idempotency-Key':'fin15-test-request-01'}));
+    assert.equal(r.status,403);
   });
 });

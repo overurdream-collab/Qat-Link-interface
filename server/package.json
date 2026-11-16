@@ -4,6 +4,6 @@
   "private": true,
   "type": "module",
   "engines": {"node": ">=22"},
-  "scripts": {"start": "node src/index.mjs", "test": "node --test", "check": "node --check src/index.mjs && node --check src/store.mjs && node --check src/http.mjs && node --check src/auth.mjs && node --check src/validation.mjs && node --check src/merchant_read.mjs && node --check src/customer_relationships.mjs && node --check src/ledger.mjs && node --check src/batch.mjs && node --check src/decimal.mjs"},
+  "scripts": {"start": "node src/index.mjs", "test": "node --test", "check": "node --check src/index.mjs && node --check src/store.mjs && node --check src/http.mjs && node --check src/auth.mjs && node --check src/validation.mjs && node --check src/merchant_read.mjs && node --check src/customer_relationships.mjs && node --check src/ledger.mjs && node --check src/batch.mjs && node --check src/amendments.mjs && node --check src/decimal.mjs"},
   "dependencies": {"pg": "^8.16.3"}
 }

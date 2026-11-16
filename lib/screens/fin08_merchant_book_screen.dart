@@ -7,14 +7,17 @@ import 'package:flutter/services.dart';
 import '../models/app_models.dart';
 import '../services/fin08_api_client.dart';
 import '../services/fin08_pending_statement.dart';
+import '../services/fin15_amendment_gateway.dart';
+import 'fin15_amendments_screen.dart';
 import '../widgets/finance_display.dart';
 
 /// Restores durable merchant-only contacts/claims from FIN-09 server API.
 /// Requires a real merchant JWT from trusted authentication. Not the full
 /// approved financial ledger; never labels claim sums as total debt balance.
 class Fin08MerchantBookScreen extends StatefulWidget {
-  const Fin08MerchantBookScreen({super.key,required this.gateway});
+  const Fin08MerchantBookScreen({super.key,required this.gateway,this.amendmentGateway});
   final Fin08ClaimsGateway gateway;
+  final Fin15AmendmentGateway? amendmentGateway;
   @override
   State<Fin08MerchantBookScreen> createState() => _Fin08MerchantBookScreenState();
 }
@@ -278,6 +281,22 @@ class _Fin08MerchantBookScreenState extends State<Fin08MerchantBookScreen> {
           Text('هذا سجل مطالبات التاجر. لا تُعد المبالغ المعلقة إقراراً من العميل.',
             style:TextStyle(color:c.onSurfaceVariant)),
           const SizedBox(height:12),
+          if(widget.amendmentGateway!=null) ...[
+            OutlinedButton.icon(
+              key:const Key('fin15_merchant_amendments'),
+              icon:const Icon(Icons.edit_note_outlined),
+              label:const Text('طلبات تعديل مبالغ الديون'),
+              onPressed:_loading?null:() async {
+                await Navigator.of(context).push(MaterialPageRoute<void>(
+                  builder:(_)=>Fin15AmendmentsScreen(
+                    gateway:widget.amendmentGateway!,forMerchant:true)));
+                if(!mounted)return;
+                if(_selected==null)await _loadContacts();
+                else await _select(_selected);
+              },
+            ),
+            const SizedBox(height:8),
+          ],
           if(_selected!=null) ...[
             OutlinedButton.icon(
               key:const Key('fin13_add_pending_payment'),

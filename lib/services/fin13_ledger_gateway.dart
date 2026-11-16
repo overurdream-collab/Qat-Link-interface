@@ -73,22 +73,25 @@ class Fin13Statement {
 class Fin13Operation {
   const Fin13Operation(this.id,this.type,this.amount,this.currency,
     this.status,this.createdBy,this.createdByRole,this.createdAt,
-    this.approvalMethod,this.description,this.reversalOf);
+    this.approvalMethod,this.description,this.reversalOf,
+    {this.amendmentPending=false});
   final String id, status,createdBy,createdByRole,approvalMethod;
   final String? description,reversalOf;
+  final bool amendmentPending;
   final MovementType type;
   final Decimal amount;
   final CurrencyCode currency;
   final DateTime createdAt;
-  bool get pending=>status=='pending';
+  bool get pending=>status=='pending' && !amendmentPending;
   factory Fin13Operation.fromJson(Map<String,dynamic> j){
     final s=_value(j,'status');
-    if(!['pending','approved','rejected'].contains(s))throw const FormatException('Invalid status');
+    if(!['pending','approved','rejected','superseded'].contains(s))throw const FormatException('Invalid status');
     return Fin13Operation(_value(j,'id'),_type(_value(j,'operation_type')),
       _amount(j,'amount'),_currency(j),s,_value(j,'created_by'),
       _value(j,'created_by_role'),DateTime.parse(_value(j,'created_at')),
       _value(j,'approval_method'),j['description'] as String?,
-      j['reversal_of_movement_id'] as String?);
+      j['reversal_of_movement_id'] as String?,
+      amendmentPending:j['amendment_pending']==true);
   }
 }
 class Fin13Page {

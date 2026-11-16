@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:decimal/decimal.dart';
 import '../services/fin14_batch_gateway.dart';
+import '../services/fin15_amendment_gateway.dart';
+import 'fin15_amendments_screen.dart';
 
 import '../services/fin08_api_client.dart';
 import '../models/app_models.dart';
@@ -11,9 +13,11 @@ import '../widgets/finance_display.dart';
 /// Attach only after real authenticated customer login; never from a locally
 /// validated phone, PIN or unverified mock account.
 class Fin08CustomerClaimsScreen extends StatefulWidget {
-  const Fin08CustomerClaimsScreen({super.key, required this.gateway,this.batchGateway});
+  const Fin08CustomerClaimsScreen({super.key, required this.gateway,this.batchGateway,
+    this.amendmentGateway});
   final Fin08ClaimsGateway gateway;
   final Fin14BatchGateway? batchGateway;
+  final Fin15AmendmentGateway? amendmentGateway;
 
   @override
   State<Fin08CustomerClaimsScreen> createState() => _Fin08CustomerClaimsScreenState();
@@ -122,6 +126,22 @@ class _Fin08CustomerClaimsScreenState extends State<Fin08CustomerClaimsScreen> {
     }finally{if(mounted)setState(()=>_batchBusy=false);}
   }
 
+  Future<void> _requestAmendment(Fin08PreviousClaim claim) async {
+    if(widget.amendmentGateway==null || !claim.canReview ||
+       claim.type!=MovementType.debt || _submitting.isNotEmpty ||
+       _batchBusy || _loading)return;
+    final saved=await showDialog<bool>(context:context,
+      barrierDismissible:false,
+      builder:(_)=>Fin15AmountProposalDialog(
+        gateway:widget.amendmentGateway!,claimId:claim.id,
+        originalAmount:claim.amount,currency:claim.currency));
+    if(saved==true && mounted){
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content:Text('حُفظ اقتراح المبلغ لدى الخادم. لن يُعتمد الأصل حتى يرد التاجر.')));
+      await _load();
+    }
+  }
+
   Future<void> _decide(Fin08PreviousClaim claim, bool accept) async {
     if (_submitting.contains(claim.id) || !claim.canReview) return;
     final confirmed = await showDialog<bool>(context:context,builder:(ctx)=>AlertDialog(
@@ -190,6 +210,20 @@ class _Fin08CustomerClaimsScreenState extends State<Fin08CustomerClaimsScreen> {
               label:const Text('مراجعة طلبات الارتباط بالتجار'),
             ),
             const SizedBox(height:16),
+            if(widget.amendmentGateway!=null) ...[
+              OutlinedButton.icon(
+                key:const Key('fin15_customer_amendments'),
+                icon:const Icon(Icons.edit_note_outlined),
+                label:const Text('عرض طلبات تعديل المبالغ'),
+                onPressed:_loading?null:() async{
+                  await Navigator.of(context).push(MaterialPageRoute<void>(
+                    builder:(_)=>Fin15AmendmentsScreen(
+                      gateway:widget.amendmentGateway!,forMerchant:false)));
+                  if(mounted)await _load();
+                },
+              ),
+              const SizedBox(height:8),
+            ],
             if(widget.batchGateway!=null) ...[
               Text('حدد العمليات التي تريد مراجعتها جماعياً — حتى 50 عملية.',
                 style:TextStyle(color:c.onSurfaceVariant)),
@@ -229,6 +263,14 @@ class _Fin08CustomerClaimsScreenState extends State<Fin08CustomerClaimsScreen> {
                   Text(claim.stage.labelFor(claim.type),style:TextStyle(
                     color:claim.stage==Fin08Stage.approved?c.primary:c.onSurfaceVariant,
                     fontWeight:FontWeight.w700)),
+                  if(claim.canReview && claim.type==MovementType.debt &&
+                      widget.amendmentGateway!=null)
+                    OutlinedButton.icon(
+                      key:Key('fin15_amend_claim_'+claim.id),
+                      onPressed:()=>_requestAmendment(claim),
+                      icon:const Icon(Icons.edit_outlined),
+                      label:const Text('طلب تعديل مبلغ الدين'),
+                    ),
                   if(claim.canReview) ...[
                     if(widget.batchGateway!=null)CheckboxListTile(
                       key:Key('fin14_select_'+claim.id),

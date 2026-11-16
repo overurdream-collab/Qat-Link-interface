@@ -3,6 +3,7 @@ import { listMerchantContacts, listMerchantContactClaims } from './merchant_read
 import { listCustomerRelationships } from './customer_relationships.mjs';
 import { FinancialLedgerService } from './ledger.mjs';
 import { Fin14BatchService } from './batch.mjs';
+import { Fin15AmendmentService } from './amendments.mjs';
 import { ApiError, assertText, claimDigest, currency, decision, idempotencyKey, money, normalizePhone, page, uuid, encodeCursor, decodeCursor } from './validation.mjs';
 
 const conflict = (message) => new ApiError(409, 'conflict', message);
@@ -26,6 +27,7 @@ export class Fin08Store {
     this.cursorSecret = cursorSecret;
     this.ledger = new FinancialLedgerService(this);
     this.batch = new Fin14BatchService(this);
+    this.amendments = new Fin15AmendmentService(this);
   }
   async tx(fn) {
     const c = await this.pool.connect();
@@ -203,7 +205,9 @@ export class Fin08Store {
     const {rows} = await this.pool.query(`SELECT cl.id,cl.merchant_id,mp.verified_display_name AS merchant_display_name,
         cl.contact_id,cl.amount::text,cl.currency,cl.operation_type AS type,cl.description,cl.created_at,
         cl.created_at::text AS cursor_created_at,
-        d.decision, r.status AS relationship_status, fm.id AS movement_id
+        d.decision, r.status AS relationship_status, fm.id AS movement_id,
+        cl.superseded_by_claim_id,
+        EXISTS(SELECT 1 FROM financial_amendment_requests ar WHERE ar.original_claim_id=cl.id AND ar.status='pending') AS amendment_pending
       FROM merchant_claims cl
       JOIN merchant_contacts c ON c.id=cl.contact_id AND c.merchant_id=cl.merchant_id
       ${verifiedJoin}
@@ -219,7 +223,9 @@ export class Fin08Store {
     const items=rows.slice(0,count).map(row=>({
       claim_id:row.id,merchant_id:row.merchant_id,merchant_display_name:row.merchant_display_name,
       amount:row.amount,currency:row.currency,type:row.type,description:row.description,created_at:row.created_at,
-      stage:row.movement_id ? 'approved' : row.decision==='reject' ? 'rejected' :
+      stage:row.superseded_by_claim_id ? 'superseded' :
+        row.amendment_pending ? 'amendment_pending' :
+        row.movement_id ? 'approved' : row.decision==='reject' ? 'rejected' :
         row.decision==='accept' && row.relationship_status==='approved' ? 'accepted_awaiting_posting' :
         row.decision==='accept' ? 'accepted_awaiting_relationship' : 'awaiting_review'
     }));
@@ -227,13 +233,20 @@ export class Fin08Store {
     const nextCursor=hasNext ? encodeCursor({scope:'customer_previous_claims',actor:actor.id,snapshot,createdAt:last.cursor_created_at,id:last.id},this.cursorSecret):null;
     return {items,next_cursor:nextCursor};
   }
-  async ensureEligible(c,claimId,customerId) {
-    const {rows}=await c.query(`SELECT cl.id,cl.merchant_id,cl.contact_id,cl.amount,cl.currency
+  async ensureEligible(c,claimId,customerId,{allowAmendment=false}={}) {
+    const {rows}=await c.query(`SELECT cl.id,cl.merchant_id,cl.contact_id,cl.amount,cl.currency,cl.superseded_by_claim_id
       FROM merchant_claims cl
       JOIN merchant_contacts c ON c.id=cl.contact_id AND c.merchant_id=cl.merchant_id
       ${verifiedJoin}
       WHERE cl.id=$1 AND vl.customer_id=$2 FOR UPDATE OF cl`,[claimId,customerId]);
     if (!rows.length) throw missing();
+    if(!allowAmendment){
+      if(rows[0].superseded_by_claim_id)throw conflict('Original claim has been replaced by an amended claim');
+      const pending=await c.query(
+        'SELECT 1 FROM financial_amendment_requests WHERE original_claim_id=$1 AND status=$2',
+        [claimId,'pending']);
+      if(pending.rowCount)throw conflict('Claim amount amendment awaits merchant decision');
+    }
     return rows[0];
   }
   async postClaim(c,claimId,actorId) {
@@ -249,6 +262,9 @@ export class Fin08Store {
       JOIN merchant_contacts c ON c.id=cl.contact_id AND c.merchant_id=cl.merchant_id
       ${verifiedJoin}
       WHERE cl.id=$1 AND vl.customer_id=d.customer_id
+        AND cl.superseded_by_claim_id IS NULL
+        AND NOT EXISTS(SELECT 1 FROM financial_amendment_requests ar
+          WHERE ar.original_claim_id=cl.id AND ar.status='pending')
       ON CONFLICT (source_claim_id) DO NOTHING RETURNING id`,[claimId,randomUUID()]);
     if (rows.length) await this.audit(c,actorId,'merchant_claim',claimId,'posted_once_as_approved_debt');
     return rows.length>0;
@@ -319,7 +335,7 @@ export class Fin08Store {
       if (wanted==='approved') {
         const claimed=await c.query(`SELECT cl.id,cl.operation_type FROM merchant_claims cl
           JOIN customer_claim_decisions d ON d.claim_id=cl.id AND d.decision='accept'
-          WHERE cl.merchant_id=$1 AND d.customer_id=$2`,[current.merchant_id,actor.id]);
+          WHERE cl.merchant_id=$1 AND d.customer_id=$2 AND cl.superseded_by_claim_id IS NULL`,[current.merchant_id,actor.id]);
         for(const claim of claimed.rows) if(await this.postClaim(c,claim.id,actor.id)) {
           posted++;
           if(claim.operation_type==='debt')postedDebts++;
@@ -355,7 +371,7 @@ export class Fin08Store {
       'FROM merchant_claims cl',
       'LEFT JOIN customer_claim_decisions d ON d.claim_id=cl.id',
       'LEFT JOIN financial_movements fm ON fm.source_claim_id=cl.id',
-      'WHERE cl.merchant_id=$1)',
+      'WHERE cl.merchant_id=$1 AND cl.superseded_by_claim_id IS NULL)',
       'SELECT currency,',
       'COALESCE(SUM(CASE WHEN movement_id IS NULL AND decision IS DISTINCT FROM \'reject\'',
       'AND NOT joined AND operation_type=\'debt\' THEN amount ELSE 0 END),0)::text AS outside_app,',
