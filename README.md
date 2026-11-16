@@ -1,5 +1,7 @@
 # مقتني لينك Qat-Link
 
+**آخر خط أساس موثّق — 2026-11-16:** `main` عند `80bcae1e401324fcb9da4cc709e7cfff6d5ca9ee`. دُمج FIN-10 (#22 و#25)، FIN-11 (#27)، وتحسين JWT في FIN-12 (#28). نجحت فحوص Flutter على `main` [#43857770973](https://github.com/overurdream-collab/Qat-Link-interface/actions/runs/43857770973) ونجحت Backend/PostgreSQL بعد FIN-12 [#43856631439](https://github.com/overurdream-collab/Qat-Link-interface/actions/runs/43856631439). **Login/OTP غير متصل، ولم يُختبر جهازان حقيقيان أو دفتر حركات شامل؛ لا تطلق الخدمة بعد.**
+
 
 **FIN-11 — مشاركة يدوية آمنة:** من سجل التاجر يمكن إعداد ونسخ بيان بجميع المطالبات **المعلقة وغير المعتمدة فقط** بعد تحميل كل الصفحات من الخادم وإظهار تحذير واضح؛ يختار التاجر بنفسه مشاركة النص عبر واتساب أو غيره. **لا إرسال تلقائي ولا إيصال معتمد ولا PDF مالي شامل**. [الوثيقة](docs/FIN11_MANUAL_STATEMENT_AR.md).
 

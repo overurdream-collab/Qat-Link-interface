@@ -20,4 +20,4 @@
 
 ## التحقق
 
-تنفذ GitHub Actions فحص `server`، بما فيه `npm run check` و`npm test` مع PostgreSQL 16. يُوثَّق رابط نجاح الـ CI وحالة الدمج بعد ظهور النتيجة، ولا يُفترض نجاحه سلفاً.
+اجتاز الفرع [Backend/PostgreSQL CI #43856376492](https://github.com/overurdream-collab/Qat-Link-interface/actions/runs/43856376492) و[Flutter CI #43856376406](https://github.com/overurdream-collab/Qat-Link-interface/actions/runs/43856376406). دُمج [PR #28](https://github.com/overurdream-collab/Qat-Link-interface/pull/28) عند commit `73932329648d19897d705b54f308e1e50c8eb5cc`، ونجحت فحوص `main` التالية للدمج ([Backend #43856631439](https://github.com/overurdream-collab/Qat-Link-interface/actions/runs/43856631439)، [Flutter #43856631403](https://github.com/overurdream-collab/Qat-Link-interface/actions/runs/43856631403)).
