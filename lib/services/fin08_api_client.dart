@@ -213,6 +213,46 @@ class Fin08ClaimDecisionReceipt {
   final bool ledgerPosted;
 }
 
+/// Server receipt for an atomic, explicitly selected set of historical claims.
+/// Totals are exact Decimal values split by currency and debt/payment type.
+class Fin08BatchCurrencyTotal {
+  const Fin08BatchCurrencyTotal(this.currency,this.type,this.amount,this.count);
+  final CurrencyCode currency;
+  final MovementType type;
+  final Decimal amount;
+  final int count;
+  factory Fin08BatchCurrencyTotal.fromJson(Map<String,dynamic> json) {
+    final n=json['selected_count'];
+    if(n is! int || n<1)throw const FormatException('Invalid subtotal count');
+    return Fin08BatchCurrencyTotal(
+      _currency(json['currency']),_movementType(_str(json,'type')),
+      Decimal.parse(_str(json,'total_amount')),n);
+  }
+}
+class Fin08BatchReceipt {
+  const Fin08BatchReceipt(this.decision,this.selectedCount,this.recordedCount,
+    this.postedCount,this.totals);
+  final String decision;
+  final int selectedCount,recordedCount,postedCount;
+  final List<Fin08BatchCurrencyTotal> totals;
+  factory Fin08BatchReceipt.fromJson(Map<String,dynamic> json) {
+    final decision=_str(json,'decision');
+    final selected=json['selected_count'];
+    final recorded=json['newly_recorded_count'];
+    final posted=json['newly_posted_count'];
+    if(!['accept','reject'].contains(decision) || selected is! int ||
+        recorded is! int || posted is! int || selected<1 ||
+        recorded<0 || posted<0 || recorded>selected || posted>selected ||
+        json['totals_by_currency_and_type'] is! List) {
+      throw const FormatException('Invalid batch decision receipt');
+    }
+    return Fin08BatchReceipt(decision,selected,recorded,posted,
+      (json['totals_by_currency_and_type'] as List)
+        .map((row)=>Fin08BatchCurrencyTotal.fromJson(Map<String,dynamic>.from(row as Map)))
+        .toList(growable:false));
+  }
+}
+
 class Fin08CurrencyBuckets {
   Fin08CurrencyBuckets({required this.currency,required this.outsideApp,
     required this.awaitingCustomer,required this.approvedFromClaims,
@@ -255,6 +295,9 @@ abstract class Fin08ClaimsGateway {
   Future<Fin08RelationshipReceipt> decideRelationship(String relationshipId,{required bool accept});
   Future<Fin08Page<Fin08PreviousClaim>> customerPreviousClaims({String? cursor,int limit=50});
   Future<Fin08ClaimDecisionReceipt> decidePreviousClaim(String claimId,{required bool accept});
+  Future<Fin08BatchReceipt> decidePreviousClaimsBatch(List<String> claimIds,{required bool accept}) {
+    throw UnimplementedError('Batch consent is not supported by this gateway');
+  }
 }
 
 class Fin08HttpClaimsGateway implements Fin08ClaimsGateway {
@@ -408,6 +451,21 @@ class Fin08HttpClaimsGateway implements Fin08ClaimsGateway {
   Future<Fin08Page<Fin08PreviousClaim>> customerPreviousClaims({String? cursor,int limit=50}) async =>
       _parsePage(await _request('GET','v1/customer/previous-claims',query:_pagination(cursor,limit)),
         Fin08PreviousClaim.fromJson);
+
+  @override
+  Future<Fin08BatchReceipt> decidePreviousClaimsBatch(List<String> claimIds,{required bool accept}) async {
+    if(claimIds.isEmpty || claimIds.length>50 || claimIds.toSet().length!=claimIds.length) {
+      throw ArgumentError('Choose 1-50 unique claims');
+    }
+    final response=await _request('POST','v1/customer/previous-claims/batch-decision',
+      body:{'claim_ids':claimIds,'decision':accept?'accept':'reject'});
+    final receipt=Fin08BatchReceipt.fromJson(response);
+    if(receipt.selectedCount!=claimIds.length ||
+        receipt.decision!=(accept?'accept':'reject')) {
+      throw const Fin08ApiError('نتيجة قرار المجموعة غير متطابقة.',code:'invalid_response');
+    }
+    return receipt;
+  }
 
   @override
   Future<Fin08ClaimDecisionReceipt> decidePreviousClaim(String claimId,{required bool accept}) async {
