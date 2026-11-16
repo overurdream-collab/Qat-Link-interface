@@ -57,7 +57,7 @@ export function createApi({store,verify}) {
         requireRole(actor,'merchant');
         return json(res,200,await store.listContacts(actor,{limit:page(url.searchParams.get('limit')??undefined),cursor:url.searchParams.get('cursor')}));
       }
-      const merchantContactClaims=path.match(/^\\/v1\\/merchant\\/contacts\\/([\\w-]+)\\/claims$/);
+      const merchantContactClaims=path.match(/^\/v1\/merchant\/contacts\/([\w-]+)\/claims$/);
       if(method==='GET' && merchantContactClaims){
         requireRole(actor,'merchant');
         return json(res,200,await store.listContactClaims(actor,merchantContactClaims[1],{limit:page(url.searchParams.get('limit')??undefined),cursor:url.searchParams.get('cursor')}));
