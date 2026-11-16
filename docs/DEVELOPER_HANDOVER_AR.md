@@ -168,3 +168,7 @@ flutter run
 - تحديث مرجع الميزة و[سجل القرارات](DECISION_LOG_AR.md) و[سجل التقدم](IMPLEMENTATION_STATUS_AR.md)؛ إزالة التعارض من الفهرس أو وسم الأقدم بالتاريخ.
 
 **لا يُغلق العمل بعبارة «انتهى» ما لم توثق نتيجة الفحص الفعلي ومكان الكود وقيود التشغيل.**
+
+## FIN-10 — استلام نسخة الموافقات الموثقة (2026-11-16)
+
+آخر مرجع مدمج: `89f1acf` في `main`. طلبات الارتباط بعد انضمام العميل من [PR #22](https://github.com/overurdream-collab/Qat-Link-interface/pull/22)، وتقوية مطابقة الهاتف والتصفح من [PR #25](https://github.com/overurdream-collab/Qat-Link-interface/pull/25). نجح فحص PostgreSQL على [#43854035515](https://github.com/overurdream-collab/Qat-Link-interface/actions/runs/43854035515) وFlutter على [#43854035626](https://github.com/overurdream-collab/Qat-Link-interface/actions/runs/43854035626). **المتبقي قبل الاستخدام الحقيقي:** مزود OTP وهوية JWT، ربط الدخول والواجهات بالجلسة وإعادة الجلب الخادمي، اختبار هواتف متعددة ونسخ احتياطي وتدقيق أمني. لا يُجمع أي رصيد عبر العملات ولا يعتمد دين بالموافقة على العلاقة وحدها.
