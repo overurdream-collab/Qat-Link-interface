@@ -88,6 +88,15 @@ export function createApi({store,verify}) {
       }
       // FIN-13: one authoritative APPROVED ledger for both legacy claims and
       // registered two-party requests. All identities come from JWT.
+      if(method==='POST' && path==='/v1/customer/previous-claims/batch-decisions'){
+        requireRole(actor,'customer');
+        return json(res,200,await store.batch.decideHistoricalClaims(actor,body));
+      }
+      const operationBatch=path.match(/^\/v1\/relationships\/([\w-]+)\/operations\/batch-decisions$/);
+      if(method==='POST' && operationBatch){
+        requireParticipant(actor);
+        return json(res,200,await store.batch.decideRelationshipOperations(actor,operationBatch[1],body));
+      }
       const relOpDecision=path.match(/^\/v1\/relationships\/([\w-]+)\/operations\/([\w-]+)\/decision$/);
       if(method==='POST' && relOpDecision){
         requireParticipant(actor);
