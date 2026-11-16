@@ -78,6 +78,33 @@ export function createApi({store,verify}) {
         requireRole(actor,'customer');
         return json(res,200,await store.listCustomerRelationships(actor,{limit:page(url.searchParams.get('limit')??undefined),cursor:url.searchParams.get('cursor')}));
       }
+      // FIN-15: authenticated customer amount proposals; original financial
+      // values remain untouched. Merchant resolution is a separate decision.
+      const historicAmendment=path.match(/^\/v1\/customer\/previous-claims\/([\w-]+)\/amendments$/);
+      if(method==='POST' && historicAmendment){
+        requireRole(actor,'customer');
+        const result=await store.amendments.requestHistorical(actor,historicAmendment[1],
+          body,req.headers['idempotency-key']);
+        return json(res,result.replayed?200:201,result);
+      }
+      const operationAmendment=path.match(/^\/v1\/relationships\/([\w-]+)\/operations\/([\w-]+)\/amendments$/);
+      if(method==='POST' && operationAmendment){
+        requireRole(actor,'customer');
+        const result=await store.amendments.requestOperation(actor,operationAmendment[1],
+          operationAmendment[2],body,req.headers['idempotency-key']);
+        return json(res,result.replayed?200:201,result);
+      }
+      const merchantAmendment=path.match(/^\/v1\/merchant\/amendments\/([\w-]+)\/decision$/);
+      if(method==='POST' && merchantAmendment){
+        requireRole(actor,'merchant');
+        return json(res,200,await store.amendments.decideMerchant(actor,merchantAmendment[1],body));
+      }
+      if(method==='GET' && (path==='/v1/merchant/amendments'||path==='/v1/customer/amendments')){
+        requireRole(actor,path.startsWith('/v1/merchant/')?'merchant':'customer');
+        return json(res,200,await store.amendments.list(actor,{
+          limit:page(url.searchParams.get('limit')??undefined),
+          cursor:url.searchParams.get('cursor')}));
+      }
       const claim=path.match(/^\/v1\/customer\/previous-claims\/([\w-]+)\/decision$/);
       if(method==='POST' && claim){
         requireRole(actor,'customer');return json(res,200,await store.decideClaim(actor,claim[1],body));
