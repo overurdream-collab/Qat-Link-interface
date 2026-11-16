@@ -70,3 +70,6 @@ CI الجديد `.github/workflows/fin08-api.yml` ينشئ PostgreSQL 16 مؤق�
 
 ## FIN-16 — Migration 004 وسياسة الائتمان
 طبق sql/004_fin16_credit_limits.sql بعد 001 ثم 002 ثم 003. GET/POST /v1/relationships/{id}/credit-limits مع مصادقة JWT؛ لا تُنشأ دفاتر مستقلة. التعليمات المالية [FIN-16](../docs/FIN16_CREDIT_LIMITS_AR.md). يحتاج التطبيق اختبار ترقية/استعادة قبل الإنتاج.
+
+## FIN-17 — تخصيص الدفعات والكشف المعلق
+بعد الترحيلات 001–004، شغّل `sql/005_fin17_payment_allocations.sql`. خدمة API للتخصيص/الفك تتطلب موافقة الطرف الآخر ولا تنشئ قيوداً مالية إضافية؛ يظل الرصيد غير المخصص ضمن رصيد العميل الدائن. أضيف `GET /v1/relationships/{id}/pending-statement` بكشوف منفصلة لكل عملة. التفاصيل ومعايير التحقق في [وثيقة FIN-17](../docs/FIN17_PAYMENT_ALLOCATIONS_AR.md). لا تُعلن الجاهزية قبل PostgreSQL CI وUAT الهوية والهاتفين والنسخ الاحتياطي.
