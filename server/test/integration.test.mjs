@@ -34,6 +34,10 @@ test('FIN-08 PostgreSQL E2E: historic claims, independent consent, durable ledge
       assert.equal(summary.currencies.find(r=>r.currency==='YER').outside_app,'1250.0000');
       assert.equal((await store.claimsInbox(customer,{})).items.length,0);
       await store.verifyPhone(identity,{customer_id:customer.id,phone,proof_reference:`proof-${suffix}`});
+      const initialLinks=await store.listCustomerRelationships(customer,{});
+      assert.deepEqual(new Set(initialLinks.items.map(x=>x.merchant_id)),new Set([m1.id,m2.id]));
+      assert.ok(initialLinks.items.every(x=>x.status==='pending'));
+      assert.equal(await countMovements(pool,a.claim.id),0);
       const inbox=await store.claimsInbox(customer,{limit:2});
       assert.equal(inbox.items.length,2);
       assert.ok(inbox.next_cursor);
