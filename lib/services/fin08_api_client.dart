@@ -43,6 +43,17 @@ enum Fin08Stage {
         _ => throw const FormatException('Unknown FIN-08 claim stage'),
       };
 
+  String labelFor(MovementType kind) => kind == MovementType.payment
+      ? switch (this) {
+          outsideApp => 'دفعة خارج التطبيق — غير معتمدة',
+          awaitingReview => 'دفعة بانتظار موافقة العميل — غير معتمدة',
+          acceptedAwaitingRelationship => 'وافق العميل على الدفعة — العلاقة معلقة',
+          acceptedAwaitingPosting => 'الدفعة تنتظر الترحيل',
+          rejected => 'دفعة مرفوضة — لا تؤثر على الرصيد',
+          approved => 'دفعة معتمدة',
+        }
+      : label;
+
   String get label => switch (this) {
         outsideApp => 'عميل خارج التطبيق — غير معتمد',
         awaitingReview => 'بانتظار موافقة العميل — غير معتمد',
@@ -61,6 +72,19 @@ CurrencyCode _currency(Object? wire) {
     'USD' => CurrencyCode.usd,
     _ => throw const FormatException('Unsupported currency'),
   };
+}
+
+MovementType _movementType(Object? value) => switch (value) {
+  null || 'debt' => MovementType.debt,
+  'payment' => MovementType.payment,
+  _ => throw const FormatException('Unknown movement type'),
+};
+
+Decimal _optionalDecimal(Map<String,dynamic> data,String key) {
+  final value=data[key];
+  if(value==null) return Decimal.zero; // FIN-08 response compatibility.
+  if(value is! String) throw const FormatException('Invalid money field');
+  return Decimal.parse(value);
 }
 
 String _str(Map<String, dynamic> data, String key, {String? alternative}) {
@@ -92,7 +116,7 @@ class Fin08MerchantContact {
 class Fin08MerchantClaim {
   const Fin08MerchantClaim({required this.id, required this.contactId,
     required this.amount, required this.currency, required this.createdAt,
-    required this.stage, this.description});
+    required this.stage, this.description, this.type=MovementType.debt});
   final String id;
   final String contactId;
   final Decimal amount;
@@ -100,6 +124,7 @@ class Fin08MerchantClaim {
   final String? description;
   final DateTime createdAt;
   final Fin08Stage stage;
+  final MovementType type;
 
   factory Fin08MerchantClaim.fromJson(Map<String, dynamic> json) =>
       Fin08MerchantClaim(
@@ -110,13 +135,15 @@ class Fin08MerchantClaim {
         description: json['description'] as String?,
         createdAt: _date(json, 'created_at'),
         stage: Fin08Stage.fromWire(_str(json, 'stage')),
+        type: _movementType(json['type']),
       );
 }
 
 class Fin08PreviousClaim {
   const Fin08PreviousClaim({required this.id, required this.merchantId,
     required this.merchantName, required this.amount, required this.currency,
-    required this.createdAt, required this.stage, this.description});
+    required this.createdAt, required this.stage, this.description,
+    this.type=MovementType.debt});
   final String id;
   final String merchantId;
   final String merchantName;
@@ -125,6 +152,7 @@ class Fin08PreviousClaim {
   final DateTime createdAt;
   final String? description;
   final Fin08Stage stage;
+  final MovementType type;
   bool get canReview => stage == Fin08Stage.awaitingReview;
 
   factory Fin08PreviousClaim.fromJson(Map<String, dynamic> json) =>
@@ -137,6 +165,7 @@ class Fin08PreviousClaim {
         description: json['description'] as String?,
         createdAt: _date(json, 'created_at'),
         stage: Fin08Stage.fromWire(_str(json, 'stage')),
+        type: _movementType(json['type']),
       );
 }
 
@@ -186,10 +215,15 @@ class Fin08ClaimDecisionReceipt {
 
 class Fin08CurrencyBuckets {
   const Fin08CurrencyBuckets({required this.currency,required this.outsideApp,
-    required this.awaitingCustomer,required this.approvedFromClaims});
+    required this.awaitingCustomer,required this.approvedFromClaims,
+    this.outsideAppPayments=Decimal.zero,this.awaitingPayments=Decimal.zero,
+    this.approvedPaymentsFromClaims=Decimal.zero});
   final CurrencyCode currency;
   final Decimal outsideApp;
+  final Decimal outsideAppPayments;
   final Decimal awaitingCustomer;
+  final Decimal awaitingPayments;
+  final Decimal approvedPaymentsFromClaims;
   /// Only approved pre-registration claims, NOT full accounting net.
   final Decimal approvedFromClaims;
   factory Fin08CurrencyBuckets.fromJson(Map<String,dynamic> json) =>
@@ -198,6 +232,9 @@ class Fin08CurrencyBuckets {
         outsideApp:Decimal.parse(_str(json,'outside_app')),
         awaitingCustomer:Decimal.parse(_str(json,'awaiting_customer_or_relationship')),
         approvedFromClaims:Decimal.parse(_str(json,'approved_from_claims')),
+        outsideAppPayments:_optionalDecimal(json,'outside_app_payments'),
+        awaitingPayments:_optionalDecimal(json,'awaiting_payments'),
+        approvedPaymentsFromClaims:_optionalDecimal(json,'approved_payments_from_claims'),
       );
 }
 
@@ -207,7 +244,8 @@ abstract class Fin08ClaimsGateway {
   Future<Fin08Page<Fin08MerchantClaim>> merchantClaims(String contactId,{String? cursor,int limit=50});
   Future<Fin08MerchantContact> createMerchantContact({required String name,required String phone});
   Future<Fin08ClaimReceipt> createMerchantClaim({required String contactId,required Decimal amount,
-    required CurrencyCode currency,required String idempotencyKey,String? description});
+    required CurrencyCode currency,required String idempotencyKey,String? description,
+    MovementType type=MovementType.debt});
   Future<List<Fin08CurrencyBuckets>> merchantClaimSummary();
   Future<String> requestMerchantRelationship(String contactId);
   Future<Fin08Page<Fin08CustomerRelationship>> customerRelationships({String? cursor,int limit=50});
@@ -303,11 +341,12 @@ class Fin08HttpClaimsGateway implements Fin08ClaimsGateway {
   @override
   Future<Fin08ClaimReceipt> createMerchantClaim({required String contactId,
       required Decimal amount,required CurrencyCode currency,
-      required String idempotencyKey,String? description}) async {
+      required String idempotencyKey,String? description,
+      MovementType type=MovementType.debt}) async {
     if(amount<=Decimal.zero) throw ArgumentError.value(amount,'amount','Must be positive');
     final value=await _request('POST','v1/merchant/claims',idempotencyKey:idempotencyKey,
         body:{'contact_id':contactId,'amount':amount.toString(),
-          'currency':currency.name.toUpperCase(),if(description!=null)'description':description});
+          'currency':currency.name.toUpperCase(),'type':type.name,if(description!=null)'description':description});
     return Fin08ClaimReceipt(claimId:_str(value,'id'),replayed:value['replayed']==true);
   }
 
