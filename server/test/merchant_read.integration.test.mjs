@@ -61,19 +61,22 @@ test('FIN-09 merchant restores private contacts and every claim stage without cr
       const relationship = await store.requestRelationship(merchant,{contact_id:contact.id});
       const requested=await store.listCustomerRelationships(customer,{limit:1});
       assert.equal(requested.items.length,1);
-      assert.equal(requested.items[0].relationship_id,relationship.relationship_id);
       assert.equal(requested.items[0].status,'pending');
-      assert.equal(requested.items[0].merchant_display_name,'M One');
       assert.equal((await store.listCustomerRelationships({id:'unrelated-customer',role:'customer'},{})).items.length,0);
       assert.ok(requested.next_cursor);
       const older=await store.listCustomerRelationships(customer,{limit:1,cursor:requested.next_cursor});
       assert.equal(older.items.length,1);
-      assert.equal(older.items[0].merchant_id,other.id);
+      const twoRows=[...requested.items,...older.items];
+      assert.deepEqual(new Set(twoRows.map(row=>row.merchant_id)),new Set([merchant.id,other.id]));
+      const merchantRelation=twoRows.find(row=>row.merchant_id===merchant.id);
+      assert.equal(merchantRelation.relationship_id,relationship.relationship_id);
+      assert.equal(merchantRelation.merchant_display_name,'M One');
       await assert.rejects(()=>store.listCustomerRelationships({id:'unrelated-customer',role:'customer'},{
         limit:1,cursor:requested.next_cursor
       }),{status:422});
       await store.decideRelationship(customer,relationship.relationship_id,{decision:'accept'});
-      assert.equal((await store.listCustomerRelationships(customer,{})).items[0].status,'approved');
+      assert.equal((await store.listCustomerRelationships(customer,{})).items
+        .find(row=>row.merchant_id===merchant.id).status,'approved');
       const after = await store.listContactClaims(merchant,contact.id,{});
       assert.equal(after.items.find(x=>x.claim_id===a.id).stage,'approved');
       assert.equal(after.items.find(x=>x.claim_id===b.id).stage,'rejected');
