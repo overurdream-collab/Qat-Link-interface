@@ -60,7 +60,7 @@ void main() {
     );
     expect(find.text('الديون المسجلة'), findsOneWidget);
     expect(find.text('معلقة — بانتظار الانضمام'), findsOneWidget);
-    expect(find.textContaining('5 $'), findsWidgets);
+    expect(find.textContaining(r'5 $'), findsWidgets);
     expect(find.textContaining('1,000'), findsNothing,
         reason: 'Changing currency must not aggregate YER into USD.');
     expect(find.textContaining('250'), findsNothing,
