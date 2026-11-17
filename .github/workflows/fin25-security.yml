@@ -1,0 +1,47 @@
+name: FIN25 Security Tests
+
+on:
+  push:
+    branches:
+      - 'test/fin25-security-gates-*'
+      - 'integration/fin25-*'
+    paths:
+      - 'server/src/auth.mjs'
+      - 'server/test/fin25_*.test.mjs'
+      - '.github/workflows/fin25-security.yml'
+  pull_request:
+    paths:
+      - 'server/src/auth.mjs'
+      - 'server/test/fin25_*.test.mjs'
+      - '.github/workflows/fin25-security.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: fin25-security-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  jwt-security:
+    name: JWT security regression tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: server
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+      - name: Set up Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install locked dependencies
+        run: |
+          if [ -f package-lock.json ]; then npm ci --ignore-scripts; else npm install --ignore-scripts --no-package-lock; fi
+      - name: Syntax-check FIN25 security test
+        run: node --check test/fin25_security_gates.test.mjs
+      - name: Run FIN25 JWT tests
+        run: node --test test/fin25_*.test.mjs
