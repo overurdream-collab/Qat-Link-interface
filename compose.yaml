@@ -1,0 +1,54 @@
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: qatlink
+      POSTGRES_USER: qatlink
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
+    volumes:
+      - qatlink_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U qatlink -d qatlink"]
+      interval: 5s
+      timeout: 3s
+      retries: 15
+    networks: [internal]
+  migrate:
+    image: postgres:16-alpine
+    profiles: [setup]
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      PGPASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
+    volumes:
+      - ./server/sql:/sql:ro
+    entrypoint: ["/bin/sh", "-ec"]
+    command: |
+      for file in /sql/00[1-7]_*.sql; do
+        echo "Applying $file"
+        psql -v ON_ERROR_STOP=1 -h db -U qatlink -d qatlink -f "$file"
+      done
+    networks: [internal]
+  api:
+    build: ./server
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgres://qatlink:${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}@db:5432/qatlink
+      AUTH_PUBLIC_KEY_PEM: ${AUTH_PUBLIC_KEY_PEM:?Configure trusted identity provider public key}
+      AUTH_ISSUER: ${AUTH_ISSUER:?Configure issuer}
+      AUTH_AUDIENCE: ${AUTH_AUDIENCE:?Configure audience}
+      CURSOR_SECRET: ${CURSOR_SECRET:?Configure random 32+ character secret}
+      PORT: "8080"
+    ports:
+      - "127.0.0.1:8080:8080"
+    networks: [internal]
+volumes:
+  qatlink_pgdata:
+networks:
+  internal:
+    driver: bridge
