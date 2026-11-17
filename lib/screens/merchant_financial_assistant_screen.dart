@@ -375,7 +375,6 @@ class _MerchantFinancialAssistantScreenState
     Decimal previousDebts,
   ) {
     final maxValue = debts > payments ? debts : payments;
-    final ratio = maxValue <= _zero ? 0.0 : 1.0;
     final debtRatio = maxValue <= _zero ? 0.0 : (debts / maxValue).toDouble();
     final paymentRatio = maxValue <= _zero ? 0.0 : (payments / maxValue).toDouble();
     final delta = previousDebts <= _zero
