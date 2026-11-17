@@ -7,6 +7,17 @@ const {DATABASE_URL, FIN25_ADMIN_KEY, FIN25_PORT='8082'}=process.env;
 if(!DATABASE_URL || !FIN25_ADMIN_KEY || FIN25_ADMIN_KEY.length<32) throw Error('DATABASE_URL and strong FIN25_ADMIN_KEY required');
 const pool=new Pool({connectionString:DATABASE_URL});
 const hash=x=>createHash('sha256').update(x).digest('hex');
+// Bounded unauthenticated enrollment requests; proxy must enforce its own IP limits too.
+const enrollmentRate = new Map();
+function checkEnrollmentRate(req) {
+ const ip=req.socket.remoteAddress || 'unknown';
+ const now=Date.now();
+ for(const [key,value] of enrollmentRate) if(now-value.start>3600000) enrollmentRate.delete(key);
+ const entry=enrollmentRate.get(ip);
+ if(entry && entry.count>=5) throw Object.assign(Error('Enrollment request rate limit'),{status:429});
+ enrollmentRate.set(ip,entry?{start:entry.start,count:entry.count+1}:{start:now,count:1});
+}
+
 const respond=(res,status,body)=>{res.writeHead(status,{'content-type':'application/json','cache-control':'no-store'});res.end(JSON.stringify(body));};
 function admin(req){const key=req.headers['x-fin25-admin-key'];if(typeof key!=='string'||Buffer.byteLength(key)!==Buffer.byteLength(FIN25_ADMIN_KEY)||!timingSafeEqual(Buffer.from(key),Buffer.from(FIN25_ADMIN_KEY)))throw Object.assign(Error('Unauthorized'),{status:401});}
 const server=http.createServer(async(req,res)=>{
@@ -21,6 +32,24 @@ const server=http.createServer(async(req,res)=>{
   const path=new URL(req.url,'http://localhost').pathname;
   const id=body.deviceId;
   if(['/v1/gateway/enroll','/v1/gateway/approve','/v1/gateway/revoke'].includes(path))admin(req);
+  if(path==='/v1/gateway/enrollment/request'){
+   checkEnrollmentRate(req);
+   if(typeof id!=='string'||!/^[0-9a-f-]{36}$/i.test(id)||typeof body.publicKeyPem!=='string'||body.publicKeyPem.length>4096)throw Object.assign(Error('Invalid device'),{status:400});
+   const fp=fingerprint(body.publicKeyPem);
+   const result=await pool.query("INSERT INTO fin25_gateway_devices(device_id,public_key_spki_pem,fingerprint_sha256) VALUES($1,$2,$3) ON CONFLICT DO NOTHING RETURNING device_id",[id,body.publicKeyPem,fp]);
+   if(!result.rowCount){
+    const existing=await pool.query('SELECT fingerprint_sha256,status FROM fin25_gateway_devices WHERE device_id=$1',[id]);
+    if(existing.rows[0]?.fingerprint_sha256!==fp)throw Object.assign(Error('Device identity conflict'),{status:409});
+    return respond(res,200,{deviceId:id,status:existing.rows[0].status,approved:existing.rows[0].status==='active'});
+   }
+   await pool.query("INSERT INTO fin25_gateway_audit(device_id,action) VALUES($1,'enroll_request')",[id]);
+   return respond(res,202,{deviceId:id,status:'pending',approved:false});
+  }
+  if(path==='/v1/gateway/enrollment/pending'){
+   admin(req);
+   const rows=await pool.query("SELECT device_id,fingerprint_sha256,status,proved_at FROM fin25_gateway_devices WHERE status IN ('pending','proved') ORDER BY device_id LIMIT 100");
+   return respond(res,200,{devices:rows.rows});
+  }
   if(path==='/v1/gateway/enroll'){
    if(typeof id!=='string'||!/^[0-9a-f-]{36}$/i.test(id)||typeof body.publicKeyPem!=='string')throw Object.assign(Error('Invalid device'),{status:400});
    const fp=fingerprint(body.publicKeyPem);
