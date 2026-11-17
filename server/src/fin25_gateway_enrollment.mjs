@@ -1,6 +1,6 @@
 // Isolated FIN25 enrollment service. Use behind trusted HTTPS reverse proxy.
 import http from 'node:http';
-import { createHash, timingSafeEqual } from 'node:crypto';
+import { createHash, timingSafeEqual, createPublicKey } from 'node:crypto';
 import { Pool } from 'pg';
 import { createChallenge, challengePayload, fingerprint, verifyRsa, canonicalRequest, validateSignedMetadata } from './gateway_device_crypto.mjs';
 const {DATABASE_URL, FIN25_ADMIN_KEY, FIN25_PORT='8082'}=process.env;
@@ -35,6 +35,10 @@ const server=http.createServer(async(req,res)=>{
   if(path==='/v1/gateway/enrollment/request'){
    checkEnrollmentRate(req);
    if(typeof id!=='string'||!/^[0-9a-f-]{36}$/i.test(id)||typeof body.publicKeyPem!=='string'||body.publicKeyPem.length>4096)throw Object.assign(Error('Invalid device'),{status:400});
+   let publicKey;
+   try { publicKey=createPublicKey(body.publicKeyPem); } catch { throw Object.assign(Error('Invalid public key'),{status:400}); }
+   if(publicKey.asymmetricKeyType!=='rsa'||(publicKey.asymmetricKeyDetails?.modulusLength||0)<2048)
+    throw Object.assign(Error('RSA public key of at least 2048 bits required'),{status:400});
    const fp=fingerprint(body.publicKeyPem);
    const result=await pool.query("INSERT INTO fin25_gateway_devices(device_id,public_key_spki_pem,fingerprint_sha256) VALUES($1,$2,$3) ON CONFLICT DO NOTHING RETURNING device_id",[id,body.publicKeyPem,fp]);
    if(!result.rowCount){
