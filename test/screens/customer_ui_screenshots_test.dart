@@ -96,9 +96,14 @@ void main() {
       final boundary = tester.renderObject<RenderRepaintBoundary>(
         find.byKey(boundaryKey),
       );
-      final image = await boundary.toImage(pixelRatio: 1);
-      final data = await image.toByteData(format: ui.ImageByteFormat.png);
-      image.dispose();
+      final data = await tester.runAsync(() async {
+        final image = await boundary.toImage(pixelRatio: 1);
+        try {
+          return await image.toByteData(format: ui.ImageByteFormat.png);
+        } finally {
+          image.dispose();
+        }
+      });
       if (data == null) throw StateError('Failed to encode $name screenshot.');
       File('${screenshots.path}/$name.png')
           .writeAsBytesSync(data.buffer.asUint8List());
