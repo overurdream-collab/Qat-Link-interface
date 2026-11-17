@@ -76,6 +76,8 @@ const api=http.createServer(async(req,res)=>{
    const x=await client.query('SELECT * FROM fin25_otp_challenges WHERE id=$1 FOR UPDATE',[requestId]);
    assert(x.rowCount===1,401,'Invalid or expired code');
    const ch=x.rows[0];
+   const sent=await client.query("SELECT 1 FROM fin25_sms_jobs WHERE challenge_id=$1 AND status IN ('sent','delivered')",[requestId]);
+   assert(sent.rowCount===1,401,'OTP not confirmed sent');
    assert(!ch.consumed_at&&new Date(ch.expires_at)>new Date()&&ch.attempts<5,401,'Invalid or expired code');
    await client.query('UPDATE fin25_otp_challenges SET attempts=attempts+1 WHERE id=$1',[requestId]);
    const a=Buffer.from(ch.code_digest,'hex'),b=Buffer.from(digest(requestId,code),'hex');
@@ -89,6 +91,7 @@ const api=http.createServer(async(req,res)=>{
   }
   if(path==='/v1/gateway/poll'){
    const device=await signed(req,raw);
+   assert(env.FIN25_SMS_DISPATCH_ENABLED==='true',503,'SMS dispatch disabled by operator');
    client=await pool.connect();await client.query('BEGIN');
    const x=await client.query("SELECT j.id,j.recipient,j.encrypted_body FROM fin25_sms_jobs j JOIN fin25_otp_challenges c ON c.id=j.challenge_id WHERE j.status='pending' AND c.expires_at>now() AND j.attempts<3 ORDER BY j.created_at FOR UPDATE OF j SKIP LOCKED LIMIT 1");
    if(!x.rowCount){await client.query('COMMIT');client.release();client=null;return reply(res,200,{job:null});}
