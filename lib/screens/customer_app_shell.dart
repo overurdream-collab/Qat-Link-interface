@@ -851,7 +851,16 @@ class _StudioPostCard extends StatelessWidget {
           IconButton(tooltip: 'إعجاب', onPressed: null, icon: Icon(post.isLiked ? Icons.favorite : Icons.favorite_border, color: c.danger)),
           IconButton(tooltip: 'مفضلة', onPressed: null, icon: Icon(post.isFavorite ? Icons.bookmark : Icons.bookmark_border, color: c.petrol)),
           IconButton(tooltip: 'مشاركة', onPressed: null, icon: Icon(Icons.share_outlined, color: c.muted)),
-          const Spacer(), Text('التفاعل يتطلب ربط الحساب بالخادم', style: TextStyle(color: c.muted, fontSize: 9)),
+          const SizedBox(width: 8),
+          Flexible(
+            child: Text(
+              'التفاعل يتطلب ربط الحساب بالخادم',
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.end,
+              style: TextStyle(color: c.muted, fontSize: 9),
+            ),
+          ),
         ]),
       ])),
     ])));
