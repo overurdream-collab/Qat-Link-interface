@@ -83,6 +83,12 @@ void main() {
     expect(state.merchantContacts.value, hasLength(1));
     expect(state.merchantContacts.value.single.name, 'صالح أحمد');
     await tester.pumpAndSettle();
+    expect(find.byKey(const Key('customer_download_qr_Android')), findsOneWidget);
+    expect(find.byKey(const Key('customer_download_qr_iPhone')), findsOneWidget);
+    expect(find.text('إرسال عبر واتساب'), findsOneWidget);
+    expect(find.textContaining('لا تعني موافقته'), findsOneWidget);
+    await tester.tap(find.byKey(const Key('customer_invite_close')));
+    await tester.pumpAndSettle();
     expect(find.text('عملاء في سجل التاجر — غير معتمدين'), findsOneWidget);
     expect(find.byKey(
       Key('merchant_pending_contact_${state.merchantContacts.value.single.id}')),
