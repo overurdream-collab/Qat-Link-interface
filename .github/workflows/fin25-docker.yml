@@ -1,0 +1,32 @@
+name: FIN25 Docker Compose config
+on:
+  push:
+    branches: ['integration/fin25-samsung-otp-secure-20261117']
+    paths:
+      - 'deploy/fin25/**'
+      - 'server/Dockerfile.fin25'
+      - '.github/workflows/fin25-docker.yml'
+  pull_request:
+    paths:
+      - 'deploy/fin25/**'
+      - 'server/Dockerfile.fin25'
+      - '.github/workflows/fin25-docker.yml'
+jobs:
+  compose:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check Docker Compose syntax without live secrets
+        working-directory: deploy/fin25
+        env:
+          DATABASE_URL: postgresql://test:test@host.docker.internal:5432/test
+          FIN25_ADMIN_KEY: "00000000000000000000000000000000"
+          OTP_HMAC_SECRET: synthetic-only
+          OTP_ENCRYPTION_KEY_HEX: "0000000000000000000000000000000000000000000000000000000000000000"
+          OTP_INTERNAL_API_KEY: synthetic-only
+          JWT_PUBLIC_KEY_PEM: synthetic-only
+          JWT_ISSUER: synthetic-issuer
+          JWT_AUDIENCE: synthetic-audience
+        run: docker compose config --quiet
+      - name: Build isolated FIN25 server image
+        run: docker build -f server/Dockerfile.fin25 server

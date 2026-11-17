@@ -1,0 +1,12 @@
+:443 {
+ tls /etc/caddy/certs/server.crt /etc/caddy/certs/server.key
+ @enroll path /v1/gateway/enroll /v1/gateway/challenge /v1/gateway/prove /v1/gateway/approve /v1/gateway/revoke /v1/gateway/heartbeat
+ handle @enroll {
+   reverse_proxy enrollment:8082
+ }
+ @otp path /v1/gateway/poll /v1/gateway/result /v1/auth/otp/request /v1/auth/otp/verify /v1/internal/otp/proof
+ handle @otp {
+   reverse_proxy otp:8083
+ }
+ respond 404
+}
