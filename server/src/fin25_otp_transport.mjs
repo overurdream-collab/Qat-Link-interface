@@ -149,4 +149,4 @@ const api=http.createServer(async(req,res)=>{
   return reply(res,e.status||500,{error:e.status?e.message:'Internal server error'});
  }
 });
-api.listen(Number(env.FIN25_OTP_PORT||8083),'127.0.0.1',()=>console.info('FIN25 OTP transport listening on loopback'));
+api.listen(Number(env.FIN25_OTP_PORT||8083),env.FIN25_BIND_HOST||'127.0.0.1',()=>console.info('FIN25 OTP transport listening on loopback'));
