@@ -23,6 +23,11 @@ void main() {
     final fontLoader = FontLoader('NotoSansArabic')
       ..addFont(rootBundle.load('assets/fonts/NotoSansArabic-Regular.ttf'));
     await fontLoader.load();
+    final iconFontLoader = FontLoader('MaterialIcons')
+      ..addFont(rootBundle.load(
+        'packages/flutter/lib/src/material/fonts/MaterialIcons-Regular.otf',
+      ));
+    await iconFontLoader.load();
 
     final state = _demoState();
     addTearDown(state.dispose);
