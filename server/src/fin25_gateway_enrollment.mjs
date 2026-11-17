@@ -76,4 +76,4 @@ const server=http.createServer(async(req,res)=>{
   return respond(res,404,{error:'Not found'});
  }catch(e){if(client){await client.query('ROLLBACK').catch(()=>{});client.release();}return respond(res,e.status||500,{error:e.status?e.message:'Internal server error'});}
 });
-server.listen(Number(FIN25_PORT),'127.0.0.1',()=>console.info('FIN25 enrollment on loopback'));
+server.listen(Number(FIN25_PORT),process.env.FIN25_BIND_HOST||'127.0.0.1',()=>console.info('FIN25 enrollment on loopback'));
