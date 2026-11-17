@@ -21,7 +21,7 @@ POST /v1/auth/logout       {refreshToken} → 204
 ## واجهات الهاتف ↔ الخادم (مقترحة؛ غير منفذة)
 POST /v1/gateway/devices/register (يتطلب موافقة إدارية أولية وربط المفتاح العام)
 POST /v1/gateway/poll {deviceId, capacity} → مهام قصيرة العمر مع lease
-POST /v1/gateway/jobs/{id}/result {status:"sent"|"failed"|"delivered",simSlot,errorCode?}
+POST /v1/gateway/result {jobId,status:"sent"|"failed"|"delivered",simSlot}
 POST /v1/gateway/heartbeat {deviceId,simStatuses}
 كل طلب جهاز يحمل توقيعاً ورقماً عشوائياً وتوقيتاً، ويُرفض تكرار jobId؛ يستخدم الجهاز ACK بعد تأكيد إرسال SMS من Android sent PendingIntent، وليس بمجرد استدعاء SmsManager.
 
@@ -40,3 +40,10 @@ POST /v1/gateway/heartbeat {deviceId,simStatuses}
 4. اختبارات rate-limit, replay, brute-force, duplicate delivery, SIM failover, offline, JWT refresh/revoke.
 5. لا تفعل OTP_ENABLED=true إلا بعد نجاح الاختبارات. لا تضع المفاتيح الخاصة أو بيانات الشريحة في Git.
 6. مسار إصلاح سلامة الدفتر P0 مستقل، ويظل حاجزاً أمام إطلاق التطبيق المالي.
+
+## توحيد العقد وسلامة المهلة (2026-11-17)
+- المسار المنفذ لتقرير نتيجة الإرسال هو `POST /v1/gateway/result`، ويتطلب `jobId` و`status` و`simSlot`.
+- الحالات المسموحة: `leased → sent|failed` ثم `sent → delivered` فقط. تكرار نفس النتيجة مقبول دون تغيير الحالة.
+- انتهاء مهلة الحجز **لا** يعيد المهمة تلقائياً إلى `pending`؛ قد تكون الرسالة أرسلت فعلاً وانقطع التأكيد. يلزم إجراء مصالحة مستقل قبل أي إعادة إرسال.
+- هذا ضمان **at-most-one automatic dispatch** ضمن منطق الطابور الحالي، وليس ضماناً مطلقاً لوصول SMS مرة واحدة عبر الشبكة الخلوية.
+- ما يزال تسجيل الجهاز، JWT، اختبارات الخادم، وتجربة الهاتف الحقيقي غير مكتملة. لا تفعّل `OTP_ENABLED` في الإنتاج.
