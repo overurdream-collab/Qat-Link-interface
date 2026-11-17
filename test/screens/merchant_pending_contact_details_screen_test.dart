@@ -40,6 +40,11 @@ void main() {
         ),
       ),
     ));
+    await tester.scrollUntilVisible(
+      find.byKey(const Key('off_app_export_pdf')),
+      240,
+      scrollable: find.byType(Scrollable).first,
+    );
     expect(find.byKey(const Key('off_app_export_pdf')), findsOneWidget);
     expect(find.byKey(const Key('off_app_share_pdf')), findsOneWidget);
     await tester.ensureVisible(find.byKey(const Key('off_app_add_payment')));

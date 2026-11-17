@@ -14,7 +14,11 @@ void main() {
       home: Scaffold(body: HomeScreen(state: state)),
     ));
 
-    await tester.ensureVisible(find.text('المساعد المالي الذكي'));
+    await tester.scrollUntilVisible(
+      find.text('المساعد المالي الذكي'),
+      240,
+      scrollable: find.byType(Scrollable).first,
+    );
     await tester.tap(find.text('المساعد المالي الذكي'));
     await tester.pumpAndSettle();
     expect(find.byKey(const Key('merchant_financial_assistant_screen')),

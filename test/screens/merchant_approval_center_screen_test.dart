@@ -15,7 +15,7 @@ void main() {
       home: MerchantApprovalCenterScreen(state: state),
     ));
 
-    expect(find.text('تحتاج موافقتك'), findsOneWidget);
+    expect(find.text('تحتاج موافقتي'), findsOneWidget);
     expect(find.text('لا توجد عمليات تنتظر قرارك'), findsOneWidget);
     expect(find.text('اعتماد'), findsNothing);
     expect(find.text('رفض'), findsNothing);

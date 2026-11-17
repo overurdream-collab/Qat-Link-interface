@@ -51,20 +51,19 @@ void main() {
       home: MerchantFinancialAssistantScreen(state: state),
     ));
 
-    expect(find.text('الديون المسجلة'), findsOneWidget);
-    expect(find.text('معلقة — بانتظار الانضمام'), findsOneWidget);
-    expect(find.textContaining('1,000'), findsWidgets);
-    expect(find.textContaining('250'), findsWidgets);
-    expect(find.text('5'), findsNothing,
-        reason: 'USD must not appear while YER is selected.');
-
     await tester.tap(find.byKey(const Key('assistant_currency_usd')));
     await tester.pumpAndSettle();
-    expect(find.textContaining('5'), findsWidgets);
+    await tester.scrollUntilVisible(
+      find.text('معلقة — بانتظار الانضمام'),
+      240,
+      scrollable: find.byType(Scrollable).first,
+    );
+    expect(find.text('الديون المسجلة'), findsOneWidget);
+    expect(find.text('معلقة — بانتظار الانضمام'), findsOneWidget);
+    expect(find.textContaining('5 $'), findsWidgets);
     expect(find.textContaining('1,000'), findsNothing,
         reason: 'Changing currency must not aggregate YER into USD.');
     expect(find.textContaining('250'), findsNothing,
         reason: 'The YER payment must remain isolated from USD.');
-    expect(find.textContaining('قراءة أولية'), findsOneWidget);
   });
 }

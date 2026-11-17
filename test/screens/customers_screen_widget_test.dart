@@ -108,7 +108,7 @@ void main() {
       createdAt: date));
     await pumpCustomers(tester);
     expect(find.text('عميل لا يستخدم التطبيق'), findsOneWidget);
-    expect(find.text('ديون معلقة: 1'), findsOneWidget);
+    expect(find.text('ديون مسجلة: 1 • دفعات مسجلة: 0'), findsOneWidget);
     expect(find.byKey(const Key('pending_copy_statement_p1')),
       findsOneWidget);
     expect(find.descendant(
