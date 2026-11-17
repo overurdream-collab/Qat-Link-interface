@@ -498,7 +498,7 @@ class _MerchantFinancialAssistantScreenState
     final results = <_Insight>[];
 
     for (final id in ids) {
-      Decimal total(DateTime Function(DateTime) inPeriod, MovementType type) {
+      Decimal total(bool Function(DateTime) inPeriod, MovementType type) {
         var amount = _zero;
         for (final row in rows) {
           if (row.customerId == id &&
