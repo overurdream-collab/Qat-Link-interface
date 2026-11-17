@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:qr_flutter/qr_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../features/auth/auth_input_validation.dart';
 import '../../models/merchant_pending_models.dart';
@@ -27,6 +29,19 @@ class _CustomerInvitationSheetState extends State<CustomerInvitationSheet> {
   final _name = TextEditingController();
   final _phone = TextEditingController();
 
+  // Search links are safe before the official store listings are published.
+  // Replace them with direct listing URLs once the store IDs are assigned.
+  static final Uri _playStoreUri = Uri.https(
+    'play.google.com',
+    '/store/search',
+    {'q': 'Qat-Link', 'c': 'apps'},
+  );
+  static final Uri _appStoreUri = Uri.https(
+    'apps.apple.com',
+    '/search',
+    {'term': 'Qat-Link'},
+  );
+
   @override
   void dispose() {
     _name.dispose();
@@ -34,7 +49,7 @@ class _CustomerInvitationSheetState extends State<CustomerInvitationSheet> {
     super.dispose();
   }
 
-  void _send() {
+  Future<void> _send() async {
     if (!_formKey.currentState!.validate()) return;
     final merchantId = widget.merchantId;
     if (merchantId == null || merchantId.trim().isEmpty) {
@@ -42,23 +57,183 @@ class _CustomerInvitationSheetState extends State<CustomerInvitationSheet> {
           'دون جلسة تاجر موثقة.');
       return;
     }
+
+    final name = _name.text.trim();
     final phone = AuthInputValidation.normalizePhone(_phone.text);
     try {
       final next = widget.state.merchantContacts.value.length + 1;
       widget.state.addMerchantContact(MerchantPendingContact(
         id: 'local-$merchantId-${DateTime.now().microsecondsSinceEpoch}-$next',
         merchantId: merchantId,
-        name: _name.text.trim(),
+        name: name,
         phone: phone,
         createdAt: DateTime.now(),
       ));
-      _notice('أُضيف العميل إلى سجل التاجر المحلي بحالة غير معتمد. '
-          'يمكن تسجيل مبالغ معلقة عليه، ولا تُحتسب ديوناً معتمدة. '
-          'الإرسال والاحتفاظ الدائم ينتظران ربط الخادم.');
-      Navigator.of(context).pop();
+      await _showDownloadInvite(name: name, phone: phone);
+      if (mounted) Navigator.of(context).pop();
     } on Object catch (_) {
       _notice('تعذر حفظ سجل العميل. تحقق من رقم الهاتف أو وجود '
           'هذا العميل مسبقاً ضمن سجلك.');
+    }
+  }
+
+  Future<void> _showDownloadInvite({
+    required String name,
+    required String phone,
+  }) =>
+      showDialog<void>(
+        context: context,
+        builder: (dialogContext) => AlertDialog(
+          titlePadding: const EdgeInsets.fromLTRB(20, 18, 20, 4),
+          contentPadding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
+          title: Row(children: [
+            Icon(Icons.qr_code_2_rounded, color: dialogContext.colors.petrol),
+            const SizedBox(width: 8),
+            const Expanded(
+              child: Text('شارك رابط تحميل التطبيق',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w900)),
+            ),
+          ]),
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  'امسح الرمز المناسب لهاتف العميل، أو أرسل له الدعوة عبر واتساب. '
+                  'إضافة العميل لا تعني موافقته على الارتباط أو على أي دين.',
+                  style: TextStyle(
+                    color: dialogContext.colors.muted,
+                    fontSize: 11,
+                    height: 1.45,
+                  ),
+                ),
+                const SizedBox(height: 14),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    _storeQr(
+                      context: dialogContext,
+                      title: 'Android',
+                      storeName: 'Google Play',
+                      uri: _playStoreUri,
+                    ),
+                    _storeQr(
+                      context: dialogContext,
+                      title: 'iPhone',
+                      storeName: 'App Store',
+                      uri: _appStoreUri,
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 12),
+                Container(
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    color: dialogContext.colors.pendingBackground,
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(color: dialogContext.colors.cardBorder),
+                  ),
+                  child: Text(
+                    'روابط المتاجر حالياً روابط بحث عن Qat-Link. بعد نشر التطبيق '
+                    'تُستبدل بروابط صفحة التطبيق الرسمية. تبقى بيانات العميل '
+                    'محلية وغير متزامنة حتى ربط الخادم.',
+                    style: TextStyle(
+                      color: dialogContext.colors.text,
+                      fontSize: 9,
+                      height: 1.45,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(
+              key: const Key('customer_invite_close'),
+              onPressed: () => Navigator.of(dialogContext).pop(),
+              child: const Text('إغلاق'),
+            ),
+            FilledButton.icon(
+              key: const Key('customer_invite_whatsapp'),
+              onPressed: () => _shareOnWhatsApp(name: name, phone: phone),
+              icon: const Icon(Icons.chat_rounded, size: 18),
+              label: const Text('إرسال عبر واتساب'),
+            ),
+          ],
+        ),
+      );
+
+  Widget _storeQr({
+    required BuildContext context,
+    required String title,
+    required String storeName,
+    required Uri uri,
+  }) {
+    final c = context.colors;
+    return Container(
+      width: 118,
+      padding: const EdgeInsets.fromLTRB(7, 9, 7, 7),
+      decoration: BoxDecoration(
+        color: c.card,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: c.cardBorder),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(title,
+              style: TextStyle(
+                  color: c.text, fontWeight: FontWeight.w900, fontSize: 11)),
+          const SizedBox(height: 3),
+          Text(storeName, style: TextStyle(color: c.muted, fontSize: 9)),
+          const SizedBox(height: 6),
+          QrImageView(
+            key: Key('customer_download_qr_$title'),
+            data: uri.toString(),
+            version: QrVersions.auto,
+            size: 96,
+            backgroundColor: Colors.white,
+            eyeStyle: const QrEyeStyle(
+              eyeShape: QrEyeShape.square,
+              color: Color(0xFF172B30),
+            ),
+            dataModuleStyle: const QrDataModuleStyle(
+              dataModuleShape: QrDataModuleShape.square,
+              color: Color(0xFF172B30),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> _shareOnWhatsApp({
+    required String name,
+    required String phone,
+  }) async {
+    final digits = phone.replaceAll(RegExp(r'[^0-9]'), '');
+    final message = 'مرحباً $name، حمّل تطبيق مقوتي لنك لمتابعة حسابك '
+        'واستلام طلبات الارتباط والعمليات:\n'
+        'Android (Google Play): $_playStoreUri\n'
+        'iPhone (App Store): $_appStoreUri\n'
+        'ستبقى الطلبات معلقة حتى تراجعها وتوافق عليها من التطبيق.';
+    final whatsappUri = Uri.https(
+      'wa.me',
+      '/$digits',
+      {'text': message},
+    );
+    try {
+      final launched = await launchUrl(
+        whatsappUri,
+        mode: LaunchMode.externalApplication,
+      );
+      if (!launched && mounted) {
+        _notice('تعذر فتح واتساب. يمكنك مسح رمز QR أو مشاركة الرابط يدوياً.');
+      }
+    } on Object {
+      if (mounted) {
+        _notice('تعذر فتح واتساب. يمكنك مسح رمز QR أو مشاركة الرابط يدوياً.');
+      }
     }
   }
 
