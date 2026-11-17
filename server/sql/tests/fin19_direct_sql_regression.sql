@@ -8,14 +8,17 @@ VALUES('11111111-1111-4111-8111-111111111111','fin19-test-merchant','FIN19 Custo
       ('11111111-1111-4111-8111-111111111112','fin19-test-merchant','FIN19 Other','+967777000002');
 INSERT INTO merchant_claims(id,merchant_id,contact_id,amount,currency,idempotency_key,request_digest)
 VALUES('22222222-2222-4222-8222-222222222221','fin19-test-merchant',
-'11111111-1111-4111-8111-111111111111',1,'USD','fin19-test-1',repeat('a',64));
+'11111111-1111-4111-8111-111111111111',1,'USD','fin19-test-1',repeat('a',64)),
+('22222222-2222-4222-8222-222222222222','fin19-test-merchant',
+'11111111-1111-4111-8111-111111111111',1,'USD','fin19-test-2',repeat('b',64));
 INSERT INTO merchant_relationships(id,merchant_id,customer_id,contact_id,status)
 VALUES('33333333-3333-4333-8333-333333333331','fin19-test-merchant','fin19-test-customer',
 '11111111-1111-4111-8111-111111111111','approved'),
 ('33333333-3333-4333-8333-333333333332','fin19-test-merchant','fin19-test-other',
 '11111111-1111-4111-8111-111111111112','approved');
 INSERT INTO customer_claim_decisions(claim_id,merchant_id,customer_id,decision)
-VALUES('22222222-2222-4222-8222-222222222221','fin19-test-merchant','fin19-test-customer','accept');
+VALUES('22222222-2222-4222-8222-222222222221','fin19-test-merchant','fin19-test-customer','accept'),
+('22222222-2222-4222-8222-222222222222','fin19-test-merchant','fin19-test-customer','accept');
 -- Correct approved entry must post.
 INSERT INTO financial_movements(id,source_claim_id,relationship_id,merchant_id,customer_id,amount,currency,type)
 VALUES('44444444-4444-4444-8444-444444444441','22222222-2222-4222-8222-222222222221',
@@ -25,7 +28,7 @@ DO $$
 BEGIN
   BEGIN
     INSERT INTO financial_movements(id,source_claim_id,relationship_id,merchant_id,customer_id,amount,currency,type)
-    VALUES('44444444-4444-4444-8444-444444444442','22222222-2222-4222-8222-222222222221',
+    VALUES('44444444-4444-4444-8444-444444444442','22222222-2222-4222-8222-222222222222',
     '33333333-3333-4333-8333-333333333332','fin19-test-merchant','fin19-test-other',999,'SAR','debt');
     RAISE EXCEPTION 'FAIL: forged ledger entry was accepted';
   EXCEPTION WHEN check_violation THEN
