@@ -97,7 +97,8 @@ const api=http.createServer(async(req,res)=>{
    await client.query('COMMIT');client.release();client=null;
    return reply(res,200,{job:{id:j.id,recipient:j.recipient,text:decrypt(j.encrypted_body)}});
   }
-  // A lease is not a retry permission: uncertain sends stay leased for reconciliation.\n  // No automatic requeue of expired leases, including after device restart.\n  if(path==='/v1/gateway/result'){
+  // Expired leases are not requeued automatically: uncertain SMS requires reconciliation.
+  if(path==='/v1/gateway/result'){
    const device=await signed(req,raw);
    assert(typeof data.jobId==='string'&&['sent','failed','delivered'].includes(data.status),400,'Invalid result');
    assert(Number.isInteger(data.simSlot)&&data.simSlot>=0,400,'Invalid SIM slot');
