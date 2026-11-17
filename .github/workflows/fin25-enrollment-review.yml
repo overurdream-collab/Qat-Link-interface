@@ -1,0 +1,29 @@
+name: FIN25 enrollment security review
+on:
+  push:
+    branches: [feat/fin25-self-service-enrollment-20261118]
+  pull_request:
+    paths:
+      - 'server/src/fin25_gateway_enrollment.mjs'
+      - '.github/workflows/fin25-enrollment-review.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: server
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Syntax validation
+        run: node --check src/fin25_gateway_enrollment.mjs
+      - name: Install dependencies
+        run: npm ci --ignore-scripts
+      - name: Run unit tests
+        run: npm test
