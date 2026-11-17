@@ -189,19 +189,22 @@ class _CustomerInvitationSheetState extends State<CustomerInvitationSheet> {
           const SizedBox(height: 3),
           Text(storeName, style: TextStyle(color: c.muted, fontSize: 9)),
           const SizedBox(height: 6),
-          QrImageView(
-            key: Key('customer_download_qr_$title'),
-            data: uri.toString(),
-            version: QrVersions.auto,
-            size: 96,
-            backgroundColor: Colors.white,
-            eyeStyle: const QrEyeStyle(
-              eyeShape: QrEyeShape.square,
-              color: Color(0xFF172B30),
-            ),
-            dataModuleStyle: const QrDataModuleStyle(
-              dataModuleShape: QrDataModuleShape.square,
-              color: Color(0xFF172B30),
+          SizedBox.square(
+            dimension: 96,
+            child: QrImageView(
+              key: Key('customer_download_qr_$title'),
+              data: uri.toString(),
+              version: QrVersions.auto,
+              size: 96,
+              backgroundColor: Colors.white,
+              eyeStyle: const QrEyeStyle(
+                eyeShape: QrEyeShape.square,
+                color: Color(0xFF172B30),
+              ),
+              dataModuleStyle: const QrDataModuleStyle(
+                dataModuleShape: QrDataModuleShape.square,
+                color: Color(0xFF172B30),
+              ),
             ),
           ),
         ],
