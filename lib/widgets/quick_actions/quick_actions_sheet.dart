@@ -649,7 +649,7 @@ class _MerchantPendingContactSearchState
         child: SizedBox(
           height: MediaQuery.sizeOf(context).height * .53,
           child: Column(children: [
-            Text('العملاء في سجل التاجر — غير معتمدين',
+            Text('عملاء غير منضمين إلى التطبيق',
               style: TextStyle(color: c.petrol,
                 fontWeight: FontWeight.w900, fontSize: 16)),
             const SizedBox(height: 9),
@@ -676,7 +676,7 @@ class _MerchantPendingContactSearchState
                         title: Text(item.name),
                         subtitle: Text(item.phone,
                           textDirection: TextDirection.ltr),
-                        trailing: const Text('غير معتمد'),
+                        trailing: const Text('بانتظار الانضمام'),
                         onTap: () => Navigator.of(ctx).pop(item),
                       );
                     },

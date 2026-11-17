@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../models/app_models.dart';
+import 'merchant_financial_assistant_screen.dart';
 import '../services/app_state.dart';
 import '../services/movement_calculator.dart';
 import '../theme/app_colors.dart';
@@ -8,14 +9,20 @@ import '../widgets/app_chrome.dart';
 import '../widgets/finance_display.dart';
 import '../widgets/home/hero_carousel.dart';
 import '../widgets/home/new_currency_card.dart';
+import 'merchant_approval_center_screen.dart';
 
 /// Merchant home screen body only.
 /// Top icons, theme switch and bottom navigation belong to MerchantAppShell
 /// and must NOT be copied into subsequent screens (including Movement).
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key, required this.state});
+  const HomeScreen({
+    super.key,
+    required this.state,
+    this.onOpenMovements,
+  });
 
   final AppState state;
+  final VoidCallback? onOpenMovements;
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -29,12 +36,6 @@ class _HomeScreenState extends State<HomeScreen> {
   void dispose() {
     _currencyController.dispose();
     super.dispose();
-  }
-
-  void _showReadOnlyNotice(String title) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('$title — الميزة غير متصلة ببيانات الحساب الفعلية بعد.')),
-    );
   }
 
   List<CurrencyCardData> _currencyData(List<MovementModel> movements) {
@@ -123,13 +124,10 @@ class _HomeScreenState extends State<HomeScreen> {
             const SizedBox(height: 24),
             AppSectionTitle(
               title: 'بانتظار موافقة العملاء',
-              trailing: Text(
-                'عرض الكل (${waitingForClient.length})',
-                style: TextStyle(
-                  color: c.cyan,
-                  fontSize: 11,
-                  fontWeight: FontWeight.w700,
-                ),
+              trailing: TextButton(
+                key: const Key('home_view_waiting_customer'),
+                onPressed: widget.onOpenMovements,
+                child: Text('عرض الحركة (${waitingForClient.length})'),
               ),
             ),
             const SizedBox(height: 10),
@@ -228,8 +226,26 @@ class _HomeScreenState extends State<HomeScreen> {
                   Wrap(
                     spacing: 6,
                     children: [
-                      _smallActionButton('موافقة', c.success),
-                      _smallActionButton('رفض', c.danger),
+                      OutlinedButton.icon(
+                        key: Key('home_review_${m.id}'),
+                        onPressed: () => Navigator.of(context).push<void>(
+                          MaterialPageRoute<void>(
+                            builder: (_) => MerchantApprovalCenterScreen(
+                              state: widget.state,
+                            ),
+                          ),
+                        ),
+                        icon: const Icon(Icons.fact_check_outlined, size: 15),
+                        label: const Text('مراجعة',
+                            style: TextStyle(fontSize: 10)),
+                        style: OutlinedButton.styleFrom(
+                          foregroundColor: c.petrol,
+                          side: BorderSide(color: c.cardBorder),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 9, vertical: 4),
+                          minimumSize: const Size(0, 30),
+                        ),
+                      ),
                     ],
                   ),
                 ],
@@ -252,24 +268,6 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
           ],
-        ),
-      );
-
-  Widget _smallActionButton(String label, Color color) => Material(
-        color: color,
-        borderRadius: BorderRadius.circular(8),
-        child: InkWell(
-          borderRadius: BorderRadius.circular(8),
-          onTap: () => _showReadOnlyNotice(label),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-            child: Text(
-              label,
-              style: const TextStyle(
-                color: Colors.white, fontSize: 10, fontWeight: FontWeight.w700,
-              ),
-            ),
-          ),
         ),
       );
 
@@ -336,7 +334,11 @@ class _HomeScreenState extends State<HomeScreen> {
         color: Colors.transparent,
         child: InkWell(
           borderRadius: BorderRadius.circular(20),
-          onTap: () => _showReadOnlyNotice('المساعد المالي الذكي'),
+          onTap: () => Navigator.of(context).push<void>(
+            MaterialPageRoute<void>(
+              builder: (_) => MerchantFinancialAssistantScreen(state: widget.state),
+            ),
+          ),
           child: Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(

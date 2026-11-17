@@ -5,23 +5,28 @@ import 'app_colors.dart';
 /// Single theme source for all RTL pages. Shared chrome is deliberately
 /// outside individual pages, so the Movement page can be replaced safely.
 abstract final class AppTheme {
-  static ThemeData get light => _build(false);
-  static ThemeData get dark => _build(true);
+  static ThemeData get light => build(dark: false);
+  static ThemeData get dark => build(dark: true);
 
-  static ThemeData _build(bool isDark) {
-    final c = isDark ? AppThemeColors.dark : AppThemeColors.light;
+  static ThemeData build({required bool dark, bool pink = false}) =>
+      _build(dark, pink: pink);
+
+  static ThemeData _build(bool isDark, {bool pink = false}) {
+    final c = pink
+        ? (isDark ? AppThemeColors.pinkDark : AppThemeColors.pink)
+        : (isDark ? AppThemeColors.dark : AppThemeColors.light);
     final scheme = ColorScheme(
       brightness: isDark ? Brightness.dark : Brightness.light,
-      primary: isDark ? AppColors.darkPetrol : AppColors.petrol,
-      onPrimary: isDark ? AppColors.darkBackground : Colors.white,
+      primary: c.petrol,
+      onPrimary: isDark ? c.background : Colors.white,
       primaryContainer: c.pale,
       onPrimaryContainer: c.text,
-      secondary: isDark ? AppColors.darkMint : AppColors.mint,
-      onSecondary: AppColors.ink,
+      secondary: c.mint,
+      onSecondary: c.text,
       secondaryContainer: c.pale,
       onSecondaryContainer: c.text,
-      tertiary: isDark ? AppColors.darkCyan : AppColors.cyan,
-      onTertiary: AppColors.ink,
+      tertiary: c.cyan,
+      onTertiary: c.text,
       tertiaryContainer: c.pale,
       onTertiaryContainer: c.text,
       error: c.danger,
@@ -38,14 +43,17 @@ abstract final class AppTheme {
       scrim: Colors.black,
       inverseSurface: c.text,
       onInverseSurface: c.card,
-      inversePrimary: isDark ? AppColors.mint : AppColors.petrol,
+      inversePrimary: isDark ? c.mint : c.petrol,
     );
     final base = ThemeData(
       useMaterial3: true,
+      fontFamily: 'NotoSansArabic',
+      fontFamilyFallback: const ['NotoSans'],
       colorScheme: scheme,
       brightness: scheme.brightness,
       scaffoldBackgroundColor: c.background,
       visualDensity: VisualDensity.standard,
+      extensions: [c],
     );
     return base.copyWith(
       appBarTheme: AppBarTheme(

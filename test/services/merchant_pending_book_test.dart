@@ -21,6 +21,14 @@ void main() {
     createdAt: when ?? day, description: 'مشتريات لدى التاجر',
   );
 
+  MerchantPendingPayment payment(String id, String contactId,
+      String merchant, String amount, CurrencyCode currency,
+      {DateTime? when}) => MerchantPendingPayment(
+    id: id, contactId: contactId, merchantId: merchant,
+    amount: Decimal.parse(amount), currency: currency,
+    createdAt: when ?? day, description: 'تسديد خارج التطبيق',
+  );
+
   test('merchant records unregistered contact and debt without app account', () {
     final state = AppState();
     addTearDown(state.dispose);
@@ -106,6 +114,45 @@ void main() {
     expect(()=>state.merchantPendingStatement(
       merchantId:'m1',contactId:'contact',
       from:DateTime.utc(2026,12,1),to:day),throwsArgumentError);
+  });
+
+  test('off-app payments reduce operational net by currency only', () {
+    final state=AppState();
+    addTearDown(state.dispose);
+    state.addMerchantContact(contact('contact','m1'));
+    state.addMerchantPendingDebt(
+      debt('yer-debt','contact','m1','1000',CurrencyCode.yer));
+    state.addMerchantPendingPayment(
+      payment('yer-payment','contact','m1','300',CurrencyCode.yer));
+    state.addMerchantPendingPayment(
+      payment('usd-payment','contact','m1','4',CurrencyCode.usd));
+
+    final report=state.merchantPendingStatement(
+      merchantId:'m1',contactId:'contact',from:day,to:day);
+    expect(report.operationalNetByCurrency[CurrencyCode.yer],Decimal.parse('700'));
+    expect(report.operationalNetByCurrency[CurrencyCode.usd],Decimal.parse('-4'));
+    expect(report.operationalNetByCurrency.containsKey(CurrencyCode.sar),false);
+    expect(report.paymentsByCurrency[CurrencyCode.yer],Decimal.parse('300'));
+    final text=MerchantPendingDebtQuery.shareText(report);
+    expect(text,contains('الدفعات المسجلة المعلقة: 300 YER'));
+    expect(text,contains('صافي المديونية التشغيلية المسجل: 700 YER'));
+    expect(text,contains('صافي المديونية التشغيلية المسجل: -4 USD'));
+    expect(state.movements.value,isEmpty,
+      reason:'Unjoined contacts never mutate the shared approved ledger.');
+    expect(state.merchantPendingPayments.value,hasLength(2));
+  });
+
+  test('off-app payment requires the exact merchant contact and unique id', () {
+    final state=AppState();
+    addTearDown(state.dispose);
+    state.addMerchantContact(contact('c1','m1'));
+    final item=payment('p1','c1','m1','30',CurrencyCode.yer);
+    expect(()=>state.addMerchantPendingPayment(
+      payment('foreign','c1','m2','10',CurrencyCode.yer)),throwsStateError);
+    state.addMerchantPendingPayment(item);
+    expect(()=>state.addMerchantPendingPayment(item),throwsStateError);
+    expect(state.merchantPendingPayments.value,hasLength(1));
+    expect(state.movements.value,isEmpty);
   });
 
   test('claimed debt cannot be directly approved as a financial movement', () {

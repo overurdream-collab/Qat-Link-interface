@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:qat_link/theme/app_colors.dart';
 import 'package:qat_link/main.dart';
 
 void main() {
@@ -11,6 +12,18 @@ void main() {
     expect(find.byKey(const Key('open_registration')), findsOneWidget);
     expect(find.text('الحركة'), findsNothing);
     expect(find.text('إجمالي الديون المعتمدة'), findsNothing);
+  });
+
+  testWidgets('login opens only a clearly labeled customer UI preview',
+      (tester) async {
+    await tester.pumpWidget(const QatLinkApp());
+    await tester.ensureVisible(find.byKey(const Key('open_customer_preview')));
+    await tester.tap(find.byKey(const Key('open_customer_preview')));
+    await tester.pumpAndSettle();
+    expect(find.textContaining('معاينة واجهات العميل'), findsOneWidget);
+    expect(find.text('سجل الحركة'), findsNothing);
+    expect(find.text('سجل الحساب خاص'), findsNothing);
+    expect(find.text('يتطلب حساباً موثقاً'), findsWidgets);
   });
 
   testWidgets('registered role options stay on a separate page', (tester) async {
@@ -51,5 +64,34 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.byTooltip('الوضع النهاري'), findsOneWidget);
     expect(find.text('أهلاً بعودتك'), findsOneWidget);
+  });
+
+  testWidgets('female registration selects pink identity and male restores base',
+      (tester) async {
+    await tester.pumpWidget(const QatLinkApp());
+    await tester.ensureVisible(find.byKey(const Key('open_registration')));
+    await tester.tap(find.byKey(const Key('open_registration')));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byKey(const Key('gender_female')));
+    await tester.pumpAndSettle();
+    expect(
+      tester.widget<MaterialApp>(find.byType(MaterialApp)).theme!
+          .colorScheme.primary,
+      AppColors.pinkPrimary,
+    );
+    expect(
+      tester.widget<MaterialApp>(find.byType(MaterialApp)).theme!
+          .scaffoldBackgroundColor,
+      AppColors.pinkBackground,
+    );
+
+    await tester.tap(find.byKey(const Key('gender_male')));
+    await tester.pumpAndSettle();
+    expect(
+      tester.widget<MaterialApp>(find.byType(MaterialApp)).theme!
+          .colorScheme.primary,
+      AppColors.petrol,
+    );
   });
 }

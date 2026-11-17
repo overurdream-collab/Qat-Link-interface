@@ -28,7 +28,7 @@
 
 ### قرار FIN-07 — تدوين مطالبات التاجر قبل تسجيل العميل
 
-لم يعد شرط الارتباط المعتمد يمنع **حفظ مطالبة محلية خاصة في دفتر التاجر**: إذا كان الشخص بلا تطبيق، يُنشئ التاجر `MerchantPendingContact` ثم يسجل `MerchantPendingDebt` من زر الدين السريع. يعرض القسم المنفصل «عملاء في سجل التاجر — غير معتمدين» مبالغها حسب العملة ونسخ كشف موسوم لإرساله يدوياً. **هذا ليس `MovementModel`، ولا يدخل الرصيد المالي المعتمد.** عند تسجيل العميل لاحقاً يجب مطابقة الهاتف الموثق وقبول العلاقة ثم موافقة مستقلة على كل دين قبل ترحيله، مع حفظ الرابط ومنع التكرار. [التفصيل والعقود المطلوبة](MERCHANT_PENDING_DEBTS_BEFORE_APP_AR.md). **الحفظ الموجود اليوم في AppState مؤقت ولا يضمن بقاء البيانات بعد إغلاق التطبيق**؛ لا يجوز تقديمه كدفتر موثوق قبل تخزين خادمي دائم.
+لم يعد شرط الارتباط المعتمد يمنع **حفظ حركات محلية خاصة في دفتر التاجر**: إذا كان الشخص بلا تطبيق، يُنشئ التاجر `MerchantPendingContact` ثم يسجل ديناً أو دفعة في ملفه ضمن «عملاء غير منضمين إلى التطبيق». يعرض الملف الحركة والكشف ومجاميع العملات منفصلة؛ الدفعة تخفض الصافي التشغيلي فقط ولا تدخل الرصيد المشترك المعتمد. **هذه الحركات ليست `MovementModel`.** عند تسجيل العميل لاحقاً يجب إثبات ملكية الرقم بالخادم، ثم يعرض التطبيق الحركات السابقة للمراجعة المستقلة دون تكرار. [التفصيل والعقد](MERCHANT_PENDING_DEBTS_BEFORE_APP_AR.md). **الحفظ الموجود اليوم في AppState مؤقت ولا يضمن بقاء البيانات بعد إغلاق التطبيق**؛ لا يجوز تقديمه كدفتر موثوق قبل تخزين خادمي دائم.
 
 **دليل بدء تكامل FIN-08:** ابدأ من [عقد الخادم الفني لانضمام العميل ومطالباته السابقة](FIN08_JOINED_CUSTOMER_BACKEND_CONTRACT_AR.md)، وراجع [PR #17](https://github.com/overurdream-collab/Qat-Link-interface/pull/17) و[اختبارات main الناجحة](https://github.com/overurdream-collab/Qat-Link-interface/actions/runs/43701479844). لا توصل شاشة العميل بكود يطابق رقماً محلياً؛ يجب أن يثبت الخادم ملكية الحساب قبل كشف المطالبات.
 
@@ -58,6 +58,7 @@
 | العملاء: البحث والترتيب وطلبات الارتباط | lib/screens/customers_screen.dart؛ lib/widgets/customers/ | CUSTOMERS_SCREEN_REFERENCE_AR.md؛ test/screens/customers_screen_widget_test.dart | واجهة، لا دعوات خادم حقيقية |
 | زر (+): إضافة عميل/دين/تسديد بسرعة | lib/widgets/quick_actions/ | QUICK_ACTIONS_CUSTOMER_SELECTION_AR.md؛ test/widgets/quick_actions/ | واجهة وربط بالنموذج المحلي |
 | سجل الحركة: الفلاتر والعملة والحالات | lib/screens/movement_screen.dart؛ lib/widgets/movement/ | MOVEMENT_SCREEN_REFERENCE_AR.md؛ test/screens/movement_screen_widget_test.dart | واجهة وحسابات محلية |
+| مساحة العميل: الرئيسية والحركة والاستوديو والتجار واكتشف | lib/screens/customer_app_shell.dart؛ مدخل معاينة في lib/main.dart وlib/screens/login_screen.dart | APPROVED_CUSTOMER_UI_AR.md؛ test/screens/customer_app_shell_widget_test.dart؛ test/screens/auth_screens_widget_test.dart | واجهات Flutter ومعاينة آمنة؛ لا دخول/مزامنة/تفاعل إنتاجي |
 | تفاصيل العميل: الفترة والكشف وتصدير PDF | lib/screens/customer_details_screen.dart؛ lib/widgets/customers/customer_statement_* | CUSTOMER_DETAILS_SCREEN_REFERENCE_AR.md؛ test/widgets/customer_statement_* | حساب وكشف محلي، يتطلب تحقق أجهزة |
 | علاقات التاجر/العميل والحركات والموافقات | lib/models/app_models.dart؛ lib/services/app_state.dart | test/services/app_state_test.dart | قواعد مجال محلية لا مصادقة حقيقية |
 | تجميع العملات ورصيد الحساب | lib/services/movement_calculator.dart؛ customer_calculator.dart | test/services/movement_calculator_test.dart | منطق مالي مختبر |
