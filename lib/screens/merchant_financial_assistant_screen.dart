@@ -380,8 +380,6 @@ class _MerchantFinancialAssistantScreenState
     final span = range.end.difference(range.start).inMilliseconds;
     final starts = List.generate(bucketCount, (i) =>
       range.start.add(Duration(milliseconds: span * i ~/ bucketCount)));
-    final ends = List.generate(bucketCount, (i) =>
-      range.start.add(Duration(milliseconds: span * (i + 1) ~/ bucketCount)));
     final debtBuckets = List<Decimal>.filled(bucketCount, _zero);
     final paymentBuckets = List<Decimal>.filled(bucketCount, _zero);
 
