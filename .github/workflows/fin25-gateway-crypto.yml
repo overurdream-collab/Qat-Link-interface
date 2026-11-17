@@ -20,4 +20,5 @@ jobs:
           node-version: '22'
       - run: node --check server/src/gateway_device_crypto.mjs
       - run: node --check server/src/fin25_gateway_enrollment.mjs
+      - run: node --check server/src/fin25_otp_transport.mjs
       - run: node --test server/test/gateway_device_crypto.test.mjs
