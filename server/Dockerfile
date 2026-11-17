@@ -1,7 +1,7 @@
 FROM node:22-alpine
 WORKDIR /app
 COPY package*.json ./
-RUN npm ci --omit=dev
+RUN npm install --omit=dev --no-audit --no-fund
 COPY src ./src
 USER node
 EXPOSE 8080
