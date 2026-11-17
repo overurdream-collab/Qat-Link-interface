@@ -65,6 +65,11 @@ void main() {
     expect(statement.operationalNetByCurrency[CurrencyCode.yer],
         Decimal.parse('750'));
     expect(state.movements.value, isEmpty);
+    await tester.scrollUntilVisible(
+      find.textContaining('750'),
+      -240,
+      scrollable: find.byType(Scrollable).first,
+    );
     expect(find.textContaining('750'), findsWidgets);
     expect(find.textContaining('لا تدخل الرصيد المشترك المعتمد'), findsOneWidget);
   });

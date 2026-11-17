@@ -127,7 +127,11 @@ void main() {
     expect(find.text('عملاء بمديونية'), findsOneWidget);
     expect(find.byKey(const Key('customer_p1_yer')), findsNothing);
 
-    await tester.ensureVisible(find.byKey(const Key('pending_open_profile_p1')));
+    await tester.scrollUntilVisible(
+      find.byKey(const Key('pending_open_profile_p1')),
+      240,
+      scrollable: find.byType(Scrollable).first,
+    );
     await tester.tap(find.byKey(const Key('pending_open_profile_p1')));
     await tester.pumpAndSettle();
     expect(find.text('ملف عميل خارج التطبيق'), findsOneWidget);
