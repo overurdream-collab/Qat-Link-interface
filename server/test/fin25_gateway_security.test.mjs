@@ -46,3 +46,15 @@ test('gateway rejects stale, future and malformed signed metadata', () => {
   assert.throws(() => validateSignedMetadata({ timestamp:String(now), nonce:'short', now }));
   assert.throws(() => validateSignedMetadata({ timestamp:'abc', nonce, now }));
 });
+
+test('gateway fingerprint is stable across equivalent PEM formatting', () => {
+  const compact = pem.replace(/\n/g, '\r\n');
+  assert.equal(fingerprint(pem), fingerprint(compact));
+});
+test('gateway refuses a signature from another device key', () => {
+  const other = generateKeyPairSync('rsa', { modulusLength: 3072 });
+  const payload = challengePayload('device-a', createChallenge());
+  const s = createSign('RSA-SHA256'); s.update(payload); s.end();
+  const foreignSignature = s.sign(other.privateKey).toString('base64');
+  assert.equal(verifyRsa(pem, payload, foreignSignature), false);
+});
