@@ -32,17 +32,17 @@ async function json(req) {
  assert(data&&typeof data==='object'&&!Array.isArray(data),400,'Invalid JSON');
  return {data,raw};
 }
-function phone(v){assert(typeof v==='string'&&/^\\+967[0-9]{9}$/.test(v),400,'Use +967 followed by 9 digits');return v;}
+function phone(v){assert(typeof v==='string'&&/^\+967[0-9]{9}$/.test(v),400,'Use +967 followed by 9 digits');return v;}
 function internal(req){const x=req.headers['x-internal-api-key'];assert(typeof x==='string'&&x.length===env.OTP_INTERNAL_API_KEY.length&&timingSafeEqual(Buffer.from(x),Buffer.from(env.OTP_INTERNAL_API_KEY)),401,'Unauthorized');}
 async function signed(req,raw){
  const id=req.headers['x-device-id'],stamp=req.headers['x-timestamp'],nonce=req.headers['x-nonce'],sig=req.headers['x-signature'];
  assert([id,stamp,nonce,sig].every(x=>typeof x==='string'),401,'Missing device signature');
- assert(/^\\d{13}$/.test(stamp)&&Math.abs(Date.now()-Number(stamp))<60000,401,'Invalid timestamp');
+ assert(/^\d{13}$/.test(stamp)&&Math.abs(Date.now()-Number(stamp))<60000,401,'Invalid timestamp');
  assert(nonce.length>=16&&nonce.length<=128,401,'Invalid nonce');
  const d=await pool.query('SELECT public_key_pem FROM sms_gateway_devices WHERE id=$1 AND enabled=true',[id]);
  assert(d.rowCount===1,401,'Device disabled');
  const v=createVerify('RSA-SHA256');
- v.update([req.method,req.url,stamp,nonce,raw].join('\\n'));v.end();
+ v.update([req.method,req.url,stamp,nonce,raw].join('\n'));v.end();
  assert(v.verify(d.rows[0].public_key_pem,Buffer.from(sig,'base64')),401,'Invalid signature');
  const n=await pool.query('INSERT INTO sms_gateway_nonces(device_id,nonce) VALUES($1,$2) ON CONFLICT DO NOTHING RETURNING nonce',[id,nonce]);
  assert(n.rowCount===1,401,'Replay');
@@ -58,6 +58,7 @@ const api=http.createServer(async(req,res)=>{
    assert(env.OTP_ENABLED==='true',503,'OTP disabled');
    const p=phone(data.phone),id=randomUUID(),code=String(randomInt(0,1000000)).padStart(6,'0');
    client=await pool.connect();await client.query('BEGIN');
+   await client.query('SELECT pg_advisory_xact_lock(hashtext($1))',[p]);
    const recent=await client.query("SELECT count(*)::int AS n,max(created_at) AS last FROM otp_challenges WHERE phone=$1 AND created_at>now()-interval '1 hour'",[p]);
    assert(recent.rows[0].n<5,429,'Too many requests');
    const last=recent.rows[0].last;
@@ -69,7 +70,7 @@ const api=http.createServer(async(req,res)=>{
   }
   if(path==='/v1/auth/otp/verify'){
    const {requestId,code}=data;
-   assert(typeof requestId==='string'&&/^[0-9a-f-]{36}$/i.test(requestId)&&typeof code==='string'&&/^\\d{6}$/.test(code),400,'Invalid request');
+   assert(typeof requestId==='string'&&/^[0-9a-f-]{36}$/i.test(requestId)&&typeof code==='string'&&/^\d{6}$/.test(code),400,'Invalid request');
    client=await pool.connect();await client.query('BEGIN');
    const x=await client.query('SELECT * FROM otp_challenges WHERE id=$1 FOR UPDATE',[requestId]);
    assert(x.rowCount===1,401,'Invalid or expired code');
