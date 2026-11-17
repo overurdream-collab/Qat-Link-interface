@@ -31,6 +31,9 @@
 - `lib/screens/customer_app_shell.dart`
 - `lib/main.dart` و`lib/screens/login_screen.dart` لمدخل المعاينة فقط
 - `test/screens/customer_app_shell_widget_test.dart`
+- `test/screens/customer_ui_screenshots_test.dart` (يلتقط الوجهات الخمس ببيانات اصطناعية إلى `build/customer-ui-screenshots/`)
 - `test/screens/auth_screens_widget_test.dart`
+
+يرفع Flutter CI صور PNG الناتجة باسم artifact `customer-ui-screenshots` لمدة سبعة أيام؛ يمكن فتحها من قسم Artifacts في تشغيل Actions. اللقطات تمثل Flutter widgets الفعلية وتستخدم بيانات تجريبية اصطناعية فقط.
 
 اختبارات Widget تغطي عزل المعاينة، أرصدة العملات الثلاث واستبعاد المرفوض، إبقاء المعلق قبل اعتماد العلاقة، واستقلال حالة فتح المتجر عن استقبال الحجوزات. نتيجة Flutter Analyze/Tests تؤخذ من CI بعد رفع هذا التغيير؛ لم يتوفر Flutter/Dart SDK في بيئة التحرير الحالية. لا يوجد هنا إثبات UAT أو مصادقة إنتاجية أو مزامنة/حجوزات/تفاعلات حية.
