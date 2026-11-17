@@ -51,10 +51,12 @@ jobs:
       - run: npm test
       - name: Synthetic PostgreSQL backup and restore verification
         run: |
-          pg_dump -Fc --no-owner --no-acl -f "$RUNNER_TEMP/qatlink-financial.dump" "$FIN08_TEST_DATABASE_URL"
+          pg_dump --no-owner --no-acl -f "$RUNNER_TEMP/qatlink-financial.sql" "$FIN08_TEST_DATABASE_URL"
+          # Strip a setting emitted by newer pg_dump clients but unknown to PostgreSQL 16.
+          sed -i '/^SET transaction_timeout = 0;$/d' "$RUNNER_TEMP/qatlink-financial.sql"
           createdb -h 127.0.0.1 -U fin08 qatlink_restore_test
           RESTORE_URL=postgres://fin08:fin08_test_only@127.0.0.1:5432/qatlink_restore_test
-          pg_restore --exit-on-error --no-owner --no-acl -d "$RESTORE_URL" "$RUNNER_TEMP/qatlink-financial.dump"
+          psql -v ON_ERROR_STOP=1 "$RESTORE_URL" -f "$RUNNER_TEMP/qatlink-financial.sql"
           psql "$FIN08_TEST_DATABASE_URL" -Atq -c "SELECT 'movements:'||count(*) FROM financial_movements UNION ALL SELECT 'allocation_entries:'||count(*) FROM financial_payment_allocation_entries UNION ALL SELECT 'allocation_requests:'||count(*) FROM financial_payment_allocation_requests ORDER BY 1" > "$RUNNER_TEMP/source-counts.txt"
           psql "$RESTORE_URL" -Atq -c "SELECT 'movements:'||count(*) FROM financial_movements UNION ALL SELECT 'allocation_entries:'||count(*) FROM financial_payment_allocation_entries UNION ALL SELECT 'allocation_requests:'||count(*) FROM financial_payment_allocation_requests ORDER BY 1" > "$RUNNER_TEMP/restored-counts.txt"
           psql "$FIN08_TEST_DATABASE_URL" -Atq -c "SELECT relationship_id::text||':'||currency||':'||sum(CASE WHEN type='debt' THEN amount ELSE -amount END)::numeric(20,4)::text FROM financial_movements GROUP BY relationship_id,currency ORDER BY 1" > "$RUNNER_TEMP/source-balances.txt"
