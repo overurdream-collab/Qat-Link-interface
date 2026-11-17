@@ -482,6 +482,58 @@ class _MerchantFinancialAssistantScreenState
     ],
   );
 
+  List<_Insight> _customerInsights(List<MovementModel> rows, _Range range) {
+    final names = {
+      for (final customer in widget.state.customers.value)
+        customer.id: customer.name,
+    };
+    final ids = rows
+        .where((row) =>
+            row.status == MovementStatus.approved &&
+            row.type == MovementType.debt &&
+            (range.includes(row.createdAt) ||
+                range.includesPrevious(row.createdAt)))
+        .map((row) => row.customerId)
+        .toSet();
+    final results = <_Insight>[];
+
+    for (final id in ids) {
+      Decimal total(DateTime Function(DateTime) inPeriod, MovementType type) {
+        var amount = _zero;
+        for (final row in rows) {
+          if (row.customerId == id &&
+              row.type == type &&
+              row.status == MovementStatus.approved &&
+              inPeriod(row.createdAt)) {
+            amount += row.amount;
+          }
+        }
+        return amount;
+      }
+
+      final debts = total(range.includes, MovementType.debt);
+      final previousDebts = total(range.includesPrevious, MovementType.debt);
+      final payments = total(range.includes, MovementType.payment);
+      final collection = _percent(payments, debts);
+      final change = previousDebts <= _zero
+          ? (debts <= _zero ? 0 : 100)
+          : ((debts - previousDebts) * _hundred / previousDebts)
+              .toDouble()
+              .round();
+      results.add(_Insight(names[id] ?? 'عميل', debts, collection, change));
+    }
+
+    if (_customerTab == 0) {
+      results.sort((a, b) => b.debt.compareTo(a.debt));
+    } else if (_customerTab == 1) {
+      results.removeWhere((item) => item.debt <= _zero);
+      results.sort((a, b) => b.collection.compareTo(a.collection));
+    } else {
+      results.sort((a, b) => b.change.abs().compareTo(a.change.abs()));
+    }
+    return results.take(3).toList(growable: false);
+  }
+
   Widget _customerSection(AppThemeColors c, List<_Insight> insights) =>
       Column(children: [
         Row(children: [
