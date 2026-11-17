@@ -68,6 +68,13 @@ BEGIN
     RAISE NOTICE 'PASS: posted decision is immutable';
   END;
   BEGIN
+    UPDATE customer_claim_decisions SET merchant_id='fin19-test-other'
+    WHERE claim_id='22222222-2222-4222-8222-222222222221';
+    RAISE EXCEPTION 'FAIL: posted decision merchant identity mutated';
+  EXCEPTION WHEN check_violation THEN
+    RAISE NOTICE 'PASS: posted decision merchant identity immutable';
+  END;
+  BEGIN
     UPDATE merchant_relationships SET contact_id='11111111-1111-4111-8111-111111111112'
     WHERE id='33333333-3333-4333-8333-333333333331';
     RAISE EXCEPTION 'FAIL: posted relationship identity was mutated';

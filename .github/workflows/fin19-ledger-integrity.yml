@@ -32,10 +32,10 @@ jobs:
       PGSSLMODE: disable
     steps:
       - uses: actions/checkout@v4
-      - name: Apply FIN migrations 001-006
+      - name: Apply FIN migrations 001-007
         run: |
           set -euo pipefail
-          for f in server/sql/001_fin08.sql server/sql/002_fin13_unified_ledger.sql server/sql/003_fin15_amendments.sql server/sql/004_fin16_credit_limits.sql server/sql/005_fin17_payment_allocations.sql server/sql/006_fin19_approved_movement_integrity.sql; do
+          for f in server/sql/001_fin08.sql server/sql/002_fin13_unified_ledger.sql server/sql/003_fin15_amendments.sql server/sql/004_fin16_credit_limits.sql server/sql/005_fin17_payment_allocations.sql server/sql/006_fin19_approved_movement_integrity.sql server/sql/007_fin20_relationship_binding.sql; do
             psql "$DATABASE_URL" -X -v ON_ERROR_STOP=1 -f "$f"
           done
       - name: Verify direct-SQL forgery is blocked and legitimate posting succeeds
