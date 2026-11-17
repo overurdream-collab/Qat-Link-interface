@@ -223,7 +223,7 @@ class _MerchantFinancialAssistantScreenState
                 ])),
               const SizedBox(height: 12),
               _card(c, 'تحليل الحركة والتحصيل', Icons.show_chart_rounded,
-                _movementSummary(c, debts, payments, previousDebts)),
+                _movementSummary(c, rows, range, debts, payments, previousDebts)),
               const SizedBox(height: 12),
               _card(c, 'تحليل العملاء', Icons.groups_2_outlined,
                 _customerSection(c, customers)),
@@ -370,84 +370,119 @@ class _MerchantFinancialAssistantScreenState
 
   Widget _movementSummary(
     AppThemeColors c,
+    List<MovementModel> rows,
+    _Range range,
     Decimal debts,
     Decimal payments,
     Decimal previousDebts,
   ) {
-    final maxValue = debts > payments ? debts : payments;
-    final debtRatio = maxValue <= _zero ? 0.0 : (debts / maxValue).toDouble();
-    final paymentRatio = maxValue <= _zero ? 0.0 : (payments / maxValue).toDouble();
+    const bucketCount = 6;
+    final span = range.end.difference(range.start).inMilliseconds;
+    final starts = List.generate(bucketCount, (i) =>
+      range.start.add(Duration(milliseconds: span * i ~/ bucketCount)));
+    final ends = List.generate(bucketCount, (i) =>
+      range.start.add(Duration(milliseconds: span * (i + 1) ~/ bucketCount)));
+    final debtBuckets = List<Decimal>.filled(bucketCount, _zero);
+    final paymentBuckets = List<Decimal>.filled(bucketCount, _zero);
+
+    for (final row in rows) {
+      if (!range.includes(row.createdAt) ||
+          row.status != MovementStatus.approved) continue;
+      var index = starts.lastIndexWhere((start) => !row.createdAt.isBefore(start));
+      if (index < 0) continue;
+      if (index >= bucketCount) index = bucketCount - 1;
+      if (row.type == MovementType.debt) {
+        debtBuckets[index] += row.amount;
+      } else {
+        paymentBuckets[index] += row.amount;
+      }
+    }
+
+    final maxValue = [...debtBuckets, ...paymentBuckets].fold<Decimal>(
+      _zero, (largest, value) => value > largest ? value : largest);
     final delta = previousDebts <= _zero
         ? null
-        : ((debts - previousDebts) * _hundred / previousDebts).toDouble().round();
+        : ((debts - previousDebts) * _hundred / previousDebts)
+            .toDouble().round();
+
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Text('ديون معتمدة ودفعات معتمدة في $_periodLabel',
         style: TextStyle(color: c.muted, fontSize: 9)),
       const SizedBox(height: 10),
-      _bar(c, 'الديون', debts, debtRatio, c.petrol),
+      Row(children: [
+        _legend(c.petrol, 'الديون'),
+        const SizedBox(width: 12),
+        _legend(c.cyan, 'الدفعات'),
+      ]),
       const SizedBox(height: 8),
-      _bar(c, 'الدفعات', payments, paymentRatio, c.cyan),
-      const SizedBox(height: 8),
+      SizedBox(height: 112, child: Row(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          for (var i = 0; i < bucketCount; i++)
+            Expanded(child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Expanded(child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    _chartBar(c, debtBuckets[i], maxValue, c.petrol),
+                    const SizedBox(width: 3),
+                    _chartBar(c, paymentBuckets[i], maxValue, c.cyan),
+                  ],
+                )),
+                const SizedBox(height: 4),
+                Text(_bucketLabel(starts[i]),
+                  style: TextStyle(color: c.muted, fontSize: 7)),
+              ],
+            )),
+        ],
+      )),
+      const SizedBox(height: 7),
       Text(delta == null ? 'لا تتوفر فترة سابقة للمقارنة.'
         : 'تغير الديون المعتمدة عن الفترة السابقة: ${delta >= 0 ? '+' : ''}$delta%',
         style: TextStyle(color: c.muted, fontSize: 9)),
+      const SizedBox(height: 3),
+      Text('الرسم يعرض الحركات المعتمدة فقط؛ ولا يجمع العملات.',
+        style: TextStyle(color: c.muted, fontSize: 8)),
     ]);
   }
 
-  Widget _bar(AppThemeColors c, String label, Decimal value,
-      double fraction, Color color) => Row(children: [
-    SizedBox(width: 46, child: Text(label,
-      style: TextStyle(color: c.muted, fontSize: 9))),
-    Expanded(child: ClipRRect(
-      borderRadius: BorderRadius.circular(6),
-      child: LinearProgressIndicator(value: fraction,
-        minHeight: 8, color: color, backgroundColor: c.pale))),
-    const SizedBox(width: 8),
-    Text(_amount(value), style: TextStyle(color: c.text,
-      fontSize: 9, fontWeight: FontWeight.w800)),
-  ]);
-
-  List<_Insight> _customerInsights(List<MovementModel> rows, _Range range) {
-    final names = {for (final customer in widget.state.customers.value)
-      customer.id: customer.name};
-    final ids = rows.where((row) =>
-      row.status == MovementStatus.approved &&
-      row.type == MovementType.debt &&
-      (range.includes(row.createdAt) || range.includesPrevious(row.createdAt)))
-      .map((row) => row.customerId).toSet();
-    final results = <_Insight>[];
-    for (final id in ids) {
-      Decimal total(DateTime Function(DateTime) test, MovementType type) {
-        var result = _zero;
-        for (final row in rows) {
-          if (row.customerId == id && row.type == type &&
-              row.status == MovementStatus.approved && test(row.createdAt)) {
-            result += row.amount;
-          }
-        }
-        return result;
-      }
-      final currentDebt = total(range.includes, MovementType.debt);
-      final previousDebt = total(range.includesPrevious, MovementType.debt);
-      final currentPayments = total(range.includes, MovementType.payment);
-      final ratio = _percent(currentPayments, currentDebt);
-      final change = previousDebt <= _zero
-          ? (currentDebt <= _zero ? 0 : 100)
-          : ((currentDebt - previousDebt) * _hundred / previousDebt)
-              .toDouble().round();
-      results.add(_Insight(names[id] ?? 'عميل', currentDebt,
-        ratio, change));
-    }
-    if (_customerTab == 0) {
-      results.sort((a, b) => b.debt.compareTo(a.debt));
-    } else if (_customerTab == 1) {
-      results.removeWhere((item) => item.debt <= _zero);
-      results.sort((a, b) => b.collection.compareTo(a.collection));
-    } else {
-      results.sort((a, b) => b.change.abs().compareTo(a.change.abs()));
-    }
-    return results.take(3).toList(growable: false);
+  Widget _chartBar(
+    AppThemeColors c,
+    Decimal value,
+    Decimal maxValue,
+    Color color,
+  ) {
+    final fraction = maxValue <= _zero
+        ? 0.0
+        : (value / maxValue).toDouble().clamp(0.0, 1.0);
+    return Expanded(child: FractionallySizedBox(
+      heightFactor: fraction == 0 ? 0.025 : fraction,
+      alignment: Alignment.bottomCenter,
+      child: Container(
+        constraints: const BoxConstraints(minHeight: 2),
+        decoration: BoxDecoration(
+          color: fraction == 0 ? c.cardBorder : color,
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(3)),
+        ),
+      ),
+    ));
   }
+
+  String _bucketLabel(DateTime date) => _period == _Period.daily
+      ? '${date.hour.toString().padLeft(2, '0')}:00'
+      : '${date.day}/${date.month}';
+
+  Widget _legend(Color color, String label) => Row(
+    mainAxisSize: MainAxisSize.min,
+    children: [
+      Container(width: 8, height: 8,
+        decoration: BoxDecoration(color: color, shape: BoxShape.circle)),
+      const SizedBox(width: 4),
+      Text(label, style: TextStyle(color: context.colors.muted, fontSize: 8)),
+    ],
+  );
 
   Widget _customerSection(AppThemeColors c, List<_Insight> insights) =>
       Column(children: [
