@@ -69,12 +69,14 @@ class _CustomerInvitationSheetState extends State<CustomerInvitationSheet> {
         phone: phone,
         createdAt: DateTime.now(),
       ));
-      await _showDownloadInvite(name: name, phone: phone);
-      if (mounted) Navigator.of(context).pop();
-    } on Object catch (_) {
+    } on Object {
       _notice('تعذر حفظ سجل العميل. تحقق من رقم الهاتف أو وجود '
           'هذا العميل مسبقاً ضمن سجلك.');
+      return;
     }
+
+    await _showDownloadInvite(name: name, phone: phone);
+    if (mounted) Navigator.of(context).pop();
   }
 
   Future<void> _showDownloadInvite({
