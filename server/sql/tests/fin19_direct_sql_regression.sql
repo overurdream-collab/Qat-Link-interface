@@ -43,6 +43,18 @@ BEGIN
     RAISE NOTICE 'PASS: forged amount/currency rejected';
   END;
   BEGIN
+    DELETE FROM merchant_claims WHERE id='22222222-2222-4222-8222-222222222221';
+    RAISE EXCEPTION 'FAIL: posted claim deleted';
+  EXCEPTION WHEN check_violation THEN
+    RAISE NOTICE 'PASS: posted claim deletion rejected';
+  END;
+  BEGIN
+    UPDATE financial_movements SET amount=999 WHERE id='44444444-4444-4444-8444-444444444441';
+    RAISE EXCEPTION 'FAIL: approved ledger mutated';
+  EXCEPTION WHEN raise_exception THEN
+    RAISE NOTICE 'PASS: approved ledger immutable';
+  END;
+  BEGIN
     UPDATE merchant_claims SET amount=999 WHERE id='22222222-2222-4222-8222-222222222221';
     RAISE EXCEPTION 'FAIL: posted claim was mutated';
   EXCEPTION WHEN check_violation THEN
