@@ -1,0 +1,37 @@
+name: FIN19 Ledger Integrity
+on:
+  pull_request:
+    paths:
+      - 'server/sql/**'
+      - '.github/workflows/fin19-ledger-integrity.yml'
+  workflow_dispatch:
+jobs:
+  direct-sql-regression:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: fin19_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d fin19_test"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      DATABASE_URL: postgresql://postgres:postgres@localhost:5432/fin19_test
+      PGSSLMODE: disable
+    steps:
+      - uses: actions/checkout@v4
+      - name: Apply FIN migrations 001-006
+        run: |
+          set -euo pipefail
+          for f in server/sql/001_fin08.sql server/sql/002_fin13_unified_ledger.sql server/sql/003_fin15_amendments.sql server/sql/004_fin16_credit_limits.sql server/sql/005_fin17_payment_allocations.sql server/sql/006_fin19_approved_movement_integrity.sql; do
+            psql "$DATABASE_URL" -X -v ON_ERROR_STOP=1 -f "$f"
+          done
+      - name: Verify direct-SQL forgery is blocked and legitimate posting succeeds
+        run: psql "$DATABASE_URL" -X -v ON_ERROR_STOP=1 -f server/sql/tests/fin19_direct_sql_regression.sql
