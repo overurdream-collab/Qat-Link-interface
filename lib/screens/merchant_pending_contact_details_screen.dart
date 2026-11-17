@@ -38,16 +38,26 @@ class MerchantPendingContactDetailsScreen extends StatefulWidget {
 class _MerchantPendingContactDetailsScreenState
     extends State<MerchantPendingContactDetailsScreen> {
   bool _reportBusy = false;
+  final TextEditingController _entryAmountController =
+      TextEditingController();
+  final TextEditingController _entryDescriptionController =
+      TextEditingController();
+
+  @override
+  void dispose() {
+    _entryAmountController.dispose();
+    _entryDescriptionController.dispose();
+    super.dispose();
+  }
 
   Future<_PendingEntryDraft?> _entryDialog({required bool payment}) async {
     final formKey = GlobalKey<FormState>();
-    final amount = TextEditingController();
-    final description = TextEditingController();
+    _entryAmountController.clear();
+    _entryDescriptionController.clear();
     var currency = CurrencyCode.yer;
-    try {
-      return await showDialog<_PendingEntryDraft>(
-        context: context,
-        builder: (dialogContext) => StatefulBuilder(
+    return showDialog<_PendingEntryDraft>(
+      context: context,
+      builder: (dialogContext) => StatefulBuilder(
           builder: (dialogContext, update) => AlertDialog(
             title: Text(payment ? 'تسجيل دفعة للعميل' : 'تسجيل دين للعميل'),
             content: Form(
@@ -68,7 +78,7 @@ class _MerchantPendingContactDetailsScreenState
                   const SizedBox(height: 12),
                   TextFormField(
                     key: const Key('off_app_entry_amount'),
-                    controller: amount,
+                    controller: _entryAmountController,
                     keyboardType:
                         const TextInputType.numberWithOptions(decimal: true),
                     decoration: const InputDecoration(labelText: 'المبلغ'),
@@ -103,7 +113,7 @@ class _MerchantPendingContactDetailsScreenState
                   const SizedBox(height: 8),
                   TextFormField(
                     key: const Key('off_app_entry_description'),
-                    controller: description,
+                    controller: _entryDescriptionController,
                     maxLength: 160,
                     decoration:
                         const InputDecoration(labelText: 'البيان (اختياري)'),
@@ -123,11 +133,12 @@ class _MerchantPendingContactDetailsScreenState
                   Navigator.pop(
                     dialogContext,
                     _PendingEntryDraft(
-                      Decimal.parse(_normalizeAmount(amount.text)),
+                      Decimal.parse(
+                          _normalizeAmount(_entryAmountController.text)),
                       currency,
-                      description.text.trim().isEmpty
+                      _entryDescriptionController.text.trim().isEmpty
                           ? null
-                          : description.text.trim(),
+                          : _entryDescriptionController.text.trim(),
                     ),
                   );
                 },
@@ -136,11 +147,8 @@ class _MerchantPendingContactDetailsScreenState
             ],
           ),
         ),
-      );
-    } finally {
-      amount.dispose();
-      description.dispose();
-    }
+      ),
+    );
   }
 
   String _normalizeAmount(String input) => input

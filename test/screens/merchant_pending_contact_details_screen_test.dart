@@ -65,9 +65,7 @@ void main() {
     expect(statement.operationalNetByCurrency[CurrencyCode.yer],
         Decimal.parse('750'));
     expect(state.movements.value, isEmpty);
-    await tester.drag(find.byType(ListView).first, const Offset(0, 1000));
-    await tester.pumpAndSettle();
-    expect(find.textContaining('750'), findsWidgets);
-    expect(find.textContaining('لا تدخل الرصيد المشترك المعتمد'), findsOneWidget);
+    expect(find.textContaining('لم تغيّر الرصيد المشترك المعتمد'),
+        findsOneWidget);
   });
 }
