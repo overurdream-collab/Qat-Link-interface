@@ -25,7 +25,7 @@ void main() {
     await fontLoader.load();
     final iconFontLoader = FontLoader('MaterialIcons')
       ..addFont(rootBundle.load(
-        'packages/flutter/lib/src/material/fonts/MaterialIcons-Regular.otf',
+        'fonts/MaterialIcons-Regular.otf',
       ));
     await iconFontLoader.load();
 
