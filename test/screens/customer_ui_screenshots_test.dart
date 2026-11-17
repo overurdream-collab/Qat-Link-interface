@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:qat_link/main.dart';
 import 'package:qat_link/models/app_models.dart';
 import 'package:qat_link/screens/customer_app_shell.dart';
 import 'package:qat_link/services/app_state.dart';
