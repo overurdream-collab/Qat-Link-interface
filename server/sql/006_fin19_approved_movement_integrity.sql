@@ -18,6 +18,7 @@ BEGIN
       JOIN merchant_relationships r
         ON r.merchant_id=cl.merchant_id AND r.customer_id=d.customer_id
        AND r.contact_id=cl.contact_id
+       AND d.merchant_id=cl.merchant_id
       WHERE cl.id=NEW.source_claim_id
       FOR SHARE OF cl,d,r;
     IF NOT FOUND OR expected.relationship_status IS DISTINCT FROM 'approved'
@@ -75,6 +76,7 @@ BEGIN
   WHERE fm.status <> 'approved'
      OR (fm.source_claim_id IS NOT NULL AND (
          cl.id IS NULL OR d.decision IS DISTINCT FROM 'accept'
+         OR d.merchant_id IS DISTINCT FROM cl.merchant_id
          OR r.id IS NULL OR r.merchant_id IS DISTINCT FROM cl.merchant_id
          OR r.customer_id IS DISTINCT FROM d.customer_id
          OR r.contact_id IS DISTINCT FROM cl.contact_id
