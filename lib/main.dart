@@ -13,6 +13,7 @@ import 'widgets/customers/customer_invitation_sheet.dart';
 import 'widgets/quick_actions/quick_actions_sheet.dart';
 import 'models/app_models.dart';
 import 'models/merchant_pending_models.dart';
+import 'features/auth/registration_role.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,14 +29,23 @@ class QatLinkApp extends StatefulWidget {
 
 class _QatLinkAppState extends State<QatLinkApp> {
   ThemeMode _themeMode = ThemeMode.light;
+  bool _femaleProfile = false;
+
+  bool get _pinkTheme => _femaleProfile;
+
+  void _setProfileGender(ProfileGender gender) {
+    setState(() {
+      _femaleProfile = gender == ProfileGender.female;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'مقوتي لنك',
       debugShowCheckedModeBanner: false,
-      theme: AppTheme.light,
-      darkTheme: AppTheme.dark,
+      theme: AppTheme.build(dark: false, pink: _pinkTheme),
+      darkTheme: AppTheme.build(dark: true, pink: _pinkTheme),
       themeMode: _themeMode,
       locale: const Locale('ar'),
       supportedLocales: const [Locale('ar'), Locale('en')],
@@ -46,6 +56,7 @@ class _QatLinkAppState extends State<QatLinkApp> {
       ],
       home: LoginScreen(
         isDark: _themeMode == ThemeMode.dark,
+        onGenderChanged: _setProfileGender,
         onToggleTheme: () => setState(() {
           _themeMode = _themeMode == ThemeMode.dark
               ? ThemeMode.light
@@ -56,7 +67,9 @@ class _QatLinkAppState extends State<QatLinkApp> {
   }
 }
 
-/// Merchant-only UI shell, reachable after future server authentication.\n/// Never wire a PIN-only client-side navigation to this shell.\n/// The only owner of top and bottom navigation across merchant pages.
+/// Merchant-only UI shell, reachable after future server authentication.
+/// Never wire a PIN-only client-side navigation to this shell.
+/// The only owner of top and bottom navigation across merchant pages.
 /// The future MovementScreen should replace MerchantMovementsTab body only.
 class MerchantAppShell extends StatefulWidget {
   const MerchantAppShell({
@@ -67,6 +80,9 @@ class MerchantAppShell extends StatefulWidget {
     this.verifiedCustomerMatches = const [],
     this.verifiedClaimDecisions = const [],
     this.verifiedTransferredClaimIds = const <String>{},
+    this.isFemale = false,
+    this.isPinkTheme = false,
+    this.onUseBaseTheme,
   });
 
   final bool isDark;
@@ -78,6 +94,9 @@ class MerchantAppShell extends StatefulWidget {
   final List<VerifiedCustomerContactMatch> verifiedCustomerMatches;
   final List<VerifiedCustomerClaimDecision> verifiedClaimDecisions;
   final Set<String> verifiedTransferredClaimIds;
+  final bool isFemale;
+  final bool isPinkTheme;
+  final VoidCallback? onUseBaseTheme;
 
   @override
   State<MerchantAppShell> createState() => _MerchantAppShellState();
@@ -180,6 +199,17 @@ class _MerchantAppShellState extends State<MerchantAppShell> {
                   widget.onToggleTheme();
                 },
               ),
+              if (widget.isFemale && widget.isPinkTheme &&
+                  widget.onUseBaseTheme != null)
+                ListTile(
+                  leading: Icon(Icons.palette_outlined, color: c.petrol),
+                  title: const Text('استخدام الثيم الأساسي'),
+                  subtitle: const Text('يمكنك تغيير اختيارك دون تغيير بيانات الجنس'),
+                  onTap: () {
+                    Navigator.pop(modalContext);
+                    widget.onUseBaseTheme?.call();
+                  },
+                ),
               ListTile(
                 leading: Icon(Icons.info_outline, color: c.petrol),
                 title: const Text('واجهة أولية — بيانات الحساب غير متصلة'),
@@ -215,7 +245,10 @@ class _MerchantAppShellState extends State<MerchantAppShell> {
                   _ => 0,
                 },
                 children: [
-                  HomeScreen(state: _state),
+                  HomeScreen(
+                    state: _state,
+                    onOpenMovements: () => setState(() => _selectedIndex = 1),
+                  ),
                   MerchantMovementsTab(state: _state),
                   _selectedCustomer == null
                       ? MerchantCustomersTab(

@@ -6,6 +6,17 @@ import 'package:flutter/material.dart';
 /// choosing a label in the form grants no financial or supplier privileges.
 enum RegistrationRole { customer, merchant, supplier }
 
+/// Optional profile data. It never grants an app role or financial consent.
+enum ProfileGender { male, female, unspecified }
+
+extension ProfileGenderUi on ProfileGender {
+  String get title => switch (this) {
+        ProfileGender.male => 'ذكر',
+        ProfileGender.female => 'أنثى',
+        ProfileGender.unspecified => 'أفضل عدم التحديد',
+      };
+}
+
 extension RegistrationRoleUi on RegistrationRole {
   String get title => switch (this) {
         RegistrationRole.customer => 'عميل',

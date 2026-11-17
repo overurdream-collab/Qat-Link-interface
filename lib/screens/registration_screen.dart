@@ -14,10 +14,12 @@ class RegistrationScreen extends StatefulWidget {
     super.key,
     required this.isDark,
     required this.onToggleTheme,
+    required this.onGenderChanged,
   });
 
   final bool isDark;
   final VoidCallback onToggleTheme;
+  final ValueChanged<ProfileGender> onGenderChanged;
 
   @override
   State<RegistrationScreen> createState() => _RegistrationScreenState();
@@ -30,6 +32,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   final _pin = TextEditingController();
   final _confirmPin = TextEditingController();
   RegistrationRole _selectedRole = RegistrationRole.merchant;
+  ProfileGender _gender = ProfileGender.unspecified;
   bool _showPin = false;
 
   @override
@@ -145,6 +148,35 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                 ),
                               ],
                             ),
+                          ),
+                          const SizedBox(height: 16),
+                          Text('الجنس والثيم', style: TextStyle(
+                            color: c.petrol, fontSize: 14,
+                            fontWeight: FontWeight.w900,
+                          )),
+                          const SizedBox(height: 4),
+                          Text(
+                            'اختيار أنثى يفعّل الثيم الوردي تلقائياً. '
+                            'يمكن تغيير الثيم بعد إكمال التسجيل.',
+                            style: TextStyle(color: c.muted, fontSize: 10),
+                          ),
+                          const SizedBox(height: 8),
+                          Wrap(
+                            key: const Key('registration_gender_choices'),
+                            spacing: 7,
+                            runSpacing: 6,
+                            children: [
+                              for (final gender in ProfileGender.values)
+                                ChoiceChip(
+                                  key: Key('gender_${gender.name}'),
+                                  label: Text(gender.title),
+                                  selected: _gender == gender,
+                                  onSelected: (_) {
+                                    setState(() => _gender = gender);
+                                    widget.onGenderChanged(gender);
+                                  },
+                                ),
+                            ],
                           ),
                           const SizedBox(height: 19),
                           TextFormField(

@@ -13,6 +13,8 @@ class AppState {
       ValueNotifier(const []);
   final ValueNotifier<List<MerchantPendingDebt>> merchantPendingDebts =
       ValueNotifier(const []);
+  final ValueNotifier<List<MerchantPendingPayment>> merchantPendingPayments =
+      ValueNotifier(const []);
 
   List<RelationshipModel> get pendingRelationships => relationships.value
       .where((r) => r.status == RelationshipStatus.pending).toList(growable: false);
@@ -52,19 +54,32 @@ class AppState {
 
   /// An unacknowledged merchant record. No approved financial movement.
   void addMerchantPendingDebt(MerchantPendingDebt debt) {
-    if (debt.merchantId.trim().isEmpty) {
-      throw StateError('Merchant identity is required.');
-    }
-    final matches = merchantContacts.value.where((c) =>
-        c.id == debt.contactId && c.merchantId == debt.merchantId);
-    if (matches.length != 1) {
-      throw StateError('The contact does not belong to this merchant.');
-    }
+    _requireContact(debt.contactId, debt.merchantId);
     _unique(merchantPendingDebts.value.map((d) => d.id), debt.id,
         'merchant pending debt');
     merchantPendingDebts.value =
         List.unmodifiable([...merchantPendingDebts.value, debt]);
     // movements intentionally untouched.
+  }
+
+  /// Records a local, unacknowledged payment without changing approved ledger.
+  void addMerchantPendingPayment(MerchantPendingPayment payment) {
+    _requireContact(payment.contactId, payment.merchantId);
+    _unique(merchantPendingPayments.value.map((item) => item.id), payment.id,
+        'merchant pending payment');
+    merchantPendingPayments.value =
+        List.unmodifiable([...merchantPendingPayments.value, payment]);
+  }
+
+  void _requireContact(String contactId, String merchantId) {
+    if (merchantId.trim().isEmpty) {
+      throw StateError('Merchant identity is required.');
+    }
+    final matches = merchantContacts.value.where((contact) =>
+        contact.id == contactId && contact.merchantId == merchantId);
+    if (matches.length != 1) {
+      throw StateError('The contact does not belong to this merchant.');
+    }
   }
 
   /// Scoped report for manual communication, not customer acknowledgment.
@@ -83,6 +98,7 @@ class AppState {
       merchantId: merchantId,
       contact: contacts.single,
       debts: merchantPendingDebts.value,
+      payments: merchantPendingPayments.value,
       from: from,
       to: to,
     );
@@ -218,5 +234,6 @@ class AppState {
     movements.dispose();
     merchantContacts.dispose();
     merchantPendingDebts.dispose();
+    merchantPendingPayments.dispose();
   }
 }

@@ -94,6 +94,33 @@ class MerchantPendingDebt {
   final String? description;
 }
 
+/// Merchant-entered payment for an unjoined contact. It lowers the merchant's
+/// operational net for its currency but is not part of the shared approved
+/// balance until the verified customer reviews and approves it.
+class MerchantPendingPayment {
+  MerchantPendingPayment({
+    required this.id,
+    required this.merchantId,
+    required this.contactId,
+    required this.amount,
+    required this.currency,
+    required this.createdAt,
+    this.description,
+  }) {
+    if (amount <= Decimal.zero) {
+      throw ArgumentError.value(amount, 'amount', 'Payment must be positive.');
+    }
+  }
+
+  final String id;
+  final String merchantId;
+  final String contactId;
+  final Decimal amount;
+  final CurrencyCode currency;
+  final DateTime createdAt;
+  final String? description;
+}
+
 /// A report intended for the trader to share externally, labelled unverified.
 /// It is a unilateral claim, not evidence that the recipient owes the money.
 class MerchantPendingStatement {
@@ -103,6 +130,8 @@ class MerchantPendingStatement {
     required this.to,
     required this.byCurrency,
     required this.rows,
+    this.paymentsByCurrency = const {},
+    this.paymentRows = const [],
   });
 
   final MerchantPendingContact contact;
@@ -110,6 +139,17 @@ class MerchantPendingStatement {
   final DateTime to;
   final Map<CurrencyCode, Decimal> byCurrency;
   final List<MerchantPendingDebt> rows;
+  final Map<CurrencyCode, Decimal> paymentsByCurrency;
+  final List<MerchantPendingPayment> paymentRows;
+
+  Map<CurrencyCode, Decimal> get operationalNetByCurrency {
+    final currencies = {...byCurrency.keys, ...paymentsByCurrency.keys};
+    return Map.unmodifiable({
+      for (final currency in currencies)
+        currency: (byCurrency[currency] ?? Decimal.zero) -
+            (paymentsByCurrency[currency] ?? Decimal.zero),
+    });
+  }
 }
 
 /// Pure, tenant-scoped math. No cross-currency sums and no changes to ledger.
@@ -118,6 +158,7 @@ abstract final class MerchantPendingDebtQuery {
     required String? merchantId,
     required MerchantPendingContact contact,
     required Iterable<MerchantPendingDebt> debts,
+    Iterable<MerchantPendingPayment> payments = const [],
     required DateTime from,
     required DateTime to,
   }) {
@@ -142,12 +183,25 @@ abstract final class MerchantPendingDebtQuery {
       totals.update(debt.currency, (value) => value + debt.amount,
           ifAbsent: () => debt.amount);
     }
+    final paymentRows = payments.where((payment) =>
+        payment.merchantId == merchantId &&
+        payment.contactId == contact.id &&
+        !payment.createdAt.isBefore(start) &&
+        payment.createdAt.isBefore(endExclusive)).toList()
+      ..sort((a, b) => a.createdAt.compareTo(b.createdAt));
+    final paymentTotals = <CurrencyCode, Decimal>{};
+    for (final payment in paymentRows) {
+      paymentTotals.update(payment.currency, (value) => value + payment.amount,
+          ifAbsent: () => payment.amount);
+    }
     return MerchantPendingStatement(
       contact: contact,
       from: start,
       to: DateTime(to.year, to.month, to.day),
       byCurrency: Map.unmodifiable(totals),
       rows: List.unmodifiable(rows),
+      paymentsByCurrency: Map.unmodifiable(paymentTotals),
+      paymentRows: List.unmodifiable(paymentRows),
     );
   }
 
@@ -163,19 +217,32 @@ abstract final class MerchantPendingDebtQuery {
       ..writeln('هاتف التواصل: ${report.contact.phone}')
       ..writeln('الفترة: ${date(report.from)} إلى ${date(report.to)}')
       ..writeln('---');
-    if (report.rows.isEmpty) {
+    if (report.rows.isEmpty && report.paymentRows.isEmpty) {
       buffer.writeln('لا توجد مبالغ معلقة في هذه الفترة.');
     }
     for (final debt in report.rows) {
-      buffer.writeln('${date(debt.createdAt)} | '
+      buffer.writeln('${date(debt.createdAt)} | دين مسجل | '
           '${debt.description?.trim().isNotEmpty == true ? debt.description!.trim() : 'مديونية مسجلة من التاجر'}'
           ' | ${debt.amount} ${debt.currency.name.toUpperCase()}');
+    }
+    for (final payment in report.paymentRows) {
+      buffer.writeln('${date(payment.createdAt)} | دفعة مسجلة لدى التاجر | '
+          '${payment.description?.trim().isNotEmpty == true ? payment.description!.trim() : 'تسديد مسجل من التاجر'}'
+          ' | ${payment.amount} ${payment.currency.name.toUpperCase()}');
     }
     buffer.writeln('---');
     for (final currency in CurrencyCode.values) {
       final amount = report.byCurrency[currency];
       if (amount != null) {
-        buffer.writeln('المبلغ المعلق: $amount ${currency.name.toUpperCase()}');
+        buffer.writeln('الديون المسجلة المعلقة: $amount ${currency.name.toUpperCase()}');
+      }
+      final paid = report.paymentsByCurrency[currency];
+      if (paid != null) {
+        buffer.writeln('الدفعات المسجلة المعلقة: $paid ${currency.name.toUpperCase()}');
+      }
+      final net = report.operationalNetByCurrency[currency];
+      if (net != null) {
+        buffer.writeln('صافي المديونية التشغيلية المسجل: $net ${currency.name.toUpperCase()}');
       }
     }
     buffer.writeln('تنبيه: هذا بيان من سجل التاجر وحده؛ '

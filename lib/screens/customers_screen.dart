@@ -6,6 +6,7 @@ import '../models/app_models.dart';
 import '../models/merchant_pending_models.dart';
 import '../services/app_state.dart';
 import 'customer_details_screen.dart';
+import 'merchant_pending_contact_details_screen.dart';
 import '../theme/app_colors.dart';
 import '../widgets/customers/customers_view_model.dart';
 import '../widgets/customers/merchant_debt_status_summary.dart';
@@ -69,6 +70,7 @@ class _MerchantCustomersTabState extends State<MerchantCustomersTab> {
         widget.state.movements,
         widget.state.merchantContacts,
         widget.state.merchantPendingDebts,
+        widget.state.merchantPendingPayments,
       ]),
       builder: (context, _) {
         final customers = widget.state.customers.value;
@@ -104,7 +106,7 @@ class _MerchantCustomersTabState extends State<MerchantCustomersTab> {
         final pending = CustomersViewModel.pendingRelationships(
           rels, merchantId: widget.merchantId,
         );
-        final merchantContacts = widget.state.merchantContacts.value.where(
+        final searchedMerchantContacts = widget.state.merchantContacts.value.where(
           (contact) => widget.merchantId != null &&
               contact.merchantId == widget.merchantId &&
               (MovementQuery.normalizeSearch(contact.name)
@@ -112,6 +114,12 @@ class _MerchantCustomersTabState extends State<MerchantCustomersTab> {
                MovementQuery.normalizeSearch(contact.phone)
                    .contains(MovementQuery.normalizeSearch(_searchController.text)))
         ).toList();
+        final merchantContacts = searchedMerchantContacts.where((contact) =>
+          _matchesPendingContactFilter(
+            contact,
+            widget.state.merchantPendingDebts.value,
+            widget.state.merchantPendingPayments.value,
+          )).toList();
         final customerMap = {for (final customer in customers) customer.id: customer};
         final grouped = <CurrencyCode, List<CustomerCurrencyRow>>{};
         for (final entry in visible) {
@@ -187,7 +195,26 @@ class _MerchantCustomersTabState extends State<MerchantCustomersTab> {
               ),
             ),
             const SizedBox(height: 12),
-            _metrics(c, metricRows),
+            _metrics(
+              c,
+              metricRows,
+              privateContactCount: merchantContacts.length,
+              privateDebtorCount: merchantContacts.where((contact) =>
+                _pendingContactNet(
+                  contact,
+                  widget.state.merchantPendingDebts.value,
+                  widget.state.merchantPendingPayments.value,
+                ) > Decimal.zero).length,
+              privateOperationCount: widget.state.merchantPendingDebts.value
+                  .where((row) => merchantContacts.any((contact) =>
+                    row.contactId == contact.id && row.merchantId == widget.merchantId &&
+                    (_currency == null || row.currency == _currency)))
+                  .length + widget.state.merchantPendingPayments.value
+                  .where((row) => merchantContacts.any((contact) =>
+                    row.contactId == contact.id && row.merchantId == widget.merchantId &&
+                    (_currency == null || row.currency == _currency)))
+                  .length,
+            ),
             const SizedBox(height: 18),
             Text('تصفية حسب العملة:', style: TextStyle(
               fontSize: 12, fontWeight: FontWeight.w800, color: c.muted,
@@ -203,7 +230,7 @@ class _MerchantCustomersTabState extends State<MerchantCustomersTab> {
             if (merchantContacts.isNotEmpty) ...[
               const SizedBox(height: 17),
               Row(children: [
-                Expanded(child: Text('عملاء في سجل التاجر — غير معتمدين',
+                Expanded(child: Text('عملاء غير منضمين إلى التطبيق',
                   style: TextStyle(color: c.petrol, fontSize: 13,
                     fontWeight: FontWeight.w900))),
                 _countBadge(c, merchantContacts.length),
@@ -247,7 +274,11 @@ class _MerchantCustomersTabState extends State<MerchantCustomersTab> {
                   color: c.text,
                 )),
                 const SizedBox(width: 8),
-                _countBadge(c, CustomersViewModel.distinctCustomers(visible)),
+                _countBadge(
+                  c,
+                  CustomersViewModel.distinctCustomers(visible) +
+                      merchantContacts.length,
+                ),
                 const Spacer(),
                 _sortPicker(c),
               ],
@@ -318,13 +349,13 @@ class _MerchantCustomersTabState extends State<MerchantCustomersTab> {
     return Column(children: [
       _stageLine(c,
         key: Key('balance_outside_app_${currency.name}'),
-        title: 'رصيد انتظار تحميل التطبيق',
-        hint: 'عملاء خارج التطبيق / لم يُتحقق من انضمامهم',
+        title: 'ديون مسجلة — بانتظار انضمام العميل',
+        hint: 'عملاء خارج التطبيق؛ راجع صافيهم في ملف العميل',
         amount: outside, currency: currency, color: c.pendingText),
       const SizedBox(height: 5),
       _stageLine(c,
         key: Key('balance_awaiting_approval_${currency.name}'),
-        title: 'رصيد بانتظار موافقة العميل',
+        title: 'ديون مسجلة — بانتظار موافقة العميل',
         hint: 'الديون المعلقة بعد الارتباط',
         amount: awaiting, currency: currency, color: c.pendingText),
       const SizedBox(height: 5),
@@ -367,14 +398,23 @@ class _MerchantCustomersTabState extends State<MerchantCustomersTab> {
 
   Widget _merchantPendingCard(
       AppThemeColors c, MerchantPendingContact contact) {
-    final sums = <CurrencyCode, Decimal>{};
-    var count = 0;
+    final debtSums = <CurrencyCode, Decimal>{};
+    final paymentSums = <CurrencyCode, Decimal>{};
+    var debtCount = 0;
+    var paymentCount = 0;
     for (final claim in widget.state.merchantPendingDebts.value) {
       if (claim.contactId != contact.id ||
           claim.merchantId != widget.merchantId) continue;
-      count++;
-      sums.update(claim.currency, (old) => old + claim.amount,
+      debtCount++;
+      debtSums.update(claim.currency, (old) => old + claim.amount,
           ifAbsent: () => claim.amount);
+    }
+    for (final payment in widget.state.merchantPendingPayments.value) {
+      if (payment.contactId != contact.id ||
+          payment.merchantId != widget.merchantId) continue;
+      paymentCount++;
+      paymentSums.update(payment.currency, (old) => old + payment.amount,
+          ifAbsent: () => payment.amount);
     }
     return Container(
       key: Key('merchant_pending_contact_${contact.id}'),
@@ -396,22 +436,30 @@ class _MerchantCustomersTabState extends State<MerchantCustomersTab> {
                 style: TextStyle(color: c.muted, fontSize: 11)),
             ],
           )),
-          Text('غير معتمد', style: TextStyle(
+          Text('بانتظار الانضمام', style: TextStyle(
             color: c.pendingText, fontSize: 11,
             fontWeight: FontWeight.w800)),
         ]),
         const SizedBox(height: 9),
-        Text('ديون معلقة: $count', style: TextStyle(
+        Text('ديون مسجلة: $debtCount • دفعات مسجلة: $paymentCount', style: TextStyle(
           color: c.pendingText, fontWeight: FontWeight.w800, fontSize: 12)),
         for (final currency in CurrencyCode.values)
-          if (sums[currency] != null)
-            Text('${FinanceDisplay.amount(sums[currency]!)} '
-                '${FinanceDisplay.currencyCode(currency)} — معلق',
+          if (debtSums[currency] != null || paymentSums[currency] != null)
+            Text('ديون ${FinanceDisplay.amount(debtSums[currency] ?? Decimal.zero)} '
+                '− دفعات ${FinanceDisplay.amount(paymentSums[currency] ?? Decimal.zero)} '
+                '= صافي ${FinanceDisplay.amount((debtSums[currency] ?? Decimal.zero) - (paymentSums[currency] ?? Decimal.zero))} '
+                '${FinanceDisplay.currencyCode(currency)}',
               style: TextStyle(color: c.text, fontSize: 12)),
         const SizedBox(height: 8),
         OutlinedButton.icon(
+          key: Key('pending_open_profile_${contact.id}'),
+          onPressed: () => _openPendingContactDetails(contact),
+          icon: const Icon(Icons.account_circle_outlined, size: 17),
+          label: const Text('ملف العميل والحركة'),
+        ),
+        OutlinedButton.icon(
           key: Key('pending_copy_statement_${contact.id}'),
-          onPressed: count == 0 ? null :
+          onPressed: debtCount + paymentCount == 0 ? null :
               () => _copyPendingStatement(contact),
           icon: const Icon(Icons.copy_rounded, size: 17),
           label: const Text('نسخ كشف المبالغ لإرساله'),
@@ -446,6 +494,16 @@ class _MerchantCustomersTabState extends State<MerchantCustomersTab> {
     }
   }
 
+  void _openPendingContactDetails(MerchantPendingContact contact) {
+    Navigator.of(context).push(MaterialPageRoute<void>(
+      builder: (routeContext) => MerchantPendingContactDetailsScreen(
+        state: widget.state,
+        contact: contact,
+        merchantId: widget.merchantId,
+      ),
+    ));
+  }
+
   Widget _countBadge(AppThemeColors c, int number) => Container(
     padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 4),
     decoration: BoxDecoration(
@@ -457,23 +515,79 @@ class _MerchantCustomersTabState extends State<MerchantCustomersTab> {
     )),
   );
 
-  Widget _metrics(AppThemeColors c, List<CustomerCurrencyRow> rows) {
+  Decimal _pendingContactNet(
+    MerchantPendingContact contact,
+    List<MerchantPendingDebt> debts,
+    List<MerchantPendingPayment> payments,
+  ) {
+    final currencies = _currency == null
+        ? CurrencyCode.values
+        : [_currency!];
+    for (final currency in currencies) {
+      var net = Decimal.zero;
+      for (final debt in debts.where((entry) =>
+          entry.contactId == contact.id && entry.merchantId == widget.merchantId &&
+          entry.currency == currency)) {
+        net += debt.amount;
+      }
+      for (final payment in payments.where((entry) =>
+          entry.contactId == contact.id && entry.merchantId == widget.merchantId &&
+          entry.currency == currency)) {
+        net -= payment.amount;
+      }
+      if (net > Decimal.zero) return net;
+    }
+    return Decimal.zero;
+  }
+
+  bool _matchesPendingContactFilter(
+    MerchantPendingContact contact,
+    List<MerchantPendingDebt> debts,
+    List<MerchantPendingPayment> payments,
+  ) {
+    final operations = [
+      ...debts.where((entry) =>
+          entry.contactId == contact.id && entry.merchantId == widget.merchantId &&
+          (_currency == null || entry.currency == _currency)),
+      ...payments.where((entry) =>
+          entry.contactId == contact.id && entry.merchantId == widget.merchantId &&
+          (_currency == null || entry.currency == _currency)),
+    ];
+    final net = _pendingContactNet(contact, debts, payments);
+    return switch (_filter) {
+      CustomerListFilter.all => true,
+      CustomerListFilter.unpaid => net > Decimal.zero,
+      CustomerListFilter.pending => operations.isNotEmpty,
+      CustomerListFilter.settled => false,
+      CustomerListFilter.unpaidAndPending =>
+          net > Decimal.zero && operations.isNotEmpty,
+    };
+  }
+
+  Widget _metrics(
+    AppThemeColors c,
+    List<CustomerCurrencyRow> rows, {
+    required int privateContactCount,
+    required int privateDebtorCount,
+    required int privateOperationCount,
+  }) {
     final stats = <(String, String, IconData, Color)>[
       ('إجمالي العملاء',
-          '${CustomersViewModel.distinctCustomers(rows)}',
+          '${CustomersViewModel.distinctCustomers(rows) + privateContactCount}',
           Icons.groups_rounded, c.petrol),
       ('عملاء بمديونية',
-          '${CustomersViewModel.customersInDebt(rows)}',
+          '${CustomersViewModel.customersInDebt(rows) + privateDebtorCount}',
           Icons.account_balance_wallet_outlined, c.danger),
       ('عمليات عالقة',
-          '${CustomersViewModel.pendingMovements(rows)}',
+          '${CustomersViewModel.pendingMovements(rows) + privateOperationCount}',
           Icons.schedule_rounded, c.pendingText),
     ];
     return Row(children: [
       for (var i = 0; i < stats.length; i++) ...[
         if (i > 0) const SizedBox(width: 7),
         Expanded(
-          child: Container(
+            child: Container(
+              key: Key('customers_metric_${['total', 'debtors', 'pending'][i]}'),
             padding: const EdgeInsets.symmetric(
               horizontal: 9, vertical: 11),
             constraints: const BoxConstraints(minHeight: 86),

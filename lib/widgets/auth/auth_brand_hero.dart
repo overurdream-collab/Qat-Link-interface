@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../theme/app_colors.dart';
 
-/// The approved Yemeni mascot and qat bundle should be provided as offline
-/// assets under assets/images/. Missing assets show a branded fallback.
-/// The original approved artwork must never be replaced with unrelated stock.
+/// Uses the merchant-approved Yemeni mascot as an offline asset. Missing
+/// artwork shows a branded fallback; never replace it with unrelated stock.
 class AuthBrandHero extends StatelessWidget {
   const AuthBrandHero({super.key, this.compact = false});
 
@@ -42,27 +41,22 @@ class AuthBrandHero extends StatelessWidget {
             right: -55, top: -80,
             child: _glow(180, AppColors.mint.withValues(alpha: .19)),
           ),
-          // The original image (not a generated replacement) is used once
-          // its agreed asset is committed to the repo.
+          // Preserve the supplied approved logo, including its gold frame.
           Positioned(
             left: 0, bottom: 0,
             width: compact ? 121 : 165,
-            height: compact ? 153 : 220,
-            child: _approvedImage(
-              'assets/images/maqwati_yemeni_mascot.webp',
-              icon: Icons.person_rounded,
-              color: c.petrol,
-            ),
-          ),
-          Positioned(
-            right: compact ? 12 : 11,
-            bottom: compact ? 10 : 21,
-            width: compact ? 87 : 128,
-            height: compact ? 82 : 115,
-            child: _approvedImage(
-              'assets/images/qat_bundles.webp',
-              icon: Icons.eco_rounded,
-              color: const Color(0xFF288153),
+            height: compact ? 145 : 175,
+            child: Semantics(
+              image: true,
+              label: 'الشعار الرسمي لمقوتي لنك',
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(16),
+                child: _approvedImage(
+                  'assets/images/maqwati_approved_mascot.jpeg',
+                  icon: Icons.person_rounded,
+                  color: c.petrol,
+                ),
+              ),
             ),
           ),
           Positioned(
