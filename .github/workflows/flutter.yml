@@ -29,3 +29,14 @@ jobs:
         run: flutter analyze --no-fatal-infos
       - name: Tests
         run: flutter test
+      - name: Generate Android platform for CI build verification
+        run: flutter create --platforms=android --project-name qat_link .
+      - name: Build Android debug APK
+        run: flutter build apk --debug
+      - name: Upload Android debug APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: qat-link-android-debug-apk
+          path: build/app/outputs/flutter-apk/app-debug.apk
+          if-no-files-found: error
+          retention-days: 7
