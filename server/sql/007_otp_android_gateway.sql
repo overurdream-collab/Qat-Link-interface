@@ -4,6 +4,7 @@ CREATE TABLE IF NOT EXISTS otp_challenges (
  id uuid PRIMARY KEY, phone text NOT NULL, code_digest text NOT NULL,
  expires_at timestamptz NOT NULL, resend_after timestamptz NOT NULL,
  attempts integer NOT NULL DEFAULT 0, consumed_at timestamptz,
+ proof_digest text UNIQUE, proof_expires_at timestamptz, proof_redeemed_at timestamptz,
  created_at timestamptz NOT NULL DEFAULT now(),
  CONSTRAINT otp_attempts_range CHECK (attempts BETWEEN 0 AND 5)
 );
