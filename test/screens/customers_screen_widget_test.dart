@@ -98,6 +98,10 @@ void main() {
 
   testWidgets('a privately recorded pending debt stays separate from approved balances',
       (tester) async {
+    tester.view.physicalSize = const Size(800, 900);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
     final date = DateTime.now();
     state.addMerchantContact(MerchantPendingContact(
       id: 'p1', merchantId: 'm1', name: 'عميل لا يستخدم التطبيق',
@@ -127,11 +131,7 @@ void main() {
     expect(find.text('عملاء بمديونية'), findsOneWidget);
     expect(find.byKey(const Key('customer_p1_yer')), findsNothing);
 
-    await tester.scrollUntilVisible(
-      find.byKey(const Key('pending_open_profile_p1')),
-      240,
-      scrollable: find.byType(Scrollable).first,
-    );
+    await tester.ensureVisible(find.byKey(const Key('pending_open_profile_p1')));
     await tester.tap(find.byKey(const Key('pending_open_profile_p1')));
     await tester.pumpAndSettle();
     expect(find.text('ملف عميل خارج التطبيق'), findsOneWidget);

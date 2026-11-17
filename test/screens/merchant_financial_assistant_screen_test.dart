@@ -54,12 +54,12 @@ void main() {
     await tester.tap(find.byKey(const Key('assistant_currency_usd')));
     await tester.pumpAndSettle();
     await tester.scrollUntilVisible(
-      find.text('معلقة — بانتظار الانضمام'),
+      find.text('معلقة — بانتظار انضمام العميل'),
       240,
       scrollable: find.byType(Scrollable).first,
     );
     expect(find.text('الديون المسجلة'), findsOneWidget);
-    expect(find.text('معلقة — بانتظار الانضمام'), findsOneWidget);
+    expect(find.text('معلقة — بانتظار انضمام العميل'), findsOneWidget);
     expect(find.textContaining(r'5 $'), findsWidgets);
     expect(find.textContaining('1,000'), findsNothing,
         reason: 'Changing currency must not aggregate YER into USD.');
