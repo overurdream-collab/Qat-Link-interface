@@ -5,6 +5,7 @@ import { randomInt, randomUUID, createHmac, timingSafeEqual, createDecipheriv, c
 import { Pool } from 'pg';
 import { verifyRsa, canonicalRequest, validateSignedMetadata } from './gateway_device_crypto.mjs';
 import { createHash } from 'node:crypto';
+import { createVerifier } from './auth.mjs';
 
 const env = process.env;
 for (const k of ['DATABASE_URL','OTP_HMAC_SECRET','OTP_ENCRYPTION_KEY_HEX','OTP_INTERNAL_API_KEY'])
@@ -12,6 +13,10 @@ for (const k of ['DATABASE_URL','OTP_HMAC_SECRET','OTP_ENCRYPTION_KEY_HEX','OTP_
 const key = Buffer.from(env.OTP_ENCRYPTION_KEY_HEX,'hex');
 if (key.length !== 32) throw new Error('OTP_ENCRYPTION_KEY_HEX must be 32-byte hex');
 const pool = new Pool({connectionString:env.DATABASE_URL});
+const identityVerifier = createVerifier({
+ publicKey: env.JWT_PUBLIC_KEY_PEM?.replace(/\\n/g,'\n'),
+ issuer: env.JWT_ISSUER, audience: env.JWT_AUDIENCE,
+});
 const digest=(id,code)=>createHmac('sha256',env.OTP_HMAC_SECRET).update(id+':'+code).digest('hex');
 function encrypt(s) {
  const iv=cryptoRandom(12),c=createCipheriv('aes-256-gcm',key,iv);
@@ -35,7 +40,12 @@ async function json(req) {
  return {data,raw};
 }
 function phone(v){assert(typeof v==='string'&&/^\+967[0-9]{9}$/.test(v),400,'Use +967 followed by 9 digits');return v;}
-function internal(req){const x=req.headers['x-internal-api-key'];assert(typeof x==='string'&&x.length===env.OTP_INTERNAL_API_KEY.length&&timingSafeEqual(Buffer.from(x),Buffer.from(env.OTP_INTERNAL_API_KEY)),401,'Unauthorized');}
+function internal(req){
+ const actor=identityVerifier(req.headers.authorization);
+ assert(actor.role==='identity_service',403,'Identity service only');
+ const x=req.headers['x-internal-api-key'];
+ assert(typeof x==='string'&&x.length===env.OTP_INTERNAL_API_KEY.length&&timingSafeEqual(Buffer.from(x),Buffer.from(env.OTP_INTERNAL_API_KEY)),401,'Unauthorized');
+}
 async function signed(req,raw){
  const id=req.headers['x-device-id'],stamp=req.headers['x-timestamp'],nonce=req.headers['x-nonce'],sig=req.headers['x-signature'];
  assert([id,stamp,nonce,sig].every(x=>typeof x==='string'),401,'Missing device signature');
