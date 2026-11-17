@@ -5,7 +5,7 @@ on:
     paths:
       - 'server/sql/009_fin25_gateway_isolated.sql'
       - 'server/sql/010_fin25_otp_isolated.sql'
-      - 'server/test/fin25_postgres_integration.mjs'
+      - 'server/fin25_postgres_integration.mjs'
       - '.github/workflows/fin25-postgres.yml'
   pull_request:
     paths:
@@ -34,7 +34,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - run: npm ci
+      - run: npm install --no-package-lock --ignore-scripts --no-audit --no-fund
         working-directory: server
-      - run: node --test test/fin25_postgres_integration.mjs
+      - run: node fin25_postgres_integration.mjs
         working-directory: server
