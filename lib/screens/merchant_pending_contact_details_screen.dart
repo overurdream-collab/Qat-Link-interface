@@ -144,9 +144,9 @@ class _MerchantPendingContactDetailsScreenState
   }
 
   String _normalizeAmount(String input) => input
-      .replaceAll(RegExp(r'[٠-٩]'), (match) =>
+      .replaceAllMapped(RegExp(r'[٠-٩]'), (match) =>
           String.fromCharCode(match.group(0)!.codeUnitAt(0) - 0x0660 + 0x30))
-      .replaceAll(RegExp(r'[۰-۹]'), (match) =>
+      .replaceAllMapped(RegExp(r'[۰-۹]'), (match) =>
           String.fromCharCode(match.group(0)!.codeUnitAt(0) - 0x06F0 + 0x30))
       .replaceAll('٫', '.')
       .replaceAll(',', '')

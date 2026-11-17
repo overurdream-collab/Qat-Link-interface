@@ -27,9 +27,8 @@ class MerchantApprovalCenterScreen extends StatefulWidget {
 
 class _MerchantApprovalCenterScreenState
     extends State<MerchantApprovalCenterScreen> {
-  late _ApprovalView _view = _ApprovalView.values[
-    widget.initialView.clamp(0, _ApprovalView.values.length - 1),
-  ];
+  late _ApprovalView _view = _ApprovalView
+      .values[widget.initialView.clamp(0, _ApprovalView.values.length - 1).toInt()];
 
   String _customerName(String id) {
     for (final customer in widget.state.customers.value) {
