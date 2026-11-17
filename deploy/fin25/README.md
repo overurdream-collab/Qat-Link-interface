@@ -30,7 +30,7 @@ docker compose up -d --build
 docker compose ps
 docker compose logs --tail=100 enrollment otp https
 ```
-The HTTPS URL entered on Samsung is `https://YOUR_CERTIFICATE_HOSTNAME_OR_LAN_IP:8443`. Trust the issuing CA on the phone if using a private CA. A self-signed untrusted server certificate will be rejected.
+The backend processes bind to 0.0.0.0 **inside their private Docker network only** so Caddy can reach them; neither service publishes its port to the host. Only Caddy publishes 8443.\n\nThe HTTPS URL entered on Samsung is `https://YOUR_CERTIFICATE_HOSTNAME_OR_LAN_IP:8443`. Trust the issuing CA on the phone if using a private CA. A self-signed untrusted server certificate will be rejected.
 
 ## Enroll and prove
 1. On Samsung create Android Keystore key and copy Device ID + public SPKI PEM + fingerprint.
