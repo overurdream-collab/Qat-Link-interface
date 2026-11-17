@@ -2,6 +2,7 @@
 -- Apply after migrations 001 through 005, including FIN-15 amendment tables.
 -- Deployment role must own DDL; application role must not own tables or triggers.
 BEGIN;
+LOCK TABLE financial_movements IN SHARE ROW EXCLUSIVE MODE;
 CREATE OR REPLACE FUNCTION fin19_validate_approved_movement()
 RETURNS trigger LANGUAGE plpgsql AS $$
 DECLARE
@@ -80,10 +81,12 @@ BEGIN
          OR r.id IS NULL OR r.merchant_id IS DISTINCT FROM cl.merchant_id
          OR r.customer_id IS DISTINCT FROM d.customer_id
          OR r.contact_id IS DISTINCT FROM cl.contact_id
+         OR r.status IS DISTINCT FROM 'approved'
          OR ROW(fm.merchant_id,fm.amount,fm.currency,fm.type)
             IS DISTINCT FROM ROW(cl.merchant_id,cl.amount,cl.currency,cl.operation_type)))
      OR (fm.source_operation_id IS NOT NULL AND (
          o.id IS NULL OR o.status IS DISTINCT FROM 'approved'
+         OR r.status IS DISTINCT FROM 'approved'
          OR ROW(fm.merchant_id,fm.customer_id,fm.relationship_id,fm.amount,fm.currency,fm.type,fm.reversal_of_movement_id)
             IS DISTINCT FROM ROW(o.merchant_id,o.customer_id,o.relationship_id,o.amount,o.currency,o.operation_type,o.reversal_of_movement_id)));
   IF invalid_count > 0 THEN
