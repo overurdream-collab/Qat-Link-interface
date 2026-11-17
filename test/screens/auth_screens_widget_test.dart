@@ -14,6 +14,18 @@ void main() {
     expect(find.text('إجمالي الديون المعتمدة'), findsNothing);
   });
 
+  testWidgets('login opens only a clearly labeled customer UI preview',
+      (tester) async {
+    await tester.pumpWidget(const QatLinkApp());
+    await tester.ensureVisible(find.byKey(const Key('open_customer_preview')));
+    await tester.tap(find.byKey(const Key('open_customer_preview')));
+    await tester.pumpAndSettle();
+    expect(find.textContaining('معاينة واجهات العميل'), findsOneWidget);
+    expect(find.text('سجل الحركة'), findsNothing);
+    expect(find.text('سجل الحساب خاص'), findsNothing);
+    expect(find.text('يتطلب حساباً موثقاً'), findsWidgets);
+  });
+
   testWidgets('registered role options stay on a separate page', (tester) async {
     await tester.pumpWidget(const QatLinkApp());
     await tester.ensureVisible(find.byKey(const Key('open_registration')));

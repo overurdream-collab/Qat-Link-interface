@@ -3,6 +3,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'screens/home_screen.dart';
 import 'screens/customer_details_screen.dart';
+import 'screens/customer_app_shell.dart';
 import 'screens/login_screen.dart';
 import 'screens/merchant_tabs.dart';
 import 'services/app_state.dart';
@@ -28,6 +29,7 @@ class QatLinkApp extends StatefulWidget {
 }
 
 class _QatLinkAppState extends State<QatLinkApp> {
+  final GlobalKey<NavigatorState> _navigatorKey = GlobalKey<NavigatorState>();
   ThemeMode _themeMode = ThemeMode.light;
   bool _femaleProfile = false;
 
@@ -42,6 +44,7 @@ class _QatLinkAppState extends State<QatLinkApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      navigatorKey: _navigatorKey,
       title: 'مقوتي لنك',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.build(dark: false, pink: _pinkTheme),
@@ -57,6 +60,18 @@ class _QatLinkAppState extends State<QatLinkApp> {
       home: LoginScreen(
         isDark: _themeMode == ThemeMode.dark,
         onGenderChanged: _setProfileGender,
+        onOpenCustomerPreview: () => _navigatorKey.currentState?.push<void>(
+          MaterialPageRoute<void>(
+            builder: (_) => CustomerAppShell(
+              isDark: _themeMode == ThemeMode.dark,
+              onToggleTheme: () => setState(() {
+                _themeMode = _themeMode == ThemeMode.dark
+                    ? ThemeMode.light
+                    : ThemeMode.dark;
+              }),
+            ),
+          ),
+        ),
         onToggleTheme: () => setState(() {
           _themeMode = _themeMode == ThemeMode.dark
               ? ThemeMode.light

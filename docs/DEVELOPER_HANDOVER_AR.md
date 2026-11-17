@@ -58,6 +58,7 @@
 | العملاء: البحث والترتيب وطلبات الارتباط | lib/screens/customers_screen.dart؛ lib/widgets/customers/ | CUSTOMERS_SCREEN_REFERENCE_AR.md؛ test/screens/customers_screen_widget_test.dart | واجهة، لا دعوات خادم حقيقية |
 | زر (+): إضافة عميل/دين/تسديد بسرعة | lib/widgets/quick_actions/ | QUICK_ACTIONS_CUSTOMER_SELECTION_AR.md؛ test/widgets/quick_actions/ | واجهة وربط بالنموذج المحلي |
 | سجل الحركة: الفلاتر والعملة والحالات | lib/screens/movement_screen.dart؛ lib/widgets/movement/ | MOVEMENT_SCREEN_REFERENCE_AR.md؛ test/screens/movement_screen_widget_test.dart | واجهة وحسابات محلية |
+| مساحة العميل: الرئيسية والحركة والاستوديو والتجار واكتشف | lib/screens/customer_app_shell.dart؛ مدخل معاينة في lib/main.dart وlib/screens/login_screen.dart | APPROVED_CUSTOMER_UI_AR.md؛ test/screens/customer_app_shell_widget_test.dart؛ test/screens/auth_screens_widget_test.dart | واجهات Flutter ومعاينة آمنة؛ لا دخول/مزامنة/تفاعل إنتاجي |
 | تفاصيل العميل: الفترة والكشف وتصدير PDF | lib/screens/customer_details_screen.dart؛ lib/widgets/customers/customer_statement_* | CUSTOMER_DETAILS_SCREEN_REFERENCE_AR.md؛ test/widgets/customer_statement_* | حساب وكشف محلي، يتطلب تحقق أجهزة |
 | علاقات التاجر/العميل والحركات والموافقات | lib/models/app_models.dart؛ lib/services/app_state.dart | test/services/app_state_test.dart | قواعد مجال محلية لا مصادقة حقيقية |
 | تجميع العملات ورصيد الحساب | lib/services/movement_calculator.dart؛ customer_calculator.dart | test/services/movement_calculator_test.dart | منطق مالي مختبر |

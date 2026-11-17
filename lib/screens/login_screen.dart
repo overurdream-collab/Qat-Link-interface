@@ -16,11 +16,13 @@ class LoginScreen extends StatefulWidget {
     required this.isDark,
     required this.onToggleTheme,
     required this.onGenderChanged,
+    required this.onOpenCustomerPreview,
   });
 
   final bool isDark;
   final VoidCallback onToggleTheme;
   final ValueChanged<ProfileGender> onGenderChanged;
+  final VoidCallback onOpenCustomerPreview;
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -226,6 +228,13 @@ class _LoginScreenState extends State<LoginScreen> {
                             icon: const Icon(Icons.person_add_alt_rounded),
                             label: const Text('إنشاء حساب',
                                 style: TextStyle(fontWeight: FontWeight.w800)),
+                          ),
+                          const SizedBox(height: 7),
+                          TextButton.icon(
+                            key: const Key('open_customer_preview'),
+                            onPressed: widget.onOpenCustomerPreview,
+                            icon: const Icon(Icons.visibility_outlined),
+                            label: const Text('معاينة واجهات العميل'),
                           ),
                         ],
                       ),
