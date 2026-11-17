@@ -78,15 +78,17 @@ const api=http.createServer(async(req,res)=>{
    await client.query('UPDATE otp_challenges SET attempts=attempts+1 WHERE id=$1',[requestId]);
    const a=Buffer.from(ch.code_digest,'hex'),b=Buffer.from(digest(requestId,code),'hex');
    if(!timingSafeEqual(a,b)) { await client.query('COMMIT');client.release();client=null; return reply(res,401,{error:'Invalid or expired code'}); }
-   await client.query('UPDATE otp_challenges SET consumed_at=now() WHERE id=$1',[requestId]);
+   const proof=randomUUID()+randomUUID();
+   const proofHash=createHmac('sha256',env.OTP_HMAC_SECRET).update('proof:'+proof).digest('hex');
+   await client.query("UPDATE otp_challenges SET consumed_at=now(),proof_digest=$2,proof_expires_at=now()+interval '2 minutes' WHERE id=$1",[requestId,proofHash]);
    await client.query('COMMIT');client.release();client=null;
    // Proof is returned only to trusted identity backend; NEVER issue a role or JWT based on phone alone.
-   return reply(res,200,{verified:true,requestId,identitySession:'requires-internal-identity-service'});
+   return reply(res,200,{verified:true,proofToken:proof,expiresInSeconds:120});
   }
   if(path==='/v1/gateway/poll'){
    const device=await signed(req,raw);
    client=await pool.connect();await client.query('BEGIN');
-   const x=await client.query("SELECT j.id,j.recipient,j.encrypted_body FROM sms_gateway_jobs j JOIN otp_challenges c ON c.id=j.challenge_id WHERE (j.status='pending' OR (j.status='leased' AND j.lease_until<now())) AND c.expires_at>now() AND j.attempts<3 ORDER BY j.created_at FOR UPDATE OF j SKIP LOCKED LIMIT 1");
+   const x=await client.query("SELECT j.id,j.recipient,j.encrypted_body FROM sms_gateway_jobs j JOIN otp_challenges c ON c.id=j.challenge_id WHERE j.status='pending' AND c.expires_at>now() AND j.attempts<3 ORDER BY j.created_at FOR UPDATE OF j SKIP LOCKED LIMIT 1");
    if(!x.rowCount){await client.query('COMMIT');client.release();client=null;return reply(res,200,{job:null});}
    const j=x.rows[0];
    await client.query("UPDATE sms_gateway_jobs SET status='leased',device_id=$2,lease_until=now()+interval '45 seconds',attempts=attempts+1 WHERE id=$1",[j.id,device]);
@@ -108,7 +110,13 @@ const api=http.createServer(async(req,res)=>{
   if(path==='/v1/internal/otp/proof'){
    internal(req);
    // Reserved for server-to-server proof exchange. Never expose a phone from an unauthenticated caller.
-   return reply(res,501,{error:'Identity service exchange not implemented'});
+   assert(typeof data.proofToken==='string'&&data.proofToken.length===72,400,'Invalid proof');
+   const hash=createHmac('sha256',env.OTP_HMAC_SECRET).update('proof:'+data.proofToken).digest('hex');
+   client=await pool.connect();await client.query('BEGIN');
+   const proof=await client.query("UPDATE otp_challenges SET proof_redeemed_at=now() WHERE proof_digest=$1 AND proof_expires_at>now() AND proof_redeemed_at IS NULL RETURNING phone",[hash]);
+   await client.query('COMMIT');client.release();client=null;
+   assert(proof.rowCount===1,401,'Invalid or expired proof');
+   return reply(res,200,{verified:true,phone:proof.rows[0].phone});
   }
   return reply(res,404,{error:'Not found'});
  }catch(e){if(client){try{await client.query('ROLLBACK')}catch{}client.release()}
