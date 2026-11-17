@@ -23,6 +23,9 @@ void main() {
     final fontLoader = FontLoader('NotoSansArabic')
       ..addFont(rootBundle.load('assets/fonts/NotoSansArabic-Regular.ttf'));
     await fontLoader.load();
+    final latinFontLoader = FontLoader('NotoSans')
+      ..addFont(rootBundle.load('assets/fonts/NotoSans-Regular.ttf'));
+    await latinFontLoader.load();
     final iconFontLoader = FontLoader('MaterialIcons')
       ..addFont(rootBundle.load(
         'fonts/MaterialIcons-Regular.otf',
