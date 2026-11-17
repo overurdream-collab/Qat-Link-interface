@@ -25,11 +25,11 @@ services:
     volumes:
       - ./server/sql:/sql:ro
     entrypoint: ["/bin/sh", "-ec"]
-    command: >-
-      'for file in /sql/00[1-7]_*.sql; do
-      echo "Applying $$file";
-      psql -v ON_ERROR_STOP=1 -h db -U qatlink -d qatlink -f "$$file";
-      done'
+    command: |
+      for file in /sql/00[1-7]_*.sql; do
+        echo "Applying $file"
+        psql -v ON_ERROR_STOP=1 -h db -U qatlink -d qatlink -f "$file"
+      done
     networks: [internal]
   api:
     build: ./server
