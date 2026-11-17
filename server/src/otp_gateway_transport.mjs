@@ -96,11 +96,21 @@ const api=http.createServer(async(req,res)=>{
    await client.query('COMMIT');client.release();client=null;
    return reply(res,200,{job:{id:j.id,recipient:j.recipient,text:decrypt(j.encrypted_body)}});
   }
-  if(path==='/v1/gateway/result'){
+  // A lease is not a retry permission: uncertain sends stay leased for reconciliation.\n  // No automatic requeue of expired leases, including after device restart.\n  if(path==='/v1/gateway/result'){
    const device=await signed(req,raw);
    assert(typeof data.jobId==='string'&&['sent','failed','delivered'].includes(data.status),400,'Invalid result');
-   const x=await pool.query("UPDATE sms_gateway_jobs SET status=$3,sim_slot=$4,sent_at=CASE WHEN $3 IN ('sent','delivered') THEN now() ELSE sent_at END,lease_until=NULL WHERE id=$1 AND device_id=$2 AND status IN ('leased','sent') RETURNING id",[data.jobId,device,data.status,Number.isInteger(data.simSlot)?data.simSlot:null]);
-   assert(x.rowCount===1,409,'Job not leased to device');
+   assert(Number.isInteger(data.simSlot)&&data.simSlot>=0,400,'Invalid SIM slot');
+   client=await pool.connect();await client.query('BEGIN');
+   const current=await client.query('SELECT status,device_id FROM sms_gateway_jobs WHERE id=$1 FOR UPDATE',[data.jobId]);
+   assert(current.rowCount===1&&current.rows[0].device_id===device,409,'Job not leased to device');
+   const previous=current.rows[0].status;
+   // Repeated ACKs are idempotent; never downgrade sent/delivered to failed.
+   if(previous===data.status){await client.query('COMMIT');client.release();client=null;return reply(res,200,{accepted:true,duplicate:true});}
+   assert((previous==='leased'&&['sent','failed'].includes(data.status))||
+     (previous==='sent'&&data.status==='delivered'),409,'Invalid job state transition');
+   await client.query("UPDATE sms_gateway_jobs SET status=$2,sim_slot=$3,sent_at=CASE WHEN $2='sent' THEN now() ELSE sent_at END,lease_until=NULL WHERE id=$1",
+     [data.jobId,data.status,data.simSlot]);
+   await client.query('COMMIT');client.release();client=null;
    return reply(res,200,{accepted:true});
   }
   if(path==='/v1/gateway/heartbeat'){
