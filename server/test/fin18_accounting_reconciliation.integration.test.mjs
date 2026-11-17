@@ -46,9 +46,9 @@ test('FIN-18 PostgreSQL/API E2E: off-app partial consent, currency reconciliatio
       const debtU=await createClaim('debt-usd','2.1234','debt','USD');
       const duplicate=await createClaim('debt-yer','100.2500','debt','YER');
       assert.equal(duplicate.replayed,true);
-      assert.equal((await store.claimsInbox(customer,{})).items.length,5);
-
+      assert.equal((await store.claimsInbox(customer,{})).items.length,0);
       await store.verifyPhone(identity,{customer_id:customer.id,phone,proof_reference:key('proof')});
+      assert.equal((await store.claimsInbox(customer,{})).items.length,5);
       const relation=(await store.listCustomerRelationships(customer,{})).items[0];
       assert.equal(relation.status,'pending');
       for(const claim of [debtY.claim,paymentY.claim,debtS.claim,debtU.claim]){
