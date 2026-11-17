@@ -77,7 +77,7 @@ const api=http.createServer(async(req,res)=>{
    assert(!ch.consumed_at&&new Date(ch.expires_at)>new Date()&&ch.attempts<5,401,'Invalid or expired code');
    await client.query('UPDATE otp_challenges SET attempts=attempts+1 WHERE id=$1',[requestId]);
    const a=Buffer.from(ch.code_digest,'hex'),b=Buffer.from(digest(requestId,code),'hex');
-   assert(timingSafeEqual(a,b),401,'Invalid or expired code');
+   if(!timingSafeEqual(a,b)) { await client.query('COMMIT');client.release();client=null; return reply(res,401,{error:'Invalid or expired code'}); }
    await client.query('UPDATE otp_challenges SET consumed_at=now() WHERE id=$1',[requestId]);
    await client.query('COMMIT');client.release();client=null;
    // Proof is returned only to trusted identity backend; NEVER issue a role or JWT based on phone alone.
