@@ -2,7 +2,7 @@
 
 ## تحديث خارطة الدفتر المالي v2.2 — 2026-11-17
 
-**المرجع الجاري:** PR #37، التغيير المالي FIN-17. كود الفرع المختبر 44bbd76c23e116544afbfaa08140eea07f35ca04؛ نجح Backend/PostgreSQL (24 اختباراً، 0 فشل/تخطٍ) في [التشغيل](https://github.com/overurdream-collab/Qat-Link-interface/actions/runs/43983394661)، ونجح Flutter Analyze وTests في [التشغيل](https://github.com/overurdream-collab/Qat-Link-interface/actions/runs/43983394741). PR مفتوح وغير مدمج؛ لا تنسب هذه الإضافة إلى main قبل الدمج.
+**المرجع الجاري:** PR #37، التغيير المالي FIN-17. نسخة FIN-17 المختبرة 44bbd76c23e116544afbfaa08140eea07f35ca04 دُمجت عبر PR #37 إلى main عند e292396b8727363e101a3010b15dc1e876c4f3be؛ نجح Backend/PostgreSQL (24 اختباراً، 0 فشل/تخطٍ) في [التشغيل](https://github.com/overurdream-collab/Qat-Link-interface/actions/runs/43983394661)، ونجح Flutter Analyze وTests في [التشغيل](https://github.com/overurdream-collab/Qat-Link-interface/actions/runs/43983394741). أصبحت إضافة FIN-17 ضمن main؛
 
 | المرحلة | الحالة المثبتة |
 |---|---|
