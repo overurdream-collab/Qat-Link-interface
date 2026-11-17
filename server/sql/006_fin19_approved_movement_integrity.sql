@@ -66,7 +66,7 @@ END;
 $$;
 
 -- Existing posted rows must be valid BEFORE the trigger is installed.
-DO $
+DO $$
 DECLARE invalid_count bigint;
 BEGIN
   SELECT count(*) INTO invalid_count FROM financial_movements fm
@@ -93,11 +93,11 @@ BEGIN
     RAISE EXCEPTION 'FIN19 preflight: % invalid approved ledger rows; investigate before migration', invalid_count
       USING ERRCODE='23514';
   END IF;
-END $;
+END $$;
 
 -- Authoritative source facts must not be rewritten after an approved posting.
 CREATE OR REPLACE FUNCTION fin19_protect_posted_source()
-RETURNS trigger LANGUAGE plpgsql AS $
+RETURNS trigger LANGUAGE plpgsql AS $$
 DECLARE posted boolean;
 BEGIN
   IF TG_TABLE_NAME='merchant_claims' THEN
@@ -124,7 +124,7 @@ BEGIN
     THEN RAISE EXCEPTION 'Posted relationship identity is immutable' USING ERRCODE='23514'; END IF;
   END IF;
   RETURN CASE WHEN TG_OP='DELETE' THEN OLD ELSE NEW END;
-END $;
+END $$;
 DROP TRIGGER IF EXISTS fin19_claim_source_immutable ON merchant_claims;
 CREATE TRIGGER fin19_claim_source_immutable BEFORE UPDATE OR DELETE ON merchant_claims
 FOR EACH ROW EXECUTE FUNCTION fin19_protect_posted_source();
