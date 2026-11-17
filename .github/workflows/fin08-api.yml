@@ -48,4 +48,8 @@ jobs:
         run: psql -v ON_ERROR_STOP=1 -h 127.0.0.1 -U fin08 -d qatlink_test -f sql/004_fin16_credit_limits.sql
       - name: Apply FIN17 payment allocation migration
         run: psql -v ON_ERROR_STOP=1 -h 127.0.0.1 -U fin08 -d qatlink_test -f sql/005_fin17_payment_allocations.sql
+      - name: Apply FIN19 approved ledger source integrity migration
+        run: psql -v ON_ERROR_STOP=1 -h 127.0.0.1 -U fin08 -d qatlink_test -f sql/006_fin19_approved_movement_integrity.sql
+      - name: Apply FIN20 relationship identity binding migration
+        run: psql -v ON_ERROR_STOP=1 -h 127.0.0.1 -U fin08 -d qatlink_test -f sql/007_fin20_relationship_binding.sql
       - run: npm test
