@@ -35,6 +35,14 @@ BEGIN
     RAISE NOTICE 'PASS: forged ledger entry rejected (23514)';
   END;
   BEGIN
+    INSERT INTO financial_movements(id,source_claim_id,relationship_id,merchant_id,customer_id,amount,currency,type)
+    VALUES('44444444-4444-4444-8444-444444444443','22222222-2222-4222-8222-222222222222',
+    '33333333-3333-4333-8333-333333333331','fin19-test-merchant','fin19-test-customer',999,'SAR','debt');
+    RAISE EXCEPTION 'FAIL: forged amount/currency accepted';
+  EXCEPTION WHEN check_violation THEN
+    RAISE NOTICE 'PASS: forged amount/currency rejected';
+  END;
+  BEGIN
     UPDATE merchant_claims SET amount=999 WHERE id='22222222-2222-4222-8222-222222222221';
     RAISE EXCEPTION 'FAIL: posted claim was mutated';
   EXCEPTION WHEN check_violation THEN
