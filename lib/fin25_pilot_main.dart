@@ -25,3 +25,4 @@ class Fin25PilotApp extends StatelessWidget {
         ],
         home: const Fin25PilotSetupScreen(),
       );
+}
