@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../widgets/auth/auth_brand_hero.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import '../services/fin25_otp_client.dart';
@@ -108,6 +109,8 @@ class _Fin25OtpScreenState extends State<Fin25OtpScreen> {
     body: SafeArea(child: Center(child: ConstrainedBox(
       constraints: const BoxConstraints(maxWidth: 460),
       child: ListView(padding: const EdgeInsets.all(22), children: [
+        const MaqwatiBrandMark(height: 62),
+        const SizedBox(height: 8),
         const Icon(Icons.verified_user_outlined, size: 52),
         const SizedBox(height: 12),
         Text('الرقم: ${widget.phone}', textAlign: TextAlign.center),
