@@ -37,7 +37,7 @@ class Fin25OtpClient {
         : normalized.startsWith('967') && normalized.length == 12
             ? normalized.substring(3)
             : normalized;
-    if (!RegExp(r'^[0-9]{9}.hasMatch(digits)) {
+    if (!RegExp(r'^[0-9]{9} {
       throw const Fin25OtpException(
           'أدخل رقم جوال يمني صحيحاً بالأرقام الإنجليزية 0-9 فقط.');
     }
