@@ -45,9 +45,14 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   void _submit() {
     if (!_formKey.currentState!.validate()) return;
-    // Never send or persist the entered PIN or selected role: the trusted
-    // identity issuer has not yet been connected to FIN25 phone proof.
-    // This handoff verifies phone ownership only and creates no user/session.
+    // Never transmit or store a PIN. Role selection is a registration request;
+    // trusted identity service issues role only after FIN25 phone proof.
+    if (_selectedRole == RegistrationRole.supplier) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('حساب المورد غير مدعوم حالياً في خدمة الهوية.'),
+      ));
+      return;
+    }
     final String phone;
     try {
       phone = Fin25OtpClient.normalizeYemeniPhone(_phone.text);
@@ -58,7 +63,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       return;
     }
     Navigator.of(context).push(MaterialPageRoute<void>(
-      builder: (_) => Fin25PilotSetupScreen(initialPhone: phone),
+      builder: (_) => Fin25PilotSetupScreen(
+        initialPhone: phone,
+        enableIdentity: true,
+        requestedRole: _selectedRole.name,
+        displayName: _name.text.trim(),
+      ),
     ));
   }
 
