@@ -21,6 +21,7 @@ void main() {
     expect(AuthInputValidation.phone('+۹۶۷۷۷۱۲۳۴۵۶۷'), isNotNull);
     expect(AuthInputValidation.phone('707123456'), isNull);
     expect(AuthInputValidation.phone('717123456'), isNull);
+    expect(AuthInputValidation.phone('727123456'), isNull);
     expect(AuthInputValidation.phone('737123456'), isNull);
     expect(AuthInputValidation.phone('777123456'), isNull);
     expect(AuthInputValidation.phone('787123456'), isNull);
