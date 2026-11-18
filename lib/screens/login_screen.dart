@@ -70,50 +70,43 @@ class _LoginScreenState extends State<LoginScreen> {
 
     // Debug builds only. The URL is never saved, and no request is sent
     // until the user explicitly presses "إرسال رمز OTP" on the next screen.
-    final urlController = TextEditingController(text: _fin25Url);
-    String? selectedUrl;
-    try {
-      selectedUrl = await showDialog<String>(
-        context: context,
-        builder: (dialogContext) => AlertDialog(
-          title: const Text('عنوان خادم OTP التجريبي'),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Text('أدخل عنوان HTTPS الموثوق لبيئة الاختبار فقط. '
-                  'لا تستخدم خادماً لا تتحكم به.'),
-              const SizedBox(height: 12),
-              TextField(
-                key: const Key('fin25_otp_server_url'),
-                controller: urlController,
-                keyboardType: TextInputType.url,
-                autocorrect: false,
-                decoration: const InputDecoration(
-                  hintText: 'https://your-test-server.example/',
-                  labelText: 'عنوان HTTPS',
-                ),
+    String enteredUrl = _fin25Url;
+    final selectedUrl = await showDialog<String>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: const Text('عنوان خادم OTP التجريبي'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Text('أدخل عنوان HTTPS الموثوق لبيئة الاختبار فقط. '
+                'لا تستخدم خادماً لا تتحكم به.'),
+            const SizedBox(height: 12),
+            TextFormField(
+              key: const Key('fin25_otp_server_url'),
+              initialValue: _fin25Url,
+              onChanged: (value) => enteredUrl = value,
+              keyboardType: TextInputType.url,
+              autocorrect: false,
+              decoration: const InputDecoration(
+                hintText: 'https://your-test-server.example/',
+                labelText: 'عنوان HTTPS',
               ),
-            ],
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(dialogContext),
-              child: const Text('إلغاء'),
-            ),
-            FilledButton(
-              key: const Key('fin25_otp_open'),
-              onPressed: () => Navigator.pop(
-                dialogContext, urlController.text.trim()),
-              child: const Text('متابعة'),
             ),
           ],
         ),
-      );
-    } finally {
-      // Allow the dialog's exit animation to finish before disposal.
-      // TextField is unmounted after the dialog Future completes.
-      urlController.dispose();
-    }
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(dialogContext),
+            child: const Text('إلغاء'),
+          ),
+          FilledButton(
+            key: const Key('fin25_otp_open'),
+            onPressed: () => Navigator.pop(dialogContext, enteredUrl.trim()),
+            child: const Text('متابعة'),
+          ),
+        ],
+      ),
+    );
     if (!mounted || selectedUrl == null) return;
     try {
       final base = Uri.parse(selectedUrl);
