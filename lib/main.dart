@@ -10,6 +10,7 @@ import 'theme/app_colors.dart';
 import 'theme/app_theme.dart';
 import 'widgets/app_chrome.dart';
 import 'widgets/notifications/maqwati_notifications_sheet.dart';
+import 'widgets/notifications/maqwati_incoming_notification_host.dart';
 import 'widgets/auth/auth_brand_hero.dart';
 import 'widgets/customers/customer_invitation_sheet.dart';
 import 'widgets/quick_actions/quick_actions_sheet.dart';
@@ -69,6 +70,7 @@ class MerchantAppShell extends StatefulWidget {
     this.verifiedCustomerMatches = const [],
     this.verifiedClaimDecisions = const [],
     this.verifiedTransferredClaimIds = const <String>{},
+    this.incomingNotification,
   });
 
   final bool isDark;
@@ -80,6 +82,8 @@ class MerchantAppShell extends StatefulWidget {
   final List<VerifiedCustomerContactMatch> verifiedCustomerMatches;
   final List<VerifiedCustomerClaimDecision> verifiedClaimDecisions;
   final Set<String> verifiedTransferredClaimIds;
+  /// An authenticated notification-stream event; null unless connected.
+  final MaqwatiNotificationEvent? incomingNotification;
 
   @override
   State<MerchantAppShell> createState() => _MerchantAppShellState();
@@ -181,7 +185,9 @@ class _MerchantAppShellState extends State<MerchantAppShell> {
   @override
   Widget build(BuildContext context) {
     final c = context.colors;
-    return Scaffold(
+    return MaqwatiIncomingNotificationHost(
+      event: widget.incomingNotification,
+      child: Scaffold(
       backgroundColor: c.background,
       body: SafeArea(
         child: Column(
@@ -243,6 +249,7 @@ class _MerchantAppShellState extends State<MerchantAppShell> {
             ),
           ],
         ),
+      ),
       ),
     );
   }
