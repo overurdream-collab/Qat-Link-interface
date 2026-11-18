@@ -5,6 +5,8 @@ import '../features/auth/auth_input_validation.dart';
 import '../theme/app_colors.dart';
 import '../widgets/auth/auth_brand_hero.dart';
 import 'registration_screen.dart';
+import '../services/fin25_otp_client.dart';
+import 'fin25_otp_screen.dart';
 
 /// App entry point. UI only: no PIN is persisted, sent, or accepted without
 /// server authentication. Never navigate to private finance pages on form
@@ -45,6 +47,27 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
+  }
+
+  // Set at build time only for a controlled FIN25 test; no server URL is hardcoded.
+  static const _fin25Url = String.fromEnvironment('FIN25_OTP_BASE_URL');
+
+  void _openOtpTest() {
+    final raw = _phone.text;
+    try {
+      final phone = Fin25OtpClient.normalizeYemeniPhone(raw);
+      final base = Uri.parse(_fin25Url);
+      if (base.scheme != 'https' || base.host.isEmpty) {
+        throw const FormatException('HTTPS required');
+      }
+      Navigator.of(context).push(MaterialPageRoute<void>(
+        builder: (_) => Fin25OtpScreen(phone: phone, baseUri: base),
+      ));
+    } on Exception {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('أدخل رقماً يمنياً صحيحاً وتأكد من إعداد HTTPS للاختبار.'),
+      ));
+    }
   }
 
   void _signIn() {
@@ -192,6 +215,15 @@ class _LoginScreenState extends State<LoginScreen> {
                                   fontWeight: FontWeight.w800,
                                 )),
                           ),
+                          if (_fin25Url.isNotEmpty) ...[
+                            const SizedBox(height: 10),
+                            OutlinedButton.icon(
+                              key: const Key('fin25_otp_test'),
+                              onPressed: _openOtpTest,
+                              icon: const Icon(Icons.sms_outlined),
+                              label: const Text('اختبار تحقق SMS (بدون تسجيل دخول)'),
+                            ),
+                          ],
                           const SizedBox(height: 13),
                           Text(
                             'ليس لديك حساب؟',
