@@ -32,7 +32,7 @@ class _QatLinkAppState extends State<QatLinkApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'مقوتي لنك',
+      title: 'مقوتي لينك',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light,
       darkTheme: AppTheme.dark,
