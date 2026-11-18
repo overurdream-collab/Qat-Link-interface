@@ -30,6 +30,34 @@ void main() {
     expect(find.text('أتابع حساباتي وأراجع طلبات التجار'), findsOneWidget);
   });
 
+  testWidgets('signup hands off only phone to OTP without creating account',
+      (tester) async {
+    await tester.pumpWidget(const QatLinkApp());
+    await tester.ensureVisible(find.byKey(const Key('open_registration')));
+    await tester.tap(find.byKey(const Key('open_registration')));
+    await tester.pumpAndSettle();
+
+    await tester.enterText(find.byKey(const Key('register_name')),
+        'محمد علي');
+    await tester.enterText(find.byKey(const Key('register_phone')),
+        '771234567');
+    await tester.enterText(find.byKey(const Key('register_pin')), '1234');
+    await tester.enterText(find.byKey(const Key('register_confirm_pin')),
+        '1234');
+    await tester.ensureVisible(find.byKey(const Key('register_submit')));
+    await tester.tap(find.byKey(const Key('register_submit')));
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(const Key('pilot_url')), findsOneWidget);
+    expect(find.byKey(const Key('pilot_phone')), findsOneWidget);
+    final field = tester.widget<TextFormField>(
+        find.byKey(const Key('pilot_phone')));
+    expect(field.controller?.text, '+967771234567');
+    expect(find.byKey(const Key('otp_request')), findsNothing);
+    expect(find.text('الحركة'), findsNothing);
+    expect(find.textContaining('تم إنشاء الحساب'), findsNothing);
+  });
+
   testWidgets('login form does not grant a session on valid local inputs', (tester) async {
     await tester.pumpWidget(const QatLinkApp());
     await tester.enterText(
