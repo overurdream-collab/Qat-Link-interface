@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../widgets/auth/auth_brand_hero.dart';
 import 'package:http/http.dart' as http;
 import '../services/identity_session_client.dart';
 
@@ -82,6 +83,8 @@ class _Fin25PilotSetupScreenState extends State<Fin25PilotSetupScreen> {
       child: Form(key: _form, child: ListView(
         padding: const EdgeInsets.all(24),
         children: [
+          const MaqwatiBrandMark(height: 64),
+          const SizedBox(height: 8),
           const Icon(Icons.phonelink_lock_outlined, size: 56),
           const SizedBox(height: 16),
           const Text('تجربة رسالة التحقق على الجوال',
