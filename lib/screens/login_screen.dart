@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:http/http.dart' as http;
 
 import '../features/auth/auth_input_validation.dart';
 import '../theme/app_colors.dart';
@@ -119,8 +118,9 @@ class _LoginScreenState extends State<LoginScreen> {
     try {
       final base = Uri.parse(selectedUrl);
       // Require a clean HTTPS origin; do not accept credentials or paths.
-      Fin25OtpClient(baseUri: base, httpClient: http.Client()).httpClient.close();
-      if (base.path.isNotEmpty && base.path != '/') {
+      if (base.scheme != 'https' || base.host.isEmpty ||
+          base.userInfo.isNotEmpty || base.hasQuery || base.hasFragment ||
+          (base.path.isNotEmpty && base.path != '/')) {
         throw const FormatException('Root HTTPS base URL required');
       }
       Navigator.of(context).push(MaterialPageRoute<void>(
