@@ -176,7 +176,7 @@ class _LoginScreenState extends State<LoginScreen> {
           Positioned.fill(child: ColoredBox(
             color: Theme.of(context).brightness == Brightness.dark
                 ? const Color(0xC713212D)
-                : const Color(0xCFF1F8FA),
+                : const Color(0x8CF1F8FA),
           )),
           SafeArea(
         child: SingleChildScrollView(
