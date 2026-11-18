@@ -10,8 +10,8 @@ const publicKey=pair.publicKey.export({type:'spki',format:'pem'});
 const issuer='qat-link-identity-test',audience='qat-link-financial-test';
 const proofToken='11111111-1111-4111-8111-11111111111122222222-2222-4222-8222-222222222222';
 
-function fixture({proofStatus=200,role='merchant',existing=null}={}) {
-  let consumed=0, inserted=0, current=existing;
+function fixture({proofStatus=200,role='merchant',existing=null,failFinance=false}={}) {
+  let consumed=0, inserted=0, current=existing, provisioned=0;
   const events=[];
   const pool={
     async connect(){return {release(){},async query(sql,args=[]){
@@ -20,7 +20,7 @@ function fixture({proofStatus=200,role='merchant',existing=null}={}) {
       if(sql.startsWith('SELECT subject,role,display_name FROM identity_accounts WHERE phone=')) return current?{rowCount:1,rows:[current]}:{rowCount:0,rows:[]};
       if(sql.startsWith('INSERT INTO identity_accounts')) {
         inserted++;
-        current={subject:args[0],role:args[2],display_name:args[3]};
+        current={subject:args[0],role:args[2],display_name:args[3],finance_proof_reference:args[4],finance_provisioned_at:null};
         return {rowCount:1,rows:[current]};
       }
       if(sql.startsWith('UPDATE identity_accounts'))return {rowCount:1,rows:[]};
@@ -39,8 +39,13 @@ function fixture({proofStatus=200,role='merchant',existing=null}={}) {
     consumed++;
     return {ok:proofStatus===200,status:proofStatus,async json(){return {verified:true,phone:'+967771234567'};}};
   };
+  const financeProvision=async ({account,phone})=>{
+    provisioned++;
+    assert.equal(phone,'+967771234567');
+    if(failFinance) throw new IdentityError(503,'Finance unavailable');
+  };
   const settings={privateKey,publicKey,issuer,audience,fin25ProofUrl:'http://fin25-test-otp:8083/v1/internal/otp/proof',fin25InternalKey:'test-key'};
-  return {service:createIdentityLogic({pool,fetchImpl,settings}),requests,events,get consumed(){return consumed;},get inserted(){return inserted;}};
+  return {service:createIdentityLogic({pool,fetchImpl,settings,financeProvision}),requests,events,get consumed(){return consumed;},get inserted(){return inserted;},get provisioned(){return provisioned;}};
 }
 test('RS256 identity_service bearer is accepted and HS256 is refused',()=>{
   const bearer=signIdentityJwt({privateKey,issuer,audience,subject:'identity-svc',role:'identity_service',lifetimeSeconds:60});
@@ -53,7 +58,7 @@ test('RS256 identity_service bearer is accepted and HS256 is refused',()=>{
 test('valid proof creates one merchant identity, returns user JWT, checks role on me',async()=>{
   const f=fixture();const result=await f.service.exchange({proofToken,requestedRole:'merchant',displayName:'متجر تجريبي'});
   assert.equal(result.account.role,'merchant');
-  assert.equal(f.inserted,1);assert.equal(f.consumed,1);
+  assert.equal(f.inserted,1);assert.equal(f.consumed,1);assert.equal(f.provisioned,1);
   assert.equal(f.requests[0].internalKey,'test-key');
   assert.equal(f.requests[0].body.proofToken,proofToken);
   assert.equal(createVerifier({publicKey,issuer,audience})('Bearer '+f.requests[0].auth.split(' ')[1]).role,'identity_service');
@@ -84,4 +89,12 @@ test('tampered or expired account session is rejected',async()=>{
   await assert.rejects(f.service.me('Bearer '+expired),e=>e.status===401);
   const forged=signIdentityJwt({privateKey,issuer,audience,subject:'fake',role:'customer'});
   await assert.rejects(f.service.me('Bearer '+forged),e=>e.status===401);
+});
+
+test('financial provisioning failure rejects account session and rolls back',async()=>{
+  const f=fixture({failFinance:true});
+  await assert.rejects(f.service.exchange({proofToken,requestedRole:'merchant',displayName:'متجر تجريبي'}),e=>e.status===503);
+  assert.equal(f.provisioned,1);
+  assert.ok(f.events.includes('ROLLBACK'));
+  assert.ok(!f.events.includes('COMMIT'));
 });
