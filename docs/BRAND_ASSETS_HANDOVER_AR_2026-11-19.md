@@ -46,3 +46,6 @@
 
 ## النشر والحماية
 الفرع `feat/p0-auth-identity-integration-20261118` وPR #61. لم يُدمج إلى main، ولم تُعدل قاعدة FIN25 أو بوابة Samsung SMS أو Docker.
+
+## APK بصري للمعاينة
+`.github/workflows/p0-auth-ci.yml` يبني الآن Debug APK للتطبيق الرئيسي ويرفع الأثر باسم `maqwati-branded-login-preview-apk` إذا اجتاز التوقيع والبناء، مع `retention-days: 7`. هذا **ليس** APK دخول مالي فعلي، لأن عنوان `IDENTITY_API_BASE_URL` لم يُهيأ وخدمة الهوية غير منشورة. توقيع debug يختلف عن تطبيق بوابة SMS ولا يجوز تثبيته فوق تطبيق البوابة. رابط GitHub Actions الفعلي ونتيجته يثبتان بعد انتهاء CI.
