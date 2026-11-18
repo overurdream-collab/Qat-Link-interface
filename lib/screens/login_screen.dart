@@ -8,6 +8,7 @@ import '../widgets/auth/auth_brand_hero.dart';
 import 'registration_screen.dart';
 import '../services/fin25_otp_client.dart';
 import 'fin25_otp_screen.dart';
+import 'fin25_pilot_setup_screen.dart';
 
 /// App entry point. UI only: no PIN is persisted, sent, or accepted without
 /// server authentication. Never navigate to private finance pages on form
@@ -124,6 +125,22 @@ class _LoginScreenState extends State<LoginScreen> {
         content: Text('أدخل عنوان HTTPS صحيحاً وخالياً من أي مسار أو بيانات دخول.'),
       ));
     }
+  }
+
+  void _signInWithSms() {
+    final String phone;
+    try {
+      phone = Fin25OtpClient.normalizeYemeniPhone(_phone.text);
+    } on Fin25OtpException catch (error) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(error.message)));
+      return;
+    }
+    // OTP login is independent of the unconnected four-digit PIN.
+    Navigator.of(context).push(MaterialPageRoute<void>(
+      builder: (_) => Fin25PilotSetupScreen(
+        initialPhone: phone, enableIdentity: true),
+    ));
   }
 
   void _signIn() {
@@ -276,6 +293,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                   fontSize: 16,
                                   fontWeight: FontWeight.w800,
                                 )),
+                          ),
+                          const SizedBox(height: 10),
+                          OutlinedButton.icon(
+                            key: const Key('login_with_otp'),
+                            onPressed: _signInWithSms,
+                            icon: const Icon(Icons.sms_outlined),
+                            label: const Text('الدخول برمز تحقق SMS'),
                           ),
                           if (kDebugMode) ...[
                             const SizedBox(height: 10),
