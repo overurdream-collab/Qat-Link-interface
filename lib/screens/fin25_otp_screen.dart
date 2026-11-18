@@ -5,9 +5,12 @@ import '../services/fin25_otp_client.dart';
 
 /// Verifies phone ownership for FIN25 testing. Does not authenticate an account.
 class Fin25OtpScreen extends StatefulWidget {
-  const Fin25OtpScreen({super.key, required this.phone, required this.baseUri});
+  const Fin25OtpScreen({super.key, required this.phone, required this.baseUri,
+    this.httpClient});
   final String phone;
   final Uri baseUri;
+  /// Caller retains ownership when injecting a client (for widget tests).
+  final http.Client? httpClient;
   @override
   State<Fin25OtpScreen> createState() => _Fin25OtpScreenState();
 }
@@ -23,13 +26,13 @@ class _Fin25OtpScreenState extends State<Fin25OtpScreen> {
   @override
   void initState() {
     super.initState();
-    _http = http.Client();
+    _http = widget.httpClient ?? http.Client();
     _client = Fin25OtpClient(baseUri: widget.baseUri, httpClient: _http);
   }
   @override
   void dispose() {
     _code.dispose();
-    _http.close();
+    if (widget.httpClient == null) _http.close();
     super.dispose();
   }
 
@@ -56,6 +59,7 @@ class _Fin25OtpScreenState extends State<Fin25OtpScreen> {
     try {
       await _client.verify(requestId: _challenge!.requestId, code: _code.text);
       if (!mounted) return;
+      _code.clear();
       setState(() {
         _verified = true;
         _message = 'تم التحقق من ملكية الرقم. الدخول إلى الحساب لا يزال معطلاً حتى إصدار جلسة آمنة من خدمة الهوية.';
@@ -79,6 +83,12 @@ class _Fin25OtpScreenState extends State<Fin25OtpScreen> {
         const SizedBox(height: 20),
         Text(_message, textAlign: TextAlign.center,
           key: const Key('otp_status')),
+        if (_challenge != null) ...[
+          const SizedBox(height: 12),
+          const Text('معرّف الطلب للمتابعة (لا يحتوي على الرمز):'),
+          SelectableText(_challenge!.requestId,
+            key: const Key('otp_request_id'), textDirection: TextDirection.ltr),
+        ],
         const SizedBox(height: 20),
         if (_challenge == null)
           FilledButton(key: const Key('otp_request'), onPressed: _busy ? null : _request,
@@ -101,3 +111,4 @@ class _Fin25OtpScreenState extends State<Fin25OtpScreen> {
     ))),
   );
 }
+
