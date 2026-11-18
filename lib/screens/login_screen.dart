@@ -1,5 +1,7 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:http/http.dart' as http;
 
 import '../features/auth/auth_input_validation.dart';
 import '../theme/app_colors.dart';
@@ -52,20 +54,81 @@ class _LoginScreenState extends State<LoginScreen> {
   // Set at build time only for a controlled FIN25 test; no server URL is hardcoded.
   static const _fin25Url = String.fromEnvironment('FIN25_OTP_BASE_URL');
 
-  void _openOtpTest() {
-    final raw = _phone.text;
+  Future<void> _openOtpTest() async {
+    if (!kDebugMode) return;
+    final String phone;
     try {
-      final phone = Fin25OtpClient.normalizeYemeniPhone(raw);
-      final base = Uri.parse(_fin25Url);
-      if (base.scheme != 'https' || base.host.isEmpty) {
-        throw const FormatException('HTTPS required');
+      if (AuthInputValidation.phone(_phone.text) != null) {
+        throw const FormatException('Invalid local phone');
+      }
+      phone = Fin25OtpClient.normalizeYemeniPhone(_phone.text);
+    } on Exception {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('أدخل 9 أرقام إنجليزية بعد مفتاح اليمن +967.'),
+      ));
+      return;
+    }
+
+    // Debug builds only. The URL is never saved, and no request is sent
+    // until the user explicitly presses "إرسال رمز OTP" on the next screen.
+    final urlController = TextEditingController(text: _fin25Url);
+    String? selectedUrl;
+    try {
+      selectedUrl = await showDialog<String>(
+        context: context,
+        builder: (dialogContext) => AlertDialog(
+          title: const Text('عنوان خادم OTP التجريبي'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Text('أدخل عنوان HTTPS الموثوق لبيئة الاختبار فقط. '
+                  'لا تستخدم خادماً لا تتحكم به.'),
+              const SizedBox(height: 12),
+              TextField(
+                key: const Key('fin25_otp_server_url'),
+                controller: urlController,
+                keyboardType: TextInputType.url,
+                autocorrect: false,
+                decoration: const InputDecoration(
+                  hintText: 'https://your-test-server.example/',
+                  labelText: 'عنوان HTTPS',
+                ),
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(dialogContext),
+              child: const Text('إلغاء'),
+            ),
+            FilledButton(
+              key: const Key('fin25_otp_open'),
+              onPressed: () => Navigator.pop(
+                dialogContext, urlController.text.trim()),
+              child: const Text('متابعة'),
+            ),
+          ],
+        ),
+      );
+    } finally {
+      // Allow the dialog's exit animation to finish before disposal.
+      // TextField is unmounted after the dialog Future completes.
+      urlController.dispose();
+    }
+    if (!mounted || selectedUrl == null) return;
+    try {
+      final base = Uri.parse(selectedUrl);
+      // Require a clean HTTPS origin; do not accept credentials or paths.
+      Fin25OtpClient(baseUri: base, httpClient: http.Client()).httpClient.close();
+      if (base.path.isNotEmpty && base.path != '/') {
+        throw const FormatException('Root HTTPS base URL required');
       }
       Navigator.of(context).push(MaterialPageRoute<void>(
         builder: (_) => Fin25OtpScreen(phone: phone, baseUri: base),
       ));
     } on Exception {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text('أدخل رقماً يمنياً صحيحاً وتأكد من إعداد HTTPS للاختبار.'),
+        content: Text('أدخل عنوان HTTPS صحيحاً وخالياً من أي مسار أو بيانات دخول.'),
       ));
     }
   }
@@ -221,7 +284,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   fontWeight: FontWeight.w800,
                                 )),
                           ),
-                          if (_fin25Url.isNotEmpty) ...[
+                          if (kDebugMode) ...[
                             const SizedBox(height: 10),
                             OutlinedButton.icon(
                               key: const Key('fin25_otp_test'),
