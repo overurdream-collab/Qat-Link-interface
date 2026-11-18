@@ -80,18 +80,24 @@ class _MaqwatiPeekingMascotState extends State<MaqwatiPeekingMascot>
                 borderRadius: BorderRadius.circular(size * .48),
               ),
               child: ClipRect(
-                child: Align(
+                child: OverflowBox(
                   alignment: Alignment.centerLeft,
-                  widthFactor: .34,
+                  minWidth: size * 3,
+                  maxWidth: size * 3,
                   child: Image.asset(
                     MaqwatiBrandAssets.horizontalLogo,
                     height: size,
                     width: size * 3,
                     fit: BoxFit.fill,
                     key: const Key('maqwati_peek_source_logo'),
-                    errorBuilder: (_, __, ___) =>
-                        Icon(Icons.face_rounded,
+                    errorBuilder: (_, __, ___) => Align(
+                      alignment: Alignment.centerLeft,
+                      child: SizedBox(
+                        width: size,
+                        child: Icon(Icons.face_rounded,
                           size: size * .65, color: Colors.white),
+                      ),
+                    ),
                   ),
                 ),
               ),
