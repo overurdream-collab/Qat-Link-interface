@@ -38,7 +38,7 @@ class Fin25OtpClient {
             ? normalized.substring(3)
             : normalized;
     if (!RegExp(r'^[0-9]{9}$').hasMatch(digits)) {
-      throw const Fin25OtpException('أدخل رقم جوال يمني صحيحاً من 9 أرقام.');
+      throw const Fin25OtpException('أدخل رقم جوال يمني بالأرقام الإنجليزية 0-9 فقط.');
     }
     return '+967$digits';
   }
@@ -87,7 +87,7 @@ class Fin25OtpClient {
   Future<void> verify({required String requestId, required String code}) async {
     final otp = AuthInputValidation.normalizeDigits(code);
     if (!RegExp(r'^[0-9]{6}$').hasMatch(otp)) {
-      throw const Fin25OtpException('رمز الرسالة يجب أن يتكون من 6 أرقام.');
+      throw const Fin25OtpException('رمز الرسالة يجب أن يتكون من 6 أرقام إنجليزية (0-9).');
     }
     final response = await _post('v1/auth/otp/verify',
       {'requestId': requestId, 'code': otp});
