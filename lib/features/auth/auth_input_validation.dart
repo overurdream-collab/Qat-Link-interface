@@ -6,7 +6,7 @@ abstract final class AuthInputValidation {
   static String normalizePhone(String value) =>
       value.replaceAll(RegExp(r'[\s\-\(\)]'), '');
 
-  /// Yemeni mobile prefixes currently supported: 70, 71, 73, 77, 78.
+  /// Yemeni mobile prefixes currently supported: 70, 71, 72, 73, 77, 78.
   /// Accept local 9-digit and +967/967 international notation.
   static String? phone(String? raw) {
     final value = normalizePhone(raw ?? '');
