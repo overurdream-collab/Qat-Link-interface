@@ -41,7 +41,7 @@ void main() {
         return pending.future;
       }
       verifications++;
-      return http.Response('{"verified":true,"proofToken":"never-show-this"}', 200);
+      return http.Response('{"verified":true,"proofToken":"11111111-1111-4111-8111-11111111111122222222-2222-4222-8222-222222222222"}', 200);
     });
     addTearDown(client.close);
     await tester.pumpWidget(MaterialApp(home: Fin25OtpScreen(
