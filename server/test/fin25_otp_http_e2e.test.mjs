@@ -79,6 +79,19 @@ if (!dbUrl) {
     assert.equal(proof.body.phone,phone);
     assert.equal((await post('/v1/internal/otp/proof',{proofToken:verified.body.proofToken},headers)).status,401,'proof is single-use');
   });
+  test('OTP HTTP allows Yemeni 72 and refuses non-Yemeni or invalid ranges',async()=>{
+    for(const invalid of ['+966551234567','+967751234567','+967791234567',
+      '+967٧٧٦٦٤٤٣١٢','+967123456789']) {
+      const result=await post('/v1/auth/otp/request',{phone:invalid});
+      assert.equal(result.status,400,invalid);
+    }
+    const sabafon72='+967727654321';
+    const result=await post('/v1/auth/otp/request',{phone:sabafon72});
+    assert.equal(result.status,202);
+    await pool.query('DELETE FROM fin25_sms_jobs WHERE recipient=$1',[sabafon72]);
+    await pool.query('DELETE FROM fin25_otp_challenges WHERE phone=$1',[sabafon72]);
+  });
+
   test('OTP HTTP throttles immediate duplicate requests',async()=>{
     const result=await post('/v1/auth/otp/request',{phone});
     assert.equal(result.status,429);
