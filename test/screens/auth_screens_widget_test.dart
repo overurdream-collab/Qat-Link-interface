@@ -58,6 +58,21 @@ void main() {
     expect(find.textContaining('تم إنشاء الحساب'), findsNothing);
   });
 
+  testWidgets('SMS account login navigates to configured identity setup only',
+      (tester) async {
+    await tester.pumpWidget(const QatLinkApp());
+    await tester.enterText(find.byKey(const Key('login_phone')), '771234567');
+    await tester.ensureVisible(find.byKey(const Key('login_with_otp')));
+    await tester.tap(find.byKey(const Key('login_with_otp')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const Key('pilot_phone')), findsOneWidget);
+    final phone = tester.widget<TextFormField>(
+      find.byKey(const Key('pilot_phone')));
+    expect(phone.controller?.text, '+967771234567');
+    expect(find.byKey(const Key('otp_request')), findsNothing);
+    expect(find.text('الحركة'), findsNothing);
+  });
+
   testWidgets('login form does not grant a session on valid local inputs', (tester) async {
     await tester.pumpWidget(const QatLinkApp());
     await tester.enterText(
