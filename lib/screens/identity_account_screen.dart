@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../widgets/auth/auth_brand_hero.dart';
 import '../services/identity_session_client.dart';
+import 'customer_updates_screen.dart';
 
 /// Account session confirmation. Do not expose AppState's mock financial ledger.
 class IdentityAccountScreen extends StatelessWidget {
@@ -29,6 +30,20 @@ class IdentityAccountScreen extends StatelessWidget {
           'يظل عرض الدفتر المالي معطلاً حتى ربط واجهاته ببيانات الخادم الحقيقية؛ '
           'لا نعرض أرصدة تجريبية على أنها حسابك.',
           textAlign: TextAlign.center),
+        const SizedBox(height: 16),
+        if (session.role == 'customer') ...[
+          OutlinedButton.icon(
+            key: const Key('customer_open_updates'),
+            onPressed: () => Navigator.of(context).push(
+              MaterialPageRoute<void>(
+                builder: (_) => const CustomerUpdatesScreen(),
+              ),
+            ),
+            icon: const Icon(Icons.notifications_active_outlined),
+            label: const Text('تنبيهاتي وحجوزاتي'),
+          ),
+          const SizedBox(height: 8),
+        ],
         const SizedBox(height: 24),
         FilledButton.icon(
           key: const Key('identity_logout'),
