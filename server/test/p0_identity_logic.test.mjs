@@ -34,7 +34,7 @@ function fixture({proofStatus=200,role='merchant',existing=null,failFinance=fals
         return {rowCount:1,rows:[{subject:current.subject}]};
       }
       if(sql.startsWith('UPDATE identity_accounts SET last_login_at=')) return {rowCount:1,rows:[]};
-      if(sql.startsWith('SELECT subject,role,display_name FROM identity_accounts WHERE subject=')) {
+      if(sql.startsWith('SELECT subject,role,display_name,finance_provisioned_at FROM identity_accounts WHERE subject=')) {
         return current?.subject===args[0]?{rowCount:1,rows:[current]}:{rowCount:0,rows:[]};
       }
       throw new Error('Unexpected statement');
@@ -109,4 +109,10 @@ test('financial provisioning failure prevents session but preserves stable ident
   assert.equal(recovered.account.role,'merchant');
   assert.equal(f.inserted,1);
   assert.equal(f.provisioned,2);
+});
+
+test('identity me rejects user who has not completed FIN08 provisioning',async()=>{
+  const f=fixture({existing:{subject:'account-pending',role:'customer',display_name:null,finance_provisioned_at:null}});
+  const token=signIdentityJwt({privateKey,issuer,audience,subject:'account-pending',role:'customer'});
+  await assert.rejects(f.service.me('Bearer '+token),e=>e.status===401);
 });
