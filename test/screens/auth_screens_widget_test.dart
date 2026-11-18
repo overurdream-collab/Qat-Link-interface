@@ -6,7 +6,7 @@ void main() {
   testWidgets('app opens login without exposing private finance tabs', (tester) async {
     await tester.pumpWidget(const QatLinkApp());
     expect(find.text('أهلاً بعودتك'), findsOneWidget);
-    expect(find.text('رقم الجوال'), findsOneWidget);
+    expect(find.text('رقم الجوال اليمني'), findsOneWidget);
     expect(find.text('رمز الدخول'), findsOneWidget);
     expect(find.byKey(const Key('open_registration')), findsOneWidget);
     expect(find.text('الحركة'), findsNothing);
