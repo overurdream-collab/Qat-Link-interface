@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../widgets/auth/auth_brand_hero.dart';
 import '../services/identity_session_client.dart';
 
 /// Account session confirmation. Do not expose AppState's mock financial ledger.
@@ -12,6 +13,8 @@ class IdentityAccountScreen extends StatelessWidget {
     body: SafeArea(child: Center(child: ConstrainedBox(
       constraints: const BoxConstraints(maxWidth: 460),
       child: ListView(padding: const EdgeInsets.all(24), children: [
+        const MaqwatiBrandMark(height: 66),
+        const SizedBox(height: 8),
         const Icon(Icons.verified_user, size: 68),
         const SizedBox(height: 16),
         Text('تم تسجيل الدخول بنجاح', textAlign: TextAlign.center,
