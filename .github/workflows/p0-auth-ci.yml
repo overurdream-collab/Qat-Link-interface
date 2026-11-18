@@ -1,0 +1,33 @@
+name: P0 auth integration safety checks
+
+on:
+  push:
+    branches:
+      - feat/p0-auth-identity-integration-20261118
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: p0-auth-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  flutter-auth:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - name: Resolve dependencies
+        run: flutter pub get
+      - name: Static analysis
+        run: flutter analyze --no-fatal-infos
+      - name: Full Flutter unit and widget suite
+        run: flutter test
+      - name: Auth flow and FIN25 client targeted checks
+        run: flutter test test/screens/auth_screens_widget_test.dart test/screens/fin25_pilot_test.dart test/services/fin25_otp_client_test.dart
