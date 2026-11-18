@@ -161,6 +161,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                           const SizedBox(height: 11),
                           TextFormField(
                             key: const Key('register_phone'),
+                            inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9+]'))],
                             controller: _phone,
                             keyboardType: TextInputType.phone,
                             textDirection: TextDirection.ltr,
