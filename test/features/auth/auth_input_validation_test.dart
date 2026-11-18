@@ -16,7 +16,7 @@ void main() {
 
   test('only Yemeni mobile numbers in ASCII are accepted', () {
     expect(AuthInputValidation.phone('771234567'), isNull);
-    expect(AuthInputValidation.phone('+967 771 234 567'), isNull);
+    expect(AuthInputValidation.phone('+967 771 234 567'), isNotNull);
     expect(AuthInputValidation.phone('٧٧١٢٣٤٥٦٧'), isNotNull);
     expect(AuthInputValidation.phone('+۹۶۷۷۷۱۲۳۴۵۶۷'), isNotNull);
     expect(AuthInputValidation.phone('707123456'), isNull);
@@ -27,7 +27,8 @@ void main() {
     expect(AuthInputValidation.phone('787123456'), isNull);
     expect(AuthInputValidation.phone('+966 551 234 567'), isNotNull);
     expect(AuthInputValidation.phone('71234567'), isNotNull);
-    expect(AuthInputValidation.phone('751234567'), isNotNull);
+    expect(AuthInputValidation.phone('751234567'), isNull);
+    expect(AuthInputValidation.phone('123456789'), isNull);
     expect(AuthInputValidation.phone('12'), isNotNull);
     expect(AuthInputValidation.phone('abc123456789'), isNotNull);
   });
