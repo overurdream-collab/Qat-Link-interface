@@ -141,6 +141,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           const SizedBox(height: 17),
                           TextFormField(
                             key: const Key('login_phone'),
+                            inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9+]'))],
                             controller: _phone,
                             keyboardType: TextInputType.phone,
                             textDirection: TextDirection.ltr,
