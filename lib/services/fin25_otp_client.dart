@@ -84,8 +84,15 @@ class Fin25OtpClient {
     return Fin25OtpChallenge(id, seconds);
   }
 
-  /// Do not persist or return proofToken to the UI. It is NOT an access JWT.
+  /// Legacy phone-only pilot: intentionally discards the proof and does not login.
   Future<void> verify({required String requestId, required String code}) async {
+    await verifyForIdentity(requestId: requestId, code: code);
+  }
+
+  /// The returned proof is secret, single use and short lived. Supply it ONLY
+  /// to the configured trusted identity API; never print, cache or persist it.
+  Future<String> verifyForIdentity({required String requestId,
+      required String code}) async {
     final otp = AuthInputValidation.normalizeDigits(code);
     if (!RegExp(r'^[0-9]{6}$').hasMatch(otp)) {
       throw const Fin25OtpException('رمز الرسالة يجب أن يتكون من 6 أرقام إنجليزية (0-9).');
@@ -95,7 +102,10 @@ class Fin25OtpClient {
     if (response['verified'] != true) {
       throw const Fin25OtpException('لم يؤكد الخادم صحة الرمز.');
     }
-    // The identity issuer must redeem proof server-to-server and issue a JWT.
-    // Never navigate to financial pages here.
+    final token = response['proofToken'];
+    if (token is! String || !RegExp(r'^[a-fA-F0-9-]{72}$').hasMatch(token)) {
+      throw const Fin25OtpException('لم يصدر الخادم إثبات هاتف صالحاً.');
+    }
+    return token;
   }
 }
