@@ -1,0 +1,76 @@
+name: FIN25 physical phone test package
+
+on:
+  push:
+    branches: ['test/fin25-mobile-pilot-20261118']
+  pull_request:
+    branches: ['feat/fin25-flutter-otp-verification-20261118']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: fin25-mobile-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  pilot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - run: flutter pub get
+      - run: flutter analyze --no-fatal-infos
+      - run: flutter test
+      - name: Validate read-only preflight syntax
+        run: node --check scripts/fin25-mobile-preflight.mjs
+      - name: Parse Windows script
+        shell: pwsh
+        run: |
+          $tokens = $null
+          $errors = $null
+          [System.Management.Automation.Language.Parser]::ParseFile(
+            "$PWD/scripts/fin25-mobile-preflight.ps1", [ref]$tokens, [ref]$errors) | Out-Null
+          if ($errors.Count) { $errors | Format-List; exit 1 }
+      - name: Generate isolated Android pilot identity
+        run: |
+          flutter create --platforms=android --project-name qat_link .
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          manifest = Path('android/app/src/main/AndroidManifest.xml')
+          value, count = re.subn(r'android:label="[^"]+"', 'android:label="مقوتي لينك — اختبار الجوال"', manifest.read_text(), count=1)
+          assert count == 1
+          manifest.write_text(value)
+          gradle = Path('android/app/build.gradle.kts')
+          value, count = re.subn(r'applicationId\s*=\s*"[^"]+"', 'applicationId = "com.maqwati.fin25.mobilepilot"', gradle.read_text(), count=1)
+          assert count == 1
+          gradle.write_text(value)
+          PY
+      - name: Build actual pilot entry point
+        run: flutter build apk --debug --target lib/fin25_pilot_main.dart
+      - name: Record APK identity and verification
+        run: |
+          set -euo pipefail
+          mkdir -p mobile-test-package
+          cp build/app/outputs/flutter-apk/app-debug.apk mobile-test-package/maqwati-mobile-pilot.apk
+          cp scripts/fin25-mobile-preflight.* mobile-test-package/
+          cp docs/FIN25_MOBILE_PILOT_AR.md mobile-test-package/README_AR.md
+          BUILD_TOOLS=$(find "$ANDROID_HOME/build-tools" -mindepth 1 -maxdepth 1 -type d | sort -V | tail -1)
+          "$BUILD_TOOLS/apksigner" verify --verbose --print-certs mobile-test-package/maqwati-mobile-pilot.apk > mobile-test-package/apk-signature.txt
+          "$BUILD_TOOLS/aapt" dump badging mobile-test-package/maqwati-mobile-pilot.apk > mobile-test-package/apk-identity.txt
+          grep "^package: name='com.maqwati.fin25.mobilepilot'" mobile-test-package/apk-identity.txt
+          echo "$GITHUB_SHA" > mobile-test-package/source-commit.txt
+          cd mobile-test-package
+          sha256sum maqwati-mobile-pilot.apk > SHA256SUMS.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: maqwati-fin25-mobile-test-package
+          path: mobile-test-package/
+          if-no-files-found: error
+          retention-days: 14
