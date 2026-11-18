@@ -184,7 +184,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                             textAlign: TextAlign.right,
                             inputFormatters: [
                               FilteringTextInputFormatter.allow(
-                                RegExp(r'[0-9٠-٩۰-۹]'),
+                                RegExp(r'[0-9]'),
                               ),
                               LengthLimitingTextInputFormatter(4),
                             ],
@@ -217,7 +217,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                             textAlign: TextAlign.right,
                             inputFormatters: [
                               FilteringTextInputFormatter.allow(
-                                RegExp(r'[0-9٠-٩۰-۹]'),
+                                RegExp(r'[0-9]'),
                               ),
                               LengthLimitingTextInputFormatter(4),
                             ],
