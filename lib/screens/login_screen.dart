@@ -165,7 +165,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             textAlign: TextAlign.right,
                             inputFormatters: [
                               FilteringTextInputFormatter.allow(
-                                RegExp(r'[0-9٠-٩۰-۹]'),
+                                RegExp(r'[0-9]'),
                               ),
                               LengthLimitingTextInputFormatter(4),
                             ],
