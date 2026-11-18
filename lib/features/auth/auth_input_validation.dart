@@ -11,8 +11,8 @@ abstract final class AuthInputValidation {
   static String? phone(String? raw) {
     final value = normalizePhone(raw ?? '');
     if (value.isEmpty) return 'أدخل رقم الجوال';
-    if (!RegExp(r'^(?:\+967|967)?7[01378][0-9]{7}$').hasMatch(value)) {
-      return 'أدخل رقم جوال يمني فقط (70/71/73/77/78) بالأرقام الإنجليزية 0-9';
+    if (!RegExp(r'^(?:\+967|967)?7[012378][0-9]{7}$').hasMatch(value)) {
+      return 'أدخل رقم جوال يمني فقط (70/71/72/73/77/78) بالأرقام الإنجليزية 0-9';
     }
     return null;
   }
