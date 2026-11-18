@@ -141,15 +141,20 @@ class _LoginScreenState extends State<LoginScreen> {
                           const SizedBox(height: 17),
                           TextFormField(
                             key: const Key('login_phone'),
-                            inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9+]'))],
+                            inputFormatters: [
+                              FilteringTextInputFormatter.digitsOnly,
+                              LengthLimitingTextInputFormatter(9),
+                            ],
                             controller: _phone,
                             keyboardType: TextInputType.phone,
                             textDirection: TextDirection.ltr,
                             textAlign: TextAlign.right,
                             autofillHints: const [AutofillHints.telephoneNumber],
                             decoration: const InputDecoration(
-                              labelText: 'رقم الجوال',
-                              hintText: 'مثال: 771234567',
+                              labelText: 'رقم الجوال اليمني',
+                              prefixText: '+967  ',
+                              helperText: '9 أرقام إنجليزية فقط',
+                              hintText: '771234567',
                               prefixIcon: Icon(Icons.phone_android_rounded),
                             ),
                             validator: AuthInputValidation.phone,
