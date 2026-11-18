@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../models/app_models.dart';
+import 'merchant_financial_assistant_screen.dart';
 import '../services/app_state.dart';
 import '../services/movement_calculator.dart';
 import '../theme/app_colors.dart';
@@ -336,7 +337,11 @@ class _HomeScreenState extends State<HomeScreen> {
         color: Colors.transparent,
         child: InkWell(
           borderRadius: BorderRadius.circular(20),
-          onTap: () => _showReadOnlyNotice('المساعد المالي الذكي'),
+          onTap: () => Navigator.of(context).push<void>(
+            MaterialPageRoute<void>(
+              builder: (_) => MerchantFinancialAssistantScreen(state: widget.state),
+            ),
+          ),
           child: Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
