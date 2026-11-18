@@ -2,19 +2,29 @@
 import { createServer } from 'node:http';
 import { Pool } from 'pg';
 import { createIdentityLogic, IdentityError } from './identity_logic.mjs';
+import { createFinanceProvisioner } from './identity_finance_provisioner.mjs';
 
 const env = process.env;
 const required = [
   'IDENTITY_DATABASE_URL','IDENTITY_PRIVATE_KEY_PEM','IDENTITY_PUBLIC_KEY_PEM',
-  'IDENTITY_ISSUER','IDENTITY_AUDIENCE','FIN25_INTERNAL_PROOF_URL','FIN25_INTERNAL_API_KEY'
+  'IDENTITY_ISSUER','IDENTITY_AUDIENCE','FIN25_INTERNAL_PROOF_URL','FIN25_INTERNAL_API_KEY',
+  'FIN08_INTERNAL_BASE_URL'
 ];
 for(const k of required) if(!env[k]) throw new Error('Missing identity configuration: '+k);
 const port = Number(env.IDENTITY_PORT || 8090);
 if(!Number.isInteger(port) || port<1 || port>65535) throw new Error('Invalid IDENTITY_PORT');
 const pool = new Pool({connectionString:env.IDENTITY_DATABASE_URL,
   ssl:env.IDENTITY_PG_SSL==='true'?{rejectUnauthorized:true}:undefined,max:5});
+const signing = {
+  privateKey:env.IDENTITY_PRIVATE_KEY_PEM.replace(/\\n/g,'\n'),
+  issuer:env.IDENTITY_ISSUER,audience:env.IDENTITY_AUDIENCE
+};
+const finance = createFinanceProvisioner({
+  fetchImpl:fetch,
+  settings:{...signing,financeBaseUrl:env.FIN08_INTERNAL_BASE_URL}
+});
 const logic = createIdentityLogic({
-  pool,fetchImpl:fetch,
+  pool,fetchImpl:fetch,financeProvision:finance.provision,
   settings:{
     privateKey:env.IDENTITY_PRIVATE_KEY_PEM.replace(/\\n/g,'\n'),
     publicKey:env.IDENTITY_PUBLIC_KEY_PEM.replace(/\\n/g,'\n'),
