@@ -17,7 +17,10 @@ Uri? fin25PilotOrigin(String value) {
 }
 
 class Fin25PilotSetupScreen extends StatefulWidget {
-  const Fin25PilotSetupScreen({super.key});
+  const Fin25PilotSetupScreen({super.key, this.initialPhone});
+
+  /// Optional phone prefilling for registration handoff. No credentials are passed.
+  final String? initialPhone;
 
   @override
   State<Fin25PilotSetupScreen> createState() => _Fin25PilotSetupScreenState();
@@ -26,7 +29,13 @@ class Fin25PilotSetupScreen extends StatefulWidget {
 class _Fin25PilotSetupScreenState extends State<Fin25PilotSetupScreen> {
   final _form = GlobalKey<FormState>();
   final _url = TextEditingController();
-  final _phone = TextEditingController();
+  late final TextEditingController _phone;
+
+  @override
+  void initState() {
+    super.initState();
+    _phone = TextEditingController(text: widget.initialPhone ?? '');
+  }
 
   @override
   void dispose() {
