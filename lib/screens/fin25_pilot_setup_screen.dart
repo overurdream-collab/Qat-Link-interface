@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import '../services/identity_session_client.dart';
 
 import '../services/fin25_otp_client.dart';
 import 'fin25_otp_screen.dart';
@@ -17,10 +19,14 @@ Uri? fin25PilotOrigin(String value) {
 }
 
 class Fin25PilotSetupScreen extends StatefulWidget {
-  const Fin25PilotSetupScreen({super.key, this.initialPhone});
+  const Fin25PilotSetupScreen({super.key, this.initialPhone,
+    this.enableIdentity = false, this.requestedRole, this.displayName});
 
   /// Optional phone prefilling for registration handoff. No credentials are passed.
   final String? initialPhone;
+  final bool enableIdentity;
+  final String? requestedRole;
+  final String? displayName;
 
   @override
   State<Fin25PilotSetupScreen> createState() => _Fin25PilotSetupScreenState();
@@ -30,26 +36,40 @@ class _Fin25PilotSetupScreenState extends State<Fin25PilotSetupScreen> {
   final _form = GlobalKey<FormState>();
   final _url = TextEditingController();
   late final TextEditingController _phone;
+  final http.Client _identityHttp = http.Client();
+  late final IdentitySessionClient? _identity;
 
   @override
   void initState() {
     super.initState();
     _phone = TextEditingController(text: widget.initialPhone ?? '');
+    _identity = widget.enableIdentity
+        ? IdentitySessionClient.fromBuildConfig(_identityHttp) : null;
   }
 
   @override
   void dispose() {
     _url.dispose();
     _phone.dispose();
+    _identityHttp.close();
     super.dispose();
   }
 
   void _open() {
     if (!_form.currentState!.validate()) return;
+    if (widget.enableIdentity && _identity == null) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('خدمة الهوية لم تُهيأ لهذا الإصدار. لا يمكن تسجيل الحساب بعد.'),
+      ));
+      return;
+    }
     Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) =>
       Fin25OtpScreen(
         phone: Fin25OtpClient.normalizeYemeniPhone(_phone.text),
         baseUri: fin25PilotOrigin(_url.text)!,
+        identityClient: _identity,
+        requestedRole: widget.requestedRole,
+        displayName: widget.displayName,
       ),
     ));
   }
@@ -94,8 +114,10 @@ class _Fin25PilotSetupScreenState extends State<Fin25PilotSetupScreen> {
           FilledButton(key: const Key('pilot_continue'), onPressed: _open,
             child: const Text('متابعة إلى اختبار الرمز')),
           const SizedBox(height: 16),
-          const Text('هذه النسخة لا تفتح حساب التاجر أو العميل. '
-            'نجاح الرمز يثبت ملكية الرقم فقط؛ جلسة الدخول المالية مرحلة منفصلة.',
+          Text(widget.enableIdentity
+            ? 'بعد قبول الرمز تُطلب جلسة حساب موثقة من خدمة الهوية. '
+              'البيانات المالية لا تظهر حتى اتصال الدفتر الحقيقي.'
+            : 'هذه النسخة اختبار OTP فقط ولا تفتح الحساب المالي.',
             textAlign: TextAlign.center),
         ],
       )),
