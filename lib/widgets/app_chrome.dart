@@ -56,9 +56,31 @@ class AppTopBar extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(greeting, style: TextStyle(
-                  color: c.muted, fontSize: 12, fontWeight: FontWeight.w600,
-                )),
+                Row(
+                  children: [
+                    SizedBox(
+                      width: 104,
+                      height: 29,
+                      child: Image.asset(
+                        MaqwatiBrandAssets.horizontalLogo,
+                        key: const Key('app_header_wordmark'),
+                        fit: BoxFit.contain,
+                        errorBuilder: (_, __, ___) => Text(
+                          'مقوتي لينك',
+                          style: TextStyle(color: c.petrol,
+                            fontWeight: FontWeight.w900, fontSize: 12),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 5),
+                    Flexible(
+                      child: Text(greeting,
+                        maxLines: 1, overflow: TextOverflow.ellipsis,
+                        style: TextStyle(color: c.muted, fontSize: 11),
+                      ),
+                    ),
+                  ],
+                ),
                 Text(
                   accountName,
                   maxLines: 1,
