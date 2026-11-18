@@ -63,7 +63,7 @@ class HeroCarousel extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('مقوتي لنك • مساحة التاجر',
+                Text('مقوتي لينك • مساحة التاجر',
                   style: TextStyle(color: Colors.white70, fontSize: 10)),
                 SizedBox(height: 3),
                 Text('تابع حساباتك بذكاء',
