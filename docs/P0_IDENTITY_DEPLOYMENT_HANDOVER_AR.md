@@ -5,7 +5,7 @@
 - تطبيق Samsung SMS Gateway في المستودع `smsgateway` لا يتغير، ولا تدخل أسرار الهوية إلى APK البوابة.
 - خادم `fin25-test` القائم ينفذ `/v1/auth/otp/request` و`/v1/auth/otp/verify` ويعيد `proofToken` صالحاً لمدة 120 ثانية؛ يستهلكه `POST /v1/internal/otp/proof` مرة واحدة بتوقيع خدمة هوية ومفتاح داخلي.
 - خدمة جديدة: `server/src/identity_server.mjs` منفصلة عن خادم المالية. تستقبل `POST /v1/identity/session` بجسم `{proofToken, requestedRole?, displayName?}`؛ `requestedRole` إما `customer` أو `merchant` عند التسجيل الأول فقط. الدخول اللاحق يرسل الإثبات فقط. ترفض `supplier`.
-- `GET /v1/identity/me` يتطلب `Bearer accessToken` ويطابق الدور مع قاعدة الحسابات. جلسة RS256 قصيرة العمر (15 دقيقة)، ولا يوجد refresh أو PIN مخزن بعد.
+- قبل إصدار JWT، تسجل خدمة الهوية الحساب عند FIN08: التاجر في `/v1/internal/merchant-profiles` والعميل في `/v1/internal/verified-phones` بإثبات مرجعي ثابت. تؤثر هذه العملية على سجل الهوية فقط وتُنشئ علاقات Pending لا موافقات مالية. إخفاق FIN08 يمنع صدور الجلسة، وتبقى محاولة التسجيل التالية مشروطة برمز OTP جديد.\n- `GET /v1/identity/me` يتطلب `Bearer accessToken` ويطابق الدور مع قاعدة الحسابات. جلسة RS256 قصيرة العمر (15 دقيقة)، ولا يوجد refresh أو PIN مخزن بعد.
 - الشاشة `IdentityAccountScreen` تعرض هوية المستخدم دون أرصدة وهمية. الدفتر الحقيقي **غير موصول**؛ لا تعلن جاهزية الإنتاج.
 
 ## إعدادات نشر الخدمة (أسماء فقط؛ لا ترفع قيماً سرية)
@@ -17,7 +17,7 @@
 | `IDENTITY_ISSUER`, `IDENTITY_AUDIENCE` | نفس قيم `JWT_ISSUER/AUDIENCE` في FIN25 و`AUTH_ISSUER/AUDIENCE` في الخادم المالي |
 | `FIN25_INTERNAL_PROOF_URL` | عنوان خدمة FIN25 **الداخلي** المنتهي بـ `/v1/internal/otp/proof`، لا النفق الخارجي |
 | `FIN25_INTERNAL_API_KEY` | قيمة تطابق `OTP_INTERNAL_API_KEY` الموجودة لدى FIN25؛ لا تظهر للتطبيق |
-| `IDENTITY_PORT` | اختياري 8090 |
+| `FIN08_INTERNAL_BASE_URL` | عنوان داخلي محمي لخادم FIN08 المالي، بمساري التهيئة `merchant-profiles` و`verified-phones`؛ لا تعرضه علناً |\n| `IDENTITY_PORT` | اختياري 8090 |
 | `IDENTITY_BIND_HOST` | افتراضياً 127.0.0.1؛ يجب ضبط شبكة الوكيل العكسي بأمان |
 | `IDENTITY_PG_SSL` | استخدم true للقاعدة البعيدة مع تحقق شهادتها |
 
@@ -42,6 +42,6 @@
 
 ## حدود الإصدار الحالي
 - خدمة الهوية مهيأة للإصدار كعملية Node مستقلة لكن **غير منشورة**.
-- لا يوجد refresh/revocation token بعد، ولا حماية ربط الجهاز أو نقل الرقم، ولا provision لخادم FIN08، ولا سجلات حسابات حقيقية مثبتة.
+- لا يوجد refresh/revocation token بعد، ولا حماية ربط الجهاز أو نقل الرقم. يوجد **كود** تهيئة FIN08 الداخلي لكن نجاحه الفعلي على البيئة لم يثبت؛ لا توجد سجلات حسابات حقيقية مثبتة.
 - التوقيع وبيانات الهوية تحققت في اختبارات وحدة فقط عند ظهور نتيجة CI. لا تدّعِ اكتمال دورة دخول الحقيقية قبل تشغيل خادم الاختبار وتثبيت APK موقّع ومختبر.
 - بيئة `fin25-test` وSMS Gateway تظلان على حالهما حتى موافقة تشغيلية مستقلة.
