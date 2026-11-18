@@ -87,7 +87,7 @@ class _Fin25OtpScreenState extends State<Fin25OtpScreen> {
           TextField(key: const Key('otp_code'), controller: _code,
             textAlign: TextAlign.center, keyboardType: TextInputType.number,
             maxLength: 6, inputFormatters: [
-              FilteringTextInputFormatter.allow(RegExp(r'[0-9٠-٩۰-۹]')),
+              FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
               LengthLimitingTextInputFormatter(6),
             ], decoration: const InputDecoration(labelText: 'رمز الرسالة (6 أرقام)')),
           FilledButton(key: const Key('otp_verify'), onPressed: _busy ? null : _verify,
