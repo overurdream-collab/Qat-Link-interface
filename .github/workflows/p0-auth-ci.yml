@@ -45,3 +45,27 @@ jobs:
       - name: Run identity security unit tests
         working-directory: server
         run: node --test test/p0_identity_*.test.mjs
+
+  android-compile:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - name: Resolve Flutter packages
+        run: flutter pub get
+      - name: Generate Android project for isolated CI compile
+        run: flutter create --platforms=android --project-name qat_link --org com.maqwati .
+      - name: Compile main Flutter app as debug APK (not a release)
+        run: flutter build apk --debug --target lib/main.dart
+      - name: Verify build artifact and debug signature
+        shell: bash
+        run: |
+          test -s build/app/outputs/flutter-apk/app-debug.apk
+          BUILD_TOOLS=$(find "$ANDROID_HOME/build-tools" -mindepth 1 -maxdepth 1 -type d | sort -V | tail -1)
+          "$BUILD_TOOLS/apksigner" verify --verbose build/app/outputs/flutter-apk/app-debug.apk
+          sha256sum build/app/outputs/flutter-apk/app-debug.apk
+          echo "Build verified. Identity endpoint not supplied: this is NOT a functional login release."
