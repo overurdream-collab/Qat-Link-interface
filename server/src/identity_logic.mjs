@@ -17,10 +17,11 @@ export function signIdentityJwt({ privateKey, issuer, audience, subject, role, l
   sign.update(h+'.'+p); sign.end();
   return h+'.'+p+'.'+sign.sign(privateKey).toString('base64url');
 }
-export function createIdentityLogic({ pool, fetchImpl, settings, clock }) {
+export function createIdentityLogic({ pool, fetchImpl, settings, clock, financeProvision }) {
   const { privateKey, publicKey, issuer, audience, fin25ProofUrl, fin25InternalKey } = settings;
   if (!privateKey || !publicKey || !issuer || !audience || !fin25ProofUrl || !fin25InternalKey ||
       !/^https?:$/.test(new URL(fin25ProofUrl).protocol)) throw new Error('Identity configuration incomplete');
+  if(typeof financeProvision !== 'function') throw new Error('Verified FIN08 provisioner required');
   const verify = createVerifier({ publicKey, issuer, audience });
   const issue = (subject,role,lifetimeSeconds=900) => signIdentityJwt({
     privateKey,issuer,audience,subject,role,lifetimeSeconds,clock
@@ -56,7 +57,7 @@ export function createIdentityLogic({ pool, fetchImpl, settings, clock }) {
     const client = await pool.connect();
     try {
       await client.query('BEGIN');
-      const existing = await client.query('SELECT subject,role,display_name FROM identity_accounts WHERE phone=$1 FOR UPDATE',[proof.phone]);
+      const existing = await client.query('SELECT subject,role,display_name,finance_proof_reference,finance_provisioned_at FROM identity_accounts WHERE phone=$1 FOR UPDATE',[proof.phone]);
       let account;
       if(existing.rowCount) {
         account = existing.rows[0];
@@ -67,10 +68,16 @@ export function createIdentityLogic({ pool, fetchImpl, settings, clock }) {
         if(requestedRole==='merchant' && !displayName?.trim()) throw new IdentityError(400,'Merchant display name required');
         const subject=randomUUID();
         const inserted=await client.query(
-          'INSERT INTO identity_accounts(subject,phone,role,display_name) VALUES($1,$2,$3,$4) ON CONFLICT (phone) DO NOTHING RETURNING subject,role,display_name',
-          [subject,proof.phone,requestedRole,displayName?.trim() || null]);
+          'INSERT INTO identity_accounts(subject,phone,role,display_name,finance_proof_reference) VALUES($1,$2,$3,$4,$5) ON CONFLICT (phone) DO NOTHING RETURNING subject,role,display_name,finance_proof_reference,finance_provisioned_at',
+          [subject,proof.phone,requestedRole,displayName?.trim() || null,randomUUID()]);
         if(!inserted.rowCount) throw new IdentityError(409,'Concurrent account registration; request new OTP');
         account=inserted.rows[0];
+      }
+      if(!account.finance_provisioned_at) {
+        // Idempotent server-to-server FIN08 provisioning. Nothing in this
+        // operation approves bilateral merchant/customer relations or debts.
+        await financeProvision({account,phone:proof.phone});
+        await client.query('UPDATE identity_accounts SET finance_provisioned_at=now() WHERE subject=$1',[account.subject]);
       }
       await client.query('UPDATE identity_accounts SET last_login_at=now() WHERE subject=$1',[account.subject]);
       await client.query('COMMIT');
