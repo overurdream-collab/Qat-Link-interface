@@ -100,8 +100,8 @@ export function createIdentityLogic({ pool, fetchImpl, settings, clock, financeP
     let actor;
     try {actor=verify(header);}catch {throw new IdentityError(401,'Invalid or expired session');}
     if(!['merchant','customer'].includes(actor.role)) throw new IdentityError(403,'Not an account session');
-    const result=await pool.query('SELECT subject,role,display_name FROM identity_accounts WHERE subject=$1',[actor.id]);
-    if(result.rowCount!==1 || result.rows[0].role!==actor.role) throw new IdentityError(401,'Session account mismatch');
+    const result=await pool.query('SELECT subject,role,display_name,finance_provisioned_at FROM identity_accounts WHERE subject=$1',[actor.id]);
+    if(result.rowCount!==1 || result.rows[0].role!==actor.role || !result.rows[0].finance_provisioned_at) throw new IdentityError(401,'Session account mismatch');
     const row=result.rows[0];
     return {account:{id:row.subject,role:row.role,displayName:row.display_name}};
   }
