@@ -54,36 +54,47 @@ export function createIdentityLogic({ pool, fetchImpl, settings, clock, financeP
     try { proof=await response.json(); } catch {throw new IdentityError(502,'Invalid proof response');}
     if(proof?.verified !== true || typeof proof.phone !== 'string' || !/^\+967[0-9]{9}$/.test(proof.phone))
       throw new IdentityError(502,'Invalid proof response');
+    // Commit stable subject/reference before cross-service provisioning so that
+    // retries after a network error use the SAME idempotent identity.
     const client = await pool.connect();
+    let account;
     try {
       await client.query('BEGIN');
-      const existing = await client.query('SELECT subject,role,display_name,finance_proof_reference,finance_provisioned_at FROM identity_accounts WHERE phone=$1 FOR UPDATE',[proof.phone]);
-      let account;
+      const existing = await client.query(
+        'SELECT subject,role,display_name,finance_proof_reference,finance_provisioned_at FROM identity_accounts WHERE phone=$1 FOR UPDATE',
+        [proof.phone]);
       if(existing.rowCount) {
         account = existing.rows[0];
         if(requestedRole !== undefined && requestedRole !== account.role)
           throw new IdentityError(409,'This phone already belongs to another account role');
       } else {
         if(!requestedRole) throw new IdentityError(409,'Account registration required');
-        if(requestedRole==='merchant' && !displayName?.trim()) throw new IdentityError(400,'Merchant display name required');
-        const subject=randomUUID();
+        if(requestedRole==='merchant' && !displayName?.trim())
+          throw new IdentityError(400,'Merchant display name required');
         const inserted=await client.query(
           'INSERT INTO identity_accounts(subject,phone,role,display_name,finance_proof_reference) VALUES($1,$2,$3,$4,$5) ON CONFLICT (phone) DO NOTHING RETURNING subject,role,display_name,finance_proof_reference,finance_provisioned_at',
-          [subject,proof.phone,requestedRole,displayName?.trim() || null,randomUUID()]);
-        if(!inserted.rowCount) throw new IdentityError(409,'Concurrent account registration; request new OTP');
+          [randomUUID(),proof.phone,requestedRole,displayName?.trim() || null,randomUUID()]);
+        if(!inserted.rowCount) throw new IdentityError(409,'Concurrent registration; request new OTP');
         account=inserted.rows[0];
       }
-      if(!account.finance_provisioned_at) {
-        // Idempotent server-to-server FIN08 provisioning. Nothing in this
-        // operation approves bilateral merchant/customer relations or debts.
-        await financeProvision({account,phone:proof.phone});
-        await client.query('UPDATE identity_accounts SET finance_provisioned_at=now() WHERE subject=$1',[account.subject]);
-      }
-      await client.query('UPDATE identity_accounts SET last_login_at=now() WHERE subject=$1',[account.subject]);
       await client.query('COMMIT');
-      return {accessToken:issue(account.subject,account.role), tokenType:'Bearer', expiresInSeconds:900,
-        account:{id:account.subject,role:account.role,displayName:account.display_name}};
-    } catch(e) {await client.query('ROLLBACK');throw e;} finally {client.release();}
+    } catch(e) {
+      try { await client.query('ROLLBACK'); } catch {}
+      throw e;
+    } finally { client.release(); }
+
+    if(!account.finance_provisioned_at) {
+      // Idempotent remote update; a lost ACK can be retried with the stable
+      // finance_proof_reference after a new, valid OTP. No JWT before success.
+      await financeProvision({account,phone:proof.phone});
+      const mark=await pool.query(
+        'UPDATE identity_accounts SET finance_provisioned_at=now() WHERE subject=$1 RETURNING subject',
+        [account.subject]);
+      if(mark.rowCount!==1) throw new IdentityError(503,'Account provisioning state unavailable');
+    }
+    await pool.query('UPDATE identity_accounts SET last_login_at=now() WHERE subject=$1',[account.subject]);
+    return {accessToken:issue(account.subject,account.role), tokenType:'Bearer', expiresInSeconds:900,
+      account:{id:account.subject,role:account.role,displayName:account.display_name}};
   }
   async function me(header) {
     let actor;
