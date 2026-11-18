@@ -24,6 +24,12 @@ void main() {
     await tester.scrollUntilVisible(
       find.byKey(const Key('reminder_audience')), 260,
       scrollable:find.byType(Scrollable).first);
+    await Scrollable.ensureVisible(
+      tester.element(find.byKey(const Key('reminder_audience'))),
+      alignment: 0.25,
+      duration: Duration.zero,
+    );
+    await tester.pumpAndSettle();
     expect(find.byKey(const Key('reminder_audience')),findsOneWidget);
     expect(find.text('كل العملاء'),findsWidgets);
     await tester.tap(find.byKey(const Key('reminder_audience')));
