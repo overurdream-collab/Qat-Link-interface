@@ -19,6 +19,8 @@ void main() {
 
   testWidgets('setup validates and opens OTP without sending automatically', (tester) async {
     await tester.pumpWidget(const MaterialApp(home: Fin25PilotSetupScreen()));
+    await tester.ensureVisible(find.byKey(const Key('pilot_continue')));
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(const Key('pilot_continue')));
     await tester.pumpAndSettle();
     expect(find.byType(Fin25OtpScreen), findsNothing);
