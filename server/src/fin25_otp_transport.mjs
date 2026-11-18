@@ -39,7 +39,7 @@ async function json(req) {
  assert(data&&typeof data==='object'&&!Array.isArray(data),400,'Invalid JSON');
  return {data,raw};
 }
-function phone(v){assert(typeof v==='string'&&/^\+9677[012378][0-9]{7}$/.test(v),400,'Use +967 and a Yemeni mobile prefix 70/71/72/73/77/78');return v;}
+function phone(v){assert(typeof v==='string'&&/^\+967[0-9]{9}$/.test(v),400,'Use +967 followed by exactly 9 ASCII digits');return v;}
 function internal(req){
  const actor=identityVerifier(req.headers.authorization);
  assert(actor.role==='identity_service',403,'Identity service only');
