@@ -6,7 +6,7 @@ import 'package:qat_link/services/fin25_otp_client.dart';
 
 void main() {
   test('normalizes Yemeni phone numbers', () {
-    expect(Fin25OtpClient.normalizeYemeniPhone('٧٧٦٦٤٤٣١٢'), '+967776644312');
+    expect(() => Fin25OtpClient.normalizeYemeniPhone('٧٧٦٦٤٤٣١٢'), throwsA(isA<Fin25OtpException>()));
     expect(Fin25OtpClient.normalizeYemeniPhone('967776644312'), '+967776644312');
     expect(() => Fin25OtpClient.normalizeYemeniPhone('123'),
         throwsA(isA<Fin25OtpException>()));
@@ -37,7 +37,8 @@ void main() {
       }),
     );
     final challenge = await client.request('776644312');
-    await client.verify(requestId: challenge.requestId, code: '١٢٣٤٥٦');
+    await expectLater(client.verify(requestId: challenge.requestId, code: '١٢٣٤٥٦'), throwsA(isA<Fin25OtpException>()));
+    await client.verify(requestId: challenge.requestId, code: '123456');
     expect(paths, ['/v1/auth/otp/request', '/v1/auth/otp/verify']);
   });
 
