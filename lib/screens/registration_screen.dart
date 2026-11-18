@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 
 import '../features/auth/auth_input_validation.dart';
 import '../features/auth/registration_role.dart';
+import '../services/fin25_otp_client.dart';
+import 'fin25_pilot_setup_screen.dart';
 import '../theme/app_colors.dart';
 import '../widgets/auth/auth_brand_hero.dart';
 
@@ -43,15 +45,21 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   void _submit() {
     if (!_formKey.currentState!.validate()) return;
-    // No client-side privilege grant, account creation, or PIN persistence.
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text(
-          'تم التحقق من المدخلات فقط. إنشاء الحساب يحتاج '
-          'خدمة تسجيل آمنة وتحقق رقم الجوال قبل تفعيل أي دور.',
-        ),
-      ),
-    );
+    // Never send or persist the entered PIN or selected role: the trusted
+    // identity issuer has not yet been connected to FIN25 phone proof.
+    // This handoff verifies phone ownership only and creates no user/session.
+    final String phone;
+    try {
+      phone = Fin25OtpClient.normalizeYemeniPhone(_phone.text);
+    } on Fin25OtpException catch (error) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(error.message)),
+      );
+      return;
+    }
+    Navigator.of(context).push(MaterialPageRoute<void>(
+      builder: (_) => Fin25PilotSetupScreen(initialPhone: phone),
+    ));
   }
 
   @override
@@ -250,7 +258,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                             key: const Key('register_submit'),
                             onPressed: _submit,
                             icon: const Icon(Icons.person_add_alt_rounded),
-                            label: const Text('إنشاء الحساب',
+                            label: const Text('متابعة للتحقق من الجوال',
                                 style: TextStyle(
                                     fontWeight: FontWeight.w800,
                                     fontSize: 15)),
