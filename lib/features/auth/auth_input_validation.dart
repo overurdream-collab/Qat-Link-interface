@@ -1,32 +1,16 @@
 /// Frontend input hygiene only. Does not replace server authentication.
 abstract final class AuthInputValidation {
-  static String normalizeDigits(String source) {
-    const arabic = '٠١٢٣٤٥٦٧٨٩';
-    const persian = '۰۱۲۳۴۵۶۷۸۹';
-    final out = StringBuffer();
-    for (final rune in source.runes) {
-      final char = String.fromCharCode(rune);
-      final arabicIndex = arabic.indexOf(char);
-      final persianIndex = persian.indexOf(char);
-      if (arabicIndex >= 0) {
-        out.write(arabicIndex);
-      } else if (persianIndex >= 0) {
-        out.write(persianIndex);
-      } else {
-        out.write(char);
-      }
-    }
-    return out.toString();
-  }
+  /// Arabic and Persian numeral characters are rejected, not converted.
+  static String normalizeDigits(String source) => source;
 
-  static String normalizePhone(String value) => normalizeDigits(value)
-      .replaceAll(RegExp(r'[\s\-\(\)]'), '');
+  /// UI stores the local part only; +967 is displayed separately.
+  static String normalizePhone(String value) => value.trim();
 
   static String? phone(String? raw) {
-    final phone = normalizePhone(raw ?? '');
-    if (phone.isEmpty) return 'أدخل رقم الجوال';
-    if (!RegExp(r'^\+?[0-9]{9,15}$').hasMatch(phone)) {
-      return 'أدخل رقماً صحيحاً من 9 إلى 15 رقماً';
+    final value = normalizePhone(raw ?? '');
+    if (value.isEmpty) return 'أدخل رقم الجوال';
+    if (!RegExp(r'^[0-9]{9}$').hasMatch(value)) {
+      return 'أدخل 9 أرقام إنجليزية (0-9) بعد مفتاح اليمن +967';
     }
     return null;
   }
@@ -34,7 +18,7 @@ abstract final class AuthInputValidation {
   static String? pin(String? raw) {
     final pin = normalizeDigits(raw ?? '');
     if (!RegExp(r'^[0-9]{4}$').hasMatch(pin)) {
-      return 'رمز الدخول يجب أن يتكون من 4 أرقام';
+      return 'رمز الدخول يجب أن يتكون من 4 أرقام إنجليزية (0-9)';
     }
     return null;
   }

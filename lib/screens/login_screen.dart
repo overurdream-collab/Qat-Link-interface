@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -5,6 +6,8 @@ import '../features/auth/auth_input_validation.dart';
 import '../theme/app_colors.dart';
 import '../widgets/auth/auth_brand_hero.dart';
 import 'registration_screen.dart';
+import '../services/fin25_otp_client.dart';
+import 'fin25_otp_screen.dart';
 
 /// App entry point. UI only: no PIN is persisted, sent, or accepted without
 /// server authentication. Never navigate to private finance pages on form
@@ -45,6 +48,82 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
+  }
+
+  // Set at build time only for a controlled FIN25 test; no server URL is hardcoded.
+  static const _fin25Url = String.fromEnvironment('FIN25_OTP_BASE_URL');
+
+  Future<void> _openOtpTest() async {
+    if (!kDebugMode) return;
+    final String phone;
+    try {
+      if (AuthInputValidation.phone(_phone.text) != null) {
+        throw const FormatException('Invalid local phone');
+      }
+      phone = Fin25OtpClient.normalizeYemeniPhone(_phone.text);
+    } on Exception {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('أدخل 9 أرقام إنجليزية بعد مفتاح اليمن +967.'),
+      ));
+      return;
+    }
+
+    // Debug builds only. The URL is never saved, and no request is sent
+    // until the user explicitly presses "إرسال رمز OTP" on the next screen.
+    String enteredUrl = _fin25Url;
+    final selectedUrl = await showDialog<String>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: const Text('عنوان خادم OTP التجريبي'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Text('أدخل عنوان HTTPS الموثوق لبيئة الاختبار فقط. '
+                'لا تستخدم خادماً لا تتحكم به.'),
+            const SizedBox(height: 12),
+            TextFormField(
+              key: const Key('fin25_otp_server_url'),
+              initialValue: _fin25Url,
+              onChanged: (value) => enteredUrl = value,
+              keyboardType: TextInputType.url,
+              autocorrect: false,
+              decoration: const InputDecoration(
+                hintText: 'https://your-test-server.example/',
+                labelText: 'عنوان HTTPS',
+              ),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(dialogContext),
+            child: const Text('إلغاء'),
+          ),
+          FilledButton(
+            key: const Key('fin25_otp_open'),
+            onPressed: () => Navigator.pop(dialogContext, enteredUrl.trim()),
+            child: const Text('متابعة'),
+          ),
+        ],
+      ),
+    );
+    if (!mounted || selectedUrl == null) return;
+    try {
+      final base = Uri.parse(selectedUrl);
+      // Require a clean HTTPS origin; do not accept credentials or paths.
+      if (base.scheme != 'https' || base.host.isEmpty ||
+          base.userInfo.isNotEmpty || base.hasQuery || base.hasFragment ||
+          (base.path.isNotEmpty && base.path != '/')) {
+        throw const FormatException('Root HTTPS base URL required');
+      }
+      Navigator.of(context).push(MaterialPageRoute<void>(
+        builder: (_) => Fin25OtpScreen(phone: phone, baseUri: base),
+      ));
+    } on Exception {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('أدخل عنوان HTTPS صحيحاً وخالياً من أي مسار أو بيانات دخول.'),
+      ));
+    }
   }
 
   void _signIn() {
@@ -118,14 +197,20 @@ class _LoginScreenState extends State<LoginScreen> {
                           const SizedBox(height: 17),
                           TextFormField(
                             key: const Key('login_phone'),
+                            inputFormatters: [
+                              FilteringTextInputFormatter.digitsOnly,
+                              LengthLimitingTextInputFormatter(9),
+                            ],
                             controller: _phone,
                             keyboardType: TextInputType.phone,
                             textDirection: TextDirection.ltr,
                             textAlign: TextAlign.right,
                             autofillHints: const [AutofillHints.telephoneNumber],
                             decoration: const InputDecoration(
-                              labelText: 'رقم الجوال',
-                              hintText: 'مثال: 771234567',
+                              labelText: 'رقم الجوال اليمني',
+                              prefixText: '+967  ',
+                              helperText: '9 أرقام إنجليزية فقط',
+                              hintText: '771234567',
                               prefixIcon: Icon(Icons.phone_android_rounded),
                             ),
                             validator: AuthInputValidation.phone,
@@ -142,7 +227,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             textAlign: TextAlign.right,
                             inputFormatters: [
                               FilteringTextInputFormatter.allow(
-                                RegExp(r'[0-9٠-٩۰-۹]'),
+                                RegExp(r'[0-9]'),
                               ),
                               LengthLimitingTextInputFormatter(4),
                             ],
@@ -192,6 +277,15 @@ class _LoginScreenState extends State<LoginScreen> {
                                   fontWeight: FontWeight.w800,
                                 )),
                           ),
+                          if (kDebugMode) ...[
+                            const SizedBox(height: 10),
+                            OutlinedButton.icon(
+                              key: const Key('fin25_otp_test'),
+                              onPressed: _openOtpTest,
+                              icon: const Icon(Icons.sms_outlined),
+                              label: const Text('اختبار تحقق SMS (بدون تسجيل دخول)'),
+                            ),
+                          ],
                           const SizedBox(height: 13),
                           Text(
                             'ليس لديك حساب؟',

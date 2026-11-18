@@ -6,7 +6,7 @@ void main() {
   testWidgets('app opens login without exposing private finance tabs', (tester) async {
     await tester.pumpWidget(const QatLinkApp());
     expect(find.text('أهلاً بعودتك'), findsOneWidget);
-    expect(find.text('رقم الجوال'), findsOneWidget);
+    expect(find.text('رقم الجوال اليمني'), findsOneWidget);
     expect(find.text('رمز الدخول'), findsOneWidget);
     expect(find.byKey(const Key('open_registration')), findsOneWidget);
     expect(find.text('الحركة'), findsNothing);
@@ -41,6 +41,22 @@ void main() {
     await tester.pump();
     expect(find.text('أهلاً بعودتك'), findsOneWidget);
     expect(find.textContaining('لا تُفتح الحسابات'), findsWidgets);
+    expect(find.text('الحركة'), findsNothing);
+  });
+
+  testWidgets('debug OTP test requires manual HTTPS and never opens finance', (tester) async {
+    await tester.pumpWidget(const QatLinkApp());
+    await tester.enterText(find.byKey(const Key('login_phone')), '776644312');
+    await tester.ensureVisible(find.byKey(const Key('fin25_otp_test')));
+    await tester.tap(find.byKey(const Key('fin25_otp_test')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const Key('fin25_otp_server_url')), findsOneWidget);
+    expect(find.byKey(const Key('otp_request')), findsNothing);
+    await tester.enterText(
+      find.byKey(const Key('fin25_otp_server_url')), 'http://example.com');
+    await tester.tap(find.byKey(const Key('fin25_otp_open')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const Key('otp_request')), findsNothing);
     expect(find.text('الحركة'), findsNothing);
   });
 
