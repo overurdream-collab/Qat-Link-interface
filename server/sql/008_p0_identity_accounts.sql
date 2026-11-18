@@ -4,6 +4,8 @@ CREATE TABLE IF NOT EXISTS identity_accounts (
   subject uuid PRIMARY KEY,
   phone text NOT NULL UNIQUE CHECK (phone ~ '^\\+967[0-9]{9}$'),
   role text NOT NULL CHECK (role IN ('merchant','customer')),
+  finance_proof_reference uuid NOT NULL UNIQUE,
+  finance_provisioned_at timestamptz,
   display_name text CHECK (display_name IS NULL OR length(trim(display_name)) BETWEEN 2 AND 160),
   created_at timestamptz NOT NULL DEFAULT now(),
   last_login_at timestamptz,
