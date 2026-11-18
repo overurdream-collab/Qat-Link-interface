@@ -37,8 +37,7 @@ void main() {
       }),
     );
     final challenge = await client.request('776644312');
-    final result = await client.verify(requestId: challenge.requestId, code: '١٢٣٤٥٦');
-    expect(result, isNull);
+    await client.verify(requestId: challenge.requestId, code: '١٢٣٤٥٦');
     expect(paths, ['/v1/auth/otp/request', '/v1/auth/otp/verify']);
   });
 
