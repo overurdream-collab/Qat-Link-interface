@@ -11,7 +11,7 @@ const issuer='qat-link-identity-test',audience='qat-link-financial-test';
 const proofToken='11111111-1111-4111-8111-11111111111122222222-2222-4222-8222-222222222222';
 
 function fixture({proofStatus=200,role='merchant',existing=null,failFinance=false}={}) {
-  let consumed=0, inserted=0, current=existing, provisioned=0;
+  let consumed=0, inserted=0, current=existing, provisioned=0, failProvision=failFinance;
   const events=[];
   const pool={
     async connect(){return {release(){},async query(sql,args=[]){
@@ -27,6 +27,13 @@ function fixture({proofStatus=200,role='merchant',existing=null,failFinance=fals
       throw new Error('Unexpected statement');
     }};},
     async query(sql,args){
+      events.push(sql);
+      if(sql.startsWith('UPDATE identity_accounts SET finance_provisioned_at=')) {
+        if(!current || current.subject!==args[0]) return {rowCount:0,rows:[]};
+        current.finance_provisioned_at=new Date().toISOString();
+        return {rowCount:1,rows:[{subject:current.subject}]};
+      }
+      if(sql.startsWith('UPDATE identity_accounts SET last_login_at=')) return {rowCount:1,rows:[]};
       if(sql.startsWith('SELECT subject,role,display_name FROM identity_accounts WHERE subject=')) {
         return current?.subject===args[0]?{rowCount:1,rows:[current]}:{rowCount:0,rows:[]};
       }
@@ -42,10 +49,10 @@ function fixture({proofStatus=200,role='merchant',existing=null,failFinance=fals
   const financeProvision=async ({account,phone})=>{
     provisioned++;
     assert.equal(phone,'+967771234567');
-    if(failFinance) throw new IdentityError(503,'Finance unavailable');
+    if(failProvision) throw new IdentityError(503,'Finance unavailable');
   };
   const settings={privateKey,publicKey,issuer,audience,fin25ProofUrl:'http://fin25-test-otp:8083/v1/internal/otp/proof',fin25InternalKey:'test-key'};
-  return {service:createIdentityLogic({pool,fetchImpl,settings,financeProvision}),requests,events,get consumed(){return consumed;},get inserted(){return inserted;},get provisioned(){return provisioned;}};
+  return {service:createIdentityLogic({pool,fetchImpl,settings,financeProvision}),requests,events,get consumed(){return consumed;},get inserted(){return inserted;},get provisioned(){return provisioned;},allowFinance(){failProvision=false;}};
 }
 test('RS256 identity_service bearer is accepted and HS256 is refused',()=>{
   const bearer=signIdentityJwt({privateKey,issuer,audience,subject:'identity-svc',role:'identity_service',lifetimeSeconds:60});
@@ -64,7 +71,7 @@ test('valid proof creates one merchant identity, returns user JWT, checks role o
   assert.equal(createVerifier({publicKey,issuer,audience})('Bearer '+f.requests[0].auth.split(' ')[1]).role,'identity_service');
   assert.equal(createVerifier({publicKey,issuer,audience})('Bearer '+result.accessToken).role,'merchant');
   assert.deepEqual((await f.service.me('Bearer '+result.accessToken)).account,result.account);
-  assert.equal(f.events.at(-1),'COMMIT');
+  assert.ok(f.events.includes('COMMIT'));
 });
 test('existing phone keeps stored role, rejects requested escalation even after proof',async()=>{
   const f=fixture({existing:{subject:'account-1',role:'customer',display_name:'عميل'}});
@@ -91,10 +98,15 @@ test('tampered or expired account session is rejected',async()=>{
   await assert.rejects(f.service.me('Bearer '+forged),e=>e.status===401);
 });
 
-test('financial provisioning failure rejects account session and rolls back',async()=>{
+test('financial provisioning failure prevents session but preserves stable identity for retry',async()=>{
   const f=fixture({failFinance:true});
   await assert.rejects(f.service.exchange({proofToken,requestedRole:'merchant',displayName:'متجر تجريبي'}),e=>e.status===503);
   assert.equal(f.provisioned,1);
-  assert.ok(f.events.includes('ROLLBACK'));
-  assert.ok(!f.events.includes('COMMIT'));
+  assert.ok(f.events.includes('COMMIT'));
+  assert.equal(f.inserted,1);
+  f.allowFinance();
+  const recovered=await f.service.exchange({proofToken,requestedRole:'merchant',displayName:'متجر تجريبي'});
+  assert.equal(recovered.account.role,'merchant');
+  assert.equal(f.inserted,1);
+  assert.equal(f.provisioned,2);
 });
