@@ -17,7 +17,7 @@ function fixture({proofStatus=200,role='merchant',existing=null,failFinance=fals
     async connect(){return {release(){},async query(sql,args=[]){
       events.push(sql);
       if(sql==='BEGIN'||sql==='COMMIT'||sql==='ROLLBACK') return {rowCount:0,rows:[]};
-      if(sql.startsWith('SELECT subject,role,display_name FROM identity_accounts WHERE phone=')) return current?{rowCount:1,rows:[current]}:{rowCount:0,rows:[]};
+      if(sql.startsWith('SELECT subject,role,display_name,finance_proof_reference,finance_provisioned_at FROM identity_accounts WHERE phone=')) return current?{rowCount:1,rows:[current]}:{rowCount:0,rows:[]};
       if(sql.startsWith('INSERT INTO identity_accounts')) {
         inserted++;
         current={subject:args[0],role:args[2],display_name:args[3],finance_proof_reference:args[4],finance_provisioned_at:null};
