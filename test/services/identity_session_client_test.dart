@@ -31,12 +31,12 @@ void main() {
           'accessToken': 'a' * 80,
           'expiresInSeconds': 900,
           'account': {'id':'subject-1','role':'merchant','displayName':'متجر اختبار'}
-        }), 200);
+        }), 200, headers: const {'content-type':'application/json; charset=utf-8'});
       }
       expect(request.headers['authorization'], 'Bearer ${'a' * 80}');
       return http.Response(jsonEncode({
         'account': {'id':'subject-1','role':'merchant','displayName':'متجر اختبار'}
-      }), 200);
+      }), 200, headers: const {'content-type':'application/json; charset=utf-8'});
     });
     addTearDown(client.close);
     final api = IdentitySessionClient(baseUri: Uri.parse(identityOrigin),
@@ -52,11 +52,18 @@ void main() {
   });
   test('rejects supplier and mismatched account without signing in', () async {
     final api = IdentitySessionClient(baseUri: Uri.parse(identityOrigin),
-      httpClient: MockClient((request) async => http.Response(jsonEncode({
-        'accessToken': 'b' * 80,
-        'expiresInSeconds': 900,
-        'account': {'id':'user-1','role':'customer'}
-      }), 200)));
+      httpClient: MockClient((request) async {
+        if (request.url.path.endsWith('/me')) {
+          return http.Response(jsonEncode({
+            'account': {'id':'different-user','role':'customer'}
+          }), 200);
+        }
+        return http.Response(jsonEncode({
+          'accessToken': 'b' * 80,
+          'expiresInSeconds': 900,
+          'account': {'id':'user-1','role':'customer'}
+        }), 200);
+      }));
     await expectLater(api.exchange(proofToken:proof,requestedRole:'supplier'),
       throwsA(isA<IdentitySessionException>()));
     await expectLater(api.exchange(proofToken:proof),
