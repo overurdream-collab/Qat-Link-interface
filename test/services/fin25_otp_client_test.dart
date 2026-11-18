@@ -8,6 +8,7 @@ void main() {
   test('normalizes Yemeni phone numbers', () {
     expect(() => Fin25OtpClient.normalizeYemeniPhone('٧٧٦٦٤٤٣١٢'), throwsA(isA<Fin25OtpException>()));
     expect(Fin25OtpClient.normalizeYemeniPhone('967776644312'), '+967776644312');
+    expect(Fin25OtpClient.normalizeYemeniPhone('727123456'), '+967727123456');
     expect(() => Fin25OtpClient.normalizeYemeniPhone('+966551234567'), throwsA(isA<Fin25OtpException>()));
     expect(() => Fin25OtpClient.normalizeYemeniPhone('751234567'), throwsA(isA<Fin25OtpException>()));
     expect(() => Fin25OtpClient.normalizeYemeniPhone('123'),
