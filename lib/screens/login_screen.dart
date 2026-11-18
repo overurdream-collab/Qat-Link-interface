@@ -155,7 +155,30 @@ class _LoginScreenState extends State<LoginScreen> {
     final c = context.colors;
     return Scaffold(
       backgroundColor: c.background,
-      body: SafeArea(
+      body: Stack(
+        children: [
+          Positioned.fill(child: Image.asset(
+            MaqwatiBrandAssets.loginBackground,
+            key: const Key('maqwati_login_background'),
+            fit: BoxFit.cover,
+            alignment: Alignment.centerRight,
+            errorBuilder: (_, __, ___) => DecoratedBox(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topRight,
+                  end: Alignment.bottomLeft,
+                  colors: [MaqwatiBrandColors.lightAqua, c.background,
+                    MaqwatiBrandColors.deepTeal.withValues(alpha: .20)],
+                ),
+              ),
+            ),
+          )),
+          Positioned.fill(child: ColoredBox(
+            color: Theme.of(context).brightness == Brightness.dark
+                ? const Color(0xC713212D)
+                : const Color(0xCFF1F8FA),
+          )),
+          SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.fromLTRB(16, 9, 16, 24),
           child: Center(
@@ -359,6 +382,8 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           ),
         ),
+          ),
+        ],
       ),
     );
   }
