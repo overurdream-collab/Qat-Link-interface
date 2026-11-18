@@ -1,0 +1,35 @@
+name: Import approved Maqwati branding images (one time)
+on:
+  push:
+    branches: [feat/p0-auth-identity-integration-20261118]
+    paths: ['.github/workflows/import-maqwati-assets-once.yml']
+permissions:
+  contents: write
+jobs:
+  import-assets:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feat/p0-auth-identity-integration-20261118
+      - name: Download approved source thumbnails from Canva temporary URLs
+        env:
+          BACKGROUND_URL: 'https://media.canva.com/v2/image-resize/format:JPG/height:200/quality:75/uri:ifs%3A%2F%2FM%2F1ceb7e6e-65ac-4bcb-bd2b-cc7d4aea1190/watermark:F/width:112?csig=AAAAAAAAAAAAAAAAAAAAAKQWBmQWFqhSP86PAsqQWBh3dPgLP3s2hK2z2NZ7hs5a&exp=1795057875&osig=AAAAAAAAAAAAAAAAAAAAAIYkd0ADjOLfVpfmq1VmrrdPN0DC81vNoebAeFjDH8F4&signer=media-rpc&token=AAIAAU0AJDFjZWI3ZTZlLTY1YWMtNGJjYi1iZDJiLWNjN2Q0YWVhMTE5MAAAAAABofHJeDgnSnnn-oyYUXwB4hn7oD9xZVak4AtcWnz9e9YExzwjJQ&x-canva-quality=thumbnail'
+          LOGO_URL: 'https://media.canva.com/v2/image-resize/format:JPG/height:66/quality:75/uri:ifs%3A%2F%2FM%2F160812a9-6a3d-478d-909c-93b90f931bcd/watermark:F/width:200?csig=AAAAAAAAAAAAAAAAAAAAABTzCWIHFPyzWixFIddwZBvrk3njz31sPX-81ZM49E2w&exp=1795057475&osig=AAAAAAAAAAAAAAAAAAAAALARZH_PmZYyPmu4l3C4Yqij2CO4QTCcmA9dT4d5NBxC&signer=media-rpc&token=AAIAAU0AJDE2MDgxMmE5LTZhM2QtNDc4ZC05MDljLTkzYjkwZjkzMWJjZAAAAAABofHDXbio74X0PNWyTLSAESZswyDOWDXN6Qo_giOJiOlvUeiVdg&x-canva-quality=thumbnail'
+        run: |
+          set -euo pipefail
+          mkdir -p assets/images
+          curl --fail --location --silent --show-error --retry 3 "$BACKGROUND_URL" -o assets/images/maqwati_login_background.jpg
+          curl --fail --location --silent --show-error --retry 3 "$LOGO_URL" -o assets/images/maqwati_horizontal_logo.jpg
+          file assets/images/maqwati_login_background.jpg assets/images/maqwati_horizontal_logo.jpg
+          test "$(wc -c < assets/images/maqwati_login_background.jpg)" -gt 2000
+          test "$(wc -c < assets/images/maqwati_horizontal_logo.jpg)" -gt 2000
+          sha256sum assets/images/maqwati_login_background.jpg assets/images/maqwati_horizontal_logo.jpg
+      - name: Commit images for offline app use
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/images/maqwati_login_background.jpg assets/images/maqwati_horizontal_logo.jpg
+          git commit -m "assets(brand): embed approved login background and logo for offline Flutter" || exit 0
+          git push origin HEAD:feat/p0-auth-identity-integration-20261118
