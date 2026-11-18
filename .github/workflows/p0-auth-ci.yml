@@ -31,3 +31,17 @@ jobs:
         run: flutter test
       - name: Auth flow and FIN25 client targeted checks
         run: flutter test test/screens/auth_screens_widget_test.dart test/screens/fin25_pilot_test.dart test/services/fin25_otp_client_test.dart
+
+  identity-logic:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check identity service syntax
+        run: node --check server/src/identity_logic.mjs && node --check server/src/identity_server.mjs
+      - name: Run identity security unit tests
+        working-directory: server
+        run: node --test test/p0_identity_logic.test.mjs
