@@ -1,0 +1,59 @@
+# P0 separate identity stack. NEVER use this file to recreate FIN25 or SMS.
+# Requires operator-confirmed Docker network names from read-only preflight.
+services:
+  identity-db:
+    image: postgres:16-alpine
+    env_file:
+      - ./identity.runtime.env
+    volumes:
+      - identity-db-data:/var/lib/postgresql/data
+    networks:
+      - identity-private
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U \\$${POSTGRES_USER} -d \\$${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+  identity:
+    build:
+      context: ../../server
+      dockerfile: Dockerfile.identity
+    env_file:
+      - ./identity.runtime.env
+    environment:
+      IDENTITY_PORT: "8090"
+      IDENTITY_BIND_HOST: "0.0.0.0"
+    # Local reverse proxy only. HTTPS is provisioned outside this stack.
+    ports:
+      - "127.0.0.1:${IDENTITY_LOOPBACK_PORT:-8090}:8090"
+    depends_on:
+      identity-db:
+        condition: service_healthy
+    networks:
+      - identity-private
+      - fin25-existing
+      - fin08-existing
+    read_only: true
+    tmpfs:
+      - /tmp:size=16m
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped
+
+networks:
+  identity-private:
+    internal: true
+  # DO NOT guess or recreate these networks. Operator must confirm names.
+  fin25-existing:
+    external: true
+    name: ${FIN25_DOCKER_NETWORK:?Confirm FIN25 network from read-only inventory}
+  fin08-existing:
+    external: true
+    name: ${FIN08_DOCKER_NETWORK:?Confirm FIN08 network from read-only inventory}
+
+volumes:
+  identity-db-data:
