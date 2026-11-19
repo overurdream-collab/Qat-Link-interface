@@ -23,7 +23,7 @@ docker network ls --format "{{.Name}}"
 
 ## المرحلة 1 — تجهيز *ملف خاص* على جهاز الخادم (بعد الموافقة)
 - انسخ **ملفين منفصلين** محلياً فقط: `identity.runtime.env.example` إلى `identity.runtime.env` لخدمة الهوية، و`identity.db.env.example` إلى `identity.db.env` لمالك PostgreSQL. كلاهما محجوب في `.gitignore` ولا يُرفع. خزّن كلمات المرور ومفتاح RSA الخاص بصلاحيات وصول مقيدة. **لا تمنح حاوية قاعدة البيانات مفاتيح توقيع الهوية، ولا تمنح خدمة الهوية كلمة مرور مالك القاعدة.**
-- حدد أسماء شبكات Docker الحقيقية بدلاً من placeholders، ولا تنشئ شبكة جديدة داخل FIN25 لمجرد نجاح Compose.
+- أثبت فحص جهاز التشغيل أن FIN25 على `fin25-test-net` بالاسم `otp:8083`، وFIN08 على `maqwatilink_internal` بالاسم `api:8080`؛ راجع بقاء هذين الاسمين قبل أي نشر، ولا تنشئ شبكة جديدة داخل FIN25 لمجرد نجاح Compose.
 - في `identity.db.env`، `POSTGRES_USER=identity_owner` دور مالك منفصل؛ واجهة Node تستخدم `identity_app` عبر `IDENTITY_DATABASE_URL` الموجود حصراً في `identity.runtime.env`، وهو دور مستقل **غير مالك وغير superuser**. أنشئه بكلمة مرور خاصة منفصلة ثم امنحه فقط `CONNECT/USAGE/SELECT/INSERT/UPDATE` للجدول المطلوب. لا تمنحه `CREATE` أو `ALTER` أو `DROP`.
 - جهّز مفتاح RSA مخصصاً للهوية واحفظ الخاص في الخادم وحده؛ تأكد من تطابق العام وissuer/audience مع FIN25 وFIN08 دون نشر قيم مفاتيح.
 - حدد `FIN25_INTERNAL_PROOF_URL` لشبكة خدمة OTP الفعلية ومسار `/v1/internal/otp/proof`. لا تستخدم عنوان `trycloudflare` لهذا الاتصال الداخلي.
