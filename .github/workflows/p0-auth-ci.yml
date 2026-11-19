@@ -41,7 +41,16 @@ jobs:
         with:
           node-version: '22'
       - name: Check identity service syntax
-        run: node --check server/src/identity_logic.mjs && node --check server/src/identity_finance_provisioner.mjs && node --check server/src/identity_server.mjs
+        run: node --check server/src/identity_logic.mjs && node --check server/src/identity_finance_provisioner.mjs && node --check server/src/identity_server.mjs && node --check scripts/check_identity_runtime_trust.mjs
+      - name: Verify trust preflight fails safely without local credentials
+        run: |
+          if node scripts/check_identity_runtime_trust.mjs > preflight.log 2>&1; then
+            echo "Preflight must fail closed without local secrets"; exit 1
+          fi
+          if ! grep -q 'BLOCKED\|identity.runtime.env missing' preflight.log; then
+            cat preflight.log; exit 1
+          fi
+          echo "Read-only preflight correctly blocks unconfigured deployment"
       - name: Install Node identity test dependencies
         working-directory: server
         run: npm install --omit=dev --ignore-scripts --no-audit --no-fund
