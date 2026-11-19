@@ -9,6 +9,7 @@ import 'registration_screen.dart';
 import '../services/fin25_otp_client.dart';
 import 'fin25_otp_screen.dart';
 import 'fin25_pilot_setup_screen.dart';
+import 'notification_design_preview_screen.dart';
 
 /// App entry point. UI only: no PIN is persisted, sent, or accepted without
 /// server authentication. Never navigate to private finance pages on form
@@ -331,6 +332,18 @@ class _LoginScreenState extends State<LoginScreen> {
                               onPressed: _openOtpTest,
                               icon: const Icon(Icons.sms_outlined),
                               label: const Text('اختبار تحقق SMS (بدون تسجيل دخول)'),
+                            ),
+                            const SizedBox(height: 8),
+                            OutlinedButton.icon(
+                              key: const Key('open_notification_design_preview'),
+                              onPressed: () => Navigator.of(context).push(
+                                MaterialPageRoute<void>(
+                                  builder: (_) =>
+                                      const NotificationDesignPreviewScreen(),
+                                ),
+                              ),
+                              icon: const Icon(Icons.auto_awesome_outlined),
+                              label: const Text('معاينة حركة التنبيهات والحجوزات'),
                             ),
                           ],
                           const SizedBox(height: 13),
