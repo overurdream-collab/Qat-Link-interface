@@ -9,6 +9,9 @@ import 'services/app_state.dart';
 import 'theme/app_colors.dart';
 import 'theme/app_theme.dart';
 import 'widgets/app_chrome.dart';
+import 'widgets/notifications/maqwati_notifications_sheet.dart';
+import 'widgets/notifications/maqwati_incoming_notification_host.dart';
+import 'widgets/auth/auth_brand_hero.dart';
 import 'widgets/customers/customer_invitation_sheet.dart';
 import 'widgets/quick_actions/quick_actions_sheet.dart';
 import 'models/app_models.dart';
@@ -32,7 +35,7 @@ class _QatLinkAppState extends State<QatLinkApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'مقوتي لنك',
+      title: 'مقوتي لينك',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light,
       darkTheme: AppTheme.dark,
@@ -67,6 +70,7 @@ class MerchantAppShell extends StatefulWidget {
     this.verifiedCustomerMatches = const [],
     this.verifiedClaimDecisions = const [],
     this.verifiedTransferredClaimIds = const <String>{},
+    this.incomingNotification,
   });
 
   final bool isDark;
@@ -78,6 +82,8 @@ class MerchantAppShell extends StatefulWidget {
   final List<VerifiedCustomerContactMatch> verifiedCustomerMatches;
   final List<VerifiedCustomerClaimDecision> verifiedClaimDecisions;
   final Set<String> verifiedTransferredClaimIds;
+  /// An authenticated notification-stream event; null unless connected.
+  final MaqwatiNotificationEvent? incomingNotification;
 
   @override
   State<MerchantAppShell> createState() => _MerchantAppShellState();
@@ -127,28 +133,12 @@ class _MerchantAppShellState extends State<MerchantAppShell> {
   }
 
   void _showNotifications() {
-    final c = context.colors;
     showModalBottomSheet<void>(
       context: context,
       showDragHandle: true,
-      backgroundColor: c.card,
-      builder: (modalContext) => SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(24),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text('التنبيهات', style: TextStyle(
-                fontSize: 18, color: c.petrol, fontWeight: FontWeight.w800)),
-              const SizedBox(height: 12),
-              Text('لا توجد تنبيهات متصلة بالخادم حالياً.',
-                  style: TextStyle(color: c.muted)),
-              const SizedBox(height: 18),
-            ],
-          ),
-        ),
-      ),
+      isScrollControlled: true,
+      backgroundColor: context.colors.card,
+      builder: (_) => const MaqwatiNotificationsSheet(),
     );
   }
 
@@ -164,6 +154,7 @@ class _MerchantAppShellState extends State<MerchantAppShell> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
+              const MaqwatiBrandMark(height: 56),
               Align(
                 alignment: Alignment.centerRight,
                 child: Text('الضبط', style: TextStyle(
@@ -194,7 +185,9 @@ class _MerchantAppShellState extends State<MerchantAppShell> {
   @override
   Widget build(BuildContext context) {
     final c = context.colors;
-    return Scaffold(
+    return MaqwatiIncomingNotificationHost(
+      event: widget.incomingNotification,
+      child: Scaffold(
       backgroundColor: c.background,
       body: SafeArea(
         child: Column(
@@ -256,6 +249,7 @@ class _MerchantAppShellState extends State<MerchantAppShell> {
             ),
           ],
         ),
+      ),
       ),
     );
   }

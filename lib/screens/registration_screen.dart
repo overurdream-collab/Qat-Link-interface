@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 
 import '../features/auth/auth_input_validation.dart';
 import '../features/auth/registration_role.dart';
+import '../services/fin25_otp_client.dart';
+import 'fin25_pilot_setup_screen.dart';
 import '../theme/app_colors.dart';
 import '../widgets/auth/auth_brand_hero.dart';
 
@@ -43,15 +45,31 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   void _submit() {
     if (!_formKey.currentState!.validate()) return;
-    // No client-side privilege grant, account creation, or PIN persistence.
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text(
-          'تم التحقق من المدخلات فقط. إنشاء الحساب يحتاج '
-          'خدمة تسجيل آمنة وتحقق رقم الجوال قبل تفعيل أي دور.',
-        ),
+    // Never transmit or store a PIN. Role selection is a registration request;
+    // trusted identity service issues role only after FIN25 phone proof.
+    if (_selectedRole == RegistrationRole.supplier) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('حساب المورد غير مدعوم حالياً في خدمة الهوية.'),
+      ));
+      return;
+    }
+    final String phone;
+    try {
+      phone = Fin25OtpClient.normalizeYemeniPhone(_phone.text);
+    } on Fin25OtpException catch (error) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(error.message)),
+      );
+      return;
+    }
+    Navigator.of(context).push(MaterialPageRoute<void>(
+      builder: (_) => Fin25PilotSetupScreen(
+        initialPhone: phone,
+        enableIdentity: true,
+        requestedRole: _selectedRole.name,
+        displayName: _name.text.trim(),
       ),
-    );
+    ));
   }
 
   @override
@@ -250,7 +268,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                             key: const Key('register_submit'),
                             onPressed: _submit,
                             icon: const Icon(Icons.person_add_alt_rounded),
-                            label: const Text('إنشاء الحساب',
+                            label: const Text('متابعة للتحقق من الجوال',
                                 style: TextStyle(
                                     fontWeight: FontWeight.w800,
                                     fontSize: 15)),

@@ -1,16 +1,22 @@
 import 'package:flutter/material.dart';
+import '../widgets/auth/auth_brand_hero.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import '../services/fin25_otp_client.dart';
+import '../services/identity_session_client.dart';
+import 'identity_account_screen.dart';
 
 /// Verifies phone ownership for FIN25 testing. Does not authenticate an account.
 class Fin25OtpScreen extends StatefulWidget {
   const Fin25OtpScreen({super.key, required this.phone, required this.baseUri,
-    this.httpClient});
+    this.httpClient, this.identityClient, this.requestedRole, this.displayName});
   final String phone;
   final Uri baseUri;
   /// Caller retains ownership when injecting a client (for widget tests).
   final http.Client? httpClient;
+  final IdentitySessionClient? identityClient;
+  final String? requestedRole;
+  final String? displayName;
   @override
   State<Fin25OtpScreen> createState() => _Fin25OtpScreenState();
 }
@@ -57,13 +63,39 @@ class _Fin25OtpScreenState extends State<Fin25OtpScreen> {
     if (_busy || _verified || _challenge == null) return;
     setState(() { _busy = true; _message = 'جارٍ التحقق من الرمز...'; });
     try {
-      await _client.verify(requestId: _challenge!.requestId, code: _code.text);
+      // FIN25 proof must be redeemed by trusted identity backend, not Flutter.
+      final proof = await _client.verifyForIdentity(
+        requestId: _challenge!.requestId, code: _code.text);
       if (!mounted) return;
       _code.clear();
-      setState(() {
-        _verified = true;
-        _message = 'تم التحقق من ملكية الرقم. الدخول إلى الحساب لا يزال معطلاً حتى إصدار جلسة آمنة من خدمة الهوية.';
-      });
+      if (widget.identityClient != null) {
+        setState(() { _message = 'جارٍ إنشاء جلسة الحساب الآمنة...'; });
+        try {
+          final session = await widget.identityClient!.exchange(
+            proofToken: proof,
+            requestedRole: widget.requestedRole,
+            displayName: widget.displayName,
+          );
+          if (!mounted) return;
+          setState(() { _verified = true; _message = 'تم توثيق الحساب.'; });
+          Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute<void>(
+              builder: (_) => IdentityAccountScreen(session: session)),
+            (route) => route.isFirst,
+          );
+        } on IdentitySessionException catch (error) {
+          if (mounted) setState(() {
+            // FIN25 proof was consumed and cannot be replayed.
+            _challenge = null;
+            _message = '${error.message} يجب طلب رمز جديد لإعادة المحاولة.';
+          });
+        }
+      } else {
+        setState(() {
+          _verified = true;
+          _message = 'تم التحقق من ملكية الرقم. الدخول إلى الحساب لا يزال معطلاً حتى إصدار جلسة آمنة من خدمة الهوية.';
+        });
+      }
     } on Fin25OtpException catch (e) {
       if (mounted) setState(() { _message = e.message; });
     } finally {
@@ -77,6 +109,8 @@ class _Fin25OtpScreenState extends State<Fin25OtpScreen> {
     body: SafeArea(child: Center(child: ConstrainedBox(
       constraints: const BoxConstraints(maxWidth: 460),
       child: ListView(padding: const EdgeInsets.all(22), children: [
+        const MaqwatiBrandMark(height: 62),
+        const SizedBox(height: 8),
         const Icon(Icons.verified_user_outlined, size: 52),
         const SizedBox(height: 12),
         Text('الرقم: ${widget.phone}', textAlign: TextAlign.center),

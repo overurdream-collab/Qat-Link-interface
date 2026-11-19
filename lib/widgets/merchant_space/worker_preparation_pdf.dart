@@ -6,6 +6,8 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 
+import '../auth/maqwati_report_brand.dart';
+
 import 'merchant_space_models.dart';
 
 /// Employee-only preparation report: large text, no telephone numbers,
@@ -97,6 +99,7 @@ abstract final class WorkerPreparationPdf {
 
     rect(0, 0, _w, _h, white);
     rect(0, 0, _w, 143, teal);
+    await paintMaqwatiReportLogo(canvas, x: 16, y: 11, width: 245, height: 82);
     write('كشف تجهيز العمال', 751, 15, 680, size: 34, bold: true,
         color: white);
     write(storeName, 749, 69, 660, size: 23, color: white);

@@ -8,6 +8,8 @@ import '../widgets/auth/auth_brand_hero.dart';
 import 'registration_screen.dart';
 import '../services/fin25_otp_client.dart';
 import 'fin25_otp_screen.dart';
+import 'fin25_pilot_setup_screen.dart';
+import 'notification_design_preview_screen.dart';
 
 /// App entry point. UI only: no PIN is persisted, sent, or accepted without
 /// server authentication. Never navigate to private finance pages on form
@@ -126,6 +128,22 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
+  void _signInWithSms() {
+    final String phone;
+    try {
+      phone = Fin25OtpClient.normalizeYemeniPhone(_phone.text);
+    } on Fin25OtpException catch (error) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(error.message)));
+      return;
+    }
+    // OTP login is independent of the unconnected four-digit PIN.
+    Navigator.of(context).push(MaterialPageRoute<void>(
+      builder: (_) => Fin25PilotSetupScreen(
+        initialPhone: phone, enableIdentity: true),
+    ));
+  }
+
   void _signIn() {
     if (!_formKey.currentState!.validate()) return;
     // Deliberately no onAuthenticated call, persistent token, local PIN
@@ -138,7 +156,30 @@ class _LoginScreenState extends State<LoginScreen> {
     final c = context.colors;
     return Scaffold(
       backgroundColor: c.background,
-      body: SafeArea(
+      body: Stack(
+        children: [
+          Positioned.fill(child: Image.asset(
+            MaqwatiBrandAssets.loginBackground,
+            key: const Key('maqwati_login_background'),
+            fit: BoxFit.cover,
+            alignment: Alignment.centerRight,
+            errorBuilder: (_, __, ___) => DecoratedBox(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topRight,
+                  end: Alignment.bottomLeft,
+                  colors: [MaqwatiBrandColors.lightAqua, c.background,
+                    MaqwatiBrandColors.deepTeal.withValues(alpha: .20)],
+                ),
+              ),
+            ),
+          )),
+          Positioned.fill(child: ColoredBox(
+            color: Theme.of(context).brightness == Brightness.dark
+                ? const Color(0xC713212D)
+                : const Color(0x8CF1F8FA),
+          )),
+          SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.fromLTRB(16, 9, 16, 24),
           child: Center(
@@ -167,7 +208,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   Container(
                     padding: const EdgeInsets.fromLTRB(19, 18, 19, 19),
                     decoration: BoxDecoration(
-                      color: c.card,
+                      color: widget.isDark
+                          ? c.card.withValues(alpha: .96)
+                          : Colors.white.withValues(alpha: .96),
                       borderRadius: BorderRadius.circular(26),
                       border: Border.all(color: c.cardBorder),
                       boxShadow: AppColors.cardShadow,
@@ -194,7 +237,33 @@ class _LoginScreenState extends State<LoginScreen> {
                               color: c.muted, fontSize: 12,
                             ),
                           ),
-                          const SizedBox(height: 17),
+                          const SizedBox(height: 11),
+                          Container(
+                            key: const Key('bilateral_approval_message'),
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 9, horizontal: 11),
+                            decoration: BoxDecoration(
+                              color: c.pale,
+                              borderRadius: BorderRadius.circular(13),
+                              border: Border.all(
+                                color: MaqwatiBrandColors.gold
+                                    .withValues(alpha: .55)),
+                            ),
+                            child: Row(children: [
+                              Icon(Icons.verified_user_outlined,
+                                  color: c.petrol, size: 20),
+                              const SizedBox(width: 8),
+                              Expanded(child: Text(
+                                'التاجر يسجّل، والعميل يعتمد',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    color: c.petrol,
+                                    fontWeight: FontWeight.w800,
+                                    fontSize: 12),
+                              )),
+                            ]),
+                          ),
+                          const SizedBox(height: 14),
                           TextFormField(
                             key: const Key('login_phone'),
                             inputFormatters: [
@@ -215,6 +284,47 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                             validator: AuthInputValidation.phone,
                           ),
+                          const SizedBox(height: 13),
+                          FilledButton.icon(
+                            key: const Key('login_with_otp'),
+                            onPressed: _signInWithSms,
+                            style: FilledButton.styleFrom(
+                              backgroundColor: MaqwatiBrandColors.deepTeal,
+                              foregroundColor: Colors.white,
+                              minimumSize: const Size.fromHeight(54),
+                              side: const BorderSide(
+                                color: MaqwatiBrandColors.gold,
+                                width: 1.5,
+                              ),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(18),
+                              ),
+                            ),
+                            icon: const Icon(Icons.sms_outlined),
+                            label: const Text('الدخول برمز تحقق SMS',
+                              style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.w900)),
+                          ),
+                          const SizedBox(height: 8),
+                          Text('تصل رسالة إلى جوالك للتحقق من ملكية الرقم',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 11, color: c.muted,
+                            ),
+                          ),
+                          const SizedBox(height: 16),
+                          Row(children: [
+                            Expanded(child: Divider(color: c.cardBorder)),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 12),
+                              child: Text('الدخول بالرمز الخاص (غير مفعّل)',
+                                style: TextStyle(
+                                  fontSize: 11, color: c.muted,
+                                )),
+                            ),
+                            Expanded(child: Divider(color: c.cardBorder)),
+                          ]),
                           const SizedBox(height: 13),
                           TextFormField(
                             key: const Key('login_pin'),
@@ -261,22 +371,26 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
                           const SizedBox(height: 3),
-                          FilledButton.icon(
+                          OutlinedButton.icon(
                             key: const Key('login_submit'),
                             onPressed: _signIn,
-                            style: FilledButton.styleFrom(
-                              minimumSize: const Size.fromHeight(50),
+                            style: OutlinedButton.styleFrom(
+                              minimumSize: const Size.fromHeight(45),
+                              foregroundColor: c.muted,
+                              side: BorderSide(color: c.cardBorder),
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(18),
+                                borderRadius: BorderRadius.circular(16),
                               ),
                             ),
-                            icon: const Icon(Icons.login_rounded),
-                            label: const Text('تسجيل الدخول',
+                            icon: const Icon(Icons.lock_clock_outlined),
+                            label: const Text('الدخول بالرمز الخاص (قيد التطوير)',
                                 style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w800,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w700,
                                 )),
                           ),
+                          const SizedBox(height: 10),
+
                           if (kDebugMode) ...[
                             const SizedBox(height: 10),
                             OutlinedButton.icon(
@@ -284,6 +398,18 @@ class _LoginScreenState extends State<LoginScreen> {
                               onPressed: _openOtpTest,
                               icon: const Icon(Icons.sms_outlined),
                               label: const Text('اختبار تحقق SMS (بدون تسجيل دخول)'),
+                            ),
+                            const SizedBox(height: 8),
+                            OutlinedButton.icon(
+                              key: const Key('open_notification_design_preview'),
+                              onPressed: () => Navigator.of(context).push(
+                                MaterialPageRoute<void>(
+                                  builder: (_) =>
+                                      const NotificationDesignPreviewScreen(),
+                                ),
+                              ),
+                              icon: const Icon(Icons.auto_awesome_outlined),
+                              label: const Text('معاينة حركة التنبيهات والحجوزات'),
                             ),
                           ],
                           const SizedBox(height: 13),
@@ -335,6 +461,8 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           ),
         ),
+          ),
+        ],
       ),
     );
   }

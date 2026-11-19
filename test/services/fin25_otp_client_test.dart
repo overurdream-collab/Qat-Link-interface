@@ -36,7 +36,7 @@ void main() {
           }), 202);
         }
         expect(jsonDecode(request.body)['code'], '123456');
-        return http.Response('{"verified":true}', 200);
+        return http.Response('{"verified":true,"proofToken":"11111111-1111-4111-8111-11111111111122222222-2222-4222-8222-222222222222"}', 200);
       }),
     );
     final challenge = await client.request('776644312');
