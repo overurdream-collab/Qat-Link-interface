@@ -52,22 +52,41 @@ class AuthBrandHero extends StatelessWidget {
     return Container(
       key: const Key('maqwati_branded_header'),
       width: double.infinity,
-      padding: EdgeInsets.fromLTRB(16, compact ? 10 : 14, 16, compact ? 10 : 16),
+      padding: EdgeInsets.fromLTRB(14, compact ? 9 : 12, 14, compact ? 11 : 14),
       decoration: BoxDecoration(
         color: dark
-          ? c.card.withValues(alpha: .95)
-          : Colors.white.withValues(alpha: .90),
+            ? c.card.withValues(alpha: .96)
+            : Colors.white.withValues(alpha: .92),
         borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: c.cardBorder),
+        border: Border.all(
+          color: MaqwatiBrandColors.gold.withValues(alpha: dark ? .55 : .42),
+          width: 1.2,
+        ),
         boxShadow: AppColors.cardShadow,
       ),
       child: Column(mainAxisSize: MainAxisSize.min, children: [
-        MaqwatiBrandMark(height: compact ? 68 : 91),
-        SizedBox(height: compact ? 5 : 8),
-        Text('مساعدك المالي الذكي',
-          style: TextStyle(color: c.petrol,
-            fontSize: compact ? 12 : 14,
-            fontWeight: FontWeight.w800)),
+        // This is the approved logo asset, not an unrelated illustration.
+        MaqwatiBrandMark(height: compact ? 64 : 82),
+        const SizedBox(height: 4),
+        Text(
+          'مساعدك المالي الذكي',
+          key: const Key('maqwati_brand_tagline'),
+          style: TextStyle(
+            color: c.petrol,
+            fontSize: compact ? 13 : 15,
+            fontWeight: FontWeight.w900,
+          ),
+        ),
+        const SizedBox(height: 3),
+        Text(
+          'لتجارة أنجح',
+          key: const Key('maqwati_brand_promise'),
+          style: TextStyle(
+            color: dark ? MaqwatiBrandColors.gold : MaqwatiBrandColors.deepTeal,
+            fontSize: compact ? 12 : 13,
+            fontWeight: FontWeight.w800,
+          ),
+        ),
       ]),
     );
   }
