@@ -30,3 +30,15 @@
 - صورة الخلفية الرسمية تُستعمل مع تباين مقروء؛ لا تدمج صورة المرجع مباشرة بما فيها حقول دخول غير حقيقية.
 - أصول الشعار في GitHub ما زالت مصغّرة: لا تعتبر التصميم عالي الدقة قبل استبدالها بالأصل واعتماد فحص SHA256 وفق `scripts/check_maqwati_brand_assets.py`.
 - لا نشر، لا دمج، لا تعديل قاعدة البيانات أو Docker أو مفاتيح SMS، ولا ادعاء بأن خدمة المصادقة نُشرت أو أجري اختبار هاتف حقيقي.
+
+
+## نتيجة التحقق النهائية / تسليم APK — 19 نوفمبر 2026
+- `26f76753249b42487e9c29aff8810887599355e2`: آخر commit يضم تعديل الواجهة مع وثيقة القرار؛ هو الـSHA الذي فحصته GitHub Actions.
+- [P0 auth integration safety checks #44509325120](https://github.com/overurdream-collab/Qat-Link-interface/actions/runs/44509325120): `completed/success`، وتتضمن:
+  - `flutter-auth`: تحليل Flutter ناجح، جميع الاختبارات ناجحة، واختبارات FIN25 المستهدفة ناجحة.
+  - `identity-logic`: فحص بناء Node وخدمة الهوية والاختبارات الأمنية ناجح.
+  - `brand-release-assets`: فحص ملفات الهوية البصرية وسكربتات Windows ناجح.
+  - `android-compile`: البناء `flutter build apk --debug --target lib/main.dart` وتحقق توقيع APK ناجح.
+- Artifact: `maqwati-branded-login-preview-apk` ID `14522095301`، [رابط التحميل في GitHub](https://github.com/overurdream-collab/Qat-Link-interface/actions/runs/44509325120/artifacts/14522095301). حزمة ZIP بحجم نحو 79.6MB، تتضمن APK واحداً 158286318 بايت، SHA-256 `fd6defed7f84940f76eb1d15823e3926a0041bfc5cdc71d0cf0ad65d0140eafe`.
+- **حدود التسليم:** APK Debug للمعاينة وليس Release، مع الأصول الرسومية المصغّرة الموجودة حالياً في GitHub؛ اعتماد الدقة الأصلية ما زال ينتظر استبدال الصور وفق SHA256. خدمة الهوية/الدخول المالي لم تُنشر على `fin25-test`، فلا تتوقع إصدار جلسة دخول حقيقية بمجرد تثبيت المعاينة.
+- لم تُنفذ تجربة بصرية على هاتف المستخدم، ولم يُدمج PR #61 أو تُمس بوابة SMS أو إعدادات Docker وقاعدة البيانات.
