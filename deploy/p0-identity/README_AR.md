@@ -22,9 +22,9 @@ docker network ls --format "{{.Name}}"
 افحص أسماء شبكات `fin25-test` وFIN08 والحاويات والصور، وهل توجد متغيرات `JWT_PUBLIC_KEY_PEM` و`JWT_ISSUER` و`JWT_AUDIENCE` و`OTP_INTERNAL_API_KEY` (حالة الحضور فقط، لا القيم). لا تشارك `.env` أو مفاتيح JWT أو رمز OTP مع أي شخص أو في GitHub.
 
 ## المرحلة 1 — تجهيز *ملف خاص* على جهاز الخادم (بعد الموافقة)
-- انسخ `deploy/p0-identity/identity.runtime.env.example` إلى `identity.runtime.env` محلياً فقط؛ `.gitignore` يمنع رفعه. اجعل صلاحيات الوصول إليه مقتصرة على المسؤول.
+- انسخ **ملفين منفصلين** محلياً فقط: `identity.runtime.env.example` إلى `identity.runtime.env` لخدمة الهوية، و`identity.db.env.example` إلى `identity.db.env` لمالك PostgreSQL. كلاهما محجوب في `.gitignore` ولا يُرفع. خزّن كلمات المرور ومفتاح RSA الخاص بصلاحيات وصول مقيدة. **لا تمنح حاوية قاعدة البيانات مفاتيح توقيع الهوية، ولا تمنح خدمة الهوية كلمة مرور مالك القاعدة.**
 - حدد أسماء شبكات Docker الحقيقية بدلاً من placeholders، ولا تنشئ شبكة جديدة داخل FIN25 لمجرد نجاح Compose.
-- `POSTGRES_USER=identity_owner` هو دور مالك منفصل؛ واجهة Node تستخدم `identity_app` عبر `IDENTITY_DATABASE_URL`، وهو دور مستقل **غير مالك وغير superuser**. أنشئه بكلمة مرور خاصة منفصلة ثم امنحه فقط `CONNECT/USAGE/SELECT/INSERT/UPDATE` للجدول المطلوب. لا تمنحه `CREATE` أو `ALTER` أو `DROP`.
+- في `identity.db.env`، `POSTGRES_USER=identity_owner` دور مالك منفصل؛ واجهة Node تستخدم `identity_app` عبر `IDENTITY_DATABASE_URL` الموجود حصراً في `identity.runtime.env`، وهو دور مستقل **غير مالك وغير superuser**. أنشئه بكلمة مرور خاصة منفصلة ثم امنحه فقط `CONNECT/USAGE/SELECT/INSERT/UPDATE` للجدول المطلوب. لا تمنحه `CREATE` أو `ALTER` أو `DROP`.
 - جهّز مفتاح RSA مخصصاً للهوية واحفظ الخاص في الخادم وحده؛ تأكد من تطابق العام وissuer/audience مع FIN25 وFIN08 دون نشر قيم مفاتيح.
 - حدد `FIN25_INTERNAL_PROOF_URL` لشبكة خدمة OTP الفعلية ومسار `/v1/internal/otp/proof`. لا تستخدم عنوان `trycloudflare` لهذا الاتصال الداخلي.
 - حدد `FIN08_INTERNAL_BASE_URL` لخادم مالي فعلي يستطيع رؤية خدمة الهوية عبر شبكة مصرح بها. إذا لم توجد شبكة FIN08 أو خدمة FIN08 عاملة، **توقف هنا ولا تكمل إعداد تشغيل شكلي**.
