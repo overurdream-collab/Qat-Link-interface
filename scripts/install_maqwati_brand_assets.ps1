@@ -79,9 +79,12 @@ try {
         $destination = Join-Path $repo ($v.Item.Archive -replace '/', [IO.Path]::DirectorySeparatorChar)
         $parent = Split-Path -Parent $destination
         if (-not [IO.Directory]::Exists($parent)) { throw "Expected project asset folder not found: $parent" }
-        # Save the exact former file for quick recovery. Never overwrite backup.
+        # Backups must be OUTSIDE assets/images/ because Flutter bundles
+        # everything in that folder, including unintended .bak files.
         if ([IO.File]::Exists($destination)) {
-            $backup = $destination + '.pre-original.bak'
+            $backupRoot = Join-Path $env:LOCALAPPDATA 'Maqwati\\BrandBackups'
+            [IO.Directory]::CreateDirectory($backupRoot) | Out-Null
+            $backup = Join-Path $backupRoot ([IO.Path]::GetFileName($destination) + '.pre-original.bak')
             if (-not [IO.File]::Exists($backup)) {
                 [IO.File]::Copy($destination, $backup, $false)
             }
