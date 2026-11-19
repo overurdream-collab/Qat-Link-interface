@@ -69,3 +69,11 @@
 - أُضيف `scripts/check_maqwati_brand_assets.py` ويجب تشغيل `python scripts/check_maqwati_brand_assets.py --mode release` **قبل أي بناء إطلاق فعلي**؛ هذا يمنع اعتماد الصور المصغرة إلى أن تصبح الملفات مطابقة تماماً لـSHA الأصلي. وضع `--mode preview` لا يمنع APK المعاينة.
 - تحديث CI يختبر وجود الأصول داخل معاينة Flutter ويتحقق من صلاحية سكربت PowerShell؛ **لا يزعم أن ملفات GitHub الأصلية أصبحت عالية الدقة**.
 - ثبت نجاح وظائف `flutter-auth` و`identity-logic` و`android-compile` في [تشغيل P0 رقم 44422665231](https://github.com/overurdream-collab/Qat-Link-interface/actions/runs/44422665231) عند commit `562be691d11495ed6df0d37527ef62df3097e85e`. نتج artifact `maqwati-branded-login-preview-apk` رقم `14482752935`؛ انتهاؤه مبدئياً في 25 نوفمبر. هذا APK DEBUG تجريبي **ويحتوي نسختي الصور المصغّرتين**، وليس تسليم إنتاجياً ولا تنفيذ إشعارات النظام عند إغلاق التطبيق.
+
+
+## معاينة العميل دون تسجيل الدخول — 19 نوفمبر 2026
+- تم اكتشاف قيد مهم: النسخة التجريبية لا تصل إلى شاشة حساب موثق قبل نشر خدمة P0، وبالتالي كان اختبار الإطلالة مقتصراً على Flutter Widget Tests.
+- `061a9fc22f58b054e60ed711869efd89a3062900`: `lib/screens/notification_design_preview_screen.dart` يعرض شاشة **محاكاة تصميمية فقط** لظهور الحجز أو التنبيه، ويستخدم نفس `MaqwatiIncomingNotificationHost` الذي سيستقبل الأحداث الحقيقية مستقبلاً.
+- `530e52194307a50852f4c2b5c10e2f55e67d3e75`: زر جديد في `lib/screens/login_screen.dart` باسم «معاينة حركة التنبيهات والحجوزات» يظهر **فقط في Debug** عند `kDebugMode`. الوصول إليه لا يصدر JWT، ولا يستدعي SMS، ولا ينشئ حساباً أو حجزاً أو ديناً.
+- `1d6d425251586470e2b6e226eaab599d2700647d`: اختبار `test/screens/notification_design_preview_screen_test.dart` لفتح شاشة المعاينة من تسجيل الدخول، ثم محاكاة وصول الحجز والتنبيه وعرض البطاقة، مع التأكد من غياب جلسة مالية.
+- المعاينة لا تمثل وصول إشعار Android أصلي، ولا تظهر عند إغلاق التطبيق؛ الخدمة الحقيقية غير متصلة. أي نسخة APK سابقة على هذه الـCommits لا تضم زر المعاينة.
