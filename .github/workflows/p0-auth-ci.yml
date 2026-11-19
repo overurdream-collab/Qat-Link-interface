@@ -98,3 +98,35 @@ jobs:
             [System.Management.Automation.Language.Parser]::ParseFile((Resolve-Path $script), [ref]$tokens, [ref]$errors) | Out-Null
             if ($errors.Count -gt 0) { $errors | Out-String | Write-Error; exit 1 }
           }
+
+  identity-postgres-schema:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: test_identity
+          POSTGRES_PASSWORD: local_ci_only
+          POSTGRES_DB: identity_ci
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U test_identity -d identity_ci"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 15
+    env:
+      PGHOST: localhost
+      PGPORT: '5432'
+      PGUSER: test_identity
+      PGPASSWORD: local_ci_only
+      PGDATABASE: identity_ci
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install PostgreSQL client
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq postgresql-client
+      - name: Apply identity schema to isolated disposable database
+        run: psql -X -v ON_ERROR_STOP=1 -f server/sql/008_p0_identity_accounts.sql
+      - name: Test phone constraint, duplicate protection, transaction rollback
+        run: psql -X -v ON_ERROR_STOP=1 -f server/test/p0_identity_schema_checks.sql
