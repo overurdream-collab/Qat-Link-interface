@@ -51,7 +51,7 @@ function fixture({proofStatus=200,role='merchant',existing=null,failFinance=fals
     assert.equal(phone,'+967771234567');
     if(failProvision) throw new IdentityError(503,'Finance unavailable');
   };
-  const settings={privateKey,publicKey,issuer,audience,fin25ProofUrl:'http://fin25-test-otp:8083/v1/internal/otp/proof',fin25InternalKey:'test-key'};
+  const settings={privateKey,publicKey,issuer,audience,fin25Signing:{privateKey,issuer,audience},fin25ProofUrl:'http://fin25-test-otp:8083/v1/internal/otp/proof',fin25InternalKey:'test-key'};
   return {service:createIdentityLogic({pool,fetchImpl,settings,financeProvision}),requests,events,get consumed(){return consumed;},get inserted(){return inserted;},get provisioned(){return provisioned;},allowFinance(){failProvision=false;}};
 }
 test('RS256 identity_service bearer is accepted and HS256 is refused',()=>{
