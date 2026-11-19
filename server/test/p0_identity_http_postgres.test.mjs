@@ -39,8 +39,13 @@ test('P0 HTTP + real PostgreSQL: synthetic FIN25 proof -> identity JWT -> FIN08,
   const pair = generateKeyPairSync('rsa',{modulusLength:2048});
   const privateKey = pair.privateKey.export({type:'pkcs8',format:'pem'});
   const publicKey = pair.publicKey.export({type:'spki',format:'pem'});
-  const issuer='p0-ci-issuer',audience='p0-ci-fin08';
+  const issuer='p0-ci-fin08-issuer',audience='p0-ci-fin08';
+  const fin25Pair=generateKeyPairSync('rsa',{modulusLength:2048});
+  const fin25PrivateKey=fin25Pair.privateKey.export({type:'pkcs8',format:'pem'});
+  const fin25PublicKey=fin25Pair.publicKey.export({type:'spki',format:'pem'});
+  const fin25Issuer='p0-ci-fin25-issuer',fin25Audience='p0-ci-fin25';
   const verify=createVerifier({publicKey,issuer,audience});
+  const verifyFin25=createVerifier({publicKey:fin25PublicKey,issuer:fin25Issuer,audience:fin25Audience});
   const proofs=new Map();
   const finance=[];
   const pool=new Pool({connectionString});
@@ -49,7 +54,7 @@ test('P0 HTTP + real PostgreSQL: synthetic FIN25 proof -> identity JWT -> FIN08,
       res.writeHead(404).end();return;
     }
     try {
-      assert.equal(verify(req.headers.authorization).role,'identity_service');
+      assert.equal(verifyFin25(req.headers.authorization).role,'identity_service');
       assert.equal(req.headers['x-internal-api-key'],'ci-internal-only');
       const {proofToken}=await readJson(req);
       const phone=proofs.get(proofToken);
@@ -81,8 +86,8 @@ test('P0 HTTP + real PostgreSQL: synthetic FIN25 proof -> identity JWT -> FIN08,
         IDENTITY_PRIVATE_KEY_PEM:privateKey,
         IDENTITY_PUBLIC_KEY_PEM:publicKey,
         IDENTITY_ISSUER:issuer,IDENTITY_AUDIENCE:audience,
-        FIN25_SIGNING_PRIVATE_KEY_PEM:privateKey,FIN25_SIGNING_PUBLIC_KEY_PEM:publicKey,
-        FIN25_SIGNING_ISSUER:issuer,FIN25_SIGNING_AUDIENCE:audience,
+        FIN25_SIGNING_PRIVATE_KEY_PEM:fin25PrivateKey,FIN25_SIGNING_PUBLIC_KEY_PEM:fin25PublicKey,
+        FIN25_SIGNING_ISSUER:fin25Issuer,FIN25_SIGNING_AUDIENCE:fin25Audience,
         FIN25_INTERNAL_PROOF_URL:`http://127.0.0.1:${fin25Port}/v1/internal/otp/proof`,
         FIN25_INTERNAL_API_KEY:'ci-internal-only',
         FIN08_INTERNAL_BASE_URL:`http://127.0.0.1:${fin08Port}/`,
@@ -114,6 +119,7 @@ test('P0 HTTP + real PostgreSQL: synthetic FIN25 proof -> identity JWT -> FIN08,
     }
     const m=await exchange({phone:'+967771234567',role:'merchant',name:'متجر اختبار'});
     assert.equal(m.response.status,200);
+    assert.throws(()=>verifyFin25('Bearer '+m.payload.accessToken),'FIN08 user token must not pass FIN25 service verifier');
     assert.equal(verify('Bearer '+m.payload.accessToken).role,'merchant');
     assert.equal(finance[0].path,'/v1/internal/merchant-profiles');
     assert.equal(finance[0].body.merchant_id,m.payload.account.id);
