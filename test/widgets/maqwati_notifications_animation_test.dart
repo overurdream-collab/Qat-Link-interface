@@ -23,6 +23,25 @@ void main() {
     expect(tester.takeException(), isNull);
   });
 
+  testWidgets('mascot portrait fills the notification circle without logo overflow',
+      (tester) async {
+    await tester.pumpWidget(const MaterialApp(
+      home: Scaffold(body: Center(child: MaqwatiPeekingMascot(
+        animate: false, size: 72,
+      ))),
+    ));
+    expect(find.byKey(const Key('maqwati_peek_circular_crop')), findsOneWidget);
+    expect(find.byType(OverflowBox), findsNothing);
+    final photo = tester.widget<Image>(
+      find.byKey(const Key('maqwati_peek_source_logo')));
+    expect(photo.fit, BoxFit.cover);
+    expect(photo.alignment, const Alignment(-0.81, 0));
+    expect(tester.getSize(
+      find.byKey(const Key('maqwati_mascot_peek'))),
+      const Size(72, 72));
+    expect(tester.takeException(), isNull);
+  });
+
   testWidgets('honors reduced motion accessibility setting', (tester) async {
     await tester.pumpWidget(MaterialApp(
       home: MediaQuery(
