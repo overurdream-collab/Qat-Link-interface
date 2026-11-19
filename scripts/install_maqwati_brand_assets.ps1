@@ -19,6 +19,7 @@ param(
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 Add-Type -AssemblyName System.IO.Compression
+Add-Type -AssemblyName System.IO.Compression.FileSystem
 
 $repo = Split-Path -Parent $PSScriptRoot
 $archivePath = (Resolve-Path -LiteralPath $ZipPath -ErrorAction Stop).Path
