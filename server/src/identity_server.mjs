@@ -1,5 +1,6 @@
 // P0 identity API is a separate process. It does NOT alter running FIN25 OTP/SMS.
 import { createServer } from 'node:http';
+import { createPrivateKey, createPublicKey } from 'node:crypto';
 import { Pool } from 'pg';
 import { createIdentityLogic, IdentityError } from './identity_logic.mjs';
 import { createFinanceProvisioner } from './identity_finance_provisioner.mjs';
@@ -8,15 +9,27 @@ const env = process.env;
 const required = [
   'IDENTITY_DATABASE_URL','IDENTITY_PRIVATE_KEY_PEM','IDENTITY_PUBLIC_KEY_PEM',
   'IDENTITY_ISSUER','IDENTITY_AUDIENCE','FIN25_INTERNAL_PROOF_URL','FIN25_INTERNAL_API_KEY',
-  'FIN08_INTERNAL_BASE_URL'
+  'FIN08_INTERNAL_BASE_URL',
+  'FIN25_SIGNING_PRIVATE_KEY_PEM','FIN25_SIGNING_PUBLIC_KEY_PEM',
+  'FIN25_SIGNING_ISSUER','FIN25_SIGNING_AUDIENCE'
 ];
 for(const k of required) if(!env[k]) throw new Error('Missing identity configuration: '+k);
+const pem = s => s.replace(/\\n/g,'\n');
+// Refuse startup if signing keys do not match their corresponding verifier keys.
+for (const [privateName, publicName] of [
+  ['IDENTITY_PRIVATE_KEY_PEM','IDENTITY_PUBLIC_KEY_PEM'],
+  ['FIN25_SIGNING_PRIVATE_KEY_PEM','FIN25_SIGNING_PUBLIC_KEY_PEM']
+]) {
+  const actual = createPublicKey(createPrivateKey(pem(env[privateName]))).export({type:'spki',format:'der'});
+  const expected = createPublicKey(pem(env[publicName])).export({type:'spki',format:'der'});
+  if (!actual.equals(expected)) throw new Error('Identity signing public/private key mismatch: '+publicName);
+}
 const port = Number(env.IDENTITY_PORT || 8090);
 if(!Number.isInteger(port) || port<1 || port>65535) throw new Error('Invalid IDENTITY_PORT');
 const pool = new Pool({connectionString:env.IDENTITY_DATABASE_URL,
   ssl:env.IDENTITY_PG_SSL==='true'?{rejectUnauthorized:true}:undefined,max:5});
 const signing = {
-  privateKey:env.IDENTITY_PRIVATE_KEY_PEM.replace(/\\n/g,'\n'),
+  privateKey:pem(env.IDENTITY_PRIVATE_KEY_PEM),
   issuer:env.IDENTITY_ISSUER,audience:env.IDENTITY_AUDIENCE
 };
 const finance = createFinanceProvisioner({
@@ -27,10 +40,15 @@ const logic = createIdentityLogic({
   pool,fetchImpl:fetch,financeProvision:finance.provision,
   settings:{
     privateKey:env.IDENTITY_PRIVATE_KEY_PEM.replace(/\\n/g,'\n'),
-    publicKey:env.IDENTITY_PUBLIC_KEY_PEM.replace(/\\n/g,'\n'),
+    publicKey:pem(env.IDENTITY_PUBLIC_KEY_PEM),
     issuer:env.IDENTITY_ISSUER,audience:env.IDENTITY_AUDIENCE,
     fin25ProofUrl:env.FIN25_INTERNAL_PROOF_URL,
-    fin25InternalKey:env.FIN25_INTERNAL_API_KEY
+    fin25InternalKey:env.FIN25_INTERNAL_API_KEY,
+    fin25Signing:{
+      privateKey:pem(env.FIN25_SIGNING_PRIVATE_KEY_PEM),
+      issuer:env.FIN25_SIGNING_ISSUER,
+      audience:env.FIN25_SIGNING_AUDIENCE
+    }
   }
 });
 const respond=(res,status,value)=>{
