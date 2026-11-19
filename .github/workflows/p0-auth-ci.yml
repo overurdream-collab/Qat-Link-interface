@@ -139,7 +139,8 @@ jobs:
       - name: Parse isolated identity Compose without changing running services
         run: |
           cp deploy/p0-identity/identity.runtime.env.example deploy/p0-identity/identity.runtime.env
+          cp deploy/p0-identity/identity.db.env.example deploy/p0-identity/identity.db.env
           docker compose -f deploy/p0-identity/compose.yml --env-file deploy/p0-identity/identity.runtime.env config --quiet
-          rm deploy/p0-identity/identity.runtime.env
+          rm deploy/p0-identity/identity.runtime.env deploy/p0-identity/identity.db.env
       - name: Build standalone identity Node image in isolated CI
         run: docker build -f server/Dockerfile.identity -t maqwati-identity-ci:check ./server
