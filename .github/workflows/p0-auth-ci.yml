@@ -59,6 +59,8 @@ jobs:
         run: flutter pub get
       - name: Generate Android project for isolated CI compile
         run: flutter create --platforms=android --project-name qat_link --org com.maqwati .
+      - name: Verify offline Maqwati preview assets (release requires originals)
+        run: python3 scripts/check_maqwati_brand_assets.py --mode preview
       - name: Compile main Flutter app as debug APK (not a release)
         run: flutter build apk --debug --target lib/main.dart
       - name: Verify build artifact and debug signature
@@ -76,3 +78,20 @@ jobs:
           path: build/app/outputs/flutter-apk/app-debug.apk
           retention-days: 7
 
+
+  brand-release-assets:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify asset gate logic is executable
+        run: |
+          python3 scripts/check_maqwati_brand_assets.py --mode preview
+          python3 -m py_compile scripts/check_maqwati_brand_assets.py
+          echo "Full-size release assets must be checked with --mode release BEFORE any distribution."
+      - name: Parse Windows PowerShell brand installer
+        shell: pwsh
+        run: |
+          $tokens=$null; $errors=$null
+          [System.Management.Automation.Language.Parser]::ParseFile((Resolve-Path scripts/install_maqwati_brand_assets.ps1), [ref]$tokens, [ref]$errors) | Out-Null
+          if ($errors.Count -gt 0) { $errors | Out-String | Write-Error; exit 1 }
