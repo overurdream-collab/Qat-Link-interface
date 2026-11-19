@@ -1,3 +1,4 @@
+identity.db.env
 identity.runtime.env
 *.key
 *.pem
