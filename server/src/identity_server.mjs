@@ -41,7 +41,16 @@ const respond=(res,status,value)=>{
 const api=createServer(async(req,res)=>{
   try {
     const path=new URL(req.url || '/', 'http://localhost').pathname;
-    if(req.method==='GET' && path==='/healthz') return respond(res,200,{status:'ok'});
+    if(req.method==='GET' && path==='/healthz') {
+      // Database and schema must be present before accepting a phone proof.
+      // Never reveal connection strings, table contents or key material.
+      try {
+        await pool.query('SELECT subject FROM identity_accounts LIMIT 0');
+        return respond(res,200,{status:'ready'});
+      } catch {
+        return respond(res,503,{status:'unavailable'});
+      }
+    }
     if(req.method==='GET' && path==='/v1/identity/me')
       return respond(res,200,await logic.me(req.headers.authorization));
     if(req.method!=='POST' || path!=='/v1/identity/session') return respond(res,404,{error:'Not found'});
