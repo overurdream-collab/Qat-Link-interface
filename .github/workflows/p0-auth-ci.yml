@@ -42,6 +42,9 @@ jobs:
           node-version: '22'
       - name: Check identity service syntax
         run: node --check server/src/identity_logic.mjs && node --check server/src/identity_finance_provisioner.mjs && node --check server/src/identity_server.mjs
+      - name: Install Node identity test dependencies
+        working-directory: server
+        run: npm install --omit=dev --ignore-scripts --no-audit --no-fund
       - name: Run identity security unit tests
         working-directory: server
         run: node --test test/p0_identity_*.test.mjs
