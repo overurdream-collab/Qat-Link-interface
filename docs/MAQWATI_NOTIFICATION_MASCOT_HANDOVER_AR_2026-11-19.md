@@ -54,3 +54,18 @@
 - `d4f4dc2d5557dbbed467447a42b8a9e686ce91b9`: تعديل `test/screens/fin25_pilot_test.dart` لتمرير الشاشة حتى زر المتابعة قبل اختباره.
 - `22c23ac6862d2651814e745f91f9a9bb52afde02`: تعديل `test/screens/merchant_reminder_campaign_widget_test.dart` لوضع قائمة اختيار الجمهور داخل مجال اللمس قبل التفاعل معها.
 - لا تعلن الاختبارات الكاملة ناجحة حتى انتهاء فحص CI على **رأس هذه التغييرات**. نفّذ Android على هاتف صغير وتحقق من ارتفاع الشعار والأزرار فعلياً.
+
+
+## استكمال الأصول عالية الدقة وفحص منع إصدار الصور المصغرة — 19 نوفمبر 2026
+- تم فتح الملف الأصلي `maqwati_brand_full_resolution.zip` في بيئة معالجة الملفات، وتحقق وجود صورتين فعليتين بالمقاسات:
+  - `assets/images/maqwati_login_background.jpg`: ‏864×1536، ‏314834 بايت، SHA256 `5164ee3d142c7b62bdab6312faf290ceff75852ec8f6260cba82fe434084c748`.
+  - `assets/images/maqwati_horizontal_logo.jpg`: ‏1536×512، ‏163866 بايت، SHA256 `2765b0d88d3f352f589dac789f1c8dd847293dbfed08fcda9eb665140bf5c12b`.
+- **الأصول الأصلية لم تُرفع بعد إلى GitHub**؛ نسخ المستودع صغيرة (العلامة التجريبية فقط)، لأن GitHub content connector للملفات النصية لا يقبل JPEG بصورته الثنائية. لم نغيّر الصور المصغرة دون تكامل آمن لنقل البايتات.
+- أُضيف `scripts/install_maqwati_brand_assets.ps1` لفحص ZIP الأصلي باستخدام SHA256 وأبعاد JPEG قبل إجراء أي كتابة. وضعه الافتراضي **قراءة فقط**؛ الخيار `-Apply` يستبدل هذين الملفين فقط وينشئ نسخاً احتياطية محلية. لا يعدل SMS Gateway/FIN25/Docker:
+  ```powershell
+  .\\scripts\\install_maqwati_brand_assets.ps1 -ZipPath "C:\\path\\maqwati_brand_full_resolution.zip"
+  .\\scripts\\install_maqwati_brand_assets.ps1 -ZipPath "C:\\path\\maqwati_brand_full_resolution.zip" -Apply
+  ```
+- أُضيف `scripts/check_maqwati_brand_assets.py` ويجب تشغيل `python scripts/check_maqwati_brand_assets.py --mode release` **قبل أي بناء إطلاق فعلي**؛ هذا يمنع اعتماد الصور المصغرة إلى أن تصبح الملفات مطابقة تماماً لـSHA الأصلي. وضع `--mode preview` لا يمنع APK المعاينة.
+- تحديث CI يختبر وجود الأصول داخل معاينة Flutter ويتحقق من صلاحية سكربت PowerShell؛ **لا يزعم أن ملفات GitHub الأصلية أصبحت عالية الدقة**.
+- ثبت نجاح وظائف `flutter-auth` و`identity-logic` و`android-compile` في [تشغيل P0 رقم 44422665231](https://github.com/overurdream-collab/Qat-Link-interface/actions/runs/44422665231) عند commit `562be691d11495ed6df0d37527ef62df3097e85e`. نتج artifact `maqwati-branded-login-preview-apk` رقم `14482752935`؛ انتهاؤه مبدئياً في 25 نوفمبر. هذا APK DEBUG تجريبي **ويحتوي نسختي الصور المصغّرتين**، وليس تسليم إنتاجياً ولا تنفيذ إشعارات النظام عند إغلاق التطبيق.
