@@ -3,8 +3,9 @@
 services:
   identity-db:
     image: postgres:16-alpine
+    # Never expose RSA identity signing secrets to the PostgreSQL process.
     env_file:
-      - ./identity.runtime.env
+      - ./identity.db.env
     volumes:
       - identity-db-data:/var/lib/postgresql/data
     networks:
