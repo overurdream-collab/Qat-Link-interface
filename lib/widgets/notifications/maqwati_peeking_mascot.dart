@@ -70,32 +70,40 @@ class _MaqwatiPeekingMascotState extends State<MaqwatiPeekingMascot>
               ),
             );
           },
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(size * .48),
-            child: Container(
-              decoration: BoxDecoration(
-                color: MaqwatiBrandColors.deepTeal,
-                border: Border.all(
-                  color: MaqwatiBrandColors.gold, width: 2.4),
-                borderRadius: BorderRadius.circular(size * .48),
-              ),
-              child: ClipRect(
-                child: OverflowBox(
-                  alignment: Alignment.centerLeft,
-                  minWidth: size * 3,
-                  maxWidth: size * 3,
-                  child: Image.asset(
-                    MaqwatiBrandAssets.horizontalLogo,
-                    height: size,
-                    width: size * 3,
-                    fit: BoxFit.fill,
-                    key: const Key('maqwati_peek_source_logo'),
-                    errorBuilder: (_, __, ___) => Align(
-                      alignment: Alignment.centerLeft,
-                      child: SizedBox(
-                        width: size,
+          // The source is a 3:1 horizontal brand logo, not a portrait.
+          // Its round portrait occupies approximately source x=155..555.
+          // Previous OverflowBox showed x=0..512 and included the white
+          // margin and broken gold arcs. Crop the artwork to the portrait
+          // centre, then zoom until the character fills our whole circle.
+          child: DecoratedBox(
+            decoration: const BoxDecoration(
+              shape: BoxShape.circle,
+              color: MaqwatiBrandColors.deepTeal,
+              border: Border.fromBorderSide(BorderSide(
+                color: MaqwatiBrandColors.gold, width: 2.4)),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(2.4),
+              child: ClipOval(
+                key: const Key('maqwati_peek_circular_crop'),
+                child: SizedBox.square(
+                  dimension: size,
+                  child: Transform.scale(
+                    scale: 1.30,
+                    child: Image.asset(
+                      MaqwatiBrandAssets.horizontalLogo,
+                      key: const Key('maqwati_peek_source_logo'),
+                      width: size,
+                      height: size,
+                      fit: BoxFit.cover,
+                      // The negative X offset centres the mascot badge,
+                      // rather than cropping from the start of the wordmark.
+                      alignment: const Alignment(-0.81, 0),
+                      filterQuality: FilterQuality.high,
+                      errorBuilder: (_, __, ___) => ColoredBox(
+                        color: MaqwatiBrandColors.deepTeal,
                         child: Icon(Icons.face_rounded,
-                          size: size * .65, color: Colors.white),
+                          size: size * .7, color: Colors.white),
                       ),
                     ),
                   ),
