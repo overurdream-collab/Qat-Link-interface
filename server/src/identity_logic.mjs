@@ -18,10 +18,12 @@ export function signIdentityJwt({ privateKey, issuer, audience, subject, role, l
   return h+'.'+p+'.'+sign.sign(privateKey).toString('base64url');
 }
 export function createIdentityLogic({ pool, fetchImpl, settings, clock, financeProvision }) {
-  const { privateKey, publicKey, issuer, audience, fin25ProofUrl, fin25InternalKey } = settings;
+  const { privateKey, publicKey, issuer, audience, fin25ProofUrl, fin25InternalKey, fin25Signing } = settings;
   if (!privateKey || !publicKey || !issuer || !audience || !fin25ProofUrl || !fin25InternalKey ||
       !/^https?:$/.test(new URL(fin25ProofUrl).protocol)) throw new Error('Identity configuration incomplete');
   if(typeof financeProvision !== 'function') throw new Error('Verified FIN08 provisioner required');
+  if (!fin25Signing?.privateKey || !fin25Signing?.issuer || !fin25Signing?.audience)
+    throw new Error('Dedicated FIN25 service signing configuration required');
   const verify = createVerifier({ publicKey, issuer, audience });
   const issue = (subject,role,lifetimeSeconds=900) => signIdentityJwt({
     privateKey,issuer,audience,subject,role,lifetimeSeconds,clock
@@ -39,7 +41,7 @@ export function createIdentityLogic({ pool, fetchImpl, settings, clock, financeP
         method:'POST',
         headers:{
           'content-type':'application/json',
-          'authorization':'Bearer '+issue('maqwati-identity-service','identity_service',60),
+          'authorization':'Bearer '+signIdentityJwt({ ...fin25Signing, subject:'maqwati-identity-service', role:'identity_service', lifetimeSeconds:60, clock }),
           'x-internal-api-key':fin25InternalKey
         },
         body:JSON.stringify({proofToken}), signal:controller.signal, redirect:'error'
