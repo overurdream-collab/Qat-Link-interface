@@ -77,3 +77,14 @@
 - `530e52194307a50852f4c2b5c10e2f55e67d3e75`: زر جديد في `lib/screens/login_screen.dart` باسم «معاينة حركة التنبيهات والحجوزات» يظهر **فقط في Debug** عند `kDebugMode`. الوصول إليه لا يصدر JWT، ولا يستدعي SMS، ولا ينشئ حساباً أو حجزاً أو ديناً.
 - `1d6d425251586470e2b6e226eaab599d2700647d`: اختبار `test/screens/notification_design_preview_screen_test.dart` لفتح شاشة المعاينة من تسجيل الدخول، ثم محاكاة وصول الحجز والتنبيه وعرض البطاقة، مع التأكد من غياب جلسة مالية.
 - المعاينة لا تمثل وصول إشعار Android أصلي، ولا تظهر عند إغلاق التطبيق؛ الخدمة الحقيقية غير متصلة. أي نسخة APK سابقة على هذه الـCommits لا تضم زر المعاينة.
+
+
+## بناء APK عالي الدقة من Windows دون تغيير الخوادم
+- `9803568c9499950aaa75e5b038abc2f71055e3d9`: `scripts/build_maqwati_branded_preview.ps1` هو أمر محلي واحد يستدعي مثبّت الأصول الموثوقة، ويفرض SHA256 الأصلي في `check_maqwati_brand_assets.py --mode release`، ثم `flutter pub get`، و`flutter analyze`، واختبارات Flutter، وأخيراً `flutter build apk --debug`. لا يلمس Docker ولا SMS ولا قاعدة البيانات.
+- `8e63a33df2a9a8bf47217495798ac63d7f546ead`: فحص PowerShell syntax للسكريبتين داخل CI (بجانب فحوص Flutter وNode).
+- الأمر المقصود تشغيله **داخل نسخة مستودع Qat-Link-interface الحديثة على جهاز Windows** وليس بالضرورة مجلد `F:\\maqwatilink-fin25` الخاص بالخادم:
+  ```powershell
+  .\\scripts\\build_maqwati_branded_preview.ps1 -ZipPath "C:\\path\\maqwati_brand_full_resolution.zip"
+  ```
+  عند نجاحه يوجد APK عند `build/app/outputs/flutter-apk/app-debug.apk`. لا ترفع المفتاح الخاص للهوية أو عناوين تشغيل حساسة. يظل هذا إصدار Debug لمعاينة الشكل والحركة.
+- اختبار حركة الإشعارات من الشاشة الرئيسية متاح الآن في Debug عبر زر «معاينة حركة التنبيهات والحجوزات»؛ لا يحاكي إصدار JWT ولا وصول إشعار من الخادم.
