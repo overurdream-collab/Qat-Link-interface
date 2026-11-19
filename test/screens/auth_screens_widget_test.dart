@@ -13,6 +13,22 @@ void main() {
     expect(find.text('إجمالي الديون المعتمدة'), findsNothing);
   });
 
+  testWidgets('reference-inspired login preserves phone OTP as primary and two-party approval',
+      (tester) async {
+    await tester.pumpWidget(const QatLinkApp());
+    expect(find.byKey(const Key('maqwati_brand_tagline')), findsOneWidget);
+    expect(find.byKey(const Key('maqwati_brand_promise')), findsOneWidget);
+    expect(find.text('لتجارة أنجح'), findsOneWidget);
+    expect(find.byKey(const Key('bilateral_approval_message')), findsOneWidget);
+    expect(find.text('التاجر يسجّل، والعميل يعتمد'), findsOneWidget);
+    expect(find.byKey(const Key('login_with_otp')), findsOneWidget);
+    expect(find.text('الدخول بالرمز الخاص (قيد التطوير)'), findsOneWidget);
+    // The visual redesign must never sneak in an unconnected email login.
+    expect(find.text('البريد الإلكتروني أو اسم المستخدم'), findsNothing);
+    expect(find.text('كلمة المرور'), findsNothing);
+    expect(find.text('إجمالي الديون المعتمدة'), findsNothing);
+  });
+
   testWidgets('registered role options stay on a separate page', (tester) async {
     await tester.pumpWidget(const QatLinkApp());
     await tester.ensureVisible(find.byKey(const Key('open_registration')));
