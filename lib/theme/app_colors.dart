@@ -1,30 +1,30 @@
 import 'package:flutter/material.dart';
 
-/// Official colors approved from the merchant home preview on 2026-11-15.
-/// Keep these tokens consistent across Home, Movement, Customers, and My Space.
+/// Yemen Modern Fintech identity: consistent across login and shared pages.
+/// Semantic money/status colors remain separate from the branding palette.
 abstract final class AppColors {
-  // Approved light palette (exact preview values).
-  static const Color petrol = Color(0xFF176B70);
-  static const Color mint = Color(0xFF64C0AB);
-  static const Color cyan = Color(0xFF55AFC4);
-  static const Color sea = Color(0xFF438CC2);
-  static const Color ink = Color(0xFF172B30);
-  static const Color muted = Color(0xFF6E858B);
-  static const Color background = Color(0xFFF1F8FA);
+  // Base identity: deep Yemeni teal, muted aqua and warm gold accent.
+  static const Color petrol = Color(0xFF07575B);
+  static const Color mint = Color(0xFF168E94);
+  static const Color cyan = Color(0xFF63B5C2);
+  static const Color sea = Color(0xFF438DB2);
+  static const Color ink = Color(0xFF142F37);
+  static const Color muted = Color(0xFF637D82);
+  static const Color background = Color(0xFFF4F9F8);
   static const Color card = Color(0xFFFFFFFF);
-  static const Color cardBorder = Color(0xFFDBE9EB);
-  static const Color pale = Color(0xFFDDF3ED);
+  static const Color cardBorder = Color(0xFFD8E7E5);
+  static const Color pale = Color(0xFFE3F3F0);
   static const Color success = Color(0xFF16845B);
   static const Color red = Color(0xFFC04444);
   static const Color amber = Color(0xFF92400E);
   static const Color pendingBackground = Color(0xFFFEF3C7);
   // Optional female profile identity approved in UX-03. Financial-state
   // colors remain semantic and are intentionally shared with the base theme.
-  static const Color pinkPrimary = Color(0xFFB83F78);
-  static const Color pinkSecondary = Color(0xFFDE79A7);
-  static const Color pinkBackground = Color(0xFFFFF4F8);
+  static const Color pinkPrimary = Color(0xFF96295F);
+  static const Color pinkSecondary = Color(0xFFCA5C8E);
+  static const Color pinkBackground = Color(0xFFFFF3F8);
   static const Color pinkInk = Color(0xFF452735);
-  static const Color pinkBorder = Color(0xFFF3D7E4);
+  static const Color pinkBorder = Color(0xFFF0D4E2);
 
   // Preview-compatible aliases; use semantic color roles for financial states.
   static const Color emerald = petrol;
@@ -216,9 +216,9 @@ abstract final class AppGradients {
     begin: Alignment.centerRight,
     end: Alignment.centerLeft,
     colors: [
-      Color(0xFF135864),
-      Color(0xFF409B9D),
-      Color(0xFF8ED8CA),
+      Color(0xFF07575B),
+      Color(0xFF168E94),
+      Color(0xFFB4E2DE),
     ],
     stops: [0.0, 0.52, 1.0],
   );
