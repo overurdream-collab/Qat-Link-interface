@@ -90,9 +90,9 @@ abstract final class CustomerStatementPdf {
     canvas.scale(scale);
     final background = ui.Paint()..color = const ui.Color(0xFFFFFFFF);
     canvas.drawRect(const ui.Rect.fromLTWH(0, 0, _width, _height), background);
-    final teal = const ui.Color(0xFF176B70);
+    final teal = const ui.Color(0xFF07575B);
     final gray = const ui.Color(0xFF52636B);
-    final black = const ui.Color(0xFF172B30);
+    final black = const ui.Color(0xFF142F37);
 
     void rectangle(double x, double y, double width, double height,
         ui.Color color, [double radius = 0]) {
@@ -105,7 +105,7 @@ abstract final class CustomerStatementPdf {
 
     void label(String text, double xRight, double y, double width,
         {double size = 15, bool bold = false,
-        ui.Color color = const ui.Color(0xFF172B30),
+        ui.Color color = const ui.Color(0xFF142F37),
         int lines = 1}) {
       final painter = material.TextPainter(
         text: material.TextSpan(
@@ -126,7 +126,7 @@ abstract final class CustomerStatementPdf {
     }
 
     rectangle(0, 0, _width, 102, teal);
-    label('مقوتي لنك', 750, 18, 320, size: 31,
+    label('مقوتي لينك', 750, 18, 320, size: 31,
         color: const ui.Color(0xFFFFFFFF), bold: true);
     label('كشف حساب العميل • نسخة معاينة غير موثقة', 746, 60, 510,
         size: 16, color: const ui.Color(0xFFECFFFB));
