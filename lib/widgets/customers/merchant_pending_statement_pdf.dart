@@ -58,8 +58,8 @@ abstract final class MerchantPendingStatementPdf {
     const scale = 2.0;
     final recorder = ui.PictureRecorder();
     final canvas = ui.Canvas(recorder)..scale(scale);
-    final teal = const ui.Color(0xFF176B70);
-    final ink = const ui.Color(0xFF172B30);
+    final teal = const ui.Color(0xFF07575B);
+    final ink = const ui.Color(0xFF142F37);
     final muted = const ui.Color(0xFF52636B);
     final rose = const ui.Color(0xFFC04444);
 
@@ -74,7 +74,7 @@ abstract final class MerchantPendingStatementPdf {
 
     void text(String value, double xRight, double y, double width,
         {double size = 14, bool bold = false,
-        ui.Color color = const ui.Color(0xFF172B30), int lines = 1}) {
+        ui.Color color = const ui.Color(0xFF142F37), int lines = 1}) {
       final painter = material.TextPainter(
         text: material.TextSpan(text: value, style: material.TextStyle(
           fontSize: size,
@@ -94,14 +94,14 @@ abstract final class MerchantPendingStatementPdf {
         '${value.day.toString().padLeft(2, '0')}';
 
     box(0, 0, _width, 108, teal);
-    text('مقوتي لنك', 752, 15, 400, size: 29,
+    text('مقوتي لينك', 752, 15, 400, size: 29,
         bold: true, color: const ui.Color(0xFFFFFFFF));
     text('كشف حساب مسجل لدى التاجر — غير معتمد من العميل', 752, 59, 700,
         size: 16, bold: true, color: const ui.Color(0xFFFFE7AD));
     text('صفحة ${page + 1} من $pageCount', 180, 25, 140,
         size: 12, color: const ui.Color(0xFFFFFFFF));
 
-    box(36, 127, 722, 118, const ui.Color(0xFFF1F8FA), radius: 11);
+    box(36, 127, 722, 118, const ui.Color(0xFFF4F9F8), radius: 11);
     text('العميل المسجل لدى التاجر: ${statement.contact.name}', 733, 140, 660,
         size: 18, bold: true);
     text('هاتف التواصل: ${statement.contact.phone}', 733, 174, 620, size: 13);
