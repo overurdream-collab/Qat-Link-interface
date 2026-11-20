@@ -32,3 +32,59 @@ jobs:
         run: flutter test test/screens/auth_screens_widget_test.dart
       - name: Full Flutter test suite
         run: flutter test
+
+  android-preview:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    needs: ui-checks
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - name: Generate isolated Android wrapper
+        run: flutter create --platforms=android --org com.maqwatilink --project-name qat_link .
+      - name: Set preview-only package name and disable Kotlin incremental
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path('android/app/build.gradle.kts')
+          s = p.read_text()
+          old = 'applicationId = "com.maqwatilink.qat_link"'
+          assert old in s, 'Unexpected generated applicationId'
+          p.write_text(s.replace(old, 'applicationId = "com.maqwatilink.yemen_ui_preview"'))
+          m = Path('android/app/src/main/AndroidManifest.xml')
+          s = m.read_text()
+          assert 'android:label="qat_link"' in s, 'Unexpected app label'
+          m.write_text(s.replace('android:label="qat_link"',
+                                 'android:label="مقوتي لينك - معاينة"'))
+          with Path('android/gradle.properties').open('a') as out:
+              out.write('\nkotlin.incremental=false\n')
+          PY
+      - name: Build preview release APK
+        run: flutter build apk --release -t lib/main_ui_preview.dart
+      - name: Verify package identity and deny Internet permission
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import os
+          import subprocess
+          sdk = Path(os.environ.get('ANDROID_HOME') or os.environ['ANDROID_SDK_ROOT'])
+          aapts = sorted((sdk/'build-tools').glob('*/aapt'))
+          assert aapts, 'aapt missing'
+          apk = Path('build/app/outputs/flutter-apk/app-release.apk')
+          assert apk.is_file(), 'preview APK missing'
+          badging = subprocess.check_output([str(aapts[-1]), 'dump', 'badging', str(apk)], text=True)
+          perms = subprocess.check_output([str(aapts[-1]), 'dump', 'permissions', str(apk)], text=True)
+          assert "name='com.maqwatilink.yemen_ui_preview'" in badging, 'wrong Android package'
+          assert 'android.permission.INTERNET' not in perms, 'preview must remain offline'
+          print('APK preview identity and offline permission gate: PASS')
+          PY
+      - name: Publish isolated UI preview APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: maqwati-yemen-modern-fintech-preview-apk
+          path: build/app/outputs/flutter-apk/app-release.apk
+          if-no-files-found: error
+          retention-days: 7
