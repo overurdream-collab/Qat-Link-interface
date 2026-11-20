@@ -9,6 +9,7 @@ import 'package:pdf/widgets.dart' as pw;
 import '../../models/app_models.dart';
 import '../../models/merchant_pending_models.dart';
 import '../finance_display.dart';
+import 'pdf_brand_mascot.dart';
 
 /// Arabic PDF for a merchant-only record. It is deliberately marked as
 /// unverified on every page and keeps all currencies separate.
@@ -94,11 +95,12 @@ abstract final class MerchantPendingStatementPdf {
         '${value.day.toString().padLeft(2, '0')}';
 
     box(0, 0, _width, 108, teal);
+    await PdfBrandMascot.draw(canvas, x: 24, y: 18, size: 70);
     text('مقوتي لينك', 752, 15, 400, size: 29,
         bold: true, color: const ui.Color(0xFFFFFFFF));
     text('كشف حساب مسجل لدى التاجر — غير معتمد من العميل', 752, 59, 700,
         size: 16, bold: true, color: const ui.Color(0xFFFFE7AD));
-    text('صفحة ${page + 1} من $pageCount', 180, 25, 140,
+    text('صفحة ${page + 1} من $pageCount', 306, 25, 170,
         size: 12, color: const ui.Color(0xFFFFFFFF));
 
     box(36, 127, 722, 118, const ui.Color(0xFFF4F9F8), radius: 11);
