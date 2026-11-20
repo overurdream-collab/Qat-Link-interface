@@ -3,6 +3,8 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'main.dart' show MerchantAppShell;
 import 'screens/customer_app_shell.dart';
+import 'screens/login_screen.dart';
+import 'features/auth/registration_role.dart';
 import 'theme/app_theme.dart';
 
 /// Separate, offline-only UI design entrypoint.
@@ -20,7 +22,7 @@ class MaqwatiUiPreview extends StatefulWidget {
 }
 
 class _MaqwatiUiPreviewState extends State<MaqwatiUiPreview> {
-  bool _merchant = true;
+  int _view = 0; // 0: Login, 1: Merchant, 2: Customer
   bool _female = false;
   bool _dark = false;
 
@@ -52,21 +54,25 @@ class _MaqwatiUiPreviewState extends State<MaqwatiUiPreview> {
                   child: Row(
                     children: [
                       Expanded(
-                        child: SegmentedButton<bool>(
+                        child: SegmentedButton<int>(
                           showSelectedIcon: false,
                           segments: const [
-                            ButtonSegment<bool>(
-                              value: true,
+                            ButtonSegment<int>(
+                              value: 0,
+                              label: Text('دخول'),
+                            ),
+                            ButtonSegment<int>(
+                              value: 1,
                               label: Text('تاجر'),
                             ),
-                            ButtonSegment<bool>(
-                              value: false,
+                            ButtonSegment<int>(
+                              value: 2,
                               label: Text('عميل'),
                             ),
                           ],
-                          selected: {_merchant},
+                          selected: {_view},
                           onSelectionChanged: (value) {
-                            setState(() => _merchant = value.first);
+                            setState(() => _view = value.first);
                           },
                         ),
                       ),
@@ -91,7 +97,16 @@ class _MaqwatiUiPreviewState extends State<MaqwatiUiPreview> {
               Expanded(
                 // Only mount the selected role. No verified merchant/customer
                 // identity, auth token, or live gateway is ever supplied.
-                child: _merchant
+                child: _view == 0
+                    ? LoginScreen(
+                        isDark: _dark,
+                        onToggleTheme: () => setState(() => _dark = !_dark),
+                        onGenderChanged: (ProfileGender gender) => setState(
+                          () => _female = gender == ProfileGender.female,
+                        ),
+                        onOpenCustomerPreview: () => setState(() => _view = 2),
+                      )
+                    : _view == 1
                     ? MerchantAppShell(
                         isDark: _dark,
                         onToggleTheme: () => setState(() => _dark = !_dark),
