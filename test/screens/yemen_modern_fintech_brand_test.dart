@@ -46,4 +46,21 @@ void main() {
       AppColors.red,
     );
   });
+
+  testWidgets('login remains usable at narrow Android width',
+      (tester) async {
+    tester.view.physicalSize = const Size(320, 700);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(() {
+      tester.view.resetPhysicalSize();
+      tester.view.resetDevicePixelRatio();
+    });
+
+    await tester.pumpWidget(const QatLinkApp());
+    expect(tester.takeException(), isNull);
+    await tester.ensureVisible(find.byKey(const Key('login_submit')));
+    await tester.pump();
+    expect(find.byKey(const Key('login_submit')), findsOneWidget);
+    expect(tester.takeException(), isNull);
+  });
 }
