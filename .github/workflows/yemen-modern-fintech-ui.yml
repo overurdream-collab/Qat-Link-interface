@@ -1,0 +1,34 @@
+name: Yemen Modern Fintech UI verification
+
+on:
+  push:
+    branches:
+      - fix/maqwati-yemen-modern-fintech-20261121
+  pull_request:
+    branches:
+      - feat/merchant-ui-completion-20261117
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  ui-checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - name: Resolve dependencies
+        run: flutter pub get
+      - name: Analyze Flutter
+        run: flutter analyze --no-fatal-infos
+      - name: Verify Yemeni branding, RTL and pink identity
+        run: flutter test test/screens/yemen_modern_fintech_brand_test.dart
+      - name: Authentication UI regression
+        run: flutter test test/screens/auth_screens_widget_test.dart
+      - name: Full Flutter test suite
+        run: flutter test
