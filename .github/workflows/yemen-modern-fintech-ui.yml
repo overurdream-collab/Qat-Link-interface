@@ -28,6 +28,8 @@ jobs:
         run: flutter analyze --no-fatal-infos
       - name: Verify Yemeni branding, RTL and pink identity
         run: flutter test test/screens/yemen_modern_fintech_brand_test.dart
+      - name: Preview entrypoint and theme regression
+        run: flutter test test/screens/yemen_ui_preview_widget_test.dart
       - name: Authentication UI regression
         run: flutter test test/screens/auth_screens_widget_test.dart
       - name: Full Flutter test suite
