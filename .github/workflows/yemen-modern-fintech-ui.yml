@@ -54,7 +54,9 @@ jobs:
   android-preview:
     runs-on: ubuntu-latest
     timeout-minutes: 35
-    needs: ui-checks
+    needs: [ui-checks, full-regression]
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
       - uses: subosito/flutter-action@v2
@@ -99,10 +101,18 @@ jobs:
           assert 'android.permission.INTERNET' not in perms, 'preview must remain offline'
           print('APK preview identity and offline permission gate: PASS')
           PY
-      - name: Publish isolated UI preview APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: maqwati-yemen-modern-fintech-preview-apk
-          path: build/app/outputs/flutter-apk/app-release.apk
-          if-no-files-found: error
-          retention-days: 7
+      # Actions artifacts are over quota for this private repository.
+      # Private GitHub prerelease assets are an alternative delivery path.
+      # Only publish after all Flutter tests and offline APK checks pass.
+      - name: Publish verified private preview APK as prerelease
+        if: github.event_name != 'pull_request'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          tag="ui-preview-${GITHUB_SHA:0:12}"
+          gh release create "$tag" \
+            --target "$GITHUB_SHA" \
+            --prerelease \
+            --title "Maqwati Yemen Modern Fintech UI Preview (${GITHUB_SHA:0:12})" \
+            --notes "OFFLINE UI DEMO ONLY. Login/merchant/customer preview, not a production financial app. APK verified to have no android.permission.INTERNET; package com.maqwatilink.yemen_ui_preview. Not approved for live use." \
+            "build/app/outputs/flutter-apk/app-release.apk#maqwati-yemen-modern-preview.apk"
