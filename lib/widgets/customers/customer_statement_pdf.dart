@@ -9,6 +9,7 @@ import 'package:printing/printing.dart';
 import '../../models/app_models.dart';
 import '../finance_display.dart';
 import 'customer_statement_calculator.dart';
+import 'pdf_brand_mascot.dart';
 
 /// Prints a real, paginated A4 PDF by rasterizing Arabic with Flutter's
 /// own shaping engine. Unlike PDF core fonts, this supports Arabic without
@@ -126,11 +127,12 @@ abstract final class CustomerStatementPdf {
     }
 
     rectangle(0, 0, _width, 102, teal);
+    await PdfBrandMascot.draw(canvas, x: 24, y: 15, size: 70);
     label('مقوتي لينك', 750, 18, 320, size: 31,
         color: const ui.Color(0xFFFFFFFF), bold: true);
     label('كشف حساب العميل • نسخة معاينة غير موثقة', 746, 60, 510,
         size: 16, color: const ui.Color(0xFFECFFFB));
-    label('صفحة ${page + 1} من $pageCount', 202, 32, 158,
+    label('صفحة ${page + 1} من $pageCount', 280, 32, 140,
         size: 15, color: const ui.Color(0xFFFFFFFF));
 
     rectangle(36, 122, 722, 122, const ui.Color(0xFFF0F8F7), 12);
