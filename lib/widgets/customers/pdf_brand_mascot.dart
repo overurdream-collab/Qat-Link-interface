@@ -31,7 +31,7 @@ abstract final class PdfBrandMascot {
     double size = 70,
   }) async {
     final bounds = ui.Rect.fromLTWH(x, y, size, size);
-    final radius = ui.RRadius.circular(size * .22);
+    final radius = ui.Radius.circular(size * .22);
     final shape = ui.RRect.fromRectAndRadius(bounds, radius);
     canvas.drawRRect(
       shape,
