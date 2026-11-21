@@ -54,8 +54,8 @@ New-Item -ItemType Directory -Path $backup -ErrorAction Stop | Out-Null
 Write-Host "BACKUP=$backup"
 $ok=$false
 try{
- [System.IO.File]::WriteAllText($dst,$sourceText,(New-Object System.Text.UTF8Encoding($false)))
- [System.IO.File]::WriteAllText($yaml,$patched,(New-Object System.Text.UTF8Encoding($false)))
+ [System.IO.File]::WriteAllText($dst,$sourceText,([System.Text.UTF8Encoding]::new($false)))
+ [System.IO.File]::WriteAllText($yaml,$patched,([System.Text.UTF8Encoding]::new($false)))
  $afterJson=(& docker compose @argsCompose config --format json | Out-String)
  Check 'Patched Compose validation'
  $after=$afterJson | ConvertFrom-Json
