@@ -45,7 +45,7 @@ jobs:
         with:
           node-version: '22'
       - name: Check identity service syntax
-        run: node --check server/src/identity_logic.mjs && node --check server/src/identity_session_limiter.mjs && node --check server/src/identity_finance_provisioner.mjs && node --check server/src/identity_server.mjs && node --check scripts/check_identity_runtime_trust.mjs
+        run: node --check scripts/fin25_identity_live_pilot.mjs && node --check server/src/identity_logic.mjs && node --check server/src/identity_session_limiter.mjs && node --check server/src/identity_finance_provisioner.mjs && node --check server/src/identity_server.mjs && node --check scripts/check_identity_runtime_trust.mjs
       - name: Verify trust preflight fails safely without local credentials
         run: |
           if node scripts/check_identity_runtime_trust.mjs > preflight.log 2>&1; then
