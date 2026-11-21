@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
 
-/// Isolated Yemen Green visual concept, referencing the owner's mockups.
+/// Isolated premium blue/violet visual experiment; green branch remains untouched.
 /// Semantic money/status colors remain separate from the branding palette.
 abstract final class AppColors {
-  // Owner-approved green identity (2026-11-21): gradient #8AD15A → #6CC04A → #4EAD3D.
+  // Premium UI experiment: blue/violet/cyan. Official brand green reserved as accent.
   // The green palette is independent of the existing turquoise and female pink themes.
-  static const Color petrol = Color(0xFF2E7D32);
-  static const Color mint = Color(0xFF6CC04A);
-  static const Color cyan = Color(0xFF8AD15A);
-  static const Color sea = Color(0xFF4EAD3D);
-  static const Color ink = Color(0xFF1F2937);
-  static const Color muted = Color(0xFF6B7280);
-  static const Color background = Color(0xFFF7FBF5);
+  static const Color officialBrandGreen = Color(0xFF6CC04A);
+  static const Color petrol = Color(0xFF4C5EE6);
+  static const Color mint = Color(0xFF7072F4);
+  static const Color cyan = Color(0xFF86D5FA);
+  static const Color sea = Color(0xFF6F46D9);
+  static const Color ink = Color(0xFF151A45);
+  static const Color muted = Color(0xFF777FA8);
+  static const Color background = Color(0xFFF1F3FF);
   static const Color card = Color(0xFFFFFFFF);
-  static const Color cardBorder = Color(0xFFE5E7EB);
-  static const Color pale = Color(0xFFEDF9E8);
+  static const Color cardBorder = Color(0xFFE3E7FA);
+  static const Color pale = Color(0xFFE5E8FF);
   static const Color success = Color(0xFF16845B);
   static const Color red = Color(0xFFC04444);
   static const Color amber = Color(0xFF92400E);
@@ -224,9 +225,9 @@ abstract final class AppGradients {
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
     colors: [
-      Color(0xFF8AD15A),
-      Color(0xFF6CC04A),
-      Color(0xFF4EAD3D),
+      Color(0xFF86D5FA),
+      Color(0xFF7072F4),
+      Color(0xFF6F46D9),
     ],
     stops: [0.0, 0.5, 1.0],
   );
@@ -234,20 +235,20 @@ abstract final class AppGradients {
   static const LinearGradient yer = LinearGradient(
     begin: Alignment.centerRight,
     end: Alignment.centerLeft,
-    colors: [AppColors.petrol, AppColors.mint, AppColors.sea],
+    colors: [Color(0xFF6F6CE8), Color(0xFF4B88F4), Color(0xFF83D5F8)],
     stops: [0.0, 0.55, 1.0],
   );
 
   static const LinearGradient sar = LinearGradient(
     begin: Alignment.centerRight,
     end: Alignment.centerLeft,
-    colors: [AppColors.petrol, AppColors.cyan, AppColors.mint],
+    colors: [Color(0xFF45A3D9), Color(0xFF76D8F1), Color(0xFFA8E4EF)],
   );
 
   static const LinearGradient usd = LinearGradient(
     begin: Alignment.centerRight,
     end: Alignment.centerLeft,
-    colors: [Color(0xFF2D6030), AppColors.petrol, AppColors.cyan],
+    colors: [Color(0xFF7458D1), Color(0xFF997DF6), Color(0xFFB9A9F7)],
   );
 
   static const LinearGradient assistant = LinearGradient(
