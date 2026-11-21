@@ -144,10 +144,10 @@ class _LoginScreenState extends State<LoginScreen> {
                               decoration: decoration.copyWith(
                                 labelText: 'رقم الجوال', hintText: '771234567',
                                 labelStyle: TextStyle(color: soft),
-                                prefixIcon: const Padding(
+                                prefixIcon: Padding(
                                   padding: EdgeInsets.only(left: 13, top: 13),
                                   child: Text('+967', textDirection: TextDirection.ltr,
-                                    style: TextStyle(fontWeight: FontWeight.w700, color: _ink)),
+                                    style: TextStyle(fontWeight: FontWeight.w700, color: text)),
                                 ),
                                 suffixIcon: Icon(Icons.phone_android_rounded, color: primary),
                               ),
