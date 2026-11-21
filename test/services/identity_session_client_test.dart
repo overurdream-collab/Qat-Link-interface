@@ -69,6 +69,46 @@ void main() {
     await expectLater(api.exchange(proofToken:proof),
       throwsA(isA<IdentitySessionException>()));
   });
+  test('safe registration-required diagnosis on 409 without revealing server internals', () async {
+    final api = IdentitySessionClient(baseUri: Uri.parse(identityOrigin),
+      httpClient: MockClient((_) async => http.Response(
+        jsonEncode({'error':'Account registration required'}), 409)));
+    await expectLater(api.exchange(proofToken:proof), throwsA(
+      isA<IdentitySessionException>()
+        .having((e) => e.statusCode, 'statusCode', 409)
+        .having((e) => e.message, 'registration guidance', contains('إنشاء حساب'))));
+  });
+
+  test('safe FIN08 provisioning diagnosis on 503 does not grant a session', () async {
+    final api = IdentitySessionClient(baseUri: Uri.parse(identityOrigin),
+      httpClient: MockClient((_) async => http.Response(
+        jsonEncode({'error':'Financial provisioning unavailable'}), 503)));
+    await expectLater(api.exchange(proofToken:proof), throwsA(
+      isA<IdentitySessionException>()
+        .having((e) => e.statusCode, 'statusCode', 503)
+        .having((e) => e.message, 'FIN08 guidance', contains('FIN08'))));
+  });
+
+  test('role conflict is not represented as an unregistered phone', () async {
+    final api = IdentitySessionClient(baseUri: Uri.parse(identityOrigin),
+      httpClient: MockClient((_) async => http.Response(
+        jsonEncode({'error':'This phone already belongs to another account role'}), 409)));
+    await expectLater(api.exchange(proofToken:proof), throwsA(
+      isA<IdentitySessionException>()
+        .having((e) => e.message, 'role conflict guidance', contains('نوع حساب مختلف'))));
+  });
+
+  test('untrusted error text is never displayed to the user', () async {
+    const privateDetail = 'PRIVATE_USER_OR_TOKEN_DETAILS';
+    final api = IdentitySessionClient(baseUri: Uri.parse(identityOrigin),
+      httpClient: MockClient((_) async => http.Response(
+        jsonEncode({'error':privateDetail}), 500)));
+    await expectLater(api.exchange(proofToken:proof), throwsA(
+      isA<IdentitySessionException>()
+        .having((e) => e.message, 'no reflected server text',
+          allOf(isNot(contains(privateDetail)), contains('HTTP 500')))));
+  });
+
   test('failed proof redemption never returns a session', () async {
     final api = IdentitySessionClient(baseUri: Uri.parse(identityOrigin),
       httpClient: MockClient((_) async => http.Response('{"error":"expired"}',401)));
