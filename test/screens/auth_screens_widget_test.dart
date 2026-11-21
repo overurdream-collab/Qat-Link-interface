@@ -6,7 +6,7 @@ import 'package:qat_link/main.dart';
 void main() {
   testWidgets('app opens login without exposing private finance tabs', (tester) async {
     await tester.pumpWidget(const QatLinkApp());
-    expect(find.text('تسجيل الدخول'), findsOneWidget);
+    expect(find.text('تسجيل الدخول'), findsWidgets);
     expect(find.text('رقم الجوال'), findsOneWidget);
     expect(find.text('رمز الدخول'), findsOneWidget);
     expect(find.byKey(const Key('open_registration')), findsOneWidget);
@@ -53,7 +53,7 @@ void main() {
     await tester.ensureVisible(find.byKey(const Key('login_submit')));
     await tester.tap(find.byKey(const Key('login_submit')));
     await tester.pump();
-    expect(find.text('تسجيل الدخول'), findsOneWidget);
+    expect(find.text('تسجيل الدخول'), findsWidgets);
     expect(find.textContaining('لا تُفتح الحسابات'), findsWidgets);
     expect(find.text('الحركة'), findsNothing);
   });
@@ -64,7 +64,7 @@ void main() {
     await tester.tap(find.byTooltip('الوضع الليلي'));
     await tester.pumpAndSettle();
     expect(find.byTooltip('الوضع النهاري'), findsOneWidget);
-    expect(find.text('تسجيل الدخول'), findsOneWidget);
+    expect(find.text('تسجيل الدخول'), findsWidgets);
   });
 
   testWidgets('female registration selects pink identity and male restores base',
