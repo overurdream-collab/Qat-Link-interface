@@ -31,11 +31,26 @@ void main() {
     final other = find.byKey(const Key('customer_nav_0'));
     expect(studio, findsOneWidget);
     expect(tester.getSize(studio).width, 65);
+    expect(find.text('استديو'), findsOneWidget);
+    final navSurface = tester.widget<Container>(
+      find.byKey(const Key('customer_green_bottom_bar')),
+    );
+    expect((navSurface.decoration as BoxDecoration).color,
+        const Color(0xFF6CC04A));
     expect(tester.getTopLeft(studio).dy,
         lessThan(tester.getTopLeft(other).dy));
     await tester.tap(studio);
     await tester.pumpAndSettle();
     expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('discover heading describes stores operating now', (tester) async {
+    await tester.pumpWidget(const MaqwatiUiPreview());
+    await tester.tap(find.text('عميل').first);
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('customer_nav_4')));
+    await tester.pumpAndSettle();
+    expect(find.text('استكشف المتاجر العاملة الآن'), findsOneWidget);
   });
 
   testWidgets('top button order is notifications then theme then settings in RTL',
