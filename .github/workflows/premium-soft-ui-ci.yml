@@ -1,0 +1,39 @@
+name: Premium Soft UI validation
+
+on:
+  push:
+    branches:
+      - feat/maqwati-premium-soft-ui-20261121
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  flutter-ui:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout isolated UI branch
+        uses: actions/checkout@v4
+      - name: Flutter stable
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - name: Resolve dependencies
+        run: flutter pub get
+      - name: Static analysis
+        run: flutter analyze --no-fatal-infos
+      - name: Widget and domain regression tests
+        run: flutter test
+      - name: Build Android debug
+        run: flutter build apk --debug
+      - name: Attach debug APK
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: maqwati-premium-debug-apk
+          path: build/app/outputs/flutter-apk/app-debug.apk
+          if-no-files-found: error
+          retention-days: 7
