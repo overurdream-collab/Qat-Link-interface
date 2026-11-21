@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 
-/// Yemen Modern Fintech identity: consistent across login and shared pages.
+/// Isolated Yemen Green visual concept, referencing the owner's mockups.
 /// Semantic money/status colors remain separate from the branding palette.
 abstract final class AppColors {
-  // Base identity: deep Yemeni teal, muted aqua and warm gold accent.
-  static const Color petrol = Color(0xFF07575B);
-  static const Color mint = Color(0xFF168E94);
-  static const Color cyan = Color(0xFF63B5C2);
-  static const Color sea = Color(0xFF438DB2);
-  static const Color ink = Color(0xFF142F37);
-  static const Color muted = Color(0xFF637D82);
-  static const Color background = Color(0xFFF4F9F8);
+  // Green reference identity: bright leaf-green actions and deep evergreen text.
+  static const Color petrol = Color(0xFF176B24);
+  static const Color mint = Color(0xFF49B51B);
+  static const Color cyan = Color(0xFF8ED847);
+  static const Color sea = Color(0xFF63C525);
+  static const Color ink = Color(0xFF12391E);
+  static const Color muted = Color(0xFF667B69);
+  static const Color background = Color(0xFFF7FBF5);
   static const Color card = Color(0xFFFFFFFF);
-  static const Color cardBorder = Color(0xFFD8E7E5);
-  static const Color pale = Color(0xFFE3F3F0);
+  static const Color cardBorder = Color(0xFFE0ECDC);
+  static const Color pale = Color(0xFFEDF9E8);
   static const Color success = Color(0xFF16845B);
   static const Color red = Color(0xFFC04444);
   static const Color amber = Color(0xFF92400E);
@@ -39,15 +39,15 @@ abstract final class AppColors {
   static const Color green = success;
 
   // Approved night mode palette (exact CSS custom properties).
-  static const Color darkPetrol = Color(0xFFA2ECE2);
-  static const Color darkMint = Color(0xFF69C2B2);
-  static const Color darkCyan = Color(0xFF95E8F1);
-  static const Color darkInk = Color(0xFFEAF5FA);
+  static const Color darkPetrol = Color(0xFFB4F28D);
+  static const Color darkMint = Color(0xFF8DDF5E);
+  static const Color darkCyan = Color(0xFFC0F28F);
+  static const Color darkInk = Color(0xFFF0FFE9);
   static const Color darkMuted = Color(0xFFA5BAC6);
-  static const Color darkBackground = Color(0xFF13212D);
-  static const Color darkCard = Color(0xFF1D3140);
-  static const Color darkBorder = Color(0xFF355060);
-  static const Color darkPale = Color(0xFF284F57);
+  static const Color darkBackground = Color(0xFF15261B);
+  static const Color darkCard = Color(0xFF203629);
+  static const Color darkBorder = Color(0xFF45674B);
+  static const Color darkPale = Color(0xFF294C30);
   static const Color darkSuccess = Color(0xFF4EE1A0);
   static const Color darkCanvas = darkBackground;
   static const Color darkSurface = darkCard;
@@ -216,9 +216,9 @@ abstract final class AppGradients {
     begin: Alignment.centerRight,
     end: Alignment.centerLeft,
     colors: [
-      Color(0xFF07575B),
-      Color(0xFF168E94),
-      Color(0xFFB4E2DE),
+      Color(0xFF176B24),
+      Color(0xFF49B51B),
+      Color(0xFFC5F1B1),
     ],
     stops: [0.0, 0.52, 1.0],
   );
@@ -239,7 +239,7 @@ abstract final class AppGradients {
   static const LinearGradient usd = LinearGradient(
     begin: Alignment.centerRight,
     end: Alignment.centerLeft,
-    colors: [Color(0xFF24565C), AppColors.petrol, AppColors.cyan],
+    colors: [Color(0xFF2D6030), AppColors.petrol, AppColors.cyan],
   );
 
   static const LinearGradient assistant = LinearGradient(
