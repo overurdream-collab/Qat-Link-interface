@@ -10,7 +10,7 @@ import 'identity_account_screen.dart';
 class Fin25OtpScreen extends StatefulWidget {
   const Fin25OtpScreen({super.key, required this.phone, required this.baseUri,
     this.httpClient, this.identityClient, this.requestedRole, this.displayName,
-    this.manualRequestIdOnly = false, this.pilotAccessKey});
+    this.manualRequestIdOnly = false, this.pilotAccessKey, this.identityBaseUri});
   final String phone;
   final Uri baseUri;
   /// Caller retains ownership when injecting a client (for widget tests).
@@ -21,6 +21,8 @@ class Fin25OtpScreen extends StatefulWidget {
   /// Real Android login test: only verification, not SMS request from Android.
   final bool manualRequestIdOnly;
   final String? pilotAccessKey;
+  /// Production: same configured public origin for OTP and Identity.
+  final Uri? identityBaseUri;
   @override
   State<Fin25OtpScreen> createState() => _Fin25OtpScreenState();
 }
@@ -30,6 +32,7 @@ class _Fin25OtpScreenState extends State<Fin25OtpScreen> {
   final _manualId = TextEditingController();
   late final http.Client _http;
   late final Fin25OtpClient _client;
+  late final IdentitySessionClient? _sessionClient;
   Fin25OtpChallenge? _challenge;
   bool _busy = false;
   bool _verified = false;
@@ -40,6 +43,9 @@ class _Fin25OtpScreenState extends State<Fin25OtpScreen> {
     _http = widget.httpClient ?? http.Client();
     _client = Fin25OtpClient(baseUri: widget.baseUri, httpClient: _http,
       pilotAccessKey: widget.pilotAccessKey);
+    _sessionClient = widget.identityClient ?? (widget.identityBaseUri == null
+      ? null : IdentitySessionClient(baseUri: widget.identityBaseUri!,
+          httpClient: _http));
   }
   @override
   void dispose() {
@@ -87,10 +93,10 @@ class _Fin25OtpScreenState extends State<Fin25OtpScreen> {
         requestId: _challenge!.requestId, code: _code.text);
       if (!mounted) return;
       _code.clear();
-      if (widget.identityClient != null) {
+      if (_sessionClient != null) {
         setState(() { _message = 'جارٍ إنشاء جلسة الحساب الآمنة...'; });
         try {
-          final session = await widget.identityClient!.exchange(
+          final session = await _sessionClient!.exchange(
             proofToken: proof,
             requestedRole: widget.requestedRole,
             displayName: widget.displayName,
@@ -169,7 +175,7 @@ class _Fin25OtpScreenState extends State<Fin25OtpScreen> {
         ],
         if (_busy) const Center(child: CircularProgressIndicator()),
         const SizedBox(height: 16),
-        Text(widget.identityClient == null
+        Text(_sessionClient == null
           ? 'التحقق من الرقم وحده لا يمنح جلسة دخول أو صلاحية مالية.'
           : 'لا تُفتح جلسة الحساب إلا بعد إثبات OTP وIdentity؛ لا صلاحيات مالية دون موافقة الطرفين.',
           textAlign: TextAlign.center),
