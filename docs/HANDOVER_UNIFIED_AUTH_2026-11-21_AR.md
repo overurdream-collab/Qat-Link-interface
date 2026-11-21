@@ -205,3 +205,16 @@ CONFIG_MOUNTS=
 نفق `fin25-cloudflare-tunnel` الحالي يتيح وصولًا خارجيًا تجريبيًا فقط بعنوان `*.trycloudflare.com` مؤقت؛ لا يمكن استخدامه في `MAQWATI_API_BASE_URL` لإصدار Android متصل ثابت. **لا تغيّر حاويات FIN25 أو Caddy أو OTP أو Identity أو FIN08 لإصلاح ذلك.** الانتقال هو إلى **Named Tunnel** بنطاق مملوك ومضاف إلى Cloudflare، وتوجيه `Published application` إلى خدمة Caddy الحالية على `fin25-test-net`، مع إعداد TLS origin موثوق إن أمكن. لا تشغّل نفقًا جديدًا مؤقتًا ولا تكشف token في ChatGPT أو GitHub.
 
 أُضيف إلى `.github/workflows/p0-auth-ci.yml` حاجز HTTPS فعلي للـAPK المتصل، يمنع نشره قبل نجاح نفس استجابات المسارات الخمسة على النطاق العام مع تحقق TLS (دون `-k`). **لا يوجد اسم نطاق معتمد أو Named Tunnel مثبت حتى الآن**. المطلوب من المالك تحديد نطاق Cloudflare الموجود أو إنشاء نطاق مناسب، ثم إعداد النفق الدائم من لوحة Cloudflare، ثم تحقق خارجي قبل تفعيل طلب SMS العام. لا تستنتج وجود WAF من استخدام Cloudflare وحده.
+
+## 12. قرار المستخدم: Funnel مجاني بلا نطاق — 2026-11-21
+
+**قرار معتمد:** تجربة `Tailscale Funnel` المجاني بدل شراء نطاق الآن، مع إبقاء الخدمات الحالية وعدم تفعيل إرسال OTP العام. توجيه HTTPS العام نحو Caddy الموجود على Windows `https://127.0.0.1:8443`، لا Docker/Compose جديد ولا تغيير Cloudflare الحالي. يمنح Funnel عنوانًا ثابتًا للنظام المُسجّل داخل Tailnet من نمط `https://<device>.<tailnet>.ts.net` مع شهادة TLS عامة. يجب أن يكون جهاز Windows مشغّلًا ومتصلًا إلى Tailscale، وFunnel **يفتح المسارات المعروضة للإنترنت**؛ هذا للاختبار فقط وليس بديلًا لـ WAF.
+
+تم إنشاء `scripts/maqwati_tailscale_funnel_test.ps1`:
+- الوضع الافتراضي: قراءة فقط؛ يفحص تثبيت Tailscale وحالة الاتصال وDNS وفحوص FIN25 المحلية الخمسة دون إرسال SMS.
+- `-Enable`: يهيئ Funnel على 443 باتجاه `https+insecure://127.0.0.1:8443`. هذا يتجاوز ثقة شهادة Caddy الداخلية *فقط على وصل loopback المحلي*؛ الخارج يستخدم شهادة Tailscale عامة موثوقة. يتطلب تفعيل MagicDNS وHTTPS وFunnel من حساب Tailscale والموافقة على فتح الوصول العام.
+- `-Disable`: إغلاق منفذ Funnel 443 دون إيقاف FIN25 أو Cloudflare. **إيقاف Funnel لا يعطّل Tailscale VPN**.
+- بعد التفعيل: تشغيل `scripts/check_unified_auth_public_https.ps1 -Origin https://<device>.<tailnet>.ts.net`؛ يتأكد من TLS خارجي سليم ومسارات 200/401/404/403/503. لا تضع عنوانًا في GitHub قبل إثبات الفحص الخارجي.
+- `OTP_PUBLIC_REQUEST_ENABLED` يبقى `false`. لا تنشر APK لاختبار إرسال الرمز بعد؛ سينجح الاتصال والرد 503 لكنه لن يرسل SMS، وهذا مقصود. فتح SMS يتطلب ضوابط إضافية؛ Funnel وحده ليس جدار WAF.
+
+**ملاحظة واقعية مهمة:** لم ننفذ السكربت على Windows من هنا، ولم نتحقق أن Tailscale مُثبت أو أن الحساب مسجل؛ لا تدّعِ نجاح HTTPS العام بعد. مسار الاستئناف: تحديث مجلد GitHub المحلي وتشغيل الفحص المسبق وتوثيق نتيجته، ثم تفعيل Funnel بعد تحقق شروط الأمان.
