@@ -11,6 +11,7 @@ import '../services/fin16_credit_gateway.dart';
 import '../services/movement_calculator.dart';
 import '../theme/app_colors.dart';
 import '../widgets/app_chrome.dart';
+import '../widgets/account_settings_sheet.dart';
 import '../widgets/home/hero_carousel.dart';
 import '../widgets/finance_display.dart';
 import '../widgets/merchant_space/booking_intake_policy.dart';
@@ -101,26 +102,11 @@ class _CustomerAppShellState extends State<CustomerAppShell> {
   }
 
   void _settings() {
-    final c = context.colors;
-    showModalBottomSheet<void>(
-      context: context,
-      showDragHandle: true,
-      backgroundColor: c.card,
-      builder: (sheet) => SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
-          child: Column(mainAxisSize: MainAxisSize.min, children: [
-            Align(alignment: Alignment.centerRight, child: Text('إعدادات العميل', style: TextStyle(color: c.petrol, fontSize: 18, fontWeight: FontWeight.w900))),
-            ListTile(
-              leading: Icon(widget.isDark ? Icons.light_mode_outlined : Icons.dark_mode_outlined, color: c.petrol),
-              title: Text(widget.isDark ? 'الوضع النهاري' : 'الوضع الليلي'),
-              onTap: () { Navigator.pop(sheet); widget.onToggleTheme(); },
-            ),
-            ListTile(leading: Icon(Icons.security_outlined, color: c.petrol), title: const Text('الخصوصية والأمان'), subtitle: const Text('الأرصدة والقرارات لا تظهر دون جلسة موثقة')),
-            ListTile(leading: Icon(Icons.info_outline, color: c.petrol), title: const Text('حول التطبيق'), subtitle: const Text('واجهة العميل — معاينة غير متصلة')),
-          ]),
-        ),
-      ),
+    AccountSettingsSheet.open(
+      context,
+      accountName: widget.customerName,
+      roleLabel: 'العميل',
+      onChangeTheme: widget.onToggleTheme,
     );
   }
 
