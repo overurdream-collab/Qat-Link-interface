@@ -238,13 +238,11 @@ class _CustomerDetailsScreenState extends State<CustomerDetailsScreen> {
 
   Widget _surface(AppThemeColors c, Widget child) => Container(
     decoration: BoxDecoration(
-      color: Theme.of(context).brightness == Brightness.dark
-          ? const Color(0xFF292D55)
-          : Colors.white.withValues(alpha: .72),
+      color: context.premium.surface,
       borderRadius: BorderRadius.circular(28),
-      border: Border.all(color: Theme.of(context).brightness == Brightness.dark
-          ? const Color(0xFF41476B) : Colors.white, width: 1.3),
-      boxShadow: PremiumTokens.floatingShadow,
+      border: Border.all(color: context.premium.outline, width: 1.3),
+      boxShadow: [BoxShadow(color: context.premium.shadow, blurRadius: 26,
+          offset: const Offset(0, 12))],
     ),
     padding: const EdgeInsets.all(14),
     child: child,
