@@ -56,6 +56,19 @@ abstract final class AppTheme {
       extensions: [c],
     );
     return base.copyWith(
+      // One typographic and contrast system for every screen. Green remains
+      // an accent for actions; financial status colors keep their semantics.
+      textTheme: base.textTheme.apply(
+        fontFamily: 'Cairo',
+        bodyColor: c.text,
+        displayColor: c.text,
+      ),
+      primaryTextTheme: base.primaryTextTheme.apply(
+        fontFamily: 'Cairo',
+        bodyColor: c.text,
+        displayColor: c.text,
+      ),
+      iconTheme: IconThemeData(color: c.text),
       appBarTheme: AppBarTheme(
         backgroundColor: c.background,
         foregroundColor: c.text,
