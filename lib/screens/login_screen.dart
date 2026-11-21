@@ -271,7 +271,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       label: Text('خدمة العملاء', style: TextStyle(color: context.premium.accent)),
                     ),
                   ),
-                  const Center(
+                  Center(
                     child: Text('جميع الحقوق محفوظة لشركة GiC ©',
                       textAlign: TextAlign.center,
                       style: TextStyle(fontSize: 11, color: context.premium.muted)),
