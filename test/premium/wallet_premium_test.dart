@@ -15,6 +15,7 @@ void main() {
               data: CurrencyCardData(
                 currency: CurrencyCode.yer,
                 debts: '1,000',
+                balance: '700',
                 payments: '300',
                 pending: '200',
                 collectionRate: .3,
@@ -25,8 +26,9 @@ void main() {
       ),
     ));
 
-    expect(find.text('إجمالي الديون المعتمدة'), findsOneWidget);
-    expect(find.text('1,000'), findsOneWidget);
+    expect(find.text('صافي الرصيد المعتمد'), findsOneWidget);
+    expect(find.text('700'), findsOneWidget);
+    expect(find.text('1,000'), findsNothing);
     expect(find.text('300'), findsOneWidget);
     expect(find.text('200'), findsOneWidget);
     expect(find.text('المسدد المعتمد'), findsOneWidget);
