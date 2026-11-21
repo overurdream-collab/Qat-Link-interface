@@ -111,7 +111,6 @@ class AppSquareIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final c = context.colors;
     return Tooltip(
       message: tooltip,
       child: Material(
@@ -153,7 +152,6 @@ class AppBottomBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final c = context.colors;
     return Container(
       key: const Key('merchant_green_bottom_bar'),
       height: 78,
@@ -208,7 +206,6 @@ class AppBottomBar extends StatelessWidget {
     String label,
     IconData icon,
   ) {
-    final c = context.colors;
     final active = selectedIndex == index;
     final navInk = active ? PremiumTokens.violet : PremiumTokens.secondaryInk;
     return Expanded(
