@@ -1,0 +1,45 @@
+name: Generate approved Maqwati mascot assets
+
+on:
+  push:
+    branches:
+      - feat/maqwati-premium-soft-ui-20261121
+    paths:
+      - scripts/generate_mascot_assets.py
+      - .github/workflows/generate-maqwati-mascots.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: maqwati-mascots-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  generate-assets:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Prepare image dependencies
+        run: python -m pip install --disable-pip-version-check Pillow numpy
+      - name: Produce and validate theme assets
+        run: python scripts/generate_mascot_assets.py
+      - name: Commit generated PNGs into the feature branch
+        run: |
+          set -euo pipefail
+          git add assets/images/maqwati_mascot_blue.png assets/images/maqwati_mascot_pink.png
+          if git diff --cached --quiet; then
+            echo 'Mascot assets already match source'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'assets(maqwati): add approved blue and matching rose mascot PNGs'
+          git push origin HEAD:feat/maqwati-premium-soft-ui-20261121
