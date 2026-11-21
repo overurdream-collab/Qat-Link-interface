@@ -59,6 +59,7 @@ class _HomeScreenState extends State<HomeScreen> {
         CurrencyCardData(
           currency: currency,
           debts: FinanceDisplay.amount(debts),
+          balance: FinanceDisplay.amount(debts - payments),
           payments: FinanceDisplay.amount(payments),
           pending: FinanceDisplay.amount(pending),
           collectionRate: ratio,
