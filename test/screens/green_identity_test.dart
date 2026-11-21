@@ -25,9 +25,9 @@ void main() {
       (tester) async {
     await tester.pumpWidget(const MaqwatiUiPreview());
     expect(find.text('مقوتي لينك'), findsOneWidget);
-    expect(find.text('حلقة وصل بينك وبين عملائك'), findsOneWidget);
+    expect(find.text('كل يوم حكاية'), findsOneWidget);
     expect(find.byKey(const Key('login_submit')), findsOneWidget);
-    expect(find.byIcon(Icons.spa_rounded), findsWidgets);
+    expect(find.byKey(const Key('login_phone')), findsOneWidget);
     final app = tester.widget<MaterialApp>(find.byType(MaterialApp));
     expect(app.theme!.colorScheme.primary, AppColors.petrol);
     expect(Directionality.of(tester.element(find.byKey(const Key('login_submit')))),
