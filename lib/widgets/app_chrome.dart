@@ -259,7 +259,7 @@ class AppSectionTitle extends StatelessWidget {
       children: [
         Expanded(
           child: Text(title, style: TextStyle(
-            fontSize: 14, fontWeight: FontWeight.w800, color: c.petrol,
+            fontSize: 14, fontWeight: FontWeight.w800, color: c.text,
           )),
         ),
         if (trailing != null) trailing!,
