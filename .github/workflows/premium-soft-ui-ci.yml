@@ -13,6 +13,12 @@ permissions:
   contents: read
 
 jobs:
+  runner-diagnostic:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Runner can execute shell commands
+        run: echo 'runner-online' && pwd && uname -a
   flutter-ui:
     runs-on: ubuntu-latest
     timeout-minutes: 30
@@ -25,13 +31,21 @@ jobs:
           channel: stable
           cache: true
       - name: Resolve dependencies
-        run: flutter pub get 2>&1 | tee premium-pub.log
+        run: |
+          set -o pipefail
+          flutter pub get 2>&1 | tee premium-pub.log
       - name: Static analysis
-        run: flutter analyze --no-fatal-infos 2>&1 | tee premium-analyze.log
+        run: |
+          set -o pipefail
+          flutter analyze --no-fatal-infos 2>&1 | tee premium-analyze.log
       - name: Widget and domain regression tests
-        run: flutter test 2>&1 | tee premium-tests.log
+        run: |
+          set -o pipefail
+          flutter test 2>&1 | tee premium-tests.log
       - name: Build Android debug
-        run: flutter build apk --debug 2>&1 | tee premium-android.log
+        run: |
+          set -o pipefail
+          flutter build apk --debug 2>&1 | tee premium-android.log
       - name: Attach debug APK
         if: success()
         uses: actions/upload-artifact@v4
