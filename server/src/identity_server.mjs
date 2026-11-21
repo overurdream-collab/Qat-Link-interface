@@ -4,6 +4,7 @@ import { createPrivateKey, createPublicKey } from 'node:crypto';
 import { Pool } from 'pg';
 import { createIdentityLogic, IdentityError } from './identity_logic.mjs';
 import { createFinanceProvisioner } from './identity_finance_provisioner.mjs';
+import { createIdentitySessionLimiter } from './identity_session_limiter.mjs';
 
 const env = process.env;
 const required = [
@@ -51,9 +52,12 @@ const logic = createIdentityLogic({
     }
   }
 });
-const respond=(res,status,value)=>{
+// A conservative per-TCP-peer safety budget. An edge-level, distributed limiter is
+// still mandatory before public exposure; reverse proxies may share one peer IP.
+const sessionLimiter = createIdentitySessionLimiter();
+const respond=(res,status,value,extraHeaders={})=>{
   res.writeHead(status,{'content-type':'application/json; charset=utf-8',
-    'cache-control':'no-store','x-content-type-options':'nosniff'});
+    'cache-control':'no-store','x-content-type-options':'nosniff',...extraHeaders});
   res.end(JSON.stringify(value));
 };
 const api=createServer(async(req,res)=>{
@@ -74,6 +78,12 @@ const api=createServer(async(req,res)=>{
     if(req.method!=='POST' || path!=='/v1/identity/session') return respond(res,404,{error:'Not found'});
     if(req.headers['content-type']?.split(';')[0].trim()!=='application/json')
       return respond(res,415,{error:'JSON required'});
+    // Never trust client-controlled Forwarded/X-Forwarded-For values here.
+    const budget = sessionLimiter.check(req.socket.remoteAddress);
+    if (!budget.allowed) {
+      return respond(res,429,{error:'Too many session requests'},
+        {'retry-after':String(budget.retryAfterSeconds)});
+    }
     let length=0,body='';
     for await(const chunk of req) {
       length+=chunk.length;
