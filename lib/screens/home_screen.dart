@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:decimal/decimal.dart';
 
 import '../models/app_models.dart';
 import 'merchant_financial_assistant_screen.dart';
@@ -60,6 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
           currency: currency,
           debts: FinanceDisplay.amount(debts),
           balance: FinanceDisplay.amount(debts - payments),
+          isCredit: (debts - payments) < Decimal.zero,
           payments: FinanceDisplay.amount(payments),
           pending: FinanceDisplay.amount(pending),
           collectionRate: ratio,
