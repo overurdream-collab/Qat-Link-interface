@@ -45,20 +45,20 @@ abstract final class AppColors {
   static const Color inkSoft = muted;
   static const Color green = success;
 
-  // Approved night mode palette (exact CSS custom properties).
-  static const Color darkPetrol = Color(0xFFB4F28D);
-  static const Color darkMint = Color(0xFF8DDF5E);
-  static const Color darkCyan = Color(0xFFC0F28F);
-  static const Color darkInk = Color(0xFFF0FFE9);
-  static const Color darkMuted = Color(0xFFA5BAC6);
-  static const Color darkBackground = Color(0xFF15261B);
-  static const Color darkCard = Color(0xFF203629);
-  static const Color darkBorder = Color(0xFF45674B);
-  static const Color darkPale = Color(0xFF294C30);
+  // Premium branch night-mode palette (indigo/lavender); green release remains separate.
+  static const Color darkPetrol = Color(0xFFAAB7FF);
+  static const Color darkMint = Color(0xFF9887F5);
+  static const Color darkCyan = Color(0xFF7BCFF5);
+  static const Color darkInk = Color(0xFFF4F5FF);
+  static const Color darkMuted = Color(0xFFBAC2DE);
+  static const Color darkBackground = Color(0xFF161A38);
+  static const Color darkCard = Color(0xFF242949);
+  static const Color darkBorder = Color(0xFF41476B);
+  static const Color darkPale = Color(0xFF30365B);
   static const Color darkSuccess = Color(0xFF4EE1A0);
   static const Color darkCanvas = darkBackground;
   static const Color darkSurface = darkCard;
-  static const Color darkSurfaceElevated = Color(0xFF213747);
+  static const Color darkSurfaceElevated = Color(0xFF2A3157);
   static const Color darkOutline = darkBorder;
   static const Color darkText = darkInk;
 
