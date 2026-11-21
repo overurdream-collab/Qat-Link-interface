@@ -22,7 +22,7 @@ class IdentitySession {
 /// This is not the FIN25 OTP transport endpoint.
 class IdentitySessionClient {
   IdentitySessionClient({required this.baseUri, required this.httpClient,
-      this.timeout = const Duration(seconds: 12)}) {
+      this.timeout = const Duration(seconds: 12), this.pilotAccessKey}) {
     if (baseUri.scheme != 'https' || baseUri.host.isEmpty ||
         baseUri.userInfo.isNotEmpty || baseUri.hasQuery || baseUri.hasFragment ||
         (baseUri.path.isNotEmpty && baseUri.path != '/') ||
@@ -33,6 +33,8 @@ class IdentitySessionClient {
   final Uri baseUri;
   final http.Client httpClient;
   final Duration timeout;
+  /// Optional ephemeral test-only gateway authorization secret (memory only).
+  final String? pilotAccessKey;
 
   static IdentitySessionClient? fromBuildConfig(http.Client client) {
     const url = String.fromEnvironment('IDENTITY_API_BASE_URL');
@@ -56,7 +58,8 @@ class IdentitySessionClient {
     try {
       final response = await httpClient.post(
         baseUri.resolve('v1/identity/session'),
-        headers: const {'content-type':'application/json','accept':'application/json'},
+        headers: {'content-type':'application/json','accept':'application/json',
+          if (pilotAccessKey != null) 'x-pilot-key': pilotAccessKey!},
         body: jsonEncode({
           'proofToken': proofToken,
           if (requestedRole != null) 'requestedRole': requestedRole,
@@ -96,7 +99,8 @@ class IdentitySessionClient {
     try {
       final response = await httpClient.get(
         baseUri.resolve('v1/identity/me'),
-        headers: {'authorization':'Bearer $access','accept':'application/json'},
+        headers: {'authorization':'Bearer $access','accept':'application/json',
+          if (pilotAccessKey != null) 'x-pilot-key': pilotAccessKey!},
       ).timeout(timeout);
       if (response.statusCode != 200) {
         throw const IdentitySessionException('تعذر تأكيد جلسة الدخول.');
