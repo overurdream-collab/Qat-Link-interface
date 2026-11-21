@@ -52,7 +52,9 @@ abstract final class AppIncidentRecorder {
       if (kDebugMode && previousPlatformHandler != null) {
         return previousPlatformHandler(error, stack);
       }
-      return true;
+      // The in-memory recorder has NOT forwarded this fatal error to a
+      // trusted crash service. Do not falsely mark it as handled.
+      return false;
     };
   }
 
