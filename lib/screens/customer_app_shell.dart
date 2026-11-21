@@ -576,7 +576,6 @@ class _CustomerHero extends StatelessWidget {
   final String subtitle;
   @override
   Widget build(BuildContext context) {
-    final c = context.colors;
     return Container(
       padding: const EdgeInsets.all(17),
       decoration: BoxDecoration(
