@@ -1,0 +1,24 @@
+# Isolated phone login pilot, never mount over the live FIN25 Caddyfile.
+# Docker-only HTTP origin to a SEPARATE temporary Cloudflare tunnel.
+# Phone -> trusted Cloudflare HTTPS -> private Docker gateway.
+:8080 {
+  @health path /healthz
+  handle @health {
+    reverse_proxy identity:8090
+  }
+  @identity path /v1/identity/session /v1/identity/me
+  handle @identity {
+    reverse_proxy identity:8090
+  }
+  @verify path /v1/auth/otp/verify
+  handle @verify {
+    reverse_proxy otp:8083
+  }
+  # Sending SMS must remain an operator-only local action.
+  @request path /v1/auth/otp/request
+  handle @request {
+    respond "OTP requests are disabled on public pilot" 403
+  }
+  # No device enrollment/admin, polling, FIN08, or internal proof endpoint.
+  respond 404
+}
