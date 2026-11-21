@@ -12,7 +12,10 @@ class AuthBrandHero extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final background = Theme.of(context).scaffoldBackgroundColor;
+    final pink = background == const Color(0xFFFFEFF6) ||
+        background == const Color(0xFF251B30);
+    final accent = pink ? const Color(0xFFAD3379) : _purple;
     final width = MediaQuery.sizeOf(context).width;
     final narrow = width < 365;
     final avatarWidth = compact ? 94.0 : (narrow ? 104.0 : 156.0);
@@ -28,11 +31,13 @@ class AuthBrandHero extends StatelessWidget {
               start: 12, top: 12,
               child: Container(
                 width: avatarWidth + 22, height: avatarWidth + 22,
-                decoration: const BoxDecoration(
+                decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   gradient: LinearGradient(
                     begin: Alignment.topRight, end: Alignment.bottomLeft,
-                    colors: [Color(0xFFC2A4FF), Color(0xFF73DCF6)],
+                    colors: pink
+                        ? const [Color(0xFFF8DCEB), Color(0xFF8551B2)]
+                        : const [Color(0xFFC2A4FF), Color(0xFF73DCF6)],
                   ),
                 ),
               ),
@@ -67,9 +72,13 @@ class AuthBrandHero extends StatelessWidget {
                     FittedBox(
                       fit: BoxFit.scaleDown,
                       child: ShaderMask(
-                        shaderCallback: (bounds) => const LinearGradient(
+                        shaderCallback: (bounds) => LinearGradient(
                           begin: Alignment.topCenter, end: Alignment.bottomCenter,
-                          colors: [Color(0xFF8CF6FF), Color(0xFF0FA7F9), Color(0xFF0752E6), Color(0xFF2533AE)],
+                          colors: pink
+                              ? const [Color(0xFFF8DCEB), Color(0xFFAD4389),
+                                  Color(0xFFAD3379), Color(0xFF8551B2)]
+                              : const [Color(0xFF8CF6FF), Color(0xFF0FA7F9),
+                                  Color(0xFF0752E6), Color(0xFF2533AE)],
                         ).createShader(bounds),
                         child: Text(
                           'مقوتي لينك',
@@ -90,7 +99,7 @@ class AuthBrandHero extends StatelessWidget {
                       'كل يوم حكاية',
                       style: const TextStyle(
                         fontFamily: 'Cairo', fontWeight: FontWeight.w900,
-                        color: Color(0xFF5730C4), fontSize: 19,
+                        color: pink ? accent : const Color(0xFF5730C4), fontSize: 19,
                       ),
                     ),
                     const SizedBox(height: 3),
@@ -98,7 +107,9 @@ class AuthBrandHero extends StatelessWidget {
                       width: 108, height: 4,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(8),
-                        gradient: const LinearGradient(colors: [_cyan, _blue, _purple]),
+                        gradient: LinearGradient(colors: pink
+                            ? const [Color(0xFFF8DCEB), Color(0xFFAD4389), Color(0xFF8551B2)]
+                            : const [_cyan, _blue, _purple]),
                       ),
                     ),
                   ],
