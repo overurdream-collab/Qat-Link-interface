@@ -22,7 +22,7 @@ void main() {
       (tester) async {
     await tester.pumpWidget(const QatLinkApp());
 
-    final context = tester.element(find.text('تسجيل الدخول'));
+    final context = tester.element(find.text('تسجيل الدخول').first);
     expect(Directionality.of(context), TextDirection.rtl);
     expect(
       tester.widget<MaterialApp>(find.byType(MaterialApp)).locale,
