@@ -143,6 +143,24 @@ test('P0 HTTP + real PostgreSQL: synthetic FIN25 proof -> identity JWT -> FIN08,
       headers:{'content-type':'application/json'},
       body:JSON.stringify({proofToken:randomUUID()+randomUUID(),requestedRole:'merchant',displayName:'غير معروف'})});
     assert.equal(bad.status,401);
+
+    // Actual HTTP security assertion: even malformed JSON session bodies consume
+    // the per-peer budget and eventually receive 429 with Retry-After.
+    // Exercise only this isolated synthetic service, never the live FIN25 stack.
+    let throttled;
+    for (let n = 0; n < 65; n++) {
+      const response = await fetch(origin+'/v1/identity/session',{
+        method:'POST',headers:{'content-type':'application/json'},
+        body:'{}'
+      });
+      if (response.status === 429) { throttled = response; break; }
+      assert.equal(response.status,400);
+    }
+    assert.ok(throttled,'Identity session endpoint must return 429 after budget exhaustion');
+    assert.ok(Number(throttled.headers.get('retry-after')) >= 1,'429 must include Retry-After');
+    assert.deepEqual(await throttled.json(),{error:'Too many session requests'});
+    const untouchedHealth=await fetch(origin+'/healthz');
+    assert.equal(untouchedHealth.status,200,'Rate limit must not disable health endpoint');
     const result=await pool.query(
       'SELECT role, finance_provisioned_at IS NOT NULL AS done FROM identity_accounts ORDER BY role');
     assert.equal(result.rowCount,2);
