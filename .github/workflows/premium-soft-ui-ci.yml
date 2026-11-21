@@ -60,12 +60,19 @@ jobs:
         run: |
           set -o pipefail
           flutter build apk --debug 2>&1 | tee premium-android.log
+      - name: Package APK with provenance
+        run: |
+          set -euo pipefail
+          mkdir -p artifacts
+          cp build/app/outputs/flutter-apk/app-debug.apk artifacts/maqwati-premium-debug.apk
+          (cd artifacts && sha256sum maqwati-premium-debug.apk > SHA256SUMS.txt)
+          printf 'branch=%s\ncommit=%s\nbuild=debug-only\n' "$GITHUB_REF_NAME" "$GITHUB_SHA" > artifacts/BUILD_INFO.txt
       - name: Attach debug APK
         if: success()
         uses: actions/upload-artifact@v4
         with:
           name: maqwati-premium-debug-apk
-          path: build/app/outputs/flutter-apk/app-debug.apk
+          path: artifacts/
           if-no-files-found: error
           retention-days: 7
       - name: Upload validation logs even on failure
