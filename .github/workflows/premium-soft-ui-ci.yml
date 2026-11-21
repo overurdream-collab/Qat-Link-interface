@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   runner-diagnostic:
@@ -25,6 +25,19 @@ jobs:
     steps:
       - name: Checkout isolated UI branch
         uses: actions/checkout@v4
+      - name: Generate and commit themed mascot assets
+        if: ${{ github.event_name == 'push' && github.ref_name == 'feat/maqwati-premium-soft-ui-20261121' }}
+        run: |
+          set -euo pipefail
+          python3 -m pip install --disable-pip-version-check Pillow numpy
+          python3 scripts/generate_mascot_assets.py
+          git add assets/images/maqwati_mascot_blue.png assets/images/maqwati_mascot_pink.png
+          if ! git diff --cached --quiet; then
+            git config user.name 'github-actions[bot]'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git commit -m 'assets(maqwati): commit blue and pink mascot PNGs'
+            git push origin HEAD:feat/maqwati-premium-soft-ui-20261121
+          fi
       - name: Flutter stable
         uses: subosito/flutter-action@v2
         with:
