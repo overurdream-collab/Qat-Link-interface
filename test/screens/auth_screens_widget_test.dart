@@ -46,7 +46,7 @@ void main() {
     expect(find.text('أتابع حساباتي وأراجع طلبات التجار'), findsOneWidget);
   });
 
-  testWidgets('signup hands off only phone to OTP without creating account',
+  testWidgets('signup fails closed without a configured HTTPS API',
       (tester) async {
     await tester.pumpWidget(const QatLinkApp());
     await tester.ensureVisible(find.byKey(const Key('open_registration')));
@@ -64,27 +64,22 @@ void main() {
     await tester.tap(find.byKey(const Key('register_submit')));
     await tester.pumpAndSettle();
 
-    expect(find.byKey(const Key('pilot_url')), findsOneWidget);
-    expect(find.byKey(const Key('pilot_phone')), findsOneWidget);
-    final field = tester.widget<TextFormField>(
-        find.byKey(const Key('pilot_phone')));
-    expect(field.controller?.text, '+967771234567');
+    expect(find.textContaining('خادم مقوتي الآمن غير مهيأ'), findsOneWidget);
+    expect(find.byKey(const Key('pilot_url')), findsNothing);
     expect(find.byKey(const Key('otp_request')), findsNothing);
     expect(find.text('الحركة'), findsNothing);
     expect(find.textContaining('تم إنشاء الحساب'), findsNothing);
   });
 
-  testWidgets('SMS account login navigates to configured identity setup only',
+  testWidgets('SMS account login blocks unconfigured HTTPS API',
       (tester) async {
     await tester.pumpWidget(const QatLinkApp());
     await tester.enterText(find.byKey(const Key('login_phone')), '771234567');
     await tester.ensureVisible(find.byKey(const Key('login_with_otp')));
     await tester.tap(find.byKey(const Key('login_with_otp')));
     await tester.pumpAndSettle();
-    expect(find.byKey(const Key('pilot_phone')), findsOneWidget);
-    final phone = tester.widget<TextFormField>(
-      find.byKey(const Key('pilot_phone')));
-    expect(phone.controller?.text, '+967771234567');
+    expect(find.textContaining('لم يُجهَّز عنوان خدمة تسجيل الدخول'), findsOneWidget);
+    expect(find.byKey(const Key('pilot_phone')), findsNothing);
     expect(find.byKey(const Key('otp_request')), findsNothing);
     expect(find.text('الحركة'), findsNothing);
   });
