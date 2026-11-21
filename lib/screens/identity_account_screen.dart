@@ -28,8 +28,8 @@ class IdentityAccountScreen extends StatelessWidget {
           Text(session.displayName!, textAlign: TextAlign.center),
         const SizedBox(height: 18),
         const Text('تسجيل الدخول مؤكد من خدمة الهوية. '
-          'يظل عرض الدفتر المالي معطلاً حتى ربط واجهاته ببيانات الخادم الحقيقية؛ '
-          'لا نعرض أرصدة تجريبية على أنها حسابك.',
+          'يمكن الاطلاع على بيانات المطالبات والارتباطات من FIN08 للقراءة فقط عند توفر الربط الآمن. '
+          'الدفتر المالي الكامل ولوحات البيانات التجريبية غير مفعّلة لهذا الحساب.',
           textAlign: TextAlign.center),
         const SizedBox(height: 16),
         if (session.role == 'customer') ...[
