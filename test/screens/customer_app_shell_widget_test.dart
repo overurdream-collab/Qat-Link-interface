@@ -173,7 +173,7 @@ void main() {
     await tester.drag(pager, const Offset(-420, 0));
     await tester.pumpAndSettle();
     expect(find.byKey(const Key('customer_balance_usd')), findsOneWidget);
-    expect(find.textContaining('5 \), findsOneWidget,
+    expect(find.textContaining('5 '), findsOneWidget,
         reason: 'Five approved USD must remain independent of YER and SAR.');
   });
 
