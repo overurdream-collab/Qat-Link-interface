@@ -114,7 +114,7 @@ class AppSquareIconButton extends StatelessWidget {
       message: tooltip,
       child: Material(
         color: c.card,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(20),
         child: InkWell(
           onTap: onTap,
           borderRadius: BorderRadius.circular(12),
@@ -155,8 +155,8 @@ class AppBottomBar extends StatelessWidget {
       key: const Key('merchant_green_bottom_bar'),
       height: 73,
       decoration: BoxDecoration(
-        color: c.mint,
-        border: Border(top: BorderSide(color: c.mint)),
+        color: c.card,
+        border: Border(top: BorderSide(color: c.cardBorder)),
         boxShadow: [
           BoxShadow(
             color: AppColors.ink.withValues(alpha: .06),
@@ -206,7 +206,7 @@ class AppBottomBar extends StatelessWidget {
     final c = context.colors;
     final active = selectedIndex == index;
     final navInk = Theme.of(context).brightness == Brightness.dark
-        ? c.text : AppColors.ink;
+        ? c.text : c.petrol;
     return Expanded(
       child: Semantics(
         button: true,
@@ -218,7 +218,7 @@ class AppBottomBar extends StatelessWidget {
           child: Container(
             margin: const EdgeInsets.symmetric(horizontal: 2, vertical: 6),
             decoration: BoxDecoration(
-              color: active ? Colors.white.withValues(alpha: .25) : Colors.transparent,
+              color: active ? c.pale.withValues(alpha: .38) : Colors.transparent,
               borderRadius: BorderRadius.circular(18),
             ),
             child: Column(
@@ -281,7 +281,7 @@ class AppSurface extends StatelessWidget {
       padding: padding,
       decoration: BoxDecoration(
         color: c.card,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(30),
         border: Border.all(color: c.cardBorder),
         boxShadow: AppColors.cardShadow,
       ),
