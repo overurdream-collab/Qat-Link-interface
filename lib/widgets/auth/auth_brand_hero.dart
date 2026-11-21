@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 import '../../theme/premium_tokens.dart';
 
-/// RTL responsive brand composition for the sign-in and registration flows.
-/// The stored mascot is intentionally provisional until the approved
-/// blue/violet recolour is available as its own licensed image.
+/// Approved Maqwati login header, 2026-11-22.
+/// Character on the left, blue raised logotype and «كل يوم حكاية» on the right.
+/// No checkmark badge or extra circle above the app name.
 class AuthBrandHero extends StatelessWidget {
   const AuthBrandHero({super.key, this.compact = false});
 
@@ -12,99 +12,168 @@ class AuthBrandHero extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final height = compact ? 158.0 : 223.0;
+    final visual = context.premium;
+    final height = compact ? 162.0 : 236.0;
     return Semantics(
       container: true,
-      label: 'مقوتي، تعاملاتك بثقة وسهولة',
+      label: 'مقوتي، كل يوم حكاية',
       child: SizedBox(
         height: height,
-        child: LayoutBuilder(
-          builder: (context, constraints) {
-            final artWidth = (constraints.maxWidth * .45)
-                .clamp(105.0, compact ? 155.0 : 201.0)
-                .toDouble();
-            return Stack(
-              children: [
-                PositionedDirectional(
-                  end: 10,
-                  top: compact ? 20 : 25,
-                  child: Container(
-                    width: artWidth * .89,
-                    height: artWidth * .89,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      gradient: context.premium.hero,
-                    ),
+        child: LayoutBuilder(builder: (context, constraints) {
+          final artWidth = (constraints.maxWidth * .47)
+              .clamp(108.0, compact ? 156.0 : 204.0).toDouble();
+          return Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsetsDirectional.only(
+                    start: 0, end: 2, bottom: 27,
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      _RaisedMaqwatiWordmark(compact: compact),
+                      SizedBox(height: compact ? 6 : 10),
+                      FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text(
+                          'كل يوم حكاية',
+                          key: const Key('approved_login_tagline'),
+                          textDirection: TextDirection.rtl,
+                          style: TextStyle(
+                            color: Theme.of(context).brightness == Brightness.dark
+                                ? const Color(0xFFD7B7FF)
+                                : const Color(0xFF5730C4),
+                            fontSize: compact ? 16 : 21,
+                            fontWeight: FontWeight.w900,
+                            height: 1.3,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 6),
+                      Container(
+                        width: compact ? 94 : 132,
+                        height: 4,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(50),
+                          gradient: visual.action,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                Row(
+              ),
+              SizedBox(
+                width: artWidth,
+                height: height,
+                child: Stack(
+                  alignment: Alignment.bottomCenter,
                   children: [
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsetsDirectional.only(start: 8, end: 2),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              width: compact ? 41 : 50,
-                              height: compact ? 41 : 50,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                gradient: context.premium.action,
-                                boxShadow: PremiumTokens.floatingShadow,
-                              ),
-                              child: const Icon(Icons.done_all_rounded,
-                                color: Colors.white, size: 27),
-                            ),
-                            const SizedBox(height: 9),
-                            FittedBox(
-                              fit: BoxFit.scaleDown,
-                              alignment: Alignment.centerRight,
-                              child: Text(
-                                'مقوتي',
-                                style: TextStyle(
-                                  color: context.premium.ink,
-                                  fontSize: compact ? 29 : 40,
-                                  fontWeight: FontWeight.w900,
-                                  height: 1.3,
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: 3),
-                            Text(
-                              'تعاملاتك بثقة وسهولة',
-                              maxLines: 2,
-                              style: TextStyle(
-                                color: context.premium.muted,
-                                fontSize: compact ? 10 : 12,
-                                height: 1.5,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                          ],
+                    Positioned(
+                      left: 10,
+                      bottom: compact ? 15 : 28,
+                      child: Container(
+                        width: artWidth * .87,
+                        height: artWidth * .87,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          gradient: LinearGradient(
+                            colors: [
+                              const Color(0xFFDAADFA).withValues(alpha: .78),
+                              const Color(0xFF82C9FF).withValues(alpha: .74),
+                            ],
+                          ),
                         ),
                       ),
                     ),
-                    SizedBox(
-                      width: artWidth,
-                      height: height,
+                    Positioned.fill(
                       child: Image.asset(
                         'assets/images/maqwati_approved_mascot.jpeg',
                         fit: BoxFit.contain,
                         alignment: Alignment.bottomCenter,
-                        errorBuilder: (context, error, stackTrace) => const Icon(
-                          Icons.person_rounded,
-                          size: 86,
-                          color: PremiumTokens.violet,
-                        ),
+                        errorBuilder: (context, error, stackTrace) =>
+                            const Icon(Icons.person_rounded,
+                                size: 86, color: PremiumTokens.violet),
                       ),
                     ),
                   ],
                 ),
-              ],
-            );
-          },
+              ),
+            ],
+          );
+        }),
+      ),
+    );
+  }
+}
+
+class _RaisedMaqwatiWordmark extends StatelessWidget {
+  const _RaisedMaqwatiWordmark({required this.compact});
+
+  final bool compact;
+
+  @override
+  Widget build(BuildContext context) {
+    final size = compact ? 30.0 : 39.0;
+    const title = 'مقوتي';
+    final base = TextStyle(
+      fontFamily: 'Cairo',
+      fontSize: size,
+      fontWeight: FontWeight.w900,
+      height: 1.45,
+      letterSpacing: -.8,
+    );
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    return Semantics(
+      label: title,
+      child: ExcludeSemantics(
+        child: FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              Transform.translate(
+                offset: const Offset(2.5, 5),
+                child: Text(title,
+                  textDirection: TextDirection.rtl,
+                  style: base.copyWith(
+                    color: const Color(0xFF171C98),
+                    shadows: const [
+                      Shadow(color: Color(0x6A2C2B9A),
+                          offset: Offset(1, 7), blurRadius: 7),
+                    ],
+                  ),
+                ),
+              ),
+              ShaderMask(
+                blendMode: BlendMode.srcIn,
+                shaderCallback: (bounds) => LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: isDark
+                      ? const [
+                          Color(0xFF8DEBFF),
+                          Color(0xFF268EFF),
+                          Color(0xFF174DCB),
+                        ]
+                      : const [
+                          Color(0xFF8CF6FF),
+                          Color(0xFF0FA7F9),
+                          Color(0xFF0752E6),
+                          Color(0xFF2533AE),
+                        ],
+                ).createShader(bounds),
+                child: Text(
+                  title,
+                  key: const Key('approved_blue_3d_maqwati_wordmark'),
+                  textDirection: TextDirection.rtl,
+                  style: base.copyWith(color: Colors.white),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
