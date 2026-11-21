@@ -257,3 +257,29 @@ EXTERNAL_HTTPS_ROUTING=PASS (WAF and real SMS still NOT proven)
 **قرار المرحلة:** تم **تسليم APK تجريبي متصل** للخادم العام بنجاح من GitHub. لم يجربه المستخدم على الهاتف بعد؛ خدمة `OTP_PUBLIC_REQUEST_ENABLED=false` متعمدة ومثبتة بـ503، لذلك لن يستطيع طلب إرسال SMS من التطبيق في الحالة الحالية. لا تعلن أن دورة الدخول الفعلية أو تفعيل حساب مالي قد نجحا.
 
 **العمل القادم:** تثبيت APK على هاتف Android، اختبار الوصول والاستجابة fail-closed؛ قبل السماح بأي إرسال SMS عام يجب حماية الإساءة (WAF أو طبقة حماية فعلية أخرى، سياسة تكلفة وحدود عددية ومراقبة)، ثم اختبار رسالة واحدة ورمز واحد وإثبات Identity JWT و`/me` تحت رقابة المستخدم. لا تغيّر Docker أو Tailscale Funnel أو OTP image بلا دليل جديد.
+
+## 15. قرار المالك: اختبار متعدد المستخدمين، مع بوابة SMS عامة محدودة
+
+**توجيه صريح من المالك:** يريد إتاحة إرسال OTP لعدة مختبرين في النسخة التجريبية، ولا يريد حصر الخدمة برقم هاتف واحد. **ملاحظة أمنية جوهرية:** عدم امتلاك غيره للـAPK لا يمنع استخدام واجهة API العامة مباشرة؛ رابط Tailscale Funnel عام. لا توجد WAF مثبتة، لذا لا يُسوّغ فتح الإرسال بلا حدود.
+
+تم حفظ `scripts/maqwati_otp_multi_tester_gate.ps1` على الفرع القائم، مع تحقق PowerShell Syntax في CI. يستخدم **نفس** مشروع Docker `fin25-test` والمصدر/الـoverride المحمي والصورة الحالية `sha256:310d4573...`، ويضيف فقط `otp-public-beta.override.yml` بقيمتي `OTP_PUBLIC_REQUEST_ENABLED=true` و`OTP_PUBLIC_MAX_PER_HOUR=6` افتراضيًا، دون مساس بقاعدة البيانات أو المفاتيح أو Caddy أو FIN08. الحد العالمي إجمالي **جميع الأرقام** مع حد لكل رقم 5 طلبات/ساعة وفاصل 60 ثانية بين الطلبات. كود SQL الحالي يطبق الحد العالمي ذريًا.
+
+**مهم: لم ينفذ هذا السكربت على Windows بعد؛ إرسال OTP العام لا يزال مغلقًا عند آخر إثبات.** السكربت في الوضع الافتراضي فحص فقط؛ `-Enable` يغيّر حاوية `otp` وحدها، ثم يجري طلبًا **بدون رقم** ويشترط `HTTP=400` (لا تُنشأ رسالة SMS) دليلاً على فتح المعالج؛ ويحاول الرجوع تلقائيًا إذا فشل. `-Disable` يعيد الإعداد المغلق ويشترط `503`. لا يُلغى `otp-unified-promotion.override.yml` ولا يُعدل `preserve-live.override.json`. أي تحديث لاحق لحاوية OTP يجب أن يأخذ **أربعة** ملفات Compose عند استمرار التجربة العامة.
+
+فحص جاف آمن بعد سحب آخر فرع:
+```powershell
+$p='F:\maqwati-integration-fin25-20261121';git -C $p pull --ff-only origin integration/fin25-identity-consolidation-20261121;if($LASTEXITCODE -ne 0){throw 'Git pull failed'};powershell.exe -NoProfile -ExecutionPolicy Bypass -File "$p\scripts\maqwati_otp_multi_tester_gate.ps1"
+```
+
+فتح التجربة (بعد `OTP_BETA_PREFLIGHT=PASS` ونجاح CI، ومراجعة أثر التكلفة):
+```powershell
+$p='F:\maqwati-integration-fin25-20261121';powershell.exe -NoProfile -ExecutionPolicy Bypass -File "$p\scripts\maqwati_otp_multi_tester_gate.ps1" -Enable
+```
+إغلاقها عند أي إساءة أو انتهاء التجربة:
+```powershell
+$p='F:\maqwati-integration-fin25-20261121';powershell.exe -NoProfile -ExecutionPolicy Bypass -File "$p\scripts\maqwati_otp_multi_tester_gate.ps1" -Disable
+```
+
+**قيود القبول:** نجاح `PUBLIC_OTP=BETA_ENABLED HTTP=400_EMPTY_BODY` لا يعني وصول SMS؛ يتطلب الاختبار الحقيقي رقمًا مملوكًا لمختبر وافق على الاختبار، وتشغيل هاتف بوابة SMS المعتمد، نجاح `sent`، إدخال الرمز، إصدار JWT و`/me`. لا طلب رسائل غير لازمة، ولا مشاركة OTP أو JWT أو مفاتيح التشفير. يجب مراقبة الميزانية والإنفاق؛ 6 رسائل/ساعة قد تعني نظريًا حتى 144 محاولة يوميًا إذا استُهلك الحد في كل ساعة، وليست حصة مجانية مضمونة.
+
+**قبل الإطلاق العام التجاري:** إضافة حماية جدية على مستوى IP/الجهاز/السلوك ومنع التسجيل الآلي، ومراقبة الإرسال والتكلفة. إعداد Funnel وحده ليس جدار WAF.
