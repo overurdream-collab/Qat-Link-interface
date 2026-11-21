@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 
@@ -461,10 +463,26 @@ class _CustomerCurrencyPager extends StatefulWidget {
 
 class _CustomerCurrencyPagerState extends State<_CustomerCurrencyPager> {
   final PageController _pages = PageController(viewportFraction: .94);
+  Timer? _autoSlide;
   int _active = 0;
+  bool _touching = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _autoSlide = Timer.periodic(const Duration(seconds: 6), (_) {
+      if (!mounted || _touching || !_pages.hasClients || !TickerMode.of(context)) return;
+      _pages.animateToPage(
+        (_active + 1) % CurrencyCode.values.length,
+        duration: const Duration(milliseconds: 420),
+        curve: Curves.easeInOutCubic,
+      );
+    });
+  }
 
   @override
   void dispose() {
+    _autoSlide?.cancel();
     _pages.dispose();
     super.dispose();
   }
@@ -473,20 +491,25 @@ class _CustomerCurrencyPagerState extends State<_CustomerCurrencyPager> {
   Widget build(BuildContext context) {
     final c = context.colors;
     return Column(children: [
-      SizedBox(
-        height: 218,
-        child: PageView.builder(
-          key: const Key('customer_currency_pager'),
-          controller: _pages,
-          itemCount: CurrencyCode.values.length,
-          onPageChanged: (value) => setState(() => _active = value),
-          itemBuilder: (context, index) => Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 4),
-            child: _CustomerBalanceCard(
-              state: widget.state,
-              customerId: widget.customerId,
-              currency: CurrencyCode.values[index],
-              showcase: true,
+      Listener(
+        onPointerDown: (_) => _touching = true,
+        onPointerUp: (_) => _touching = false,
+        onPointerCancel: (_) => _touching = false,
+        child: SizedBox(
+          height: 218,
+          child: PageView.builder(
+            key: const Key('customer_currency_pager'),
+            controller: _pages,
+            itemCount: CurrencyCode.values.length,
+            onPageChanged: (value) => setState(() => _active = value),
+            itemBuilder: (context, index) => Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 4),
+              child: _CustomerBalanceCard(
+                state: widget.state,
+                customerId: widget.customerId,
+                currency: CurrencyCode.values[index],
+                showcase: true,
+              ),
             ),
           ),
         ),
