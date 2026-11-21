@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'app_colors.dart';
+import 'premium_tokens.dart';
 
 /// Single theme source for all RTL pages. Shared chrome is deliberately
 /// outside individual pages, so the Movement page can be replaced safely.
@@ -53,7 +54,7 @@ abstract final class AppTheme {
       brightness: scheme.brightness,
       scaffoldBackgroundColor: c.background,
       visualDensity: VisualDensity.standard,
-      extensions: [c],
+      extensions: [c, PremiumVisualPalette.select(pink: pink, dark: isDark)],
     );
     return base.copyWith(
       // Unified Cairo typography; finance statuses retain semantic colors.
