@@ -22,6 +22,7 @@ BEGIN
           JOIN customer_claim_decisions d ON d.claim_id=cl.id
           WHERE cl.id=fm.source_claim_id
             AND d.decision='accept'
+            AND d.merchant_id=cl.merchant_id
             AND d.customer_id=fm.customer_id
             AND d.merchant_id=fm.merchant_id
             AND cl.contact_id=r.contact_id
@@ -37,6 +38,33 @@ BEGIN
           SELECT 1 FROM relationship_operations op
           WHERE op.id=fm.source_operation_id
             AND op.status='approved'
+            AND op.decided_at IS NOT NULL
+            AND op.decided_by IS NOT NULL
+            AND (
+              (op.created_by_role='merchant'
+               AND op.created_by=r.merchant_id
+               AND op.decided_by=r.customer_id)
+              OR
+              (op.created_by_role='customer'
+               AND op.created_by=r.customer_id
+               AND op.decided_by=r.merchant_id)
+            )
+            AND (
+              (op.approval_method='manual'
+               AND op.auto_policy_version IS NULL)
+              OR
+              (op.approval_method='delegated_policy'
+               AND op.created_by_role='merchant'
+               AND op.operation_type='debt'
+               AND EXISTS (
+                 SELECT 1 FROM relationship_policy_events pe
+                 WHERE pe.relationship_id=op.relationship_id
+                   AND pe.version=op.auto_policy_version
+                   AND pe.enabled=true
+                   AND pe.actor_id=r.customer_id
+                   AND pe.happened_at<=op.created_at
+               ))
+            )
             AND op.relationship_id=fm.relationship_id
             AND op.merchant_id=fm.merchant_id
             AND op.customer_id=fm.customer_id
