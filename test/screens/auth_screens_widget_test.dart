@@ -17,6 +17,9 @@ void main() {
   testWidgets('login opens only a clearly labeled customer UI preview',
       (tester) async {
     await tester.pumpWidget(const QatLinkApp());
+    await tester.ensureVisible(find.text('معاينة الواجهات التجريبية'));
+    await tester.tap(find.text('معاينة الواجهات التجريبية'));
+    await tester.pumpAndSettle();
     await tester.ensureVisible(find.byKey(const Key('open_customer_preview')));
     await tester.tap(find.byKey(const Key('open_customer_preview')));
     await tester.pumpAndSettle();
