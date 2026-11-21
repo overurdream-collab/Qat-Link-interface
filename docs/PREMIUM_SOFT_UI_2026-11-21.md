@@ -42,3 +42,13 @@ Keep the PR as **draft**. Do not merge into `main` or the green branch until all
 - **CI is not green**: workflow run [#44889254734](https://github.com/overurdream-collab/Qat-Link-interface/actions/runs/44889254734) was reported as failure. The connector exposed no job steps and the redirected log API returned BlobNotFound, so the failure cause has **not** been established; do not state that Flutter analysis, tests or APK passed.
 - Approved blue/purple recolored mascot is not present as a separate verified repository asset; the existing owner mascot image remains an interim placeholder. No unauthorized source images or rendered screenshots were committed.
 - This branch is a visual implementation pass; full screen-by-screen pixel approval and production auth/server wiring remain open gates.
+
+## Follow-up implementation (2026-11-21)
+- Responsive mascot/brand composition in the login and registration hero; responsive merchant banner tested at four phone widths (test added, not yet executed).
+- Premium customer homepage, distinct currency gradients, customer/merchant dock and consistent `استديو` label.
+- Customer list premium action, movement frosted filter header, contrast-aware dark surfaces.
+- Merchant wallet primary value now exact Decimal **approved debts minus approved payments**; pending movements remain a separate display. Negative approved net shows **رصيد دائن لصالح العميل**. Added automated widget assertions for both standard and credit cases.
+- UI-only changes verified by comparing green base and premium head: no files changed under `lib/models/`, `lib/services/` or `server/`. All modified Dart files passed a basic brace-delimiter static check; **this does not certify compilation**.
+- Runner diagnosis: [Actions #44889771450](https://github.com/overurdream-collab/Qat-Link-interface/actions/runs/44889771450) and [#44889854217](https://github.com/overurdream-collab/Qat-Link-interface/actions/runs/44889854217) report **both** simple shell-only `runner-diagnostic` and Flutter job failure without any step logs. Existing [issue #69](https://github.com/overurdream-collab/Qat-Link-interface/issues/69) updated with evidence. Do not attribute this to Flutter code without a started runner and logs.
+- Fallback verification entry point (Windows): `scripts/premium-ui-verify.ps1`. Must execute on a trusted Flutter-enabled machine and share real test/build results before approval.
+- Pending: dedicated recolored approved mascot asset, pixel-perfect screen review, verified OTP/session and support integrations, a green Android build and successful tests.
