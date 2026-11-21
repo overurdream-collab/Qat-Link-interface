@@ -6,7 +6,6 @@ import '../features/auth/registration_role.dart';
 import '../services/fin25_otp_client.dart';
 import '../services/maqwati_api_config.dart';
 import 'fin25_otp_screen.dart';
-import 'fin25_pilot_setup_screen.dart';
 import '../theme/app_colors.dart';
 import '../widgets/auth/auth_brand_hero.dart';
 
