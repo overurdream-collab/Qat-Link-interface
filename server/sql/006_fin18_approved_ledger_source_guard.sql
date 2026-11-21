@@ -6,7 +6,12 @@
 BEGIN;
 
 CREATE OR REPLACE FUNCTION fin18_approved_movement_source_integrity()
-RETURNS trigger LANGUAGE plpgsql AS $fin18$
+RETURNS trigger
+LANGUAGE plpgsql
+SECURITY INVOKER
+-- Avoid temp-schema or user-search_path object shadowing of ledger sources.
+SET search_path = pg_catalog, public, pg_temp
+AS $fin18$
 DECLARE
   valid_source boolean := false;
 BEGIN
