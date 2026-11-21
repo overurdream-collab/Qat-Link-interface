@@ -117,3 +117,26 @@ OLD_RUNNING_IMAGE=sha256:784837db48892b78b2801fc027021c885fe9782dece551fd6ecf187
 ```
 
 **تفسير مقيد بالأدلة:** التحضير ناجح، الحاوية العاملة لم تستبدل، ولا نستنتج هوية الصورة الجديدة من قيمة `Naming`. لا تُدخل أي بيانات أو مفاتيح من `.env` في المستودع أو المحادثة. الخطوة التالية هي فحص هوية صور Docker ومصدر تكوين البناء قراءةً فقط، قبل اتخاذ قرار التبديل.
+
+## 9. حسم تعارض مرجع صورة OTP — دليل من Docker (2026-11-21، نحو 22:51)
+
+أظهر فحص المستخدم اللاحق:
+
+```text
+Effective Compose otp.image = sha256:784837db48892b78b2801fc027021c885fe9782dece551fd6ecf18719fde1a9e
+Running OTP image           = sha256:784837db48892b78b2801fc027021c885fe9782dece551fd6ecf18719fde1a9e
+Built candidate image       = sha256:310d4573e701066e6bc0c95ceefe3cac4fa5d5e2d11b889715d175b3e705797c
+Base compose image line     = caddy:2-alpine (HTTPS service)
+Preserve-live override otp  = sha256:784837db48892b78b2801fc027021c885fe9782dece551fd6ecf18719fde1a9e
+```
+
+**السبب مثبت:** `preserve-live.override.json` يثبّت صورة OTP القديمة صراحة؛ أمر البناء نجح لكن الحاوية لم تتغير. لا تعدّل ملف الحماية ولا تغيّر وسوم الصور القديمة.
+
+أُضيف `scripts/promote_existing_otp_only.ps1` لاستخدام **ملف override إضافي لخدمة OTP وحدها** مع نفس مشروع Compose ونفس ملف الحماية. الوضع الافتراضي فحص مسبق بدون إعادة تشغيل. عند `-Apply` فقط، يُنشئ الحاوية `otp` مجددًا باستخدام صورة `310d...` و`--no-deps --no-build`؛ ويتحقق من أن الطلب العام يرجع `503` مع `OTP_PUBLIC_REQUEST_ENABLED=false`، وأن `/healthz=200` و`/me=401` و`/internal/otp/proof=404` و`/request=403`. عند فشل التحقق يُحاول الرجوع إلى الصورة القديمة بتوجيه Compose الأصلي. **الملف يحتاج إثبات نجاح فحص PowerShell CI وتشغيل الفحص المسبق محليًا، ولا توجد نتيجة نشر حي حتى الآن.**
+
+الأمر للفحص فقط (لا يوقف خدمات):
+```powershell
+$p='F:\maqwati-integration-fin25-20261121'; git -C $p pull --ff-only origin integration/fin25-identity-consolidation-20261121; if($LASTEXITCODE -ne 0){throw 'Git pull failed'}; powershell.exe -NoProfile -ExecutionPolicy Bypass -File "$p\scripts\promote_existing_otp_only.ps1"
+```
+
+**لا تنفذ `-Apply` قبل نجاح `OTP_PROMOTION_PREFLIGHT=PASS` وفحص نتيجة أحدث CI.** بعد النشر، يجب إدراج ملف `otp-unified-promotion.override.yml` في كل أوامر Compose المستقبلية حتى توحيد التكوين نهائيًا؛ حذفه أو نسيانه قد يعيد اختيار الصورة القديمة.
