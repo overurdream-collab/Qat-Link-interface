@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../models/app_models.dart';
 import '../services/app_state.dart';
 import '../theme/app_colors.dart';
+import '../theme/premium_tokens.dart';
 import '../widgets/app_chrome.dart';
 import '../widgets/finance_display.dart';
 import '../widgets/movement/movement_view_model.dart';
@@ -175,14 +176,12 @@ class _MerchantMovementsTabState extends State<MerchantMovementsTab> {
     return Container(
       padding: const EdgeInsets.fromLTRB(14, 5, 14, 10),
       decoration: BoxDecoration(
-        color: c.background,
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.ink.withValues(alpha: .04),
-            blurRadius: 9,
-            offset: const Offset(0, 3),
-          ),
-        ],
+        color: Theme.of(context).brightness == Brightness.dark
+          ? const Color(0xFF252A50)
+          : Colors.white.withValues(alpha: .72),
+        borderRadius: const BorderRadius.vertical(bottom: Radius.circular(28)),
+        border: Border(bottom: BorderSide(color: c.cardBorder)),
+        boxShadow: PremiumTokens.floatingShadow,
       ),
       child: Column(
         children: [
