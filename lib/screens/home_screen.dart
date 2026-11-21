@@ -7,7 +7,7 @@ import '../services/movement_calculator.dart';
 import '../theme/app_colors.dart';
 import '../widgets/app_chrome.dart';
 import '../widgets/finance_display.dart';
-import '../widgets/home/hero_carousel.dart';
+import '../widgets/home/premium_home_hero.dart';
 import '../widgets/home/new_currency_card.dart';
 import 'merchant_approval_center_screen.dart';
 
@@ -95,8 +95,8 @@ class _HomeScreenState extends State<HomeScreen> {
         return ListView(
           padding: const EdgeInsets.fromLTRB(14, 16, 14, 24),
           children: [
-            const HeroCarousel(),
-            const SizedBox(height: 16),
+            const PremiumHomeHero(),
+            const SizedBox(height: 21),
             const AppSectionTitle(title: 'أرصدة المتجر'),
             const SizedBox(height: 10),
             SizedBox(
