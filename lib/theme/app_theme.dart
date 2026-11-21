@@ -47,8 +47,8 @@ abstract final class AppTheme {
     );
     final base = ThemeData(
       useMaterial3: true,
-      fontFamily: 'NotoSansArabic',
-      fontFamilyFallback: const ['NotoSans'],
+      fontFamily: 'Cairo',
+      fontFamilyFallback: const ['NotoSansArabic', 'NotoSans'],
       colorScheme: scheme,
       brightness: scheme.brightness,
       scaffoldBackgroundColor: c.background,
@@ -101,6 +101,48 @@ abstract final class AppTheme {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
+        ),
+      ),
+      // Shared component styling prevents per-page brand drift.
+      textButtonTheme: TextButtonThemeData(
+        style: TextButton.styleFrom(
+          foregroundColor: c.petrol,
+          textStyle: const TextStyle(fontWeight: FontWeight.w700),
+        ),
+      ),
+      outlinedButtonTheme: OutlinedButtonThemeData(
+        style: OutlinedButton.styleFrom(
+          foregroundColor: c.petrol,
+          minimumSize: const Size(48, 46),
+          side: BorderSide(color: c.cardBorder, width: 1.3),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(14),
+          ),
+          textStyle: const TextStyle(fontWeight: FontWeight.w700),
+        ),
+      ),
+      chipTheme: base.chipTheme.copyWith(
+        backgroundColor: c.card,
+        selectedColor: c.pale,
+        side: BorderSide(color: c.cardBorder),
+        labelStyle: TextStyle(color: c.text),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+      ),
+      bottomSheetTheme: BottomSheetThemeData(
+        backgroundColor: c.card,
+        modalBackgroundColor: c.card,
+        surfaceTintColor: Colors.transparent,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+        ),
+      ),
+      dialogTheme: DialogThemeData(
+        backgroundColor: c.card,
+        surfaceTintColor: Colors.transparent,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
         ),
       ),
       snackBarTheme: SnackBarThemeData(

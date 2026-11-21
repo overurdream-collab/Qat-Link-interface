@@ -60,7 +60,9 @@ void main() {
       merchantId: contact.merchantId,
       contactId: contact.id,
       from: DateTime(2026, 11, 1),
-      to: DateTime(2026, 11, 17),
+      // The UI records the payment at DateTime.now(). The report must
+      // include that payment instead of ending at the older debt date.
+      to: DateTime.now(),
     );
     expect(statement.operationalNetByCurrency[CurrencyCode.yer],
         Decimal.parse('750'));

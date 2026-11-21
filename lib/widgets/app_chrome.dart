@@ -38,7 +38,18 @@ class AppTopBar extends StatelessWidget {
               border: Border.all(color: c.mint, width: 2),
             ),
             alignment: Alignment.center,
-            child: Icon(Icons.person_rounded, color: c.petrol, size: 24),
+            clipBehavior: Clip.antiAlias,
+            child: Image.asset(
+              'assets/images/maqwati_approved_mascot.jpeg',
+              width: 40,
+              height: 40,
+              fit: BoxFit.cover,
+              errorBuilder: (context, error, stackTrace) => Icon(
+                Icons.person_rounded,
+                color: c.petrol,
+                size: 24,
+              ),
+            ),
           ),
           const SizedBox(width: 7),
           Expanded(
