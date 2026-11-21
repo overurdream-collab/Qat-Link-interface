@@ -22,6 +22,8 @@ void main() {
     expect(otp.identityBaseUri, MaqwatiApiConfig.origin);
     expect(otp.manualRequestIdOnly, isFalse);
     expect(find.byKey(const Key('otp_request')), findsOneWidget);
+    expect(find.text('التحقق من رقم الجوال'), findsOneWidget);
+    expect(find.byKey(const Key('otp_request_id')), findsNothing);
     expect(find.byKey(const Key('pilot_url')), findsNothing);
     expect(find.byKey(const Key('pilot_access_key')), findsNothing);
     expect(find.byKey(const Key('otp_manual_request_id')), findsNothing);
