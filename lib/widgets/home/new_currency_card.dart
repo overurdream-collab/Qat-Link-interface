@@ -28,24 +28,25 @@ class NewCurrencyCard extends StatelessWidget {
 
   final CurrencyCardData data;
 
-  LinearGradient get _gradient => switch (data.currency) {
-    CurrencyCode.yer => AppGradients.yer,
-    CurrencyCode.sar => AppGradients.sar,
-    CurrencyCode.usd => AppGradients.usd,
-  };
-
   @override
   Widget build(BuildContext context) {
+    final isPink = Theme.of(context).scaffoldBackgroundColor == AppColors.pinkBackground ||
+        Theme.of(context).scaffoldBackgroundColor == const Color(0xFF251B30);
+    final gradient = switch (data.currency) {
+      CurrencyCode.yer => isPink ? AppGradients.pinkYer : AppGradients.yer,
+      CurrencyCode.sar => isPink ? AppGradients.pinkSar : AppGradients.sar,
+      CurrencyCode.usd => isPink ? AppGradients.pinkUsd : AppGradients.usd,
+    };
     return Container(
       height: 220,
       margin: const EdgeInsets.symmetric(horizontal: 4),
       padding: const EdgeInsets.fromLTRB(17, 16, 17, 17),
       decoration: BoxDecoration(
-        gradient: _gradient,
-        borderRadius: BorderRadius.circular(22),
+        gradient: gradient,
+        borderRadius: BorderRadius.circular(30),
         boxShadow: [
           BoxShadow(
-            color: AppColors.petrol.withValues(alpha: .12),
+            color: Theme.of(context).colorScheme.primary.withValues(alpha: .17),
             blurRadius: 20,
             offset: const Offset(0, 8),
           ),
@@ -168,7 +169,7 @@ class NewCurrencyCard extends StatelessWidget {
                         strokeWidth: 9,
                         backgroundColor: Colors.white30,
                         valueColor: const AlwaysStoppedAnimation<Color>(
-                          Color(0xFFD5ECA6),
+                          Color(0xFFFFFFFF),
                         ),
                       ),
                     ),
