@@ -31,7 +31,7 @@ class AuthBrandHero extends StatelessWidget {
                   child: Container(
                     width: artWidth * .89,
                     height: artWidth * .89,
-                    decoration: const BoxDecoration(
+                    decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       gradient: context.premium.hero,
                     ),
