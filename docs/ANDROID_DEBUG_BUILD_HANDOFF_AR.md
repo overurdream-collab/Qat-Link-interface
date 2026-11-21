@@ -7,7 +7,7 @@
 ## البناء عبر GitHub Actions
 
 1. افتح [Premium Soft UI validation](https://github.com/overurdream-collab/Qat-Link-interface/actions/workflows/premium-soft-ui-ci.yml) واختر تشغيل workflow على الفرع المذكور بعد حل مشكلة GitHub Actions المؤسسية.
-2. ينشئ Workflow ملفات Android المفقودة مؤقتاً بواسطة `flutter create --platforms=android --org com.example .`، ولا يغيّر قاعدة البيانات ولا يدمج في `main`.
+2. ينشئ Workflow قالب Android في مجلد مؤقت بواسطة `flutter create --no-pub --project-name qat_link --platforms=android --org com.example` ثم ينسخ مجلد `android` فقط عند غيابه. لا يُولد اختبارات قالب داخل المشروع، ولا يغيّر قاعدة البيانات أو يدمج في `main`.
 3. يثبت الحزم ويشغّل `flutter analyze --no-fatal-infos` ثم `flutter test` ثم `flutter build apk --debug`.
 4. عند النجاح، نزّل artifact باسم `maqwati-premium-debug-apk`. بداخله `maqwati-premium-debug.apk` و`SHA256SUMS.txt` و`BUILD_INFO.txt`.
 5. لا تنشر هذا الملف عبر متجر التطبيقات. `com.example` معرف اختبار مؤقت؛ هوية الحزمة النهائية وتوقيع الإصدار قرار منفصل.
@@ -44,3 +44,6 @@ pwsh -NoProfile -ExecutionPolicy Bypass -File .\scripts\premium-ui-verify.ps1
 
 ## بوابة الدمج
 يبقى [PR #70](https://github.com/overurdream-collab/Qat-Link-interface/pull/70) **Draft**. لا دمج أو إصدار Production قبل CI ناجح، مراجعة الصور والوظائف، المصادقة/OTP، فحوص الأمان والدفتر المالي، وتوقيع الإنتاج المعتمد.
+
+## تمكين معاينة الواجهات دون مصادقة
+أضيف مسار معاينة صريح للتاجر في شاشة الدخول بجوار معاينة العميل. لا يمرر `merchantId`، ولا يصدر جلسة خادم، ولا يفتح حسابات مالية خاصة. يُستخدم للفحص البصري فقط.
