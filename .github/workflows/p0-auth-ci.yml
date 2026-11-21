@@ -9,6 +9,12 @@ on:
     branches:
       - main
   workflow_dispatch:
+    inputs:
+      api_origin:
+        description: 'Public HTTPS origin for ONE connected Android debug APK (e.g. https://device.tailnet.ts.net)'
+        type: string
+        required: false
+        default: ''
 
 permissions:
   contents: read
@@ -67,6 +73,8 @@ jobs:
   android-compile:
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    env:
+      API_ORIGIN: ${{ inputs.api_origin || vars.MAQWATI_API_BASE_URL || '' }}
     steps:
       - uses: actions/checkout@v4
       - uses: subosito/flutter-action@v2
@@ -90,11 +98,10 @@ jobs:
           sha256sum build/app/outputs/flutter-apk/app-debug.apk
           echo "Build verified. Identity endpoint not supplied: this is NOT a functional login release."
       # One supported application binary. A functional APK can only be built
-      # when the operator sets the SAME persistent HTTPS origin for FIN25/Identity.
+      # when the operator supplies the SAME publicly trusted HTTPS origin for FIN25/Identity.
+      # For a temporary Tailscale test, use workflow_dispatch api_origin; do NOT persist it as a repository variable.
       - name: Validate configured public HTTPS origin
-        if: ${{ vars.MAQWATI_API_BASE_URL != '' }}
-        env:
-          API_ORIGIN: ${{ vars.MAQWATI_API_BASE_URL }}
+        if: ${{ env.API_ORIGIN != '' }}
         run: |
           python3 - <<'PY'
           import os, urllib.parse
@@ -110,9 +117,7 @@ jobs:
           print('Single HTTPS origin validated')
           PY
       - name: Check public TLS and unified routes before building a connected APK
-        if: ${{ vars.MAQWATI_API_BASE_URL != '' }}
-        env:
-          API_ORIGIN: ${{ vars.MAQWATI_API_BASE_URL }}
+        if: ${{ env.API_ORIGIN != '' }}
         shell: bash
         run: |
           set -euo pipefail
@@ -137,12 +142,10 @@ jobs:
           done
           echo "PUBLIC_HTTPS_GATE=PASS (does not authorize SMS or prove Android login)"
       - name: Build the only connected login APK
-        if: ${{ vars.MAQWATI_API_BASE_URL != '' }}
-        env:
-          API_ORIGIN: ${{ vars.MAQWATI_API_BASE_URL }}
+        if: ${{ env.API_ORIGIN != '' }}
         run: flutter build apk --debug --target lib/main.dart --dart-define=MAQWATI_API_BASE_URL="$API_ORIGIN"
       - name: Verify single-origin connected APK signature
-        if: ${{ vars.MAQWATI_API_BASE_URL != '' }}
+        if: ${{ env.API_ORIGIN != '' }}
         shell: bash
         run: |
           test -s build/app/outputs/flutter-apk/app-debug.apk
@@ -150,7 +153,7 @@ jobs:
           "$BUILD_TOOLS/apksigner" verify --verbose build/app/outputs/flutter-apk/app-debug.apk
           sha256sum build/app/outputs/flutter-apk/app-debug.apk
       - name: Publish one unified Maqwati login APK
-        if: ${{ vars.MAQWATI_API_BASE_URL != '' }}
+        if: ${{ env.API_ORIGIN != '' }}
         uses: actions/upload-artifact@v4
         with:
           name: maqwati-unified-login-apk
