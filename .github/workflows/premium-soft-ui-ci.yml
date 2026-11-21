@@ -34,7 +34,9 @@ jobs:
         run: |
           if [ ! -f android/app/src/main/AndroidManifest.xml ]; then
             echo 'Android project missing; generating debug-only Flutter Android scaffold'
-            flutter create --platforms=android --org com.example .
+            scaffold="$(mktemp -d)"
+            flutter create --no-pub --project-name qat_link --platforms=android --org com.example "$scaffold"
+            cp -R "$scaffold/android" ./android
           fi
           test -f android/app/src/main/AndroidManifest.xml
           python3 - <<'PY'
