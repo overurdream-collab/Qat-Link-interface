@@ -147,7 +147,7 @@ class PremiumVisualPalette extends ThemeExtension<PremiumVisualPalette> {
   PremiumVisualPalette lerp(ThemeExtension<PremiumVisualPalette>? other, double t) {
     if (other is! PremiumVisualPalette) return this;
     LinearGradient mix(LinearGradient a, LinearGradient b) =>
-        LinearGradient.lerp(a, b, t) ?? a;
+        (Gradient.lerp(a, b, t) as LinearGradient?) ?? a;
     return PremiumVisualPalette(
       canvas: mix(canvas, other.canvas), action: mix(action, other.action),
       hero: mix(hero, other.hero), yer: mix(yer, other.yer),
