@@ -4,6 +4,8 @@ import 'package:flutter/services.dart';
 import '../features/auth/auth_input_validation.dart';
 import '../features/auth/registration_role.dart';
 import '../services/fin25_otp_client.dart';
+import '../services/maqwati_api_config.dart';
+import 'fin25_otp_screen.dart';
 import 'fin25_pilot_setup_screen.dart';
 import '../theme/app_colors.dart';
 import '../widgets/auth/auth_brand_hero.dart';
@@ -62,10 +64,17 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       );
       return;
     }
+    final origin = MaqwatiApiConfig.origin;
+    if (origin == null) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('خادم مقوتي الآمن غير مهيأ لإنشاء الحساب.')));
+      return;
+    }
     Navigator.of(context).push(MaterialPageRoute<void>(
-      builder: (_) => Fin25PilotSetupScreen(
-        initialPhone: phone,
-        enableIdentity: true,
+      builder: (_) => Fin25OtpScreen(
+        phone: phone,
+        baseUri: origin,
+        identityBaseUri: origin,
         requestedRole: _selectedRole.name,
         displayName: _name.text.trim(),
       ),
