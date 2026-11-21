@@ -34,10 +34,11 @@ class AppTopBar extends StatelessWidget {
             width: 40,
             height: 40,
             decoration: BoxDecoration(
-              color: PremiumTokens.canvas,
+              color: context.premium.selected,
               shape: BoxShape.circle,
               border: Border.all(color: Colors.white, width: 2),
-              boxShadow: PremiumTokens.floatingShadow,
+              boxShadow: [BoxShadow(color: context.premium.shadow,
+                blurRadius: 25, offset: const Offset(0, 10))],
             ),
             alignment: Alignment.center,
             clipBehavior: Clip.antiAlias,
@@ -114,7 +115,7 @@ class AppSquareIconButton extends StatelessWidget {
     return Tooltip(
       message: tooltip,
       child: Material(
-        color: Colors.white.withValues(alpha: .77),
+        color: context.premium.surface,
         borderRadius: BorderRadius.circular(23),
         child: InkWell(
           onTap: onTap,
@@ -128,7 +129,7 @@ class AppSquareIconButton extends StatelessWidget {
               border: Border.all(color: Colors.white, width: 1.4),
               boxShadow: PremiumTokens.floatingShadow,
             ),
-            child: Icon(icon, size: 19, color: PremiumTokens.ink),
+            child: Icon(icon, size: 19, color: context.premium.ink),
           ),
         ),
       ),
@@ -157,9 +158,9 @@ class AppBottomBar extends StatelessWidget {
       height: 78,
       margin: const EdgeInsets.fromLTRB(11, 0, 11, 9),
       decoration: BoxDecoration(
-        color: Theme.of(context).brightness == Brightness.dark ? const Color(0xFF292D55) : Colors.white.withValues(alpha: .80),
+        color: context.premium.surface,
         borderRadius: BorderRadius.circular(34),
-        border: Border.all(color: Colors.white, width: 1.5),
+        border: Border.all(color: context.premium.outline, width: 1.5),
         boxShadow: [
           BoxShadow(
             color: AppColors.ink.withValues(alpha: .06),
@@ -177,7 +178,7 @@ class AppBottomBar extends StatelessWidget {
               child: Tooltip(
                 message: 'إضافة سريعة',
                 child: Material(
-                  color: PremiumTokens.violet,
+                  color: context.premium.accent,
                   elevation: 5,
                   shape: const CircleBorder(),
                   child: InkWell(
@@ -207,7 +208,7 @@ class AppBottomBar extends StatelessWidget {
     IconData icon,
   ) {
     final active = selectedIndex == index;
-    final navInk = active ? PremiumTokens.violet : (Theme.of(context).brightness == Brightness.dark ? PremiumTokens.darkSecondaryInk : PremiumTokens.secondaryInk);
+    final navInk = active ? context.premium.accent : context.premium.muted;
     return Expanded(
       child: Semantics(
         button: true,
@@ -219,7 +220,7 @@ class AppBottomBar extends StatelessWidget {
           child: Container(
             margin: const EdgeInsets.symmetric(horizontal: 2, vertical: 6),
             decoration: BoxDecoration(
-              color: active ? (Theme.of(context).brightness == Brightness.dark ? const Color(0xFF414B83) : const Color(0xFFE4E6FF)) : Colors.transparent,
+              color: active ? context.premium.selected : Colors.transparent,
               borderRadius: BorderRadius.circular(25),
             ),
             child: Column(
@@ -281,9 +282,9 @@ class AppSurface extends StatelessWidget {
       width: double.infinity,
       padding: padding,
       decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: .73),
+        color: context.premium.surface,
         borderRadius: BorderRadius.circular(26),
-        border: Border.all(color: Colors.white, width: 1.3),
+        border: Border.all(color: context.premium.outline, width: 1.3),
         boxShadow: PremiumTokens.floatingShadow,
       ),
       child: child,
@@ -293,5 +294,4 @@ class AppSurface extends StatelessWidget {
 
 /// High-contrast text on each premium surface.
 Color widgetThemeInk(BuildContext context) =>
-    Theme.of(context).brightness == Brightness.dark
-        ? PremiumTokens.darkInk : PremiumTokens.ink;
+    context.premium.ink;
