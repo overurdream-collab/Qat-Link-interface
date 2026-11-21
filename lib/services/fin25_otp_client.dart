@@ -20,7 +20,7 @@ class Fin25OtpChallenge {
 
 class Fin25OtpClient {
   Fin25OtpClient({required this.baseUri, required this.httpClient,
-    this.timeout = const Duration(seconds: 15)}) {
+    this.timeout = const Duration(seconds: 15), this.pilotAccessKey}) {
     if (baseUri.scheme != 'https' || baseUri.host.isEmpty ||
         baseUri.userInfo.isNotEmpty || baseUri.hasQuery || baseUri.hasFragment) {
       throw ArgumentError('FIN25 OTP requires a clean HTTPS base URL');
@@ -29,6 +29,8 @@ class Fin25OtpClient {
   final Uri baseUri;
   final http.Client httpClient;
   final Duration timeout;
+  /// Volatile pilot key supplied by operator; never log or store it.
+  final String? pilotAccessKey;
 
   static String normalizeYemeniPhone(String raw) {
     final normalized = AuthInputValidation.normalizePhone(raw);
@@ -48,7 +50,8 @@ class Fin25OtpClient {
     try {
       final response = await httpClient.post(
         baseUri.resolve(path),
-        headers: const {'content-type': 'application/json', 'accept': 'application/json'},
+        headers: {'content-type': 'application/json', 'accept': 'application/json',
+          if (pilotAccessKey != null) 'x-pilot-key': pilotAccessKey!},
         body: jsonEncode(body),
       ).timeout(timeout);
       final value = jsonDecode(response.body);
