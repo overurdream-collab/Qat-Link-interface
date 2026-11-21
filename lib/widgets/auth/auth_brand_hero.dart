@@ -74,17 +74,23 @@ class AuthBrandHero extends StatelessWidget {
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.min,
+                    mainAxisSize: MainAxisSize.max,
                     children: [
-                      Text(
-                        'مقوتي لينك',
-                        style: TextStyle(
-                          color: colors.petrol,
-                          fontSize: compact ? 23 : 28,
-                          height: 1.15,
-                          fontWeight: FontWeight.w900,
+                      Expanded(
+                        child: FittedBox(
+                          fit: BoxFit.scaleDown,
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            'مقوتي لينك',
+                            style: TextStyle(
+                              color: colors.petrol,
+                              fontSize: compact ? 23 : 28,
+                              height: 1.15,
+                              fontWeight: FontWeight.w900,
+                            ),
+                            textDirection: TextDirection.rtl,
+                          ),
                         ),
-                        textDirection: TextDirection.rtl,
                       ),
                       const SizedBox(width: 6),
                       Icon(
