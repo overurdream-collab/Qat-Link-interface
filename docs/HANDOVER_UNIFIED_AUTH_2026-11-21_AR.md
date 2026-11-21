@@ -61,7 +61,7 @@ F:\maqwatilink-secrets\identity-recovery-20261120\preserve-live.override.json
 
 ## 4. نقطة التوقف بالضبط
 
-**الخطوة التالية مباشرة:** لم يُقدّم المستخدم بعد ناتج تنفيذ `stage_existing_otp_update.ps1`. لا تفترض تشغيله أو اكتمال تحديث OTP. الأولوية هي تحضير الصورة دون لمس الحاوية الجارية، ثم تقييم نتيجته.
+**تحديث مثبت من سجل المستخدم الساعة 22:38 تقريبًا:** شغّل المستخدم `stage_existing_otp_update.ps1` من نسخة الفرع عند Commit `ffb3154` وظهرت النتائج `BACKUP=F:\maqwatilink-fin25\deploy\fin25\otp-stage-backup.20261121-223808`، ثم `COMPOSE=PASS PUBLIC_OTP=DISABLED`، ونجاح Docker build (12/12)، وأخيرًا `OTP_STAGE=PASS`. صرّح السكربت بأن الحاويات العاملة لم تتغير. **لا تعِد تشغيل سكربت التحضير أو نسخ المصدر مجددًا دون سبب.**
 
 الأمر الجاهز على Windows PowerShell:
 ```powershell
@@ -70,9 +70,9 @@ git -C $p pull --ff-only origin integration/fin25-identity-consolidation-2026112
 if($LASTEXITCODE -ne 0){throw 'Git pull failed'}
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File "$p\scripts\stage_existing_otp_update.ps1"
 ```
-النتيجة المتوقعة إن نجح فحص الأمان والبناء: `OTP_STAGE=PASS` مع `BACKUP=` و`OLD_RUNNING_IMAGE=`. **هذه ليست موافقة على استبدال الحاوية أو تفعيل الرسائل العامة**.
+**هذا الأمر نُفذ بالفعل ونجح؛ محفوظ هنا للتوثيق فقط، لا يُطلب تكراره.** هو لا يثبت تشغيل الكود الجديد داخل الحاوية، ولا يجيز فتح الرسائل العامة.
 
-بعد نجاح التحضير: افحص الـimage المبنية، صلاحية البيئة، والفارق عن الصورة الحالية، وجهز **استبدال حاوية `otp` وحدها** بالاعتماد على ملفات Compose الأصلية والـoverride نفسه، مع صورة قديمة محددة كمرجع تراجع، ومع فحوص HTTP وسلامة العمل الحالي. لا تستخدم `docker compose down`، ولا تعِد إنشاء `enrollment` أو `https` أو PostgreSQL، ولا تمس FIN08 أو Identity. قبل أي استبدال فعلي قد يؤثر على خدمة SMS، أبلغ المستخدم بالعملية والأثر المحدود وخطة التراجع.
+**الأولوية الآن تدقيق هوية صورة Docker قبل أي استبدال**: سجل البناء يعرض `exporting config sha256:582401dd...` و`manifest list sha256:310d4573...`، لكن `naming to docker.io/library/sha256:784837db...`، وهو بالضبط النص الظاهر في `OLD_RUNNING_IMAGE=sha256:784837db...`. التسمية وحدها ليست دليلًا أن الصورة الجديدة مطابقة للصورة القديمة أو مختلفة عنها. افحص `docker image inspect` (معرّف الصورة الفعلي، الوسم، وقت الإنشاء)، و`docker compose images otp`، ومحتوى صورة OTP الجديدة بعد البناء، دون إعادة تشغيل الخدمات أو عرض أسرار. **لا تستبدل الحاوية قبل إثبات أن الصورة المرشحة جديدة ومعرفة آلية تراجع موثوقة**. بعد التحقق جهز **استبدال حاوية `otp` وحدها** بالاعتماد على ملفات Compose الأصلية والـoverride نفسه، مع صورة قديمة محددة كمرجع تراجع، ومع فحوص HTTP وسلامة العمل الحالي. لا تستخدم `docker compose down`، ولا تعِد إنشاء `enrollment` أو `https` أو PostgreSQL، ولا تمس FIN08 أو Identity. قبل أي استبدال فعلي قد يؤثر على خدمة SMS، أبلغ المستخدم بالعملية والأثر المحدود وخطة التراجع.
 
 **مهم:** لا يزال `PUBLIC_OTP=404` على الخدمة الحية حتى يثبت العكس. بعد تحديث OTP وبقاء `OTP_PUBLIC_REQUEST_ENABLED=false`، ينبغي أن يصبح الطلب العام غير المصرح `503` بدل `404`؛ هذا إثبات تفعيل المسار المغلق، لا إثبات إرسال رسالة.
 
@@ -96,8 +96,24 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File "$p\scripts\stage_existi
 
 1. يبدأ من هذا الملف و`docs/UNIFIED_AUTH_RELEASE_GATE_AR.md` وPR #71.
 2. يتحقق من أحدث Commit/CI قبل التعديل، مع المحافظة على الفرع الحالي وعدم إنشاء بديل.
-3. يطلب أو يقرأ **فقط ناتج** سكربت تجهيز OTP، ويكمل من آخر حالة مثبتة، دون إعادة خطوات Caddy الناجحة.
+3. يعد نتيجة `OTP_STAGE=PASS` مثبتة من سجل المستخدم، ثم يتحقق من هوية الصورة المبنية وتعارض وسمها مع معرّف الصورة القديمة، ويكمل من هنا دون إعادة خطوات Caddy أو التحضير.
 4. يوثّق كل عملية فعلية مع حالة `PASS/FAIL/BLOCKED` ودليل محدد، ويفصل بين تحديث الكود وبين الحالة الحية على Windows.
 5. يحفظ تحديثات التسليم في المستودع نفسه بعد كل نقطة قبول.
 
-**حالة التسليم عند الإغلاق:** `Caddy live=PASS`، `OTP image staging=NOT YET CONFIRMED`، `OTP live swap=NOT DONE`، `Public SMS=DISABLED`، `Actual Android Identity login=NOT YET PROVEN`.
+**حالة التسليم المحدثة:** `Caddy live=PASS`، `OTP source/Compose staged=PASS`، `OTP Docker build=PASS`، `New vs old image identity=NEEDS VERIFICATION`، `OTP live swap=NOT DONE`، `Public SMS=DISABLED`، `Actual Android Identity login=NOT YET PROVEN`.
+
+
+## 8. سجل الحالة بعد تسليم المستخدم (2026-11-21، بعد 22:38)
+
+```text
+BACKUP=F:\maqwatilink-fin25\deploy\fin25\otp-stage-backup.20261121-223808
+COMPOSE=PASS PUBLIC_OTP=DISABLED
+Docker build: FINISHED 12/12
+Export config: sha256:582401dd3b7b8408d15a815a1af2f0e0c929f8fe5cf59448e4010af6fc079b6b34
+Export manifest list: sha256:310d4573e701066e6bc0c95ceefe3cac4fa5d5e2d11b889715d175b3e705797c
+Naming: docker.io/library/sha256:784837db48892b78b2801fc027021c885fe9782dece551fd6ecf18719fde1a9e
+OTP_STAGE=PASS
+OLD_RUNNING_IMAGE=sha256:784837db48892b78b2801fc027021c885fe9782dece551fd6ecf18719fde1a9e
+```
+
+**تفسير مقيد بالأدلة:** التحضير ناجح، الحاوية العاملة لم تستبدل، ولا نستنتج هوية الصورة الجديدة من قيمة `Naming`. لا تُدخل أي بيانات أو مفاتيح من `.env` في المستودع أو المحادثة. الخطوة التالية هي فحص هوية صور Docker ومصدر تكوين البناء قراءةً فقط، قبل اتخاذ قرار التبديل.
