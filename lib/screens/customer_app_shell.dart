@@ -624,12 +624,10 @@ class _CustomerBalanceCard extends StatelessWidget {
           width: double.infinity,
           padding: const EdgeInsets.all(18),
           decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topRight,
-              end: Alignment.bottomLeft,
-              colors: [c.petrol, c.mint, c.cyan],
-            ),
-            borderRadius: BorderRadius.circular(22),
+            gradient: AppGradients.forCurrency(currency.name,
+              pink: Theme.of(context).scaffoldBackgroundColor == AppColors.pinkBackground ||
+                Theme.of(context).scaffoldBackgroundColor == const Color(0xFF251B30)),
+            borderRadius: BorderRadius.circular(30),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
