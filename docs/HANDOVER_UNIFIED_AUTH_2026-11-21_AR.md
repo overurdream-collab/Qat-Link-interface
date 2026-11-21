@@ -192,3 +192,16 @@ $p='F:\maqwati-integration-fin25-20261121';git -C $p pull --ff-only origin integ
 استبدل `YOUR-PERMANENT-HOST` بالعنوان **الفعلي** بعد ضبط DNS/Cloudflare، وليس بنطاق تجريبي. ظهور `EXTERNAL_HTTPS_ROUTING=PASS` يثبت الحافة والشهادة والتوجيه من جهاز Windows **فقط**، ولا يكفي وحده لإثبات WAF أو نجاح Android أو SMS.
 
 **حالة هذه المرحلة:** اختبار المحلية `5/5 PASS`، وتصحيح واجهة الدخول `COMMITTED`، وفحص HTTPS الخارجي `COMMITTED, NOT RUN (NO CONFIRMED HOST)`، واختبار Android من خارج الشبكة `BLOCKED`، وإرسال SMS العام `DISABLED`. تحقق من أحدث نتائج GitHub Actions بعد كل تعديل قبل أي بناء للتوزيع.
+
+## 11. حسم وضع Cloudflare الخارجي — من فحص المستخدم
+
+```text
+TUNNEL_STATUS=running
+TUNNEL_MODE=QUICK_TUNNEL
+NETWORKS=fin25-test-net
+CONFIG_MOUNTS=
+```
+
+نفق `fin25-cloudflare-tunnel` الحالي يتيح وصولًا خارجيًا تجريبيًا فقط بعنوان `*.trycloudflare.com` مؤقت؛ لا يمكن استخدامه في `MAQWATI_API_BASE_URL` لإصدار Android متصل ثابت. **لا تغيّر حاويات FIN25 أو Caddy أو OTP أو Identity أو FIN08 لإصلاح ذلك.** الانتقال هو إلى **Named Tunnel** بنطاق مملوك ومضاف إلى Cloudflare، وتوجيه `Published application` إلى خدمة Caddy الحالية على `fin25-test-net`، مع إعداد TLS origin موثوق إن أمكن. لا تشغّل نفقًا جديدًا مؤقتًا ولا تكشف token في ChatGPT أو GitHub.
+
+أُضيف إلى `.github/workflows/p0-auth-ci.yml` حاجز HTTPS فعلي للـAPK المتصل، يمنع نشره قبل نجاح نفس استجابات المسارات الخمسة على النطاق العام مع تحقق TLS (دون `-k`). **لا يوجد اسم نطاق معتمد أو Named Tunnel مثبت حتى الآن**. المطلوب من المالك تحديد نطاق Cloudflare الموجود أو إنشاء نطاق مناسب، ثم إعداد النفق الدائم من لوحة Cloudflare، ثم تحقق خارجي قبل تفعيل طلب SMS العام. لا تستنتج وجود WAF من استخدام Cloudflare وحده.
