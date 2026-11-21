@@ -310,6 +310,7 @@ class _CustomerBottomBar extends StatelessWidget {
           Positioned.fill(
             top: 10,
             child: Container(
+              key: const Key('customer_green_bottom_bar'),
               decoration: BoxDecoration(
                 color: c.mint,
                 border: Border(top: BorderSide(color: c.mint)),
