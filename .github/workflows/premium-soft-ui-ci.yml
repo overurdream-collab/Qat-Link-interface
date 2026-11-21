@@ -31,6 +31,7 @@ jobs:
           channel: stable
           cache: true
       - name: Prepare Android scaffold for source-only Flutter checkout
+        id: android_scaffold
         run: |
           if [ ! -f android/app/src/main/AndroidManifest.xml ]; then
             echo 'Android project missing; generating debug-only Flutter Android scaffold'
@@ -47,6 +48,7 @@ jobs:
           path.write_text(text, encoding='utf-8')
           PY
       - name: Resolve dependencies
+        id: dependencies
         run: |
           set -o pipefail
           flutter pub get 2>&1 | tee premium-pub.log
@@ -59,10 +61,14 @@ jobs:
           set -o pipefail
           flutter test 2>&1 | tee premium-tests.log
       - name: Build Android debug
+        id: android_build
+        if: ${{ !cancelled() && steps.android_scaffold.outcome == 'success' && steps.dependencies.outcome == 'success' }}
         run: |
           set -o pipefail
           flutter build apk --debug 2>&1 | tee premium-android.log
       - name: Package APK with provenance
+        id: android_package
+        if: ${{ !cancelled() && steps.android_build.outcome == 'success' }}
         run: |
           set -euo pipefail
           mkdir -p artifacts
@@ -70,7 +76,7 @@ jobs:
           (cd artifacts && sha256sum maqwati-premium-debug.apk > SHA256SUMS.txt)
           printf 'branch=%s\ncommit=%s\nbuild=debug-only\n' "$GITHUB_REF_NAME" "$GITHUB_SHA" > artifacts/BUILD_INFO.txt
       - name: Attach debug APK
-        if: success()
+        if: ${{ !cancelled() && steps.android_package.outcome == 'success' }}
         uses: actions/upload-artifact@v4
         with:
           name: maqwati-premium-debug-apk
