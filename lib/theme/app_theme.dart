@@ -56,8 +56,7 @@ abstract final class AppTheme {
       extensions: [c],
     );
     return base.copyWith(
-      // One typographic and contrast system for every screen. Green remains
-      // an accent for actions; financial status colors keep their semantics.
+      // Unified Cairo typography; finance statuses retain semantic colors.
       textTheme: base.textTheme.apply(
         fontFamily: 'Cairo',
         bodyColor: c.text,
@@ -81,7 +80,7 @@ abstract final class AppTheme {
         elevation: 0,
         margin: EdgeInsets.zero,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(30),
           side: BorderSide(color: c.cardBorder),
         ),
       ),
@@ -94,7 +93,7 @@ abstract final class AppTheme {
           vertical: 13,
         ),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(14),
+          borderRadius: BorderRadius.circular(28),
           borderSide: BorderSide(color: c.cardBorder),
         ),
         enabledBorder: OutlineInputBorder(
@@ -108,13 +107,12 @@ abstract final class AppTheme {
       ),
       filledButtonTheme: FilledButtonThemeData(
         style: FilledButton.styleFrom(
-          // Lime-green call-to-action from the reference. Dark text provides
-          // much stronger contrast than white on bright leaf green.
-          foregroundColor: pink ? scheme.onPrimary : AppColors.ink,
-          backgroundColor: pink ? scheme.primary : c.mint,
-          minimumSize: const Size(48, 46),
+          // Premium blue-violet / orchid buttons with legible light foreground.
+          foregroundColor: isDark ? c.background : Colors.white,
+          backgroundColor: c.petrol,
+          minimumSize: const Size(48, 48),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(28),
           ),
         ),
       ),
