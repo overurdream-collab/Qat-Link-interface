@@ -6,7 +6,7 @@ import '../services/fin25_otp_client.dart';
 import '../services/identity_session_client.dart';
 import 'identity_account_screen.dart';
 
-/// Verifies phone ownership for FIN25 testing. Does not authenticate an account.
+/// FIN25 phone verification and, when configured, a real Identity session.
 class Fin25OtpScreen extends StatefulWidget {
   const Fin25OtpScreen({super.key, required this.phone, required this.baseUri,
     this.httpClient, this.identityClient, this.requestedRole, this.displayName,
@@ -131,7 +131,7 @@ class _Fin25OtpScreenState extends State<Fin25OtpScreen> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(title: const Text('اختبار تحقق SMS')),
+    appBar: AppBar(title: Text(_sessionClient == null ? 'اختبار تحقق SMS' : 'التحقق من رقم الجوال')),
     body: SafeArea(child: Center(child: ConstrainedBox(
       constraints: const BoxConstraints(maxWidth: 460),
       child: ListView(padding: const EdgeInsets.all(22), children: [
@@ -143,9 +143,9 @@ class _Fin25OtpScreenState extends State<Fin25OtpScreen> {
         const SizedBox(height: 20),
         Text(_message, textAlign: TextAlign.center,
           key: const Key('otp_status')),
-        if (_challenge != null) ...[
+        if (_challenge != null && _sessionClient == null) ...[
           const SizedBox(height: 12),
-          const Text('معرّف الطلب للمتابعة (لا يحتوي على الرمز):'),
+          const Text('معرّف الطلب للاختبار (لا يحتوي على الرمز):'),
           SelectableText(_challenge!.requestId,
             key: const Key('otp_request_id'), textDirection: TextDirection.ltr),
         ],
