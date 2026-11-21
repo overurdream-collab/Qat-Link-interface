@@ -136,7 +136,10 @@ jobs:
           PREVIEW_HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
         run: |
           tag="green-preview-${PREVIEW_HEAD_SHA:0:12}"
-          apk="build/app/outputs/flutter-apk/app-release.apk#maqwati-green-independent-preview.apk"
+          # GitHub CLI uses path#label as an asset *label*, not its filename.
+          # Copy it to its final filename before upload so CI can verify it.
+          cp build/app/outputs/flutter-apk/app-release.apk maqwati-green-independent-preview.apk
+          apk="maqwati-green-independent-preview.apk"
           if gh release view "$tag" >/dev/null 2>&1; then
             echo "Release $tag already exists; uploading verified APK to it."
             gh release upload "$tag" "$apk" --clobber
