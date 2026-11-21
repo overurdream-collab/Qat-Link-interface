@@ -20,7 +20,7 @@ void main() {
       expect(link, findsOneWidget);
       await tester.ensureVisible(link);
       await tester.tap(link);
-      await tester.pump();
+      await tester.pumpAndSettle();
       expect(find.byType(VerifiedFin08OverviewScreen), findsOneWidget);
       expect(find.textContaining('أرصدة تجريبية'), findsNothing);
       // No local demo shell, ledger writes or pre-approved balance navigation.
