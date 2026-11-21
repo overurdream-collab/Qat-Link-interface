@@ -97,7 +97,7 @@ class AuthBrandHero extends StatelessWidget {
                     const SizedBox(height: 5),
                     Text(
                       'كل يوم حكاية',
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontFamily: 'Cairo', fontWeight: FontWeight.w900,
                         color: pink ? accent : const Color(0xFF5730C4), fontSize: 19,
                       ),
