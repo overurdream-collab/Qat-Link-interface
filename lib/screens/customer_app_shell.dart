@@ -299,7 +299,6 @@ class _CustomerBottomBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final darkDock = Theme.of(context).brightness == Brightness.dark;
     final navInk = context.premium.ink;
     return SizedBox(
       height: 83,
