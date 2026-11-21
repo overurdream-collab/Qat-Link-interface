@@ -12,6 +12,7 @@ import '../services/fin13_ledger_gateway.dart';
 import '../services/fin16_credit_gateway.dart';
 import '../services/movement_calculator.dart';
 import '../theme/app_colors.dart';
+import '../theme/premium_tokens.dart';
 import '../widgets/app_chrome.dart';
 import '../widgets/account_settings_sheet.dart';
 import '../widgets/home/hero_carousel.dart';
@@ -299,8 +300,7 @@ class _CustomerBottomBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final c = context.colors;
-    final navInk = Theme.of(context).brightness == Brightness.dark
-        ? c.text : AppColors.ink;
+    final navInk = PremiumTokens.ink;
     return SizedBox(
       height: 83,
       child: Stack(
@@ -312,9 +312,10 @@ class _CustomerBottomBar extends StatelessWidget {
             child: Container(
               key: const Key('customer_green_bottom_bar'),
               decoration: BoxDecoration(
-                color: c.mint,
-                border: Border(top: BorderSide(color: c.mint)),
-                boxShadow: AppColors.cardShadow,
+                color: Colors.white.withValues(alpha: .84),
+                borderRadius: BorderRadius.circular(32),
+                border: Border.all(color: Colors.white, width: 1.4),
+                boxShadow: PremiumTokens.floatingShadow,
               ),
             ),
           ),
@@ -325,9 +326,9 @@ class _CustomerBottomBar extends StatelessWidget {
               width: 84,
               height: 47,
               decoration: BoxDecoration(
-                color: c.mint,
+                color: const Color(0xFFE8E9FF),
                 borderRadius: const BorderRadius.vertical(top: Radius.circular(46)),
-                border: Border(top: BorderSide(color: c.mint)),
+                border: Border.all(color: Colors.white, width: 1.4),
               ),
             ),
           ),
@@ -373,7 +374,7 @@ class _CustomerBottomBar extends StatelessWidget {
               child: Tooltip(
                 message: 'استديو',
                 child: Material(
-                  color: c.petrol,
+                  color: PremiumTokens.violet,
                   elevation: 5,
                   shape: const CircleBorder(),
                   child: InkWell(
