@@ -108,7 +108,11 @@ class PremiumHomeHero extends StatelessWidget {
                           context.maqwatiMascotAsset,
                           alignment: Alignment.bottomCenter,
                           fit: BoxFit.contain,
-                          errorBuilder: (context, error, stackTrace) => const SizedBox.shrink(),
+                          errorBuilder: (context, error, stackTrace) => Image.asset(
+                            'assets/images/maqwati_approved_mascot.jpeg',
+                            alignment: Alignment.bottomCenter,
+                            fit: BoxFit.contain,
+                          ),
                         ),
                       ),
                     ],
