@@ -7,6 +7,7 @@ import '../theme/app_colors.dart';
 import '../widgets/auth/auth_brand_hero.dart';
 import 'registration_screen.dart';
 import '../services/fin25_otp_client.dart';
+import '../services/maqwati_api_config.dart';
 import 'fin25_otp_screen.dart';
 import 'fin25_pilot_setup_screen.dart';
 import 'notification_design_preview_screen.dart';
@@ -137,10 +138,17 @@ class _LoginScreenState extends State<LoginScreen> {
         SnackBar(content: Text(error.message)));
       return;
     }
-    // OTP login is independent of the unconnected four-digit PIN.
+    // One production API and one OTP+Identity flow. Never accept a manual
+    // tunnel URL or test gateway key for customer authentication.
+    final origin = MaqwatiApiConfig.origin;
+    if (origin == null) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('لم يُجهَّز عنوان خدمة تسجيل الدخول الآمن لهذا الإصدار.')));
+      return;
+    }
     Navigator.of(context).push(MaterialPageRoute<void>(
-      builder: (_) => Fin25PilotSetupScreen(
-        initialPhone: phone, enableIdentity: true),
+      builder: (_) => Fin25OtpScreen(
+        phone: phone, baseUri: origin, identityBaseUri: origin),
     ));
   }
 
