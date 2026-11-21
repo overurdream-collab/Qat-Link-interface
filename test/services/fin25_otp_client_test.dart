@@ -45,6 +45,23 @@ void main() {
     expect(paths, ['/v1/auth/otp/request', '/v1/auth/otp/verify']);
   });
 
+  test('configured mobile requests use only globally budgeted public endpoint', () async {
+    final paths = <String>[];
+    final client = MockClient((request) async {
+      paths.add(request.url.path);
+      return http.Response(jsonEncode({
+        'requestId': '11111111-1111-4111-8111-111111111111',
+        'expiresInSeconds': 300
+      }), 202);
+    });
+    addTearDown(client.close);
+    final api = Fin25OtpClient(
+      baseUri: Uri.parse('https://api.example.test/'),
+      httpClient: client, usePublicRequest: true);
+    await api.request('776644312');
+    expect(paths, ['/v1/auth/otp/public-request']);
+  });
+
   test('rate limit rejects excess requests', () async {
     final client = Fin25OtpClient(
       baseUri: Uri.parse('https://example.com/'),
