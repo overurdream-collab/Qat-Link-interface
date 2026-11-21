@@ -95,8 +95,10 @@ abstract final class AppTheme {
       ),
       filledButtonTheme: FilledButtonThemeData(
         style: FilledButton.styleFrom(
-          foregroundColor: scheme.onPrimary,
-          backgroundColor: scheme.primary,
+          // Lime-green call-to-action from the reference. Dark text provides
+          // much stronger contrast than white on bright leaf green.
+          foregroundColor: pink ? scheme.onPrimary : AppColors.ink,
+          backgroundColor: pink ? scheme.primary : c.mint,
           minimumSize: const Size(48, 46),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
