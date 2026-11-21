@@ -52,3 +52,11 @@ Keep the PR as **draft**. Do not merge into `main` or the green branch until all
 - Runner diagnosis: [Actions #44889771450](https://github.com/overurdream-collab/Qat-Link-interface/actions/runs/44889771450) and [#44889854217](https://github.com/overurdream-collab/Qat-Link-interface/actions/runs/44889854217) report **both** simple shell-only `runner-diagnostic` and Flutter job failure without any step logs. Existing [issue #69](https://github.com/overurdream-collab/Qat-Link-interface/issues/69) updated with evidence. Do not attribute this to Flutter code without a started runner and logs.
 - Fallback verification entry point (Windows): `scripts/premium-ui-verify.ps1`. Must execute on a trusted Flutter-enabled machine and share real test/build results before approval.
 - Pending: dedicated recolored approved mascot asset, pixel-perfect screen review, verified OTP/session and support integrations, a green Android build and successful tests.
+
+## Extended screen pass
+- Login/registration masthead now responsive in RTL; customer profile details and assistant analytical panels use frosted surfaces.
+- Customer navigation and merchant navigation support the dark premium palette, and the studio label is `استديو`.
+- Customer per-currency wallets use separated YER/SAR/USD gradients; merchant primary value uses approved net. If that net is negative, the card explicitly says `رصيد دائن لصالح العميل`.
+- Merchant customer list and movement filter header use shared premium typography/spacing; no financial services modified.
+- Local Windows build fallback in `scripts/premium-ui-verify.ps1` is **provided but not executed** in this environment.
+- [Issue #69](https://github.com/overurdream-collab/Qat-Link-interface/issues/69) remains the blocker: simple runner shell diagnostics fail independently from Flutter, with null job steps and missing logs. Root cause awaits runner/billing/admin investigation. Do not merge while red.
