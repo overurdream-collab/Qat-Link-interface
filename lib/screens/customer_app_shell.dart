@@ -104,10 +104,24 @@ class _CustomerAppShellState extends State<CustomerAppShell> {
   }
 
   void _settings() {
+    // Show only the authenticated customer's own profile. Preview must
+    // never populate the settings sheet with another customer's data.
+    CustomerModel? profile;
+    if (_canViewPrivateData) {
+      for (final customer in _state.customers.value) {
+        if (customer.id == widget.customerId) {
+          profile = customer;
+          break;
+        }
+      }
+    }
+    final addressValue = profile?.profileData['address'];
     AccountSettingsSheet.open(
       context,
-      accountName: widget.customerName,
+      accountName: profile?.name ?? widget.customerName,
       roleLabel: 'العميل',
+      phone: profile?.phone,
+      address: addressValue is String ? addressValue : null,
       onChangeTheme: widget.onToggleTheme,
     );
   }
