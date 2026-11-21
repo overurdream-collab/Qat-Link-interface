@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - feat/maqwati-premium-soft-ui-20261121
+  pull_request:
+    branches:
+      - feat/maqwati-green-identity-isolated-20261121
   workflow_dispatch:
 
 permissions:
