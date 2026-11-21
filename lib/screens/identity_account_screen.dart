@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../widgets/auth/auth_brand_hero.dart';
 import '../services/identity_session_client.dart';
 import 'customer_updates_screen.dart';
+import 'verified_fin08_overview_screen.dart';
 
 /// Account session confirmation. Do not expose AppState's mock financial ledger.
 class IdentityAccountScreen extends StatelessWidget {
@@ -44,6 +45,15 @@ class IdentityAccountScreen extends StatelessWidget {
           ),
           const SizedBox(height: 8),
         ],
+        const SizedBox(height: 20),
+        FilledButton.icon(
+          key: const Key('open_verified_fin08_overview'),
+          onPressed: () => Navigator.of(context).push(
+            MaterialPageRoute<void>(
+              builder: (_) => VerifiedFin08OverviewScreen(session: session))),
+          icon: const Icon(Icons.cloud_done_outlined),
+          label: const Text('عرض بيانات حسابي الحقيقية'),
+        ),
         const SizedBox(height: 24),
         FilledButton.icon(
           key: const Key('identity_logout'),
