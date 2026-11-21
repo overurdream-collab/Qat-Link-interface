@@ -10,6 +10,7 @@ import '../theme/premium_tokens.dart';
 import '../widgets/app_chrome.dart';
 import '../widgets/finance_display.dart';
 import '../widgets/home/premium_home_hero.dart';
+import '../widgets/home/hero_carousel.dart';
 import '../widgets/home/new_currency_card.dart';
 import 'merchant_approval_center_screen.dart';
 
@@ -100,6 +101,8 @@ class _HomeScreenState extends State<HomeScreen> {
           padding: const EdgeInsets.fromLTRB(14, 16, 14, 24),
           children: [
             const PremiumHomeHero(),
+            const SizedBox(height: 12),
+            const HeroCarousel(),
             const SizedBox(height: 21),
             const AppSectionTitle(title: 'أرصدة المتجر'),
             const SizedBox(height: 10),
