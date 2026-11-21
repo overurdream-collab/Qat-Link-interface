@@ -29,7 +29,6 @@ class _LoginScreenState extends State<LoginScreen> {
   static const _blue = Color(0xFF328BF5);
   static const _purple = Color(0xFF7939EA);
   static const _cyan = Color(0xFF73DCF6);
-  static const _ink = Color(0xFF111A4B);
   final _formKey = GlobalKey<FormState>();
   final _phone = TextEditingController();
   final _pin = TextEditingController();
@@ -60,8 +59,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final pink = Theme.of(context).colorScheme.primary != const Color(0xFF2E7D32) &&
-        Theme.of(context).colorScheme.primary == const Color(0xFF96295F);
+    final pink = Theme.of(context).scaffoldBackgroundColor == const Color(0xFFFFEFF6) ||
+        Theme.of(context).scaffoldBackgroundColor == const Color(0xFF251B30);
     final dark = widget.isDark;
     final primary = pink ? const Color(0xFFAD3379) : _purple;
     final secondary = pink ? const Color(0xFF8551B2) : _blue;
@@ -145,7 +144,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 labelText: 'رقم الجوال', hintText: '771234567',
                                 labelStyle: TextStyle(color: soft),
                                 prefixIcon: Padding(
-                                  padding: EdgeInsets.only(left: 13, top: 13),
+                                  padding: const EdgeInsets.only(left: 13, top: 13),
                                   child: Text('+967', textDirection: TextDirection.ltr,
                                     style: TextStyle(fontWeight: FontWeight.w700, color: text)),
                                 ),
