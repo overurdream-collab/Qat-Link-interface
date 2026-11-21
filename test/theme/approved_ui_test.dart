@@ -17,13 +17,13 @@ void main() {
   });
 
   test('Isolated Yemen Green daylight tokens are exact', () {
-    expect(AppColors.petrol, const Color(0xFF176B24));
-    expect(AppColors.mint, const Color(0xFF49B51B));
-    expect(AppColors.cyan, const Color(0xFF8ED847));
-    expect(AppColors.sea, const Color(0xFF63C525));
+    expect(AppColors.petrol, const Color(0xFF2E7D32));
+    expect(AppColors.mint, const Color(0xFF6CC04A));
+    expect(AppColors.cyan, const Color(0xFF8AD15A));
+    expect(AppColors.sea, const Color(0xFF4EAD3D));
     expect(AppColors.background, const Color(0xFFF7FBF5));
     expect(AppColors.card, const Color(0xFFFFFFFF));
-    expect(AppColors.cardBorder, const Color(0xFFE0ECDC));
+    expect(AppColors.cardBorder, const Color(0xFFE5E7EB));
     expect(AppColors.pale, const Color(0xFFEDF9E8));
   });
 
@@ -37,13 +37,13 @@ void main() {
 
   test('hero and currency gradients match the green reference palette', () {
     expect(AppGradients.hero.colors, const [
-      Color(0xFF176B24), Color(0xFF49B51B), Color(0xFFC5F1B1),
+      Color(0xFF8AD15A), Color(0xFF6CC04A), Color(0xFF4EAD3D),
     ]);
     expect(AppGradients.yer.colors, const [
-      Color(0xFF176B24), Color(0xFF49B51B), Color(0xFF63C525),
+      Color(0xFF2E7D32), Color(0xFF6CC04A), Color(0xFF4EAD3D),
     ]);
     expect(AppGradients.sar.colors, const [
-      Color(0xFF176B24), Color(0xFF8ED847), Color(0xFF49B51B),
+      Color(0xFF2E7D32), Color(0xFF8AD15A), Color(0xFF6CC04A),
     ]);
   });
 
