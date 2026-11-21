@@ -54,7 +54,7 @@ abstract final class AppTheme {
       brightness: scheme.brightness,
       scaffoldBackgroundColor: c.background,
       visualDensity: VisualDensity.standard,
-      extensions: [c],
+      extensions: [c, PremiumVisualPalette.select(pink: pink, dark: isDark)],
     );
     return base.copyWith(
       // One typographic and contrast system for every screen. Green remains
@@ -83,13 +83,13 @@ abstract final class AppTheme {
         margin: EdgeInsets.zero,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(28),
-          side: BorderSide(color: Colors.white.withValues(alpha: .8)),
+          side: BorderSide(color: c.cardBorder),
         ),
       ),
       dividerTheme: DividerThemeData(color: c.cardBorder, thickness: 1),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
-        fillColor: Colors.white.withValues(alpha: .75),
+        fillColor: isDark ? c.card : Colors.white.withValues(alpha: .85),
         contentPadding: const EdgeInsets.symmetric(
           horizontal: 14,
           vertical: 13,
@@ -112,7 +112,7 @@ abstract final class AppTheme {
           // Lime-green call-to-action from the reference. Dark text provides
           // much stronger contrast than white on bright leaf green.
           foregroundColor: Colors.white,
-          backgroundColor: pink ? scheme.primary : PremiumTokens.blue,
+          backgroundColor: c.petrol,
           minimumSize: const Size(48, 46),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(28),
