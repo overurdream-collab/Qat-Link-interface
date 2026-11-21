@@ -47,8 +47,8 @@ abstract final class AppTheme {
     );
     final base = ThemeData(
       useMaterial3: true,
-      fontFamily: 'NotoSansArabic',
-      fontFamilyFallback: const ['NotoSans'],
+      fontFamily: 'Cairo',
+      fontFamilyFallback: const ['NotoSansArabic', 'NotoSans'],
       colorScheme: scheme,
       brightness: scheme.brightness,
       scaffoldBackgroundColor: c.background,
