@@ -21,7 +21,7 @@ jobs:
         run: echo 'runner-online' && pwd && uname -a
   flutter-ui:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 60
     steps:
       - name: Checkout isolated UI branch
         uses: actions/checkout@v4
@@ -30,6 +30,20 @@ jobs:
         with:
           channel: stable
           cache: true
+      - name: Prepare Android scaffold for source-only Flutter checkout
+        run: |
+          if [ ! -f android/app/src/main/AndroidManifest.xml ]; then
+            echo 'Android project missing; generating debug-only Flutter Android scaffold'
+            flutter create --platforms=android --org com.example .
+          fi
+          test -f android/app/src/main/AndroidManifest.xml
+          python3 - <<'PY'
+          from pathlib import Path
+          path = Path('android/app/src/main/AndroidManifest.xml')
+          text = path.read_text(encoding='utf-8')
+          text = text.replace('android:label="qat_link"', 'android:label="مقوتي"')
+          path.write_text(text, encoding='utf-8')
+          PY
       - name: Resolve dependencies
         run: |
           set -o pipefail
