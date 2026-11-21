@@ -65,10 +65,25 @@ const api=http.createServer(async(req,res)=>{
   const {data,raw}=await json(req);
   const path=new URL(req.url,'http://localhost').pathname;
   if(req.method!=='POST')return reply(res,405,{error:'Method not allowed'});
-  if(path==='/v1/auth/otp/request'){
+  if(path==='/v1/auth/otp/request'||path==='/v1/auth/otp/public-request'){
+   const isPublic=path==='/v1/auth/otp/public-request';
+   // Operator's local endpoint remains separate. Public sends are disabled by
+   // default and have a PostgreSQL-serialized hourly global SMS budget.
+   if(isPublic){
+    assert(env.OTP_PUBLIC_REQUEST_ENABLED==='true',503,'Public OTP disabled');
+    const max=Number(env.OTP_PUBLIC_MAX_PER_HOUR);
+    assert(Number.isInteger(max)&&max>=1&&max<=120,503,'Public OTP budget not configured');
+   }
    assert(env.OTP_ENABLED==='true',503,'OTP disabled');
    const p=phone(data.phone),id=randomUUID(),code=String(randomInt(0,1000000)).padStart(6,'0');
    client=await pool.connect();await client.query('BEGIN');
+   if(isPublic){
+    // Lock independent of the per-phone lock: multiple phones cannot bypass
+    // the global budget concurrently. Phone/OTP details are never logged.
+    await client.query('SELECT pg_advisory_xact_lock($1)',[2026112101]);
+    const count=await client.query("SELECT count(*)::int AS n FROM fin25_otp_challenges WHERE created_at>now()-interval '1 hour'");
+    assert(count.rows[0].n<Number(env.OTP_PUBLIC_MAX_PER_HOUR),429,'SMS budget exhausted');
+   }
    await client.query('SELECT pg_advisory_xact_lock(hashtext($1))',[p]);
    const recent=await client.query("SELECT count(*)::int AS n,max(created_at) AS last FROM fin25_otp_challenges WHERE phone=$1 AND created_at>now()-interval '1 hour'",[p]);
    assert(recent.rows[0].n<5,429,'Too many requests');
