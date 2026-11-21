@@ -218,3 +218,26 @@ CONFIG_MOUNTS=
 - `OTP_PUBLIC_REQUEST_ENABLED` يبقى `false`. لا تنشر APK لاختبار إرسال الرمز بعد؛ سينجح الاتصال والرد 503 لكنه لن يرسل SMS، وهذا مقصود. فتح SMS يتطلب ضوابط إضافية؛ Funnel وحده ليس جدار WAF.
 
 **ملاحظة واقعية مهمة:** لم ننفذ السكربت على Windows من هنا، ولم نتحقق أن Tailscale مُثبت أو أن الحساب مسجل؛ لا تدّعِ نجاح HTTPS العام بعد. مسار الاستئناف: تحديث مجلد GitHub المحلي وتشغيل الفحص المسبق وتوثيق نتيجته، ثم تفعيل Funnel بعد تحقق شروط الأمان.
+
+## 13. Tailscale Funnel فعلي — نجاح التوجيه الخارجي 5/5
+
+أثبت المستخدم بعد تثبيت Tailscale وتفعيل Funnel القائم:
+```text
+Funnel on: https://desktop-3jc03si.tail0e4691.ts.net
+/ proxy https+insecure://127.0.0.1:8443
+HEALTH_HTTP=200
+PASS /healthz HTTP=200 EXPECTED=200
+PASS /v1/identity/me HTTP=401 EXPECTED=401
+PASS /v1/internal/otp/proof HTTP=404 EXPECTED=404
+PASS /v1/auth/otp/request HTTP=403 EXPECTED=403
+PASS /v1/auth/otp/public-request HTTP=503 EXPECTED=503
+EXTERNAL_HTTPS_ROUTING=PASS (WAF and real SMS still NOT proven)
+```
+
+**النتيجة:** عنوان HTTPS من Tailscale مثبت أنه يعمل من جهاز Windows باستخدام شهادة عامة موثوقة، مع إغلاق OTP العام. هذا **نطاق تجريبي مرتبط بالجهاز** وليس نظامًا متاحًا 24/7؛ يجب استمرار تشغيل Windows وTailscale Funnel. لا WAF مثبت ولا إرسال SMS فعلي أو مصادقة كاملة عبر Android حتى الآن. لا تغير Docker أو Caddy أو Identity أو FIN08 أو إعدادات SSL المحلية عند استكماله.
+
+أضيف إلى `.github/workflows/p0-auth-ci.yml` إدخال تشغيل يدوي `workflow_dispatch.inputs.api_origin` لتجميع **APK debug واحد متصل** بكتابة العنوان `https://desktop-3jc03si.tail0e4691.ts.net` فقط أثناء التشغيل؛ لا حاجة إلى وضع العنوان في إعداد دائم بالمستودع. يشترط إنشاء artifact `maqwati-unified-login-apk` اجتياز فحص TLS العام والمسارات الخمسة من GitHub Actions. **إرسال SMS العام لا يزال مغلقًا، ولذلك فإن APK المتصل لا يثبت الدخول الكامل بعد.**
+
+بعد دمج أو سحب هذا التعديل، تشغيل العمل من صفحة GitHub Actions الخاصة بـ`P0 auth integration safety checks` → `Run workflow` → اختيار الفرع `integration/fin25-identity-consolidation-20261121` → إدخال `api_origin` المذكور → `Run workflow`. انتظر نجاح اختبار Android والمصدر الخارجي قبل تنزيل artifact. **لم يُنفذ هذا التشغيل اليدوي بعد من هذه الجلسة ولا يجوز الادعاء بأن APK موجود قبل ظهور الـartifact.**
+
+الحالة: `LOCAL=5/5 PASS`؛ `EXTERNAL_TAILSCALE=5/5 PASS`؛ `PUBLIC_OTP=DISABLED/503`؛ `CONNECTED_APK=NOT YET BUILT VIA MANUAL ACTION`؛ `REAL_PHONE_LOGIN=NOT PROVEN`.
