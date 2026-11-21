@@ -300,7 +300,7 @@ class _CustomerBottomBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final c = context.colors;
     final navInk = Theme.of(context).brightness == Brightness.dark
-        ? c.text : AppColors.ink;
+        ? c.text : c.petrol;
     return SizedBox(
       height: 83,
       child: Stack(
@@ -312,8 +312,8 @@ class _CustomerBottomBar extends StatelessWidget {
             child: Container(
               key: const Key('customer_green_bottom_bar'),
               decoration: BoxDecoration(
-                color: c.mint,
-                border: Border(top: BorderSide(color: c.mint)),
+                color: c.card,
+                border: Border(top: BorderSide(color: c.cardBorder)),
                 boxShadow: AppColors.cardShadow,
               ),
             ),
@@ -325,9 +325,9 @@ class _CustomerBottomBar extends StatelessWidget {
               width: 84,
               height: 47,
               decoration: BoxDecoration(
-                color: c.mint,
+                color: c.card,
                 borderRadius: const BorderRadius.vertical(top: Radius.circular(46)),
-                border: Border(top: BorderSide(color: c.mint)),
+                border: Border(top: BorderSide(color: c.cardBorder)),
               ),
             ),
           ),
