@@ -37,6 +37,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final _phone = TextEditingController();
   final _pin = TextEditingController();
   bool _showPin = false;
+  bool _rememberMe = false;
 
   @override
   void dispose() {
@@ -87,23 +88,52 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: IconButton(
-                      tooltip: widget.isDark
-                          ? 'الوضع النهاري'
-                          : 'الوضع الليلي',
-                      onPressed: widget.onToggleTheme,
-                      icon: Icon(
-                        widget.isDark
-                            ? Icons.light_mode_outlined
-                            : Icons.dark_mode_outlined,
-                        color: c.petrol,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Tooltip(
+                        message: 'اللغة العربية',
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 13, vertical: 9,
+                          ),
+                          decoration: BoxDecoration(
+                            color: context.premium.surface,
+                            borderRadius: BorderRadius.circular(27),
+                            border: Border.all(color: context.premium.outline),
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Icon(Icons.language_rounded,
+                                  color: context.premium.accent, size: 19),
+                              const SizedBox(width: 7),
+                              Text('العربية',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w800,
+                                  color: context.premium.ink,
+                                )),
+                              const SizedBox(width: 4),
+                              Icon(Icons.keyboard_arrow_down_rounded,
+                                  color: context.premium.accent, size: 19),
+                            ],
+                          ),
+                        ),
                       ),
-                    ),
+                      IconButton(
+                        tooltip: widget.isDark ? 'الوضع النهاري' : 'الوضع الليلي',
+                        onPressed: widget.onToggleTheme,
+                        icon: Icon(
+                          widget.isDark
+                              ? Icons.light_mode_outlined
+                              : Icons.dark_mode_outlined,
+                          color: c.petrol,
+                        ),
+                      ),
+                    ],
                   ),
                   const AuthBrandHero(),
-                  const SizedBox(height: 11),
+                  const SizedBox(height: 3),
                   Container(
                     padding: const EdgeInsets.fromLTRB(19, 18, 19, 19),
                     decoration: BoxDecoration(
@@ -129,7 +159,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           const SizedBox(height: 5),
                           Text(
-                            'أدخل رقم جوالك ورمز الدخول للمتابعة',
+                            'أدخل بيانات حسابك للمتابعة',
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               color: context.premium.muted, fontSize: 12,
@@ -145,8 +175,9 @@ class _LoginScreenState extends State<LoginScreen> {
                             autofillHints: const [AutofillHints.telephoneNumber],
                             decoration: const InputDecoration(
                               labelText: 'رقم الجوال',
-                              hintText: 'مثال: 771234567',
+                              hintText: '771234567',
                               prefixIcon: Icon(Icons.phone_android_rounded),
+                              suffixText: '+967',
                             ),
                             validator: AuthInputValidation.phone,
                           ),
@@ -167,7 +198,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               LengthLimitingTextInputFormatter(4),
                             ],
                             decoration: InputDecoration(
-                              labelText: 'كلمة المرور (رمز الدخول)',
+                              labelText: 'كلمة المرور',
                               hintText: '••••',
                               counterText: '',
                               prefixIcon: const Icon(
@@ -187,20 +218,37 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                             validator: AuthInputValidation.pin,
                           ),
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: TextButton(
-                              onPressed: () =>
-                                  _notConnected('استعادة رمز الدخول'),
-                              child: const Text('نسيت الرمز؟'),
-                            ),
+                          Row(
+                            children: [
+                              TextButton(
+                                key: const Key('login_forgot_password'),
+                                onPressed: () => _notConnected('استعادة كلمة المرور'),
+                                child: const Text('نسيت كلمة المرور؟'),
+                              ),
+                              const Spacer(),
+                              Text('تذكرني', style: TextStyle(
+                                color: context.premium.ink,
+                                fontWeight: FontWeight.w700,
+                              )),
+                              Checkbox(
+                                key: const Key('login_remember_me'),
+                                value: _rememberMe,
+                                activeColor: context.premium.accent,
+                                onChanged: (value) =>
+                                    setState(() => _rememberMe = value ?? false),
+                              ),
+                            ],
                           ),
                           const SizedBox(height: 12),
                           DecoratedBox(
                             decoration: BoxDecoration(
                               gradient: context.premium.action,
                               borderRadius: BorderRadius.circular(32),
-                              boxShadow: PremiumTokens.floatingShadow,
+                              boxShadow: [BoxShadow(
+                                color: context.premium.shadow,
+                                blurRadius: 22,
+                                offset: const Offset(0, 10),
+                              )],
                             ),
                             child: FilledButton.icon(
                             key: const Key('login_submit'),
@@ -251,27 +299,43 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                             ),
                             icon: const Icon(Icons.person_add_alt_rounded),
-                            label: const Text('إنشاء حساب',
+                            label: const Text('إنشاء حساب جديد',
                                 style: TextStyle(fontWeight: FontWeight.w800)),
                           ),
                           const SizedBox(height: 7),
-                          TextButton.icon(
-                            key: const Key('open_customer_preview'),
-                            onPressed: widget.onOpenCustomerPreview,
-                            icon: const Icon(Icons.visibility_outlined),
-                            label: const Text('معاينة واجهات العميل'),
-                          ),
-                          if (widget.onOpenMerchantPreview != null)
-                            TextButton.icon(
-                              key: const Key('open_merchant_preview'),
-                              onPressed: widget.onOpenMerchantPreview,
-                              icon: const Icon(Icons.storefront_outlined),
-                              label: const Text('معاينة واجهات التاجر'),
-                            ),
-                          if (widget.onOpenMerchantPreview != null)
-                            Text('المعاينة تجريبية فقط؛ لا تسمح بالدخول إلى الحسابات أو اعتماد المبالغ.',
+                          ExpansionTile(
+                            title: Text(
+                              'معاينة الواجهات التجريبية',
+                              style: TextStyle(
+                                color: context.premium.muted,
+                                fontSize: 11,
+                              ),
                               textAlign: TextAlign.center,
-                              style: TextStyle(fontSize: 10, color: context.premium.muted)),
+                            ),
+                            tilePadding: EdgeInsets.zero,
+                            childrenPadding: EdgeInsets.zero,
+                            children: [
+                              TextButton.icon(
+                                key: const Key('open_customer_preview'),
+                                onPressed: widget.onOpenCustomerPreview,
+                                icon: const Icon(Icons.visibility_outlined),
+                                label: const Text('معاينة واجهات العميل'),
+                              ),
+                              if (widget.onOpenMerchantPreview != null)
+                                TextButton.icon(
+                                  key: const Key('open_merchant_preview'),
+                                  onPressed: widget.onOpenMerchantPreview,
+                                  icon: const Icon(Icons.storefront_outlined),
+                                  label: const Text('معاينة واجهات التاجر'),
+                                ),
+                              Text(
+                                'المعاينة تجريبية فقط؛ لا تسمح بالدخول إلى الحسابات أو اعتماد المبالغ.',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(fontSize: 10,
+                                    color: context.premium.muted),
+                              ),
+                            ],
+                          ),
                         ],
                       ),
                     ),
