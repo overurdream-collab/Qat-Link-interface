@@ -241,3 +241,19 @@ EXTERNAL_HTTPS_ROUTING=PASS (WAF and real SMS still NOT proven)
 بعد دمج أو سحب هذا التعديل، تشغيل العمل من صفحة GitHub Actions الخاصة بـ`P0 auth integration safety checks` → `Run workflow` → اختيار الفرع `integration/fin25-identity-consolidation-20261121` → إدخال `api_origin` المذكور → `Run workflow`. انتظر نجاح اختبار Android والمصدر الخارجي قبل تنزيل artifact. **لم يُنفذ هذا التشغيل اليدوي بعد من هذه الجلسة ولا يجوز الادعاء بأن APK موجود قبل ظهور الـartifact.**
 
 الحالة: `LOCAL=5/5 PASS`؛ `EXTERNAL_TAILSCALE=5/5 PASS`؛ `PUBLIC_OTP=DISABLED/503`؛ `CONNECTED_APK=NOT YET BUILT VIA MANUAL ACTION`؛ `REAL_PHONE_LOGIN=NOT PROVEN`.
+
+## 14. تم تنفيذ بناء APK المتصل بنجاح عبر GitHub (21 نوفمبر 2026)
+
+**بناء مثبت، وليس مجرد أمر أو خطة:**
+- GitHub Actions **push run #44946452032** على commit `5eafee1db72a82e04d234a8b699e23ad3faa608e`.
+- مهمة `android-compile=success` وجميع مهام Workflow نفسه `success`.
+- ضمن مهمة Android نجحت صراحة: `Validate configured public HTTPS origin`؛ `Check public TLS and unified routes before building a connected APK`؛ `Build the only connected login APK`؛ `Verify single-origin connected APK signature`؛ `Publish one unified Maqwati login APK`.
+- artifact حقيقي موجود: `maqwati-unified-login-apk`، ID `14723263481`، أرشيف ZIP حجمه `79,569,717` بايت، المعرّف المشفّر للـZIP `sha256:60c7cc6a8a62170b47149c094cd5e441e462ff688e089468fc45640bbcde947a`، ينتهي احتفاظ GitHub به في **28 نوفمبر 2026**.
+- رابط التنزيل من GitHub (يلزم صلاحية المستودع): `https://github.com/overurdream-collab/Qat-Link-interface/actions/runs/44946452032/artifacts/14723263481`.
+- عنوان `MAQWATI_API_BASE_URL` الذي استُخدم في هذا التشغيل: `https://desktop-3jc03si.tail0e4691.ts.net`، ولم يضاف إلى المصدر الثابت للتطبيق.
+- تم حذف التفعيل المؤقت الخاص برسالة Commit `[build-tsnet-apk]` من Workflow بعد نجاح البناء، مع الإبقاء على خيار `workflow_dispatch.inputs.api_origin` لأي بناء مستقبلي يُشغل يدويًا. آخر Commit للرجوع إلى التكوين الاعتيادي `11ae08ab054e41034582c4d031a0f45e3c548481`.
+- ملاحظة: تشغيل `pull_request` لنفس commit #44946456019 نجح لكن تخطى خطوات البناء المتصل؛ نجاح Artifact أعلاه من تشغيل **push #44946452032** ولا يجوز الخلط بينهما.
+
+**قرار المرحلة:** تم **تسليم APK تجريبي متصل** للخادم العام بنجاح من GitHub. لم يجربه المستخدم على الهاتف بعد؛ خدمة `OTP_PUBLIC_REQUEST_ENABLED=false` متعمدة ومثبتة بـ503، لذلك لن يستطيع طلب إرسال SMS من التطبيق في الحالة الحالية. لا تعلن أن دورة الدخول الفعلية أو تفعيل حساب مالي قد نجحا.
+
+**العمل القادم:** تثبيت APK على هاتف Android، اختبار الوصول والاستجابة fail-closed؛ قبل السماح بأي إرسال SMS عام يجب حماية الإساءة (WAF أو طبقة حماية فعلية أخرى، سياسة تكلفة وحدود عددية ومراقبة)، ثم اختبار رسالة واحدة ورمز واحد وإثبات Identity JWT و`/me` تحت رقابة المستخدم. لا تغيّر Docker أو Tailscale Funnel أو OTP image بلا دليل جديد.
