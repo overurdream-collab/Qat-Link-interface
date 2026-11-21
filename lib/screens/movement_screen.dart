@@ -61,14 +61,6 @@ class _MerchantMovementsTabState extends State<MerchantMovementsTab> {
     });
   }
 
-  void _notice(String title) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('$title — يتطلب ربط خدمة التقارير والصلاحيات.'),
-      ),
-    );
-  }
-
   static String _date(DateTime date) {
     final day = date.day.toString().padLeft(2, '0');
     final month = date.month.toString().padLeft(2, '0');
