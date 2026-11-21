@@ -216,6 +216,11 @@ jobs:
           cp deploy/p0-identity/identity.db.env.example deploy/p0-identity/identity.db.env
           docker compose -f deploy/p0-identity/compose.yml --env-file deploy/p0-identity/identity.runtime.env config --quiet
           rm deploy/p0-identity/identity.runtime.env deploy/p0-identity/identity.db.env
+      - name: Parse the EXISTING unified FIN25 Caddy ingress (no deployment)
+        run: |
+          docker run --rm \
+            -v "$PWD/deploy/fin25/Caddyfile:/etc/caddy/Caddyfile:ro" \
+            caddy:2-alpine caddy adapt --config /etc/caddy/Caddyfile > /dev/null
       - name: Validate isolated Caddy Android login pilot with ephemeral gate key
         run: |
           docker run --rm -e PILOT_KEY=0123456789abcdef0123456789abcdef \
