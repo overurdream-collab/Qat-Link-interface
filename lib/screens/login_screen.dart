@@ -79,7 +79,25 @@ class _LoginScreenState extends State<LoginScreen> {
       backgroundColor: context.colors.background,
       body: Container(
         decoration: BoxDecoration(gradient: context.premium.canvas),
-        child: SafeArea(
+        child: Stack(
+          children: [
+            Positioned.fill(
+              child: Align(
+                alignment: Alignment.bottomCenter,
+                child: IgnorePointer(
+                  child: SizedBox(
+                    height: 90,
+                    width: double.infinity,
+                    child: CustomPaint(
+                      painter: _ApprovedLoginWavesPainter(
+                        pink: context.premium.accent == const Color(0xFFAD3379),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.fromLTRB(18, 12, 18, 26),
           child: Center(
@@ -369,7 +387,62 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         ),
         ),
+          ],
+        ),
       ),
     );
   }
+}
+
+/// Decoration only: the two blue-lilac waves on the approved login reference.
+/// Isolated from the interactive fields and from all financial state.
+class _ApprovedLoginWavesPainter extends CustomPainter {
+  const _ApprovedLoginWavesPainter({required this.pink});
+  final bool pink;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final back = Path()
+      ..moveTo(0, size.height * .27)
+      ..cubicTo(size.width * .24, -size.height * .12,
+          size.width * .38, size.height * 1.10,
+          size.width * .67, size.height * .52)
+      ..cubicTo(size.width * .83, size.height * .11,
+          size.width * .94, size.height * .14,
+          size.width, size.height * .37)
+      ..lineTo(size.width, size.height)
+      ..lineTo(0, size.height)
+      ..close();
+    final front = Path()
+      ..moveTo(0, size.height * .72)
+      ..cubicTo(size.width * .23, size.height * .35,
+          size.width * .36, size.height * 1.28,
+          size.width * .56, size.height * .80)
+      ..cubicTo(size.width * .79, size.height * .21,
+          size.width * .89, size.height * .61,
+          size.width, size.height * .57)
+      ..lineTo(size.width, size.height)
+      ..lineTo(0, size.height)
+      ..close();
+    canvas.drawPath(
+      back,
+      Paint()..shader = LinearGradient(
+        colors: pink
+            ? const [Color(0xFFEDB2E2), Color(0xFFCD9DF5), Color(0xFFF5C6E1)]
+            : const [Color(0xFFBA8CF5), Color(0xFF8F80F6), Color(0xFF82CBFF)],
+      ).createShader(Offset.zero & size),
+    );
+    canvas.drawPath(
+      front,
+      Paint()..shader = LinearGradient(
+        colors: pink
+            ? const [Color(0xFFCBA1FB), Color(0xFFDE9DDE), Color(0xFFE9B7F5)]
+            : const [Color(0xFFE1B6FB), Color(0xFFA279F9), Color(0xFF70CAFA)],
+      ).createShader(Offset.zero & size),
+    );
+  }
+
+  @override
+  bool shouldRepaint(covariant _ApprovedLoginWavesPainter oldDelegate) =>
+      pink != oldDelegate.pink;
 }
