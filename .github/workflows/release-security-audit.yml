@@ -48,6 +48,26 @@ jobs:
             gh issue create --repo "$REPO" --title "$title" --body "A security gate failed on commit \`$SHA\`. [Private CI run]($RUN_URL). Do not paste raw production logs, authorization headers, phone numbers or financial data into this issue."
           fi
 
+  flutter-security:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - name: Resolve Flutter dependencies
+        run: flutter pub get
+      - name: Analyze Flutter security and UI changes
+        run: flutter analyze --no-fatal-infos
+      - name: Test privacy-safe crash diagnostics
+        run: flutter test test/services/app_incident_recorder_test.dart
+      - name: Full Flutter regression
+        run: flutter test
+
   codeql-javascript:
     runs-on: ubuntu-latest
     timeout-minutes: 30
