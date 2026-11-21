@@ -27,6 +27,15 @@
  handle @identity {
    reverse_proxy identity:8090
  }
+ # FIN08 read-only routes, forwarded via existing Identity service;
+ # POST/PUT/DELETE finance paths are NOT exposed.
+ @financeRead {
+   method GET
+   path /v1/merchant/contacts /v1/merchant/contacts/*/claims /v1/merchant/claims/summary /v1/customer/relationships /v1/customer/previous-claims
+ }
+ handle @financeRead {
+   reverse_proxy identity:8090
+ }
  @otp path /v1/gateway/poll /v1/gateway/result /v1/auth/otp/verify
  handle @otp {
    reverse_proxy otp:8083
