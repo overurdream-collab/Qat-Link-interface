@@ -42,12 +42,13 @@ class NewCurrencyCard extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(17, 16, 17, 17),
       decoration: BoxDecoration(
         gradient: _gradient,
-        borderRadius: BorderRadius.circular(22),
+        borderRadius: BorderRadius.circular(32),
+        border: Border.all(color: Colors.white.withValues(alpha: .65), width: 1.5),
         boxShadow: [
           BoxShadow(
-            color: AppColors.petrol.withValues(alpha: .12),
-            blurRadius: 20,
-            offset: const Offset(0, 8),
+            color: AppColors.petrol.withValues(alpha: .22),
+            blurRadius: 28,
+            offset: const Offset(0, 14),
           ),
         ],
       ),
@@ -73,8 +74,8 @@ class NewCurrencyCard extends StatelessWidget {
                 height: 215, width: 215,
                 decoration: BoxDecoration(
                   border: Border.all(
-                    color: const Color(0x12FFFFFF),
-                    width: 47,
+                    color: const Color(0x30FFFFFF),
+                    width: 3,
                   ),
                   shape: BoxShape.circle,
                 ),
@@ -168,7 +169,7 @@ class NewCurrencyCard extends StatelessWidget {
                         strokeWidth: 9,
                         backgroundColor: Colors.white30,
                         valueColor: const AlwaysStoppedAnimation<Color>(
-                          Color(0xFFD5ECA6),
+                          Color(0xFFAEEBFF),
                         ),
                       ),
                     ),
@@ -216,9 +217,9 @@ class _MiniKpi extends StatelessWidget {
       constraints: const BoxConstraints(minHeight: 54),
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
       decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: .16),
+        color: Colors.white.withValues(alpha: .21),
         border: Border.all(color: Colors.white24),
-        borderRadius: BorderRadius.circular(13),
+        borderRadius: BorderRadius.circular(20),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
