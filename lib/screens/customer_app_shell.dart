@@ -300,7 +300,7 @@ class _CustomerBottomBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final darkDock = Theme.of(context).brightness == Brightness.dark;
-    final navInk = darkDock ? PremiumTokens.darkInk : PremiumTokens.ink;
+    final navInk = context.premium.ink;
     return SizedBox(
       height: 83,
       child: Stack(
@@ -312,7 +312,7 @@ class _CustomerBottomBar extends StatelessWidget {
             child: Container(
               key: const Key('customer_green_bottom_bar'),
               decoration: BoxDecoration(
-                color: darkDock ? const Color(0xFF292D55) : Colors.white.withValues(alpha: .84),
+                color: context.premium.surface,
                 borderRadius: BorderRadius.circular(32),
                 border: Border.all(color: Colors.white, width: 1.4),
                 boxShadow: PremiumTokens.floatingShadow,
@@ -326,7 +326,7 @@ class _CustomerBottomBar extends StatelessWidget {
               width: 84,
               height: 47,
               decoration: BoxDecoration(
-                color: darkDock ? const Color(0xFF373D6A) : const Color(0xFFE8E9FF),
+                color: context.premium.selected,
                 borderRadius: const BorderRadius.vertical(top: Radius.circular(46)),
                 border: Border.all(color: Colors.white, width: 1.4),
               ),
@@ -374,7 +374,7 @@ class _CustomerBottomBar extends StatelessWidget {
               child: Tooltip(
                 message: 'استديو',
                 child: Material(
-                  color: PremiumTokens.violet,
+                  color: context.premium.accent,
                   elevation: 5,
                   shape: const CircleBorder(),
                   child: InkWell(
@@ -634,9 +634,9 @@ class _CustomerBalanceCard extends StatelessWidget {
           padding: const EdgeInsets.all(18),
           decoration: BoxDecoration(
             gradient: switch (currency) {
-              CurrencyCode.yer => AppGradients.yer,
-              CurrencyCode.sar => AppGradients.sar,
-              CurrencyCode.usd => AppGradients.usd,
+              CurrencyCode.yer => context.premium.yer,
+              CurrencyCode.sar => context.premium.sar,
+              CurrencyCode.usd => context.premium.usd,
             },
             borderRadius: BorderRadius.circular(32),
             border: Border.all(color: Colors.white.withValues(alpha: .72), width: 1.4),
