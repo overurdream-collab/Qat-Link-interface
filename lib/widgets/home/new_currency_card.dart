@@ -10,6 +10,7 @@ class CurrencyCardData {
     required this.currency,
     required this.debts,
     this.balance,
+    this.isCredit = false,
     required this.payments,
     required this.pending,
     required this.collectionRate,
@@ -19,6 +20,7 @@ class CurrencyCardData {
   final String debts;
   /// Approved debts minus approved payments. Null preserves legacy callers.
   final String? balance;
+  final bool isCredit;
   final String payments;
   final String pending;
   final double collectionRate;
@@ -116,7 +118,9 @@ class NewCurrencyCard extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 8),
-                  Text(data.balance == null ? 'إجمالي الديون المعتمدة' : 'صافي الرصيد المعتمد',
+                  Text(data.balance == null
+                    ? 'إجمالي الديون المعتمدة'
+                    : data.isCredit ? 'رصيد دائن لصالح العميل' : 'صافي الرصيد المعتمد',
                     style: const TextStyle(fontSize: 11, color: Colors.white70)),
                   FittedBox(
                     fit: BoxFit.scaleDown,
