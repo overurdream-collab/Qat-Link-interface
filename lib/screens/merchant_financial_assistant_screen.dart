@@ -666,12 +666,11 @@ class _MerchantFinancialAssistantScreenState
       Container(
         padding: const EdgeInsets.all(13),
         decoration: BoxDecoration(
-          color: Theme.of(context).brightness == Brightness.dark
-              ? const Color(0xFF292D55)
-              : Colors.white.withValues(alpha: .73),
+          color: context.premium.surface,
           borderRadius: BorderRadius.circular(28),
           border: Border.all(color: c.cardBorder, width: 1.2),
-          boxShadow: PremiumTokens.floatingShadow),
+          boxShadow: [BoxShadow(color: context.premium.shadow,
+            blurRadius: 26, offset: const Offset(0, 12))]),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Row(children: [
             Icon(icon, size: 17, color: c.petrol),
