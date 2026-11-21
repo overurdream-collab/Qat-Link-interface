@@ -8,6 +8,7 @@ import '../services/app_state.dart';
 import 'customer_details_screen.dart';
 import 'merchant_pending_contact_details_screen.dart';
 import '../theme/app_colors.dart';
+import '../theme/premium_tokens.dart';
 import '../widgets/customers/customers_view_model.dart';
 import '../widgets/customers/merchant_debt_status_summary.dart';
 import '../widgets/finance_display.dart';
@@ -146,7 +147,7 @@ class _MerchantCustomersTabState extends State<MerchantCustomersTab> {
                   children: [
                     Text('العملاء', style: TextStyle(
                       fontWeight: FontWeight.w900, color: c.text, fontSize: 18)),
-                    Text('مقوتي لينك • العلاقات المعتمدة',
+                    Text('مقوتي • العلاقات المعتمدة',
                       style: TextStyle(color: c.muted, fontSize: 10)),
                   ],
                 )),
@@ -159,11 +160,11 @@ class _MerchantCustomersTabState extends State<MerchantCustomersTab> {
                 key: const Key('customers_add'),
                 onPressed: _openRequestModal,
                 style: FilledButton.styleFrom(
-                  backgroundColor: AppColors.petrol,
+                  backgroundColor: PremiumTokens.blue,
                   foregroundColor: Colors.white,
                   elevation: 2,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(13),
+                    borderRadius: BorderRadius.circular(25),
                   ),
                 ),
                 icon: const Icon(Icons.person_add_alt_1_rounded),

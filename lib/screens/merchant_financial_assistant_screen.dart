@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../models/app_models.dart';
 import '../services/app_state.dart';
 import '../theme/app_colors.dart';
+import '../theme/premium_tokens.dart';
 import '../widgets/finance_display.dart';
 
 enum _Period { daily, weekly, firstHalf, secondHalf, monthly }
@@ -664,10 +665,12 @@ class _MerchantFinancialAssistantScreenState
   Widget _card(AppThemeColors c, String title, IconData icon, Widget child) =>
       Container(
         padding: const EdgeInsets.all(13),
-        decoration: BoxDecoration(color: c.card,
-          borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: c.cardBorder),
-          boxShadow: AppColors.cardShadow),
+        decoration: BoxDecoration(
+          color: context.premium.surface,
+          borderRadius: BorderRadius.circular(28),
+          border: Border.all(color: c.cardBorder, width: 1.2),
+          boxShadow: [BoxShadow(color: context.premium.shadow,
+            blurRadius: 26, offset: const Offset(0, 12))]),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Row(children: [
             Icon(icon, size: 17, color: c.petrol),

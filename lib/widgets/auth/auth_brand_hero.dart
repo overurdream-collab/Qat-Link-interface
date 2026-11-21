@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 
-import '../../theme/app_colors.dart';
+import '../../theme/premium_tokens.dart';
 
-/// Dedicated green identity, inspired by the approved Yemeni mascot mockups.
-/// Uses actual Flutter text and controls, never a flattened image form.
-/// The portrait is the existing local mascot; high-resolution original
-/// replacement needs owner-asset verification in a separate change.
+/// Approved Maqwati login header, 2026-11-22.
+/// Character on the left, blue raised logotype and «كل يوم حكاية» on the right.
+/// No checkmark badge or extra circle above the app name.
 class AuthBrandHero extends StatelessWidget {
   const AuthBrandHero({super.key, this.compact = false});
 
@@ -13,147 +12,168 @@ class AuthBrandHero extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.colors;
-    final dark = Theme.of(context).brightness == Brightness.dark;
-    final imageSize = compact ? 70.0 : 106.0;
-
+    final visual = context.premium;
+    final height = compact ? 162.0 : 236.0;
     return Semantics(
       container: true,
-      label: 'مقوتي لينك، حلقة وصل بينك وبين عملائك',
-      child: Container(
-        height: compact ? 146 : 222,
-        width: double.infinity,
-        clipBehavior: Clip.antiAlias,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(27),
-          border: Border.all(color: colors.cardBorder),
-          color: colors.card,
-          boxShadow: AppColors.cardShadow,
-        ),
-        child: Stack(
-          children: [
-            PositionedDirectional(
-              start: -60,
-              top: -130,
-              child: Transform.rotate(
-                angle: -.22,
-                child: Container(
-                  width: 280,
-                  height: compact ? 185 : 210,
-                  decoration: BoxDecoration(
-                    color: dark
-                        ? colors.pale
-                        : const Color(0xFFD9F6C9),
-                    borderRadius: const BorderRadius.only(
-                      bottomLeft: Radius.circular(155),
-                      bottomRight: Radius.circular(115),
-                    ),
+      label: 'مقوتي، كل يوم حكاية',
+      child: SizedBox(
+        height: height,
+        child: LayoutBuilder(builder: (context, constraints) {
+          final artWidth = (constraints.maxWidth * .47)
+              .clamp(108.0, compact ? 156.0 : 204.0).toDouble();
+          return Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsetsDirectional.only(
+                    start: 0, end: 2, bottom: 27,
                   ),
-                ),
-              ),
-            ),
-            PositionedDirectional(
-              end: -36,
-              bottom: -60,
-              child: Container(
-                height: 130,
-                width: 190,
-                decoration: BoxDecoration(
-                  color: colors.pale.withValues(alpha: .65),
-                  borderRadius: const BorderRadius.all(Radius.elliptical(100, 65)),
-                ),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: 16,
-                vertical: compact ? 10 : 13,
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.max,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Expanded(
-                        child: FittedBox(
-                          fit: BoxFit.scaleDown,
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            'مقوتي لينك',
-                            style: TextStyle(
-                              color: colors.petrol,
-                              fontSize: compact ? 23 : 28,
-                              height: 1.15,
-                              fontWeight: FontWeight.w900,
-                            ),
-                            textDirection: TextDirection.rtl,
+                      _RaisedMaqwatiWordmark(compact: compact),
+                      SizedBox(height: compact ? 6 : 10),
+                      FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text(
+                          'كل يوم حكاية',
+                          key: const Key('approved_login_tagline'),
+                          textDirection: TextDirection.rtl,
+                          style: TextStyle(
+                            color: Theme.of(context).brightness == Brightness.dark
+                                ? const Color(0xFFD7B7FF)
+                                : const Color(0xFF5730C4),
+                            fontSize: compact ? 16 : 21,
+                            fontWeight: FontWeight.w900,
+                            height: 1.3,
                           ),
                         ),
                       ),
-                      const SizedBox(width: 6),
-                      Icon(
-                        Icons.spa_rounded,
-                        size: compact ? 21 : 26,
-                        color: colors.mint,
+                      const SizedBox(height: 6),
+                      Container(
+                        width: compact ? 94 : 132,
+                        height: 4,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(50),
+                          gradient: visual.action,
+                        ),
                       ),
                     ],
                   ),
-                  if (!compact)
-                    Text(
-                      'Muqawati Link',
-                      style: TextStyle(
-                        color: colors.muted,
-                        letterSpacing: 1.1,
-                        fontSize: 11,
-                      ),
-                    ),
-                  SizedBox(height: compact ? 5 : 8),
-                  Container(
-                    width: imageSize,
-                    height: imageSize,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: colors.pale,
-                      border: Border.all(color: colors.card, width: 4),
-                      boxShadow: const [
-                        BoxShadow(
-                          color: Color(0x25245819),
-                          blurRadius: 14,
-                          offset: Offset(0, 5),
-                        ),
-                      ],
-                    ),
-                    clipBehavior: Clip.antiAlias,
-                    child: Image.asset(
-                      'assets/images/maqwati_approved_mascot.jpeg',
-                      fit: BoxFit.cover,
-                      alignment: Alignment.topCenter,
-                      errorBuilder: (context, error, stackTrace) => Icon(
-                        Icons.account_circle_rounded,
-                        color: colors.petrol,
-                        size: imageSize * .75,
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: compact ? 4 : 9),
-                  Text(
-                    'حلقة وصل بينك وبين عملائك',
-                    textDirection: TextDirection.rtl,
-                    textAlign: TextAlign.center,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      color: colors.text,
-                      fontSize: compact ? 10.5 : 12,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                ],
+                ),
               ),
-            ),
-          ],
+              SizedBox(
+                width: artWidth,
+                height: height,
+                child: Stack(
+                  alignment: Alignment.bottomCenter,
+                  children: [
+                    Positioned(
+                      left: 10,
+                      bottom: compact ? 15 : 28,
+                      child: Container(
+                        width: artWidth * .87,
+                        height: artWidth * .87,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          gradient: LinearGradient(
+                            colors: [
+                              const Color(0xFFDAADFA).withValues(alpha: .78),
+                              const Color(0xFF82C9FF).withValues(alpha: .74),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    Positioned.fill(
+                      child: Image.asset(
+                        'assets/images/maqwati_approved_mascot.jpeg',
+                        fit: BoxFit.contain,
+                        alignment: Alignment.bottomCenter,
+                        errorBuilder: (context, error, stackTrace) =>
+                            const Icon(Icons.person_rounded,
+                                size: 86, color: PremiumTokens.violet),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          );
+        }),
+      ),
+    );
+  }
+}
+
+class _RaisedMaqwatiWordmark extends StatelessWidget {
+  const _RaisedMaqwatiWordmark({required this.compact});
+
+  final bool compact;
+
+  @override
+  Widget build(BuildContext context) {
+    final size = compact ? 30.0 : 39.0;
+    const title = 'مقوتي';
+    final base = TextStyle(
+      fontFamily: 'Cairo',
+      fontSize: size,
+      fontWeight: FontWeight.w900,
+      height: 1.45,
+      letterSpacing: -.8,
+    );
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    return Semantics(
+      label: title,
+      child: ExcludeSemantics(
+        child: FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              Transform.translate(
+                offset: const Offset(2.5, 5),
+                child: Text(title,
+                  textDirection: TextDirection.rtl,
+                  style: base.copyWith(
+                    color: const Color(0xFF171C98),
+                    shadows: const [
+                      Shadow(color: Color(0x6A2C2B9A),
+                          offset: Offset(1, 7), blurRadius: 7),
+                    ],
+                  ),
+                ),
+              ),
+              ShaderMask(
+                blendMode: BlendMode.srcIn,
+                shaderCallback: (bounds) => LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: isDark
+                      ? const [
+                          Color(0xFF8DEBFF),
+                          Color(0xFF268EFF),
+                          Color(0xFF174DCB),
+                        ]
+                      : const [
+                          Color(0xFF8CF6FF),
+                          Color(0xFF0FA7F9),
+                          Color(0xFF0752E6),
+                          Color(0xFF2533AE),
+                        ],
+                ).createShader(bounds),
+                child: Text(
+                  title,
+                  key: const Key('approved_blue_3d_maqwati_wordmark'),
+                  textDirection: TextDirection.rtl,
+                  style: base.copyWith(color: Colors.white),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

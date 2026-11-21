@@ -7,6 +7,7 @@ import 'package:image_picker/image_picker.dart';
 import '../models/app_models.dart';
 import '../services/app_state.dart';
 import '../theme/app_colors.dart';
+import '../theme/premium_tokens.dart';
 import '../widgets/customers/customer_statement_calculator.dart';
 import '../widgets/customers/customer_statement_pdf.dart';
 import '../widgets/finance_display.dart';
@@ -228,7 +229,7 @@ class _CustomerDetailsScreenState extends State<CustomerDetailsScreen> {
           color: c.pale,
           borderRadius: BorderRadius.circular(20),
         ),
-        child: Text('مقوتي لنك', style: TextStyle(
+        child: Text('مقوتي', style: TextStyle(
           color: c.petrol, fontSize: 10, fontWeight: FontWeight.w800,
         )),
       ),
@@ -237,10 +238,11 @@ class _CustomerDetailsScreenState extends State<CustomerDetailsScreen> {
 
   Widget _surface(AppThemeColors c, Widget child) => Container(
     decoration: BoxDecoration(
-      color: c.card,
-      borderRadius: BorderRadius.circular(17),
-      border: Border.all(color: c.cardBorder),
-      boxShadow: AppColors.cardShadow,
+      color: context.premium.surface,
+      borderRadius: BorderRadius.circular(28),
+      border: Border.all(color: context.premium.outline, width: 1.3),
+      boxShadow: [BoxShadow(color: context.premium.shadow, blurRadius: 26,
+          offset: const Offset(0, 12))],
     ),
     padding: const EdgeInsets.all(14),
     child: child,
