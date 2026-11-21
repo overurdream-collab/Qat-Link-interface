@@ -24,7 +24,7 @@ void main() {
   testWidgets('premium concept opens Arabic login with the mascot and tagline',
       (tester) async {
     await tester.pumpWidget(const MaqwatiUiPreview());
-    expect(find.text('مقوتي لينك'), findsOneWidget);
+    expect(find.byKey(const Key('approved_blue_3d_maqwati_wordmark')), findsOneWidget);
     expect(find.text('كل يوم حكاية'), findsOneWidget);
     expect(find.byKey(const Key('login_submit')), findsOneWidget);
     expect(find.byKey(const Key('login_phone')), findsOneWidget);
