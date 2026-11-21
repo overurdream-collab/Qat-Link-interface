@@ -10,6 +10,7 @@ import 'services/app_state.dart';
 import 'theme/app_colors.dart';
 import 'theme/app_theme.dart';
 import 'widgets/app_chrome.dart';
+import 'widgets/account_settings_sheet.dart';
 import 'widgets/customers/customer_invitation_sheet.dart';
 import 'widgets/quick_actions/quick_actions_sheet.dart';
 import 'models/app_models.dart';
@@ -187,52 +188,11 @@ class _MerchantAppShellState extends State<MerchantAppShell> {
   }
 
   void _showSettings() {
-    final c = context.colors;
-    showModalBottomSheet<void>(
-      context: context,
-      showDragHandle: true,
-      backgroundColor: c.card,
-      builder: (modalContext) => SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Align(
-                alignment: Alignment.centerRight,
-                child: Text('الضبط', style: TextStyle(
-                  fontSize: 18, color: c.petrol, fontWeight: FontWeight.w800)),
-              ),
-              ListTile(
-                leading: Icon(
-                  widget.isDark ? Icons.light_mode_outlined : Icons.dark_mode_outlined,
-                  color: c.petrol,
-                ),
-                title: Text(widget.isDark ? 'الوضع النهاري' : 'الوضع الليلي'),
-                onTap: () {
-                  Navigator.pop(modalContext);
-                  widget.onToggleTheme();
-                },
-              ),
-              if (widget.isFemale && widget.isPinkTheme &&
-                  widget.onUseBaseTheme != null)
-                ListTile(
-                  leading: Icon(Icons.palette_outlined, color: c.petrol),
-                  title: const Text('استخدام الثيم الأساسي'),
-                  subtitle: const Text('يمكنك تغيير اختيارك دون تغيير بيانات الجنس'),
-                  onTap: () {
-                    Navigator.pop(modalContext);
-                    widget.onUseBaseTheme?.call();
-                  },
-                ),
-              ListTile(
-                leading: Icon(Icons.info_outline, color: c.petrol),
-                title: const Text('واجهة أولية — بيانات الحساب غير متصلة'),
-              ),
-            ],
-          ),
-        ),
-      ),
+    AccountSettingsSheet.open(
+      context,
+      accountName: 'حساب التاجر',
+      roleLabel: 'التاجر',
+      onChangeTheme: widget.onToggleTheme,
     );
   }
 
