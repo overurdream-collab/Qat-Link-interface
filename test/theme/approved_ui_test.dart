@@ -16,34 +16,34 @@ void main() {
     }
   });
 
-  test('Yemen Modern Fintech daylight tokens are exact', () {
-    expect(AppColors.petrol, const Color(0xFF07575B));
-    expect(AppColors.mint, const Color(0xFF168E94));
-    expect(AppColors.cyan, const Color(0xFF63B5C2));
-    expect(AppColors.sea, const Color(0xFF438DB2));
-    expect(AppColors.background, const Color(0xFFF4F9F8));
+  test('Isolated Yemen Green daylight tokens are exact', () {
+    expect(AppColors.petrol, const Color(0xFF176B24));
+    expect(AppColors.mint, const Color(0xFF49B51B));
+    expect(AppColors.cyan, const Color(0xFF8ED847));
+    expect(AppColors.sea, const Color(0xFF63C525));
+    expect(AppColors.background, const Color(0xFFF7FBF5));
     expect(AppColors.card, const Color(0xFFFFFFFF));
-    expect(AppColors.cardBorder, const Color(0xFFD8E7E5));
-    expect(AppColors.pale, const Color(0xFFE3F3F0));
+    expect(AppColors.cardBorder, const Color(0xFFE0ECDC));
+    expect(AppColors.pale, const Color(0xFFEDF9E8));
   });
 
   test('approved night colors are exact', () {
-    expect(AppColors.darkPetrol, const Color(0xFFA2ECE2));
-    expect(AppColors.darkBackground, const Color(0xFF13212D));
-    expect(AppColors.darkCard, const Color(0xFF1D3140));
-    expect(AppColors.darkBorder, const Color(0xFF355060));
-    expect(AppColors.darkInk, const Color(0xFFEAF5FA));
+    expect(AppColors.darkPetrol, const Color(0xFFB4F28D));
+    expect(AppColors.darkBackground, const Color(0xFF15261B));
+    expect(AppColors.darkCard, const Color(0xFF203629));
+    expect(AppColors.darkBorder, const Color(0xFF45674B));
+    expect(AppColors.darkInk, const Color(0xFFF0FFE9));
   });
 
-  test('hero and currency gradients match the Yemen Modern Fintech palette', () {
+  test('hero and currency gradients match the green reference palette', () {
     expect(AppGradients.hero.colors, const [
-      Color(0xFF07575B), Color(0xFF168E94), Color(0xFFB4E2DE),
+      Color(0xFF176B24), Color(0xFF49B51B), Color(0xFFC5F1B1),
     ]);
     expect(AppGradients.yer.colors, const [
-      Color(0xFF07575B), Color(0xFF168E94), Color(0xFF438DB2),
+      Color(0xFF176B24), Color(0xFF49B51B), Color(0xFF63C525),
     ]);
     expect(AppGradients.sar.colors, const [
-      Color(0xFF07575B), Color(0xFF63B5C2), Color(0xFF168E94),
+      Color(0xFF176B24), Color(0xFF8ED847), Color(0xFF49B51B),
     ]);
   });
 
