@@ -292,14 +292,15 @@ class _CustomerBottomBar extends StatelessWidget {
   static const _items = <(String, IconData)>[
     ('الرئيسية', Icons.home_outlined),
     ('الحركة', Icons.receipt_long_outlined),
-    ('الاستوديو', Icons.photo_library_outlined),
+    ('استديو', Icons.photo_library_outlined),
     ('التجار', Icons.storefront_outlined),
     ('اكتشف', Icons.explore_outlined),
   ];
 
   @override
   Widget build(BuildContext context) {
-    final navInk = PremiumTokens.ink;
+    final darkDock = Theme.of(context).brightness == Brightness.dark;
+    final navInk = darkDock ? PremiumTokens.darkInk : PremiumTokens.ink;
     return SizedBox(
       height: 83,
       child: Stack(
@@ -311,7 +312,7 @@ class _CustomerBottomBar extends StatelessWidget {
             child: Container(
               key: const Key('customer_green_bottom_bar'),
               decoration: BoxDecoration(
-                color: Colors.white.withValues(alpha: .84),
+                color: darkDock ? const Color(0xFF292D55) : Colors.white.withValues(alpha: .84),
                 borderRadius: BorderRadius.circular(32),
                 border: Border.all(color: Colors.white, width: 1.4),
                 boxShadow: PremiumTokens.floatingShadow,
@@ -325,7 +326,7 @@ class _CustomerBottomBar extends StatelessWidget {
               width: 84,
               height: 47,
               decoration: BoxDecoration(
-                color: const Color(0xFFE8E9FF),
+                color: darkDock ? const Color(0xFF373D6A) : const Color(0xFFE8E9FF),
                 borderRadius: const BorderRadius.vertical(top: Radius.circular(46)),
                 border: Border.all(color: Colors.white, width: 1.4),
               ),
