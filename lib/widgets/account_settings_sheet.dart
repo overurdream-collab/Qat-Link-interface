@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import '../services/app_incident_recorder.dart';
 
 import '../theme/app_colors.dart';
 
@@ -98,6 +100,21 @@ class AccountSettingsSheet extends StatelessWidget {
               leading: Icon(Icons.shield_outlined, color: c.petrol),
               title: const Text('الخصوصية والأمان'),
               subtitle: const Text('لا تُعرض البيانات المالية إلا بصلاحيات وجلسة موثقة'),
+            ),
+            ListTile(
+              key: const Key('settings_diagnostics_export'),
+              leading: Icon(Icons.bug_report_outlined, color: c.petrol),
+              title: const Text('تقرير الأعطال'),
+              subtitle: const Text('نسخ رموز الأعطال والأوقات فقط، دون أرقام أو بيانات مالية. لا إرسال تلقائي.'),
+              onTap: () async {
+                await Clipboard.setData(ClipboardData(
+                  text: AppIncidentRecorder.exportSanitized(),
+                ));
+                if (!context.mounted) return;
+                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                  content: Text('تم نسخ تقرير الأعطال الآمن، ويمكنك مشاركته مع الدعم.'),
+                ));
+              },
             ),
             ListTile(
               key: const Key('settings_about'),
