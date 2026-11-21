@@ -5,6 +5,7 @@ import { Pool } from 'pg';
 import { createIdentityLogic, IdentityError } from './identity_logic.mjs';
 import { createFinanceProvisioner } from './identity_finance_provisioner.mjs';
 import { createIdentitySessionLimiter } from './identity_session_limiter.mjs';
+import { createIdentityFinanceReadProxy } from './identity_fin08_read_proxy.mjs';
 
 const env = process.env;
 const required = [
@@ -55,6 +56,7 @@ const logic = createIdentityLogic({
 // A conservative per-TCP-peer safety budget. An edge-level, distributed limiter is
 // still mandatory before public exposure; reverse proxies may share one peer IP.
 const sessionLimiter = createIdentitySessionLimiter();
+const financeRead = createIdentityFinanceReadProxy({fetchImpl: fetch, financeBaseUrl:env.FIN08_INTERNAL_BASE_URL});
 const respond=(res,status,value,extraHeaders={})=>{
   res.writeHead(status,{'content-type':'application/json; charset=utf-8',
     'cache-control':'no-store','x-content-type-options':'nosniff',...extraHeaders});
@@ -75,6 +77,16 @@ const api=createServer(async(req,res)=>{
     }
     if(req.method==='GET' && path==='/v1/identity/me')
       return respond(res,200,await logic.me(req.headers.authorization));
+    // Read-only financial data through the already-networked Identity service.
+    // Validate this session before calling FIN08; FIN08 also verifies its JWT.
+    if(req.method==='GET' &&
+      (path.startsWith('/v1/merchant/') || path.startsWith('/v1/customer/'))) {
+      const account=(await logic.me(req.headers.authorization)).account;
+      return respond(res,200,await financeRead({
+        method:req.method,url:req.url,
+        authorization:req.headers.authorization,account
+      }));
+    }
     if(req.method!=='POST' || path!=='/v1/identity/session') return respond(res,404,{error:'Not found'});
     if(req.headers['content-type']?.split(';')[0].trim()!=='application/json')
       return respond(res,415,{error:'JSON required'});
