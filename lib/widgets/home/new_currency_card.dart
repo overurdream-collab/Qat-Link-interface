@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../models/app_models.dart';
-import '../../theme/app_colors.dart';
+import '../../theme/premium_tokens.dart';
 import '../finance_display.dart';
 
 /// Data supplied by the existing approved-only financial read model.
@@ -9,6 +9,8 @@ class CurrencyCardData {
   const CurrencyCardData({
     required this.currency,
     required this.debts,
+    this.balance,
+    this.isCredit = false,
     required this.payments,
     required this.pending,
     required this.collectionRate,
@@ -16,6 +18,9 @@ class CurrencyCardData {
 
   final CurrencyCode currency;
   final String debts;
+  /// Approved debts minus approved payments. Null preserves legacy callers.
+  final String? balance;
+  final bool isCredit;
   final String payments;
   final String pending;
   final double collectionRate;
@@ -28,27 +33,27 @@ class NewCurrencyCard extends StatelessWidget {
 
   final CurrencyCardData data;
 
+  LinearGradient _gradient(BuildContext context) => switch (data.currency) {
+    CurrencyCode.yer => context.premium.yer,
+    CurrencyCode.sar => context.premium.sar,
+    CurrencyCode.usd => context.premium.usd,
+  };
+
   @override
   Widget build(BuildContext context) {
-    final isPink = Theme.of(context).scaffoldBackgroundColor == AppColors.pinkBackground ||
-        Theme.of(context).scaffoldBackgroundColor == const Color(0xFF251B30);
-    final gradient = switch (data.currency) {
-      CurrencyCode.yer => isPink ? AppGradients.pinkYer : AppGradients.yer,
-      CurrencyCode.sar => isPink ? AppGradients.pinkSar : AppGradients.sar,
-      CurrencyCode.usd => isPink ? AppGradients.pinkUsd : AppGradients.usd,
-    };
     return Container(
       height: 220,
       margin: const EdgeInsets.symmetric(horizontal: 4),
       padding: const EdgeInsets.fromLTRB(17, 16, 17, 17),
       decoration: BoxDecoration(
-        gradient: gradient,
-        borderRadius: BorderRadius.circular(30),
+        gradient: _gradient(context),
+        borderRadius: BorderRadius.circular(32),
+        border: Border.all(color: Colors.white.withValues(alpha: .65), width: 1.5),
         boxShadow: [
           BoxShadow(
-            color: Theme.of(context).colorScheme.primary.withValues(alpha: .17),
-            blurRadius: 20,
-            offset: const Offset(0, 8),
+            color: context.premium.shadow,
+            blurRadius: 28,
+            offset: const Offset(0, 14),
           ),
         ],
       ),
@@ -74,8 +79,8 @@ class NewCurrencyCard extends StatelessWidget {
                 height: 215, width: 215,
                 decoration: BoxDecoration(
                   border: Border.all(
-                    color: const Color(0x12FFFFFF),
-                    width: 47,
+                    color: const Color(0x30FFFFFF),
+                    width: 3,
                   ),
                   shape: BoxShape.circle,
                 ),
@@ -113,14 +118,15 @@ class NewCurrencyCard extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 8),
-                  const Text('إجمالي الديون المعتمدة', style: TextStyle(
-                    fontSize: 11, color: Colors.white70,
-                  )),
+                  Text(data.balance == null
+                    ? 'إجمالي الديون المعتمدة'
+                    : data.isCredit ? 'رصيد دائن لصالح العميل' : 'صافي الرصيد المعتمد',
+                    style: const TextStyle(fontSize: 11, color: Colors.white70)),
                   FittedBox(
                     fit: BoxFit.scaleDown,
                     alignment: Alignment.centerRight,
                     child: Text(
-                      data.debts,
+                      data.balance ?? data.debts,
                       style: const TextStyle(
                         color: Colors.white,
                         fontSize: 30,
@@ -169,7 +175,7 @@ class NewCurrencyCard extends StatelessWidget {
                         strokeWidth: 9,
                         backgroundColor: Colors.white30,
                         valueColor: const AlwaysStoppedAnimation<Color>(
-                          Color(0xFFFFFFFF),
+                          Color(0xFFAEEBFF),
                         ),
                       ),
                     ),
@@ -217,9 +223,9 @@ class _MiniKpi extends StatelessWidget {
       constraints: const BoxConstraints(minHeight: 54),
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
       decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: .16),
+        color: Colors.white.withValues(alpha: .21),
         border: Border.all(color: Colors.white24),
-        borderRadius: BorderRadius.circular(13),
+        borderRadius: BorderRadius.circular(20),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
