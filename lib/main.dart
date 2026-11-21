@@ -46,7 +46,7 @@ class _QatLinkAppState extends State<QatLinkApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       navigatorKey: _navigatorKey,
-      title: 'مقوتي لينك',
+      title: 'مقوتي',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.build(dark: false, pink: _pinkTheme),
       darkTheme: AppTheme.build(dark: true, pink: _pinkTheme),
