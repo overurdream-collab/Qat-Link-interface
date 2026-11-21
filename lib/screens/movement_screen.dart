@@ -226,11 +226,7 @@ class _MerchantMovementsTabState extends State<MerchantMovementsTab> {
                   ],
                 ),
               ),
-              IconButton(
-                tooltip: 'تصدير الحركة',
-                onPressed: () => _notice('تصدير الحركة'),
-                icon: Icon(Icons.file_download_outlined, color: c.petrol),
-              ),
+
             ],
           ),
           const SizedBox(height: 8),
