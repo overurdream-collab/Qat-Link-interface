@@ -3,21 +3,27 @@ import 'package:flutter/material.dart';
 /// Isolated Yemen Green visual concept, referencing the owner's mockups.
 /// Semantic money/status colors remain separate from the branding palette.
 abstract final class AppColors {
-  // Green reference identity: bright leaf-green actions and deep evergreen text.
-  static const Color petrol = Color(0xFF176B24);
-  static const Color mint = Color(0xFF49B51B);
-  static const Color cyan = Color(0xFF8ED847);
-  static const Color sea = Color(0xFF63C525);
-  static const Color ink = Color(0xFF12391E);
-  static const Color muted = Color(0xFF667B69);
+  // Owner-approved green identity (2026-11-21): gradient #8AD15A → #6CC04A → #4EAD3D.
+  // The green palette is independent of the existing turquoise and female pink themes.
+  static const Color petrol = Color(0xFF2E7D32);
+  static const Color mint = Color(0xFF6CC04A);
+  static const Color cyan = Color(0xFF8AD15A);
+  static const Color sea = Color(0xFF4EAD3D);
+  static const Color ink = Color(0xFF1F2937);
+  static const Color muted = Color(0xFF6B7280);
   static const Color background = Color(0xFFF7FBF5);
   static const Color card = Color(0xFFFFFFFF);
-  static const Color cardBorder = Color(0xFFE0ECDC);
+  static const Color cardBorder = Color(0xFFE5E7EB);
   static const Color pale = Color(0xFFEDF9E8);
   static const Color success = Color(0xFF16845B);
   static const Color red = Color(0xFFC04444);
   static const Color amber = Color(0xFF92400E);
   static const Color pendingBackground = Color(0xFFFEF3C7);
+  // Character-detail candidates: reserved decorative accents (not user-
+  // supplied exact hex values). Preserve the approved original asset itself.
+  static const Color characterIvory = Color(0xFFF5EAD6);
+  static const Color characterSoftGold = Color(0xFFD4AF37);
+  static const Color characterDarkBrown = Color(0xFF533B2B);
   // Optional female profile identity approved in UX-03. Financial-state
   // colors remain semantic and are intentionally shared with the base theme.
   static const Color pinkPrimary = Color(0xFF96295F);
@@ -212,15 +218,17 @@ extension AppContextColors on BuildContext {
 
 /// Faithful gradients from the approved screenshot/HTML.
 abstract final class AppGradients {
+  /// Official owner-specified identity gradient; these are design tokens,
+  /// not colors sampled from screenshots.
   static const LinearGradient hero = LinearGradient(
-    begin: Alignment.centerRight,
-    end: Alignment.centerLeft,
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
     colors: [
-      Color(0xFF176B24),
-      Color(0xFF49B51B),
-      Color(0xFFC5F1B1),
+      Color(0xFF8AD15A),
+      Color(0xFF6CC04A),
+      Color(0xFF4EAD3D),
     ],
-    stops: [0.0, 0.52, 1.0],
+    stops: [0.0, 0.5, 1.0],
   );
 
   static const LinearGradient yer = LinearGradient(
