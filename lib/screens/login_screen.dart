@@ -72,9 +72,9 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     final c = context.colors;
     return Scaffold(
-      backgroundColor: widget.isDark ? const Color(0xFF171A3C) : PremiumTokens.canvas,
+      backgroundColor: context.colors.background,
       body: Container(
-        decoration: BoxDecoration(gradient: widget.isDark ? PremiumTokens.darkCanvasGradient : PremiumTokens.canvasGradient),
+        decoration: BoxDecoration(gradient: context.premium.canvas),
         child: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.fromLTRB(18, 12, 18, 26),
@@ -104,9 +104,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   Container(
                     padding: const EdgeInsets.fromLTRB(19, 18, 19, 19),
                     decoration: BoxDecoration(
-                      color: widget.isDark ? const Color(0xFF292C55) : Colors.white.withValues(alpha: .68),
+                      color: context.premium.surface,
                       borderRadius: BorderRadius.circular(38),
-                      border: Border.all(color: widget.isDark ? const Color(0xFF4D5282) : Colors.white.withValues(alpha: .95), width: 1.5),
+                      border: Border.all(color: context.premium.outline, width: 1.5),
                       boxShadow: PremiumTokens.floatingShadow,
                     ),
                     child: Form(
@@ -118,7 +118,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             'تسجيل الدخول',
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              color: widget.isDark ? PremiumTokens.darkInk : PremiumTokens.ink,
+                              color: context.premium.ink,
                               fontSize: 24,
                               fontWeight: FontWeight.w900,
                             ),
@@ -128,7 +128,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             'أدخل رقم جوالك ورمز الدخول للمتابعة',
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              color: widget.isDark ? PremiumTokens.darkSecondaryInk : PremiumTokens.secondaryInk, fontSize: 12,
+                              color: context.premium.muted, fontSize: 12,
                             ),
                           ),
                           const SizedBox(height: 22),
@@ -194,7 +194,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           const SizedBox(height: 12),
                           DecoratedBox(
                             decoration: BoxDecoration(
-                              gradient: PremiumTokens.action,
+                              gradient: context.premium.action,
                               borderRadius: BorderRadius.circular(32),
                               boxShadow: PremiumTokens.floatingShadow,
                             ),
@@ -240,8 +240,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                             style: OutlinedButton.styleFrom(
                               minimumSize: const Size.fromHeight(47),
-                              foregroundColor: PremiumTokens.ink,
-                              side: const BorderSide(color: PremiumTokens.lilac, width: 1.5),
+                              foregroundColor: context.premium.accent,
+                              side: BorderSide(color: context.premium.accent, width: 1.5),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(18),
                               ),
@@ -266,14 +266,14 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: TextButton.icon(
                       key: const Key('login_customer_support'),
                       onPressed: _supportUnavailable,
-                      icon: const Icon(Icons.headset_mic_outlined, color: PremiumTokens.violet),
+                      icon: const Icon(Icons.headset_mic_outlined, color: context.premium.accent),
                       label: const Text('خدمة العملاء', style: TextStyle(color: PremiumTokens.violet)),
                     ),
                   ),
                   const Center(
                     child: Text('جميع الحقوق محفوظة لشركة GiC ©',
                       textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 11, color: PremiumTokens.secondaryInk)),
+                      style: TextStyle(fontSize: 11, color: context.premium.muted)),
                   ),
                   const SizedBox(height: 10),
                   Text(
