@@ -33,3 +33,12 @@
 
 ## Merge policy
 Keep the PR as **draft**. Do not merge into `main` or the green branch until all build, security, financial integrity and design checks pass. The previously approved UX/business rules remain binding; a visual prototype cannot change role permissions, double approvals, immutable approved movements or decimal accounting.
+
+## Verified implementation ledger — 2026-11-21
+- Code pushed on isolated branch; merchant and customer main screens share premium blue/lavender visual surfaces and centered 3-currency carousel.
+- Login and merchant/customer navigation are restyled; UI test files added under `test/premium/`.
+- Main app display title is `مقوتي`. The green branch is unchanged (comparison showed 0 commits behind green; only this feature branch is ahead).
+- New GitHub Actions workflow `premium-soft-ui-ci.yml` includes flutter pub get, analyze, widget/domain tests, Android debug build, and log/APK artifact steps.
+- **CI is not green**: workflow run [#44889254734](https://github.com/overurdream-collab/Qat-Link-interface/actions/runs/44889254734) was reported as failure. The connector exposed no job steps and the redirected log API returned BlobNotFound, so the failure cause has **not** been established; do not state that Flutter analysis, tests or APK passed.
+- Approved blue/purple recolored mascot is not present as a separate verified repository asset; the existing owner mascot image remains an interim placeholder. No unauthorized source images or rendered screenshots were committed.
+- This branch is a visual implementation pass; full screen-by-screen pixel approval and production auth/server wiring remain open gates.
