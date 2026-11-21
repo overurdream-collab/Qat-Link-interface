@@ -2,8 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import '../helpers/merchant_shell_test_app.dart';
 import 'package:qat_link/theme/app_colors.dart';
+import 'package:qat_link/theme/app_theme.dart';
 
 void main() {
+  test('Cairo Arabic typeface is applied across base, dark and female themes', () {
+    for (final theme in [
+      AppTheme.build(dark: false),
+      AppTheme.build(dark: true),
+      AppTheme.build(dark: false, pink: true),
+      AppTheme.build(dark: true, pink: true),
+    ]) {
+      expect(theme.textTheme.bodyMedium?.fontFamily, 'Cairo');
+    }
+  });
+
   test('Yemen Modern Fintech daylight tokens are exact', () {
     expect(AppColors.petrol, const Color(0xFF07575B));
     expect(AppColors.mint, const Color(0xFF168E94));
