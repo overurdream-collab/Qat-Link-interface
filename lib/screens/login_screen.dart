@@ -107,7 +107,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       color: context.premium.surface,
                       borderRadius: BorderRadius.circular(38),
                       border: Border.all(color: context.premium.outline, width: 1.5),
-                      boxShadow: PremiumTokens.floatingShadow,
+                      boxShadow: [BoxShadow(color: context.premium.shadow, blurRadius: 26,
+                        offset: const Offset(0, 12))],
                     ),
                     child: Form(
                       key: _formKey,
@@ -266,8 +267,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: TextButton.icon(
                       key: const Key('login_customer_support'),
                       onPressed: _supportUnavailable,
-                      icon: const Icon(Icons.headset_mic_outlined, color: context.premium.accent),
-                      label: const Text('خدمة العملاء', style: TextStyle(color: PremiumTokens.violet)),
+                      icon: Icon(Icons.headset_mic_outlined, color: context.premium.accent),
+                      label: Text('خدمة العملاء', style: TextStyle(color: context.premium.accent)),
                     ),
                   ),
                   const Center(
