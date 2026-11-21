@@ -3,8 +3,9 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class IdentitySessionException implements Exception {
-  const IdentitySessionException(this.message);
+  const IdentitySessionException(this.message, {this.statusCode});
   final String message;
+  final int? statusCode;
   @override
   String toString() => message;
 }
@@ -67,9 +68,33 @@ class IdentitySessionClient {
         }),
       ).timeout(timeout);
       if (response.statusCode != 200) {
-        throw IdentitySessionException(response.statusCode == 409
-            ? 'الحساب مرتبط بدور آخر، أو يلزم إنشاء الحساب أولاً. أعد طلب رمز تحقق جديد.'
-            : 'تعذّر إنشاء الجلسة. قد يلزم طلب رمز تحقق جديد.');
+        // Preserve the safe status and allowlisted server error type only.
+        // Never expose tokens, proof, raw server bodies or personal data.
+        String? reason;
+        try {
+          final error = jsonDecode(response.body);
+          if (error is Map<String, dynamic> && error['error'] is String) {
+            reason = error['error'] as String;
+          }
+        } on FormatException { /* Unknown response; use safe fallback. */ }
+        final message = switch ((response.statusCode, reason)) {
+          (409, 'Account registration required') =>
+            'هذا الرقم ليس له حساب بعد. ارجع إلى شاشة البداية واضغط «إنشاء حساب» واختر تاجر أو عميل.',
+          (409, 'This phone already belongs to another account role') =>
+            'هذا الرقم مسجل بنوع حساب مختلف. لا يمكن تغيير نوع الحساب باستخدام رمز SMS.',
+          (409, 'Phone ownership conflict requires review') =>
+            'يوجد تعارض في ملكية الرقم ويحتاج مراجعة الإدارة.',
+          (503, 'Financial provisioning unavailable') =>
+            'تم إثبات الرقم لكن تعذر تهيئة الحساب المالي. لم تُنشأ جلسة دخول؛ يلزم فحص خدمة FIN08.',
+          (503, 'Identity proof service unavailable') =>
+            'خدمة الربط بين OTP والهوية غير متاحة. لم تُنشأ جلسة دخول.',
+          (401, _) => 'انتهت صلاحية إثبات الهاتف أو استُخدم مسبقاً. اطلب رمزاً جديداً.',
+          (429, _) => 'طلبات تسجيل الدخول كثيرة حالياً. أعد المحاولة بعد انتهاء فترة التقييد.',
+          (409, _) => 'تعذر تفعيل الحساب بسبب تعارض في بياناته. يلزم مراجعة الحساب.',
+          (503, _) => 'خدمة إنشاء الجلسات غير متاحة حالياً. لم تُنشأ جلسة دخول.',
+          _ => 'فشل إنشاء الجلسة (HTTP ${response.statusCode}). لم يتم تسجيل الدخول.',
+        };
+        throw IdentitySessionException(message, statusCode: response.statusCode);
       }
       final decoded = jsonDecode(response.body);
       if (decoded is! Map<String, dynamic>) {
