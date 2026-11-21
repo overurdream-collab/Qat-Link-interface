@@ -170,3 +170,25 @@ PASS /v1/auth/otp/public-request HTTP=503 EXPECTED=503
 **حدود الدليل:** فحوص localhost باستخدام `curl -k` لا تثبت ثقة شهادة TLS على Android أو توفر اسم مضيف عام ثابت أو حماية WAF، ولا تختبر إرسال SMS فعليًا أو إتمام جلسة Identity. `503` دليل تعطل endpoint العام عمدًا، وليس دليلًا على إرسال OTP.
 
 **نقطة الاستئناف الجديدة:** التحقق من HTTPS الدائم والشهادة من جهاز الهاتف، وتأكيد ضوابط WAF/rate limits، وربط `MAQWATI_API_BASE_URL` بعنوان ثابت لبناء APK واحد؛ بعدها تشغيل اختبار حقيقي محدود لطلب OTP وتسلّمه والتحقق منه وإصدار Identity JWT و`/me`، دون تمكين وصول مالي غير معتمد. يحافظ المشغّل على نسخة بيانات FIN25 ومفاتيحها وخدمة الجهاز المعتمد ولا يفتح OTP العام قبل حماية الإساءة. 
+
+## 11. استكمال العمل بعد نجاح 5/5 (21 نوفمبر 2026)
+
+أُنجزت تعديلات إضافية على **نفس فرع PR #71** دون مساس بالحاويات الحية:
+
+- `lib/screens/fin25_otp_screen.dart`: إخفاء معرّف طلب OTP الداخلي وعنوان «اختبار تحقق SMS» في شاشة **الدخول الحقيقي**؛ يظل مسار الاختبار اليدوي منفصلاً.
+- `test/screens/unified_auth_configured_widget_test.dart`: منع عودة معرّف الطلب الداخلي إلى واجهة الدخول الحقيقية.
+- `scripts/check_unified_auth_public_https.ps1`: فحص قراءة فقط لمصدر HTTPS خارجي ثابت؛ يفحص TLS **دون `-k`** ومسارات `/healthz` و`/identity/me` و`/internal/otp/proof` و`/auth/otp/request` و`/auth/otp/public-request`؛ لا يرسل SMS ولا يغير Docker، ويرفض `localhost` و`*.trycloudflare.com`.
+- `.github/workflows/p0-auth-ci.yml`: إدخال فحص بنية سكربت HTTPS الجديد ضمن اختبارات PowerShell.
+- `docs/UNIFIED_AUTH_RELEASE_GATE_AR.md` و`docs/IDENTITY_HTTPS_SECURITY_GATE_AR_2026-11-21.md`: إزالة التعارض التاريخي الذي كان يصف `PUBLIC_OTP=404` بعد إثبات `503`.
+
+**المانع الخارجي ما يزال قائماً:** لا يوجد حتى هذا التسليم **اسم نطاق عام ثابت مؤكد** أو إثبات WAF ومنع إساءة الاستخدام، ولا يوجد دليل على تعيين `MAQWATI_API_BASE_URL` في إعداد GitHub Actions. لا تستخدم أي Quick Tunnel سابق أو تفترض نطاقاً جديداً.
+
+بعد توفر نطاق HTTPS الدائم وتشغيله عبر Caddy الحالي، شغّل محليًا بعد سحب آخر تغييرات الفرع:
+
+```powershell
+$p='F:\maqwati-integration-fin25-20261121';git -C $p pull --ff-only origin integration/fin25-identity-consolidation-20261121;if($LASTEXITCODE -ne 0){throw 'Git pull failed'};powershell.exe -NoProfile -ExecutionPolicy Bypass -File "$p\scripts\check_unified_auth_public_https.ps1" -Origin 'https://YOUR-PERMANENT-HOST/'
+```
+
+استبدل `YOUR-PERMANENT-HOST` بالعنوان **الفعلي** بعد ضبط DNS/Cloudflare، وليس بنطاق تجريبي. ظهور `EXTERNAL_HTTPS_ROUTING=PASS` يثبت الحافة والشهادة والتوجيه من جهاز Windows **فقط**، ولا يكفي وحده لإثبات WAF أو نجاح Android أو SMS.
+
+**حالة هذه المرحلة:** اختبار المحلية `5/5 PASS`، وتصحيح واجهة الدخول `COMMITTED`، وفحص HTTPS الخارجي `COMMITTED, NOT RUN (NO CONFIRMED HOST)`، واختبار Android من خارج الشبكة `BLOCKED`، وإرسال SMS العام `DISABLED`. تحقق من أحدث نتائج GitHub Actions بعد كل تعديل قبل أي بناء للتوزيع.
