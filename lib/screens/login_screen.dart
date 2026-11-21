@@ -64,9 +64,9 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     final c = context.colors;
     return Scaffold(
-      backgroundColor: PremiumTokens.canvas,
+      backgroundColor: widget.isDark ? const Color(0xFF171A3C) : PremiumTokens.canvas,
       body: Container(
-        decoration: const BoxDecoration(gradient: PremiumTokens.canvasGradient),
+        decoration: BoxDecoration(gradient: widget.isDark ? PremiumTokens.darkCanvasGradient : PremiumTokens.canvasGradient),
         child: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.fromLTRB(18, 12, 18, 26),
@@ -96,9 +96,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   Container(
                     padding: const EdgeInsets.fromLTRB(19, 18, 19, 19),
                     decoration: BoxDecoration(
-                      color: Colors.white.withValues(alpha: .68),
+                      color: widget.isDark ? const Color(0xFF292C55) : Colors.white.withValues(alpha: .68),
                       borderRadius: BorderRadius.circular(38),
-                      border: Border.all(color: Colors.white.withValues(alpha: .95), width: 1.5),
+                      border: Border.all(color: widget.isDark ? const Color(0xFF4D5282) : Colors.white.withValues(alpha: .95), width: 1.5),
                       boxShadow: PremiumTokens.floatingShadow,
                     ),
                     child: Form(
@@ -110,7 +110,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             'تسجيل الدخول',
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              color: PremiumTokens.ink,
+                              color: widget.isDark ? PremiumTokens.darkInk : PremiumTokens.ink,
                               fontSize: 24,
                               fontWeight: FontWeight.w900,
                             ),
@@ -120,7 +120,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             'أدخل رقم جوالك ورمز الدخول للمتابعة',
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              color: PremiumTokens.secondaryInk, fontSize: 12,
+                              color: widget.isDark ? PremiumTokens.darkSecondaryInk : PremiumTokens.secondaryInk, fontSize: 12,
                             ),
                           ),
                           const SizedBox(height: 22),
