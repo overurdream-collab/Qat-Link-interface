@@ -29,7 +29,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final PageController _currencyController = PageController(viewportFraction: .83);
+  final PageController _currencyController = PageController(viewportFraction: .73, initialPage: 150);
   int _currencyPage = 0;
 
   @override
@@ -103,13 +103,13 @@ class _HomeScreenState extends State<HomeScreen> {
               height: 230,
               child: PageView.builder(
                 controller: _currencyController,
-                itemCount: currencies.length,
-                onPageChanged: (index) => setState(() => _currencyPage = index),
+                itemCount: currencies.length * 101,
+                onPageChanged: (index) => setState(() => _currencyPage = index % currencies.length),
                 itemBuilder: (context, index) => AnimatedScale(
-                  scale: _currencyPage == index ? 1 : .91,
+                  scale: _currencyPage == index % currencies.length ? 1 : .89,
                   duration: const Duration(milliseconds: 260),
                   curve: Curves.easeOutCubic,
-                  child: NewCurrencyCard(data: currencies[index]),
+                  child: NewCurrencyCard(data: currencies[index % currencies.length]),
                 ),
               ),
             ),
