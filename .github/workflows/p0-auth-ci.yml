@@ -89,12 +89,6 @@ jobs:
           "$BUILD_TOOLS/apksigner" verify --verbose build/app/outputs/flutter-apk/app-debug.apk
           sha256sum build/app/outputs/flutter-apk/app-debug.apk
           echo "Build verified. Identity endpoint not supplied: this is NOT a functional login release."
-      - name: Upload branded login preview APK (not for financial login)
-        uses: actions/upload-artifact@v4
-        with:
-          name: maqwati-branded-login-preview-apk
-          path: build/app/outputs/flutter-apk/app-debug.apk
-          retention-days: 7
       # One supported application binary. A functional APK can only be built
       # when the operator sets the SAME persistent HTTPS origin for FIN25/Identity.
       - name: Validate configured public HTTPS origin
