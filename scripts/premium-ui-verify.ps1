@@ -9,6 +9,16 @@ if ($LASTEXITCODE -ne 0 -or $current -ne $branch) {
 if (-not (Get-Command flutter -ErrorAction SilentlyContinue)) {
   throw 'Flutter is not on PATH. Open a Flutter-enabled terminal.'
 }
+$manifest = 'android\app\src\main\AndroidManifest.xml'
+if (-not (Test-Path $manifest)) {
+  Write-Host 'No Android scaffold in checkout; generating debug-only Flutter project.'
+  & flutter create --platforms=android --org com.example .
+  if ($LASTEXITCODE -ne 0) { throw 'Flutter Android scaffold generation failed' }
+}
+if (-not (Test-Path $manifest)) { throw 'AndroidManifest.xml still missing after setup' }
+$manifestText = [System.IO.File]::ReadAllText((Resolve-Path $manifest).Path)
+$manifestText = $manifestText.Replace('android:label="qat_link"', 'android:label="مقوتي"')
+[System.IO.File]::WriteAllText((Resolve-Path $manifest).Path, $manifestText, (New-Object System.Text.UTF8Encoding($false)))
 $logDir = Join-Path (Get-Location) 'build\premium-validation'
 New-Item -ItemType Directory -Path $logDir -Force | Out-Null
 $steps = @(
@@ -31,6 +41,18 @@ $apk = 'build\app\outputs\flutter-apk\app-debug.apk'
 if (-not (Test-Path $apk)) {
   throw "Flutter returned success but no APK was found at $apk"
 }
-Write-Host "PASS: Flutter analyze, tests and debug APK complete."
+$hash = (Get-FileHash -Path $apk -Algorithm SHA256).Hash
+$manifestPath = Join-Path $logDir 'build-info.txt'
+$details = @(
+  'Application: مقوتي',
+  'Build type: Android DEBUG only (not a production-signed release)',
+  "Branch: $branch",
+  "Commit: $(git rev-parse HEAD)",
+  "APK: $((Resolve-Path $apk).Path)",
+  "SHA256: $hash"
+)
+$details | Set-Content -Path $manifestPath -Encoding utf8
+Write-Host 'PASS: Flutter analyze, tests and debug APK complete.'
 Write-Host "APK: $((Resolve-Path $apk).Path)"
+Write-Host "SHA256: $hash"
 Write-Host "Logs: $logDir"
