@@ -39,6 +39,7 @@ class Fin25PilotSetupScreen extends StatefulWidget {
 class _Fin25PilotSetupScreenState extends State<Fin25PilotSetupScreen> {
   final _form = GlobalKey<FormState>();
   final _url = TextEditingController();
+  final _pilotKey = TextEditingController();
   late final TextEditingController _phone;
   final http.Client _identityHttp = http.Client();
   late final IdentitySessionClient? _identity;
@@ -54,6 +55,7 @@ class _Fin25PilotSetupScreenState extends State<Fin25PilotSetupScreen> {
   @override
   void dispose() {
     _url.dispose();
+    _pilotKey.dispose();
     _phone.dispose();
     _identityHttp.close();
     super.dispose();
@@ -68,8 +70,15 @@ class _Fin25PilotSetupScreenState extends State<Fin25PilotSetupScreen> {
       return;
     }
     final origin = fin25PilotOrigin(_url.text)!;
+    final key = manualOtpLoginPilot ? _pilotKey.text.trim() : null;
+    if (manualOtpLoginPilot && (key == null || !RegExp(r'^[0-9a-fA-F]{32}').hasMatch(key) || key.length != 32)) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('أدخل مفتاح اختبار الدخول المكون من 32 خانة كما ظهر على الكمبيوتر.')));
+      return;
+    }
     final identity = widget.enableIdentity && manualOtpLoginPilot
-        ? IdentitySessionClient(baseUri: origin, httpClient: _identityHttp)
+        ? IdentitySessionClient(baseUri: origin, httpClient: _identityHttp,
+            pilotAccessKey: key)
         : _identity;
     Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) =>
       Fin25OtpScreen(
@@ -77,6 +86,7 @@ class _Fin25PilotSetupScreenState extends State<Fin25PilotSetupScreen> {
         baseUri: origin,
         identityClient: identity,
         manualRequestIdOnly: manualOtpLoginPilot,
+        pilotAccessKey: key,
         requestedRole: widget.requestedRole,
         displayName: widget.displayName,
       ),
@@ -110,6 +120,17 @@ class _Fin25PilotSetupScreenState extends State<Fin25PilotSetupScreen> {
             validator: (value) => fin25PilotOrigin(value ?? '') == null
               ? 'أدخل عنوان HTTPS الخارجي فقط دون مسار أو بيانات دخول.' : null,
           ),
+          if (manualOtpLoginPilot) ...[
+            const SizedBox(height: 16),
+            TextFormField(
+              key: const Key('pilot_access_key'),
+              controller: _pilotKey,
+              obscureText: true,
+              autocorrect: false,
+              enableSuggestions: false,
+              decoration: const InputDecoration(labelText: 'مفتاح بوابة الاختبار المؤقت'),
+            ),
+          ],
           const SizedBox(height: 16),
           TextFormField(
             key: const Key('pilot_phone'), controller: _phone,
