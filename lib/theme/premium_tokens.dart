@@ -168,6 +168,17 @@ extension PremiumVisualContext on BuildContext {
       Theme.of(this).extension<PremiumVisualPalette>() ??
       (Theme.of(this).brightness == Brightness.dark
           ? PremiumVisualPalette.premiumDark : PremiumVisualPalette.premium);
+
+  /// Both mascots are generated from the same approved character source.
+  /// Selection only changes the visual asset; never a profile or finance rule.
+  String get maqwatiMascotAsset {
+    final accent = premium.accent;
+    final femalePalette = accent == const Color(0xFFAD3379) ||
+        accent == const Color(0xFFF2A7D0);
+    return femalePalette
+        ? 'assets/images/maqwati_mascot_pink.png'
+        : 'assets/images/maqwati_mascot_blue.png';
+  }
 }
 
 class PremiumSurface extends StatelessWidget {
