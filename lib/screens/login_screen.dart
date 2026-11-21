@@ -372,15 +372,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       textAlign: TextAlign.center,
                       style: TextStyle(fontSize: 11, color: context.premium.muted)),
                   ),
-                  const SizedBox(height: 10),
-                  Text(
-                    'تسجيل أي عملية مالية لا يعني اعتمادها؛ '
-                    'موافقة الطرف الآخر مطلوبة.',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 10, color: c.muted,
-                    ),
-                  ),
                 ],
               ),
             ),
