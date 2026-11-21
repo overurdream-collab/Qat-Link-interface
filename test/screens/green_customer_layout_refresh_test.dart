@@ -11,6 +11,8 @@ void main() {
     await tester.tap(find.text('عميل').first);
     await tester.pumpAndSettle();
     expect(find.byKey(const Key('home_campaign_carousel')), findsOneWidget);
+    await tester.drag(find.byType(ListView).first, const Offset(0, -230));
+    await tester.pumpAndSettle();
     expect(find.byKey(const Key('customer_currency_pager')), findsOneWidget);
     expect(find.byKey(const Key('customer_currency_indicators')), findsOneWidget);
     expect(find.byKey(const Key('customer_balance_yer')), findsOneWidget);
