@@ -19,6 +19,9 @@ Uri? fin25PilotOrigin(String value) {
   return uri.replace(path: '/');
 }
 
+/// Debug-only pilot. The operator requests SMS locally, never from Android.
+const bool manualOtpLoginPilot = bool.fromEnvironment('FIN25_MANUAL_OTP_PILOT', defaultValue: false);
+
 class Fin25PilotSetupScreen extends StatefulWidget {
   const Fin25PilotSetupScreen({super.key, this.initialPhone,
     this.enableIdentity = false, this.requestedRole, this.displayName});
@@ -44,7 +47,7 @@ class _Fin25PilotSetupScreenState extends State<Fin25PilotSetupScreen> {
   void initState() {
     super.initState();
     _phone = TextEditingController(text: widget.initialPhone ?? '');
-    _identity = widget.enableIdentity
+    _identity = widget.enableIdentity && !manualOtpLoginPilot
         ? IdentitySessionClient.fromBuildConfig(_identityHttp) : null;
   }
 
@@ -58,17 +61,22 @@ class _Fin25PilotSetupScreenState extends State<Fin25PilotSetupScreen> {
 
   void _open() {
     if (!_form.currentState!.validate()) return;
-    if (widget.enableIdentity && _identity == null) {
+    if (widget.enableIdentity && !manualOtpLoginPilot && _identity == null) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text('خدمة الهوية لم تُهيأ لهذا الإصدار. لا يمكن تسجيل الحساب بعد.'),
       ));
       return;
     }
+    final origin = fin25PilotOrigin(_url.text)!;
+    final identity = widget.enableIdentity && manualOtpLoginPilot
+        ? IdentitySessionClient(baseUri: origin, httpClient: _identityHttp)
+        : _identity;
     Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) =>
       Fin25OtpScreen(
         phone: Fin25OtpClient.normalizeYemeniPhone(_phone.text),
-        baseUri: fin25PilotOrigin(_url.text)!,
-        identityClient: _identity,
+        baseUri: origin,
+        identityClient: identity,
+        manualRequestIdOnly: manualOtpLoginPilot,
         requestedRole: widget.requestedRole,
         displayName: widget.displayName,
       ),
