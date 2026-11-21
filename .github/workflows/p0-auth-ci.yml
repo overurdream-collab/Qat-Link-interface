@@ -20,8 +20,8 @@ permissions:
   contents: read
 
 concurrency:
-  group: p0-auth-${{ github.ref }}
-  cancel-in-progress: true
+  group: p0-auth-${{ github.ref }}-${{ github.sha }}
+  cancel-in-progress: false
 
 jobs:
   flutter-auth:
