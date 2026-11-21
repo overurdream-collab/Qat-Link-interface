@@ -41,18 +41,23 @@ $apk = 'build\app\outputs\flutter-apk\app-debug.apk'
 if (-not (Test-Path $apk)) {
   throw "Flutter returned success but no APK was found at $apk"
 }
-$hash = (Get-FileHash -Path $apk -Algorithm SHA256).Hash
+$outDir = Join-Path (Get-Location) 'build\\premium-delivery'
+New-Item -ItemType Directory -Path $outDir -Force | Out-Null
+$deliveryApk = Join-Path $outDir 'maqwati-premium-debug.apk'
+Copy-Item -Path $apk -Destination $deliveryApk -Force
+$hash = (Get-FileHash -Path $deliveryApk -Algorithm SHA256).Hash
+"$hash  maqwati-premium-debug.apk" | Set-Content -Path (Join-Path $outDir 'SHA256SUMS.txt') -Encoding ascii
 $manifestPath = Join-Path $logDir 'build-info.txt'
 $details = @(
   'Application: مقوتي',
   'Build type: Android DEBUG only (not a production-signed release)',
   "Branch: $branch",
   "Commit: $(git rev-parse HEAD)",
-  "APK: $((Resolve-Path $apk).Path)",
+  "APK: $((Resolve-Path $deliveryApk).Path)",
   "SHA256: $hash"
 )
 $details | Set-Content -Path $manifestPath -Encoding utf8
 Write-Host 'PASS: Flutter analyze, tests and debug APK complete.'
-Write-Host "APK: $((Resolve-Path $apk).Path)"
+Write-Host "APK: $((Resolve-Path $deliveryApk).Path)"
 Write-Host "SHA256: $hash"
 Write-Host "Logs: $logDir"
