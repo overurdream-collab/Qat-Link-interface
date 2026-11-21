@@ -20,7 +20,8 @@ $steps = @(
 foreach ($step in $steps) {
   $log = Join-Path $logDir ($step.Label + '.log')
   Write-Host "Running flutter $($step.Args -join ' ') ..."
-  & flutter @($step.Args) 2>&1 | Tee-Object -FilePath $log
+  $flutterArgs = [string[]]$step.Args
+  & flutter @flutterArgs 2>&1 | Tee-Object -FilePath $log
   $code = $LASTEXITCODE
   if ($code -ne 0) {
     throw "Failed: $($step.Label) (exit=$code). Log: $log"
