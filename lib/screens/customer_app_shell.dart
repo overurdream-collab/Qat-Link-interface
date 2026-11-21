@@ -632,11 +632,11 @@ class _CustomerBalanceCard extends StatelessWidget {
           width: double.infinity,
           padding: const EdgeInsets.all(18),
           decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topRight,
-              end: Alignment.bottomLeft,
-              colors: [c.petrol, c.mint, c.cyan],
-            ),
+            gradient: switch (currency) {
+              CurrencyCode.yer => AppGradients.yer,
+              CurrencyCode.sar => AppGradients.sar,
+              CurrencyCode.usd => AppGradients.usd,
+            },
             borderRadius: BorderRadius.circular(32),
             border: Border.all(color: Colors.white.withValues(alpha: .72), width: 1.4),
             boxShadow: PremiumTokens.floatingShadow,
