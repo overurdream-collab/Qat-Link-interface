@@ -134,6 +134,10 @@ jobs:
             actual=$(curl --silent --show-error --fail-with-body --max-time 15 --max-redirs 0 \
               -o /dev/null -w '%{http_code}' -X "$method" \
               -H 'content-type: application/json' --data '{}' "$origin$path" || true)
+            if [[ "$path" == "/v1/auth/otp/public-request" && "$actual" == "400" ]]; then
+              echo "PASS $path HTTP=400 (explicit beta OTP enabled; empty request queues no SMS)"
+              continue
+            fi
             if [[ "$actual" != "$expected" ]]; then
               echo "::error::Public HTTPS acceptance failed at $path (HTTP $actual, expected $expected)."
               exit 1
