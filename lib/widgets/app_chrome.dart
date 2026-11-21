@@ -71,12 +71,7 @@ class AppTopBar extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 3),
-          AppSquareIconButton(
-            icon: Icons.settings_rounded,
-            tooltip: 'الضبط',
-            onTap: onSettingsTap,
-          ),
-          const SizedBox(width: 5),
+          // In RTL visual order: notifications → theme → settings.
           AppSquareIconButton(
             icon: Icons.notifications_none_rounded,
             tooltip: 'التنبيهات',
@@ -87,6 +82,12 @@ class AppTopBar extends StatelessWidget {
             icon: isDark ? Icons.light_mode_outlined : Icons.dark_mode_outlined,
             tooltip: isDark ? 'الوضع النهاري' : 'الوضع الليلي',
             onTap: onThemeTap,
+          ),
+          const SizedBox(width: 5),
+          AppSquareIconButton(
+            icon: Icons.settings_rounded,
+            tooltip: 'الضبط',
+            onTap: onSettingsTap,
           ),
         ],
       ),
