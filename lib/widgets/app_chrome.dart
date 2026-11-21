@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../theme/app_colors.dart';
+import '../theme/premium_tokens.dart';
 
 /// Fixed header shared by all merchant screens (RTL):
 /// profile / greeting on the right; settings, notifications, night mode
@@ -33,9 +34,10 @@ class AppTopBar extends StatelessWidget {
             width: 40,
             height: 40,
             decoration: BoxDecoration(
-              color: c.pale,
+              color: PremiumTokens.canvas,
               shape: BoxShape.circle,
-              border: Border.all(color: c.mint, width: 2),
+              border: Border.all(color: Colors.white, width: 2),
+              boxShadow: PremiumTokens.floatingShadow,
             ),
             alignment: Alignment.center,
             clipBehavior: Clip.antiAlias,
@@ -64,7 +66,7 @@ class AppTopBar extends StatelessWidget {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
-                    color: c.petrol, fontSize: 18, fontWeight: FontWeight.w900,
+                    color: PremiumTokens.ink, fontSize: 18, fontWeight: FontWeight.w900,
                   ),
                 ),
               ],
@@ -113,8 +115,8 @@ class AppSquareIconButton extends StatelessWidget {
     return Tooltip(
       message: tooltip,
       child: Material(
-        color: c.card,
-        borderRadius: BorderRadius.circular(12),
+        color: Colors.white.withValues(alpha: .77),
+        borderRadius: BorderRadius.circular(23),
         child: InkWell(
           onTap: onTap,
           borderRadius: BorderRadius.circular(12),
@@ -123,10 +125,11 @@ class AppSquareIconButton extends StatelessWidget {
             height: 37,
             alignment: Alignment.center,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: c.cardBorder),
+              borderRadius: BorderRadius.circular(23),
+              border: Border.all(color: Colors.white, width: 1.4),
+              boxShadow: PremiumTokens.floatingShadow,
             ),
-            child: Icon(icon, size: 19, color: c.petrol),
+            child: Icon(icon, size: 19, color: PremiumTokens.ink),
           ),
         ),
       ),
@@ -153,10 +156,12 @@ class AppBottomBar extends StatelessWidget {
     final c = context.colors;
     return Container(
       key: const Key('merchant_green_bottom_bar'),
-      height: 73,
+      height: 78,
+      margin: const EdgeInsets.fromLTRB(11, 0, 11, 9),
       decoration: BoxDecoration(
-        color: c.mint,
-        border: Border(top: BorderSide(color: c.mint)),
+        color: Colors.white.withValues(alpha: .80),
+        borderRadius: BorderRadius.circular(34),
+        border: Border.all(color: Colors.white, width: 1.5),
         boxShadow: [
           BoxShadow(
             color: AppColors.ink.withValues(alpha: .06),
@@ -174,8 +179,8 @@ class AppBottomBar extends StatelessWidget {
               child: Tooltip(
                 message: 'إضافة سريعة',
                 child: Material(
-                  color: c.petrol,
-                  elevation: 3,
+                  color: PremiumTokens.violet,
+                  elevation: 5,
                   shape: const CircleBorder(),
                   child: InkWell(
                     onTap: onAdd,
@@ -205,8 +210,7 @@ class AppBottomBar extends StatelessWidget {
   ) {
     final c = context.colors;
     final active = selectedIndex == index;
-    final navInk = Theme.of(context).brightness == Brightness.dark
-        ? c.text : AppColors.ink;
+    final navInk = active ? PremiumTokens.violet : PremiumTokens.secondaryInk;
     return Expanded(
       child: Semantics(
         button: true,
@@ -218,8 +222,8 @@ class AppBottomBar extends StatelessWidget {
           child: Container(
             margin: const EdgeInsets.symmetric(horizontal: 2, vertical: 6),
             decoration: BoxDecoration(
-              color: active ? Colors.white.withValues(alpha: .25) : Colors.transparent,
-              borderRadius: BorderRadius.circular(18),
+              color: active ? const Color(0xFFE4E6FF) : Colors.transparent,
+              borderRadius: BorderRadius.circular(25),
             ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -280,10 +284,10 @@ class AppSurface extends StatelessWidget {
       width: double.infinity,
       padding: padding,
       decoration: BoxDecoration(
-        color: c.card,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: c.cardBorder),
-        boxShadow: AppColors.cardShadow,
+        color: Colors.white.withValues(alpha: .73),
+        borderRadius: BorderRadius.circular(26),
+        border: Border.all(color: Colors.white, width: 1.3),
+        boxShadow: PremiumTokens.floatingShadow,
       ),
       child: child,
     );
