@@ -173,7 +173,49 @@ void main() {
     await tester.drag(pager, const Offset(-420, 0));
     await tester.pumpAndSettle();
     expect(find.byKey(const Key('customer_balance_usd')), findsOneWidget);
-    expect(find.textContaining('5 \\$'), findsOneWidget,
+    expect(find.textContaining('5 \), findsOneWidget,
+        reason: 'Five approved USD must remain independent of YER and SAR.');
+  });
+
+  testWidgets('discover keeps store opening and booking availability independent',
+      (tester) async {
+    final state = AppState();
+    addTearDown(state.dispose);
+    await tester.pumpWidget(MaterialApp(
+      theme: AppTheme.light,
+      home: Scaffold(
+        body: CustomerDiscoverScreen(state: state, customerId: null, onOpenStore: (_) {}, stores: [
+          CustomerPublicStore(
+            merchantId: 'closed-booking',
+            name: 'متجر مغلق يستقبل حجزاً',
+            governorate: 'أمانة العاصمة',
+            market: 'السوق الأول',
+            isOpen: false,
+            acceptsBookings: true,
+          ),
+          CustomerPublicStore(
+            merchantId: 'open-no-booking',
+            name: 'متجر مفتوح',
+            governorate: 'أمانة العاصمة',
+            market: 'السوق الأول',
+            isOpen: true,
+            acceptsBookings: false,
+          ),
+        ]),
+      ),
+    ));
+
+    await tester.tap(find.widgetWithText(ChoiceChip, 'يستقبل حجوزات'));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const Key('public_store_closed-booking')), findsOneWidget);
+    expect(find.byKey(const Key('public_store_open-no-booking')), findsNothing);
+
+    await tester.tap(find.widgetWithText(ChoiceChip, 'مفتوح'));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const Key('public_store_closed-booking')), findsNothing);
+  });
+}
+), findsOneWidget,
         reason: 'Five approved USD must remain independent of YER and SAR.');
   });
 
