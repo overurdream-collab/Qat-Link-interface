@@ -61,6 +61,17 @@ class _QatLinkAppState extends State<QatLinkApp> {
       home: LoginScreen(
         isDark: _themeMode == ThemeMode.dark,
         onGenderChanged: _setProfileGender,
+        onOpenMerchantPreview: () => _navigatorKey.currentState?.push<void>(
+          MaterialPageRoute<void>(
+            builder: (_) => MerchantAppShell(
+              isDark: _themeMode == ThemeMode.dark,
+              onToggleTheme: () => setState(() {
+                _themeMode = _themeMode == ThemeMode.dark
+                    ? ThemeMode.light : ThemeMode.dark;
+              }),
+            ),
+          ),
+        ),
         onOpenCustomerPreview: () => _navigatorKey.currentState?.push<void>(
           MaterialPageRoute<void>(
             builder: (_) => CustomerAppShell(
