@@ -10,7 +10,7 @@ import 'identity_account_screen.dart';
 class Fin25OtpScreen extends StatefulWidget {
   const Fin25OtpScreen({super.key, required this.phone, required this.baseUri,
     this.httpClient, this.identityClient, this.requestedRole, this.displayName,
-    this.manualRequestIdOnly = false});
+    this.manualRequestIdOnly = false, this.pilotAccessKey});
   final String phone;
   final Uri baseUri;
   /// Caller retains ownership when injecting a client (for widget tests).
@@ -20,6 +20,7 @@ class Fin25OtpScreen extends StatefulWidget {
   final String? displayName;
   /// Real Android login test: only verification, not SMS request from Android.
   final bool manualRequestIdOnly;
+  final String? pilotAccessKey;
   @override
   State<Fin25OtpScreen> createState() => _Fin25OtpScreenState();
 }
@@ -37,7 +38,8 @@ class _Fin25OtpScreenState extends State<Fin25OtpScreen> {
   void initState() {
     super.initState();
     _http = widget.httpClient ?? http.Client();
-    _client = Fin25OtpClient(baseUri: widget.baseUri, httpClient: _http);
+    _client = Fin25OtpClient(baseUri: widget.baseUri, httpClient: _http,
+      pilotAccessKey: widget.pilotAccessKey);
   }
   @override
   void dispose() {
