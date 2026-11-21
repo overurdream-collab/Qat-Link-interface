@@ -36,6 +36,8 @@ jobs:
         run: flutter test test/theme/approved_ui_test.dart
       - name: Green reference identity tests
         run: flutter test test/screens/green_identity_test.dart
+      - name: Home banner interaction and rotation tests
+        run: flutter test test/widgets/home_banner_carousel_test.dart
 
   # This remains an independent release-blocking signal. An unrelated
   # off-app accounting regression must not suppress a fully offline UI APK.
@@ -83,6 +85,21 @@ jobs:
                                  'android:label="مقوتي لينك - الأخضر"'))
           with Path('android/gradle.properties').open('a') as out:
               out.write('\nkotlin.incremental=false\n')
+          PY
+      - name: Verify all seven original owner banners were committed
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          names = (
+            '01-welcome-blue.jpeg', '02-close-yellow.jpeg',
+            '03-eyes-blue.jpeg', '04-welcome-purple.jpeg',
+            '05-close-pink.jpeg', '06-welcome-red.jpeg',
+            '07-happiness-pink.jpeg',
+          )
+          missing = [name for name in names
+                     if not (Path('assets/banners') / name).is_file()]
+          assert not missing, f'Original banner assets missing: {missing}. Do not publish placeholder-only APK.'
+          print('All seven original banner assets: PASS')
           PY
       - name: Build preview release APK
         run: flutter build apk --release -t lib/main_green_preview.dart
