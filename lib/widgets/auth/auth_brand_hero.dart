@@ -90,7 +90,7 @@ class AuthBrandHero extends StatelessWidget {
                     ),
                     Positioned.fill(
                       child: Image.asset(
-                        'assets/images/maqwati_approved_mascot.jpeg',
+                        context.maqwatiMascotAsset,
                         fit: BoxFit.contain,
                         alignment: Alignment.bottomCenter,
                         errorBuilder: (context, error, stackTrace) =>
