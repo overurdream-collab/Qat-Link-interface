@@ -20,6 +20,7 @@ $expected = @{
     '06-welcome-red.jpeg' = '65484554d8d3d7e871785bac930d2e9e880e33a5ab3fa02292b5a932f6429362'
     '07-happiness-pink.jpeg' = '5a1e701ac1659d7e7615306afedbdca05c24ffa56705b845d044b22d0c2eb837'
 }
+Add-Type -AssemblyName System.IO.Compression.FileSystem
 $zip = [IO.Compression.ZipFile]::OpenRead((Resolve-Path $ZipPath).Path)
 try {
     $target = Join-Path $root 'assets\banners'
