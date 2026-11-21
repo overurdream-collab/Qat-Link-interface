@@ -297,21 +297,97 @@ class _CustomerBottomBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final c = context.colors;
-    return Container(
-      height: 70,
-      decoration: BoxDecoration(color: c.card, border: Border(top: BorderSide(color: c.cardBorder)), boxShadow: AppColors.cardShadow),
-      child: Row(children: [
-        for (var index = 0; index < _items.length; index++)
-          Expanded(child: InkWell(
-            key: Key('customer_nav_$index'),
-            onTap: () => onSelect(index),
-            child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-              Icon(_items[index].$2, size: 20, color: index == selectedIndex ? c.petrol : c.muted),
-              const SizedBox(height: 3),
-              Text(_items[index].$1, style: TextStyle(fontSize: 9, fontWeight: index == selectedIndex ? FontWeight.w900 : FontWeight.w500, color: index == selectedIndex ? c.petrol : c.muted)),
+    return SizedBox(
+      height: 83,
+      child: Stack(
+        clipBehavior: Clip.none,
+        alignment: Alignment.bottomCenter,
+        children: [
+          Positioned.fill(
+            top: 10,
+            child: Container(
+              decoration: BoxDecoration(
+                color: c.card,
+                border: Border(top: BorderSide(color: c.cardBorder)),
+                boxShadow: AppColors.cardShadow,
+              ),
+            ),
+          ),
+          // The distinct semicircular cradle is an extension of the bar.
+          Positioned(
+            top: 0,
+            child: Container(
+              width: 84,
+              height: 47,
+              decoration: BoxDecoration(
+                color: c.card,
+                borderRadius: const BorderRadius.vertical(top: Radius.circular(46)),
+                border: Border(top: BorderSide(color: c.cardBorder)),
+              ),
+            ),
+          ),
+          Positioned.fill(
+            top: 12,
+            child: Row(children: [
+              for (var index = 0; index < _items.length; index++)
+                Expanded(
+                  child: index == 2
+                      ? const SizedBox.shrink()
+                      : InkWell(
+                          key: Key('customer_nav_$index'),
+                          onTap: () => onSelect(index),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(_items[index].$2,
+                                  size: 21,
+                                  color: index == selectedIndex ? c.petrol : c.muted),
+                              const SizedBox(height: 3),
+                              Text(
+                                _items[index].$1,
+                                maxLines: 1,
+                                style: TextStyle(
+                                  fontSize: 10,
+                                  fontWeight: index == selectedIndex
+                                      ? FontWeight.w900 : FontWeight.w500,
+                                  color: index == selectedIndex ? c.petrol : c.muted,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                ),
             ]),
-          )),
-      ]),
+          ),
+          Positioned(
+            top: -5,
+            child: Semantics(
+              label: 'الاستوديو',
+              selected: selectedIndex == 2,
+              button: true,
+              child: Tooltip(
+                message: 'الاستوديو',
+                child: Material(
+                  color: c.mint,
+                  elevation: 5,
+                  shape: const CircleBorder(),
+                  child: InkWell(
+                    key: const Key('customer_nav_2'),
+                    customBorder: const CircleBorder(),
+                    onTap: () => onSelect(2),
+                    child: const SizedBox(
+                      width: 65,
+                      height: 65,
+                      child: Icon(Icons.photo_library_rounded,
+                          size: 30, color: Colors.white),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
