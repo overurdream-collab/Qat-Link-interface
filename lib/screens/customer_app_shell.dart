@@ -299,7 +299,6 @@ class _CustomerBottomBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final c = context.colors;
     final navInk = PremiumTokens.ink;
     return SizedBox(
       height: 83,
