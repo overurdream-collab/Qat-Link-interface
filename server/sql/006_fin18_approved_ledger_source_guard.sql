@@ -27,6 +27,7 @@ BEGIN
       FROM merchant_claims cl
       JOIN customer_claim_decisions d
         ON d.claim_id = cl.id AND d.decision = 'accept'
+        AND d.merchant_id = cl.merchant_id
       JOIN merchant_relationships r
         ON r.id = NEW.relationship_id AND r.status = 'approved'
         AND r.merchant_id = cl.merchant_id
@@ -71,6 +72,36 @@ BEGIN
       WHERE op.id = NEW.source_operation_id
         AND op.status = 'approved'
         AND r.status = 'approved'
+        AND op.decided_by IS NOT NULL
+        AND op.decided_at IS NOT NULL
+        -- The creator must be the represented party, and the decision must
+        -- come from its actual counterparty, not a fabricated ID.
+        AND (
+          (op.created_by_role = 'merchant'
+           AND op.created_by = r.merchant_id
+           AND op.decided_by = r.customer_id)
+          OR
+          (op.created_by_role = 'customer'
+           AND op.created_by = r.customer_id
+           AND op.decided_by = r.merchant_id)
+        )
+        AND (
+          (op.approval_method = 'manual'
+           AND op.auto_policy_version IS NULL)
+          OR
+          (op.approval_method = 'delegated_policy'
+           AND op.created_by_role = 'merchant'
+           AND op.operation_type = 'debt'
+           AND op.auto_policy_version IS NOT NULL
+           AND EXISTS (
+             SELECT 1 FROM relationship_policy_events pe
+             WHERE pe.relationship_id = op.relationship_id
+               AND pe.version = op.auto_policy_version
+               AND pe.enabled = true
+               AND pe.actor_id = r.customer_id
+               AND pe.happened_at <= op.created_at
+           ))
+        )
         AND NEW.relationship_id = op.relationship_id
         AND NEW.merchant_id = op.merchant_id
         AND NEW.customer_id = op.customer_id
