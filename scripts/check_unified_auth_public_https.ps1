@@ -1,6 +1,6 @@
 # Read-only externally trusted TLS/HTTP checks for a stable Maqwati hostname.
 # Does NOT use -k, send SMS, deploy Docker, or reveal private credentials.
-param([Parameter(Mandatory=$true)][string]$Origin)
+param([Parameter(Mandatory=$true)][string]$Origin,[switch]$AllowBetaPublicOtp)
 $ErrorActionPreference='Stop'
 if($Origin -notmatch '^https://'){throw 'HTTPS_ORIGIN_REQUIRED'}
 try{$uri=[Uri]::new($Origin)}catch{throw 'INVALID_HTTPS_ORIGIN'}
@@ -21,7 +21,7 @@ $tests=@(
  @{Path='/v1/identity/me';Method='GET';Expected='401'},
  @{Path='/v1/internal/otp/proof';Method='POST';Expected='404'},
  @{Path='/v1/auth/otp/request';Method='POST';Expected='403'},
- @{Path='/v1/auth/otp/public-request';Method='POST';Expected='503'}
+ @{Path='/v1/auth/otp/public-request';Method='POST';Expected=$(if($AllowBetaPublicOtp){'400'}else{'503'})}
 )
 $allPassed=$true
 foreach($t in $tests){
