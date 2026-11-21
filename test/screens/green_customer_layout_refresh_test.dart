@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:qat_link/main_ui_preview.dart';
+import 'package:qat_link/widgets/app_chrome.dart';
+import '../helpers/merchant_shell_test_app.dart';
 
 void main() {
   testWidgets('customer home matches merchant banner and has 3 sliding currencies',
@@ -40,7 +42,10 @@ void main() {
     await tester.tap(find.text('عميل').first);
     await tester.pumpAndSettle();
     final notice = find.byTooltip('التنبيهات');
-    final theme = find.byTooltip('الوضع الليلي');
+    final theme = find.descendant(
+      of: find.byType(AppTopBar),
+      matching: find.byTooltip('الوضع الليلي'),
+    );
     final settings = find.byTooltip('الضبط');
     expect(notice, findsOneWidget);
     expect(theme, findsOneWidget);
@@ -63,9 +68,20 @@ void main() {
     expect(find.byKey(const Key('settings_change_password')), findsOneWidget);
     await tester.ensureVisible(find.byKey(const Key('settings_packages')));
     expect(find.byKey(const Key('settings_packages')), findsOneWidget);
-    await tester.ensureVisible(find.byKey(const Key('settings_privacy')));
+    await tester.scrollUntilVisible(find.byKey(const Key('settings_privacy')),
+        160, scrollable: find.byType(Scrollable).last);
     expect(find.byKey(const Key('settings_privacy')), findsOneWidget);
-    await tester.ensureVisible(find.byKey(const Key('settings_about')));
+    await tester.scrollUntilVisible(find.byKey(const Key('settings_about')),
+        100, scrollable: find.byType(Scrollable).last);
     expect(find.byKey(const Key('settings_about')), findsOneWidget);
+  });
+
+  testWidgets('merchant movement has one report action at bottom only',
+      (tester) async {
+    await tester.pumpWidget(const MerchantShellTestApp());
+    await tester.tap(find.text('الحركة').first);
+    await tester.pumpAndSettle();
+    expect(find.byTooltip('تصدير الحركة'), findsNothing);
+    expect(find.text('إصدار التقرير'), findsOneWidget);
   });
 }
