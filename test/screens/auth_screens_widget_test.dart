@@ -98,20 +98,11 @@ void main() {
     expect(find.text('الحركة'), findsNothing);
   });
 
-  testWidgets('debug OTP test requires manual HTTPS and never opens finance', (tester) async {
+  testWidgets('primary login has no alternative manual OTP server chooser', (tester) async {
     await tester.pumpWidget(const QatLinkApp());
-    await tester.enterText(find.byKey(const Key('login_phone')), '776644312');
-    await tester.ensureVisible(find.byKey(const Key('fin25_otp_test')));
-    await tester.tap(find.byKey(const Key('fin25_otp_test')));
-    await tester.pumpAndSettle();
-    expect(find.byKey(const Key('fin25_otp_server_url')), findsOneWidget);
-    expect(find.byKey(const Key('otp_request')), findsNothing);
-    await tester.enterText(
-      find.byKey(const Key('fin25_otp_server_url')), 'http://example.com');
-    await tester.tap(find.byKey(const Key('fin25_otp_open')));
-    await tester.pumpAndSettle();
-    expect(find.byKey(const Key('otp_request')), findsNothing);
-    expect(find.text('الحركة'), findsNothing);
+    expect(find.byKey(const Key('fin25_otp_test')), findsNothing);
+    expect(find.byKey(const Key('fin25_otp_server_url')), findsNothing);
+    expect(find.byKey(const Key('login_with_otp')), findsOneWidget);
   });
 
   testWidgets('login supports the approved night theme', (tester) async {
