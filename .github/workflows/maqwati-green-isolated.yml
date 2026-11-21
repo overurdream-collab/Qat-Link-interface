@@ -1,0 +1,125 @@
+name: Maqwati Isolated Green UI verification
+
+on:
+  push:
+    branches:
+      - feat/maqwati-green-identity-isolated-20261121
+  pull_request:
+    branches:
+      - fix/maqwati-yemen-modern-fintech-20261121
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  ui-checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - name: Resolve dependencies
+        run: flutter pub get
+      - name: Analyze Flutter
+        run: flutter analyze --no-fatal-infos
+      - name: Verify Yemeni branding, RTL and pink identity
+        run: flutter test test/screens/yemen_modern_fintech_brand_test.dart
+      - name: Preview entrypoint and theme regression
+        run: flutter test test/screens/yemen_ui_preview_widget_test.dart
+      - name: Authentication UI regression
+        run: flutter test test/screens/auth_screens_widget_test.dart
+      - name: Shared UI palette and navigation regression
+        run: flutter test test/theme/approved_ui_test.dart
+      - name: Green reference identity tests
+        run: flutter test test/screens/green_identity_test.dart
+
+  # This remains an independent release-blocking signal. An unrelated
+  # off-app accounting regression must not suppress a fully offline UI APK.
+  full-regression:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    needs: ui-checks
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - run: flutter pub get
+      - name: Full Flutter suite including financial regression
+        run: flutter test
+
+  android-preview:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    needs: [ui-checks, full-regression]
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - name: Generate isolated Android wrapper
+        run: flutter create --platforms=android --org com.maqwatilink --project-name qat_link .
+      - name: Set preview-only package name and disable Kotlin incremental
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path('android/app/build.gradle.kts')
+          s = p.read_text()
+          old = 'applicationId = "com.maqwatilink.qat_link"'
+          assert old in s, 'Unexpected generated applicationId'
+          p.write_text(s.replace(old, 'applicationId = "com.maqwatilink.green_ui_preview"'))
+          m = Path('android/app/src/main/AndroidManifest.xml')
+          s = m.read_text()
+          assert 'android:label="qat_link"' in s, 'Unexpected app label'
+          m.write_text(s.replace('android:label="qat_link"',
+                                 'android:label="مقوتي لينك - الأخضر"'))
+          with Path('android/gradle.properties').open('a') as out:
+              out.write('\nkotlin.incremental=false\n')
+          PY
+      - name: Build preview release APK
+        run: flutter build apk --release -t lib/main_green_preview.dart
+      - name: Verify package identity and deny Internet permission
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import os
+          import subprocess
+          sdk = Path(os.environ.get('ANDROID_HOME') or os.environ['ANDROID_SDK_ROOT'])
+          aapts = sorted((sdk/'build-tools').glob('*/aapt'))
+          assert aapts, 'aapt missing'
+          apk = Path('build/app/outputs/flutter-apk/app-release.apk')
+          assert apk.is_file(), 'preview APK missing'
+          badging = subprocess.check_output([str(aapts[-1]), 'dump', 'badging', str(apk)], text=True)
+          perms = subprocess.check_output([str(aapts[-1]), 'dump', 'permissions', str(apk)], text=True)
+          assert "name='com.maqwatilink.green_ui_preview'" in badging, 'wrong Android package'
+          assert 'android.permission.INTERNET' not in perms, 'preview must remain offline'
+          print('APK preview identity and offline permission gate: PASS')
+          PY
+      # Actions artifacts are over quota for this private repository.
+      # Private GitHub prerelease assets are an alternative delivery path.
+      # Only publish after all Flutter tests and offline APK checks pass.
+      - name: Publish verified private preview APK as prerelease
+        if: >-
+          github.event_name == 'push' ||
+          (github.event_name == 'pull_request' &&
+           github.event.pull_request.head.repo.full_name == github.repository &&
+           github.event.pull_request.head.ref == 'feat/maqwati-green-identity-isolated-20261121')
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PREVIEW_HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          tag="green-preview-${PREVIEW_HEAD_SHA:0:12}"
+          gh release create "$tag" \
+            --target "$PREVIEW_HEAD_SHA" \
+            --prerelease \
+            --title "Maqwati Green Concept Independent Preview (${GITHUB_SHA:0:12})" \
+            --notes "OFFLINE UI DEMO ONLY. Login/merchant/customer preview, not a production financial app. APK verified to have no android.permission.INTERNET; package com.maqwatilink.green_ui_preview. Not approved for live use." \
+            "build/app/outputs/flutter-apk/app-release.apk#maqwati-green-independent-preview.apk"
