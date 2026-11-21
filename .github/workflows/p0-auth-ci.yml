@@ -104,8 +104,38 @@ jobs:
           assert not parsed.username and not parsed.password and not parsed.query and not parsed.fragment
           assert parsed.path in ('','/'), 'Origin cannot contain a path'
           assert not parsed.hostname.endswith('.trycloudflare.com'), 'Temporary tunnel is not a stable origin'
+          assert parsed.hostname not in ('localhost', '127.0.0.1', '::1'), 'Loopback is not a public origin'
+          assert parsed.port in (None, 443), 'Only public HTTPS port 443 is accepted'
+          assert not parsed.hostname.endswith(('.local','.localhost','.example','.test','.invalid')), 'Placeholder/private origin not allowed'
           print('Single HTTPS origin validated')
           PY
+      - name: Check public TLS and unified routes before building a connected APK
+        if: ${{ vars.MAQWATI_API_BASE_URL != '' }}
+        env:
+          API_ORIGIN: ${{ vars.MAQWATI_API_BASE_URL }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          origin="${API_ORIGIN%/}"
+          routes=(
+            "GET /healthz 200"
+            "GET /v1/identity/me 401"
+            "POST /v1/internal/otp/proof 404"
+            "POST /v1/auth/otp/request 403"
+            "POST /v1/auth/otp/public-request 503"
+          )
+          for spec in "${routes[@]}"; do
+            read -r method path expected <<< "$spec"
+            actual=$(curl --silent --show-error --fail-with-body --max-time 15 --max-redirs 0 \
+              -o /dev/null -w '%{http_code}' -X "$method" \
+              -H 'content-type: application/json' --data '{}' "$origin$path" || true)
+            if [[ "$actual" != "$expected" ]]; then
+              echo "::error::Public HTTPS acceptance failed at $path (HTTP $actual, expected $expected)."
+              exit 1
+            fi
+            echo "PASS $path HTTP=$actual"
+          done
+          echo "PUBLIC_HTTPS_GATE=PASS (does not authorize SMS or prove Android login)"
       - name: Build the only connected login APK
         if: ${{ vars.MAQWATI_API_BASE_URL != '' }}
         env:
