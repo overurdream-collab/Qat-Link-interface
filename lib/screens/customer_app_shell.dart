@@ -11,6 +11,7 @@ import '../services/fin16_credit_gateway.dart';
 import '../services/movement_calculator.dart';
 import '../theme/app_colors.dart';
 import '../widgets/app_chrome.dart';
+import '../widgets/home/hero_carousel.dart';
 import '../widgets/finance_display.dart';
 import '../widgets/merchant_space/booking_intake_policy.dart';
 import '../widgets/merchant_space/client_store_booking_sheet.dart';
@@ -341,14 +342,14 @@ class CustomerHomeScreen extends StatelessWidget {
       final relationships = id == null ? <RelationshipModel>[] : state.relationships.value.where((r) => r.customerId == id).toList();
       final reviewCount = id == null ? 0 : state.movements.value.where((m) => m.customerId == id && m.status == MovementStatus.pending && m.createdByRole == ParticipantRole.merchant).length;
       return ListView(padding: const EdgeInsets.fromLTRB(14, 8, 14, 24), children: [
-        _CustomerHero(name: id == null ? 'مرحباً بك' : 'حسابك في مقوتي لنك', subtitle: 'تابع حساباتك وراجع طلبات التجار بوضوح.'),
-        const SizedBox(height: 17),
+        const HeroCarousel(),
+        const SizedBox(height: 18),
         Row(children: [
-          const Expanded(child: AppSectionTitle(title: 'أرصدة الحسابات')),
-          Text('كل عملة مستقلة', style: TextStyle(color: c.muted, fontSize: 10)),
+          const Expanded(child: AppSectionTitle(title: 'ملخص الحسابات')),
+          Text('3 عملات مستقلة', style: TextStyle(color: c.muted, fontSize: 10)),
         ]),
         const SizedBox(height: 9),
-        for (final currency in CurrencyCode.values) _CustomerBalanceCard(state: state, customerId: id, currency: currency),
+        _CustomerCurrencyPager(state: state, customerId: id),
         const SizedBox(height: 14),
         _CustomerActionCard(
           icon: Icons.fact_check_outlined,
@@ -385,6 +386,71 @@ class CustomerHomeScreen extends StatelessWidget {
   );
 }
 
+/// Same swipeable 3-currency concept as the merchant home, keeping each
+/// currency independent. No aggregation and no preview account leakage.
+class _CustomerCurrencyPager extends StatefulWidget {
+  const _CustomerCurrencyPager({required this.state, required this.customerId});
+  final AppState state;
+  final String? customerId;
+
+  @override
+  State<_CustomerCurrencyPager> createState() => _CustomerCurrencyPagerState();
+}
+
+class _CustomerCurrencyPagerState extends State<_CustomerCurrencyPager> {
+  final PageController _pages = PageController(viewportFraction: .94);
+  int _active = 0;
+
+  @override
+  void dispose() {
+    _pages.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final c = context.colors;
+    return Column(children: [
+      SizedBox(
+        height: 218,
+        child: PageView.builder(
+          key: const Key('customer_currency_pager'),
+          controller: _pages,
+          itemCount: CurrencyCode.values.length,
+          onPageChanged: (value) => setState(() => _active = value),
+          itemBuilder: (context, index) => Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 4),
+            child: _CustomerBalanceCard(
+              state: widget.state,
+              customerId: widget.customerId,
+              currency: CurrencyCode.values[index],
+              showcase: true,
+            ),
+          ),
+        ),
+      ),
+      const SizedBox(height: 7),
+      Row(
+        key: const Key('customer_currency_indicators'),
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          for (var i = 0; i < CurrencyCode.values.length; i++)
+            AnimatedContainer(
+              duration: const Duration(milliseconds: 200),
+              margin: const EdgeInsets.symmetric(horizontal: 3),
+              width: _active == i ? 19 : 6,
+              height: 6,
+              decoration: BoxDecoration(
+                color: _active == i ? c.petrol : c.cardBorder,
+                borderRadius: BorderRadius.circular(8),
+              ),
+            ),
+        ],
+      ),
+    ]);
+  }
+}
+
 class _CustomerHero extends StatelessWidget {
   const _CustomerHero({required this.name, required this.subtitle});
   final String name;
@@ -413,11 +479,12 @@ class _CustomerHero extends StatelessWidget {
 }
 
 class _CustomerBalanceCard extends StatelessWidget {
-  const _CustomerBalanceCard({required this.state, required this.customerId, required this.currency, this.merchantId});
+  const _CustomerBalanceCard({required this.state, required this.customerId, required this.currency, this.merchantId, this.showcase = false});
   final AppState state;
   final String? customerId;
   final CurrencyCode currency;
   final String? merchantId;
+  final bool showcase;
   @override
   Widget build(BuildContext context) => AnimatedBuilder(
     animation: Listenable.merge([state.movements, state.relationships]),
@@ -440,6 +507,60 @@ class _CustomerBalanceCard extends StatelessWidget {
       final balance = debt - payment;
       // Pending claims remain visible even while the relationship itself is pending.
       final pending = id == null ? Decimal.zero : MovementCalculator.pendingTotal(customerMovements, customerId: id, currency: currency);
+      if (showcase) {
+        return Container(
+          key: Key('customer_balance_${currency.name}'),
+          width: double.infinity,
+          padding: const EdgeInsets.all(18),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
+              colors: [c.petrol, c.mint, c.sea],
+            ),
+            borderRadius: BorderRadius.circular(22),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(children: [
+                const Icon(Icons.account_balance_wallet_outlined, color: Colors.white, size: 24),
+                const SizedBox(width: 8),
+                Expanded(child: Text(
+                  switch (currency) {
+                    CurrencyCode.yer => 'الريال اليمني',
+                    CurrencyCode.sar => 'الريال السعودي',
+                    CurrencyCode.usd => 'الدولار الأمريكي',
+                  },
+                  style: const TextStyle(color: Colors.white, fontSize: 17, fontWeight: FontWeight.w900),
+                )),
+                Text(currency.name.toUpperCase(), style: const TextStyle(color: Colors.white70, fontWeight: FontWeight.w800)),
+              ]),
+              const SizedBox(height: 18),
+              Text(id == null ? 'الرصيد يتطلب تسجيل دخول موثق' : 'الرصيد المشترك المعتمد',
+                  style: const TextStyle(color: Colors.white70, fontSize: 12)),
+              const SizedBox(height: 5),
+              FittedBox(
+                fit: BoxFit.scaleDown,
+                alignment: Alignment.centerRight,
+                child: Text(
+                  id == null ? '—' : '${FinanceDisplay.amount(balance)} ${FinanceDisplay.currencySymbol(currency)}',
+                  style: const TextStyle(color: Colors.white, fontSize: 30, fontWeight: FontWeight.w900),
+                ),
+              ),
+              const Spacer(),
+              Row(children: [
+                const Icon(Icons.pending_actions_outlined, color: Colors.white70, size: 16),
+                const SizedBox(width: 6),
+                Expanded(child: Text(
+                  id == null ? 'لا توجد بيانات مالية في وضع المعاينة' : 'حركات معلقة خارج الرصيد: ${FinanceDisplay.amount(pending)}',
+                  style: const TextStyle(color: Colors.white, fontSize: 11, fontWeight: FontWeight.w700),
+                )),
+              ]),
+            ],
+          ),
+        );
+      }
       return Container(
         key: Key('customer_balance_${currency.name}'),
         margin: const EdgeInsets.only(bottom: 8),
