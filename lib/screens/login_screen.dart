@@ -53,6 +53,14 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
+  void _supportUnavailable() {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text(
+        'قناة خدمة العملاء لم تُربط بعد. سيظهر رقم التواصل المعتمد بعد تفعيله.',
+      )),
+    );
+  }
+
   void _signIn() {
     if (!_formKey.currentState!.validate()) return;
     // Deliberately no onAuthenticated call, persistent token, local PIN
@@ -257,7 +265,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   Center(
                     child: TextButton.icon(
                       key: const Key('login_customer_support'),
-                      onPressed: () => _notConnected('خدمة العملاء'),
+                      onPressed: _supportUnavailable,
                       icon: const Icon(Icons.headset_mic_outlined, color: PremiumTokens.violet),
                       label: const Text('خدمة العملاء', style: TextStyle(color: PremiumTokens.violet)),
                     ),
