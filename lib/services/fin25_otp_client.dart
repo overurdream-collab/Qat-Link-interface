@@ -20,7 +20,8 @@ class Fin25OtpChallenge {
 
 class Fin25OtpClient {
   Fin25OtpClient({required this.baseUri, required this.httpClient,
-    this.timeout = const Duration(seconds: 15), this.pilotAccessKey}) {
+    this.timeout = const Duration(seconds: 15), this.pilotAccessKey,
+    this.usePublicRequest = false}) {
     if (baseUri.scheme != 'https' || baseUri.host.isEmpty ||
         baseUri.userInfo.isNotEmpty || baseUri.hasQuery || baseUri.hasFragment) {
       throw ArgumentError('FIN25 OTP requires a clean HTTPS base URL');
@@ -31,6 +32,9 @@ class Fin25OtpClient {
   final Duration timeout;
   /// Volatile pilot key supplied by operator; never log or store it.
   final String? pilotAccessKey;
+  /// Unified production ingress has a separately gated, globally budgeted
+  /// /public-request route. Operator's local /request is never exposed.
+  final bool usePublicRequest;
 
   static String normalizeYemeniPhone(String raw) {
     final normalized = AuthInputValidation.normalizePhone(raw);
@@ -75,7 +79,9 @@ class Fin25OtpClient {
 
   Future<Fin25OtpChallenge> request(String phone) async {
     final number = normalizeYemeniPhone(phone);
-    final response = await _post('v1/auth/otp/request', {'phone': number});
+    final response = await _post(
+      usePublicRequest ? 'v1/auth/otp/public-request' : 'v1/auth/otp/request',
+      {'phone': number});
     final id = response['requestId'];
     if (id is! String || !RegExp(r'^[a-fA-F0-9-]{36}$').hasMatch(id)) {
       throw const Fin25OtpException('الخادم لم يرجع معرف تحقق صالحاً.');
