@@ -27,7 +27,7 @@ class PremiumHomeHero extends StatelessWidget {
         ),
         child: LayoutBuilder(
           builder: (context, constraints) {
-            final mascotWidth = (constraints.maxWidth * .36).clamp(86.0, 136.0);
+            final mascotWidth = (constraints.maxWidth * .36).clamp(86.0, 136.0).toDouble();
             return Stack(
               children: [
                 PositionedDirectional(
