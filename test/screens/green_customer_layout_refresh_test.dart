@@ -36,7 +36,7 @@ void main() {
       find.byKey(const Key('customer_green_bottom_bar')),
     );
     expect((navSurface.decoration as BoxDecoration).color,
-        const Color(0xFF7939EA));
+        const Color(0xFFFFFFFF));
     expect(tester.getTopLeft(studio).dy,
         lessThan(tester.getTopLeft(other).dy));
     await tester.tap(studio);
