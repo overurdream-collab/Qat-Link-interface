@@ -1,0 +1,69 @@
+name: Release security gates (isolated audit)
+
+on:
+  push:
+    branches:
+      - audit/security-finance-release-gate-20261121
+  pull_request:
+    branches:
+      - feat/maqwati-green-identity-isolated-20261121
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  api-security:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      issues: write
+    defaults:
+      run:
+        working-directory: server
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install without lifecycle scripts
+        run: npm install --ignore-scripts --no-audit --no-fund
+      - name: Check Node syntax
+        run: npm run check
+      - name: Run bounded network and privacy tests
+        run: node --test test/security_hardening.test.mjs
+      - name: Audit high and critical Node dependency advisories
+        run: npm audit --omit=dev --audit-level=high
+      - name: Open redacted CI incident on failure (no logs or secrets)
+        if: failure() && github.event_name == 'push'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          SHA: ${{ github.sha }}
+        run: |
+          title="[Security CI] API gate failed on ${SHA:0:12}"
+          if ! gh issue list --repo "$REPO" --state open --search "$title in:title" --json title --jq '.[].title' | grep -Fx "$title"; then
+            gh issue create --repo "$REPO" --title "$title" --body "A security gate failed on commit \`$SHA\`. [Private CI run]($RUN_URL). Do not paste raw production logs, authorization headers, phone numbers or financial data into this issue."
+          fi
+
+  codeql-javascript:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    # Private repository Code Scanning may require a paid security entitlement.
+    # A permission/licensing failure must be reported as unverified, not pass.
+    continue-on-error: true
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: github/codeql-action/init@v4
+        with:
+          languages: javascript-typescript
+          queries: security-extended
+      - uses: github/codeql-action/analyze@v4
+        with:
+          category: /language:javascript-typescript
