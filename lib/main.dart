@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'services/app_incident_recorder.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'screens/home_screen.dart';
@@ -19,6 +20,7 @@ import 'features/auth/registration_role.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+  AppIncidentRecorder.install();
   runApp(const QatLinkApp());
 }
 

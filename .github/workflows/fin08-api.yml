@@ -48,4 +48,8 @@ jobs:
         run: psql -v ON_ERROR_STOP=1 -h 127.0.0.1 -U fin08 -d qatlink_test -f sql/004_fin16_credit_limits.sql
       - name: Apply FIN17 payment allocation migration
         run: psql -v ON_ERROR_STOP=1 -h 127.0.0.1 -U fin08 -d qatlink_test -f sql/005_fin17_payment_allocations.sql
+      - name: Apply FIN18 P0 approved movement source integrity guard
+        run: psql -v ON_ERROR_STOP=1 -h 127.0.0.1 -U fin08 -d qatlink_test -f sql/006_fin18_approved_ledger_source_guard.sql
       - run: npm test
+      - name: Audit historical and synthetic approved-ledger source consistency
+        run: psql -v ON_ERROR_STOP=1 -h 127.0.0.1 -U fin08 -d qatlink_test -f sql/audit_fin18_existing_ledger.sql
