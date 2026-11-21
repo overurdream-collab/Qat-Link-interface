@@ -9,7 +9,7 @@ void main() {
     await tester.pumpWidget(const QatLinkApp());
 
     expect(find.text('مقوتي لينك'), findsOneWidget);
-    expect(find.text('حلقة وصل بينك وبين عملائك'), findsOneWidget);
+    expect(find.text('كل يوم حكاية'), findsOneWidget);
     expect(find.text('مقوتي لنك'), findsNothing);
     expect(find.byKey(const Key('login_phone')), findsOneWidget);
     expect(find.byKey(const Key('login_pin')), findsOneWidget);
@@ -22,7 +22,7 @@ void main() {
       (tester) async {
     await tester.pumpWidget(const QatLinkApp());
 
-    final context = tester.element(find.text('أهلاً بعودتك'));
+    final context = tester.element(find.text('تسجيل الدخول'));
     expect(Directionality.of(context), TextDirection.rtl);
     expect(
       tester.widget<MaterialApp>(find.byType(MaterialApp)).locale,
