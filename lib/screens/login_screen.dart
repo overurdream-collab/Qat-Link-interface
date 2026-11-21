@@ -9,7 +9,6 @@ import 'registration_screen.dart';
 import '../services/fin25_otp_client.dart';
 import '../services/maqwati_api_config.dart';
 import 'fin25_otp_screen.dart';
-import 'fin25_pilot_setup_screen.dart';
 import 'notification_design_preview_screen.dart';
 
 /// App entry point. UI only: no PIN is persisted, sent, or accepted without
