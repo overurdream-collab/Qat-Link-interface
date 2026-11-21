@@ -1,4 +1,4 @@
-name: Maqwati Isolated Green UI verification
+name: Maqwati Isolated Premium UI verification
 
 on:
   push:
@@ -34,7 +34,9 @@ jobs:
         run: flutter test test/screens/auth_screens_widget_test.dart
       - name: Shared UI palette and navigation regression
         run: flutter test test/theme/approved_ui_test.dart
-      - name: Green reference identity tests
+      - name: Premium identity and currency tokens
+        run: flutter test test/theme/premium_identity_tokens_test.dart
+      - name: Isolated reference identity tests
         run: flutter test test/screens/green_identity_test.dart
       - name: Home banner interaction and rotation tests
         run: flutter test test/widgets/home_banner_carousel_test.dart
@@ -84,7 +86,7 @@ jobs:
           s = m.read_text()
           assert 'android:label="qat_link"' in s, 'Unexpected app label'
           m.write_text(s.replace('android:label="qat_link"',
-                                 'android:label="مقوتي لينك - الأخضر"'))
+                                 'android:label="مقوتي لينك - معاينة الهوية"'))
           with Path('android/gradle.properties').open('a') as out:
               out.write('\nkotlin.incremental=false\n')
           PY
@@ -147,9 +149,9 @@ jobs:
             gh release create "$tag" \
               --target "$PREVIEW_HEAD_SHA" \
               --prerelease \
-              --title "Maqwati Green Concept Independent Preview (${PREVIEW_HEAD_SHA:0:12})" \
+              --title "Maqwati Premium Concept Independent Preview (${PREVIEW_HEAD_SHA:0:12})" \
               --notes "OFFLINE UI DEMO ONLY. Login/merchant/customer preview, not a production financial app. APK verified to have no android.permission.INTERNET; package com.maqwatilink.green_ui_preview. Not approved for live use." \
               "$apk"
           fi
           gh release view "$tag" --json assets --jq '.assets[].name' | grep -Fx 'maqwati-green-independent-preview.apk'
-          echo "Verified original-banner green preview published at release: $tag"
+          echo "Verified independent premium preview published at release: $tag"
