@@ -33,7 +33,8 @@ foreach($t in $tests){
  if($curlExit -ne 0){$status="TLS_OR_NETWORK_ERROR_$curlExit"}
  $pass=($status -eq $t.Expected)
  if(-not $pass){$allPassed=$false}
- Write-Host "$($(if($pass){'PASS'}else{'FAIL'})) $($t.Path) HTTP=$status EXPECTED=$($t.Expected)"
+ $state=if($pass){'PASS'}else{'FAIL'}
+ Write-Host "$state $($t.Path) HTTP=$status EXPECTED=$($t.Expected)"
 }
 if($allPassed){Write-Host 'EXTERNAL_HTTPS_ROUTING=PASS (WAF and real SMS still NOT proven)'}
 else{Write-Host 'EXTERNAL_HTTPS_ROUTING=BLOCKED (do not enable public SMS)';exit 1}
