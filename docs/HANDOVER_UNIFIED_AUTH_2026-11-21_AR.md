@@ -316,3 +316,25 @@ IMPORTANT: keep all FOUR Compose files for subsequent OTP operations.
 **بناء APK التشخيصي:** بدأت مهمة GitHub Actions `P0 auth integration safety checks` push run `44950727219` على commit `52ae7812081a6f012ae62d1098801f353e04d190` مع إعادة استخدام Tailscale origin الثابت واختبار HTTPS العام قبل بناء APK. يجب التحقق فعليًا من نجاح مهمة `android-compile` ووجود artifact قبل تقديم رابط تنزيل؛ أُضيف marker مؤقت `[build-identity-diagnostic-apk]` يقتصر على هذا التشغيل؛ يُزال بعده كي لا تُنشأ حزم تلقائية عند كل Commit. لم تُعدَل أي حاوية حية في هذه الخطوة.
 
 > تشغيل بناء التشخيص النهائي: لا تُحدث هذا الفرع حتى يكتمل GitHub Actions وتظهر الحزمة؛ التشغيل الحالي تجريبي ولا يغيّر الخدمات الحية.
+
+## 17. فشل تسجيل الدخول بعد وصول SMS: تشخيص دون إرسال OTP جديد
+
+أبلغ المستخدم بنتيجة مؤكدة على APK المتصل فعليًا: **طلب OTP مقبول، ورسالة SMS وصلت، لكن تسجيل الدخول فشل**. لا تعُد لإعداد Funnel أو Docker أو بوابة الرسائل، ولا تعتبر وصول SMS دليلاً على نجاح `/v1/auth/otp/verify` أو `/v1/identity/session`.
+
+بعد مراجعة `lib/screens/fin25_otp_screen.dart` و`server/src/fin25_otp_transport.mjs` و`server/src/identity_logic.mjs`:
+1. قد يفشل OTP verify بسبب رمز غير صالح/منتهي، أو لأن `fin25_sms_jobs.status` لم يبلغ `sent/delivered` رغم وصول SMS على الهاتف. إرسال الجهاز وتحديث حالته مرحلتان مختلفتان.
+2. إذا استُهلك OTP وأُصدر proof، فقد يفشل استرداده من Identity (صلاحية 120 ثانية، مفاتيح الثقة و`FIN25_INTERNAL_PROOF_URL`).
+3. إذا كان رقم الهاتف **غير مسجل** وبدأ المستخدم من «الدخول» لا «إنشاء حساب»، فإن `identity_logic.exchange` يرجع **409 Account registration required** بعد استهلاك proof، لأن إنشاء الحساب يحتاج تحديد دور `merchant/customer`. **هذا احتمال مؤكد من الكود، وليس سببًا مثبتًا على هذه المحاولة.**
+4. قد ينجح استرداد proof لكن تفشل تهيئة FIN08 ويُحفظ `identity_accounts.finance_provisioned_at=NULL`، مما يمنع إصدار JWT؛ لا يجوز تجاوز هذا الحاجز.
+5. شاشة Flutter تعرض أخطاء محلية مبنية على HTTP من خدمة Identity، وقد تظهر رسالة مختلفة إذا فشل `/me`.
+
+أضيف `scripts/diagnose_login_after_sms_readonly.ps1` كفحص قراءة فقط يجمع إحصاءات **مجملة** من حاويتي OTP وIdentity لآخر 60 دقيقة: عدد طلبات OTP، محاولات رمز خاطئ، تأكيد الإرسال، استهلاك OTP، استرداد proof، حسابات مسجلة حديثًا، حسابات تنتظر FIN08 وتسجيلات دخول ناجحة. **لا يجمع أو يعرض رقم هاتف أو OTP أو JWT أو proof أو مفاتيح**؛ لا ينشئ SMS ولا يغير قاعدة البيانات ولا يتصل بالـAPI العام.
+
+أمر التشخيص (سطر Windows واحد بعد `git pull --ff-only`):
+```powershell
+$p='F:\maqwati-integration-fin25-20261121';git -C $p pull --ff-only origin integration/fin25-identity-consolidation-20261121;if($LASTEXITCODE -ne 0){throw 'Git pull failed'};powershell.exe -NoProfile -ExecutionPolicy Bypass -File "$p\scripts\diagnose_login_after_sms_readonly.ps1" -Minutes 60
+```
+
+إذا أعاد `OTP_AGGREGATE` صفرًا لقيم استهلاك/إثبات، تُراجع مرحلة OTP؛ إذا `otp_verified > proof_redeemed_by_identity`، تُراجع مرحلة استرداد Identity؛ إذا `proof_redeemed_by_identity > 0` لكن لم يظهر دخول ناجح، يُراجع مسار التسجيل/FIN08 والدور. **هذه مؤشرات مجمعة قد تشمل محاولات مختبرين آخرين وليست إسنادًا قاطعًا إلى هاتف واحد**. لا تطلب من المستخدم إعادة الرمز لمجرد التشخيص، ولا تشارك بيانات سرية.
+
+**حالة الإجراء:** أداة تشخيص محفوظة في الفرع نفسه، لكن لا يمكن تشغيلها داخل Docker Windows من GitHub، وتحديد السبب الجذري يتطلب نتيجة مشغل الجهاز أو نص رسالة الخطأ كما ظهرت على شاشة الهاتف. لا تعلن أن العطل أصلح أو أن جلسة JWT صدرت دون اختبار قبولي فعلي.
