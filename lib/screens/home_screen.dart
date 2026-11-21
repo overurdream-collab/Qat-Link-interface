@@ -6,6 +6,7 @@ import 'merchant_financial_assistant_screen.dart';
 import '../services/app_state.dart';
 import '../services/movement_calculator.dart';
 import '../theme/app_colors.dart';
+import '../theme/premium_tokens.dart';
 import '../widgets/app_chrome.dart';
 import '../widgets/finance_display.dart';
 import '../widgets/home/premium_home_hero.dart';
@@ -349,7 +350,7 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              gradient: AppGradients.assistant,
+              gradient: context.premium.hero,
               borderRadius: BorderRadius.circular(20),
               boxShadow: [
                 BoxShadow(
