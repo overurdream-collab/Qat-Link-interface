@@ -17,8 +17,10 @@ void main() {
         home: IdentityAccountScreen(session: session),
       ));
       final link = find.byKey(const Key('open_verified_fin08_overview'));
+      await tester.scrollUntilVisible(link, 170,
+        scrollable: find.byType(Scrollable).first,
+      );
       expect(link, findsOneWidget);
-      await tester.ensureVisible(link);
       await tester.tap(link);
       await tester.pumpAndSettle();
       expect(find.byType(VerifiedFin08OverviewScreen), findsOneWidget);
