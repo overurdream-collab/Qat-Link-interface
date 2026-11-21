@@ -66,7 +66,7 @@ class AppTopBar extends StatelessWidget {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
-                    color: PremiumTokens.ink, fontSize: 18, fontWeight: FontWeight.w900,
+                    color: widgetThemeInk(context), fontSize: 18, fontWeight: FontWeight.w900,
                   ),
                 ),
               ],
@@ -157,7 +157,7 @@ class AppBottomBar extends StatelessWidget {
       height: 78,
       margin: const EdgeInsets.fromLTRB(11, 0, 11, 9),
       decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: .80),
+        color: Theme.of(context).brightness == Brightness.dark ? const Color(0xFF292D55) : Colors.white.withValues(alpha: .80),
         borderRadius: BorderRadius.circular(34),
         border: Border.all(color: Colors.white, width: 1.5),
         boxShadow: [
@@ -207,7 +207,7 @@ class AppBottomBar extends StatelessWidget {
     IconData icon,
   ) {
     final active = selectedIndex == index;
-    final navInk = active ? PremiumTokens.violet : PremiumTokens.secondaryInk;
+    final navInk = active ? PremiumTokens.violet : (Theme.of(context).brightness == Brightness.dark ? PremiumTokens.darkSecondaryInk : PremiumTokens.secondaryInk);
     return Expanded(
       child: Semantics(
         button: true,
@@ -219,7 +219,7 @@ class AppBottomBar extends StatelessWidget {
           child: Container(
             margin: const EdgeInsets.symmetric(horizontal: 2, vertical: 6),
             decoration: BoxDecoration(
-              color: active ? const Color(0xFFE4E6FF) : Colors.transparent,
+              color: active ? (Theme.of(context).brightness == Brightness.dark ? const Color(0xFF414B83) : const Color(0xFFE4E6FF)) : Colors.transparent,
               borderRadius: BorderRadius.circular(25),
             ),
             child: Column(
@@ -290,3 +290,8 @@ class AppSurface extends StatelessWidget {
     );
   }
 }
+
+/// High-contrast text on each premium surface.
+Color widgetThemeInk(BuildContext context) =>
+    Theme.of(context).brightness == Brightness.dark
+        ? PremiumTokens.darkInk : PremiumTokens.ink;
