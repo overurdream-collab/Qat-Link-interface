@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import '../features/auth/auth_input_validation.dart';
 import '../features/auth/registration_role.dart';
 import '../theme/app_colors.dart';
+import '../theme/premium_tokens.dart';
 import '../widgets/auth/auth_brand_hero.dart';
 import 'registration_screen.dart';
 
@@ -63,10 +64,12 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     final c = context.colors;
     return Scaffold(
-      backgroundColor: c.background,
-      body: SafeArea(
+      backgroundColor: PremiumTokens.canvas,
+      body: Container(
+        decoration: const BoxDecoration(gradient: PremiumTokens.canvasGradient),
+        child: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.fromLTRB(16, 9, 16, 24),
+          padding: const EdgeInsets.fromLTRB(18, 12, 18, 26),
           child: Center(
             child: ConstrainedBox(
               constraints: const BoxConstraints(maxWidth: 460),
@@ -93,10 +96,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   Container(
                     padding: const EdgeInsets.fromLTRB(19, 18, 19, 19),
                     decoration: BoxDecoration(
-                      color: c.card,
-                      borderRadius: BorderRadius.circular(26),
-                      border: Border.all(color: c.cardBorder),
-                      boxShadow: AppColors.cardShadow,
+                      color: Colors.white.withValues(alpha: .68),
+                      borderRadius: BorderRadius.circular(38),
+                      border: Border.all(color: Colors.white.withValues(alpha: .95), width: 1.5),
+                      boxShadow: PremiumTokens.floatingShadow,
                     ),
                     child: Form(
                       key: _formKey,
@@ -104,23 +107,23 @@ class _LoginScreenState extends State<LoginScreen> {
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           Text(
-                            'أهلاً بعودتك',
+                            'تسجيل الدخول',
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              color: c.petrol,
-                              fontSize: 19,
+                              color: PremiumTokens.ink,
+                              fontSize: 24,
                               fontWeight: FontWeight.w900,
                             ),
                           ),
                           const SizedBox(height: 5),
                           Text(
-                            'سجّل دخولك إلى حسابك',
+                            'أدخل رقم جوالك ورمز الدخول للمتابعة',
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              color: c.muted, fontSize: 12,
+                              color: PremiumTokens.secondaryInk, fontSize: 12,
                             ),
                           ),
-                          const SizedBox(height: 17),
+                          const SizedBox(height: 22),
                           TextFormField(
                             key: const Key('login_phone'),
                             controller: _phone,
@@ -152,7 +155,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               LengthLimitingTextInputFormatter(4),
                             ],
                             decoration: InputDecoration(
-                              labelText: 'رمز الدخول',
+                              labelText: 'كلمة المرور (رمز الدخول)',
                               hintText: '••••',
                               counterText: '',
                               prefixIcon: const Icon(
@@ -180,14 +183,23 @@ class _LoginScreenState extends State<LoginScreen> {
                               child: const Text('نسيت الرمز؟'),
                             ),
                           ),
-                          const SizedBox(height: 3),
-                          FilledButton.icon(
+                          const SizedBox(height: 12),
+                          DecoratedBox(
+                            decoration: BoxDecoration(
+                              gradient: PremiumTokens.action,
+                              borderRadius: BorderRadius.circular(32),
+                              boxShadow: PremiumTokens.floatingShadow,
+                            ),
+                            child: FilledButton.icon(
                             key: const Key('login_submit'),
                             onPressed: _signIn,
                             style: FilledButton.styleFrom(
-                              minimumSize: const Size.fromHeight(50),
+                              minimumSize: const Size.fromHeight(54),
+                              backgroundColor: Colors.transparent,
+                              foregroundColor: Colors.white,
+                              shadowColor: Colors.transparent,
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(18),
+                                borderRadius: BorderRadius.circular(32),
                               ),
                             ),
                             icon: const Icon(Icons.login_rounded),
@@ -196,6 +208,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   fontSize: 16,
                                   fontWeight: FontWeight.w800,
                                 )),
+                            ),
                           ),
                           const SizedBox(height: 13),
                           Text(
@@ -219,8 +232,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                             style: OutlinedButton.styleFrom(
                               minimumSize: const Size.fromHeight(47),
-                              foregroundColor: c.petrol,
-                              side: BorderSide(color: c.mint, width: 1.5),
+                              foregroundColor: PremiumTokens.ink,
+                              side: const BorderSide(color: PremiumTokens.lilac, width: 1.5),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(18),
                               ),
@@ -240,7 +253,21 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 12),
+                  const SizedBox(height: 16),
+                  Center(
+                    child: TextButton.icon(
+                      key: const Key('login_customer_support'),
+                      onPressed: () => _notConnected('خدمة العملاء'),
+                      icon: const Icon(Icons.headset_mic_outlined, color: PremiumTokens.violet),
+                      label: const Text('خدمة العملاء', style: TextStyle(color: PremiumTokens.violet)),
+                    ),
+                  ),
+                  const Center(
+                    child: Text('جميع الحقوق محفوظة لشركة GiC ©',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 11, color: PremiumTokens.secondaryInk)),
+                  ),
+                  const SizedBox(height: 10),
                   Text(
                     'تسجيل أي عملية مالية لا يعني اعتمادها؛ '
                     'موافقة الطرف الآخر مطلوبة.',
@@ -253,6 +280,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
           ),
+        ),
         ),
       ),
     );
