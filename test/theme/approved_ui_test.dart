@@ -54,6 +54,10 @@ void main() {
     expect(find.text('العملاء'), findsOneWidget);
     expect(find.text('مساحتي'), findsOneWidget);
     expect(find.byTooltip('إضافة سريعة'), findsOneWidget);
+    final nav = tester.widget<Container>(
+      find.byKey(const Key('merchant_green_bottom_bar')),
+    );
+    expect((nav.decoration as BoxDecoration).color, AppColors.mint);
     expect(find.byTooltip('الضبط'), findsOneWidget);
     expect(find.byTooltip('التنبيهات'), findsOneWidget);
     expect(find.byTooltip('الوضع الليلي'), findsOneWidget);
