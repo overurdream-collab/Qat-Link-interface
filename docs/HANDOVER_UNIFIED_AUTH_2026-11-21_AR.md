@@ -140,3 +140,33 @@ $p='F:\maqwati-integration-fin25-20261121'; git -C $p pull --ff-only origin inte
 ```
 
 **لا تنفذ `-Apply` قبل نجاح `OTP_PROMOTION_PREFLIGHT=PASS` وفحص نتيجة أحدث CI.** بعد النشر، يجب إدراج ملف `otp-unified-promotion.override.yml` في كل أوامر Compose المستقبلية حتى توحيد التكوين نهائيًا؛ حذفه أو نسيانه قد يعيد اختيار الصورة القديمة.
+
+## 10. قبول تحديث OTP على الخدمة الحية — مؤكد من المستخدم (2026-11-21)
+
+بعد نجاح التحضير، فحص المستخدم الحالة الحية وكانت:
+```text
+OTP overlay file: F:\maqwatilink-fin25\deploy\fin25\otp-unified-promotion.override.yml
+services:
+  otp:
+    image: sha256:310d4573e701066e6bc0c95ceefe3cac4fa5d5e2d11b889715d175b3e705797c
+
+docker inspect fin25-test-otp-1 --format '{{.Image}}'
+sha256:310d4573e701066e6bc0c95ceefe3cac4fa5d5e2d11b889715d175b3e705797c
+docker inspect fin25-test-otp-1 --format '{{.State.Status}}'
+running
+```
+
+ثم أجرى فحص HTTP عبر Caddy الحالي `https://localhost:8443` وظهرت **جميع الحالات الخمس PASS**:
+```text
+PASS /healthz HTTP=200 EXPECTED=200
+PASS /v1/identity/me HTTP=401 EXPECTED=401
+PASS /v1/internal/otp/proof HTTP=404 EXPECTED=404
+PASS /v1/auth/otp/request HTTP=403 EXPECTED=403
+PASS /v1/auth/otp/public-request HTTP=503 EXPECTED=503
+```
+
+**القرار:** تم تأكيد نشر الصورة الجديدة وتشغيلها على خدمة OTP القائمة ونجاح فحوص التوجيه والحظر (5/5). لا تُعِد تشغيل `-Apply`، ولا تحذف ملف `otp-unified-promotion.override.yml`؛ ففقده عند تشغيل Compose مجددًا قد يعيد الصورة القديمة المثبتة في `preserve-live.override.json`. لا حاجة إلى بناء إضافي أو تحديث Caddy في هذه المرحلة.
+
+**حدود الدليل:** فحوص localhost باستخدام `curl -k` لا تثبت ثقة شهادة TLS على Android أو توفر اسم مضيف عام ثابت أو حماية WAF، ولا تختبر إرسال SMS فعليًا أو إتمام جلسة Identity. `503` دليل تعطل endpoint العام عمدًا، وليس دليلًا على إرسال OTP.
+
+**نقطة الاستئناف الجديدة:** التحقق من HTTPS الدائم والشهادة من جهاز الهاتف، وتأكيد ضوابط WAF/rate limits، وربط `MAQWATI_API_BASE_URL` بعنوان ثابت لبناء APK واحد؛ بعدها تشغيل اختبار حقيقي محدود لطلب OTP وتسلّمه والتحقق منه وإصدار Identity JWT و`/me`، دون تمكين وصول مالي غير معتمد. يحافظ المشغّل على نسخة بيانات FIN25 ومفاتيحها وخدمة الجهاز المعتمد ولا يفتح OTP العام قبل حماية الإساءة. 
