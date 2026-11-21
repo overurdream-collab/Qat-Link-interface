@@ -93,9 +93,11 @@ class AuthBrandHero extends StatelessWidget {
                         context.maqwatiMascotAsset,
                         fit: BoxFit.contain,
                         alignment: Alignment.bottomCenter,
-                        errorBuilder: (context, error, stackTrace) =>
-                            const Icon(Icons.person_rounded,
-                                size: 86, color: PremiumTokens.violet),
+                        errorBuilder: (context, error, stackTrace) => Image.asset(
+                          'assets/images/maqwati_approved_mascot.jpeg',
+                          fit: BoxFit.contain,
+                          alignment: Alignment.bottomCenter,
+                        ),
                       ),
                     ),
                   ],
