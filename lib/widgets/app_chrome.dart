@@ -152,6 +152,7 @@ class AppBottomBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final c = context.colors;
     return Container(
+      key: const Key('merchant_green_bottom_bar'),
       height: 73,
       decoration: BoxDecoration(
         color: c.mint,
