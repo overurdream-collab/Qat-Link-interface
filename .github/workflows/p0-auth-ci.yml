@@ -4,6 +4,10 @@ on:
   push:
     branches:
       - feat/p0-auth-identity-integration-20261118
+      - integration/fin25-identity-consolidation-20261121
+  pull_request:
+    branches:
+      - main
   workflow_dispatch:
 
 permissions:
