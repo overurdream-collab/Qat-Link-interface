@@ -20,8 +20,8 @@ permissions:
   contents: read
 
 concurrency:
-  group: p0-auth-${{ github.ref }}-${{ github.sha }}
-  cancel-in-progress: false
+  group: p0-auth-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   flutter-auth:
@@ -74,7 +74,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     env:
-      API_ORIGIN: ${{ inputs.api_origin || vars.MAQWATI_API_BASE_URL || (github.event_name == 'push' && contains(github.event.head_commit.message, '[build-identity-diagnostic-apk]') && 'https://desktop-3jc03si.tail0e4691.ts.net') || '' }}
+      API_ORIGIN: ${{ inputs.api_origin || vars.MAQWATI_API_BASE_URL || '' }}
     steps:
       - uses: actions/checkout@v4
       - uses: subosito/flutter-action@v2
