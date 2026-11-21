@@ -601,7 +601,7 @@ class _CustomerBalanceCard extends StatelessWidget {
             gradient: LinearGradient(
               begin: Alignment.topRight,
               end: Alignment.bottomLeft,
-              colors: [c.petrol, c.mint, c.sea],
+              colors: [c.petrol, c.mint, c.cyan],
             ),
             borderRadius: BorderRadius.circular(22),
           ),
