@@ -7,7 +7,7 @@ import { createInterface } from 'node:readline';
 
 const identity = 'http://127.0.0.1:8090';
 const otpContainer = 'fin25-test-otp-1';
-const dockerScript = String.raw\`
+const dockerScript = String.raw`
 const fs=require('node:fs');
 const input=JSON.parse(fs.readFileSync(0,'utf8'));
 const port=process.env.FIN25_OTP_PORT||'8083';
@@ -18,7 +18,7 @@ fetch('http://127.0.0.1:'+port+input.path,{
  const body=await r.json();
  process.stdout.write(JSON.stringify({status:r.status,body}));
 }).catch(()=>{process.stderr.write('LOCAL_OTP_UNAVAILABLE');process.exitCode=1});
-\`;
+`;
 
 async function requestOtpService(path, body) {
   return new Promise((resolve, reject) => {
