@@ -18,12 +18,15 @@ class LoginScreen extends StatefulWidget {
     required this.onToggleTheme,
     required this.onGenderChanged,
     required this.onOpenCustomerPreview,
+    this.onOpenMerchantPreview,
   });
 
   final bool isDark;
   final VoidCallback onToggleTheme;
   final ValueChanged<ProfileGender> onGenderChanged;
   final VoidCallback onOpenCustomerPreview;
+  /// Visual preview only, no authenticated identity or private account.
+  final VoidCallback? onOpenMerchantPreview;
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -258,6 +261,17 @@ class _LoginScreenState extends State<LoginScreen> {
                             icon: const Icon(Icons.visibility_outlined),
                             label: const Text('معاينة واجهات العميل'),
                           ),
+                          if (widget.onOpenMerchantPreview != null)
+                            TextButton.icon(
+                              key: const Key('open_merchant_preview'),
+                              onPressed: widget.onOpenMerchantPreview,
+                              icon: const Icon(Icons.storefront_outlined),
+                              label: const Text('معاينة واجهات التاجر'),
+                            ),
+                          if (widget.onOpenMerchantPreview != null)
+                            Text('المعاينة تجريبية فقط؛ لا تسمح بالدخول إلى الحسابات أو اعتماد المبالغ.',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(fontSize: 10, color: context.premium.muted)),
                         ],
                       ),
                     ),
