@@ -21,7 +21,7 @@ if (-not (Test-Path $manifest)) {
 if (-not (Test-Path $manifest)) { throw 'AndroidManifest.xml still missing after setup' }
 $manifestText = [System.IO.File]::ReadAllText((Resolve-Path $manifest).Path)
 $manifestText = $manifestText.Replace('android:label="qat_link"', 'android:label="مقوتي"')
-[System.IO.File]::WriteAllText((Resolve-Path $manifest).Path, $manifestText, (New-Object System.Text.UTF8Encoding($false)))
+[System.IO.File]::WriteAllText((Resolve-Path $manifest).Path, $manifestText, [System.Text.UTF8Encoding]::new($false))
 $logDir = Join-Path (Get-Location) 'build\premium-validation'
 New-Item -ItemType Directory -Path $logDir -Force | Out-Null
 $steps = @(
