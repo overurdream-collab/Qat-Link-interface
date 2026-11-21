@@ -283,3 +283,22 @@ $p='F:\maqwati-integration-fin25-20261121';powershell.exe -NoProfile -ExecutionP
 **قيود القبول:** نجاح `PUBLIC_OTP=BETA_ENABLED HTTP=400_EMPTY_BODY` لا يعني وصول SMS؛ يتطلب الاختبار الحقيقي رقمًا مملوكًا لمختبر وافق على الاختبار، وتشغيل هاتف بوابة SMS المعتمد، نجاح `sent`، إدخال الرمز، إصدار JWT و`/me`. لا طلب رسائل غير لازمة، ولا مشاركة OTP أو JWT أو مفاتيح التشفير. يجب مراقبة الميزانية والإنفاق؛ 6 رسائل/ساعة قد تعني نظريًا حتى 144 محاولة يوميًا إذا استُهلك الحد في كل ساعة، وليست حصة مجانية مضمونة.
 
 **قبل الإطلاق العام التجاري:** إضافة حماية جدية على مستوى IP/الجهاز/السلوك ومنع التسجيل الآلي، ومراقبة الإرسال والتكلفة. إعداد Funnel وحده ليس جدار WAF.
+
+## 16. إثبات تفعيل OTP التجريبي الجماعي على Windows — وفق سجل المشغل
+
+أكد المستخدم تنفيذ `scripts/maqwati_otp_multi_tester_gate.ps1 -Enable` على الكمبيوتر الحي، وكانت النتيجة:
+
+```text
+OTP_BETA_PREFLIGHT=PASS HOURLY_GLOBAL_BUDGET=6
+WARNING: Public endpoint is reachable by anyone on the Internet, not only beta APK testers.
+Container fin25-test-otp-1 Started
+PUBLIC_OTP=BETA_ENABLED HTTP=400_EMPTY_BODY HOURLY_GLOBAL_BUDGET=6
+BETA_OVERRIDE=F:\maqwatilink-fin25\deploy\fin25\otp-public-beta.override.yml
+IMPORTANT: keep all FOUR Compose files for subsequent OTP operations.
+```
+
+**الحالة الفعلية الجديدة:** خدمة OTP العامة **مفتوحة للاختبار التجريبي**، وأكد اختبار الطلب الفارغ الاستجابة `HTTP 400` بدل `503`، دون إدخال رقم أو إنشاء SMS. يحتفظ النظام بميزانية SQL ذرية إجمالية 6 طلبات/ساعة، وقيد 5 طلبات/ساعة لكل هاتف وفاصل 60 ثانية للرقم ذاته. هذه حدود تكلفة فقط، وليست حجبًا حسب IP أو WAF. لا تفترض وصول أي SMS أو نجاح جلسة هاتف إلا بعد اختبار عملي.
+
+**الحماية من العودة غير المقصودة:** يجب الاحتفاظ بالملفات الأربعة المستخدمة في عملية OTP: `docker-compose.yml`، و`preserve-live.override.json`، و`otp-unified-promotion.override.yml`، و`otp-public-beta.override.yml`. لا تُجرِ `docker compose up` عامًا أو `down`. الأمر الآمن لإغلاق الـOTP العام بعد التجربة هو `scripts/maqwati_otp_multi_tester_gate.ps1 -Disable`، مع التحقق من `HTTP=503`.
+
+**التالي:** فحص علني بلا إرسال (الطلب الفارغ `400` مع سلامة المسارات الأخرى)، والتأكد من حالة هاتف بوابة SMS المعتمد واتصاله فعليًا، ثم طلب **رسالة حقيقية واحدة إلى رقم يملكه المختبر بموافقته** من APK وتوثيق نتيجة الطلب ووصول SMS وتأكيد `sent` والتحقق من رمز OTP وإنشاء Identity JWT و`/me`. لا تطلب OTP أو المفاتيح أو JWT في المحادثة. إذا كان الجهاز غير متصل أو فشل النقل فلا تكرر إرسال رموز بشكل آلي أو تغيّر حالة الرسائل المعلقة يدويًا.
