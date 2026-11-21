@@ -18,12 +18,9 @@ class PremiumHomeHero extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(32),
           border: Border.all(color: Colors.white.withValues(alpha: .65), width: 1.4),
-          gradient: const LinearGradient(
-            begin: Alignment.topRight,
-            end: Alignment.bottomLeft,
-            colors: [Color(0xFFAAB8FF), Color(0xFF7478F0), Color(0xFF689CF5)],
-          ),
-          boxShadow: PremiumTokens.floatingShadow,
+          gradient: context.premium.hero,
+          boxShadow: [BoxShadow(color: context.premium.shadow,
+            blurRadius: 27, offset: const Offset(0, 13))],
         ),
         child: LayoutBuilder(
           builder: (context, constraints) {
