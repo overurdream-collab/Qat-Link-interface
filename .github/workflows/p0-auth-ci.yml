@@ -93,6 +93,21 @@ jobs:
           name: maqwati-branded-login-preview-apk
           path: build/app/outputs/flutter-apk/app-debug.apk
           retention-days: 7
+      - name: Compile real OTP verification + Identity login pilot APK
+        run: flutter build apk --debug --target lib/main.dart --dart-define=FIN25_MANUAL_OTP_PILOT=true
+      - name: Verify manual-pilot Android APK signature
+        shell: bash
+        run: |
+          test -s build/app/outputs/flutter-apk/app-debug.apk
+          BUILD_TOOLS=$(find "$ANDROID_HOME/build-tools" -mindepth 1 -maxdepth 1 -type d | sort -V | tail -1)
+          "$BUILD_TOOLS/apksigner" verify --verbose build/app/outputs/flutter-apk/app-debug.apk
+          sha256sum build/app/outputs/flutter-apk/app-debug.apk
+      - name: Upload protected real-login pilot APK (manual OTP request)
+        uses: actions/upload-artifact@v4
+        with:
+          name: maqwati-real-login-manual-otp-pilot-apk
+          path: build/app/outputs/flutter-apk/app-debug.apk
+          retention-days: 7
 
 
   brand-release-assets:
