@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:qat_link/main_green_preview.dart' as green;
 import 'package:qat_link/main_ui_preview.dart' show MaqwatiUiPreview;
 import 'package:qat_link/theme/app_colors.dart';
 import 'package:qat_link/theme/app_theme.dart';
