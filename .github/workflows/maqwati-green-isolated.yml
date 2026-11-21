@@ -134,9 +134,17 @@ jobs:
           PREVIEW_HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
         run: |
           tag="green-preview-${PREVIEW_HEAD_SHA:0:12}"
-          gh release create "$tag" \
-            --target "$PREVIEW_HEAD_SHA" \
-            --prerelease \
-            --title "Maqwati Green Concept Independent Preview (${GITHUB_SHA:0:12})" \
-            --notes "OFFLINE UI DEMO ONLY. Login/merchant/customer preview, not a production financial app. APK verified to have no android.permission.INTERNET; package com.maqwatilink.green_ui_preview. Not approved for live use." \
-            "build/app/outputs/flutter-apk/app-release.apk#maqwati-green-independent-preview.apk"
+          apk="build/app/outputs/flutter-apk/app-release.apk#maqwati-green-independent-preview.apk"
+          if gh release view "$tag" >/dev/null 2>&1; then
+            echo "Release $tag already exists; uploading verified APK to it."
+            gh release upload "$tag" "$apk" --clobber
+          else
+            gh release create "$tag" \
+              --target "$PREVIEW_HEAD_SHA" \
+              --prerelease \
+              --title "Maqwati Green Concept Independent Preview (${PREVIEW_HEAD_SHA:0:12})" \
+              --notes "OFFLINE UI DEMO ONLY. Login/merchant/customer preview, not a production financial app. APK verified to have no android.permission.INTERNET; package com.maqwatilink.green_ui_preview. Not approved for live use." \
+              "$apk"
+          fi
+          gh release view "$tag" --json assets --jq '.assets[].name' | grep -Fx 'maqwati-green-independent-preview.apk'
+          echo "Verified original-banner green preview published at release: $tag"
