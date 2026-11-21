@@ -23,7 +23,8 @@ void main() {
     expect(find.textContaining('معاينة واجهات العميل'), findsOneWidget);
     expect(find.text('سجل الحركة'), findsNothing);
     expect(find.text('سجل الحساب خاص'), findsNothing);
-    expect(find.text('يتطلب حساباً موثقاً'), findsWidgets);
+    expect(find.byKey(const Key('customer_currency_pager')), findsOneWidget);
+    expect(find.textContaining('لا تعرض بيانات أو أرصدة حقيقية'), findsOneWidget);
   });
 
   testWidgets('registered role options stay on a separate page', (tester) async {
