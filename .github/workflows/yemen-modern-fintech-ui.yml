@@ -105,13 +105,18 @@ jobs:
       # Private GitHub prerelease assets are an alternative delivery path.
       # Only publish after all Flutter tests and offline APK checks pass.
       - name: Publish verified private preview APK as prerelease
-        if: github.event_name != 'pull_request'
+        if: >-
+          github.event_name == 'push' ||
+          (github.event_name == 'pull_request' &&
+           github.event.pull_request.head.repo.full_name == github.repository &&
+           github.event.pull_request.head.ref == 'fix/maqwati-yemen-modern-fintech-20261121')
         env:
           GH_TOKEN: ${{ github.token }}
+          PREVIEW_HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
         run: |
-          tag="ui-preview-${GITHUB_SHA:0:12}"
+          tag="ui-preview-${PREVIEW_HEAD_SHA:0:12}"
           gh release create "$tag" \
-            --target "$GITHUB_SHA" \
+            --target "$PREVIEW_HEAD_SHA" \
             --prerelease \
             --title "Maqwati Yemen Modern Fintech UI Preview (${GITHUB_SHA:0:12})" \
             --notes "OFFLINE UI DEMO ONLY. Login/merchant/customer preview, not a production financial app. APK verified to have no android.permission.INTERNET; package com.maqwatilink.yemen_ui_preview. Not approved for live use." \
