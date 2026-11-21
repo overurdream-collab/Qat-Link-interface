@@ -154,8 +154,8 @@ class AppBottomBar extends StatelessWidget {
     return Container(
       height: 73,
       decoration: BoxDecoration(
-        color: c.card,
-        border: Border(top: BorderSide(color: c.cardBorder)),
+        color: c.mint,
+        border: Border(top: BorderSide(color: c.mint)),
         boxShadow: [
           BoxShadow(
             color: AppColors.ink.withValues(alpha: .06),
@@ -204,6 +204,8 @@ class AppBottomBar extends StatelessWidget {
   ) {
     final c = context.colors;
     final active = selectedIndex == index;
+    final navInk = Theme.of(context).brightness == Brightness.dark
+        ? c.text : AppColors.ink;
     return Expanded(
       child: Semantics(
         button: true,
@@ -215,13 +217,13 @@ class AppBottomBar extends StatelessWidget {
           child: Container(
             margin: const EdgeInsets.symmetric(horizontal: 2, vertical: 6),
             decoration: BoxDecoration(
-              color: active ? c.pale : Colors.transparent,
+              color: active ? Colors.white.withValues(alpha: .25) : Colors.transparent,
               borderRadius: BorderRadius.circular(18),
             ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(icon, size: 21, color: active ? c.petrol : c.muted),
+                Icon(icon, size: 21, color: navInk),
                 const SizedBox(height: 4),
                 FittedBox(
                   fit: BoxFit.scaleDown,
@@ -230,7 +232,7 @@ class AppBottomBar extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 10,
                       fontWeight: active ? FontWeight.w800 : FontWeight.w500,
-                      color: active ? c.petrol : c.muted,
+                      color: navInk,
                     ),
                   ),
                 ),
