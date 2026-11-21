@@ -42,7 +42,8 @@ class _Fin25OtpScreenState extends State<Fin25OtpScreen> {
     super.initState();
     _http = widget.httpClient ?? http.Client();
     _client = Fin25OtpClient(baseUri: widget.baseUri, httpClient: _http,
-      pilotAccessKey: widget.pilotAccessKey);
+      pilotAccessKey: widget.pilotAccessKey,
+      usePublicRequest: widget.identityBaseUri != null);
     _sessionClient = widget.identityClient ?? (widget.identityBaseUri == null
       ? null : IdentitySessionClient(baseUri: widget.identityBaseUri!,
           httpClient: _http));
