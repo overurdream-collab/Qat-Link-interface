@@ -15,7 +15,7 @@ import '../theme/app_colors.dart';
 import '../theme/premium_tokens.dart';
 import '../widgets/app_chrome.dart';
 import '../widgets/account_settings_sheet.dart';
-import '../widgets/home/hero_carousel.dart';
+import '../widgets/home/premium_home_hero.dart';
 import '../widgets/finance_display.dart';
 import '../widgets/merchant_space/booking_intake_policy.dart';
 import '../widgets/merchant_space/client_store_booking_sheet.dart';
@@ -433,7 +433,7 @@ class CustomerHomeScreen extends StatelessWidget {
       final relationships = id == null ? <RelationshipModel>[] : state.relationships.value.where((r) => r.customerId == id).toList();
       final reviewCount = id == null ? 0 : state.movements.value.where((m) => m.customerId == id && m.status == MovementStatus.pending && m.createdByRole == ParticipantRole.merchant).length;
       return ListView(padding: const EdgeInsets.fromLTRB(14, 8, 14, 24), children: [
-        const HeroCarousel(),
+        const PremiumHomeHero(),
         const SizedBox(height: 18),
         Row(children: [
           const Expanded(child: AppSectionTitle(title: 'ملخص الحسابات')),
@@ -489,9 +489,10 @@ class _CustomerCurrencyPager extends StatefulWidget {
 }
 
 class _CustomerCurrencyPagerState extends State<_CustomerCurrencyPager> {
-  final PageController _pages = PageController(viewportFraction: .94);
+  final PageController _pages = PageController(viewportFraction: .73, initialPage: 150);
   Timer? _autoSlide;
   int _active = 0;
+  int _currentPage = 150;
   bool _touching = false;
 
   @override
@@ -500,7 +501,7 @@ class _CustomerCurrencyPagerState extends State<_CustomerCurrencyPager> {
     _autoSlide = Timer.periodic(const Duration(seconds: 6), (_) {
       if (!mounted || _touching || !_pages.hasClients || !TickerMode.of(context)) return;
       _pages.animateToPage(
-        (_active + 1) % CurrencyCode.values.length,
+        _currentPage + 1,
         duration: const Duration(milliseconds: 420),
         curve: Curves.easeInOutCubic,
       );
@@ -527,15 +528,22 @@ class _CustomerCurrencyPagerState extends State<_CustomerCurrencyPager> {
           child: PageView.builder(
             key: const Key('customer_currency_pager'),
             controller: _pages,
-            itemCount: CurrencyCode.values.length,
-            onPageChanged: (value) => setState(() => _active = value),
-            itemBuilder: (context, index) => Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 4),
-              child: _CustomerBalanceCard(
-                state: widget.state,
-                customerId: widget.customerId,
-                currency: CurrencyCode.values[index],
-                showcase: true,
+            itemCount: CurrencyCode.values.length * 101,
+            onPageChanged: (value) => setState(() {
+              _currentPage = value;
+              _active = value % CurrencyCode.values.length;
+            }),
+            itemBuilder: (context, index) => AnimatedScale(
+              scale: index % CurrencyCode.values.length == _active ? 1 : .89,
+              duration: const Duration(milliseconds: 260),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 4),
+                child: _CustomerBalanceCard(
+                  state: widget.state,
+                  customerId: widget.customerId,
+                  currency: CurrencyCode.values[index % CurrencyCode.values.length],
+                  showcase: true,
+                ),
               ),
             ),
           ),
@@ -630,7 +638,9 @@ class _CustomerBalanceCard extends StatelessWidget {
               end: Alignment.bottomLeft,
               colors: [c.petrol, c.mint, c.cyan],
             ),
-            borderRadius: BorderRadius.circular(22),
+            borderRadius: BorderRadius.circular(32),
+            border: Border.all(color: Colors.white.withValues(alpha: .72), width: 1.4),
+            boxShadow: PremiumTokens.floatingShadow,
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
