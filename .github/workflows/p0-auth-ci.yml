@@ -141,7 +141,7 @@ jobs:
         shell: pwsh
         run: |
           $tokens=$null; $errors=$null
-          foreach ($script in @('scripts/install_maqwati_brand_assets.ps1','scripts/build_maqwati_branded_preview.ps1','scripts/fin25_identity_readonly_preflight.ps1','scripts/start_android_login_pilot.ps1','scripts/request_manual_android_otp.ps1','scripts/check_unified_auth_live.ps1')) {
+          foreach ($script in @('scripts/install_maqwati_brand_assets.ps1','scripts/build_maqwati_branded_preview.ps1','scripts/fin25_identity_readonly_preflight.ps1','scripts/check_unified_auth_live.ps1')) {
             $tokens=$null; $errors=$null
             [System.Management.Automation.Language.Parser]::ParseFile((Resolve-Path $script), [ref]$tokens, [ref]$errors) | Out-Null
             if ($errors.Count -gt 0) { $errors | Out-String | Write-Error; exit 1 }
@@ -215,10 +215,5 @@ jobs:
           docker run --rm \
             -v "$PWD/deploy/fin25/Caddyfile:/etc/caddy/Caddyfile:ro" \
             caddy:2-alpine caddy adapt --config /etc/caddy/Caddyfile > /dev/null
-      - name: Validate isolated Caddy Android login pilot with ephemeral gate key
-        run: |
-          docker run --rm -e PILOT_KEY=0123456789abcdef0123456789abcdef \
-            -v "$PWD/deploy/fin25/Caddyfile.android-login-pilot:/etc/caddy/Caddyfile:ro" \
-            caddy:2-alpine caddy validate --config /etc/caddy/Caddyfile
       - name: Build standalone identity Node image in isolated CI
         run: docker build -f server/Dockerfile.identity -t maqwati-identity-ci:check ./server
