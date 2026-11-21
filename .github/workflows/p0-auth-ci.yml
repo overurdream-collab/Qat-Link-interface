@@ -35,6 +35,8 @@ jobs:
         run: flutter test
       - name: Auth flow and FIN25 client targeted checks
         run: flutter test test/screens/auth_screens_widget_test.dart test/screens/fin25_pilot_test.dart test/services/fin25_otp_client_test.dart
+      - name: Verify one configured production origin for login and registration
+        run: flutter test test/screens/unified_auth_configured_widget_test.dart --dart-define=MAQWATI_API_BASE_URL=https://api.example.test
 
   identity-logic:
     runs-on: ubuntu-latest
@@ -93,22 +95,43 @@ jobs:
           name: maqwati-branded-login-preview-apk
           path: build/app/outputs/flutter-apk/app-debug.apk
           retention-days: 7
-      - name: Compile real OTP verification + Identity login pilot APK
-        run: flutter build apk --debug --target lib/main.dart --dart-define=FIN25_MANUAL_OTP_PILOT=true
-      - name: Verify manual-pilot Android APK signature
+      # One supported application binary. A functional APK can only be built
+      # when the operator sets the SAME persistent HTTPS origin for FIN25/Identity.
+      - name: Validate configured public HTTPS origin
+        if: ${{ vars.MAQWATI_API_BASE_URL != '' }}
+        env:
+          API_ORIGIN: ${{ vars.MAQWATI_API_BASE_URL }}
+        run: |
+          python3 - <<'PY'
+          import os, urllib.parse
+          value=os.environ['API_ORIGIN']
+          parsed=urllib.parse.urlsplit(value)
+          assert parsed.scheme == 'https' and parsed.hostname, 'HTTPS origin required'
+          assert not parsed.username and not parsed.password and not parsed.query and not parsed.fragment
+          assert parsed.path in ('','/'), 'Origin cannot contain a path'
+          assert not parsed.hostname.endswith('.trycloudflare.com'), 'Temporary tunnel is not a stable origin'
+          print('Single HTTPS origin validated')
+          PY
+      - name: Build the only connected login APK
+        if: ${{ vars.MAQWATI_API_BASE_URL != '' }}
+        env:
+          API_ORIGIN: ${{ vars.MAQWATI_API_BASE_URL }}
+        run: flutter build apk --debug --target lib/main.dart --dart-define=MAQWATI_API_BASE_URL="$API_ORIGIN"
+      - name: Verify single-origin connected APK signature
+        if: ${{ vars.MAQWATI_API_BASE_URL != '' }}
         shell: bash
         run: |
           test -s build/app/outputs/flutter-apk/app-debug.apk
           BUILD_TOOLS=$(find "$ANDROID_HOME/build-tools" -mindepth 1 -maxdepth 1 -type d | sort -V | tail -1)
           "$BUILD_TOOLS/apksigner" verify --verbose build/app/outputs/flutter-apk/app-debug.apk
           sha256sum build/app/outputs/flutter-apk/app-debug.apk
-      - name: Upload protected real-login pilot APK (manual OTP request)
+      - name: Publish one unified Maqwati login APK
+        if: ${{ vars.MAQWATI_API_BASE_URL != '' }}
         uses: actions/upload-artifact@v4
         with:
-          name: maqwati-real-login-manual-otp-pilot-apk
+          name: maqwati-unified-login-apk
           path: build/app/outputs/flutter-apk/app-debug.apk
           retention-days: 7
-
 
   brand-release-assets:
     runs-on: ubuntu-latest
