@@ -28,6 +28,13 @@ abstract final class PremiumTokens {
     end: Alignment.bottomLeft,
     colors: [Color(0xFFE9EAFF), Color(0xFFF7F7FF), Color(0xFFE5EEFF)],
   );
+  static const LinearGradient darkCanvasGradient = LinearGradient(
+    begin: Alignment.topRight,
+    end: Alignment.bottomLeft,
+    colors: [Color(0xFF1C2149), Color(0xFF171A3C), Color(0xFF27224B)],
+  );
+  static const Color darkInk = Color(0xFFF3F3FF);
+  static const Color darkSecondaryInk = Color(0xFFC6C9E7);
   static final List<BoxShadow> floatingShadow = [
     BoxShadow(color: const Color(0xFF737AB7).withValues(alpha: .16), blurRadius: 26, offset: const Offset(0, 13)),
     BoxShadow(color: Colors.white.withValues(alpha: .9), blurRadius: 4, offset: const Offset(-2, -3)),
@@ -41,16 +48,19 @@ class PremiumSurface extends StatelessWidget {
   final double radius;
 
   @override
-  Widget build(BuildContext context) => Container(
-    padding: padding,
-    decoration: BoxDecoration(
-      color: Colors.white.withValues(alpha: .66),
-      borderRadius: BorderRadius.circular(radius),
-      border: Border.all(color: Colors.white.withValues(alpha: .90), width: 1.4),
-      boxShadow: PremiumTokens.floatingShadow,
-    ),
-    child: child,
-  );
+  Widget build(BuildContext context) {
+    final dark = Theme.of(context).brightness == Brightness.dark;
+    return Container(
+      padding: padding,
+      decoration: BoxDecoration(
+        color: dark ? const Color(0xFF272B54) : Colors.white.withValues(alpha: .66),
+        borderRadius: BorderRadius.circular(radius),
+        border: Border.all(color: dark ? const Color(0xFF424775) : Colors.white.withValues(alpha: .90), width: 1.4),
+        boxShadow: dark ? const [BoxShadow(color: Color(0x55000000), blurRadius: 20, offset: Offset(0, 9))] : PremiumTokens.floatingShadow,
+      ),
+      child: child,
+    );
+  }
 }
 
 class PremiumRoundButton extends StatelessWidget {
