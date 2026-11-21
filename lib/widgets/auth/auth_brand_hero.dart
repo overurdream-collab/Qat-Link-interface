@@ -12,7 +12,6 @@ class AuthBrandHero extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dark = Theme.of(context).brightness == Brightness.dark;
     final height = compact ? 158.0 : 223.0;
     return Semantics(
       container: true,
@@ -34,11 +33,7 @@ class AuthBrandHero extends StatelessWidget {
                     height: artWidth * .89,
                     decoration: const BoxDecoration(
                       shape: BoxShape.circle,
-                      gradient: LinearGradient(
-                        begin: Alignment.topRight,
-                        end: Alignment.bottomLeft,
-                        colors: [Color(0xFFCBB4FF), Color(0xFF85C8FA)],
-                      ),
+                      gradient: context.premium.hero,
                     ),
                   ),
                 ),
@@ -56,7 +51,7 @@ class AuthBrandHero extends StatelessWidget {
                               height: compact ? 41 : 50,
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
-                                gradient: PremiumTokens.action,
+                                gradient: context.premium.action,
                                 boxShadow: PremiumTokens.floatingShadow,
                               ),
                               child: const Icon(Icons.done_all_rounded,
@@ -69,7 +64,7 @@ class AuthBrandHero extends StatelessWidget {
                               child: Text(
                                 'مقوتي',
                                 style: TextStyle(
-                                  color: dark ? Colors.white : PremiumTokens.ink,
+                                  color: context.premium.ink,
                                   fontSize: compact ? 29 : 40,
                                   fontWeight: FontWeight.w900,
                                   height: 1.3,
@@ -81,7 +76,7 @@ class AuthBrandHero extends StatelessWidget {
                               'تعاملاتك بثقة وسهولة',
                               maxLines: 2,
                               style: TextStyle(
-                                color: dark ? const Color(0xFFC3C8EC) : PremiumTokens.secondaryInk,
+                                color: context.premium.muted,
                                 fontSize: compact ? 10 : 12,
                                 height: 1.5,
                                 fontWeight: FontWeight.w700,
