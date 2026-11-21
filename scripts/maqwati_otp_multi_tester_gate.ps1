@@ -32,12 +32,6 @@ if($baseConfig.services.otp.image -ne $expectedImage){throw 'Promotion overlay d
 if([string]$baseConfig.services.otp.environment.OTP_PUBLIC_REQUEST_ENABLED -eq 'true'){
  throw 'Original OTP configuration is already publicly enabled; review before toggling'
 }
-if([string]$baseConfig.services.otp.environment.OTP_ENABLED -ne 'true'){
- throw 'OTP_ENABLED not true; do not expose a non-working beta'
-}
-if([string]$baseConfig.services.otp.environment.FIN25_SMS_DISPATCH_ENABLED -ne 'true'){
- throw 'FIN25_SMS_DISPATCH_ENABLED not true; gateway cannot deliver SMS'
-}
 if($Disable){
  if(-not(Test-Path -LiteralPath $beta)){
    Write-Host 'PUBLIC_OTP=ALREADY_CONFIGURED_DISABLED; no running container changed'
@@ -53,6 +47,12 @@ if($Disable){
  Remove-Item -LiteralPath $beta -Force
  Write-Host 'PUBLIC_OTP=DISABLED HTTP=503'
  exit 0
+}
+if([string]$baseConfig.services.otp.environment.OTP_ENABLED -ne 'true'){
+ throw 'OTP_ENABLED not true; do not expose a non-working beta'
+}
+if([string]$baseConfig.services.otp.environment.FIN25_SMS_DISPATCH_ENABLED -ne 'true'){
+ throw 'FIN25_SMS_DISPATCH_ENABLED not true; gateway cannot deliver SMS'
 }
 if(Test-Path -LiteralPath $beta){throw "Existing beta config requires review; refusing overwrite: $beta"}
 # Compose overlay contains no credentials. Budget caps TOTAL requests across all phones.
