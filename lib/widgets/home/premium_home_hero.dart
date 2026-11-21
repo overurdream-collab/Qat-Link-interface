@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../theme/premium_tokens.dart';
 
-/// Purpose-built promotional surface for the approved premium visual direction.
-/// A decorative promo, not a claim that AI features or purchases are enabled.
+/// Compact premium campaign panel. Responsive to small Arabic screens.
+/// No business action is implied by this purely informational banner.
 class PremiumHomeHero extends StatelessWidget {
   const PremiumHomeHero({super.key});
 
@@ -11,9 +11,9 @@ class PremiumHomeHero extends StatelessWidget {
   Widget build(BuildContext context) {
     return Semantics(
       container: true,
-      label: 'مقوتي، حسابات واضحة وتعاملات بثقة',
+      label: 'مقوتي، حسابات واضحة وتعاملات بثقة، كل عملية بموافقة الطرفين',
       child: Container(
-        height: 170,
+        height: 174,
         clipBehavior: Clip.antiAlias,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(32),
@@ -25,70 +25,102 @@ class PremiumHomeHero extends StatelessWidget {
           ),
           boxShadow: PremiumTokens.floatingShadow,
         ),
-        child: Stack(children: [
-          PositionedDirectional(
-            start: -34, top: -45,
-            child: Container(
-              width: 190, height: 190,
-              decoration: BoxDecoration(
-                color: Colors.white.withValues(alpha: .13),
-                shape: BoxShape.circle,
-              ),
-            ),
-          ),
-          PositionedDirectional(
-            end: -56, bottom: -90,
-            child: Container(
-              width: 240, height: 160,
-              decoration: BoxDecoration(
-                color: PremiumTokens.lilac.withValues(alpha: .45),
-                borderRadius: BorderRadius.circular(100),
-              ),
-            ),
-          ),
-          PositionedDirectional(
-            start: 15, top: 15, bottom: 0,
-            child: SizedBox(
-              width: 128,
-              child: Image.asset(
-                'assets/images/maqwati_approved_mascot.jpeg',
-                alignment: Alignment.bottomCenter,
-                fit: BoxFit.contain,
-                errorBuilder: (_, _, _) => const SizedBox.shrink(),
-              ),
-            ),
-          ),
-          PositionedDirectional(
-            end: 21, top: 27,
-            child: SizedBox(
-              width: 178,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text('مقوتي',
-                    style: TextStyle(color: Colors.white, fontSize: 26,
-                      fontWeight: FontWeight.w900)),
-                  const SizedBox(height: 4),
-                  Text('حسابات واضحة\nوتعاملات بثقة',
-                    style: TextStyle(color: Colors.white.withValues(alpha: .94),
-                      fontSize: 13, fontWeight: FontWeight.w700, height: 1.6)),
-                  const SizedBox(height: 9),
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 11, vertical: 6),
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            final mascotWidth = (constraints.maxWidth * .36).clamp(86.0, 136.0);
+            return Stack(
+              children: [
+                PositionedDirectional(
+                  start: -35, top: -63,
+                  child: Container(
+                    width: 200, height: 200,
                     decoration: BoxDecoration(
-                      color: Colors.white.withValues(alpha: .24),
-                      borderRadius: BorderRadius.circular(24),
-                      border: Border.all(color: Colors.white54),
+                      color: Colors.white.withValues(alpha: .13),
+                      shape: BoxShape.circle,
                     ),
-                    child: const Text('كل عملية بموافقة الطرفين',
-                      style: TextStyle(color: Colors.white, fontSize: 9,
-                        fontWeight: FontWeight.w800)),
                   ),
-                ],
-              ),
-            ),
-          ),
-        ]),
+                ),
+                PositionedDirectional(
+                  end: -38, bottom: -100,
+                  child: Container(
+                    width: 230, height: 180,
+                    decoration: BoxDecoration(
+                      color: PremiumTokens.lilac.withValues(alpha: .42),
+                      borderRadius: BorderRadius.circular(110),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsetsDirectional.fromSTEB(18, 13, 7, 0),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.only(bottom: 14),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text('مقوتي',
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  color: Colors.white, fontSize: 25,
+                                  fontWeight: FontWeight.w900,
+                                ),
+                              ),
+                              const SizedBox(height: 2),
+                              const Text('حسابات واضحة\nوتعاملات بثقة',
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 12.5, fontWeight: FontWeight.w700,
+                                  height: 1.4,
+                                ),
+                              ),
+                              const SizedBox(height: 9),
+                              Flexible(
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white.withValues(alpha: .22),
+                                    borderRadius: BorderRadius.circular(18),
+                                    border: Border.all(color: Colors.white54),
+                                  ),
+                                  child: const FittedBox(
+                                    fit: BoxFit.scaleDown,
+                                    alignment: Alignment.centerRight,
+                                    child: Text('كل عملية بموافقة الطرفين',
+                                      style: TextStyle(
+                                        color: Colors.white, fontSize: 10,
+                                        fontWeight: FontWeight.w800,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: mascotWidth,
+                        height: double.infinity,
+                        child: Image.asset(
+                          'assets/images/maqwati_approved_mascot.jpeg',
+                          alignment: Alignment.bottomCenter,
+                          fit: BoxFit.contain,
+                          errorBuilder: (_, _, _) => const SizedBox.shrink(),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            );
+          },
+        ),
       ),
     );
   }
