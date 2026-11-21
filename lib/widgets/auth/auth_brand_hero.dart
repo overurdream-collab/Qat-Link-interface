@@ -15,7 +15,7 @@ class AuthBrandHero extends StatelessWidget {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final width = MediaQuery.sizeOf(context).width;
     final narrow = width < 365;
-    final avatarWidth = compact ? 94.0 : (narrow ? 132.0 : 156.0);
+    final avatarWidth = compact ? 94.0 : (narrow ? 104.0 : 156.0);
     return Semantics(
       container: true,
       label: 'مقوتي لينك، كل يوم حكاية',
@@ -60,7 +60,7 @@ class AuthBrandHero extends StatelessWidget {
             PositionedDirectional(
               end: 3, top: compact ? 34 : 63,
               child: SizedBox(
-                width: narrow ? 185 : 205,
+                width: narrow ? 150 : 205,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
@@ -75,7 +75,7 @@ class AuthBrandHero extends StatelessWidget {
                           'مقوتي لينك',
                           textDirection: TextDirection.rtl,
                           style: TextStyle(
-                            fontFamily: 'Cairo', fontSize: compact ? 29 : 35,
+                            fontFamily: 'Cairo', fontSize: compact ? 29 : (narrow ? 26 : 35),
                             fontWeight: FontWeight.w900, color: Colors.white,
                             shadows: const [
                               Shadow(color: Color(0xFF2533AE), offset: Offset(2, 4), blurRadius: 1),
