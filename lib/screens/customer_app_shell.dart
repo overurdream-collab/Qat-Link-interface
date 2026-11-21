@@ -299,6 +299,8 @@ class _CustomerBottomBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final c = context.colors;
+    final navInk = Theme.of(context).brightness == Brightness.dark
+        ? c.text : AppColors.ink;
     return SizedBox(
       height: 83,
       child: Stack(
@@ -309,8 +311,8 @@ class _CustomerBottomBar extends StatelessWidget {
             top: 10,
             child: Container(
               decoration: BoxDecoration(
-                color: c.card,
-                border: Border(top: BorderSide(color: c.cardBorder)),
+                color: c.mint,
+                border: Border(top: BorderSide(color: c.mint)),
                 boxShadow: AppColors.cardShadow,
               ),
             ),
@@ -322,9 +324,9 @@ class _CustomerBottomBar extends StatelessWidget {
               width: 84,
               height: 47,
               decoration: BoxDecoration(
-                color: c.card,
+                color: c.mint,
                 borderRadius: const BorderRadius.vertical(top: Radius.circular(46)),
-                border: Border(top: BorderSide(color: c.cardBorder)),
+                border: Border(top: BorderSide(color: c.mint)),
               ),
             ),
           ),
@@ -343,7 +345,7 @@ class _CustomerBottomBar extends StatelessWidget {
                             children: [
                               Icon(_items[index].$2,
                                   size: 21,
-                                  color: index == selectedIndex ? c.petrol : c.muted),
+                                  color: navInk),
                               const SizedBox(height: 3),
                               Text(
                                 _items[index].$1,
@@ -352,7 +354,7 @@ class _CustomerBottomBar extends StatelessWidget {
                                   fontSize: 10,
                                   fontWeight: index == selectedIndex
                                       ? FontWeight.w900 : FontWeight.w500,
-                                  color: index == selectedIndex ? c.petrol : c.muted,
+                                  color: navInk,
                                 ),
                               ),
                             ],
@@ -364,13 +366,13 @@ class _CustomerBottomBar extends StatelessWidget {
           Positioned(
             top: -5,
             child: Semantics(
-              label: 'الاستوديو',
+              label: 'استديو',
               selected: selectedIndex == 2,
               button: true,
               child: Tooltip(
-                message: 'الاستوديو',
+                message: 'استديو',
                 child: Material(
-                  color: c.mint,
+                  color: c.petrol,
                   elevation: 5,
                   shape: const CircleBorder(),
                   child: InkWell(
@@ -380,8 +382,17 @@ class _CustomerBottomBar extends StatelessWidget {
                     child: const SizedBox(
                       width: 65,
                       height: 65,
-                      child: Icon(Icons.photo_library_rounded,
-                          size: 30, color: Colors.white),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.photo_library_rounded,
+                              size: 25, color: Colors.white),
+                          Text('استديو', style: TextStyle(
+                            color: Colors.white, fontSize: 10,
+                            height: 1.15, fontWeight: FontWeight.w800,
+                          )),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -890,7 +901,7 @@ class _CustomerDiscoverScreenState extends State<CustomerDiscoverScreen> {
     final markets = widget.stores.where((s) => _governorate == null || s.governorate == _governorate).map((s) => s.market).toSet().toList()..sort();
     final stores = widget.stores.where((s) => (_governorate == null || s.governorate == _governorate) && (_market.isEmpty || s.market == _market) && (_openOnly != true || s.isOpen) && (_bookingOnly != true || s.acceptsBookings) && ('${s.name} ${s.market} ${s.governorate}'.toLowerCase().contains(_search.toLowerCase()))).toList();
     return ListView(padding: const EdgeInsets.fromLTRB(14, 10, 14, 24), children: [
-      const AppSectionTitle(title: 'اكتشف المتاجر'),
+      const AppSectionTitle(title: 'استكشف المتاجر العاملة الآن'),
       const SizedBox(height: 4),
       Text('اختر المحافظة ثم السوق. زيارة المتجر لا تنشئ علاقة مالية.', style: TextStyle(color: c.muted, fontSize: 11)),
       const SizedBox(height: 10),
