@@ -12,9 +12,10 @@ import '../services/fin13_ledger_gateway.dart';
 import '../services/fin16_credit_gateway.dart';
 import '../services/movement_calculator.dart';
 import '../theme/app_colors.dart';
+import '../theme/premium_tokens.dart';
 import '../widgets/app_chrome.dart';
 import '../widgets/account_settings_sheet.dart';
-import '../widgets/home/hero_carousel.dart';
+import '../widgets/home/premium_home_hero.dart';
 import '../widgets/finance_display.dart';
 import '../widgets/merchant_space/booking_intake_policy.dart';
 import '../widgets/merchant_space/client_store_booking_sheet.dart';
@@ -291,16 +292,14 @@ class _CustomerBottomBar extends StatelessWidget {
   static const _items = <(String, IconData)>[
     ('الرئيسية', Icons.home_outlined),
     ('الحركة', Icons.receipt_long_outlined),
-    ('الاستوديو', Icons.photo_library_outlined),
+    ('استديو', Icons.photo_library_outlined),
     ('التجار', Icons.storefront_outlined),
     ('اكتشف', Icons.explore_outlined),
   ];
 
   @override
   Widget build(BuildContext context) {
-    final c = context.colors;
-    final navInk = Theme.of(context).brightness == Brightness.dark
-        ? c.text : AppColors.ink;
+    final navInk = context.premium.ink;
     return SizedBox(
       height: 83,
       child: Stack(
@@ -312,9 +311,10 @@ class _CustomerBottomBar extends StatelessWidget {
             child: Container(
               key: const Key('customer_green_bottom_bar'),
               decoration: BoxDecoration(
-                color: c.mint,
-                border: Border(top: BorderSide(color: c.mint)),
-                boxShadow: AppColors.cardShadow,
+                color: context.premium.surface,
+                borderRadius: BorderRadius.circular(32),
+                border: Border.all(color: Colors.white, width: 1.4),
+                boxShadow: PremiumTokens.floatingShadow,
               ),
             ),
           ),
@@ -325,9 +325,9 @@ class _CustomerBottomBar extends StatelessWidget {
               width: 84,
               height: 47,
               decoration: BoxDecoration(
-                color: c.mint,
+                color: context.premium.selected,
                 borderRadius: const BorderRadius.vertical(top: Radius.circular(46)),
-                border: Border(top: BorderSide(color: c.mint)),
+                border: Border.all(color: Colors.white, width: 1.4),
               ),
             ),
           ),
@@ -373,7 +373,7 @@ class _CustomerBottomBar extends StatelessWidget {
               child: Tooltip(
                 message: 'استديو',
                 child: Material(
-                  color: c.petrol,
+                  color: context.premium.accent,
                   elevation: 5,
                   shape: const CircleBorder(),
                   child: InkWell(
@@ -432,7 +432,7 @@ class CustomerHomeScreen extends StatelessWidget {
       final relationships = id == null ? <RelationshipModel>[] : state.relationships.value.where((r) => r.customerId == id).toList();
       final reviewCount = id == null ? 0 : state.movements.value.where((m) => m.customerId == id && m.status == MovementStatus.pending && m.createdByRole == ParticipantRole.merchant).length;
       return ListView(padding: const EdgeInsets.fromLTRB(14, 8, 14, 24), children: [
-        const HeroCarousel(),
+        const PremiumHomeHero(),
         const SizedBox(height: 18),
         Row(children: [
           const Expanded(child: AppSectionTitle(title: 'ملخص الحسابات')),
@@ -488,9 +488,10 @@ class _CustomerCurrencyPager extends StatefulWidget {
 }
 
 class _CustomerCurrencyPagerState extends State<_CustomerCurrencyPager> {
-  final PageController _pages = PageController(viewportFraction: .94);
+  final PageController _pages = PageController(viewportFraction: .73, initialPage: 150);
   Timer? _autoSlide;
   int _active = 0;
+  int _currentPage = 150;
   bool _touching = false;
 
   @override
@@ -499,7 +500,7 @@ class _CustomerCurrencyPagerState extends State<_CustomerCurrencyPager> {
     _autoSlide = Timer.periodic(const Duration(seconds: 6), (_) {
       if (!mounted || _touching || !_pages.hasClients || !TickerMode.of(context)) return;
       _pages.animateToPage(
-        (_active + 1) % CurrencyCode.values.length,
+        _currentPage + 1,
         duration: const Duration(milliseconds: 420),
         curve: Curves.easeInOutCubic,
       );
@@ -526,15 +527,22 @@ class _CustomerCurrencyPagerState extends State<_CustomerCurrencyPager> {
           child: PageView.builder(
             key: const Key('customer_currency_pager'),
             controller: _pages,
-            itemCount: CurrencyCode.values.length,
-            onPageChanged: (value) => setState(() => _active = value),
-            itemBuilder: (context, index) => Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 4),
-              child: _CustomerBalanceCard(
-                state: widget.state,
-                customerId: widget.customerId,
-                currency: CurrencyCode.values[index],
-                showcase: true,
+            itemCount: CurrencyCode.values.length * 101,
+            onPageChanged: (value) => setState(() {
+              _currentPage = value;
+              _active = value % CurrencyCode.values.length;
+            }),
+            itemBuilder: (context, index) => AnimatedScale(
+              scale: index % CurrencyCode.values.length == _active ? 1 : .89,
+              duration: const Duration(milliseconds: 260),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 4),
+                child: _CustomerBalanceCard(
+                  state: widget.state,
+                  customerId: widget.customerId,
+                  currency: CurrencyCode.values[index % CurrencyCode.values.length],
+                  showcase: true,
+                ),
               ),
             ),
           ),
@@ -568,11 +576,10 @@ class _CustomerHero extends StatelessWidget {
   final String subtitle;
   @override
   Widget build(BuildContext context) {
-    final c = context.colors;
     return Container(
       padding: const EdgeInsets.all(17),
       decoration: BoxDecoration(
-        gradient: LinearGradient(begin: Alignment.topRight, end: Alignment.bottomLeft, colors: [c.petrol, c.mint, c.cyan]),
+        gradient: context.premium.hero,
         borderRadius: BorderRadius.circular(22),
         boxShadow: AppColors.cardShadow,
       ),
@@ -624,12 +631,14 @@ class _CustomerBalanceCard extends StatelessWidget {
           width: double.infinity,
           padding: const EdgeInsets.all(18),
           decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topRight,
-              end: Alignment.bottomLeft,
-              colors: [c.petrol, c.mint, c.cyan],
-            ),
-            borderRadius: BorderRadius.circular(22),
+            gradient: switch (currency) {
+              CurrencyCode.yer => context.premium.yer,
+              CurrencyCode.sar => context.premium.sar,
+              CurrencyCode.usd => context.premium.usd,
+            },
+            borderRadius: BorderRadius.circular(32),
+            border: Border.all(color: Colors.white.withValues(alpha: .72), width: 1.4),
+            boxShadow: PremiumTokens.floatingShadow,
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

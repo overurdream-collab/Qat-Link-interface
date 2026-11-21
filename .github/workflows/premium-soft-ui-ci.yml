@@ -1,0 +1,93 @@
+name: Premium Soft UI validation
+
+on:
+  push:
+    branches:
+      - feat/maqwati-premium-soft-ui-20261121
+  pull_request:
+    branches:
+      - feat/maqwati-green-identity-isolated-20261121
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  runner-diagnostic:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Runner can execute shell commands
+        run: echo 'runner-online' && pwd && uname -a
+  flutter-ui:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Checkout isolated UI branch
+        uses: actions/checkout@v4
+      - name: Flutter stable
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - name: Prepare Android scaffold for source-only Flutter checkout
+        id: android_scaffold
+        run: |
+          if [ ! -f android/app/src/main/AndroidManifest.xml ]; then
+            echo 'Android project missing; generating debug-only Flutter Android scaffold'
+            scaffold="$(mktemp -d)"
+            flutter create --no-pub --project-name qat_link --platforms=android --org com.example "$scaffold"
+            cp -R "$scaffold/android" ./android
+          fi
+          test -f android/app/src/main/AndroidManifest.xml
+          python3 - <<'PY'
+          from pathlib import Path
+          path = Path('android/app/src/main/AndroidManifest.xml')
+          text = path.read_text(encoding='utf-8')
+          text = text.replace('android:label="qat_link"', 'android:label="مقوتي"')
+          path.write_text(text, encoding='utf-8')
+          PY
+      - name: Resolve dependencies
+        id: dependencies
+        run: |
+          set -o pipefail
+          flutter pub get 2>&1 | tee premium-pub.log
+      - name: Static analysis
+        run: |
+          set -o pipefail
+          flutter analyze --no-fatal-infos 2>&1 | tee premium-analyze.log
+      - name: Widget and domain regression tests
+        run: |
+          set -o pipefail
+          flutter test 2>&1 | tee premium-tests.log
+      - name: Build Android debug
+        id: android_build
+        if: ${{ !cancelled() && steps.android_scaffold.outcome == 'success' && steps.dependencies.outcome == 'success' }}
+        run: |
+          set -o pipefail
+          flutter build apk --debug 2>&1 | tee premium-android.log
+      - name: Package APK with provenance
+        id: android_package
+        if: ${{ !cancelled() && steps.android_build.outcome == 'success' }}
+        run: |
+          set -euo pipefail
+          mkdir -p artifacts
+          cp build/app/outputs/flutter-apk/app-debug.apk artifacts/maqwati-premium-debug.apk
+          (cd artifacts && sha256sum maqwati-premium-debug.apk > SHA256SUMS.txt)
+          printf 'branch=%s\ncommit=%s\nbuild=debug-only\n' "$GITHUB_REF_NAME" "$GITHUB_SHA" > artifacts/BUILD_INFO.txt
+      - name: Attach debug APK
+        if: ${{ !cancelled() && steps.android_package.outcome == 'success' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: maqwati-premium-debug-apk
+          path: artifacts/
+          if-no-files-found: error
+          retention-days: 7
+      - name: Upload validation logs even on failure
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: premium-validation-logs
+          path: premium-*.log
+          if-no-files-found: warn
+          retention-days: 7

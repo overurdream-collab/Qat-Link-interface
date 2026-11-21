@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'app_colors.dart';
+import 'premium_tokens.dart';
 
 /// Single theme source for all RTL pages. Shared chrome is deliberately
 /// outside individual pages, so the Movement page can be replaced safely.
@@ -53,7 +54,7 @@ abstract final class AppTheme {
       brightness: scheme.brightness,
       scaffoldBackgroundColor: c.background,
       visualDensity: VisualDensity.standard,
-      extensions: [c],
+      extensions: [c, PremiumVisualPalette.select(pink: pink, dark: isDark)],
     );
     return base.copyWith(
       // One typographic and contrast system for every screen. Green remains
@@ -81,20 +82,20 @@ abstract final class AppTheme {
         elevation: 0,
         margin: EdgeInsets.zero,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(28),
           side: BorderSide(color: c.cardBorder),
         ),
       ),
       dividerTheme: DividerThemeData(color: c.cardBorder, thickness: 1),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
-        fillColor: c.card,
+        fillColor: isDark ? c.card : Colors.white.withValues(alpha: .85),
         contentPadding: const EdgeInsets.symmetric(
           horizontal: 14,
           vertical: 13,
         ),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(14),
+          borderRadius: BorderRadius.circular(27),
           borderSide: BorderSide(color: c.cardBorder),
         ),
         enabledBorder: OutlineInputBorder(
@@ -110,11 +111,11 @@ abstract final class AppTheme {
         style: FilledButton.styleFrom(
           // Lime-green call-to-action from the reference. Dark text provides
           // much stronger contrast than white on bright leaf green.
-          foregroundColor: pink ? scheme.onPrimary : AppColors.ink,
-          backgroundColor: pink ? scheme.primary : c.mint,
+          foregroundColor: Colors.white,
+          backgroundColor: c.petrol,
           minimumSize: const Size(48, 46),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(28),
           ),
         ),
       ),
@@ -157,7 +158,7 @@ abstract final class AppTheme {
         backgroundColor: c.card,
         surfaceTintColor: Colors.transparent,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(30),
         ),
       ),
       snackBarTheme: SnackBarThemeData(
