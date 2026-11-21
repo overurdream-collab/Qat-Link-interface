@@ -71,12 +71,7 @@ class AppTopBar extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 3),
-          AppSquareIconButton(
-            icon: Icons.settings_rounded,
-            tooltip: 'الضبط',
-            onTap: onSettingsTap,
-          ),
-          const SizedBox(width: 5),
+          // In RTL visual order: notifications → theme → settings.
           AppSquareIconButton(
             icon: Icons.notifications_none_rounded,
             tooltip: 'التنبيهات',
@@ -87,6 +82,12 @@ class AppTopBar extends StatelessWidget {
             icon: isDark ? Icons.light_mode_outlined : Icons.dark_mode_outlined,
             tooltip: isDark ? 'الوضع النهاري' : 'الوضع الليلي',
             onTap: onThemeTap,
+          ),
+          const SizedBox(width: 5),
+          AppSquareIconButton(
+            icon: Icons.settings_rounded,
+            tooltip: 'الضبط',
+            onTap: onSettingsTap,
           ),
         ],
       ),
@@ -151,10 +152,11 @@ class AppBottomBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final c = context.colors;
     return Container(
+      key: const Key('merchant_green_bottom_bar'),
       height: 73,
       decoration: BoxDecoration(
-        color: c.card,
-        border: Border(top: BorderSide(color: c.cardBorder)),
+        color: c.mint,
+        border: Border(top: BorderSide(color: c.mint)),
         boxShadow: [
           BoxShadow(
             color: AppColors.ink.withValues(alpha: .06),
@@ -203,6 +205,8 @@ class AppBottomBar extends StatelessWidget {
   ) {
     final c = context.colors;
     final active = selectedIndex == index;
+    final navInk = Theme.of(context).brightness == Brightness.dark
+        ? c.text : AppColors.ink;
     return Expanded(
       child: Semantics(
         button: true,
@@ -214,13 +218,13 @@ class AppBottomBar extends StatelessWidget {
           child: Container(
             margin: const EdgeInsets.symmetric(horizontal: 2, vertical: 6),
             decoration: BoxDecoration(
-              color: active ? c.pale : Colors.transparent,
+              color: active ? Colors.white.withValues(alpha: .25) : Colors.transparent,
               borderRadius: BorderRadius.circular(18),
             ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(icon, size: 21, color: active ? c.petrol : c.muted),
+                Icon(icon, size: 21, color: navInk),
                 const SizedBox(height: 4),
                 FittedBox(
                   fit: BoxFit.scaleDown,
@@ -229,7 +233,7 @@ class AppBottomBar extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 10,
                       fontWeight: active ? FontWeight.w800 : FontWeight.w500,
-                      color: active ? c.petrol : c.muted,
+                      color: navInk,
                     ),
                   ),
                 ),
@@ -255,7 +259,7 @@ class AppSectionTitle extends StatelessWidget {
       children: [
         Expanded(
           child: Text(title, style: TextStyle(
-            fontSize: 14, fontWeight: FontWeight.w800, color: c.petrol,
+            fontSize: 14, fontWeight: FontWeight.w800, color: c.text,
           )),
         ),
         if (trailing != null) trailing!,

@@ -56,6 +56,19 @@ abstract final class AppTheme {
       extensions: [c],
     );
     return base.copyWith(
+      // One typographic and contrast system for every screen. Green remains
+      // an accent for actions; financial status colors keep their semantics.
+      textTheme: base.textTheme.apply(
+        fontFamily: 'Cairo',
+        bodyColor: c.text,
+        displayColor: c.text,
+      ),
+      primaryTextTheme: base.primaryTextTheme.apply(
+        fontFamily: 'Cairo',
+        bodyColor: c.text,
+        displayColor: c.text,
+      ),
+      iconTheme: IconThemeData(color: c.text),
       appBarTheme: AppBarTheme(
         backgroundColor: c.background,
         foregroundColor: c.text,
@@ -95,8 +108,10 @@ abstract final class AppTheme {
       ),
       filledButtonTheme: FilledButtonThemeData(
         style: FilledButton.styleFrom(
-          foregroundColor: scheme.onPrimary,
-          backgroundColor: scheme.primary,
+          // Lime-green call-to-action from the reference. Dark text provides
+          // much stronger contrast than white on bright leaf green.
+          foregroundColor: pink ? scheme.onPrimary : AppColors.ink,
+          backgroundColor: pink ? scheme.primary : c.mint,
           minimumSize: const Size(48, 46),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),

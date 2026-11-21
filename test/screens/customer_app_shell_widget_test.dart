@@ -27,7 +27,8 @@ void main() {
     expect(find.byKey(const Key('customer_nav_2')), findsOneWidget);
     expect(find.byKey(const Key('customer_nav_3')), findsOneWidget);
     expect(find.byKey(const Key('customer_nav_4')), findsOneWidget);
-    expect(find.text('يتطلب حساباً موثقاً'), findsWidgets);
+    expect(find.textContaining('لا تعرض بيانات أو أرصدة حقيقية'), findsOneWidget,
+        reason: 'An unverified preview must not reveal private account balances.');
 
     await tester.tap(find.byKey(const Key('customer_nav_1')));
     await tester.pumpAndSettle();
@@ -149,13 +150,31 @@ void main() {
       ),
     ));
 
-    expect(find.textContaining('700 ﷼'), findsOneWidget);
-    expect(find.textContaining('150 ر.س'), findsOneWidget);
-    expect(find.textContaining('5 \$'), findsOneWidget);
-    expect(find.textContaining('130'), findsOneWidget,
-        reason: 'Pending claims should remain visible before relationship approval.');
+    // The new home puts a full-width 16:9 banner above a *lazy* PageView.
+    // Bring the currency pager into view before testing its content.
+    await tester.drag(find.byType(ListView).first, const Offset(0, -260));
+    await tester.pumpAndSettle();
+    final pager = find.byKey(const Key('customer_currency_pager'));
+    expect(pager, findsOneWidget);
+
+    expect(find.byKey(const Key('customer_balance_yer')), findsOneWidget);
     expect(find.textContaining('700 ﷼'), findsOneWidget,
-        reason: 'The rejected 700 YER debt must not change the 700 YER balance.');
+        reason: 'Only 1000 approved debt minus 300 approved payment = 700 YER. Rejected debt is excluded.');
+    expect(find.textContaining('130'), findsOneWidget,
+        reason: '90 + 40 pending YER remain visible without entering the approved balance.');
+
+    // SAR and USD are separate pages, not simultaneously rendered cards.
+    await tester.drag(pager, const Offset(-420, 0));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const Key('customer_balance_sar')), findsOneWidget);
+    expect(find.textContaining('150 ر.س'), findsOneWidget,
+        reason: '200 approved debt minus 50 approved payment = 150 SAR.');
+
+    await tester.drag(pager, const Offset(-420, 0));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const Key('customer_balance_usd')), findsOneWidget);
+    expect(find.textContaining('5 '), findsOneWidget,
+        reason: 'Five approved USD must remain independent of YER and SAR.');
   });
 
   testWidgets('discover keeps store opening and booking availability independent',

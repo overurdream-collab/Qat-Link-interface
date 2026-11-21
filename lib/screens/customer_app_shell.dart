@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 
@@ -11,6 +13,8 @@ import '../services/fin16_credit_gateway.dart';
 import '../services/movement_calculator.dart';
 import '../theme/app_colors.dart';
 import '../widgets/app_chrome.dart';
+import '../widgets/account_settings_sheet.dart';
+import '../widgets/home/hero_carousel.dart';
 import '../widgets/finance_display.dart';
 import '../widgets/merchant_space/booking_intake_policy.dart';
 import '../widgets/merchant_space/client_store_booking_sheet.dart';
@@ -100,26 +104,25 @@ class _CustomerAppShellState extends State<CustomerAppShell> {
   }
 
   void _settings() {
-    final c = context.colors;
-    showModalBottomSheet<void>(
-      context: context,
-      showDragHandle: true,
-      backgroundColor: c.card,
-      builder: (sheet) => SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
-          child: Column(mainAxisSize: MainAxisSize.min, children: [
-            Align(alignment: Alignment.centerRight, child: Text('إعدادات العميل', style: TextStyle(color: c.petrol, fontSize: 18, fontWeight: FontWeight.w900))),
-            ListTile(
-              leading: Icon(widget.isDark ? Icons.light_mode_outlined : Icons.dark_mode_outlined, color: c.petrol),
-              title: Text(widget.isDark ? 'الوضع النهاري' : 'الوضع الليلي'),
-              onTap: () { Navigator.pop(sheet); widget.onToggleTheme(); },
-            ),
-            ListTile(leading: Icon(Icons.security_outlined, color: c.petrol), title: const Text('الخصوصية والأمان'), subtitle: const Text('الأرصدة والقرارات لا تظهر دون جلسة موثقة')),
-            ListTile(leading: Icon(Icons.info_outline, color: c.petrol), title: const Text('حول التطبيق'), subtitle: const Text('واجهة العميل — معاينة غير متصلة')),
-          ]),
-        ),
-      ),
+    // Show only the authenticated customer's own profile. Preview must
+    // never populate the settings sheet with another customer's data.
+    CustomerModel? profile;
+    if (_canViewPrivateData) {
+      for (final customer in _state.customers.value) {
+        if (customer.id == widget.customerId) {
+          profile = customer;
+          break;
+        }
+      }
+    }
+    final addressValue = profile?.profileData['address'];
+    AccountSettingsSheet.open(
+      context,
+      accountName: profile?.name ?? widget.customerName,
+      roleLabel: 'العميل',
+      phone: profile?.phone,
+      address: addressValue is String ? addressValue : null,
+      onChangeTheme: widget.onToggleTheme,
     );
   }
 
@@ -296,21 +299,109 @@ class _CustomerBottomBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final c = context.colors;
-    return Container(
-      height: 70,
-      decoration: BoxDecoration(color: c.card, border: Border(top: BorderSide(color: c.cardBorder)), boxShadow: AppColors.cardShadow),
-      child: Row(children: [
-        for (var index = 0; index < _items.length; index++)
-          Expanded(child: InkWell(
-            key: Key('customer_nav_$index'),
-            onTap: () => onSelect(index),
-            child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-              Icon(_items[index].$2, size: 20, color: index == selectedIndex ? c.petrol : c.muted),
-              const SizedBox(height: 3),
-              Text(_items[index].$1, style: TextStyle(fontSize: 9, fontWeight: index == selectedIndex ? FontWeight.w900 : FontWeight.w500, color: index == selectedIndex ? c.petrol : c.muted)),
+    final navInk = Theme.of(context).brightness == Brightness.dark
+        ? c.text : AppColors.ink;
+    return SizedBox(
+      height: 83,
+      child: Stack(
+        clipBehavior: Clip.none,
+        alignment: Alignment.bottomCenter,
+        children: [
+          Positioned.fill(
+            top: 10,
+            child: Container(
+              key: const Key('customer_green_bottom_bar'),
+              decoration: BoxDecoration(
+                color: c.mint,
+                border: Border(top: BorderSide(color: c.mint)),
+                boxShadow: AppColors.cardShadow,
+              ),
+            ),
+          ),
+          // The distinct semicircular cradle is an extension of the bar.
+          Positioned(
+            top: 0,
+            child: Container(
+              width: 84,
+              height: 47,
+              decoration: BoxDecoration(
+                color: c.mint,
+                borderRadius: const BorderRadius.vertical(top: Radius.circular(46)),
+                border: Border(top: BorderSide(color: c.mint)),
+              ),
+            ),
+          ),
+          Positioned.fill(
+            top: 12,
+            child: Row(children: [
+              for (var index = 0; index < _items.length; index++)
+                Expanded(
+                  child: index == 2
+                      ? const SizedBox.shrink()
+                      : InkWell(
+                          key: Key('customer_nav_$index'),
+                          onTap: () => onSelect(index),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(_items[index].$2,
+                                  size: 21,
+                                  color: navInk),
+                              const SizedBox(height: 3),
+                              Text(
+                                _items[index].$1,
+                                maxLines: 1,
+                                style: TextStyle(
+                                  fontSize: 10,
+                                  fontWeight: index == selectedIndex
+                                      ? FontWeight.w900 : FontWeight.w500,
+                                  color: navInk,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                ),
             ]),
-          )),
-      ]),
+          ),
+          Positioned(
+            top: -5,
+            child: Semantics(
+              label: 'استديو',
+              selected: selectedIndex == 2,
+              button: true,
+              child: Tooltip(
+                message: 'استديو',
+                child: Material(
+                  color: c.petrol,
+                  elevation: 5,
+                  shape: const CircleBorder(),
+                  child: InkWell(
+                    key: const Key('customer_nav_2'),
+                    customBorder: const CircleBorder(),
+                    onTap: () => onSelect(2),
+                    child: const SizedBox(
+                      width: 65,
+                      height: 65,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.photo_library_rounded,
+                              size: 25, color: Colors.white),
+                          Text('استديو', style: TextStyle(
+                            color: Colors.white, fontSize: 10,
+                            height: 1.15, fontWeight: FontWeight.w800,
+                          )),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -341,14 +432,14 @@ class CustomerHomeScreen extends StatelessWidget {
       final relationships = id == null ? <RelationshipModel>[] : state.relationships.value.where((r) => r.customerId == id).toList();
       final reviewCount = id == null ? 0 : state.movements.value.where((m) => m.customerId == id && m.status == MovementStatus.pending && m.createdByRole == ParticipantRole.merchant).length;
       return ListView(padding: const EdgeInsets.fromLTRB(14, 8, 14, 24), children: [
-        _CustomerHero(name: id == null ? 'مرحباً بك' : 'حسابك في مقوتي لنك', subtitle: 'تابع حساباتك وراجع طلبات التجار بوضوح.'),
-        const SizedBox(height: 17),
+        const HeroCarousel(),
+        const SizedBox(height: 18),
         Row(children: [
-          const Expanded(child: AppSectionTitle(title: 'أرصدة الحسابات')),
-          Text('كل عملة مستقلة', style: TextStyle(color: c.muted, fontSize: 10)),
+          const Expanded(child: AppSectionTitle(title: 'ملخص الحسابات')),
+          Text('3 عملات مستقلة', style: TextStyle(color: c.muted, fontSize: 10)),
         ]),
         const SizedBox(height: 9),
-        for (final currency in CurrencyCode.values) _CustomerBalanceCard(state: state, customerId: id, currency: currency),
+        _CustomerCurrencyPager(state: state, customerId: id),
         const SizedBox(height: 14),
         _CustomerActionCard(
           icon: Icons.fact_check_outlined,
@@ -385,6 +476,92 @@ class CustomerHomeScreen extends StatelessWidget {
   );
 }
 
+/// Same swipeable 3-currency concept as the merchant home, keeping each
+/// currency independent. No aggregation and no preview account leakage.
+class _CustomerCurrencyPager extends StatefulWidget {
+  const _CustomerCurrencyPager({required this.state, required this.customerId});
+  final AppState state;
+  final String? customerId;
+
+  @override
+  State<_CustomerCurrencyPager> createState() => _CustomerCurrencyPagerState();
+}
+
+class _CustomerCurrencyPagerState extends State<_CustomerCurrencyPager> {
+  final PageController _pages = PageController(viewportFraction: .94);
+  Timer? _autoSlide;
+  int _active = 0;
+  bool _touching = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _autoSlide = Timer.periodic(const Duration(seconds: 6), (_) {
+      if (!mounted || _touching || !_pages.hasClients || !TickerMode.of(context)) return;
+      _pages.animateToPage(
+        (_active + 1) % CurrencyCode.values.length,
+        duration: const Duration(milliseconds: 420),
+        curve: Curves.easeInOutCubic,
+      );
+    });
+  }
+
+  @override
+  void dispose() {
+    _autoSlide?.cancel();
+    _pages.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final c = context.colors;
+    return Column(children: [
+      Listener(
+        onPointerDown: (_) => _touching = true,
+        onPointerUp: (_) => _touching = false,
+        onPointerCancel: (_) => _touching = false,
+        child: SizedBox(
+          height: 218,
+          child: PageView.builder(
+            key: const Key('customer_currency_pager'),
+            controller: _pages,
+            itemCount: CurrencyCode.values.length,
+            onPageChanged: (value) => setState(() => _active = value),
+            itemBuilder: (context, index) => Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 4),
+              child: _CustomerBalanceCard(
+                state: widget.state,
+                customerId: widget.customerId,
+                currency: CurrencyCode.values[index],
+                showcase: true,
+              ),
+            ),
+          ),
+        ),
+      ),
+      const SizedBox(height: 7),
+      Row(
+        key: const Key('customer_currency_indicators'),
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          for (var i = 0; i < CurrencyCode.values.length; i++)
+            AnimatedContainer(
+              duration: const Duration(milliseconds: 200),
+              margin: const EdgeInsets.symmetric(horizontal: 3),
+              width: _active == i ? 19 : 6,
+              height: 6,
+              decoration: BoxDecoration(
+                color: _active == i ? c.petrol : c.cardBorder,
+                borderRadius: BorderRadius.circular(8),
+              ),
+            ),
+        ],
+      ),
+    ]);
+  }
+}
+
 class _CustomerHero extends StatelessWidget {
   const _CustomerHero({required this.name, required this.subtitle});
   final String name;
@@ -413,11 +590,12 @@ class _CustomerHero extends StatelessWidget {
 }
 
 class _CustomerBalanceCard extends StatelessWidget {
-  const _CustomerBalanceCard({required this.state, required this.customerId, required this.currency, this.merchantId});
+  const _CustomerBalanceCard({required this.state, required this.customerId, required this.currency, this.merchantId, this.showcase = false});
   final AppState state;
   final String? customerId;
   final CurrencyCode currency;
   final String? merchantId;
+  final bool showcase;
   @override
   Widget build(BuildContext context) => AnimatedBuilder(
     animation: Listenable.merge([state.movements, state.relationships]),
@@ -440,6 +618,60 @@ class _CustomerBalanceCard extends StatelessWidget {
       final balance = debt - payment;
       // Pending claims remain visible even while the relationship itself is pending.
       final pending = id == null ? Decimal.zero : MovementCalculator.pendingTotal(customerMovements, customerId: id, currency: currency);
+      if (showcase) {
+        return Container(
+          key: Key('customer_balance_${currency.name}'),
+          width: double.infinity,
+          padding: const EdgeInsets.all(18),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
+              colors: [c.petrol, c.mint, c.cyan],
+            ),
+            borderRadius: BorderRadius.circular(22),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(children: [
+                const Icon(Icons.account_balance_wallet_outlined, color: Colors.white, size: 24),
+                const SizedBox(width: 8),
+                Expanded(child: Text(
+                  switch (currency) {
+                    CurrencyCode.yer => 'الريال اليمني',
+                    CurrencyCode.sar => 'الريال السعودي',
+                    CurrencyCode.usd => 'الدولار الأمريكي',
+                  },
+                  style: const TextStyle(color: Colors.white, fontSize: 17, fontWeight: FontWeight.w900),
+                )),
+                Text(currency.name.toUpperCase(), style: const TextStyle(color: Colors.white70, fontWeight: FontWeight.w800)),
+              ]),
+              const SizedBox(height: 18),
+              Text(id == null ? 'الرصيد يتطلب تسجيل دخول موثق' : 'الرصيد المشترك المعتمد',
+                  style: const TextStyle(color: Colors.white70, fontSize: 12)),
+              const SizedBox(height: 5),
+              FittedBox(
+                fit: BoxFit.scaleDown,
+                alignment: Alignment.centerRight,
+                child: Text(
+                  id == null ? '—' : '${FinanceDisplay.amount(balance)} ${FinanceDisplay.currencySymbol(currency)}',
+                  style: const TextStyle(color: Colors.white, fontSize: 30, fontWeight: FontWeight.w900),
+                ),
+              ),
+              const Spacer(),
+              Row(children: [
+                const Icon(Icons.pending_actions_outlined, color: Colors.white70, size: 16),
+                const SizedBox(width: 6),
+                Expanded(child: Text(
+                  id == null ? 'لا توجد بيانات مالية في وضع المعاينة' : 'حركات معلقة خارج الرصيد: ${FinanceDisplay.amount(pending)}',
+                  style: const TextStyle(color: Colors.white, fontSize: 11, fontWeight: FontWeight.w700),
+                )),
+              ]),
+            ],
+          ),
+        );
+      }
       return Container(
         key: Key('customer_balance_${currency.name}'),
         margin: const EdgeInsets.only(bottom: 8),
@@ -670,7 +902,7 @@ class _CustomerDiscoverScreenState extends State<CustomerDiscoverScreen> {
     final markets = widget.stores.where((s) => _governorate == null || s.governorate == _governorate).map((s) => s.market).toSet().toList()..sort();
     final stores = widget.stores.where((s) => (_governorate == null || s.governorate == _governorate) && (_market.isEmpty || s.market == _market) && (_openOnly != true || s.isOpen) && (_bookingOnly != true || s.acceptsBookings) && ('${s.name} ${s.market} ${s.governorate}'.toLowerCase().contains(_search.toLowerCase()))).toList();
     return ListView(padding: const EdgeInsets.fromLTRB(14, 10, 14, 24), children: [
-      const AppSectionTitle(title: 'اكتشف المتاجر'),
+      const AppSectionTitle(title: 'استكشف المتاجر العاملة الآن'),
       const SizedBox(height: 4),
       Text('اختر المحافظة ثم السوق. زيارة المتجر لا تنشئ علاقة مالية.', style: TextStyle(color: c.muted, fontSize: 11)),
       const SizedBox(height: 10),

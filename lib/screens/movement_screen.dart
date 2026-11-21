@@ -61,14 +61,6 @@ class _MerchantMovementsTabState extends State<MerchantMovementsTab> {
     });
   }
 
-  void _notice(String title) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('$title — يتطلب ربط خدمة التقارير والصلاحيات.'),
-      ),
-    );
-  }
-
   static String _date(DateTime date) {
     final day = date.day.toString().padLeft(2, '0');
     final month = date.month.toString().padLeft(2, '0');
@@ -226,11 +218,7 @@ class _MerchantMovementsTabState extends State<MerchantMovementsTab> {
                   ],
                 ),
               ),
-              IconButton(
-                tooltip: 'تصدير الحركة',
-                onPressed: () => _notice('تصدير الحركة'),
-                icon: Icon(Icons.file_download_outlined, color: c.petrol),
-              ),
+
             ],
           ),
           const SizedBox(height: 8),

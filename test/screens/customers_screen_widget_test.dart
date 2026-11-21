@@ -31,6 +31,28 @@ void main() {
     expect(find.text('عمليات عالقة'), findsOneWidget);
     expect(find.text('لا يوجد عملاء مطابقون للبحث أو الفلتر'), findsOneWidget);
     expect(find.byKey(const Key('customers_sort')), findsOneWidget);
+    expect(find.byKey(const Key('customers_currency_dropdown')), findsOneWidget);
+    expect(find.byKey(const Key('customers_status_dropdown')), findsOneWidget);
+    expect(find.byKey(const Key('customers_compact_filters')), findsOneWidget);
+  });
+
+  testWidgets('compact currency and status dropdowns preserve their selections',
+      (tester) async {
+    await pumpCustomers(tester);
+    await tester.ensureVisible(find.byKey(const Key('customers_currency_dropdown')));
+    await tester.tap(find.byKey(const Key('customers_currency_dropdown')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('دولار أمريكي').last);
+    await tester.pumpAndSettle();
+    expect(find.text('دولار أمريكي'), findsOneWidget);
+
+    await tester.tap(find.byKey(const Key('customers_status_dropdown')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('المعلق').last);
+    await tester.pumpAndSettle();
+    expect(find.text('المعلق'), findsOneWidget);
+    expect(find.byType(ChoiceChip), findsNothing,
+        reason: 'Merchant customer filters are dropdowns, not cramped chips.');
   });
 
   testWidgets('a customer without approved relationship stays off the list',

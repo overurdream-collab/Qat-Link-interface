@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 
 import '../../theme/app_colors.dart';
 
-/// Yemen Modern Fintech: lightweight, accessible identity used by both
-/// onboarding screens. The approved Yemeni mascot stays an offline asset.
-/// No embedded form controls or rasterized text: these remain real widgets.
+/// Dedicated green identity, inspired by the approved Yemeni mascot mockups.
+/// Uses actual Flutter text and controls, never a flattened image form.
+/// The portrait is the existing local mascot; high-resolution original
+/// replacement needs owner-asset verification in a separate change.
 class AuthBrandHero extends StatelessWidget {
   const AuthBrandHero({super.key, this.compact = false});
 
@@ -12,128 +13,143 @@ class AuthBrandHero extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final c = context.colors;
+    final colors = context.colors;
     final dark = Theme.of(context).brightness == Brightness.dark;
-    final height = compact ? 118.0 : 168.0;
+    final imageSize = compact ? 70.0 : 106.0;
 
     return Semantics(
       container: true,
       label: 'مقوتي لينك، حلقة وصل بينك وبين عملائك',
       child: Container(
+        height: compact ? 146 : 222,
         width: double.infinity,
-        height: height,
         clipBehavior: Clip.antiAlias,
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topRight,
-            end: Alignment.bottomLeft,
-            colors: dark
-                ? [c.card, c.pale]
-                : [c.card, c.pale, c.background],
-          ),
-          borderRadius: BorderRadius.circular(24),
-          border: Border.all(color: c.cardBorder),
+          borderRadius: BorderRadius.circular(27),
+          border: Border.all(color: colors.cardBorder),
+          color: colors.card,
+          boxShadow: AppColors.cardShadow,
         ),
         child: Stack(
           children: [
-            // A restrained qamariya-inspired arc; never behind form labels.
             PositionedDirectional(
-              start: -40,
-              top: -78,
-              child: Container(
-                width: 190,
-                height: 190,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(
-                    color: const Color(0xFFD4A13E).withValues(alpha: .65),
-                    width: 1.5,
-                  ),
-                ),
-              ),
-            ),
-            PositionedDirectional(
-              start: 15,
-              bottom: 0,
-              top: 7,
-              child: SizedBox(
-                width: compact ? 105 : 137,
-                child: Semantics(
-                  image: true,
-                  label: 'شخصية مقوتي اليمنية',
-                  child: Image.asset(
-                    'assets/images/maqwati_approved_mascot.jpeg',
-                    fit: BoxFit.contain,
-                    alignment: Alignment.bottomCenter,
-                    errorBuilder: (context, error, stackTrace) => Icon(
-                      Icons.person_pin_rounded,
-                      color: c.petrol,
-                      size: compact ? 65 : 91,
+              start: -60,
+              top: -130,
+              child: Transform.rotate(
+                angle: -.22,
+                child: Container(
+                  width: 280,
+                  height: compact ? 185 : 210,
+                  decoration: BoxDecoration(
+                    color: dark
+                        ? colors.pale
+                        : const Color(0xFFD9F6C9),
+                    borderRadius: const BorderRadius.only(
+                      bottomLeft: Radius.circular(155),
+                      bottomRight: Radius.circular(115),
                     ),
                   ),
                 ),
               ),
             ),
             PositionedDirectional(
-              start: compact ? 116 : 146,
-              end: 12,
-              top: 0,
-              bottom: 0,
+              end: -36,
+              bottom: -60,
+              child: Container(
+                height: 130,
+                width: 190,
+                decoration: BoxDecoration(
+                  color: colors.pale.withValues(alpha: .65),
+                  borderRadius: const BorderRadius.all(Radius.elliptical(100, 65)),
+                ),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: 16,
+                vertical: compact ? 10 : 13,
+              ),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  FittedBox(
-                    fit: BoxFit.scaleDown,
-                    alignment: Alignment.centerRight,
-                    child: Text(
-                      'مقوتي لينك',
-                      textDirection: TextDirection.rtl,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Expanded(
+                        child: FittedBox(
+                          fit: BoxFit.scaleDown,
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            'مقوتي لينك',
+                            style: TextStyle(
+                              color: colors.petrol,
+                              fontSize: compact ? 23 : 28,
+                              height: 1.15,
+                              fontWeight: FontWeight.w900,
+                            ),
+                            textDirection: TextDirection.rtl,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 6),
+                      Icon(
+                        Icons.spa_rounded,
+                        size: compact ? 21 : 26,
+                        color: colors.mint,
+                      ),
+                    ],
+                  ),
+                  if (!compact)
+                    Text(
+                      'Muqawati Link',
                       style: TextStyle(
-                        color: c.petrol,
-                        fontSize: compact ? 23 : 28,
-                        fontWeight: FontWeight.w900,
-                        height: 1.25,
+                        color: colors.muted,
+                        letterSpacing: 1.1,
+                        fontSize: 11,
                       ),
                     ),
-                  ),
-                  const SizedBox(height: 6),
-                  Text(
-                    'حلقة وصل بينك وبين عملائك',
-                    textDirection: TextDirection.rtl,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      color: c.text,
-                      fontSize: compact ? 10 : 12,
-                      fontWeight: FontWeight.w600,
-                      height: 1.5,
-                    ),
-                  ),
-                  if (!compact) ...[
-                    const SizedBox(height: 12),
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const Icon(
-                          Icons.verified_user_outlined,
-                          color: Color(0xFFB38435),
-                          size: 16,
-                        ),
-                        const SizedBox(width: 5),
-                        Flexible(
-                          child: Text(
-                            'التاجر يسجّل، والعميل يعتمد',
-                            maxLines: 2,
-                            style: TextStyle(
-                              color: c.muted,
-                              fontSize: 10,
-                            ),
-                          ),
+                  SizedBox(height: compact ? 5 : 8),
+                  Container(
+                    width: imageSize,
+                    height: imageSize,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: colors.pale,
+                      border: Border.all(color: colors.card, width: 4),
+                      boxShadow: const [
+                        BoxShadow(
+                          color: Color(0x25245819),
+                          blurRadius: 14,
+                          offset: Offset(0, 5),
                         ),
                       ],
                     ),
-                  ],
+                    clipBehavior: Clip.antiAlias,
+                    child: Image.asset(
+                      'assets/images/maqwati_approved_mascot.jpeg',
+                      fit: BoxFit.cover,
+                      alignment: Alignment.topCenter,
+                      errorBuilder: (context, error, stackTrace) => Icon(
+                        Icons.account_circle_rounded,
+                        color: colors.petrol,
+                        size: imageSize * .75,
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: compact ? 4 : 9),
+                  Text(
+                    'حلقة وصل بينك وبين عملائك',
+                    textDirection: TextDirection.rtl,
+                    textAlign: TextAlign.center,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      color: colors.text,
+                      fontSize: compact ? 10.5 : 12,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
                 ],
               ),
             ),
