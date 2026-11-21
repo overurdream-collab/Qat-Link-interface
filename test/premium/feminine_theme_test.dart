@@ -17,9 +17,9 @@ void main() {
     expect(palette.accent, const Color(0xFFAD3379));
     expect(palette.ink, const Color(0xFF45233D));
     expect(palette.hero.colors.first, const Color(0xFFE88DB8));
-    expect(palette.yer.colors.first, const Color(0xFFC04F99));
-    expect(palette.sar.colors.first, const Color(0xFFCE6FAD));
-    expect(palette.usd.colors.first, const Color(0xFF9A63CA));
+    expect(palette.yer.colors.first, const Color(0xFFA23478));
+    expect(palette.sar.colors.first, const Color(0xFF963E77));
+    expect(palette.usd.colors.first, const Color(0xFF69429D));
     expect(find.text('مقوتي'), findsOneWidget);
   });
 
