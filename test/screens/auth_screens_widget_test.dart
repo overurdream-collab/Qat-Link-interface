@@ -23,7 +23,7 @@ void main() {
     expect(find.textContaining('معاينة واجهات العميل'), findsOneWidget);
     expect(find.text('سجل الحركة'), findsNothing);
     expect(find.text('سجل الحساب خاص'), findsNothing);
-    expect(find.byKey(const Key('customer_currency_pager')), findsOneWidget);
+    expect(find.byKey(const Key('home_campaign_carousel')), findsOneWidget);
     expect(find.textContaining('لا تعرض بيانات أو أرصدة حقيقية'), findsOneWidget);
   });
 
