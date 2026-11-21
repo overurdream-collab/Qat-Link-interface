@@ -14,24 +14,35 @@ void main() {
     expect(RegistrationRole.supplier.title, 'مورد');
   });
 
-  test('Yemeni phone and international phone formats are accepted', () {
+  test('only Yemeni mobile numbers in ASCII are accepted', () {
     expect(AuthInputValidation.phone('771234567'), isNull);
-    expect(AuthInputValidation.phone('+967 771 234 567'), isNull);
-    expect(AuthInputValidation.phone('٧٧١٢٣٤٥٦٧'), isNull);
-    expect(AuthInputValidation.phone('+۹۶۷۷۷۱۲۳۴۵۶۷'), isNull);
+    expect(AuthInputValidation.phone('+967 771 234 567'), isNotNull);
+    expect(AuthInputValidation.phone('٧٧١٢٣٤٥٦٧'), isNotNull);
+    expect(AuthInputValidation.phone('+۹۶۷۷۷۱۲۳۴۵۶۷'), isNotNull);
+    expect(AuthInputValidation.phone('707123456'), isNull);
+    expect(AuthInputValidation.phone('717123456'), isNull);
+    expect(AuthInputValidation.phone('727123456'), isNull);
+    expect(AuthInputValidation.phone('737123456'), isNull);
+    expect(AuthInputValidation.phone('777123456'), isNull);
+    expect(AuthInputValidation.phone('787123456'), isNull);
+    expect(AuthInputValidation.phone('+966 551 234 567'), isNotNull);
+    expect(AuthInputValidation.phone('71234567'), isNotNull);
+    expect(AuthInputValidation.phone('751234567'), isNull);
+    expect(AuthInputValidation.phone('123456789'), isNull);
+    expect(AuthInputValidation.phone('000000000'), isNull);
     expect(AuthInputValidation.phone('12'), isNotNull);
     expect(AuthInputValidation.phone('abc123456789'), isNotNull);
   });
 
   test('four digit PIN and confirmation are validated without saving', () {
     expect(AuthInputValidation.pin('1234'), isNull);
-    expect(AuthInputValidation.pin('١٢٣٤'), isNull);
+    expect(AuthInputValidation.pin('١٢٣٤'), isNotNull);
     expect(AuthInputValidation.pin('123'), isNotNull);
     expect(AuthInputValidation.pin('12345'), isNotNull);
     expect(AuthInputValidation.pin('abcd'), isNotNull);
     expect(AuthInputValidation.confirmPin('1234', '1234'), isNull);
     expect(AuthInputValidation.confirmPin('4321', '1234'), isNotNull);
-    expect(AuthInputValidation.confirmPin('١٢٣٤', '1234'), isNull);
+    expect(AuthInputValidation.confirmPin('١٢٣٤', '1234'), isNotNull);
   });
 
   test('full name requires at least two parts', () {

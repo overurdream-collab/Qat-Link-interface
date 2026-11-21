@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -5,6 +6,10 @@ import '../features/auth/auth_input_validation.dart';
 import '../theme/app_colors.dart';
 import '../widgets/auth/auth_brand_hero.dart';
 import 'registration_screen.dart';
+import '../services/fin25_otp_client.dart';
+import 'fin25_otp_screen.dart';
+import 'fin25_pilot_setup_screen.dart';
+import 'notification_design_preview_screen.dart';
 
 /// App entry point. UI only: no PIN is persisted, sent, or accepted without
 /// server authentication. Never navigate to private finance pages on form
@@ -47,6 +52,98 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
+  // Set at build time only for a controlled FIN25 test; no server URL is hardcoded.
+  static const _fin25Url = String.fromEnvironment('FIN25_OTP_BASE_URL');
+
+  Future<void> _openOtpTest() async {
+    if (!kDebugMode) return;
+    final String phone;
+    try {
+      if (AuthInputValidation.phone(_phone.text) != null) {
+        throw const FormatException('Invalid local phone');
+      }
+      phone = Fin25OtpClient.normalizeYemeniPhone(_phone.text);
+    } on Exception {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('أدخل 9 أرقام إنجليزية بعد مفتاح اليمن +967.'),
+      ));
+      return;
+    }
+
+    // Debug builds only. The URL is never saved, and no request is sent
+    // until the user explicitly presses "إرسال رمز OTP" on the next screen.
+    String enteredUrl = _fin25Url;
+    final selectedUrl = await showDialog<String>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: const Text('عنوان خادم OTP التجريبي'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Text('أدخل عنوان HTTPS الموثوق لبيئة الاختبار فقط. '
+                'لا تستخدم خادماً لا تتحكم به.'),
+            const SizedBox(height: 12),
+            TextFormField(
+              key: const Key('fin25_otp_server_url'),
+              initialValue: _fin25Url,
+              onChanged: (value) => enteredUrl = value,
+              keyboardType: TextInputType.url,
+              autocorrect: false,
+              decoration: const InputDecoration(
+                hintText: 'https://your-test-server.example/',
+                labelText: 'عنوان HTTPS',
+              ),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(dialogContext),
+            child: const Text('إلغاء'),
+          ),
+          FilledButton(
+            key: const Key('fin25_otp_open'),
+            onPressed: () => Navigator.pop(dialogContext, enteredUrl.trim()),
+            child: const Text('متابعة'),
+          ),
+        ],
+      ),
+    );
+    if (!mounted || selectedUrl == null) return;
+    try {
+      final base = Uri.parse(selectedUrl);
+      // Require a clean HTTPS origin; do not accept credentials or paths.
+      if (base.scheme != 'https' || base.host.isEmpty ||
+          base.userInfo.isNotEmpty || base.hasQuery || base.hasFragment ||
+          (base.path.isNotEmpty && base.path != '/')) {
+        throw const FormatException('Root HTTPS base URL required');
+      }
+      Navigator.of(context).push(MaterialPageRoute<void>(
+        builder: (_) => Fin25OtpScreen(phone: phone, baseUri: base),
+      ));
+    } on Exception {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('أدخل عنوان HTTPS صحيحاً وخالياً من أي مسار أو بيانات دخول.'),
+      ));
+    }
+  }
+
+  void _signInWithSms() {
+    final String phone;
+    try {
+      phone = Fin25OtpClient.normalizeYemeniPhone(_phone.text);
+    } on Fin25OtpException catch (error) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(error.message)));
+      return;
+    }
+    // OTP login is independent of the unconnected four-digit PIN.
+    Navigator.of(context).push(MaterialPageRoute<void>(
+      builder: (_) => Fin25PilotSetupScreen(
+        initialPhone: phone, enableIdentity: true),
+    ));
+  }
+
   void _signIn() {
     if (!_formKey.currentState!.validate()) return;
     // Deliberately no onAuthenticated call, persistent token, local PIN
@@ -59,7 +156,30 @@ class _LoginScreenState extends State<LoginScreen> {
     final c = context.colors;
     return Scaffold(
       backgroundColor: c.background,
-      body: SafeArea(
+      body: Stack(
+        children: [
+          Positioned.fill(child: Image.asset(
+            MaqwatiBrandAssets.loginBackground,
+            key: const Key('maqwati_login_background'),
+            fit: BoxFit.cover,
+            alignment: Alignment.centerRight,
+            errorBuilder: (_, __, ___) => DecoratedBox(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topRight,
+                  end: Alignment.bottomLeft,
+                  colors: [MaqwatiBrandColors.lightAqua, c.background,
+                    MaqwatiBrandColors.deepTeal.withValues(alpha: .20)],
+                ),
+              ),
+            ),
+          )),
+          Positioned.fill(child: ColoredBox(
+            color: Theme.of(context).brightness == Brightness.dark
+                ? const Color(0xC713212D)
+                : const Color(0x8CF1F8FA),
+          )),
+          SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.fromLTRB(16, 9, 16, 24),
           child: Center(
@@ -88,7 +208,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   Container(
                     padding: const EdgeInsets.fromLTRB(19, 18, 19, 19),
                     decoration: BoxDecoration(
-                      color: c.card,
+                      color: widget.isDark
+                          ? c.card.withValues(alpha: .96)
+                          : Colors.white.withValues(alpha: .96),
                       borderRadius: BorderRadius.circular(26),
                       border: Border.all(color: c.cardBorder),
                       boxShadow: AppColors.cardShadow,
@@ -115,21 +237,94 @@ class _LoginScreenState extends State<LoginScreen> {
                               color: c.muted, fontSize: 12,
                             ),
                           ),
-                          const SizedBox(height: 17),
+                          const SizedBox(height: 11),
+                          Container(
+                            key: const Key('bilateral_approval_message'),
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 9, horizontal: 11),
+                            decoration: BoxDecoration(
+                              color: c.pale,
+                              borderRadius: BorderRadius.circular(13),
+                              border: Border.all(
+                                color: MaqwatiBrandColors.gold
+                                    .withValues(alpha: .55)),
+                            ),
+                            child: Row(children: [
+                              Icon(Icons.verified_user_outlined,
+                                  color: c.petrol, size: 20),
+                              const SizedBox(width: 8),
+                              Expanded(child: Text(
+                                'التاجر يسجّل، والعميل يعتمد',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    color: c.petrol,
+                                    fontWeight: FontWeight.w800,
+                                    fontSize: 12),
+                              )),
+                            ]),
+                          ),
+                          const SizedBox(height: 14),
                           TextFormField(
                             key: const Key('login_phone'),
+                            inputFormatters: [
+                              FilteringTextInputFormatter.digitsOnly,
+                              LengthLimitingTextInputFormatter(9),
+                            ],
                             controller: _phone,
                             keyboardType: TextInputType.phone,
                             textDirection: TextDirection.ltr,
                             textAlign: TextAlign.right,
                             autofillHints: const [AutofillHints.telephoneNumber],
                             decoration: const InputDecoration(
-                              labelText: 'رقم الجوال',
-                              hintText: 'مثال: 771234567',
+                              labelText: 'رقم الجوال اليمني',
+                              prefixText: '+967  ',
+                              helperText: '9 أرقام إنجليزية فقط',
+                              hintText: '771234567',
                               prefixIcon: Icon(Icons.phone_android_rounded),
                             ),
                             validator: AuthInputValidation.phone,
                           ),
+                          const SizedBox(height: 13),
+                          FilledButton.icon(
+                            key: const Key('login_with_otp'),
+                            onPressed: _signInWithSms,
+                            style: FilledButton.styleFrom(
+                              backgroundColor: MaqwatiBrandColors.deepTeal,
+                              foregroundColor: Colors.white,
+                              minimumSize: const Size.fromHeight(54),
+                              side: const BorderSide(
+                                color: MaqwatiBrandColors.gold,
+                                width: 1.5,
+                              ),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(18),
+                              ),
+                            ),
+                            icon: const Icon(Icons.sms_outlined),
+                            label: const Text('الدخول برمز تحقق SMS',
+                              style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.w900)),
+                          ),
+                          const SizedBox(height: 8),
+                          Text('تصل رسالة إلى جوالك للتحقق من ملكية الرقم',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 11, color: c.muted,
+                            ),
+                          ),
+                          const SizedBox(height: 16),
+                          Row(children: [
+                            Expanded(child: Divider(color: c.cardBorder)),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 12),
+                              child: Text('الدخول بالرمز الخاص (غير مفعّل)',
+                                style: TextStyle(
+                                  fontSize: 11, color: c.muted,
+                                )),
+                            ),
+                            Expanded(child: Divider(color: c.cardBorder)),
+                          ]),
                           const SizedBox(height: 13),
                           TextFormField(
                             key: const Key('login_pin'),
@@ -142,7 +337,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             textAlign: TextAlign.right,
                             inputFormatters: [
                               FilteringTextInputFormatter.allow(
-                                RegExp(r'[0-9٠-٩۰-۹]'),
+                                RegExp(r'[0-9]'),
                               ),
                               LengthLimitingTextInputFormatter(4),
                             ],
@@ -176,22 +371,47 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
                           const SizedBox(height: 3),
-                          FilledButton.icon(
+                          OutlinedButton.icon(
                             key: const Key('login_submit'),
                             onPressed: _signIn,
-                            style: FilledButton.styleFrom(
-                              minimumSize: const Size.fromHeight(50),
+                            style: OutlinedButton.styleFrom(
+                              minimumSize: const Size.fromHeight(45),
+                              foregroundColor: c.muted,
+                              side: BorderSide(color: c.cardBorder),
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(18),
+                                borderRadius: BorderRadius.circular(16),
                               ),
                             ),
-                            icon: const Icon(Icons.login_rounded),
-                            label: const Text('تسجيل الدخول',
+                            icon: const Icon(Icons.lock_clock_outlined),
+                            label: const Text('الدخول بالرمز الخاص (قيد التطوير)',
                                 style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w800,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w700,
                                 )),
                           ),
+                          const SizedBox(height: 10),
+
+                          if (kDebugMode) ...[
+                            const SizedBox(height: 10),
+                            OutlinedButton.icon(
+                              key: const Key('fin25_otp_test'),
+                              onPressed: _openOtpTest,
+                              icon: const Icon(Icons.sms_outlined),
+                              label: const Text('اختبار تحقق SMS (بدون تسجيل دخول)'),
+                            ),
+                            const SizedBox(height: 8),
+                            OutlinedButton.icon(
+                              key: const Key('open_notification_design_preview'),
+                              onPressed: () => Navigator.of(context).push(
+                                MaterialPageRoute<void>(
+                                  builder: (_) =>
+                                      const NotificationDesignPreviewScreen(),
+                                ),
+                              ),
+                              icon: const Icon(Icons.auto_awesome_outlined),
+                              label: const Text('معاينة حركة التنبيهات والحجوزات'),
+                            ),
+                          ],
                           const SizedBox(height: 13),
                           Text(
                             'ليس لديك حساب؟',
@@ -241,6 +461,8 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           ),
         ),
+          ),
+        ],
       ),
     );
   }

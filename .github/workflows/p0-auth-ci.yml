@@ -1,0 +1,169 @@
+name: P0 auth integration safety checks
+
+on:
+  push:
+    branches:
+      - feat/p0-auth-identity-integration-20261118
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: p0-auth-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  flutter-auth:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - name: Resolve dependencies
+        run: flutter pub get
+      - name: Static analysis
+        run: flutter analyze --no-fatal-infos
+      - name: Full Flutter unit and widget suite
+        run: flutter test
+      - name: Auth flow and FIN25 client targeted checks
+        run: flutter test test/screens/auth_screens_widget_test.dart test/screens/fin25_pilot_test.dart test/services/fin25_otp_client_test.dart
+
+  identity-logic:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check identity service syntax
+        run: node --check server/src/identity_logic.mjs && node --check server/src/identity_finance_provisioner.mjs && node --check server/src/identity_server.mjs && node --check scripts/check_identity_runtime_trust.mjs
+      - name: Verify trust preflight fails safely without local credentials
+        run: |
+          if node scripts/check_identity_runtime_trust.mjs > preflight.log 2>&1; then
+            echo "Preflight must fail closed without local secrets"; exit 1
+          fi
+          if ! grep -q 'BLOCKED\|identity.runtime.env missing' preflight.log; then
+            cat preflight.log; exit 1
+          fi
+          echo "Read-only preflight correctly blocks unconfigured deployment"
+      - name: Install Node identity test dependencies
+        working-directory: server
+        run: npm install --omit=dev --ignore-scripts --no-audit --no-fund
+      - name: Run identity security unit tests
+        working-directory: server
+        run: node --test test/p0_identity_*.test.mjs
+
+  android-compile:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - name: Resolve Flutter packages
+        run: flutter pub get
+      - name: Generate Android project for isolated CI compile
+        run: flutter create --platforms=android --project-name qat_link --org com.maqwati .
+      - name: Verify offline Maqwati preview assets (release requires originals)
+        run: python3 scripts/check_maqwati_brand_assets.py --mode preview
+      - name: Compile main Flutter app as debug APK (not a release)
+        run: flutter build apk --debug --target lib/main.dart
+      - name: Verify build artifact and debug signature
+        shell: bash
+        run: |
+          test -s build/app/outputs/flutter-apk/app-debug.apk
+          BUILD_TOOLS=$(find "$ANDROID_HOME/build-tools" -mindepth 1 -maxdepth 1 -type d | sort -V | tail -1)
+          "$BUILD_TOOLS/apksigner" verify --verbose build/app/outputs/flutter-apk/app-debug.apk
+          sha256sum build/app/outputs/flutter-apk/app-debug.apk
+          echo "Build verified. Identity endpoint not supplied: this is NOT a functional login release."
+      - name: Upload branded login preview APK (not for financial login)
+        uses: actions/upload-artifact@v4
+        with:
+          name: maqwati-branded-login-preview-apk
+          path: build/app/outputs/flutter-apk/app-debug.apk
+          retention-days: 7
+
+
+  brand-release-assets:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify asset gate logic is executable
+        run: |
+          python3 scripts/check_maqwati_brand_assets.py --mode preview
+          python3 -m py_compile scripts/check_maqwati_brand_assets.py
+          echo "Full-size release assets must be checked with --mode release BEFORE any distribution."
+      - name: Parse Windows PowerShell brand installer
+        shell: pwsh
+        run: |
+          $tokens=$null; $errors=$null
+          foreach ($script in @('scripts/install_maqwati_brand_assets.ps1','scripts/build_maqwati_branded_preview.ps1','scripts/fin25_identity_readonly_preflight.ps1')) {
+            $tokens=$null; $errors=$null
+            [System.Management.Automation.Language.Parser]::ParseFile((Resolve-Path $script), [ref]$tokens, [ref]$errors) | Out-Null
+            if ($errors.Count -gt 0) { $errors | Out-String | Write-Error; exit 1 }
+          }
+
+  identity-postgres-schema:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: test_identity
+          POSTGRES_PASSWORD: local_ci_only
+          POSTGRES_DB: identity_ci
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U test_identity -d identity_ci"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 15
+    env:
+      PGHOST: localhost
+      PGPORT: '5432'
+      PGUSER: test_identity
+      PGPASSWORD: local_ci_only
+      PGDATABASE: identity_ci
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install PostgreSQL client
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq postgresql-client
+      - name: Apply identity schema to isolated disposable database
+        run: psql -X -v ON_ERROR_STOP=1 -f server/sql/008_p0_identity_accounts.sql
+      - name: Test phone constraint, duplicate protection, transaction rollback
+        run: psql -X -v ON_ERROR_STOP=1 -f server/test/p0_identity_schema_checks.sql
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install isolated Node identity test dependencies
+        working-directory: server
+        run: npm install --omit=dev --ignore-scripts --no-audit --no-fund
+      - name: Run synthetic HTTP identity login using real PostgreSQL (never sends SMS)
+        working-directory: server
+        env:
+          IDENTITY_CI_DATABASE_URL: postgresql://test_identity:local_ci_only@127.0.0.1:5432/identity_ci
+        run: node --test test/p0_identity_http_postgres.test.mjs
+
+  identity-image-contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Parse isolated identity Compose without changing running services
+        run: |
+          cp deploy/p0-identity/identity.runtime.env.example deploy/p0-identity/identity.runtime.env
+          cp deploy/p0-identity/identity.db.env.example deploy/p0-identity/identity.db.env
+          docker compose -f deploy/p0-identity/compose.yml --env-file deploy/p0-identity/identity.runtime.env config --quiet
+          rm deploy/p0-identity/identity.runtime.env deploy/p0-identity/identity.db.env
+      - name: Build standalone identity Node image in isolated CI
+        run: docker build -f server/Dockerfile.identity -t maqwati-identity-ci:check ./server

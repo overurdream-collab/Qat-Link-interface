@@ -6,6 +6,8 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 
+import '../auth/maqwati_report_brand.dart';
+
 import '../../models/app_models.dart';
 import '../finance_display.dart';
 import 'customer_statement_calculator.dart';
@@ -126,11 +128,12 @@ abstract final class CustomerStatementPdf {
     }
 
     rectangle(0, 0, _width, 102, teal);
-    label('مقوتي لنك', 750, 18, 320, size: 31,
+    await paintMaqwatiReportLogo(canvas, x: 16, y: 11, width: 245, height: 82);
+    label('مقوتي لينك', 750, 18, 320, size: 31,
         color: const ui.Color(0xFFFFFFFF), bold: true);
     label('كشف حساب العميل • نسخة معاينة غير موثقة', 746, 60, 510,
         size: 16, color: const ui.Color(0xFFECFFFB));
-    label('صفحة ${page + 1} من $pageCount', 202, 32, 158,
+    label('صفحة ${page + 1} من $pageCount', 407, 72, 134,
         size: 15, color: const ui.Color(0xFFFFFFFF));
 
     rectangle(36, 122, 722, 122, const ui.Color(0xFFF0F8F7), 12);

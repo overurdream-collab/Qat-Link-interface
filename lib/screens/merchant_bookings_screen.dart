@@ -5,6 +5,7 @@ import '../models/app_models.dart';
 import '../services/app_state.dart';
 import '../theme/app_colors.dart';
 import '../widgets/app_chrome.dart';
+import '../widgets/notifications/maqwati_peeking_mascot.dart';
 import '../widgets/finance_display.dart';
 import '../widgets/merchant_space/booking_debt_planner.dart';
 import '../widgets/merchant_space/booking_intake_policy.dart';
@@ -66,6 +67,7 @@ class MerchantBookingsScreen extends StatefulWidget {
 
 class _MerchantBookingsScreenState extends State<MerchantBookingsScreen> {
   final Set<String> _selectedIds = {};
+  final Set<String> _freshBookingIds = {};
   bool _exporting = false;
   late BookingIntakeSettings _settings;
   late BookingNightReminderSettings _reminder;
@@ -78,6 +80,18 @@ class _MerchantBookingsScreenState extends State<MerchantBookingsScreen> {
     super.initState();
     _settings = widget.intakeSettings;
     _reminder = widget.reminderSettings;
+  }
+
+  @override
+  void didUpdateWidget(covariant MerchantBookingsScreen oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    // Only animate newly arrived booking IDs, not every card rebuild.
+    final previous = oldWidget.bookings.map((b) => b.id).toSet();
+    _freshBookingIds
+      ..clear()
+      ..addAll(widget.bookings
+          .where((b) => !previous.contains(b.id))
+          .map((b) => b.id));
   }
 
   @override
@@ -650,6 +664,13 @@ class _MerchantBookingsScreenState extends State<MerchantBookingsScreen> {
             }
           }),
         ),
+        if (_freshBookingIds.contains(order.id)) ...[
+          MaqwatiPeekingMascot(
+            key: Key('booking_arrival_${order.id}'),
+            size: 49,
+          ),
+          const SizedBox(width: 6),
+        ],
         Expanded(child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -727,7 +748,11 @@ class _MerchantBookingsScreenState extends State<MerchantBookingsScreen> {
                 style: TextStyle(fontSize: 11, color: c.muted)),
             ],
           )),
-          Icon(Icons.inventory_2_outlined, color: c.petrol, size: 29),
+          const MaqwatiPeekingMascot(
+            key: Key('bookings_header_mascot'),
+            animate: false,
+            size: 56,
+          ),
         ]),
         const SizedBox(height: 12),
         AppSurface(child: Column(children: [

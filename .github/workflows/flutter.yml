@@ -31,6 +31,22 @@ jobs:
         run: flutter test
       - name: Generate Android platform for CI build verification
         run: flutter create --platforms=android --project-name qat_link .
+      - name: Distinguish Maqwati app from the SMS Gateway
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          manifest=Path('android/app/src/main/AndroidManifest.xml')
+          xml=manifest.read_text(encoding='utf-8')
+          import re
+          new, count = re.subn(r'android:label="[^"]+"',
+                               'android:label="مقوتي لنك"', xml, count=1)
+          assert count == 1, 'Expected exactly one Android application label'
+          manifest.write_text(new, encoding='utf-8')
+          assert 'android:label="مقوتي لنك"' in new
+          # Do not alter applicationId, which is Android's actual install identity.
+          gradle=Path('android/app/build.gradle.kts')
+          assert gradle.exists()
+          PY
       - name: Build Android debug APK
         run: flutter build apk --debug
       - name: Upload Android debug APK
