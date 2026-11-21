@@ -11,9 +11,12 @@ if (-not (Get-Command flutter -ErrorAction SilentlyContinue)) {
 }
 $manifest = 'android\app\src\main\AndroidManifest.xml'
 if (-not (Test-Path $manifest)) {
-  Write-Host 'No Android scaffold in checkout; generating debug-only Flutter project.'
-  & flutter create --platforms=android --org com.example .
+  Write-Host 'No Android scaffold in checkout; generating in a temporary folder.'
+  $temporaryScaffold = Join-Path $env:TEMP ('maqwati-android-' + [guid]::NewGuid().ToString('N'))
+  & flutter create --no-pub --project-name qat_link --platforms=android --org com.example $temporaryScaffold
   if ($LASTEXITCODE -ne 0) { throw 'Flutter Android scaffold generation failed' }
+  Copy-Item -Path (Join-Path $temporaryScaffold 'android') -Destination (Get-Location).Path -Recurse -Force
+  Remove-Item -Path $temporaryScaffold -Recurse -Force
 }
 if (-not (Test-Path $manifest)) { throw 'AndroidManifest.xml still missing after setup' }
 $manifestText = [System.IO.File]::ReadAllText((Resolve-Path $manifest).Path)
