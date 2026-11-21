@@ -21,7 +21,7 @@ class AuthBrandHero extends StatelessWidget {
           clipBehavior: Clip.none,
           children: [
             PositionedDirectional(
-              start: 14, top: compact ? 16 : 36,
+              end: 14, top: compact ? 16 : 36,
               child: Container(
                 width: compact ? 126 : 185,
                 height: compact ? 126 : 185,
@@ -36,7 +36,7 @@ class AuthBrandHero extends StatelessWidget {
               ),
             ),
             PositionedDirectional(
-              start: 3, top: compact ? 4 : 3,
+              end: 3, top: compact ? 4 : 3,
               child: SizedBox(
                 width: compact ? 155 : 207,
                 height: compact ? 153 : 225,
@@ -52,7 +52,7 @@ class AuthBrandHero extends StatelessWidget {
               ),
             ),
             PositionedDirectional(
-              end: 3, top: compact ? 28 : 59,
+              start: 3, top: compact ? 28 : 59,
               child: SizedBox(
                 width: compact ? 145 : 188,
                 child: Column(
