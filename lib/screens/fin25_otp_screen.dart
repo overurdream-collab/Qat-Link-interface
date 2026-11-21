@@ -97,7 +97,7 @@ class _Fin25OtpScreenState extends State<Fin25OtpScreen> {
       if (_sessionClient != null) {
         setState(() { _message = 'جارٍ إنشاء جلسة الحساب الآمنة...'; });
         try {
-          final session = await _sessionClient!.exchange(
+          final session = await _sessionClient.exchange(
             proofToken: proof,
             requestedRole: widget.requestedRole,
             displayName: widget.displayName,
