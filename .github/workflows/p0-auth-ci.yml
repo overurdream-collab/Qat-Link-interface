@@ -141,7 +141,7 @@ jobs:
         shell: pwsh
         run: |
           $tokens=$null; $errors=$null
-          foreach ($script in @('scripts/install_maqwati_brand_assets.ps1','scripts/build_maqwati_branded_preview.ps1','scripts/fin25_identity_readonly_preflight.ps1','scripts/check_unified_auth_live.ps1','scripts/deploy_unified_caddy_safe.ps1','scripts/stage_existing_otp_update.ps1')) {
+          foreach ($script in @('scripts/install_maqwati_brand_assets.ps1','scripts/build_maqwati_branded_preview.ps1','scripts/fin25_identity_readonly_preflight.ps1','scripts/check_unified_auth_live.ps1','scripts/deploy_unified_caddy_safe.ps1','scripts/stage_existing_otp_update.ps1','scripts/promote_existing_otp_only.ps1')) {
             $tokens=$null; $errors=$null
             [System.Management.Automation.Language.Parser]::ParseFile((Resolve-Path $script), [ref]$tokens, [ref]$errors) | Out-Null
             if ($errors.Count -gt 0) { $errors | Out-String | Write-Error; exit 1 }
