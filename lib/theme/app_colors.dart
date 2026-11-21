@@ -27,11 +27,11 @@ abstract final class AppColors {
   static const Color characterDarkBrown = Color(0xFF533B2B);
   // Optional female profile identity approved in UX-03. Financial-state
   // colors remain semantic and are intentionally shared with the base theme.
-  static const Color pinkPrimary = Color(0xFF96295F);
-  static const Color pinkSecondary = Color(0xFFCA5C8E);
-  static const Color pinkBackground = Color(0xFFFFF3F8);
-  static const Color pinkInk = Color(0xFF452735);
-  static const Color pinkBorder = Color(0xFFF0D4E2);
+  static const Color pinkPrimary = Color(0xFFAD3379);
+  static const Color pinkSecondary = Color(0xFFD75C9D);
+  static const Color pinkBackground = Color(0xFFFFF4F9);
+  static const Color pinkInk = Color(0xFF45233D);
+  static const Color pinkBorder = Color(0xFFF3D6E7);
 
   // Preview-compatible aliases; use semantic color roles for financial states.
   static const Color emerald = petrol;
@@ -144,12 +144,12 @@ class AppThemeColors extends ThemeExtension<AppThemeColors> {
     background: AppColors.pinkBackground,
     card: Colors.white,
     cardBorder: AppColors.pinkBorder,
-    pale: Color(0xFFFCE4EF),
+    pale: Color(0xFFF8DCEB),
     petrol: AppColors.pinkPrimary,
     mint: AppColors.pinkSecondary,
-    cyan: Color(0xFFE98DB6),
+    cyan: Color(0xFFE5A1C7),
     text: AppColors.pinkInk,
-    muted: Color(0xFF916A7C),
+    muted: Color(0xFF866A82),
     success: AppColors.success,
     danger: AppColors.red,
     pendingText: AppColors.amber,
@@ -157,15 +157,15 @@ class AppThemeColors extends ThemeExtension<AppThemeColors> {
   );
 
   static const AppThemeColors pinkDark = AppThemeColors(
-    background: Color(0xFF281A22),
-    card: Color(0xFF392531),
-    cardBorder: Color(0xFF634354),
-    pale: Color(0xFF4E3041),
-    petrol: Color(0xFFF0A6C7),
-    mint: Color(0xFFD875A2),
-    cyan: Color(0xFFE99BC0),
-    text: Color(0xFFFFEDF4),
-    muted: Color(0xFFD0AFBE),
+    background: Color(0xFF251B30),
+    card: Color(0xFF392B3D),
+    cardBorder: Color(0xFF60445D),
+    pale: Color(0xFF55314D),
+    petrol: Color(0xFFF2A7D0),
+    mint: Color(0xFFE09AC4),
+    cyan: Color(0xFFCB9DE8),
+    text: Color(0xFFFFEFF7),
+    muted: Color(0xFFDCC1D6),
     success: AppColors.darkSuccess,
     danger: Color(0xFFFF8A80),
     pendingText: Color(0xFFEFCA86),
