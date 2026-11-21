@@ -47,7 +47,7 @@ jobs:
         with:
           node-version: '22'
       - name: Check identity service syntax
-        run: node --check scripts/fin25_identity_live_pilot.mjs && node --check server/src/identity_logic.mjs && node --check server/src/identity_session_limiter.mjs && node --check server/src/identity_finance_provisioner.mjs && node --check server/src/identity_server.mjs && node --check scripts/check_identity_runtime_trust.mjs
+        run: node --check scripts/fin25_identity_live_pilot.mjs && node --check server/src/fin25_otp_transport.mjs && node --check server/src/identity_logic.mjs && node --check server/src/identity_session_limiter.mjs && node --check server/src/identity_finance_provisioner.mjs && node --check server/src/identity_server.mjs && node --check scripts/check_identity_runtime_trust.mjs
       - name: Verify trust preflight fails safely without local credentials
         run: |
           if node scripts/check_identity_runtime_trust.mjs > preflight.log 2>&1; then
@@ -195,6 +195,15 @@ jobs:
         env:
           IDENTITY_CI_DATABASE_URL: postgresql://test_identity:local_ci_only@127.0.0.1:5432/identity_ci
         run: node --test test/p0_identity_http_postgres.test.mjs
+      - name: Apply isolated FIN25 gateway and OTP schemas to CI-only PostgreSQL
+        run: |
+          psql -X -v ON_ERROR_STOP=1 -f server/sql/009_fin25_gateway_isolated.sql
+          psql -X -v ON_ERROR_STOP=1 -f server/sql/010_fin25_otp_isolated.sql
+      - name: Test public OTP fail-closed budget with real isolated PostgreSQL
+        working-directory: server
+        env:
+          IDENTITY_CI_DATABASE_URL: postgresql://test_identity:local_ci_only@127.0.0.1:5432/identity_ci
+        run: node --test test/fin25_public_otp_http_postgres.test.mjs
 
   identity-image-contract:
     runs-on: ubuntu-latest
