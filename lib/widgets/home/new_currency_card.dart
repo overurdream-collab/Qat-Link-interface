@@ -175,7 +175,7 @@ class NewCurrencyCard extends StatelessWidget {
                         strokeWidth: 9,
                         backgroundColor: Colors.white30,
                         valueColor: const AlwaysStoppedAnimation<Color>(
-                          Color(0xFFAEEBFF),
+                          Colors.white,
                         ),
                       ),
                     ),
