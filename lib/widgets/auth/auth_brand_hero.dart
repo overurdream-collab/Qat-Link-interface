@@ -93,7 +93,12 @@ class AuthBrandHero extends StatelessWidget {
                     ),
                     Positioned.fill(
                       child: Image.asset(
-                        'assets/images/maqwati_approved_mascot.jpeg',
+                        feminine
+                            ? 'assets/images/maqwati_feminine_mascot.webp'
+                            : 'assets/images/maqwati_approved_mascot.jpeg',
+                        key: Key(feminine
+                            ? 'approved_feminine_login_mascot'
+                            : 'approved_masculine_login_mascot'),
                         fit: BoxFit.contain,
                         alignment: Alignment.bottomCenter,
                         errorBuilder: (context, error, stackTrace) =>
