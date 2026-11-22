@@ -239,14 +239,20 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           Row(
                             children: [
-                              TextButton(
-                                key: const Key('login_forgot_password'),
-                                onPressed: () => _notConnected('استعادة كلمة المرور'),
-                                child: const Text('نسيت رمز الدخول؟'),
+                              Flexible(
+                                child: TextButton(
+                                  key: const Key('login_forgot_password'),
+                                  onPressed: () => _notConnected('استعادة رمز الدخول'),
+                                  child: const FittedBox(
+                                    fit: BoxFit.scaleDown,
+                                    child: Text('نسيت رمز الدخول؟'),
+                                  ),
+                                ),
                               ),
-                              const Spacer(),
+                              const SizedBox(width: 4),
                               Text('تذكرني', style: TextStyle(
                                 color: context.premium.ink,
+                                fontSize: 11,
                                 fontWeight: FontWeight.w700,
                               )),
                               Checkbox(
@@ -322,7 +328,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                 style: TextStyle(fontWeight: FontWeight.w800)),
                           ),
                           const SizedBox(height: 7),
-                          ExpansionTile(
+                          Material(
+                            color: Colors.transparent,
+                            child: ExpansionTile(
                             title: Text(
                               'معاينة الواجهات التجريبية',
                               style: TextStyle(
@@ -354,6 +362,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     color: context.premium.muted),
                               ),
                             ],
+                            ),
                           ),
                         ],
                       ),
