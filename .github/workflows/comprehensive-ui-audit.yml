@@ -23,6 +23,7 @@ jobs:
       - run: flutter test
       - name: Upload evidence (never update golden baselines in CI)
         if: always()
+        continue-on-error: true
         uses: actions/upload-artifact@v4
         with:
           name: ui-audit-evidence

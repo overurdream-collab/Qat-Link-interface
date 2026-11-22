@@ -35,3 +35,10 @@
 **غير جاهز للاعتماد**: G1–G5 وG7–G12 غير ناجحة أو غير مثبتة بالكامل. لا نسبة 100%.
 
 لإتمام التسليم يلزم مرجع المالك الأصلي وأصول HD، إتمام مصفوفة كل الشاشات والتباين، PostgreSQL وAndroid UAT، وبناء APK ناجح. صور قبل لهذه الجولة غير متاحة: المراجعة الآلية رفضت إعداد اختبار التقاط منفصل باعتباره تخفيفاً للاختبارات؛ لم تُخفف مصفوفة القبول الفعلية.
+
+## روابط المراجعة والتنفيذ المنشورة
+- PR المسودة: https://github.com/overurdream-collab/Qat-Link-interface/pull/72
+- commit التنفيذ: `1f25f331bf5e1f1bd4592d1218d3a753f5aadeec`؛ توضيح baselines: `c56ad5af9f54d40478d32f6f75dd6826906eaf43`.
+- Actions على c56ad5a: https://github.com/overurdream-collab/Qat-Link-interface/actions/runs/45060474903 وhttps://github.com/overurdream-collab/Qat-Link-interface/actions/runs/45060461415 (قيد التنفيذ وقت تسجيلهما؛ لا تعد PASS).
+- رفع صور الأدلة best-effort بسبب قيود حصة artifacts السابقة؛ فشل الرفع لا يخفي فشل الاختبارات ولا يحل محله. الصور والسجلات المحلية مثبتة في Git.
+- لا رابط APK جديد مثبت حتى الآن.
