@@ -12,6 +12,7 @@ import '../services/fin13_ledger_gateway.dart';
 import '../services/fin16_credit_gateway.dart';
 import '../services/movement_calculator.dart';
 import '../theme/app_colors.dart';
+import '../theme/premium_tokens.dart';
 import '../widgets/app_chrome.dart';
 import '../widgets/account_settings_sheet.dart';
 import '../widgets/home/hero_carousel.dart';
@@ -572,7 +573,7 @@ class _CustomerHero extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(17),
       decoration: BoxDecoration(
-        gradient: LinearGradient(begin: Alignment.topRight, end: Alignment.bottomLeft, colors: [c.petrol, c.mint, c.cyan]),
+        gradient: context.premium.hero,
         borderRadius: BorderRadius.circular(22),
         boxShadow: AppColors.cardShadow,
       ),
@@ -624,9 +625,11 @@ class _CustomerBalanceCard extends StatelessWidget {
           width: double.infinity,
           padding: const EdgeInsets.all(18),
           decoration: BoxDecoration(
-            gradient: AppGradients.forCurrency(currency.name,
-              pink: Theme.of(context).scaffoldBackgroundColor == AppColors.pinkBackground ||
-                Theme.of(context).scaffoldBackgroundColor == const Color(0xFF251B30)),
+            gradient: switch (currency) {
+              CurrencyCode.yer => context.premium.yer,
+              CurrencyCode.sar => context.premium.sar,
+              CurrencyCode.usd => context.premium.usd,
+            },
             borderRadius: BorderRadius.circular(30),
           ),
           child: Column(
