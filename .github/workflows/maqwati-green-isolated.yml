@@ -32,6 +32,8 @@ jobs:
         run: flutter test test/screens/yemen_ui_preview_widget_test.dart
       - name: Authentication UI regression
         run: flutter test test/screens/auth_screens_widget_test.dart
+      - name: Owner-approved glass login visual layout (four themes)
+        run: flutter test test/screens/approved_login_glass_frame_test.dart
       - name: Shared UI palette and navigation regression
         run: flutter test test/theme/approved_ui_test.dart
       - name: Premium identity and currency tokens
