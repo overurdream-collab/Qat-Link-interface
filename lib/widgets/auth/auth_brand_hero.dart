@@ -94,8 +94,8 @@ class AuthBrandHero extends StatelessWidget {
                     Positioned.fill(
                       child: Image.asset(
                         feminine
-                            ? 'assets/images/maqwati_feminine_mascot.webp'
-                            : 'assets/images/maqwati_approved_mascot.jpeg',
+                            ? 'assets/images/maqwati_feminine_character.png'
+                            : 'assets/images/maqwati_approved_character.png',
                         key: Key(feminine
                             ? 'approved_feminine_login_mascot'
                             : 'approved_masculine_login_mascot'),
