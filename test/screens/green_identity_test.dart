@@ -10,12 +10,15 @@ void main() {
     expect(AppColors.mint, const Color(0xFF7939EA));
     expect(AppColors.pale, const Color(0xFFC2A4FF));
     expect(AppColors.ink, const Color(0xFF111A4B));
-    expect(AppColors.muted, const Color(0xFF767FAE));
+    expect(AppColors.muted, const Color(0xFF59638C));
     expect(AppColors.cardBorder, const Color(0xFFE0E3F9));
     expect(AppGradients.hero.colors, const [
-      Color(0xFF7939EA), Color(0xFF328BF5), Color(0xFF73DCF6),
+      Color(0xFF7939EA),
+      Color(0xFF328BF5),
+      Color(0xFF73DCF6),
     ]);
-    expect(AppTheme.build(dark: false).textTheme.bodyMedium?.fontFamily, 'Cairo');
+    expect(
+        AppTheme.build(dark: false).textTheme.bodyMedium?.fontFamily, 'Cairo');
     // Semantic ledger colors remain unchanged by the visual concept.
     expect(AppThemeColors.light.danger, AppColors.red);
     expect(AppThemeColors.pink.petrol, AppColors.pinkPrimary);
@@ -24,13 +27,16 @@ void main() {
   testWidgets('premium concept opens Arabic login with the mascot and tagline',
       (tester) async {
     await tester.pumpWidget(const MaqwatiUiPreview());
-    expect(find.byKey(const Key('approved_blue_3d_maqwati_wordmark')), findsOneWidget);
+    expect(find.byKey(const Key('approved_blue_3d_maqwati_wordmark')),
+        findsOneWidget);
     expect(find.text('كل يوم حكاية'), findsOneWidget);
     expect(find.byKey(const Key('login_submit')), findsOneWidget);
     expect(find.byKey(const Key('login_phone')), findsOneWidget);
     final app = tester.widget<MaterialApp>(find.byType(MaterialApp));
     expect(app.theme!.colorScheme.primary, AppColors.petrol);
-    expect(Directionality.of(tester.element(find.byKey(const Key('login_submit')))),
+    expect(
+        Directionality.of(
+            tester.element(find.byKey(const Key('login_submit')))),
         TextDirection.rtl);
   });
 

@@ -1,0 +1,32 @@
+Showing outdated packages.
+[*] indicates versions that are not the latest available.
+
+Package Name              Current     Upgradable  Resolvable  Latest     
+
+direct dependencies: all up-to-date.
+
+dev_dependencies:        
+flutter_lints             *5.0.0      *5.0.0      6.0.0       6.0.0      
+
+transitive dependencies: 
+clock                     *1.1.2      *1.1.2      *1.1.2      1.1.3      
+cross_file                *0.3.5+5    *0.3.5+5    *0.3.5+5    0.4.0      
+file_selector_macos       *0.9.5+1    *0.9.5+1    *0.9.5+1    0.9.5+2    
+image_picker_ios          *0.8.13+10  *0.8.13+10  *0.8.13+10  0.8.13+16  
+intl                      *0.20.2     *0.20.2     *0.20.2     0.20.3     
+material_color_utilities  *0.13.0     *0.13.0     *0.13.0     0.13.1     
+meta                      *1.18.0     *1.18.0     *1.18.0     1.19.0     
+petitparser               *7.0.2      *7.0.2      *7.0.2      7.1.0      
+qr                        *3.0.3      *3.0.3      *3.0.3      4.0.1      
+vector_math               *2.2.0      *2.2.0      *2.2.0      2.4.4      
+web                       *1.1.1      *1.1.1      *1.1.1      1.1.2      
+xml                       *7.0.1      *7.0.1      *7.0.1      7.1.0      
+
+transitive dev_dependencies:
+lints                     *5.1.1      *5.1.1      6.1.0       6.1.0      
+matcher                   *0.12.19    *0.12.19    *0.12.19    0.12.20    
+stack_trace               *1.12.1     *1.12.1     *1.12.1     1.12.2     
+test_api                  *0.7.11     *0.7.11     *0.7.11     0.7.15     
+
+2  dependencies are constrained to versions that are older than a resolvable version.
+To update these dependencies, edit pubspec.yaml, or run `flutter pub upgrade --major-versions`.

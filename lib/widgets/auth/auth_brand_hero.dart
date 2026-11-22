@@ -13,9 +13,7 @@ class AuthBrandHero extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final visual = context.premium;
-    final background = Theme.of(context).scaffoldBackgroundColor;
-    final feminine = background == const Color(0xFFFFEFF6) ||
-        background == const Color(0xFF251B30);
+    final feminine = visual.feminineIdentity;
     final dark = Theme.of(context).brightness == Brightness.dark;
     final height = compact ? 162.0 : 236.0;
     return Semantics(
@@ -25,20 +23,24 @@ class AuthBrandHero extends StatelessWidget {
         height: height,
         child: LayoutBuilder(builder: (context, constraints) {
           final artWidth = (constraints.maxWidth * .47)
-              .clamp(108.0, compact ? 156.0 : 204.0).toDouble();
+              .clamp(108.0, compact ? 156.0 : 204.0)
+              .toDouble();
           return Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Expanded(
                 child: Padding(
                   padding: const EdgeInsetsDirectional.only(
-                    start: 0, end: 2, bottom: 27,
+                    start: 0,
+                    end: 2,
+                    bottom: 27,
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.end,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      _RaisedMaqwatiWordmark(compact: compact, feminine: feminine),
+                      _RaisedMaqwatiWordmark(
+                          compact: compact, feminine: feminine),
                       SizedBox(height: compact ? 6 : 10),
                       FittedBox(
                         fit: BoxFit.scaleDown,
@@ -48,8 +50,12 @@ class AuthBrandHero extends StatelessWidget {
                           textDirection: TextDirection.rtl,
                           style: TextStyle(
                             color: feminine
-                                ? (dark ? const Color(0xFFF2A7D0) : const Color(0xFFAD3379))
-                                : (dark ? const Color(0xFFD7B7FF) : const Color(0xFF5730C4)),
+                                ? (dark
+                                    ? const Color(0xFFF2A7D0)
+                                    : const Color(0xFFAD3379))
+                                : (dark
+                                    ? const Color(0xFFD7B7FF)
+                                    : const Color(0xFF5730C4)),
                             fontSize: compact ? 16 : 21,
                             fontWeight: FontWeight.w900,
                             height: 1.3,
@@ -93,17 +99,12 @@ class AuthBrandHero extends StatelessWidget {
                     ),
                     Positioned.fill(
                       child: Image.asset(
-                        feminine
-                            ? 'assets/images/maqwati_feminine_character.png'
-                            : 'assets/images/maqwati_approved_character.png',
+                        visual.characterAsset,
                         key: Key(feminine
                             ? 'approved_feminine_login_mascot'
                             : 'approved_masculine_login_mascot'),
                         fit: BoxFit.contain,
                         alignment: Alignment.bottomCenter,
-                        errorBuilder: (context, error, stackTrace) =>
-                            const Icon(Icons.person_rounded,
-                                size: 86, color: PremiumTokens.violet),
                       ),
                     ),
                   ],
@@ -145,13 +146,18 @@ class _RaisedMaqwatiWordmark extends StatelessWidget {
             children: [
               Transform.translate(
                 offset: const Offset(2.5, 5),
-                child: Text(title,
+                child: Text(
+                  title,
                   textDirection: TextDirection.rtl,
                   style: base.copyWith(
-                    color: feminine ? const Color(0xFF632450) : const Color(0xFF171C98),
+                    color: feminine
+                        ? const Color(0xFF632450)
+                        : const Color(0xFF171C98),
                     shadows: const [
-                      Shadow(color: Color(0x6A2C2B9A),
-                          offset: Offset(1, 7), blurRadius: 7),
+                      Shadow(
+                          color: Color(0x6A2C2B9A),
+                          offset: Offset(1, 7),
+                          blurRadius: 7),
                     ],
                   ),
                 ),
@@ -162,12 +168,24 @@ class _RaisedMaqwatiWordmark extends StatelessWidget {
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: feminine
-                      ? const [Color(0xFFF8DCEB), Color(0xFFAD4389),
-                          Color(0xFFAD3379), Color(0xFF8551B2)]
+                      ? const [
+                          Color(0xFFF8DCEB),
+                          Color(0xFFAD4389),
+                          Color(0xFFAD3379),
+                          Color(0xFF8551B2)
+                        ]
                       : (isDark
-                          ? const [Color(0xFF8DEBFF), Color(0xFF268EFF), Color(0xFF174DCB)]
-                          : const [Color(0xFF8CF6FF), Color(0xFF0FA7F9),
-                              Color(0xFF0752E6), Color(0xFF2533AE)]),
+                          ? const [
+                              Color(0xFF8DEBFF),
+                              Color(0xFF268EFF),
+                              Color(0xFF174DCB)
+                            ]
+                          : const [
+                              Color(0xFF8CF6FF),
+                              Color(0xFF0FA7F9),
+                              Color(0xFF0752E6),
+                              Color(0xFF2533AE)
+                            ]),
                 ).createShader(bounds),
                 child: Text(
                   title,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../theme/app_colors.dart';
+import '../theme/premium_tokens.dart';
 
 /// Fixed header shared by all merchant screens (RTL):
 /// profile / greeting on the right; settings, notifications, night mode
@@ -40,15 +41,10 @@ class AppTopBar extends StatelessWidget {
             alignment: Alignment.center,
             clipBehavior: Clip.antiAlias,
             child: Image.asset(
-              'assets/images/maqwati_approved_mascot.jpeg',
+              context.premium.characterAsset,
               width: 40,
               height: 40,
               fit: BoxFit.cover,
-              errorBuilder: (context, error, stackTrace) => Icon(
-                Icons.person_rounded,
-                color: c.petrol,
-                size: 24,
-              ),
             ),
           ),
           const SizedBox(width: 7),
@@ -56,15 +52,20 @@ class AppTopBar extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(greeting, style: TextStyle(
-                  color: c.muted, fontSize: 12, fontWeight: FontWeight.w600,
-                )),
+                Text(greeting,
+                    style: TextStyle(
+                      color: c.muted,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                    )),
                 Text(
                   accountName,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
-                    color: c.petrol, fontSize: 18, fontWeight: FontWeight.w900,
+                    color: c.petrol,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w900,
                   ),
                 ),
               ],
@@ -183,7 +184,8 @@ class AppBottomBar extends StatelessWidget {
                     child: const SizedBox(
                       height: 53,
                       width: 53,
-                      child: Icon(Icons.add_rounded, size: 31, color: Colors.white),
+                      child: Icon(Icons.add_rounded,
+                          size: 31, color: Colors.white),
                     ),
                   ),
                 ),
@@ -205,8 +207,8 @@ class AppBottomBar extends StatelessWidget {
   ) {
     final c = context.colors;
     final active = selectedIndex == index;
-    final navInk = Theme.of(context).brightness == Brightness.dark
-        ? c.text : c.petrol;
+    final navInk =
+        Theme.of(context).brightness == Brightness.dark ? c.text : c.petrol;
     return Expanded(
       child: Semantics(
         button: true,
@@ -218,7 +220,8 @@ class AppBottomBar extends StatelessWidget {
           child: Container(
             margin: const EdgeInsets.symmetric(horizontal: 2, vertical: 6),
             decoration: BoxDecoration(
-              color: active ? c.pale.withValues(alpha: .38) : Colors.transparent,
+              color:
+                  active ? c.pale.withValues(alpha: .38) : Colors.transparent,
               borderRadius: BorderRadius.circular(18),
             ),
             child: Column(
@@ -258,9 +261,12 @@ class AppSectionTitle extends StatelessWidget {
     return Row(
       children: [
         Expanded(
-          child: Text(title, style: TextStyle(
-            fontSize: 14, fontWeight: FontWeight.w800, color: c.text,
-          )),
+          child: Text(title,
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w800,
+                color: c.text,
+              )),
         ),
         if (trailing != null) trailing!,
       ],
@@ -269,7 +275,10 @@ class AppSectionTitle extends StatelessWidget {
 }
 
 class AppSurface extends StatelessWidget {
-  const AppSurface({super.key, required this.child, this.padding = const EdgeInsets.all(16)});
+  const AppSurface(
+      {super.key,
+      required this.child,
+      this.padding = const EdgeInsets.all(16)});
   final Widget child;
   final EdgeInsetsGeometry padding;
 

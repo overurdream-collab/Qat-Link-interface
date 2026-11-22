@@ -4,7 +4,8 @@ import 'package:qat_link/theme/app_colors.dart';
 import 'package:qat_link/main.dart';
 
 void main() {
-  testWidgets('app opens login without exposing private finance tabs', (tester) async {
+  testWidgets('app opens login without exposing private finance tabs',
+      (tester) async {
     await tester.pumpWidget(const QatLinkApp());
     expect(find.text('تسجيل الدخول'), findsWidgets);
     expect(find.text('رقم الجوال'), findsOneWidget);
@@ -14,23 +15,15 @@ void main() {
     expect(find.text('إجمالي الديون المعتمدة'), findsNothing);
   });
 
-  testWidgets('login opens only a clearly labeled customer UI preview',
-      (tester) async {
+  testWidgets('phone login hides developer preview links', (tester) async {
     await tester.pumpWidget(const QatLinkApp());
-    await tester.ensureVisible(find.text('معاينة الواجهات التجريبية'));
-    await tester.tap(find.text('معاينة الواجهات التجريبية'));
-    await tester.pumpAndSettle();
-    await tester.ensureVisible(find.byKey(const Key('open_customer_preview')));
-    await tester.tap(find.byKey(const Key('open_customer_preview')));
-    await tester.pumpAndSettle();
-    expect(find.textContaining('معاينة واجهات العميل'), findsOneWidget);
-    expect(find.text('سجل الحركة'), findsNothing);
-    expect(find.text('سجل الحساب خاص'), findsNothing);
-    expect(find.byKey(const Key('home_campaign_carousel')), findsOneWidget);
-    expect(find.textContaining('لا تعرض بيانات أو أرصدة حقيقية'), findsOneWidget);
+    expect(find.text('معاينة الواجهات التجريبية'), findsNothing);
+    expect(find.byKey(const Key('open_customer_preview')), findsNothing);
+    expect(find.byType(SegmentedButton<int>), findsNothing);
   });
 
-  testWidgets('registered role options stay on a separate page', (tester) async {
+  testWidgets('registered role options stay on a separate page',
+      (tester) async {
     await tester.pumpWidget(const QatLinkApp());
     await tester.ensureVisible(find.byKey(const Key('open_registration')));
     await tester.tap(find.byKey(const Key('open_registration')));
@@ -47,12 +40,11 @@ void main() {
     expect(find.text('أتابع حساباتي وأراجع طلبات التجار'), findsOneWidget);
   });
 
-  testWidgets('login form does not grant a session on valid local inputs', (tester) async {
+  testWidgets('login form does not grant a session on valid local inputs',
+      (tester) async {
     await tester.pumpWidget(const QatLinkApp());
-    await tester.enterText(
-      find.byKey(const Key('login_phone')), '771234567');
-    await tester.enterText(
-      find.byKey(const Key('login_pin')), '1234');
+    await tester.enterText(find.byKey(const Key('login_phone')), '771234567');
+    await tester.enterText(find.byKey(const Key('login_pin')), '1234');
     await tester.ensureVisible(find.byKey(const Key('login_submit')));
     await tester.tap(find.byKey(const Key('login_submit')));
     await tester.pump();
@@ -70,7 +62,8 @@ void main() {
     expect(find.text('تسجيل الدخول'), findsWidgets);
   });
 
-  testWidgets('female registration selects pink identity and male restores base',
+  testWidgets(
+      'female registration selects pink identity and male restores base',
       (tester) async {
     await tester.pumpWidget(const QatLinkApp());
     await tester.ensureVisible(find.byKey(const Key('open_registration')));
@@ -80,12 +73,17 @@ void main() {
     await tester.tap(find.byKey(const Key('gender_female')));
     await tester.pumpAndSettle();
     expect(
-      tester.widget<MaterialApp>(find.byType(MaterialApp)).theme!
-          .colorScheme.primary,
+      tester
+          .widget<MaterialApp>(find.byType(MaterialApp))
+          .theme!
+          .colorScheme
+          .primary,
       AppColors.pinkPrimary,
     );
     expect(
-      tester.widget<MaterialApp>(find.byType(MaterialApp)).theme!
+      tester
+          .widget<MaterialApp>(find.byType(MaterialApp))
+          .theme!
           .scaffoldBackgroundColor,
       AppColors.pinkBackground,
     );
@@ -93,8 +91,11 @@ void main() {
     await tester.tap(find.byKey(const Key('gender_male')));
     await tester.pumpAndSettle();
     expect(
-      tester.widget<MaterialApp>(find.byType(MaterialApp)).theme!
-          .colorScheme.primary,
+      tester
+          .widget<MaterialApp>(find.byType(MaterialApp))
+          .theme!
+          .colorScheme
+          .primary,
       AppColors.petrol,
     );
   });

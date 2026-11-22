@@ -19,7 +19,7 @@ abstract final class AppTheme {
     final scheme = ColorScheme(
       brightness: isDark ? Brightness.dark : Brightness.light,
       primary: c.petrol,
-      onPrimary: isDark ? c.background : Colors.white,
+      onPrimary: isDark ? c.background : (pink ? Colors.white : c.text),
       primaryContainer: c.pale,
       onPrimaryContainer: c.text,
       secondary: c.mint,
@@ -109,7 +109,7 @@ abstract final class AppTheme {
       filledButtonTheme: FilledButtonThemeData(
         style: FilledButton.styleFrom(
           // Premium blue-violet / orchid buttons with legible light foreground.
-          foregroundColor: isDark ? c.background : Colors.white,
+          foregroundColor: scheme.onPrimary,
           backgroundColor: c.petrol,
           minimumSize: const Size(48, 48),
           shape: RoundedRectangleBorder(
@@ -121,7 +121,8 @@ abstract final class AppTheme {
       textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
           foregroundColor: c.petrol,
-          textStyle: const TextStyle(fontWeight: FontWeight.w700),
+          textStyle:
+              const TextStyle(fontFamily: 'Cairo', fontWeight: FontWeight.w700),
         ),
       ),
       outlinedButtonTheme: OutlinedButtonThemeData(
@@ -132,7 +133,8 @@ abstract final class AppTheme {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(14),
           ),
-          textStyle: const TextStyle(fontWeight: FontWeight.w700),
+          textStyle:
+              const TextStyle(fontFamily: 'Cairo', fontWeight: FontWeight.w700),
         ),
       ),
       chipTheme: base.chipTheme.copyWith(

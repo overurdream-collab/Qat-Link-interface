@@ -1,0 +1,699 @@
+{
+  "files": [
+    {
+      "path": "lib/screens/customer_app_shell.dart",
+      "lines": 1167,
+      "classes": [
+        "CustomerAppShell",
+        "_CustomerAppShellState",
+        "_PreviewNotice",
+        "_CustomerBottomBar",
+        "CustomerHomeScreen",
+        "_CustomerCurrencyPager",
+        "_CustomerCurrencyPagerState",
+        "_CustomerHero",
+        "_CustomerBalanceCard",
+        "_CustomerActionCard",
+        "CustomerMovementsScreen",
+        "_CustomerMovementsScreenState",
+        "_CustomerMovementCard",
+        "CustomerMerchantsScreen",
+        "_RelationshipCard",
+        "CustomerMerchantAccountScreen",
+        "CustomerPublicStore",
+        "CustomerDiscoverScreen",
+        "_CustomerDiscoverScreenState",
+        "_PublicStoreCard",
+        "CustomerPublicStoreDetailsScreen",
+        "CustomerStudioPost",
+        "CustomerBooking",
+        "CustomerStudioScreen",
+        "_CustomerStudioScreenState",
+        "_StudioPostCard",
+        "_BookingCard",
+        "_CustomerAccountsAssistant",
+        "_CustomerEmptyCard",
+        "_FilterChip",
+        "_AmountSummaryRow",
+        "_StatusTag"
+      ],
+      "literal_colors": 0,
+      "visual_review": "NOT VERIFIED"
+    },
+    {
+      "path": "lib/screens/customer_details_screen.dart",
+      "lines": 749,
+      "classes": [
+        "CustomerDetailsScreen",
+        "_CustomerDetailsScreenState"
+      ],
+      "literal_colors": 0,
+      "visual_review": "NOT VERIFIED"
+    },
+    {
+      "path": "lib/screens/customers_screen.dart",
+      "lines": 928,
+      "classes": [
+        "MerchantCustomersTab",
+        "_MerchantCustomersTabState"
+      ],
+      "literal_colors": 0,
+      "visual_review": "NOT VERIFIED"
+    },
+    {
+      "path": "lib/screens/fin08_customer_claims_screen.dart",
+      "lines": 316,
+      "classes": [
+        "Fin08CustomerClaimsScreen",
+        "_Fin08CustomerClaimsScreenState"
+      ],
+      "literal_colors": 0,
+      "visual_review": "NOT VERIFIED"
+    },
+    {
+      "path": "lib/screens/fin08_customer_relationships_screen.dart",
+      "lines": 121,
+      "classes": [
+        "Fin08CustomerRelationshipsScreen",
+        "_Fin08CustomerRelationshipsScreenState"
+      ],
+      "literal_colors": 0,
+      "visual_review": "NOT VERIFIED"
+    },
+    {
+      "path": "lib/screens/fin08_merchant_book_screen.dart",
+      "lines": 378,
+      "classes": [
+        "Fin08MerchantBookScreen",
+        "_Fin08MerchantBookScreenState"
+      ],
+      "literal_colors": 0,
+      "visual_review": "NOT VERIFIED"
+    },
+    {
+      "path": "lib/screens/fin13_relationship_ledger_screen.dart",
+      "lines": 502,
+      "classes": [
+        "Fin13RelationshipLedgerScreen",
+        "_Fin13RelationshipLedgerScreenState"
+      ],
+      "literal_colors": 0,
+      "visual_review": "NOT VERIFIED"
+    },
+    {
+      "path": "lib/screens/fin15_amendments_screen.dart",
+      "lines": 232,
+      "classes": [
+        "Fin15AmendmentsScreen",
+        "_Fin15AmendmentsScreenState",
+        "Fin15AmountProposalDialog",
+        "_Fin15AmountProposalDialogState"
+      ],
+      "literal_colors": 0,
+      "visual_review": "NOT VERIFIED"
+    },
+    {
+      "path": "lib/screens/fin16_credit_limits_screen.dart",
+      "lines": 214,
+      "classes": [
+        "Fin16CreditLimitsScreen",
+        "_Fin16CreditLimitsScreenState"
+      ],
+      "literal_colors": 0,
+      "visual_review": "NOT VERIFIED"
+    },
+    {
+      "path": "lib/screens/home_screen.dart",
+      "lines": 406,
+      "classes": [
+        "HomeScreen",
+        "_HomeScreenState"
+      ],
+      "literal_colors": 0,
+      "visual_review": "NOT VERIFIED"
+    },
+    {
+      "path": "lib/screens/login_screen.dart",
+      "lines": 553,
+      "classes": [
+        "LoginScreen",
+        "_LoginScreenState",
+        "_ApprovedLoginWavesPainter"
+      ],
+      "literal_colors": 14,
+      "visual_review": "NOT VERIFIED"
+    },
+    {
+      "path": "lib/screens/merchant_approval_center_screen.dart",
+      "lines": 266,
+      "classes": [
+        "MerchantApprovalCenterScreen",
+        "_MerchantApprovalCenterScreenState"
+      ],
+      "literal_colors": 0,
+      "visual_review": "NOT VERIFIED"
+    },
+    {
+      "path": "lib/screens/merchant_bookings_screen.dart",
+      "lines": 888,
+      "classes": [
+        "MerchantBookingsScreen",
+        "_MerchantBookingsScreenState"
+      ],
+      "literal_colors": 0,
+      "visual_review": "NOT VERIFIED"
+    },
+    {
+      "path": "lib/screens/merchant_financial_assistant_screen.dart",
+      "lines": 700,
+      "classes": [
+        "_Range",
+        "MerchantFinancialAssistantScreen",
+        "_MerchantFinancialAssistantScreenState",
+        "_Metric",
+        "_Insight"
+      ],
+      "literal_colors": 0,
+      "visual_review": "NOT VERIFIED"
+    },
+    {
+      "path": "lib/screens/merchant_pending_contact_details_screen.dart",
+      "lines": 581,
+      "classes": [
+        "_PendingEntryDraft",
+        "MerchantPendingContactDetailsScreen",
+        "_MerchantPendingContactDetailsScreenState",
+        "_TimelineEntry"
+      ],
+      "literal_colors": 0,
+      "visual_review": "NOT VERIFIED"
+    },
+    {
+      "path": "lib/screens/merchant_space_screen.dart",
+      "lines": 1306,
+      "classes": [
+        "MerchantSpaceTab",
+        "_StudioDraft",
+        "_MerchantSpaceTabState"
+      ],
+      "literal_colors": 4,
+      "visual_review": "NOT VERIFIED"
+    },
+    {
+      "path": "lib/screens/merchant_tabs.dart",
+      "lines": 3,
+      "classes": [],
+      "literal_colors": 0,
+      "visual_review": "NOT VERIFIED"
+    },
+    {
+      "path": "lib/screens/movement_screen.dart",
+      "lines": 867,
+      "classes": [
+        "MerchantMovementsTab",
+        "_MerchantMovementsTabState"
+      ],
+      "literal_colors": 0,
+      "visual_review": "NOT VERIFIED"
+    },
+    {
+      "path": "lib/screens/registration_screen.dart",
+      "lines": 347,
+      "classes": [
+        "RegistrationScreen",
+        "_RegistrationScreenState"
+      ],
+      "literal_colors": 0,
+      "visual_review": "NOT VERIFIED"
+    },
+    {
+      "path": "lib/widgets/account_settings_sheet.dart",
+      "lines": 129,
+      "classes": [
+        "AccountSettingsSheet"
+      ],
+      "literal_colors": 0,
+      "visual_review": "NOT VERIFIED"
+    },
+    {
+      "path": "lib/widgets/app_chrome.dart",
+      "lines": 300,
+      "classes": [
+        "AppTopBar",
+        "AppSquareIconButton",
+        "AppBottomBar",
+        "AppSectionTitle",
+        "AppSurface"
+      ],
+      "literal_colors": 0,
+      "visual_review": "NOT VERIFIED"
+    },
+    {
+      "path": "lib/widgets/auth/auth_brand_hero.dart",
+      "lines": 203,
+      "classes": [
+        "AuthBrandHero",
+        "_RaisedMaqwatiWordmark"
+      ],
+      "literal_colors": 22,
+      "visual_review": "NOT VERIFIED"
+    },
+    {
+      "path": "lib/widgets/auth/login_feature_highlights.dart",
+      "lines": 102,
+      "classes": [
+        "LoginFeatureHighlights"
+      ],
+      "literal_colors": 0,
+      "visual_review": "NOT VERIFIED"
+    },
+    {
+      "path": "lib/widgets/customers/customer_invitation_sheet.dart",
+      "lines": 359,
+      "classes": [
+        "CustomerInvitationSheet",
+        "_CustomerInvitationSheetState"
+      ],
+      "literal_colors": 2,
+      "visual_review": "NOT VERIFIED"
+    },
+    {
+      "path": "lib/widgets/customers/customer_joined_claims_panel.dart",
+      "lines": 220,
+      "classes": [
+        "CustomerClaimReviewRequest",
+        "CustomerJoinedClaimsPanel",
+        "_CustomerJoinedClaimsPanelState"
+      ],
+      "literal_colors": 0,
+      "visual_review": "NOT VERIFIED"
+    },
+    {
+      "path": "lib/widgets/customers/customer_statement_calculator.dart",
+      "lines": 122,
+      "classes": [
+        "CustomerStatement",
+        "CustomerStatementCalculator"
+      ],
+      "literal_colors": 0,
+      "visual_review": "NOT VERIFIED"
+    },
+    {
+      "path": "lib/widgets/customers/customer_statement_pdf.dart",
+      "lines": 236,
+      "classes": [
+        "CustomerStatementPdf"
+      ],
+      "literal_colors": 20,
+      "visual_review": "NOT VERIFIED"
+    },
+    {
+      "path": "lib/widgets/customers/customers_view_model.dart",
+      "lines": 161,
+      "classes": [
+        "CustomerCurrencyRow",
+        "CustomersViewModel"
+      ],
+      "literal_colors": 0,
+      "visual_review": "NOT VERIFIED"
+    },
+    {
+      "path": "lib/widgets/customers/joined_customer_claims_query.dart",
+      "lines": 130,
+      "classes": [
+        "JoinedCustomerClaimRow",
+        "JoinedCustomerClaimsQuery"
+      ],
+      "literal_colors": 0,
+      "visual_review": "NOT VERIFIED"
+    },
+    {
+      "path": "lib/widgets/customers/merchant_debt_status_summary.dart",
+      "lines": 145,
+      "classes": [
+        "MerchantDebtStatusTotals",
+        "MerchantDebtStatusQuery"
+      ],
+      "literal_colors": 0,
+      "visual_review": "NOT VERIFIED"
+    },
+    {
+      "path": "lib/widgets/customers/merchant_pending_statement_pdf.dart",
+      "lines": 193,
+      "classes": [
+        "MerchantPendingStatementPdf",
+        "_PdfRow"
+      ],
+      "literal_colors": 16,
+      "visual_review": "NOT VERIFIED"
+    },
+    {
+      "path": "lib/widgets/customers/pdf_brand_mascot.dart",
+      "lines": 69,
+      "classes": [
+        "PdfBrandMascot"
+      ],
+      "literal_colors": 2,
+      "visual_review": "NOT VERIFIED"
+    },
+    {
+      "path": "lib/widgets/finance_display.dart",
+      "lines": 38,
+      "classes": [
+        "FinanceDisplay"
+      ],
+      "literal_colors": 0,
+      "visual_review": "NOT VERIFIED"
+    },
+    {
+      "path": "lib/widgets/home/hero_carousel.dart",
+      "lines": 177,
+      "classes": [
+        "HomeCampaignBanner",
+        "HomeCampaigns",
+        "HeroCarousel",
+        "_HeroCarouselState"
+      ],
+      "literal_colors": 1,
+      "visual_review": "NOT VERIFIED"
+    },
+    {
+      "path": "lib/widgets/home/new_currency_card.dart",
+      "lines": 260,
+      "classes": [
+        "CurrencyCardData",
+        "NewCurrencyCard",
+        "_MiniKpi"
+      ],
+      "literal_colors": 2,
+      "visual_review": "NOT VERIFIED"
+    },
+    {
+      "path": "lib/widgets/home/premium_home_hero.dart",
+      "lines": 140,
+      "classes": [
+        "PremiumHomeHero"
+      ],
+      "literal_colors": 0,
+      "visual_review": "NOT VERIFIED"
+    },
+    {
+      "path": "lib/widgets/merchant_space/booking_debt_planner.dart",
+      "lines": 153,
+      "classes": [
+        "BookingDebtRequestDraft",
+        "BookingDebtPlan",
+        "BookingDailyProposalAmounts",
+        "BookingProposalQuery",
+        "BookingDebtPlanner"
+      ],
+      "literal_colors": 0,
+      "visual_review": "NOT VERIFIED"
+    },
+    {
+      "path": "lib/widgets/merchant_space/booking_intake_policy.dart",
+      "lines": 174,
+      "classes": [
+        "BookingIntakeSettings",
+        "BookingEligibility",
+        "BookingIntakePolicy",
+        "BookingNightReminderSettings",
+        "BookingNightReminderPreview",
+        "BookingNightReminderPolicy"
+      ],
+      "literal_colors": 0,
+      "visual_review": "NOT VERIFIED"
+    },
+    {
+      "path": "lib/widgets/merchant_space/client_store_booking_sheet.dart",
+      "lines": 227,
+      "classes": [
+        "ClientBookingRequest",
+        "ClientStoreBookingSheet",
+        "_ClientStoreBookingSheetState"
+      ],
+      "literal_colors": 0,
+      "visual_review": "NOT VERIFIED"
+    },
+    {
+      "path": "lib/widgets/merchant_space/customer_store_discovery_sections.dart",
+      "lines": 125,
+      "classes": [
+        "CustomerStoreDiscoverySections"
+      ],
+      "literal_colors": 0,
+      "visual_review": "NOT VERIFIED"
+    },
+    {
+      "path": "lib/widgets/merchant_space/customer_store_rating_sheet.dart",
+      "lines": 152,
+      "classes": [
+        "CustomerStoreRatingSheet",
+        "_CustomerStoreRatingSheetState"
+      ],
+      "literal_colors": 1,
+      "visual_review": "NOT VERIFIED"
+    },
+    {
+      "path": "lib/widgets/merchant_space/daily_debt_query.dart",
+      "lines": 76,
+      "classes": [
+        "DailyDebtSnapshot",
+        "DailyDebtQuery"
+      ],
+      "literal_colors": 0,
+      "visual_review": "NOT VERIFIED"
+    },
+    {
+      "path": "lib/widgets/merchant_space/merchant_rating_policy.dart",
+      "lines": 111,
+      "classes": [
+        "MerchantReview",
+        "MerchantRatingSummary",
+        "MerchantReviewPolicy"
+      ],
+      "literal_colors": 0,
+      "visual_review": "NOT VERIFIED"
+    },
+    {
+      "path": "lib/widgets/merchant_space/merchant_space_models.dart",
+      "lines": 178,
+      "classes": [
+        "ReservationDraft",
+        "ReservationDailySummary",
+        "ReservationsQuery",
+        "MerchantAudienceQuery"
+      ],
+      "literal_colors": 0,
+      "visual_review": "NOT VERIFIED"
+    },
+    {
+      "path": "lib/widgets/merchant_space/night_reminder_campaign.dart",
+      "lines": 274,
+      "classes": [
+        "NightReminderCampaignDraft",
+        "NightReminderAudienceQuery",
+        "ReminderEngagementEvent",
+        "ReminderEngagementSummary",
+        "ReminderEngagementQuery",
+        "ReminderBookingDecision",
+        "ReminderQuickBookingRequest",
+        "ReminderQuickBookingPolicy"
+      ],
+      "literal_colors": 0,
+      "visual_review": "NOT VERIFIED"
+    },
+    {
+      "path": "lib/widgets/merchant_space/reminder_quick_booking_sheet.dart",
+      "lines": 195,
+      "classes": [
+        "ReminderQuickBookingSheet",
+        "_ReminderQuickBookingSheetState"
+      ],
+      "literal_colors": 0,
+      "visual_review": "NOT VERIFIED"
+    },
+    {
+      "path": "lib/widgets/merchant_space/reservation_daily_pdf.dart",
+      "lines": 203,
+      "classes": [
+        "ReservationDailyPdf"
+      ],
+      "literal_colors": 6,
+      "visual_review": "NOT VERIFIED"
+    },
+    {
+      "path": "lib/widgets/merchant_space/store_discovery_ranking.dart",
+      "lines": 100,
+      "classes": [
+        "StoreDiscoveryStanding",
+        "StoreDiscoveryRanking"
+      ],
+      "literal_colors": 0,
+      "visual_review": "NOT VERIFIED"
+    },
+    {
+      "path": "lib/widgets/merchant_space/worker_preparation_pdf.dart",
+      "lines": 148,
+      "classes": [
+        "WorkerPreparationPdf"
+      ],
+      "literal_colors": 5,
+      "visual_review": "NOT VERIFIED"
+    },
+    {
+      "path": "lib/widgets/movement/movement_view_model.dart",
+      "lines": 131,
+      "classes": [
+        "MovementQuery",
+        "MovementPeriodTotals"
+      ],
+      "literal_colors": 0,
+      "visual_review": "NOT VERIFIED"
+    },
+    {
+      "path": "lib/widgets/quick_actions/approved_customer_picker_model.dart",
+      "lines": 72,
+      "classes": [
+        "ApprovedCustomerOption",
+        "ApprovedCustomerPickerModel"
+      ],
+      "literal_colors": 0,
+      "visual_review": "NOT VERIFIED"
+    },
+    {
+      "path": "lib/widgets/quick_actions/quick_actions_sheet.dart",
+      "lines": 689,
+      "classes": [
+        "QuickActionsSheet",
+        "MovementEntrySheet",
+        "_MovementEntrySheetState",
+        "_ApprovedCustomerSearch",
+        "_ApprovedCustomerSearchState",
+        "_MerchantPendingContactSearch",
+        "_MerchantPendingContactSearchState"
+      ],
+      "literal_colors": 0,
+      "visual_review": "NOT VERIFIED"
+    },
+    {
+      "path": "lib/theme/app_colors.dart",
+      "lines": 293,
+      "classes": [
+        "AppColors",
+        "AppThemeColors",
+        "AppGradients"
+      ],
+      "literal_colors": 73,
+      "visual_review": "NOT VERIFIED"
+    },
+    {
+      "path": "lib/theme/app_theme.dart",
+      "lines": 174,
+      "classes": [
+        "AppTheme"
+      ],
+      "literal_colors": 0,
+      "visual_review": "NOT VERIFIED"
+    },
+    {
+      "path": "lib/theme/premium_tokens.dart",
+      "lines": 330,
+      "classes": [
+        "PremiumTokens",
+        "PremiumVisualPalette",
+        "PremiumSurface",
+        "PremiumRoundButton"
+      ],
+      "literal_colors": 107,
+      "visual_review": "NOT VERIFIED"
+    }
+  ],
+  "images": [
+    {
+      "path": "assets/banners/01-welcome-blue.jpeg",
+      "size": [
+        1536,
+        768
+      ],
+      "decode": "PASS"
+    },
+    {
+      "path": "assets/banners/02-close-yellow.jpeg",
+      "size": [
+        1536,
+        768
+      ],
+      "decode": "PASS"
+    },
+    {
+      "path": "assets/banners/03-eyes-blue.jpeg",
+      "size": [
+        1536,
+        864
+      ],
+      "decode": "PASS"
+    },
+    {
+      "path": "assets/banners/04-welcome-purple.jpeg",
+      "size": [
+        1536,
+        768
+      ],
+      "decode": "PASS"
+    },
+    {
+      "path": "assets/banners/05-close-pink.jpeg",
+      "size": [
+        1536,
+        768
+      ],
+      "decode": "PASS"
+    },
+    {
+      "path": "assets/banners/06-welcome-red.jpeg",
+      "size": [
+        1536,
+        768
+      ],
+      "decode": "PASS"
+    },
+    {
+      "path": "assets/banners/07-happiness-pink.jpeg",
+      "size": [
+        1536,
+        864
+      ],
+      "decode": "PASS"
+    },
+    {
+      "path": "assets/images/maqwati_approved_character.png",
+      "size": [
+        168,
+        200
+      ],
+      "decode": "PASS"
+    },
+    {
+      "path": "assets/images/maqwati_approved_mascot.jpeg",
+      "decode": "FAIL",
+      "error": "cannot identify image file 'assets/images/maqwati_approved_mascot.jpeg'"
+    },
+    {
+      "path": "assets/images/maqwati_feminine_character.png",
+      "size": [
+        172,
+        199
+      ],
+      "decode": "PASS"
+    },
+    {
+      "path": "assets/images/maqwati_feminine_mascot.webp",
+      "size": [
+        157,
+        160
+      ],
+      "decode": "PASS"
+    }
+  ]
+}

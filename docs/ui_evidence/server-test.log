@@ -1,0 +1,41 @@
+
+> qat-link-fin08-api@0.1.0 test
+> node --test
+
+﹣ FIN-10: concurrent phone verification never loses invites and microsecond page cursors never skip claims (0.843113ms) # SKIP
+﹣ FIN-13 PostgreSQL: legacy debts+payments, bilateral approval, exact ledger and customer credit (0.607138ms) # SKIP
+﹣ FIN-14 PostgreSQL selective batch consent: atomicity, tenant isolation, exact currencies and no prior auto-approval (0.584635ms) # SKIP
+﹣ FIN-14 cross-merchant selection and mixed debt/payment decisions are atomic and isolated (0.561801ms) # SKIP
+﹣ FIN-15: customer amount amendment preserves historic original, blocks competing consent and posts only approved replacement (0.599898ms) # SKIP
+﹣ FIN-15: modern pending debt amendment is mutually agreed and posted once, old movement never changes (0.097112ms) # SKIP
+﹣ FIN-16: merchant currency limits block only new debts, retain pending risk and audited versioning (0.7998ms) # SKIP
+﹣ FIN-17 PostgreSQL: bilateral allocations, unallocated credit, releases and reversal traceability (0.63582ms) # SKIP
+✔ role separation: merchants cannot access previous claim inbox (41.370726ms)
+✔ customer inbox is derived from authenticated actor, not URL/customer ID (9.043939ms)
+✔ merchant claim requires JSON and does not perform automatic ledger posting (7.167555ms)
+✔ identity-only phone proof endpoint cannot be called as merchant or customer (11.654528ms)
+✔ unauthenticated access is denied even with correct route (2.479607ms)
+✔ merchant restoration list is scoped to verified actor and restricted to merchant role (7.680054ms)
+✔ relationship inbox belongs to authenticated customer, never merchant (4.355501ms)
+✔ FIN-15 route ownership: only verified customer requests changes and only merchant responds (12.546743ms)
+﹣ FIN-08 PostgreSQL E2E: historic claims, independent consent, durable ledger, isolation and fail closed (0.65619ms) # SKIP
+﹣ FIN-09 merchant restores private contacts and every claim stage without cross-merchant disclosure (0.529494ms) # SKIP
+✔ Yemeni local phone canonicalizes; international E.164 retained (1.150924ms)
+✔ money is DECIMAL text, never float; zero/negative/overflow blocked (0.389761ms)
+✔ separate currency and independent decision only (0.315281ms)
+✔ signed cursor rejects tampering and cannot accept malformed payload (1.345438ms)
+✔ JWT verifies RS256 and rejects unsigned, wrong role and expired (87.05642ms)
+✔ FIN-12 rejects malformed JWT time claims and oversized bearer values (47.885645ms)
+ℹ tests 24
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 10
+ℹ todo 0
+ℹ duration_ms 1022.021919
+npm notice
+npm notice New major version of npm available! 11.19.1 -> 12.2.3
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.3
+npm notice To update run: npm install -g npm@12.2.3
+npm notice
