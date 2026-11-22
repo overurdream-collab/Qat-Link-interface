@@ -76,10 +76,31 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     final c = context.colors;
     return Scaffold(
-      backgroundColor: context.colors.background,
-      body: Container(
-        decoration: BoxDecoration(gradient: context.premium.canvas),
-        child: Stack(
+      backgroundColor: c.background,
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 7),
+        child: Container(
+          key: const Key('approved_glass_login_frame'),
+          decoration: BoxDecoration(
+            color: context.premium.surface,
+            borderRadius: BorderRadius.circular(43),
+            border: Border.all(
+              color: context.premium.outline,
+              width: 1.4,
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: context.premium.shadow,
+                blurRadius: 28,
+                offset: const Offset(0, 10),
+              ),
+            ],
+          ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(42),
+            child: Container(
+              decoration: BoxDecoration(gradient: context.premium.canvas),
+              child: Stack(
           children: [
             Positioned.fill(
               child: Align(
@@ -389,6 +410,9 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
         ),
           ],
+              ),
+            ),
+          ),
         ),
       ),
     );
