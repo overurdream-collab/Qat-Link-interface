@@ -159,7 +159,7 @@ class _MerchantCustomersTabState extends State<MerchantCustomersTab> {
                 key: const Key('customers_add'),
                 onPressed: _openRequestModal,
                 style: FilledButton.styleFrom(
-                  backgroundColor: AppColors.petrol,
+                  backgroundColor: c.petrol,
                   foregroundColor: Colors.white,
                   elevation: 2,
                   shape: RoundedRectangleBorder(
