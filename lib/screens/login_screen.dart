@@ -6,6 +6,7 @@ import '../features/auth/registration_role.dart';
 import '../theme/app_colors.dart';
 import '../theme/premium_tokens.dart';
 import '../widgets/auth/auth_brand_hero.dart';
+import '../widgets/auth/login_feature_highlights.dart';
 import 'registration_screen.dart';
 
 /// App entry point. UI only: no PIN is persisted, sent, or accepted without
@@ -398,6 +399,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       label: Text('خدمة العملاء', style: TextStyle(color: context.premium.accent)),
                     ),
                   ),
+                  const SizedBox(height: 14),
+                  const LoginFeatureHighlights(),
+                  const SizedBox(height: 20),
                   Center(
                     child: Text('جميع الحقوق محفوظة لشركة GiC ©',
                       textAlign: TextAlign.center,
