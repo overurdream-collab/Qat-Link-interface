@@ -49,6 +49,11 @@ void main() {
     expect(find.byKey(const Key('preview_female_theme')), findsNothing);
     expect(find.text('معاينة تصميم فقط — لا حساب مالي متصل'), findsNothing);
     expect(find.text('معاينة الواجهات التجريبية'), findsNothing);
+    final featurePosition = tester.getRect(
+        find.byKey(const Key('login_feature_highlights')));
+    // The feature row must not be completely below the visible Android screen.
+    expect(featurePosition.top, lessThan(780),
+        reason: 'All four approved feature tiles were pushed off-screen.');
     await tester.ensureVisible(find.byKey(const Key('login_feature_insights')));
     await tester.pump();
     expect(tester.takeException(), isNull);
