@@ -11,7 +11,7 @@ The user-uploaded original blue male login screenshot (not the later generated v
 - `.github/workflows/maqwati-green-isolated.yml`: dedicated step requires these regression tests to pass before financial regression or preview APK packaging.
 
 ## Asset verification and current blocker
-The repository currently contains `assets/images/maqwati_approved_mascot.jpeg` but no independently uploaded female 3D character asset. An approved visually matched, dagger-free pink woman cutout has been prepared in the conversation working environment, but it is **not** yet committed to the branch. Do not claim completed visual parity for the pink theme until its PNG/WebP source is actually stored in GitHub and wired into `AuthBrandHero`. A full-page picture is not an acceptable replacement for interactive login controls.
+The repository now contains both `assets/images/maqwati_approved_mascot.jpeg` (original male) and `assets/images/maqwati_feminine_mascot.webp` (separate transparent pink woman without a jambiya, extracted from the accepted no-dagger pink UI rendering). `AuthBrandHero` selects the character by feminine theme, retaining the original male image unchanged. This WebP is an optimized 160px UI cutout and is **not** a substitute for a final high-resolution owner-approved illustration. The reference is not a full-page background: login fields remain real Flutter controls.
 
 ## Verification standard
 1. CI Flutter analyze + all relevant widget tests pass.
@@ -22,3 +22,9 @@ The repository currently contains `assets/images/maqwati_approved_mascot.jpeg` b
 6. This is an **offline design preview**, not production login; do not infer an authenticated session or mark the full financial app production-ready.
 
 CI success alone verifies programmatic correctness, not pixel-perfect identity. No main-branch merge authorized.
+
+## Image integration evidence
+- GitHub WebP blob SHA: `bfde23998d4c69154e6d729793471a88334b98dd`.
+- Female character asset commit: `436bdf40da98fe57089ffc297f58e47a6197983e`.
+- Asset switch commit: `fa31c9c69a5ab00b10e5e7ca4e893534451f5b43`.
+- Responsive and image-selection regression: `test/screens/approved_login_glass_frame_test.dart`.
