@@ -372,7 +372,7 @@ class _MerchantMovementsTabState extends State<MerchantMovementsTab> {
         borderRadius: BorderRadius.circular(17),
         boxShadow: [
           BoxShadow(
-            color: AppColors.petrol.withValues(alpha: .16),
+            color: c.petrol.withValues(alpha: .16),
             blurRadius: 15,
             offset: const Offset(0, 5),
           ),
