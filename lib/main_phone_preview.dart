@@ -51,6 +51,7 @@ class _MaqwatiPhonePreviewState extends State<MaqwatiPhonePreview> {
               ),
               onOpenCustomerPreview: () => setState(() => _view = 2),
               onOpenMerchantPreview: () => setState(() => _view = 1),
+              showPreviewLinks: false,
             )
           : Scaffold(
               body: SafeArea(
