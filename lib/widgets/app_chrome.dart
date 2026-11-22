@@ -159,7 +159,7 @@ class AppBottomBar extends StatelessWidget {
         border: Border(top: BorderSide(color: c.cardBorder)),
         boxShadow: [
           BoxShadow(
-            color: AppColors.ink.withValues(alpha: .06),
+            color: c.text.withValues(alpha: .06),
             blurRadius: 24,
             offset: const Offset(0, -7),
           ),
