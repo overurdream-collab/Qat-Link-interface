@@ -446,12 +446,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                                         null) ...[
                                                       Expanded(
                                                         child: OutlinedButton.icon(
-                                                        style: OutlinedButton.styleFrom(
-                                                          padding: const EdgeInsets.symmetric(horizontal: 3),
-                                                          minimumSize: const Size(0, 44),
-                                                          visualDensity: VisualDensity.compact,
-                                                          textStyle: const TextStyle(fontFamily: 'Cairo', fontSize: 11, fontWeight: FontWeight.w700),
-                                                        ),
                                                           style: OutlinedButton.styleFrom(
                                                             padding: const EdgeInsets.symmetric(horizontal: 3),
                                                             minimumSize: const Size(0, 44),
@@ -478,6 +472,12 @@ class _LoginScreenState extends State<LoginScreen> {
                                                     ],
                                                     Expanded(
                                                       child: OutlinedButton.icon(
+                                                        style: OutlinedButton.styleFrom(
+                                                          padding: const EdgeInsets.symmetric(horizontal: 3),
+                                                          minimumSize: const Size(0, 44),
+                                                          visualDensity: VisualDensity.compact,
+                                                          textStyle: const TextStyle(fontFamily: 'Cairo', fontSize: 11, fontWeight: FontWeight.w700),
+                                                        ),
                                                         key: const Key(
                                                             'open_customer_preview'),
                                                         onPressed: widget
