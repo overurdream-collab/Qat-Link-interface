@@ -20,6 +20,7 @@ class LoginScreen extends StatefulWidget {
     required this.onGenderChanged,
     required this.onOpenCustomerPreview,
     this.onOpenMerchantPreview,
+    this.showPreviewLinks = true,
   });
 
   final bool isDark;
@@ -28,6 +29,8 @@ class LoginScreen extends StatefulWidget {
   final VoidCallback onOpenCustomerPreview;
   /// Visual preview only, no authenticated identity or private account.
   final VoidCallback? onOpenMerchantPreview;
+  /// Hide QA-only links on the phone-facing visual APK.
+  final bool showPreviewLinks;
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -76,6 +79,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     final c = context.colors;
+    final compact = MediaQuery.sizeOf(context).height < 860;
     return Scaffold(
       backgroundColor: c.background,
       body: Padding(
@@ -122,7 +126,8 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.fromLTRB(18, 12, 18, 26),
+          padding: EdgeInsets.fromLTRB(compact ? 12 : 18, compact ? 6 : 12,
+              compact ? 12 : 18, compact ? 24 : 26),
           child: Center(
             child: ConstrainedBox(
               constraints: const BoxConstraints(maxWidth: 460),
@@ -173,10 +178,12 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ],
                   ),
-                  const AuthBrandHero(),
-                  const SizedBox(height: 3),
+                  AuthBrandHero(compact: compact),
+                  SizedBox(height: compact ? 0 : 3),
                   Container(
-                    padding: const EdgeInsets.fromLTRB(19, 18, 19, 19),
+                    padding: EdgeInsets.fromLTRB(compact ? 13 : 19,
+                        compact ? 12 : 18, compact ? 13 : 19,
+                        compact ? 10 : 19),
                     decoration: BoxDecoration(
                       color: context.premium.surface,
                       borderRadius: BorderRadius.circular(38),
@@ -206,7 +213,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               color: context.premium.muted, fontSize: 12,
                             ),
                           ),
-                          const SizedBox(height: 22),
+                          SizedBox(height: compact ? 10 : 22),
                           TextFormField(
                             key: const Key('login_phone'),
                             controller: _phone,
@@ -222,7 +229,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                             validator: AuthInputValidation.phone,
                           ),
-                          const SizedBox(height: 13),
+                          SizedBox(height: compact ? 8 : 13),
                           TextFormField(
                             key: const Key('login_pin'),
                             controller: _pin,
@@ -286,7 +293,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                             ],
                           ),
-                          const SizedBox(height: 12),
+                          SizedBox(height: compact ? 6 : 12),
                           DecoratedBox(
                             decoration: BoxDecoration(
                               gradient: context.premium.action,
@@ -317,7 +324,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 )),
                             ),
                           ),
-                          const SizedBox(height: 13),
+                          SizedBox(height: compact ? 6 : 13),
                           Text(
                             'ليس لديك حساب؟',
                             textAlign: TextAlign.center,
@@ -325,7 +332,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               color: c.muted, fontSize: 12,
                             ),
                           ),
-                          const SizedBox(height: 7),
+                          SizedBox(height: compact ? 2 : 7),
                           OutlinedButton.icon(
                             key: const Key('open_registration'),
                             onPressed: () => Navigator.of(context).push(
@@ -349,6 +356,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             label: const Text('إنشاء حساب جديد',
                                 style: TextStyle(fontWeight: FontWeight.w800)),
                           ),
+                          if (widget.showPreviewLinks) ...[
                           const SizedBox(height: 7),
                           Material(
                             color: Colors.transparent,
@@ -386,11 +394,12 @@ class _LoginScreenState extends State<LoginScreen> {
                             ],
                             ),
                           ),
+                          ],
                         ],
                       ),
                     ),
                   ),
-                  const SizedBox(height: 16),
+                  SizedBox(height: compact ? 5 : 16),
                   Center(
                     child: TextButton.icon(
                       key: const Key('login_customer_support'),
@@ -399,9 +408,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       label: Text('خدمة العملاء', style: TextStyle(color: context.premium.accent)),
                     ),
                   ),
-                  const SizedBox(height: 14),
+                  SizedBox(height: compact ? 5 : 14),
                   const LoginFeatureHighlights(),
-                  const SizedBox(height: 20),
+                  SizedBox(height: compact ? 9 : 20),
                   Center(
                     child: Text('جميع الحقوق محفوظة لشركة GiC ©',
                       textAlign: TextAlign.center,
