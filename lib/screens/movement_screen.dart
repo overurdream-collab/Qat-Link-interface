@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:clock/clock.dart';
 
 import '../models/app_models.dart';
 import '../services/app_state.dart';
@@ -31,7 +32,7 @@ class _MerchantMovementsTabState extends State<MerchantMovementsTab> {
   @override
   void initState() {
     super.initState();
-    final today = DateTime.now();
+    final today = clock.now();
     _from = DateTime(today.year, today.month, 1);
     _to = DateTime(today.year, today.month, today.day);
   }
@@ -70,8 +71,18 @@ class _MerchantMovementsTabState extends State<MerchantMovementsTab> {
 
   static String _dayGroup(DateTime date) {
     const months = [
-      'يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو',
-      'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر',
+      'يناير',
+      'فبراير',
+      'مارس',
+      'أبريل',
+      'مايو',
+      'يونيو',
+      'يوليو',
+      'أغسطس',
+      'سبتمبر',
+      'أكتوبر',
+      'نوفمبر',
+      'ديسمبر',
     ];
     return '${date.day} ${months[date.month - 1]} ${date.year}';
   }
@@ -117,12 +128,12 @@ class _MerchantMovementsTabState extends State<MerchantMovementsTab> {
         final totals = MovementQuery.totalsByCurrency(periodRows);
         final groups = MovementQuery.byDay(rows);
 
-        return Column(
+        return ListView(
           children: [
             _fixedFilters(context, c, totals),
-            Expanded(
-              child: ListView(
-                padding: const EdgeInsets.fromLTRB(14, 10, 14, 14),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(14, 10, 14, 14),
+              child: Column(
                 children: [
                   _threeStats(c, totals),
                   const SizedBox(height: 13),
@@ -209,17 +220,17 @@ class _MerchantMovementsTabState extends State<MerchantMovementsTab> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('سجل الحركة', style: TextStyle(
-                      color: c.text,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w800,
-                    )),
+                    Text('سجل الحركة',
+                        style: TextStyle(
+                          color: c.text,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w800,
+                        )),
                     Text('جميع تعاملاتك المالية',
                         style: TextStyle(color: c.muted, fontSize: 10)),
                   ],
                 ),
               ),
-
             ],
           ),
           const SizedBox(height: 8),
@@ -234,17 +245,20 @@ class _MerchantMovementsTabState extends State<MerchantMovementsTab> {
                 isDense: true,
                 hintText: 'ابحث باسم العميل أو رقم العملية...',
                 hintStyle: TextStyle(fontSize: 11, color: c.muted),
-                prefixIcon: Icon(Icons.search_rounded, color: c.muted, size: 18),
+                prefixIcon:
+                    Icon(Icons.search_rounded, color: c.muted, size: 18),
                 prefixIconConstraints: const BoxConstraints(minWidth: 37),
                 suffixIcon: _searchController.text.isNotEmpty
                     ? IconButton(
                         tooltip: 'مسح البحث',
                         onPressed: () => setState(_searchController.clear),
-                        icon: Icon(Icons.close_rounded, color: c.muted, size: 15),
+                        icon:
+                            Icon(Icons.close_rounded, color: c.muted, size: 15),
                       )
                     : null,
                 contentPadding: const EdgeInsets.symmetric(
-                  horizontal: 10, vertical: 8,
+                  horizontal: 10,
+                  vertical: 8,
                 ),
               ),
             ),
@@ -252,11 +266,13 @@ class _MerchantMovementsTabState extends State<MerchantMovementsTab> {
           const SizedBox(height: 7),
           Row(
             children: [
-              Expanded(child: _dateField(c, 'من:', _from,
-                  () => _chooseDate(isStart: true))),
+              Expanded(
+                  child: _dateField(
+                      c, 'من:', _from, () => _chooseDate(isStart: true))),
               const SizedBox(width: 8),
-              Expanded(child: _dateField(c, 'إلى:', _to,
-                  () => _chooseDate(isStart: false))),
+              Expanded(
+                  child: _dateField(
+                      c, 'إلى:', _to, () => _chooseDate(isStart: false))),
             ],
           ),
           const SizedBox(height: 8),
@@ -295,9 +311,12 @@ class _MerchantMovementsTabState extends State<MerchantMovementsTab> {
                 child: FittedBox(
                   fit: BoxFit.scaleDown,
                   alignment: Alignment.centerRight,
-                  child: Text(_date(date), style: TextStyle(
-                    color: c.text, fontSize: 11, fontWeight: FontWeight.w700,
-                  )),
+                  child: Text(_date(date),
+                      style: TextStyle(
+                        color: c.text,
+                        fontSize: 11,
+                        fontWeight: FontWeight.w700,
+                      )),
                 ),
               ),
               const SizedBox(width: 4),
@@ -343,8 +362,10 @@ class _MerchantMovementsTabState extends State<MerchantMovementsTab> {
                 child: Text(
                   option.$2,
                   style: TextStyle(
-                    color: selected ? (Theme.of(context).brightness ==
-                            Brightness.dark ? AppColors.darkBackground : Colors.white)
+                    color: selected
+                        ? (Theme.of(context).brightness == Brightness.dark
+                            ? AppColors.darkBackground
+                            : Colors.white)
                         : c.text,
                     fontSize: 10,
                     fontWeight: FontWeight.w700,
@@ -369,7 +390,7 @@ class _MerchantMovementsTabState extends State<MerchantMovementsTab> {
       constraints: const BoxConstraints(minHeight: 91),
       padding: const EdgeInsets.all(13),
       decoration: BoxDecoration(
-        gradient: context.premium.action,
+        gradient: context.premium.accessibleAction,
         borderRadius: BorderRadius.circular(17),
         boxShadow: [
           BoxShadow(
@@ -390,7 +411,9 @@ class _MerchantMovementsTabState extends State<MerchantMovementsTab> {
               borderRadius: BorderRadius.circular(11),
             ),
             child: const Icon(
-              Icons.trending_up_rounded, color: Colors.white, size: 23,
+              Icons.trending_up_rounded,
+              color: Colors.white,
+              size: 23,
             ),
           ),
           const SizedBox(width: 9),
@@ -399,14 +422,15 @@ class _MerchantMovementsTabState extends State<MerchantMovementsTab> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text('إجمالي الحركة للفترة المحددة',
-                  style: TextStyle(
-                    color: Colors.white, fontWeight: FontWeight.w800,
-                    fontSize: 11,
-                  )),
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w800,
+                      fontSize: 11,
+                    )),
                 SizedBox(height: 4),
                 Text('مبالغ العمليات غير المرفوضة، بما فيها المعلقة',
-                  maxLines: 2,
-                  style: TextStyle(color: Colors.white70, fontSize: 9)),
+                    maxLines: 2,
+                    style: TextStyle(color: Colors.white, fontSize: 9)),
               ],
             ),
           ),
@@ -442,9 +466,10 @@ class _MerchantMovementsTabState extends State<MerchantMovementsTab> {
                   ),
                 ),
                 Text(FinanceDisplay.currencySymbol(_currency!),
-                  style: const TextStyle(
-                    color: Colors.white70, fontSize: 11,
-                  )),
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 11,
+                    )),
               ],
             ),
         ],
@@ -456,19 +481,33 @@ class _MerchantMovementsTabState extends State<MerchantMovementsTab> {
     AppThemeColors c,
     Map<CurrencyCode, MovementPeriodTotals> totals,
   ) {
-    final cards = <(String, IconData, Color, String Function(MovementPeriodTotals))>[
-      ('ديون معتمدة', Icons.arrow_upward_rounded, c.cyan,
-          (m) => FinanceDisplay.amount(m.approvedDebts)),
-      ('عمليات عالقة', Icons.schedule_rounded, c.pendingText,
-          (m) => FinanceDisplay.amount(m.pending)),
-      ('تحصيلات معتمدة', Icons.check_rounded, c.success,
-          (m) => FinanceDisplay.amount(m.approvedPayments)),
+    final cards =
+        <(String, IconData, Color, String Function(MovementPeriodTotals))>[
+      (
+        'ديون معتمدة',
+        Icons.arrow_upward_rounded,
+        c.cyan,
+        (m) => FinanceDisplay.amount(m.approvedDebts)
+      ),
+      (
+        'عمليات عالقة',
+        Icons.schedule_rounded,
+        c.pendingText,
+        (m) => FinanceDisplay.amount(m.pending)
+      ),
+      (
+        'تحصيلات معتمدة',
+        Icons.check_rounded,
+        c.success,
+        (m) => FinanceDisplay.amount(m.approvedPayments)
+      ),
     ];
     return Row(
       children: [
         for (var i = 0; i < cards.length; i++) ...[
           if (i > 0) const SizedBox(width: 6),
-          Expanded(child: Container(
+          Expanded(
+              child: Container(
             constraints: const BoxConstraints(minHeight: 66),
             padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 8),
             decoration: BoxDecoration(
@@ -491,7 +530,9 @@ class _MerchantMovementsTabState extends State<MerchantMovementsTab> {
                       child: Text(
                         '${cards[i].$4(totals[currency]!)} ${FinanceDisplay.currencyCode(currency)}',
                         style: TextStyle(
-                          color: c.text, fontSize: 9, fontWeight: FontWeight.w800,
+                          color: c.text,
+                          fontSize: 9,
+                          fontWeight: FontWeight.w800,
                         ),
                       ),
                     )
@@ -501,7 +542,9 @@ class _MerchantMovementsTabState extends State<MerchantMovementsTab> {
                     child: Text(
                       cards[i].$4(totals[_currency!]!),
                       style: TextStyle(
-                        color: c.text, fontWeight: FontWeight.w800, fontSize: 13,
+                        color: c.text,
+                        fontWeight: FontWeight.w800,
+                        fontSize: 13,
                       ),
                     ),
                   ),
@@ -509,7 +552,7 @@ class _MerchantMovementsTabState extends State<MerchantMovementsTab> {
                 FittedBox(
                   fit: BoxFit.scaleDown,
                   child: Text(cards[i].$1,
-                    style: TextStyle(color: c.muted, fontSize: 9)),
+                      style: TextStyle(color: c.muted, fontSize: 9)),
                 ),
               ],
             ),
@@ -530,7 +573,8 @@ class _MerchantMovementsTabState extends State<MerchantMovementsTab> {
       children: [
         for (var index = 0; index < options.length; index++) ...[
           if (index > 0) const SizedBox(width: 5),
-          Expanded(child: Material(
+          Expanded(
+              child: Material(
             color: _status == options[index].$1 ? c.petrol : c.card,
             borderRadius: BorderRadius.circular(9),
             child: InkWell(
@@ -540,8 +584,10 @@ class _MerchantMovementsTabState extends State<MerchantMovementsTab> {
                 constraints: const BoxConstraints(minHeight: 32),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(9),
-                  border: Border.all(color: _status == options[index].$1
-                      ? c.petrol : c.cardBorder),
+                  border: Border.all(
+                      color: _status == options[index].$1
+                          ? c.petrol
+                          : c.cardBorder),
                 ),
                 padding: const EdgeInsets.symmetric(horizontal: 3),
                 child: FittedBox(
@@ -549,11 +595,13 @@ class _MerchantMovementsTabState extends State<MerchantMovementsTab> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(options[index].$3, size: 12,
-                        color: _status == options[index].$1
-                            ? (Theme.of(context).brightness == Brightness.dark
-                                ? AppColors.darkBackground : Colors.white)
-                            : c.petrol),
+                      Icon(options[index].$3,
+                          size: 12,
+                          color: _status == options[index].$1
+                              ? (Theme.of(context).brightness == Brightness.dark
+                                  ? AppColors.darkBackground
+                                  : Colors.white)
+                              : c.petrol),
                       const SizedBox(width: 3),
                       Text(
                         options[index].$2,
@@ -562,7 +610,8 @@ class _MerchantMovementsTabState extends State<MerchantMovementsTab> {
                           fontWeight: FontWeight.w700,
                           color: _status == options[index].$1
                               ? (Theme.of(context).brightness == Brightness.dark
-                                  ? AppColors.darkBackground : Colors.white)
+                                  ? AppColors.darkBackground
+                                  : Colors.white)
                               : c.text,
                         ),
                       ),
@@ -578,20 +627,24 @@ class _MerchantMovementsTabState extends State<MerchantMovementsTab> {
   }
 
   Widget _groupLabel(AppThemeColors c, DateTime date) => Container(
-    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
-    decoration: BoxDecoration(
-      color: c.pale, borderRadius: BorderRadius.circular(9),
-    ),
-    child: Row(
-      children: [
-        Text(_dayGroup(date), style: TextStyle(
-          color: c.text, fontSize: 11, fontWeight: FontWeight.w700,
-        )),
-        const Spacer(),
-        Icon(Icons.calendar_today_outlined, size: 13, color: c.petrol),
-      ],
-    ),
-  );
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
+        decoration: BoxDecoration(
+          color: c.pale,
+          borderRadius: BorderRadius.circular(9),
+        ),
+        child: Row(
+          children: [
+            Text(_dayGroup(date),
+                style: TextStyle(
+                  color: c.text,
+                  fontSize: 11,
+                  fontWeight: FontWeight.w700,
+                )),
+            const Spacer(),
+            Icon(Icons.calendar_today_outlined, size: 13, color: c.petrol),
+          ],
+        ),
+      );
 
   Widget _movementTile(
     AppThemeColors c,
@@ -605,7 +658,9 @@ class _MerchantMovementsTabState extends State<MerchantMovementsTab> {
         ? c.muted
         : m.status == MovementStatus.pending
             ? c.pendingText
-            : isDebt ? c.success : c.danger;
+            : isDebt
+                ? c.success
+                : c.danger;
     final sign = isDebt ? '+' : '−';
     final hour = TimeOfDay.fromDateTime(m.createdAt).format(context);
     return Material(
@@ -633,12 +688,13 @@ class _MerchantMovementsTabState extends State<MerchantMovementsTab> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(name,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        color: c.text, fontSize: 12,
-                        fontWeight: FontWeight.w800,
-                      )),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          color: c.text,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w800,
+                        )),
                     const SizedBox(height: 4),
                     Text(
                       '${isDebt ? 'إضافة دين' : 'تسجيل تسديد'} • $hour',
@@ -654,14 +710,16 @@ class _MerchantMovementsTabState extends State<MerchantMovementsTab> {
                   Text(
                     '$sign${FinanceDisplay.amount(m.amount)} ${FinanceDisplay.currencySymbol(m.currency)}',
                     style: TextStyle(
-                      color: amountColor, fontSize: 12,
+                      color: amountColor,
+                      fontSize: 12,
                       fontWeight: FontWeight.w900,
                     ),
                   ),
                   const SizedBox(height: 4),
                   Container(
                     padding: const EdgeInsets.symmetric(
-                      horizontal: 7, vertical: 3,
+                      horizontal: 7,
+                      vertical: 3,
                     ),
                     decoration: BoxDecoration(
                       color: m.status == MovementStatus.pending
@@ -678,13 +736,16 @@ class _MerchantMovementsTabState extends State<MerchantMovementsTab> {
                               : m.status == MovementStatus.pending
                                   ? Icons.schedule_rounded
                                   : Icons.cancel_rounded,
-                          size: 10, color: statusColor,
+                          size: 10,
+                          color: statusColor,
                         ),
                         const SizedBox(width: 3),
-                        Text(_statusLabel(m.status), style: TextStyle(
-                          color: statusColor, fontSize: 9,
-                          fontWeight: FontWeight.w700,
-                        )),
+                        Text(_statusLabel(m.status),
+                            style: TextStyle(
+                              color: statusColor,
+                              fontSize: 9,
+                              fontWeight: FontWeight.w700,
+                            )),
                       ],
                     ),
                   ),
@@ -713,14 +774,17 @@ class _MerchantMovementsTabState extends State<MerchantMovementsTab> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text('تفاصيل الحركة', style: TextStyle(
-                color: c.petrol, fontSize: 17, fontWeight: FontWeight.w800,
-              )),
+              Text('تفاصيل الحركة',
+                  style: TextStyle(
+                    color: c.petrol,
+                    fontSize: 17,
+                    fontWeight: FontWeight.w800,
+                  )),
               const SizedBox(height: 13),
               _detailsLine(c, 'العميل', customerName),
               _detailsLine(c, 'رقم العملية', m.id),
-              _detailsLine(c, 'النوع',
-                  m.type == MovementType.debt ? 'دين' : 'تسديد'),
+              _detailsLine(
+                  c, 'النوع', m.type == MovementType.debt ? 'دين' : 'تسديد'),
               _detailsLine(c, 'الحالة', _statusLabel(m.status)),
               _detailsLine(c, 'المبلغ',
                   '${FinanceDisplay.amount(m.amount)} ${FinanceDisplay.currencyCode(m.currency)}'),
@@ -743,22 +807,28 @@ class _MerchantMovementsTabState extends State<MerchantMovementsTab> {
   }
 
   Widget _detailsLine(AppThemeColors c, String label, String value) => Padding(
-    padding: const EdgeInsets.symmetric(vertical: 5),
-    child: Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SizedBox(
-          width: 90,
-          child: Text(label, style: TextStyle(
-            color: c.muted, fontSize: 11,
-          )),
+        padding: const EdgeInsets.symmetric(vertical: 5),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              width: 90,
+              child: Text(label,
+                  style: TextStyle(
+                    color: c.muted,
+                    fontSize: 11,
+                  )),
+            ),
+            Expanded(
+                child: SelectableText(value,
+                    style: TextStyle(
+                      color: c.text,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 12,
+                    ))),
+          ],
         ),
-        Expanded(child: SelectableText(value, style: TextStyle(
-          color: c.text, fontWeight: FontWeight.w600, fontSize: 12,
-        ))),
-      ],
-    ),
-  );
+      );
 
   Widget _reportBar(
     AppThemeColors c,
@@ -780,28 +850,35 @@ class _MerchantMovementsTabState extends State<MerchantMovementsTab> {
         child: Row(
           children: [
             Container(
-              width: 32, height: 32,
+              width: 32,
+              height: 32,
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 color: c.petrol,
                 borderRadius: BorderRadius.circular(9),
               ),
               child: Icon(Icons.picture_as_pdf_outlined,
-                color: Theme.of(context).brightness == Brightness.dark
-                    ? AppColors.darkBackground : Colors.white,
-                size: 17),
+                  color: Theme.of(context).brightness == Brightness.dark
+                      ? AppColors.darkBackground
+                      : Colors.white,
+                  size: 17),
             ),
             const SizedBox(width: 9),
-            Expanded(child: Column(
+            Expanded(
+                child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('كشف الحركة', style: TextStyle(
-                  color: c.petrol, fontSize: 12, fontWeight: FontWeight.w800,
-                )),
+                Text('كشف الحركة',
+                    style: TextStyle(
+                      color: c.petrol,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w800,
+                    )),
                 const SizedBox(height: 2),
                 Text('عرض ملخص الفترة المحددة',
-                  maxLines: 2, overflow: TextOverflow.ellipsis,
-                  style: TextStyle(color: c.muted, fontSize: 9)),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(color: c.muted, fontSize: 9)),
               ],
             )),
             FilledButton(
@@ -810,7 +887,7 @@ class _MerchantMovementsTabState extends State<MerchantMovementsTab> {
                 minimumSize: const Size(92, 32),
                 padding: const EdgeInsets.symmetric(horizontal: 9),
                 tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                textStyle: const TextStyle(fontSize: 10),
+                textStyle: const TextStyle(fontFamily: 'Cairo', fontSize: 10),
               ),
               child: const Text('إصدار التقرير'),
             ),
@@ -835,29 +912,39 @@ class _MerchantMovementsTabState extends State<MerchantMovementsTab> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text('كشف الحركة', style: TextStyle(
-                color: c.petrol, fontSize: 17, fontWeight: FontWeight.w800,
-              )),
+              Text('كشف الحركة',
+                  style: TextStyle(
+                    color: c.petrol,
+                    fontSize: 17,
+                    fontWeight: FontWeight.w800,
+                  )),
               const SizedBox(height: 4),
               Text('الفترة: ${_date(_from)} — ${_date(_to)}',
-                style: TextStyle(color: c.muted, fontSize: 11)),
+                  style: TextStyle(color: c.muted, fontSize: 11)),
               const SizedBox(height: 10),
               for (final currency in CurrencyCode.values)
                 if (_currency == null || _currency == currency) ...[
                   Text(FinanceDisplay.currencyName(currency),
-                    style: TextStyle(color: c.petrol, fontWeight: FontWeight.w800)),
-                  _detailsLine(c, 'إجمالي الحركة',
-                    FinanceDisplay.amount(totals[currency]!.grossNonRejected)),
+                      style: TextStyle(
+                          color: c.petrol, fontWeight: FontWeight.w800)),
+                  _detailsLine(
+                      c,
+                      'إجمالي الحركة',
+                      FinanceDisplay.amount(
+                          totals[currency]!.grossNonRejected)),
                   _detailsLine(c, 'الديون المعتمدة',
-                    FinanceDisplay.amount(totals[currency]!.approvedDebts)),
+                      FinanceDisplay.amount(totals[currency]!.approvedDebts)),
                   _detailsLine(c, 'المعلق',
-                    FinanceDisplay.amount(totals[currency]!.pending)),
-                  _detailsLine(c, 'التسديد المعتمد',
-                    FinanceDisplay.amount(totals[currency]!.approvedPayments)),
+                      FinanceDisplay.amount(totals[currency]!.pending)),
+                  _detailsLine(
+                      c,
+                      'التسديد المعتمد',
+                      FinanceDisplay.amount(
+                          totals[currency]!.approvedPayments)),
                   const SizedBox(height: 8),
                 ],
               Text('التصدير إلى PDF غير متصل بعد بخدمة التقارير.',
-                style: TextStyle(color: c.muted, fontSize: 10)),
+                  style: TextStyle(color: c.muted, fontSize: 10)),
             ],
           ),
         ),

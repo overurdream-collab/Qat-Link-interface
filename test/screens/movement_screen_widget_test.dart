@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:flutter/material.dart';
 import '../helpers/merchant_shell_test_app.dart';
 
 void main() {
@@ -12,6 +13,7 @@ void main() {
       expect(find.text('سجل الحركة'), findsOneWidget);
       expect(find.text('جميع تعاملاتك المالية'), findsOneWidget);
       expect(find.text('إجمالي الحركة للفترة المحددة'), findsOneWidget);
+      await _revealReport(tester);
       expect(find.text('كشف الحركة'), findsOneWidget);
 
       expect(find.byTooltip('الضبط'), findsOneWidget);
@@ -36,10 +38,23 @@ void main() {
       await tester.pumpAndSettle();
       expect(find.byTooltip('الوضع النهاري'), findsOneWidget);
 
+      await _revealReport(tester);
       await tester.tap(find.text('إصدار التقرير'));
       await tester.pumpAndSettle();
       expect(find.text('التصدير إلى PDF غير متصل بعد بخدمة التقارير.'),
           findsOneWidget);
     },
   );
+}
+
+Future<void> _revealReport(WidgetTester tester) async {
+  final scrollable = find
+      .byWidgetPredicate((widget) =>
+          widget is Scrollable && widget.axisDirection == AxisDirection.down)
+      .hitTestable()
+      .first;
+  await tester.scrollUntilVisible(find.text('إصدار التقرير'), 250,
+      scrollable: scrollable);
+  await tester.pumpAndSettle();
+  expect(tester.takeException(), isNull);
 }

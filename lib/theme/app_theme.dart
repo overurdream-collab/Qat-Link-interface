@@ -110,6 +110,7 @@ abstract final class AppTheme {
         style: FilledButton.styleFrom(
           // Premium blue-violet / orchid buttons with legible light foreground.
           foregroundColor: scheme.onPrimary,
+          textStyle: const TextStyle(fontFamily: 'Cairo'),
           backgroundColor: c.petrol,
           minimumSize: const Size(48, 48),
           shape: RoundedRectangleBorder(
@@ -120,14 +121,14 @@ abstract final class AppTheme {
       // Shared component styling prevents per-page brand drift.
       textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
-          foregroundColor: c.petrol,
+          foregroundColor: c.link,
           textStyle:
               const TextStyle(fontFamily: 'Cairo', fontWeight: FontWeight.w700),
         ),
       ),
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
-          foregroundColor: c.petrol,
+          foregroundColor: c.link,
           minimumSize: const Size(48, 46),
           side: BorderSide(color: c.cardBorder, width: 1.3),
           shape: RoundedRectangleBorder(
@@ -137,11 +138,15 @@ abstract final class AppTheme {
               const TextStyle(fontFamily: 'Cairo', fontWeight: FontWeight.w700),
         ),
       ),
+      segmentedButtonTheme: SegmentedButtonThemeData(
+        style: ButtonStyle(
+            textStyle: WidgetStatePropertyAll(TextStyle(fontFamily: 'Cairo'))),
+      ),
       chipTheme: base.chipTheme.copyWith(
         backgroundColor: c.card,
         selectedColor: c.pale,
         side: BorderSide(color: c.cardBorder),
-        labelStyle: TextStyle(color: c.text),
+        labelStyle: TextStyle(color: c.text, fontFamily: 'Cairo'),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
         ),

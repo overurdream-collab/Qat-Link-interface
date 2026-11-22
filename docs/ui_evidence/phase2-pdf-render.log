@@ -1,0 +1,5 @@
+00:00 +0: loading /workspace/maqwati/test/widgets/customer_statement_pdf_test.dart
+00:00 +0: /workspace/maqwati/test/widgets/customer_statement_pdf_test.dart: offline Arabic statement renderer outputs a real PDF document
+00:00 +1: loading /workspace/maqwati/test/widgets/merchant_pending_statement_pdf_test.dart
+00:01 +1: /workspace/maqwati/test/widgets/merchant_pending_statement_pdf_test.dart: off-app statement PDF is real and contains synthetic test activity
+00:02 +2: All tests passed!

@@ -30,10 +30,16 @@ void main() {
       }
 
       test('$name body and secondary text contrast', () {
-        for (final stop in visual.accessibleAction.colors) {
+        for (final stop in [
+          visual.action,
+          visual.hero,
+          visual.yer,
+          visual.sar,
+          visual.usd
+        ].expand((g) => visual.forWhiteText(g).colors)) {
           expect(contrast(Colors.white, stop), greaterThanOrEqualTo(4.5));
         }
-        for (final foreground in [colors.text, colors.muted]) {
+        for (final foreground in [colors.text, colors.muted, colors.link]) {
           for (final surface in [colors.card, colors.background]) {
             expect(contrast(foreground, surface), greaterThanOrEqualTo(4.5));
           }

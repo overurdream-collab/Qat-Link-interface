@@ -19,7 +19,7 @@ class PremiumHomeHero extends StatelessWidget {
           borderRadius: BorderRadius.circular(32),
           border: Border.all(
               color: Colors.white.withValues(alpha: .65), width: 1.4),
-          gradient: context.premium.hero,
+          gradient: context.premium.forWhiteText(context.premium.hero),
           boxShadow: [
             BoxShadow(
                 color: context.premium.shadow,
@@ -96,7 +96,7 @@ class PremiumHomeHero extends StatelessWidget {
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 10, vertical: 6),
                                   decoration: BoxDecoration(
-                                    color: Colors.white.withValues(alpha: .22),
+                                    color: Colors.black12,
                                     borderRadius: BorderRadius.circular(18),
                                     border: Border.all(color: Colors.white54),
                                   ),

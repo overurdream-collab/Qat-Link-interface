@@ -7,3 +7,5 @@ android/
 *.iml
 node_modules/
 test/**/failures/
+__pycache__/
+*.pyc

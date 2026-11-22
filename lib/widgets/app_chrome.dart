@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:clock/clock.dart';
 
 import '../theme/app_colors.dart';
 import '../theme/premium_tokens.dart';
@@ -25,7 +26,7 @@ class AppTopBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final c = context.colors;
-    final greeting = DateTime.now().hour < 12 ? 'صباح الخير،' : 'مساء الخير،';
+    final greeting = clock.now().hour < 12 ? 'صباح الخير،' : 'مساء الخير،';
     return Padding(
       padding: const EdgeInsets.fromLTRB(11, 16, 14, 10),
       child: Row(
@@ -63,7 +64,7 @@ class AppTopBar extends StatelessWidget {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
-                    color: c.petrol,
+                    color: c.link,
                     fontSize: 18,
                     fontWeight: FontWeight.w900,
                   ),
@@ -207,8 +208,7 @@ class AppBottomBar extends StatelessWidget {
   ) {
     final c = context.colors;
     final active = selectedIndex == index;
-    final navInk =
-        Theme.of(context).brightness == Brightness.dark ? c.text : c.petrol;
+    final navInk = active ? c.text : c.link;
     return Expanded(
       child: Semantics(
         button: true,

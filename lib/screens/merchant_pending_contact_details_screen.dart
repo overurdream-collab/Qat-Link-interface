@@ -7,6 +7,7 @@ import '../models/app_models.dart';
 import '../models/merchant_pending_models.dart';
 import '../services/app_state.dart';
 import '../theme/app_colors.dart';
+import '../theme/premium_tokens.dart';
 import '../widgets/app_chrome.dart';
 import '../widgets/finance_display.dart';
 import '../widgets/customers/merchant_pending_statement_pdf.dart';
@@ -38,8 +39,7 @@ class MerchantPendingContactDetailsScreen extends StatefulWidget {
 class _MerchantPendingContactDetailsScreenState
     extends State<MerchantPendingContactDetailsScreen> {
   bool _reportBusy = false;
-  final TextEditingController _entryAmountController =
-      TextEditingController();
+  final TextEditingController _entryAmountController = TextEditingController();
   final TextEditingController _entryDescriptionController =
       TextEditingController();
 
@@ -58,103 +58,106 @@ class _MerchantPendingContactDetailsScreenState
     return showDialog<_PendingEntryDraft>(
       context: context,
       builder: (dialogContext) => StatefulBuilder(
-          builder: (dialogContext, update) => AlertDialog(
-            title: Text(payment ? 'تسجيل دفعة للعميل' : 'تسجيل دين للعميل'),
-            content: Form(
-              key: formKey,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    payment
-                        ? 'تُسجل الدفعة في سجل التاجر وتخفض صافي المديونية التشغيلي. '
-                            'تبقى معلقة ولا تخفض الرصيد المشترك المعتمد.'
-                        : 'يُسجل الدين في دفتر التاجر وحده ويبقى معلقاً حتى يراجع العميل العملية.',
-                    style: TextStyle(
-                        color: dialogContext.colors.muted,
-                        fontSize: 11,
-                        height: 1.45),
-                  ),
-                  const SizedBox(height: 12),
-                  TextFormField(
-                    key: const Key('off_app_entry_amount'),
-                    controller: _entryAmountController,
-                    keyboardType:
-                        const TextInputType.numberWithOptions(decimal: true),
-                    decoration: const InputDecoration(labelText: 'المبلغ'),
-                    validator: (value) {
-                      final clean = _normalizeAmount(value ?? '');
-                      if (!RegExp(r'^\d{1,16}(?:\.\d{1,4})?$')
-                          .hasMatch(clean)) {
-                        return 'أدخل مبلغاً موجباً بدقة تصل إلى 4 منازل';
-                      }
-                      if (Decimal.parse(clean) <= Decimal.zero) {
-                        return 'المبلغ يجب أن يكون أكبر من صفر';
-                      }
-                      return null;
-                    },
-                  ),
-                  const SizedBox(height: 8),
-                  DropdownButtonFormField<CurrencyCode>(
-                    key: const Key('off_app_entry_currency'),
-                    value: currency,
-                    decoration: const InputDecoration(labelText: 'العملة'),
-                    items: [
-                      for (final unit in CurrencyCode.values)
-                        DropdownMenuItem(
-                          value: unit,
-                          child: Text(unit.name.toUpperCase()),
-                        ),
-                    ],
-                    onChanged: (value) {
-                      if (value != null) update(() => currency = value);
-                    },
-                  ),
-                  const SizedBox(height: 8),
-                  TextFormField(
-                    key: const Key('off_app_entry_description'),
-                    controller: _entryDescriptionController,
-                    maxLength: 160,
-                    decoration:
-                        const InputDecoration(labelText: 'البيان (اختياري)'),
-                  ),
-                ],
-              ),
+        builder: (dialogContext, update) => AlertDialog(
+          title: Text(payment ? 'تسجيل دفعة للعميل' : 'تسجيل دين للعميل'),
+          content: Form(
+            key: formKey,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  payment
+                      ? 'تُسجل الدفعة في سجل التاجر وتخفض صافي المديونية التشغيلي. '
+                          'تبقى معلقة ولا تخفض الرصيد المشترك المعتمد.'
+                      : 'يُسجل الدين في دفتر التاجر وحده ويبقى معلقاً حتى يراجع العميل العملية.',
+                  style: TextStyle(
+                      color: dialogContext.colors.muted,
+                      fontSize: 11,
+                      height: 1.45),
+                ),
+                const SizedBox(height: 12),
+                TextFormField(
+                  key: const Key('off_app_entry_amount'),
+                  controller: _entryAmountController,
+                  keyboardType:
+                      const TextInputType.numberWithOptions(decimal: true),
+                  decoration: const InputDecoration(labelText: 'المبلغ'),
+                  validator: (value) {
+                    final clean = _normalizeAmount(value ?? '');
+                    if (!RegExp(r'^\d{1,16}(?:\.\d{1,4})?$').hasMatch(clean)) {
+                      return 'أدخل مبلغاً موجباً بدقة تصل إلى 4 منازل';
+                    }
+                    if (Decimal.parse(clean) <= Decimal.zero) {
+                      return 'المبلغ يجب أن يكون أكبر من صفر';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 8),
+                DropdownButtonFormField<CurrencyCode>(
+                  key: const Key('off_app_entry_currency'),
+                  value: currency,
+                  decoration: const InputDecoration(labelText: 'العملة'),
+                  items: [
+                    for (final unit in CurrencyCode.values)
+                      DropdownMenuItem(
+                        value: unit,
+                        child: Text(unit.name.toUpperCase()),
+                      ),
+                  ],
+                  onChanged: (value) {
+                    if (value != null) update(() => currency = value);
+                  },
+                ),
+                const SizedBox(height: 8),
+                TextFormField(
+                  key: const Key('off_app_entry_description'),
+                  controller: _entryDescriptionController,
+                  maxLength: 160,
+                  decoration:
+                      const InputDecoration(labelText: 'البيان (اختياري)'),
+                ),
+              ],
             ),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(dialogContext),
-                child: const Text('إلغاء'),
-              ),
-              FilledButton(
-                key: const Key('off_app_entry_save'),
-                onPressed: () {
-                  if (!formKey.currentState!.validate()) return;
-                  Navigator.pop(
-                    dialogContext,
-                    _PendingEntryDraft(
-                      Decimal.parse(
-                          _normalizeAmount(_entryAmountController.text)),
-                      currency,
-                      _entryDescriptionController.text.trim().isEmpty
-                          ? null
-                          : _entryDescriptionController.text.trim(),
-                    ),
-                  );
-                },
-                child: const Text('حفظ في سجل التاجر'),
-              ),
-            ],
           ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(dialogContext),
+              child: const Text('إلغاء'),
+            ),
+            FilledButton(
+              key: const Key('off_app_entry_save'),
+              onPressed: () {
+                if (!formKey.currentState!.validate()) return;
+                Navigator.pop(
+                  dialogContext,
+                  _PendingEntryDraft(
+                    Decimal.parse(
+                        _normalizeAmount(_entryAmountController.text)),
+                    currency,
+                    _entryDescriptionController.text.trim().isEmpty
+                        ? null
+                        : _entryDescriptionController.text.trim(),
+                  ),
+                );
+              },
+              child: const Text('حفظ في سجل التاجر'),
+            ),
+          ],
+        ),
       ),
     );
   }
 
   String _normalizeAmount(String input) => input
-      .replaceAllMapped(RegExp(r'[٠-٩]'), (match) =>
-          String.fromCharCode(match.group(0)!.codeUnitAt(0) - 0x0660 + 0x30))
-      .replaceAllMapped(RegExp(r'[۰-۹]'), (match) =>
-          String.fromCharCode(match.group(0)!.codeUnitAt(0) - 0x06F0 + 0x30))
+      .replaceAllMapped(
+          RegExp(r'[٠-٩]'),
+          (match) => String.fromCharCode(
+              match.group(0)!.codeUnitAt(0) - 0x0660 + 0x30))
+      .replaceAllMapped(
+          RegExp(r'[۰-۹]'),
+          (match) => String.fromCharCode(
+              match.group(0)!.codeUnitAt(0) - 0x06F0 + 0x30))
       .replaceAll('٫', '.')
       .replaceAll(',', '')
       .trim();
@@ -201,8 +204,7 @@ class _MerchantPendingContactDetailsScreenState
   }
 
   void _message(String value) {
-    ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text(value)));
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(value)));
   }
 
   Future<void> _copyStatement() async {
@@ -213,8 +215,8 @@ class _MerchantPendingContactDetailsScreenState
         from: DateTime(2000),
         to: DateTime.now(),
       );
-      await Clipboard.setData(ClipboardData(
-          text: MerchantPendingDebtQuery.shareText(statement)));
+      await Clipboard.setData(
+          ClipboardData(text: MerchantPendingDebtQuery.shareText(statement)));
       if (mounted) {
         _message('نُسخ كشف سجل التاجر. راجع اسم المستلم قبل مشاركته.');
       }
@@ -233,8 +235,10 @@ class _MerchantPendingContactDetailsScreenState
         from: DateTime(2000),
         to: DateTime.now(),
       );
-      final bytes = await MerchantPendingStatementPdf.create(statement);
-      final safeId = widget.contact.id.replaceAll(RegExp(r'[^a-zA-Z0-9_-]'), '_');
+      final bytes = await MerchantPendingStatementPdf.create(statement,
+          feminine: context.premium.feminineIdentity);
+      final safeId =
+          widget.contact.id.replaceAll(RegExp(r'[^a-zA-Z0-9_-]'), '_');
       final filename = 'maqwati_unverified_statement_$safeId.pdf';
       final completed = share
           ? await Printing.sharePdf(bytes: bytes, filename: filename)
@@ -269,8 +273,8 @@ class _MerchantPendingContactDetailsScreenState
           final debts = widget.state.merchantPendingDebts.value.where((entry) =>
               entry.merchantId == widget.merchantId &&
               entry.contactId == widget.contact.id);
-          final payments = widget.state.merchantPendingPayments.value
-              .where((entry) =>
+          final payments = widget.state.merchantPendingPayments.value.where(
+              (entry) =>
                   entry.merchantId == widget.merchantId &&
                   entry.contactId == widget.contact.id);
           final debtTotals = _totals(debts);
@@ -345,7 +349,8 @@ class _MerchantPendingContactDetailsScreenState
                 child: Text(
                   'هذا سجل التاجر وحده. الديون والدفعات فيه معلقة وغير معتمدة من العميل، '
                   'ولا تدخل الرصيد المشترك المعتمد.',
-                  style: TextStyle(color: c.pendingText, fontSize: 11, height: 1.5),
+                  style: TextStyle(
+                      color: c.pendingText, fontSize: 11, height: 1.5),
                 ),
               ),
               const SizedBox(height: 14),
@@ -389,18 +394,22 @@ class _MerchantPendingContactDetailsScreenState
               ),
               const SizedBox(height: 7),
               Row(children: [
-                Expanded(child: OutlinedButton.icon(
+                Expanded(
+                    child: OutlinedButton.icon(
                   key: const Key('off_app_export_pdf'),
                   onPressed: rows.isEmpty || _reportBusy
-                      ? null : () => _exportStatement(share: false),
+                      ? null
+                      : () => _exportStatement(share: false),
                   icon: const Icon(Icons.picture_as_pdf_outlined, size: 18),
                   label: Text(_reportBusy ? 'جارٍ التجهيز' : 'تصدير PDF'),
                 )),
                 const SizedBox(width: 8),
-                Expanded(child: OutlinedButton.icon(
+                Expanded(
+                    child: OutlinedButton.icon(
                   key: const Key('off_app_share_pdf'),
                   onPressed: rows.isEmpty || _reportBusy
-                      ? null : () => _exportStatement(share: true),
+                      ? null
+                      : () => _exportStatement(share: true),
                   icon: const Icon(Icons.share_outlined, size: 18),
                   label: const Text('مشاركة PDF'),
                 )),
@@ -464,12 +473,17 @@ class _MerchantPendingContactDetailsScreenState
           children: [
             Text(currency.name.toUpperCase(),
                 style: TextStyle(
-                    color: c.petrol, fontWeight: FontWeight.w900, fontSize: 11)),
+                    color: c.petrol,
+                    fontWeight: FontWeight.w900,
+                    fontSize: 11)),
             const SizedBox(height: 7),
             Row(
               children: [
-                Expanded(child: _summaryValue(c, 'الديون المسجلة', debts, symbol)),
-                Expanded(child: _summaryValue(c, 'الدفعات المسجلة', payments, symbol)),
+                Expanded(
+                    child: _summaryValue(c, 'الديون المسجلة', debts, symbol)),
+                Expanded(
+                    child:
+                        _summaryValue(c, 'الدفعات المسجلة', payments, symbol)),
                 Expanded(
                   child: _summaryValue(
                     c,
@@ -493,7 +507,8 @@ class _MerchantPendingContactDetailsScreenState
     Decimal value,
     String symbol, {
     Color? valueColor,
-  }) => Column(
+  }) =>
+      Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(title,

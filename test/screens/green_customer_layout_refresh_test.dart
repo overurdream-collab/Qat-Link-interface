@@ -5,7 +5,8 @@ import 'package:qat_link/widgets/app_chrome.dart';
 import '../helpers/merchant_shell_test_app.dart';
 
 void main() {
-  testWidgets('customer home matches merchant banner and has 3 sliding currencies',
+  testWidgets(
+      'customer home matches merchant banner and has 3 sliding currencies',
       (tester) async {
     await tester.pumpWidget(const MaqwatiUiPreview());
     await tester.tap(find.text('عميل').first);
@@ -14,7 +15,8 @@ void main() {
     await tester.drag(find.byType(ListView).first, const Offset(0, -230));
     await tester.pumpAndSettle();
     expect(find.byKey(const Key('customer_currency_pager')), findsOneWidget);
-    expect(find.byKey(const Key('customer_currency_indicators')), findsOneWidget);
+    expect(
+        find.byKey(const Key('customer_currency_indicators')), findsOneWidget);
     expect(find.byKey(const Key('customer_balance_yer')), findsOneWidget);
     await tester.drag(find.byKey(const Key('customer_currency_pager')),
         const Offset(-420, 0));
@@ -37,14 +39,14 @@ void main() {
     );
     expect((navSurface.decoration as BoxDecoration).color,
         const Color(0xFFFFFFFF));
-    expect(tester.getTopLeft(studio).dy,
-        lessThan(tester.getTopLeft(other).dy));
+    expect(tester.getTopLeft(studio).dy, lessThan(tester.getTopLeft(other).dy));
     await tester.tap(studio);
     await tester.pumpAndSettle();
     expect(tester.takeException(), isNull);
   });
 
-  testWidgets('discover heading describes stores operating now', (tester) async {
+  testWidgets('discover heading describes stores operating now',
+      (tester) async {
     await tester.pumpWidget(const MaqwatiUiPreview());
     await tester.tap(find.text('عميل').first);
     await tester.pumpAndSettle();
@@ -53,7 +55,8 @@ void main() {
     expect(find.text('استكشف المتاجر العاملة الآن'), findsOneWidget);
   });
 
-  testWidgets('top button order is notifications then theme then settings in RTL',
+  testWidgets(
+      'top button order is notifications then theme then settings in RTL',
       (tester) async {
     await tester.pumpWidget(const MaqwatiUiPreview());
     await tester.tap(find.text('عميل').first);
@@ -67,8 +70,10 @@ void main() {
     expect(notice, findsOneWidget);
     expect(theme, findsOneWidget);
     expect(settings, findsOneWidget);
-    expect(tester.getCenter(notice).dx, greaterThan(tester.getCenter(theme).dx));
-    expect(tester.getCenter(theme).dx, greaterThan(tester.getCenter(settings).dx));
+    expect(
+        tester.getCenter(notice).dx, greaterThan(tester.getCenter(theme).dx));
+    expect(
+        tester.getCenter(theme).dx, greaterThan(tester.getCenter(settings).dx));
   });
 
   testWidgets('settings contain profile, packages, security and about',
@@ -81,15 +86,18 @@ void main() {
     expect(find.byKey(const Key('settings_profile_name')), findsOneWidget);
     expect(find.byKey(const Key('settings_profile_address')), findsOneWidget);
     expect(find.byKey(const Key('settings_profile_phone')), findsOneWidget);
-    await tester.ensureVisible(find.byKey(const Key('settings_change_password')));
+    await tester
+        .ensureVisible(find.byKey(const Key('settings_change_password')));
     expect(find.byKey(const Key('settings_change_password')), findsOneWidget);
     await tester.ensureVisible(find.byKey(const Key('settings_packages')));
     expect(find.byKey(const Key('settings_packages')), findsOneWidget);
-    await tester.scrollUntilVisible(find.byKey(const Key('settings_privacy')),
-        160, scrollable: find.byType(Scrollable).last);
+    await tester.scrollUntilVisible(
+        find.byKey(const Key('settings_privacy')), 160,
+        scrollable: find.byType(Scrollable).last);
     expect(find.byKey(const Key('settings_privacy')), findsOneWidget);
-    await tester.scrollUntilVisible(find.byKey(const Key('settings_about')),
-        100, scrollable: find.byType(Scrollable).last);
+    await tester.scrollUntilVisible(
+        find.byKey(const Key('settings_about')), 100,
+        scrollable: find.byType(Scrollable).last);
     expect(find.byKey(const Key('settings_about')), findsOneWidget);
   });
 
@@ -99,6 +107,14 @@ void main() {
     await tester.tap(find.text('الحركة').first);
     await tester.pumpAndSettle();
     expect(find.byTooltip('تصدير الحركة'), findsNothing);
+    await tester.scrollUntilVisible(find.text('إصدار التقرير'), 250,
+        scrollable: find
+            .byWidgetPredicate((widget) =>
+                widget is Scrollable &&
+                widget.axisDirection == AxisDirection.down)
+            .hitTestable()
+            .first);
+    await tester.pumpAndSettle();
     expect(find.text('إصدار التقرير'), findsOneWidget);
   });
 }

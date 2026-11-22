@@ -88,6 +88,23 @@ class AppThemeColors extends ThemeExtension<AppThemeColors> {
     required this.pendingBackground,
   });
 
+  /// Readable brand text on the two standard surfaces; status colors are separate.
+  Color get link {
+    var value = petrol;
+    double ratio(Color surface) {
+      final a = value.computeLuminance();
+      final b = surface.computeLuminance();
+      return (a > b ? a + .05 : b + .05) / (a > b ? b + .05 : a + .05);
+    }
+
+    if (background.computeLuminance() > .5) {
+      while (ratio(background) < 4.5 || ratio(card) < 4.5) {
+        value = Color.alphaBlend(const Color(0x0D000000), value);
+      }
+    }
+    return value;
+  }
+
   final Color background;
   final Color card;
   final Color cardBorder;

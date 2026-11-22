@@ -167,25 +167,37 @@ class _RaisedMaqwatiWordmark extends StatelessWidget {
                 shaderCallback: (bounds) => LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
-                  colors: feminine
-                      ? const [
-                          Color(0xFFF8DCEB),
-                          Color(0xFFAD4389),
-                          Color(0xFFAD3379),
-                          Color(0xFF8551B2)
-                        ]
-                      : (isDark
+                  colors: isDark
+                      ? (feminine
                           ? const [
-                              Color(0xFF8DEBFF),
-                              Color(0xFF268EFF),
-                              Color(0xFF174DCB)
+                              Color(0xFFF8DCEB),
+                              Color(0xFFF2A7D0),
+                              Color(0xFFC2A4FF)
                             ]
                           : const [
-                              Color(0xFF8CF6FF),
-                              Color(0xFF0FA7F9),
-                              Color(0xFF0752E6),
-                              Color(0xFF2533AE)
-                            ]),
+                              Color(0xFF73DCF6),
+                              Color(0xFF8FB8FF),
+                              Color(0xFFC2A4FF)
+                            ])
+                      : feminine
+                          ? const [
+                              Color(0xFFF8DCEB),
+                              Color(0xFFAD4389),
+                              Color(0xFFAD3379),
+                              Color(0xFF8551B2)
+                            ]
+                          : (isDark
+                              ? const [
+                                  Color(0xFF8DEBFF),
+                                  Color(0xFF268EFF),
+                                  Color(0xFF174DCB)
+                                ]
+                              : const [
+                                  Color(0xFF8CF6FF),
+                                  Color(0xFF0FA7F9),
+                                  Color(0xFF0752E6),
+                                  Color(0xFF2533AE)
+                                ]),
                 ).createShader(bounds),
                 child: Text(
                   title,

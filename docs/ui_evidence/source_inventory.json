@@ -2,7 +2,7 @@
   "files": [
     {
       "path": "lib/screens/customer_app_shell.dart",
-      "lines": 1167,
+      "lines": 2079,
       "classes": [
         "CustomerAppShell",
         "_CustomerAppShellState",
@@ -42,7 +42,7 @@
     },
     {
       "path": "lib/screens/customer_details_screen.dart",
-      "lines": 749,
+      "lines": 826,
       "classes": [
         "CustomerDetailsScreen",
         "_CustomerDetailsScreenState"
@@ -52,7 +52,7 @@
     },
     {
       "path": "lib/screens/customers_screen.dart",
-      "lines": 928,
+      "lines": 1018,
       "classes": [
         "MerchantCustomersTab",
         "_MerchantCustomersTabState"
@@ -124,7 +124,7 @@
     },
     {
       "path": "lib/screens/home_screen.dart",
-      "lines": 406,
+      "lines": 426,
       "classes": [
         "HomeScreen",
         "_HomeScreenState"
@@ -165,7 +165,7 @@
     },
     {
       "path": "lib/screens/merchant_financial_assistant_screen.dart",
-      "lines": 700,
+      "lines": 843,
       "classes": [
         "_Range",
         "MerchantFinancialAssistantScreen",
@@ -178,7 +178,7 @@
     },
     {
       "path": "lib/screens/merchant_pending_contact_details_screen.dart",
-      "lines": 581,
+      "lines": 596,
       "classes": [
         "_PendingEntryDraft",
         "MerchantPendingContactDetailsScreen",
@@ -190,7 +190,7 @@
     },
     {
       "path": "lib/screens/merchant_space_screen.dart",
-      "lines": 1306,
+      "lines": 1454,
       "classes": [
         "MerchantSpaceTab",
         "_StudioDraft",
@@ -208,7 +208,7 @@
     },
     {
       "path": "lib/screens/movement_screen.dart",
-      "lines": 867,
+      "lines": 954,
       "classes": [
         "MerchantMovementsTab",
         "_MerchantMovementsTabState"
@@ -250,12 +250,12 @@
     },
     {
       "path": "lib/widgets/auth/auth_brand_hero.dart",
-      "lines": 203,
+      "lines": 215,
       "classes": [
         "AuthBrandHero",
         "_RaisedMaqwatiWordmark"
       ],
-      "literal_colors": 22,
+      "literal_colors": 28,
       "visual_review": "NOT VERIFIED"
     },
     {
@@ -300,11 +300,11 @@
     },
     {
       "path": "lib/widgets/customers/customer_statement_pdf.dart",
-      "lines": 236,
+      "lines": 272,
       "classes": [
         "CustomerStatementPdf"
       ],
-      "literal_colors": 20,
+      "literal_colors": 22,
       "visual_review": "NOT VERIFIED"
     },
     {
@@ -339,21 +339,21 @@
     },
     {
       "path": "lib/widgets/customers/merchant_pending_statement_pdf.dart",
-      "lines": 193,
+      "lines": 221,
       "classes": [
         "MerchantPendingStatementPdf",
         "_PdfRow"
       ],
-      "literal_colors": 16,
+      "literal_colors": 19,
       "visual_review": "NOT VERIFIED"
     },
     {
       "path": "lib/widgets/customers/pdf_brand_mascot.dart",
-      "lines": 69,
+      "lines": 54,
       "classes": [
         "PdfBrandMascot"
       ],
-      "literal_colors": 2,
+      "literal_colors": 3,
       "visual_review": "NOT VERIFIED"
     },
     {
@@ -379,13 +379,13 @@
     },
     {
       "path": "lib/widgets/home/new_currency_card.dart",
-      "lines": 260,
+      "lines": 207,
       "classes": [
         "CurrencyCardData",
         "NewCurrencyCard",
         "_MiniKpi"
       ],
-      "literal_colors": 2,
+      "literal_colors": 0,
       "visual_review": "NOT VERIFIED"
     },
     {
@@ -515,7 +515,7 @@
     },
     {
       "path": "lib/widgets/merchant_space/reservation_daily_pdf.dart",
-      "lines": 203,
+      "lines": 223,
       "classes": [
         "ReservationDailyPdf"
       ],
@@ -534,7 +534,7 @@
     },
     {
       "path": "lib/widgets/merchant_space/worker_preparation_pdf.dart",
-      "lines": 148,
+      "lines": 159,
       "classes": [
         "WorkerPreparationPdf"
       ],
@@ -578,18 +578,18 @@
     },
     {
       "path": "lib/theme/app_colors.dart",
-      "lines": 293,
+      "lines": 310,
       "classes": [
         "AppColors",
         "AppThemeColors",
         "AppGradients"
       ],
-      "literal_colors": 73,
+      "literal_colors": 74,
       "visual_review": "NOT VERIFIED"
     },
     {
       "path": "lib/theme/app_theme.dart",
-      "lines": 174,
+      "lines": 179,
       "classes": [
         "AppTheme"
       ],
@@ -598,7 +598,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "lines": 330,
+      "lines": 334,
       "classes": [
         "PremiumTokens",
         "PremiumVisualPalette",
@@ -673,11 +673,6 @@
         200
       ],
       "decode": "PASS"
-    },
-    {
-      "path": "assets/images/maqwati_approved_mascot.jpeg",
-      "decode": "FAIL",
-      "error": "cannot identify image file 'assets/images/maqwati_approved_mascot.jpeg'"
     },
     {
       "path": "assets/images/maqwati_feminine_character.png",

@@ -12,7 +12,12 @@ Future<void> assertImageDecodes(String assetName) async {
       reason: 'Mascot asset must be a real image, not a Git LFS pointer.');
   final buffer = await ui.ImmutableBuffer.fromUint8List(
       data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes));
-  final codec = await ui.instantiateImageCodecFromBuffer(buffer);
+  late ui.Codec codec;
+  try {
+    codec = await ui.instantiateImageCodecFromBuffer(buffer);
+  } catch (error) {
+    throw StateError('Image decode failed: $assetName: $error');
+  }
   final frame = await codec.getNextFrame();
   expect(frame.image.width, greaterThan(100));
   expect(frame.image.height, greaterThan(100));
@@ -26,6 +31,19 @@ void main() {
   test('both approved mascot asset files decode on Flutter', () async {
     await assertImageDecodes('assets/images/maqwati_approved_character.png');
     await assertImageDecodes('assets/images/maqwati_feminine_character.png');
+  });
+
+  test('every bundled character and banner image decodes', () async {
+    final manifest = await AssetManifest.loadFromAssetBundle(rootBundle);
+    final images = manifest.listAssets().where((name) =>
+        name.startsWith('assets/') &&
+        (name.endsWith('.png') ||
+            name.endsWith('.jpeg') ||
+            name.endsWith('.webp')));
+    expect(images.length, greaterThanOrEqualTo(10));
+    for (final name in images) {
+      await assertImageDecodes(name);
+    }
   });
 
   testWidgets('phone APK launches directly into a clean RTL login',
@@ -49,8 +67,8 @@ void main() {
     expect(find.byKey(const Key('preview_female_theme')), findsNothing);
     expect(find.text('معاينة تصميم فقط — لا حساب مالي متصل'), findsNothing);
     expect(find.text('معاينة الواجهات التجريبية'), findsNothing);
-    final featurePosition = tester.getRect(
-        find.byKey(const Key('login_feature_highlights')));
+    final featurePosition =
+        tester.getRect(find.byKey(const Key('login_feature_highlights')));
     // The feature row must not be completely below the visible Android screen.
     expect(featurePosition.top, lessThan(780),
         reason: 'All four approved feature tiles were pushed off-screen.');

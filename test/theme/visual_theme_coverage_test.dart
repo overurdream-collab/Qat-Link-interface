@@ -32,33 +32,43 @@ void main() {
       });
 
       for (final currency in CurrencyCode.values) {
-        testWidgets('$name applies its own ${currency.name.toUpperCase()} gradient',
+        testWidgets(
+            '$name applies its own ${currency.name.toUpperCase()} gradient',
             (tester) async {
           await tester.pumpWidget(MaterialApp(
             theme: AppTheme.build(dark: dark, pink: feminine),
             home: Scaffold(
-              body: Center(child: SizedBox(
+              body: Center(
+                  child: SizedBox(
                 height: 230,
                 width: 340,
-                child: NewCurrencyCard(data: CurrencyCardData(
-                  currency: currency, debts: '100',
-                  payments: '30', pending: '20', balance: '70',
+                child: NewCurrencyCard(
+                    data: CurrencyCardData(
+                  currency: currency,
+                  debts: '100',
+                  payments: '30',
+                  pending: '20',
+                  balance: '70',
                   collectionRate: .3,
                 )),
               )),
             ),
           ));
           final card = tester.widget<Container>(
-            find.descendant(of: find.byType(NewCurrencyCard),
-                matching: find.byType(Container)).first,
+            find
+                .descendant(
+                    of: find.byType(NewCurrencyCard),
+                    matching: find.byType(Container))
+                .first,
           );
-          final gradient = (card.decoration! as BoxDecoration).gradient! as LinearGradient;
+          final gradient =
+              (card.decoration! as BoxDecoration).gradient! as LinearGradient;
           final expected = switch (currency) {
             CurrencyCode.yer => palette.yer,
             CurrencyCode.sar => palette.sar,
             CurrencyCode.usd => palette.usd,
           };
-          expect(gradient.colors, expected.colors);
+          expect(gradient.colors, palette.forWhiteText(expected).colors);
           expect(find.text('70'), findsOneWidget);
           expect(find.text('20'), findsOneWidget);
           expect(tester.takeException(), isNull);
