@@ -157,10 +157,8 @@ class _RaisedMaqwatiWordmark extends StatelessWidget {
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: feminine
-                      ? (isDark
-                          ? const [Color(0xFFFFDFF1), Color(0xFFE995CC), Color(0xFF8F3F96)]
-                          : const [Color(0xFFFFD1E9), Color(0xFFAD4389),
-                              Color(0xFFAD3379), Color(0xFF8551B2)])
+                      ? const [Color(0xFFF8DCEB), Color(0xFFAD4389),
+                          Color(0xFFAD3379), Color(0xFF8551B2)]
                       : (isDark
                           ? const [Color(0xFF8DEBFF), Color(0xFF268EFF), Color(0xFF174DCB)]
                           : const [Color(0xFF8CF6FF), Color(0xFF0FA7F9),
