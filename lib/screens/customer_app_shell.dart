@@ -734,10 +734,11 @@ class _CustomerBalanceCard extends StatelessWidget {
               : MovementCalculator.pendingTotal(customerMovements,
                   customerId: id, currency: currency);
           if (showcase) {
+            final narrowCard = MediaQuery.sizeOf(context).width < 360;
             return Container(
               key: Key('customer_balance_${currency.name}'),
               width: double.infinity,
-              padding: const EdgeInsets.all(18),
+              padding: EdgeInsets.all(narrowCard ? 10 : 18),
               decoration: BoxDecoration(
                 gradient: context.premium.forWhiteText(switch (currency) {
                   CurrencyCode.yer => context.premium.yer,
@@ -769,14 +770,14 @@ class _CustomerBalanceCard extends StatelessWidget {
                         style: const TextStyle(
                             color: Colors.white, fontWeight: FontWeight.w800)),
                   ]),
-                  const SizedBox(height: 18),
+                  SizedBox(height: narrowCard ? 9 : 18),
                   Text(
                       id == null
                           ? 'الرصيد يتطلب تسجيل دخول موثق'
                           : 'الرصيد المشترك المعتمد',
                       style:
                           const TextStyle(color: Colors.white, fontSize: 12)),
-                  const SizedBox(height: 5),
+                  SizedBox(height: narrowCard ? 3 : 5),
                   FittedBox(
                     fit: BoxFit.scaleDown,
                     alignment: Alignment.centerRight,
