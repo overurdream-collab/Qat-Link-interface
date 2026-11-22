@@ -1,0 +1,43 @@
+name: Import owner-approved mascot cutouts (one time)
+on:
+  push:
+    branches: [feat/maqwati-green-identity-isolated-20261121]
+    paths:
+      - .github/workflows/import-approved-mascots.yml
+
+permissions:
+  contents: write
+
+jobs:
+  import-cutouts:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download original character artwork from temporary design handoff
+        env:
+          MALE_SRC: 'https://media.canva.com/v2/image-resize/format:PNG/height:200/quality:100/uri:ifs%3A%2F%2FM%2F0fe1e544-9155-46fa-8da7-0802012a7826/watermark:F/width:168?csig=AAAAAAAAAAAAAAAAAAAAAL9WT-5B5dT8xJUP_t3pPwBliIQxjpQBz-VzuIvTENtU&exp=1795378525&osig=AAAAAAAAAAAAAAAAAAAAAI3Z7-y_ysT6HCfbfyYZFdKCeos2Rtbptadv6eVkiLpu&signer=media-rpc&token=AAIAAU0AJDBmZTFlNTQ0LTkxNTUtNDZmYS04ZGE3LTA4MDIwMTJhNzgyNgAAAAABogTmM0jPi9LwVJYjTVHBS2FDaduxFe2JSReOuJGbZaYTjo8YbA&x-canva-quality=thumbnail'
+          FEMALE_SRC: 'https://media.canva.com/v2/image-resize/format:PNG/height:200/quality:100/uri:ifs%3A%2F%2FM%2F685439c6-80b1-4ce2-9f5e-7ac707e855e8/watermark:F/width:172?csig=AAAAAAAAAAAAAAAAAAAAAMG0GNgmIiZ23SEuuCpqGkUExVJ-Thgt4oJi3kL7Ciho&exp=1795375526&osig=AAAAAAAAAAAAAAAAAAAAAHEYX1M-rOYGJ5q7GA046ckay-Mcl5Q_5v0bS1AtgT03&signer=media-rpc&token=AAIAAU0AJDY4NTQzOWM2LTgwYjEtNGNlMi05ZjVlLTdhYzcwN2U4NTVlOAAAAAABogS4cHAA-6gHiiNuW7QJ93qJ82wktyNeR9DrkN22qgmKfPR7kw&x-canva-quality=thumbnail'
+        run: |
+          curl --fail --location --retry 3 --silent --show-error "$MALE_SRC" -o /tmp/maqwati_man.png
+          curl --fail --location --retry 3 --silent --show-error "$FEMALE_SRC" -o /tmp/maqwati_woman.png
+          file /tmp/maqwati_man.png /tmp/maqwati_woman.png
+          python3 - <<'PY'
+          import struct
+          from pathlib import Path
+          for p in ('/tmp/maqwati_man.png','/tmp/maqwati_woman.png'):
+              data = Path(p).read_bytes()
+              assert data[:8] == b'\x89PNG\r\n\x1a\n', f'Image is not PNG: {p}'
+              width, height = struct.unpack('>II', data[16:24])
+              assert width >= 130 and height >= 190, f'Invalid character size: {p}'
+              print(f'Valid mascot transfer: {p}, {width}x{height}, {len(data)} bytes')
+          PY
+      - name: Commit both valid, owner-approved character assets
+        run: |
+          cp /tmp/maqwati_man.png assets/images/maqwati_approved_character.png
+          cp /tmp/maqwati_woman.png assets/images/maqwati_feminine_character.png
+          git add assets/images/maqwati_approved_character.png assets/images/maqwati_feminine_character.png
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "fix(assets): restore owner-approved man and woman images as valid PNG"
+          git push origin HEAD:feat/maqwati-green-identity-isolated-20261121
