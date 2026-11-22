@@ -26,7 +26,7 @@ class QuickActionsSheet extends StatelessWidget {
       (QuickActionKind.addDebt, 'إضافة دين',
           Icons.receipt_long_rounded, const Color(0xFFD99113)),
       (QuickActionKind.addAmount, 'إضافة مبلغ',
-          Icons.account_balance_wallet_rounded, AppColors.sea),
+          Icons.account_balance_wallet_rounded, c.petrol),
     ];
     return SafeArea(
       child: Padding(
