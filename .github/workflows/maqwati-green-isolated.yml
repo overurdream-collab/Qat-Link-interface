@@ -36,6 +36,8 @@ jobs:
         run: flutter test test/theme/approved_ui_test.dart
       - name: Premium identity and currency tokens
         run: flutter test test/theme/premium_identity_tokens_test.dart
+      - name: Four-theme visual regression
+        run: flutter test test/theme/visual_theme_coverage_test.dart
       - name: Isolated reference identity tests
         run: flutter test test/screens/green_identity_test.dart
       - name: Home banner interaction and rotation tests
