@@ -6,3 +6,4 @@ android/
 .metadata
 *.iml
 node_modules/
+test/**/failures/
