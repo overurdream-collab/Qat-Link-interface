@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'services/app_incident_recorder.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'main.dart' show MerchantAppShell;
@@ -11,6 +12,7 @@ import 'theme/app_theme.dart';
 /// Never use this entrypoint for authenticated production releases.
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+  AppIncidentRecorder.install();
   runApp(const MaqwatiUiPreview());
 }
 

@@ -5,6 +5,11 @@ import { createApi } from './http.mjs';
 
 const required=['DATABASE_URL','AUTH_PUBLIC_KEY_PEM','AUTH_ISSUER','AUTH_AUDIENCE','CURSOR_SECRET'];
 for(const name of required) if(!process.env[name]) throw new Error(`Missing required configuration: ${name}`);
+// Production must fail closed if the database connection could be plaintext.
+// Private-network isolation alone does not substitute for authenticated TLS.
+if (process.env.NODE_ENV === 'production' && process.env.PG_SSL !== 'true') {
+  throw new Error('Production requires PG_SSL=true with certificate verification');
+}
 const pool=new Pool({connectionString:process.env.DATABASE_URL,ssl:process.env.PG_SSL==='true'?{rejectUnauthorized:true}:undefined,max:10});
 const verify=createVerifier({
   publicKey:process.env.AUTH_PUBLIC_KEY_PEM.replace(/\\n/g,'\n'),
@@ -14,6 +19,16 @@ const verify=createVerifier({
 const api=createApi({store:new Fin08Store(pool,{cursorSecret:process.env.CURSOR_SECRET}),verify});
 const port=Number(process.env.PORT??8080);
 if(!Number.isInteger(port)||port<1||port>65535) throw new Error('PORT must be valid');
-api.listen(port,()=>console.info(`FIN08 backend listening on :${port} (authenticated requests only)`));
+// Listen on localhost by default; container/proxy deployments must opt in
+// explicitly to wider bind addresses and restrict exposure at the firewall.
+const bindHost = process.env.FIN08_BIND_HOST ?? '127.0.0.1';
+if (!['127.0.0.1', '::1', '0.0.0.0', '::'].includes(bindHost)) {
+  throw new Error('Invalid FIN08_BIND_HOST; use explicit allowed address');
+}
+if (['0.0.0.0', '::'].includes(bindHost) && process.env.FIN08_ALLOW_ANY_BIND !== 'true') {
+  throw new Error('Non-local binding requires FIN08_ALLOW_ANY_BIND=true and a private firewall');
+}
+api.listen(port, bindHost, () => console.info(
+  `FIN08 backend listening on ${bindHost}:${port} (authenticated requests only)`));
 const shutdown=()=>{api.close(()=>pool.end());};
 process.on('SIGTERM',shutdown);process.on('SIGINT',shutdown);
