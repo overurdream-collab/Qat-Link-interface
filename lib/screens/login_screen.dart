@@ -90,7 +90,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     width: double.infinity,
                     child: CustomPaint(
                       painter: _ApprovedLoginWavesPainter(
-                        pink: context.premium.accent == const Color(0xFFAD3379),
+                        pink: Theme.of(context).scaffoldBackgroundColor == const Color(0xFFFFEFF6) ||
+                          Theme.of(context).scaffoldBackgroundColor == const Color(0xFF251B30),
                       ),
                     ),
                   ),
