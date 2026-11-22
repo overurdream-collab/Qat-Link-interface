@@ -37,6 +37,14 @@ void main() {
           final decoration = frame.decoration! as BoxDecoration;
           expect(decoration.borderRadius, BorderRadius.circular(43));
           expect(find.byType(AuthBrandHero), findsOneWidget);
+          final mascotKey = Key(female
+              ? 'approved_feminine_login_mascot'
+              : 'approved_masculine_login_mascot');
+          final mascot = tester.widget<Image>(find.byKey(mascotKey));
+          expect((mascot.image as AssetImage).assetName,
+              female
+                  ? 'assets/images/maqwati_feminine_mascot.webp'
+                  : 'assets/images/maqwati_approved_mascot.jpeg');
           expect(find.byKey(const Key('approved_login_tagline')), findsOneWidget);
           expect(find.byKey(const Key('login_phone')), findsOneWidget);
           expect(find.byKey(const Key('login_pin')), findsOneWidget);
