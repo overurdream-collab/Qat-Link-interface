@@ -409,53 +409,92 @@ class _LoginScreenState extends State<LoginScreen> {
                                                 fontWeight: FontWeight.w800)),
                                       ),
                                       if (widget.showPreviewLinks) ...[
-                                        const SizedBox(height: 7),
-                                        Material(
-                                          color: Colors.transparent,
-                                          child: ExpansionTile(
-                                            title: Text(
-                                              'معاينة الواجهات التجريبية',
-                                              style: TextStyle(
-                                                color: context.premium.muted,
-                                                fontSize: 11,
+                                        const SizedBox(height: 12),
+                                        Semantics(
+                                          container: true,
+                                          label:
+                                              'تصفح التطبيق التجريبي كتاجر أو كعميل',
+                                          child: Container(
+                                            key: const Key('login_browse_entry'),
+                                            padding: const EdgeInsets.all(11),
+                                            decoration: BoxDecoration(
+                                              color: context.premium.surface,
+                                              borderRadius:
+                                                  BorderRadius.circular(18),
+                                              border: Border.all(
+                                                color: context.premium.outline,
                                               ),
-                                              textAlign: TextAlign.center,
                                             ),
-                                            tilePadding: EdgeInsets.zero,
-                                            childrenPadding: EdgeInsets.zero,
-                                            children: [
-                                              TextButton.icon(
-                                                key: const Key(
-                                                    'open_customer_preview'),
-                                                onPressed: widget
-                                                    .onOpenCustomerPreview,
-                                                icon: const Icon(
-                                                    Icons.visibility_outlined),
-                                                label: const Text(
-                                                    'معاينة واجهات العميل'),
-                                              ),
-                                              if (widget
-                                                      .onOpenMerchantPreview !=
-                                                  null)
-                                                TextButton.icon(
-                                                  key: const Key(
-                                                      'open_merchant_preview'),
-                                                  onPressed: widget
-                                                      .onOpenMerchantPreview,
-                                                  icon: const Icon(Icons
-                                                      .storefront_outlined),
-                                                  label: const Text(
-                                                      'معاينة واجهات التاجر'),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.stretch,
+                                              children: [
+                                                Text(
+                                                  'تصفح التطبيق',
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                    color: context.premium.ink,
+                                                    fontSize: 13,
+                                                    fontWeight: FontWeight.w800,
+                                                  ),
                                                 ),
-                                              Text(
-                                                'المعاينة تجريبية فقط؛ لا تسمح بالدخول إلى الحسابات أو اعتماد المبالغ.',
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
+                                                const SizedBox(height: 8),
+                                                Row(
+                                                  children: [
+                                                    if (widget
+                                                            .onOpenMerchantPreview !=
+                                                        null) ...[
+                                                      Expanded(
+                                                        child: OutlinedButton.icon(
+                                                          key: const Key(
+                                                              'open_merchant_preview'),
+                                                          onPressed: widget
+                                                              .onOpenMerchantPreview,
+                                                          icon: const Icon(
+                                                            Icons.storefront_outlined,
+                                                            size: 18,
+                                                          ),
+                                                          label: const Text(
+                                                            'تصفح كتاجر',
+                                                            maxLines: 1,
+                                                            overflow:
+                                                                TextOverflow.ellipsis,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      const SizedBox(width: 8),
+                                                    ],
+                                                    Expanded(
+                                                      child: OutlinedButton.icon(
+                                                        key: const Key(
+                                                            'open_customer_preview'),
+                                                        onPressed: widget
+                                                            .onOpenCustomerPreview,
+                                                        icon: const Icon(
+                                                          Icons.person_outline_rounded,
+                                                          size: 18,
+                                                        ),
+                                                        label: const Text(
+                                                          'تصفح كعميل',
+                                                          maxLines: 1,
+                                                          overflow:
+                                                              TextOverflow.ellipsis,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                                const SizedBox(height: 5),
+                                                Text(
+                                                  'معاينة فقط، دون حساب حقيقي أو صلاحيات مالية.',
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                    color: context.premium.muted,
                                                     fontSize: 10,
-                                                    color:
-                                                        context.premium.muted),
-                                              ),
-                                            ],
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
                                           ),
                                         ),
                                       ],
