@@ -22,9 +22,9 @@ class QuickActionsSheet extends StatelessWidget {
     final c = context.colors;
     final entries = <(QuickActionKind, String, IconData, Color)>[
       (QuickActionKind.addCustomer, 'إضافة عميل',
-          Icons.person_add_alt_1_rounded, AppColors.success),
+          Icons.person_add_alt_1_rounded, c.petrol),
       (QuickActionKind.addDebt, 'إضافة دين',
-          Icons.receipt_long_rounded, const Color(0xFFD99113)),
+          Icons.receipt_long_rounded, c.mint),
       (QuickActionKind.addAmount, 'إضافة مبلغ',
           Icons.account_balance_wallet_rounded, c.petrol),
     ];
