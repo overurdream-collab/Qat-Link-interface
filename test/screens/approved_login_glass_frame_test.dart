@@ -43,8 +43,8 @@ void main() {
           final mascot = tester.widget<Image>(find.byKey(mascotKey));
           expect((mascot.image as AssetImage).assetName,
               female
-                  ? 'assets/images/maqwati_feminine_mascot.webp'
-                  : 'assets/images/maqwati_approved_mascot.jpeg');
+                  ? 'assets/images/maqwati_feminine_character.png'
+                  : 'assets/images/maqwati_approved_character.png');
           expect(find.byKey(const Key('approved_login_tagline')), findsOneWidget);
           expect(find.byKey(const Key('login_phone')), findsOneWidget);
           expect(find.byKey(const Key('login_pin')), findsOneWidget);
