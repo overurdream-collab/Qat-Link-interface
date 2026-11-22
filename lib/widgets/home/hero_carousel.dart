@@ -82,8 +82,8 @@ class _HeroCarouselState extends State<HeroCarousel> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    final nextFemale = Theme.of(context).colorScheme.primary ==
-        AppColors.pinkPrimary;
+    final nextFemale = Theme.of(context).scaffoldBackgroundColor == AppColors.pinkBackground ||
+        Theme.of(context).scaffoldBackgroundColor == const Color(0xFF251B30);
     if (nextFemale != _female) {
       _female = nextFemale;
       _active = 0;
