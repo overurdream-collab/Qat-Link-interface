@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'app_colors.dart';
+import 'premium_tokens.dart';
 
 /// Single theme source for all RTL pages. Shared chrome is deliberately
 /// outside individual pages, so the Movement page can be replaced safely.
@@ -53,9 +54,21 @@ abstract final class AppTheme {
       brightness: scheme.brightness,
       scaffoldBackgroundColor: c.background,
       visualDensity: VisualDensity.standard,
-      extensions: [c],
+      extensions: [c, PremiumVisualPalette.select(pink: pink, dark: isDark)],
     );
     return base.copyWith(
+      // Unified Cairo typography; finance statuses retain semantic colors.
+      textTheme: base.textTheme.apply(
+        fontFamily: 'Cairo',
+        bodyColor: c.text,
+        displayColor: c.text,
+      ),
+      primaryTextTheme: base.primaryTextTheme.apply(
+        fontFamily: 'Cairo',
+        bodyColor: c.text,
+        displayColor: c.text,
+      ),
+      iconTheme: IconThemeData(color: c.text),
       appBarTheme: AppBarTheme(
         backgroundColor: c.background,
         foregroundColor: c.text,
@@ -68,7 +81,7 @@ abstract final class AppTheme {
         elevation: 0,
         margin: EdgeInsets.zero,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(30),
           side: BorderSide(color: c.cardBorder),
         ),
       ),
@@ -81,7 +94,7 @@ abstract final class AppTheme {
           vertical: 13,
         ),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(14),
+          borderRadius: BorderRadius.circular(28),
           borderSide: BorderSide(color: c.cardBorder),
         ),
         enabledBorder: OutlineInputBorder(
@@ -95,11 +108,12 @@ abstract final class AppTheme {
       ),
       filledButtonTheme: FilledButtonThemeData(
         style: FilledButton.styleFrom(
-          foregroundColor: scheme.onPrimary,
-          backgroundColor: scheme.primary,
-          minimumSize: const Size(48, 46),
+          // Premium blue-violet / orchid buttons with legible light foreground.
+          foregroundColor: isDark ? c.background : Colors.white,
+          backgroundColor: c.petrol,
+          minimumSize: const Size(48, 48),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(28),
           ),
         ),
       ),

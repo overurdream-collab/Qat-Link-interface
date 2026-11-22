@@ -11,7 +11,7 @@ abstract final class PdfBrandMascot {
   static Future<ui.Image?> _load() async {
     try {
       final data = await rootBundle.load(
-        'assets/images/maqwati_approved_mascot.jpeg',
+        'assets/images/maqwati_approved_character.png',
       );
       final codec = await ui.instantiateImageCodec(
         data.buffer.asUint8List(),

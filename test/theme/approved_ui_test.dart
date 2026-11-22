@@ -16,34 +16,34 @@ void main() {
     }
   });
 
-  test('Yemen Modern Fintech daylight tokens are exact', () {
-    expect(AppColors.petrol, const Color(0xFF07575B));
-    expect(AppColors.mint, const Color(0xFF168E94));
-    expect(AppColors.cyan, const Color(0xFF63B5C2));
-    expect(AppColors.sea, const Color(0xFF438DB2));
-    expect(AppColors.background, const Color(0xFFF4F9F8));
+  test('Premium daylight tokens are exact', () {
+    expect(AppColors.petrol, const Color(0xFF328BF5));
+    expect(AppColors.mint, const Color(0xFF7939EA));
+    expect(AppColors.cyan, const Color(0xFF73DCF6));
+    expect(AppColors.sea, const Color(0xFF4358F5));
+    expect(AppColors.background, const Color(0xFFF2F3FF));
     expect(AppColors.card, const Color(0xFFFFFFFF));
-    expect(AppColors.cardBorder, const Color(0xFFD8E7E5));
-    expect(AppColors.pale, const Color(0xFFE3F3F0));
+    expect(AppColors.cardBorder, const Color(0xFFE0E3F9));
+    expect(AppColors.pale, const Color(0xFFC2A4FF));
   });
 
   test('approved night colors are exact', () {
-    expect(AppColors.darkPetrol, const Color(0xFFA2ECE2));
-    expect(AppColors.darkBackground, const Color(0xFF13212D));
-    expect(AppColors.darkCard, const Color(0xFF1D3140));
-    expect(AppColors.darkBorder, const Color(0xFF355060));
-    expect(AppColors.darkInk, const Color(0xFFEAF5FA));
+    expect(AppColors.darkPetrol, const Color(0xFF8FB8FF));
+    expect(AppColors.darkBackground, const Color(0xFF171A3C));
+    expect(AppColors.darkCard, const Color(0xFF25294C));
+    expect(AppColors.darkBorder, const Color(0xFF474D7C));
+    expect(AppColors.darkInk, const Color(0xFFF3F3FF));
   });
 
-  test('hero and currency gradients match the Yemen Modern Fintech palette', () {
+  test('hero and currency gradients match the official blue/purple reference palette', () {
     expect(AppGradients.hero.colors, const [
-      Color(0xFF07575B), Color(0xFF168E94), Color(0xFFB4E2DE),
+      Color(0xFF7939EA), Color(0xFF328BF5), Color(0xFF73DCF6),
     ]);
     expect(AppGradients.yer.colors, const [
-      Color(0xFF07575B), Color(0xFF168E94), Color(0xFF438DB2),
+      Color(0xFF6F6CE8), Color(0xFF4B88F4), Color(0xFF83D5F8),
     ]);
     expect(AppGradients.sar.colors, const [
-      Color(0xFF07575B), Color(0xFF63B5C2), Color(0xFF168E94),
+      Color(0xFF45A3D9), Color(0xFF76D8F1), Color(0xFFA8E4EF),
     ]);
   });
 
@@ -54,6 +54,10 @@ void main() {
     expect(find.text('العملاء'), findsOneWidget);
     expect(find.text('مساحتي'), findsOneWidget);
     expect(find.byTooltip('إضافة سريعة'), findsOneWidget);
+    final nav = tester.widget<Container>(
+      find.byKey(const Key('merchant_green_bottom_bar')),
+    );
+    expect((nav.decoration as BoxDecoration).color, AppColors.card);
     expect(find.byTooltip('الضبط'), findsOneWidget);
     expect(find.byTooltip('التنبيهات'), findsOneWidget);
     expect(find.byTooltip('الوضع الليلي'), findsOneWidget);

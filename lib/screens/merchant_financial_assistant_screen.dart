@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../models/app_models.dart';
 import '../services/app_state.dart';
 import '../theme/app_colors.dart';
+import '../theme/premium_tokens.dart';
 import '../widgets/finance_display.dart';
 
 enum _Period { daily, weekly, firstHalf, secondHalf, monthly }
@@ -650,7 +651,7 @@ class _MerchantFinancialAssistantScreenState
     margin: const EdgeInsets.only(bottom: 7),
     padding: const EdgeInsets.all(10),
     decoration: BoxDecoration(
-      gradient: AppGradients.assistant,
+      gradient: context.premium.action,
       borderRadius: BorderRadius.circular(11)),
     child: Text(text, style: const TextStyle(color: Colors.white,
       fontSize: 9, height: 1.45)));

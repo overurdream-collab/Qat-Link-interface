@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:decimal/decimal.dart';
 
 import '../models/app_models.dart';
 import 'merchant_financial_assistant_screen.dart';
 import '../services/app_state.dart';
 import '../services/movement_calculator.dart';
 import '../theme/app_colors.dart';
+import '../theme/premium_tokens.dart';
 import '../widgets/app_chrome.dart';
 import '../widgets/finance_display.dart';
+import '../widgets/home/premium_home_hero.dart';
 import '../widgets/home/hero_carousel.dart';
 import '../widgets/home/new_currency_card.dart';
 import 'merchant_approval_center_screen.dart';
@@ -29,7 +32,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final PageController _currencyController = PageController(viewportFraction: .95);
+  final PageController _currencyController = PageController(viewportFraction: .73, initialPage: 150);
   int _currencyPage = 0;
 
   @override
@@ -59,6 +62,8 @@ class _HomeScreenState extends State<HomeScreen> {
         CurrencyCardData(
           currency: currency,
           debts: FinanceDisplay.amount(debts),
+          balance: FinanceDisplay.amount(debts - payments),
+          isCredit: (debts - payments) < Decimal.zero,
           payments: FinanceDisplay.amount(payments),
           pending: FinanceDisplay.amount(pending),
           collectionRate: ratio,
@@ -95,18 +100,24 @@ class _HomeScreenState extends State<HomeScreen> {
         return ListView(
           padding: const EdgeInsets.fromLTRB(14, 16, 14, 24),
           children: [
+            const PremiumHomeHero(),
+            const SizedBox(height: 12),
             const HeroCarousel(),
-            const SizedBox(height: 16),
-            const AppSectionTitle(title: 'ملخص المديونية'),
+            const SizedBox(height: 21),
+            const AppSectionTitle(title: 'أرصدة المتجر'),
             const SizedBox(height: 10),
             SizedBox(
-              height: 220,
+              height: 230,
               child: PageView.builder(
                 controller: _currencyController,
-                itemCount: currencies.length,
-                onPageChanged: (index) => setState(() => _currencyPage = index),
-                itemBuilder: (context, index) =>
-                    NewCurrencyCard(data: currencies[index]),
+                itemCount: currencies.length * 101,
+                onPageChanged: (index) => setState(() => _currencyPage = index % currencies.length),
+                itemBuilder: (context, index) => AnimatedScale(
+                  scale: _currencyPage == index % currencies.length ? 1 : .89,
+                  duration: const Duration(milliseconds: 260),
+                  curve: Curves.easeOutCubic,
+                  child: NewCurrencyCard(data: currencies[index % currencies.length]),
+                ),
               ),
             ),
             const SizedBox(height: 11),
@@ -342,11 +353,11 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              gradient: AppGradients.assistant,
+              gradient: context.premium.hero,
               borderRadius: BorderRadius.circular(20),
               boxShadow: [
                 BoxShadow(
-                  color: AppColors.petrol.withValues(alpha: .25),
+                  color: context.premium.shadow,
                   blurRadius: 15,
                   offset: const Offset(0, 5),
                 ),

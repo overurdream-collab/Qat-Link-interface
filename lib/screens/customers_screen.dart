@@ -146,7 +146,7 @@ class _MerchantCustomersTabState extends State<MerchantCustomersTab> {
                   children: [
                     Text('العملاء', style: TextStyle(
                       fontWeight: FontWeight.w900, color: c.text, fontSize: 18)),
-                    Text('مقوتي لنك • العلاقات المعتمدة',
+                    Text('مقوتي لينك • العلاقات المعتمدة',
                       style: TextStyle(color: c.muted, fontSize: 10)),
                   ],
                 )),
@@ -159,7 +159,7 @@ class _MerchantCustomersTabState extends State<MerchantCustomersTab> {
                 key: const Key('customers_add'),
                 onPressed: _openRequestModal,
                 style: FilledButton.styleFrom(
-                  backgroundColor: AppColors.petrol,
+                  backgroundColor: c.petrol,
                   foregroundColor: Colors.white,
                   elevation: 2,
                   shape: RoundedRectangleBorder(
@@ -216,17 +216,14 @@ class _MerchantCustomersTabState extends State<MerchantCustomersTab> {
                   .length,
             ),
             const SizedBox(height: 18),
-            Text('تصفية حسب العملة:', style: TextStyle(
-              fontSize: 12, fontWeight: FontWeight.w800, color: c.muted,
-            )),
-            const SizedBox(height: 7),
-            _currencyChips(c),
-            const SizedBox(height: 13),
-            Text('الحالة:', style: TextStyle(
-              color: c.muted, fontSize: 12, fontWeight: FontWeight.w800,
-            )),
-            const SizedBox(height: 6),
-            _statusFilters(c),
+            Row(
+              key: const Key('customers_compact_filters'),
+              children: [
+                Expanded(child: _currencyDropdown(c)),
+                const SizedBox(width: 9),
+                Expanded(child: _statusDropdown(c)),
+              ],
+            ),
             if (merchantContacts.isNotEmpty) ...[
               const SizedBox(height: 17),
               Row(children: [
@@ -623,85 +620,48 @@ class _MerchantCustomersTabState extends State<MerchantCustomersTab> {
     ]);
   }
 
-  Widget _currencyChips(AppThemeColors c) => SizedBox(
-    height: 37,
-    child: ListView(
-      scrollDirection: Axis.horizontal,
-      children: [
-        _currencyChip(c, null, 'كل العملات'),
-        const SizedBox(width: 7),
-        _currencyChip(c, CurrencyCode.yer, 'ريال يمني YER'),
-        const SizedBox(width: 7),
-        _currencyChip(c, CurrencyCode.sar, 'ريال سعودي SAR'),
-        const SizedBox(width: 7),
-        _currencyChip(c, CurrencyCode.usd, 'دولار USD'),
+  // Compact, accessible menus avoid horizontal overflow of numerous chips.
+  // Filtering is presentation-only: it never changes approved balances.
+  Widget _currencyDropdown(AppThemeColors c) {
+    return DropdownButtonFormField<CurrencyCode?>(
+      key: const Key('customers_currency_dropdown'),
+      initialValue: _currency,
+      isExpanded: true,
+      decoration: const InputDecoration(
+        labelText: 'العملة',
+        prefixIcon: Icon(Icons.payments_outlined, size: 19),
+        contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+      ),
+      items: const [
+        DropdownMenuItem<CurrencyCode?>(value: null, child: Text('كل العملات')),
+        DropdownMenuItem<CurrencyCode?>(value: CurrencyCode.yer, child: Text('ريال يمني')),
+        DropdownMenuItem<CurrencyCode?>(value: CurrencyCode.sar, child: Text('ريال سعودي')),
+        DropdownMenuItem<CurrencyCode?>(value: CurrencyCode.usd, child: Text('دولار أمريكي')),
       ],
-    ),
-  );
-
-  Widget _currencyChip(
-      AppThemeColors c, CurrencyCode? value, String label) {
-    final selected = _currency == value;
-    return ChoiceChip(
-      key: Key('customers_currency_${value?.name ?? 'ALL'}'),
-      selected: selected,
-      showCheckmark: false,
-      onSelected: (_) => setState(() => _currency = value),
-      label: Text(label),
-      labelStyle: TextStyle(
-        fontWeight: FontWeight.w800,
-        fontSize: 11,
-        color: selected ? c.petrol : c.text,
-      ),
-      selectedColor: c.pale,
-      backgroundColor: c.card,
-      side: BorderSide(
-        color: selected ? c.petrol : c.cardBorder,
-      ),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(9)),
-      padding: const EdgeInsets.symmetric(horizontal: 7),
+      onChanged: (value) => setState(() => _currency = value),
     );
   }
 
-  Widget _statusFilters(AppThemeColors c) {
-    const labels = <CustomerListFilter, String>{
-      CustomerListFilter.all: 'الكل',
-      CustomerListFilter.unpaid: 'غير المسدد',
-      CustomerListFilter.pending: 'المعلق',
-      CustomerListFilter.settled: 'مصفّى الحساب',
-      CustomerListFilter.unpaidAndPending: 'دين + معلق',
-    };
-    return SizedBox(
-      height: 37,
-      child: ListView.separated(
-        scrollDirection: Axis.horizontal,
-        itemCount: labels.length,
-        separatorBuilder: (context, index) => const SizedBox(width: 6),
-        itemBuilder: (context, index) {
-          final value = labels.keys.elementAt(index);
-          final selected = _filter == value;
-          return ChoiceChip(
-            key: Key('customers_filter_${value.name}'),
-            selected: selected,
-            onSelected: (_) => setState(() => _filter = value),
-            showCheckmark: false,
-            label: Text(labels[value]!),
-            labelStyle: TextStyle(
-              fontSize: 11,
-              fontWeight: FontWeight.w700,
-              color: selected ? c.petrol : c.text,
-            ),
-            selectedColor: c.pale,
-            backgroundColor: c.card,
-            side: BorderSide(
-              color: selected ? c.petrol : c.cardBorder,
-            ),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(9),
-            ),
-          );
-        },
+  Widget _statusDropdown(AppThemeColors c) {
+    return DropdownButtonFormField<CustomerListFilter>(
+      key: const Key('customers_status_dropdown'),
+      initialValue: _filter,
+      isExpanded: true,
+      decoration: const InputDecoration(
+        labelText: 'الحالة',
+        prefixIcon: Icon(Icons.filter_list_rounded, size: 19),
+        contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       ),
+      items: const [
+        DropdownMenuItem(value: CustomerListFilter.all, child: Text('الكل')),
+        DropdownMenuItem(value: CustomerListFilter.unpaid, child: Text('غير المسدد')),
+        DropdownMenuItem(value: CustomerListFilter.pending, child: Text('المعلق')),
+        DropdownMenuItem(value: CustomerListFilter.settled, child: Text('مصفّى الحساب')),
+        DropdownMenuItem(value: CustomerListFilter.unpaidAndPending, child: Text('دين + معلق')),
+      ],
+      onChanged: (value) {
+        if (value != null) setState(() => _filter = value);
+      },
     );
   }
 

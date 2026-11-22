@@ -7,6 +7,7 @@ import 'package:image_picker/image_picker.dart';
 import '../models/app_models.dart';
 import '../services/app_state.dart';
 import '../theme/app_colors.dart';
+import '../theme/premium_tokens.dart';
 import '../widgets/customers/customer_statement_calculator.dart';
 import '../widgets/customers/customer_statement_pdf.dart';
 import '../widgets/finance_display.dart';
@@ -715,7 +716,7 @@ class _CustomerDetailsScreenState extends State<CustomerDetailsScreen> {
       Row(children: [
         Expanded(child: Container(
           decoration: BoxDecoration(
-            gradient: AppGradients.assistant,
+            gradient: context.premium.action,
             borderRadius: BorderRadius.circular(12),
           ),
           child: FilledButton.icon(

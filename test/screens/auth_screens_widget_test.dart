@@ -6,7 +6,7 @@ import 'package:qat_link/main.dart';
 void main() {
   testWidgets('app opens login without exposing private finance tabs', (tester) async {
     await tester.pumpWidget(const QatLinkApp());
-    expect(find.text('أهلاً بعودتك'), findsOneWidget);
+    expect(find.text('تسجيل الدخول'), findsWidgets);
     expect(find.text('رقم الجوال'), findsOneWidget);
     expect(find.text('رمز الدخول'), findsOneWidget);
     expect(find.byKey(const Key('open_registration')), findsOneWidget);
@@ -17,13 +17,17 @@ void main() {
   testWidgets('login opens only a clearly labeled customer UI preview',
       (tester) async {
     await tester.pumpWidget(const QatLinkApp());
+    await tester.ensureVisible(find.text('معاينة الواجهات التجريبية'));
+    await tester.tap(find.text('معاينة الواجهات التجريبية'));
+    await tester.pumpAndSettle();
     await tester.ensureVisible(find.byKey(const Key('open_customer_preview')));
     await tester.tap(find.byKey(const Key('open_customer_preview')));
     await tester.pumpAndSettle();
     expect(find.textContaining('معاينة واجهات العميل'), findsOneWidget);
     expect(find.text('سجل الحركة'), findsNothing);
     expect(find.text('سجل الحساب خاص'), findsNothing);
-    expect(find.text('يتطلب حساباً موثقاً'), findsWidgets);
+    expect(find.byKey(const Key('home_campaign_carousel')), findsOneWidget);
+    expect(find.textContaining('لا تعرض بيانات أو أرصدة حقيقية'), findsOneWidget);
   });
 
   testWidgets('registered role options stay on a separate page', (tester) async {
@@ -52,7 +56,7 @@ void main() {
     await tester.ensureVisible(find.byKey(const Key('login_submit')));
     await tester.tap(find.byKey(const Key('login_submit')));
     await tester.pump();
-    expect(find.text('أهلاً بعودتك'), findsOneWidget);
+    expect(find.text('تسجيل الدخول'), findsWidgets);
     expect(find.textContaining('لا تُفتح الحسابات'), findsWidgets);
     expect(find.text('الحركة'), findsNothing);
   });
@@ -63,7 +67,7 @@ void main() {
     await tester.tap(find.byTooltip('الوضع الليلي'));
     await tester.pumpAndSettle();
     expect(find.byTooltip('الوضع النهاري'), findsOneWidget);
-    expect(find.text('أهلاً بعودتك'), findsOneWidget);
+    expect(find.text('تسجيل الدخول'), findsWidgets);
   });
 
   testWidgets('female registration selects pink identity and male restores base',
