@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'main_ui_preview.dart';
+import 'main_phone_preview.dart';
 
-/// Separate offline green design experiment. The production entrypoint
-/// remains lib/main.dart; never grants a logged-in financial session.
+/// Offline Android preview with the approved login as its initial screen.
+/// Navigation to merchant/customer is available only from the explicitly
+/// labeled preview expansion; no real authentication is performed.
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(const MaqwatiUiPreview());
+  runApp(const MaqwatiPhonePreview());
 }
