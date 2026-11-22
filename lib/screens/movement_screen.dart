@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../models/app_models.dart';
 import '../services/app_state.dart';
 import '../theme/app_colors.dart';
+import '../theme/premium_tokens.dart';
 import '../widgets/app_chrome.dart';
 import '../widgets/finance_display.dart';
 import '../widgets/movement/movement_view_model.dart';
@@ -368,7 +369,7 @@ class _MerchantMovementsTabState extends State<MerchantMovementsTab> {
       constraints: const BoxConstraints(minHeight: 91),
       padding: const EdgeInsets.all(13),
       decoration: BoxDecoration(
-        gradient: AppGradients.assistant,
+        gradient: context.premium.action,
         borderRadius: BorderRadius.circular(17),
         boxShadow: [
           BoxShadow(
