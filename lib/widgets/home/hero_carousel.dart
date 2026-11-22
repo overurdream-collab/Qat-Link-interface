@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import '../../theme/app_colors.dart';
+import '../../theme/premium_tokens.dart';
 
 /// Ordered campaign assets from the owner's seven original banners.
 /// The assets are deliberately separate from the finance/accounting layer.
@@ -131,7 +132,7 @@ class _HeroCarouselState extends State<HeroCarousel> {
                         fit: BoxFit.contain,
                         filterQuality: FilterQuality.medium,
                         errorBuilder: (_, __, ___) => DecoratedBox(
-                          decoration: BoxDecoration(gradient: AppGradients.hero),
+                          decoration: BoxDecoration(gradient: context.premium.hero),
                           child: Center(
                             child: Text(
                               banner.label,
