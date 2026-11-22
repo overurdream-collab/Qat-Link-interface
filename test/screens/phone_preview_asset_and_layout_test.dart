@@ -27,6 +27,14 @@ Future<void> assertImageDecodes(String assetName) async {
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
+  setUpAll(() async {
+    await (FontLoader('Cairo')
+          ..addFont(rootBundle.load('assets/fonts/Cairo-Variable.ttf')))
+        .load();
+    await (FontLoader('MaterialIcons')
+          ..addFont(rootBundle.load('fonts/MaterialIcons-Regular.otf')))
+        .load();
+  });
 
   test('both approved mascot asset files decode on Flutter', () async {
     await assertImageDecodes('assets/images/maqwati_approved_character.png');
