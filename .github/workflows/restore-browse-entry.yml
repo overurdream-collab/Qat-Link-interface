@@ -1,0 +1,50 @@
+name: Restore phone browse entry regression
+on:
+  push:
+    branches:
+      - fix/maqwati-restore-browse-entry-20261122
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify-browse:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.44.6'
+          channel: stable
+          cache: true
+      - run: flutter pub get
+      - name: Analyze Flutter
+        run: flutter analyze --no-fatal-infos
+      - name: Verify both browse buttons and return navigation
+        run: flutter test test/screens/phone_preview_asset_and_layout_test.dart
+      - name: Verify production login cannot bypass authentication
+        run: flutter test test/screens/auth_screens_widget_test.dart
+      - name: Full Flutter regression
+        run: flutter test
+  android:
+    needs: verify-browse
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.44.6'
+          channel: stable
+          cache: true
+      - run: flutter create --platforms=android --org com.maqwatilink --project-name qat_link .
+      - run: flutter build apk --release -t lib/main_phone_preview.dart
+      - uses: actions/upload-artifact@v4
+        with:
+          name: maqwati-phone-browse-preview-apk
+          path: build/app/outputs/flutter-apk/app-release.apk
+          retention-days: 7
