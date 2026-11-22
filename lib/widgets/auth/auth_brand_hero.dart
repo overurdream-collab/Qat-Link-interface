@@ -13,6 +13,10 @@ class AuthBrandHero extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final visual = context.premium;
+    final background = Theme.of(context).scaffoldBackgroundColor;
+    final feminine = background == const Color(0xFFFFEFF6) ||
+        background == const Color(0xFF251B30);
+    final dark = Theme.of(context).brightness == Brightness.dark;
     final height = compact ? 162.0 : 236.0;
     return Semantics(
       container: true,
@@ -34,7 +38,7 @@ class AuthBrandHero extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.end,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      _RaisedMaqwatiWordmark(compact: compact),
+                      _RaisedMaqwatiWordmark(compact: compact, feminine: feminine),
                       SizedBox(height: compact ? 6 : 10),
                       FittedBox(
                         fit: BoxFit.scaleDown,
@@ -43,9 +47,9 @@ class AuthBrandHero extends StatelessWidget {
                           key: const Key('approved_login_tagline'),
                           textDirection: TextDirection.rtl,
                           style: TextStyle(
-                            color: Theme.of(context).brightness == Brightness.dark
-                                ? const Color(0xFFD7B7FF)
-                                : const Color(0xFF5730C4),
+                            color: feminine
+                                ? (dark ? const Color(0xFFF2A7D0) : const Color(0xFFAD3379))
+                                : (dark ? const Color(0xFFD7B7FF) : const Color(0xFF5730C4)),
                             fontSize: compact ? 16 : 21,
                             fontWeight: FontWeight.w900,
                             height: 1.3,
@@ -80,10 +84,9 @@ class AuthBrandHero extends StatelessWidget {
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           gradient: LinearGradient(
-                            colors: [
-                              const Color(0xFFDAADFA).withValues(alpha: .78),
-                              const Color(0xFF82C9FF).withValues(alpha: .74),
-                            ],
+                            colors: feminine
+                                ? const [Color(0xFFF8DCEB), Color(0xFF8551B2)]
+                                : const [Color(0xFFDAADFA), Color(0xFF82C9FF)],
                           ),
                         ),
                       ),
@@ -110,9 +113,10 @@ class AuthBrandHero extends StatelessWidget {
 }
 
 class _RaisedMaqwatiWordmark extends StatelessWidget {
-  const _RaisedMaqwatiWordmark({required this.compact});
+  const _RaisedMaqwatiWordmark({required this.compact, required this.feminine});
 
   final bool compact;
+  final bool feminine;
 
   @override
   Widget build(BuildContext context) {
@@ -139,7 +143,7 @@ class _RaisedMaqwatiWordmark extends StatelessWidget {
                 child: Text(title,
                   textDirection: TextDirection.rtl,
                   style: base.copyWith(
-                    color: const Color(0xFF171C98),
+                    color: feminine ? const Color(0xFF632450) : const Color(0xFF171C98),
                     shadows: const [
                       Shadow(color: Color(0x6A2C2B9A),
                           offset: Offset(1, 7), blurRadius: 7),
@@ -152,18 +156,15 @@ class _RaisedMaqwatiWordmark extends StatelessWidget {
                 shaderCallback: (bounds) => LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
-                  colors: isDark
-                      ? const [
-                          Color(0xFF8DEBFF),
-                          Color(0xFF268EFF),
-                          Color(0xFF174DCB),
-                        ]
-                      : const [
-                          Color(0xFF8CF6FF),
-                          Color(0xFF0FA7F9),
-                          Color(0xFF0752E6),
-                          Color(0xFF2533AE),
-                        ],
+                  colors: feminine
+                      ? (isDark
+                          ? const [Color(0xFFFFDFF1), Color(0xFFE995CC), Color(0xFF8F3F96)]
+                          : const [Color(0xFFFFD1E9), Color(0xFFAD4389),
+                              Color(0xFFAD3379), Color(0xFF8551B2)])
+                      : (isDark
+                          ? const [Color(0xFF8DEBFF), Color(0xFF268EFF), Color(0xFF174DCB)]
+                          : const [Color(0xFF8CF6FF), Color(0xFF0FA7F9),
+                              Color(0xFF0752E6), Color(0xFF2533AE)]),
                 ).createShader(bounds),
                 child: Text(
                   title,
