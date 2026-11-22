@@ -18,9 +18,9 @@ void main() {
     expect(female.map((b) => b.id).toSet().length, 7);
   });
 
-  Future<void> mount(WidgetTester tester, {bool pink = false}) =>
+  Future<void> mount(WidgetTester tester, {bool pink = false, bool dark = false}) =>
       tester.pumpWidget(MaterialApp(
-        theme: AppTheme.build(dark: false, pink: pink),
+        theme: AppTheme.build(dark: dark, pink: pink),
         home: const Scaffold(body: HeroCarousel()),
       ));
 
@@ -39,6 +39,14 @@ void main() {
     await mount(tester, pink: true);
     expect(find.byKey(const Key('home_campaign_close-pink')), findsOneWidget);
     expect(AppThemeColors.pink.danger, AppColors.red);
+  });
+
+  testWidgets('pink night retains female-priority banners and dark financial semantics',
+      (tester) async {
+    await mount(tester, pink: true, dark: true);
+    expect(find.byKey(const Key('home_campaign_close-pink')), findsOneWidget);
+    expect(AppThemeColors.pinkDark.danger, AppThemeColors.dark.danger);
+    expect(tester.takeException(), isNull);
   });
 
   testWidgets('carousel advances after six seconds', (tester) async {
