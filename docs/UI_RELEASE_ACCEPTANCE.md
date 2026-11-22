@@ -15,7 +15,7 @@
 | G9 الحسابات والصلاحيات بلا تراجع | NOT VERIFIED | Flutter PASS؛ Node 14 PASS، 10 SKIP لغياب PostgreSQL؛ لا إثبات E2E/جهازين |
 | G10 Android APK | PASS | Actions 45060555108: build + package + PNG + offline checks + upload SUCCESS |
 | G11 تجربة APK على Android | NOT VERIFIED | لا محاكي/جهاز موصول، ولا ملف جديد مثبت |
-| G12 الأدلة والتقرير كاملة | NOT VERIFIED | الوثائق الخمس والسجلات موجودة؛ المراجع الأصلية واعتماد Android وAPK جديد ناقصة |
+| G12 الأدلة والتقرير كاملة | NOT VERIFIED | الوثائق الخمس والسجلات موجودة؛ المراجع الأصلية واعتماد Android وتغطية باقي الشاشات ناقصة |
 
 ## التحقق المحلي
 - Flutter 3.44.6، Dart 3.12.2، Linux Flutter tester.
