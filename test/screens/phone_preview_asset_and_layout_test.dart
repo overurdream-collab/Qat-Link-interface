@@ -67,6 +67,11 @@ void main() {
     expect(find.byKey(const Key('preview_female_theme')), findsNothing);
     expect(find.text('معاينة تصميم فقط — لا حساب مالي متصل'), findsNothing);
     expect(find.text('معاينة الواجهات التجريبية'), findsNothing);
+    expect(find.byKey(const Key('login_browse_entry')), findsOneWidget);
+    expect(find.byKey(const Key('open_merchant_preview')), findsOneWidget);
+    expect(find.byKey(const Key('open_customer_preview')), findsOneWidget);
+    expect(find.text('تصفح كتاجر'), findsOneWidget);
+    expect(find.text('تصفح كعميل'), findsOneWidget);
     final featurePosition =
         tester.getRect(find.byKey(const Key('login_feature_highlights')));
     // The feature row must not be completely below the visible Android screen.
@@ -74,6 +79,42 @@ void main() {
         reason: 'All four approved feature tiles were pushed off-screen.');
     await tester.ensureVisible(find.byKey(const Key('login_feature_insights')));
     await tester.pump();
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('phone browse opens merchant and returns to login without auth',
+      (tester) async {
+    tester.view.physicalSize = const Size(390, 820);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+    await tester.pumpWidget(const MaqwatiPhonePreview());
+    await tester.ensureVisible(find.byKey(const Key('open_merchant_preview')));
+    await tester.tap(find.byKey(const Key('open_merchant_preview')));
+    await tester.pumpAndSettle();
+    expect(find.text('معاينة التاجر'), findsOneWidget);
+    expect(find.byKey(const Key('phone_preview_back_to_login')), findsOneWidget);
+    await tester.tap(find.byKey(const Key('phone_preview_back_to_login')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const Key('login_submit')), findsOneWidget);
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('phone browse opens customer and returns to login without auth',
+      (tester) async {
+    tester.view.physicalSize = const Size(320, 780);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+    await tester.pumpWidget(const MaqwatiPhonePreview());
+    await tester.ensureVisible(find.byKey(const Key('open_customer_preview')));
+    await tester.tap(find.byKey(const Key('open_customer_preview')));
+    await tester.pumpAndSettle();
+    expect(find.text('معاينة العميل'), findsOneWidget);
+    expect(find.byKey(const Key('phone_preview_back_to_login')), findsOneWidget);
+    await tester.tap(find.byKey(const Key('phone_preview_back_to_login')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const Key('login_submit')), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
 }
