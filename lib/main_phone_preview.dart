@@ -53,50 +53,40 @@ class _MaqwatiPhonePreviewState extends State<MaqwatiPhonePreview> {
               onOpenMerchantPreview: () => setState(() => _view = 1),
               showPreviewLinks: true,
             )
-          : Scaffold(
-              body: SafeArea(
-                child: Column(
-                  children: [
-                    Material(
-                      child: Row(
-                        children: [
-                          IconButton(
-                            key: const Key('phone_preview_back_to_login'),
-                            tooltip: 'العودة إلى تسجيل الدخول',
-                            onPressed: () => setState(() => _view = 0),
-                            icon: const Icon(Icons.arrow_back_rounded),
-                          ),
-                          Expanded(
-                            child: Text(
-                              _view == 1 ? 'معاينة التاجر' : 'معاينة العميل',
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        ],
+          : Stack(
+              children: [
+                Positioned.fill(
+                  child: _view == 1
+                      ? MerchantAppShell(
+                          isDark: _dark,
+                          onToggleTheme: () =>
+                              setState(() => _dark = !_dark),
+                          isFemale: _pink,
+                          isPinkTheme: _pink,
+                        )
+                      : CustomerAppShell(
+                          isDark: _dark,
+                          onToggleTheme: () =>
+                              setState(() => _dark = !_dark),
+                        ),
+                ),
+                Positioned(
+                  top: 0,
+                  left: 7,
+                  child: SafeArea(
+                    child: Material(
+                      elevation: 2,
+                      borderRadius: BorderRadius.circular(25),
+                      child: TextButton.icon(
+                        key: const Key('phone_preview_back_to_login'),
+                        onPressed: () => setState(() => _view = 0),
+                        icon: const Icon(Icons.arrow_back_rounded, size: 18),
+                        label: Text(_view == 1 ? 'معاينة التاجر' : 'معاينة العميل'),
                       ),
                     ),
-                    Expanded(
-                      child: _view == 1
-                          ? MerchantAppShell(
-                              isDark: _dark,
-                              onToggleTheme: () =>
-                                  setState(() => _dark = !_dark),
-                              isFemale: _pink,
-                              isPinkTheme: _pink,
-                            )
-                          : CustomerAppShell(
-                              isDark: _dark,
-                              onToggleTheme: () =>
-                                  setState(() => _dark = !_dark),
-                            ),
-                    ),
-                    const Text(
-                      'معاينة بصرية دون اتصال بالخادم أو بيانات مالية حقيقية',
-                      style: TextStyle(fontSize: 10),
-                    ),
-                  ],
+                  ),
                 ),
-              ),
+              ],
             ),
     );
   }
