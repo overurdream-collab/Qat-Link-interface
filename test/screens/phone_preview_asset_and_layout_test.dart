@@ -24,8 +24,8 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   test('both approved mascot asset files decode on Flutter', () async {
-    await assertImageDecodes('assets/images/maqwati_approved_mascot.jpeg');
-    await assertImageDecodes('assets/images/maqwati_feminine_mascot.webp');
+    await assertImageDecodes('assets/images/maqwati_approved_character.png');
+    await assertImageDecodes('assets/images/maqwati_feminine_character.png');
   });
 
   testWidgets('phone APK launches directly into a clean RTL login',
