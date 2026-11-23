@@ -1,0 +1,18 @@
+00:00 +0: loading /workspace/maqwati/test/ui_audit/pdf_identity_test.dart
+00:00 +0: PDF preserves the full male character
+00:00 +0 -1: PDF preserves the full male character [E]
+  Golden "goldens/pdf/character_male.png": Pixel test failed, 41.15%, 4115px diff detected.
+  Failure feedback can be found at /workspace/maqwati/test/ui_audit/failures
+  package:flutter_test/src/_goldens_io.dart 108:5  LocalFileComparator.compare
+  
+00:00 +0 -1: PDF preserves the full female character
+00:00 +0 -2: PDF preserves the full female character [E]
+  Golden "goldens/pdf/character_female.png": Pixel test failed, 41.36%, 4136px diff detected.
+  Failure feedback can be found at /workspace/maqwati/test/ui_audit/failures
+  package:flutter_test/src/_goldens_io.dart 108:5  LocalFileComparator.compare
+  
+00:00 +0 -2: Some tests failed.
+
+Failing tests:
+  /workspace/maqwati/test/ui_audit/pdf_identity_test.dart: PDF preserves the full female character
+  /workspace/maqwati/test/ui_audit/pdf_identity_test.dart: PDF preserves the full male character

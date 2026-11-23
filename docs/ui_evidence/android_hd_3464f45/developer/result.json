@@ -1,0 +1,17 @@
+{
+  "installed": true,
+  "launched": true,
+  "themes": 4,
+  "widths": [
+    320,
+    360,
+    390,
+    430,
+    600,
+    800
+  ],
+  "captures": 92,
+  "role_tab_and_modal_captures": 52,
+  "extra_home_size_captures": 40,
+  "scope": "existing offline unverified shells; no auth or financial E2E"
+}

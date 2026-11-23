@@ -12,7 +12,12 @@ Future<void> assertImageDecodes(String assetName) async {
       reason: 'Mascot asset must be a real image, not a Git LFS pointer.');
   final buffer = await ui.ImmutableBuffer.fromUint8List(
       data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes));
-  final codec = await ui.instantiateImageCodecFromBuffer(buffer);
+  late ui.Codec codec;
+  try {
+    codec = await ui.instantiateImageCodecFromBuffer(buffer);
+  } catch (error) {
+    throw StateError('Image decode failed: $assetName: $error');
+  }
   final frame = await codec.getNextFrame();
   expect(frame.image.width, greaterThan(100));
   expect(frame.image.height, greaterThan(100));
@@ -26,6 +31,49 @@ void main() {
   test('both approved mascot asset files decode on Flutter', () async {
     await assertImageDecodes('assets/images/maqwati_approved_character.png');
     await assertImageDecodes('assets/images/maqwati_feminine_character.png');
+  });
+
+  test('adopted HD characters and logo decode with real alpha transparency',
+      () async {
+    for (final asset in [
+      'assets/images/maqwati_approved_character.png',
+      'assets/images/maqwati_feminine_character.png',
+      'assets/images/maqwati_brand_logo.png',
+    ]) {
+      final data = await rootBundle.load(asset);
+      final codec = await ui.instantiateImageCodec(
+          data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes));
+      final image = (await codec.getNextFrame()).image;
+      expect(image.width, greaterThanOrEqualTo(750), reason: asset);
+      expect(image.height, greaterThanOrEqualTo(750), reason: asset);
+      final pixels =
+          (await image.toByteData(format: ui.ImageByteFormat.rawRgba))!;
+      var transparent = false, nearOpaque = false;
+      for (var i = 3; i < pixels.lengthInBytes; i += 4) {
+        final alpha = pixels.getUint8(i);
+        transparent |= alpha == 0;
+        nearOpaque |= alpha >= 250;
+      }
+      expect(transparent, isTrue,
+          reason: '$asset needs a transparent exterior');
+      expect(nearOpaque, isTrue,
+          reason: '$asset must retain the character/artwork');
+      image.dispose();
+      codec.dispose();
+    }
+  });
+
+  test('every bundled character and banner image decodes', () async {
+    final manifest = await AssetManifest.loadFromAssetBundle(rootBundle);
+    final images = manifest.listAssets().where((name) =>
+        name.startsWith('assets/') &&
+        (name.endsWith('.png') ||
+            name.endsWith('.jpeg') ||
+            name.endsWith('.webp')));
+    expect(images.length, greaterThanOrEqualTo(10));
+    for (final name in images) {
+      await assertImageDecodes(name);
+    }
   });
 
   testWidgets('phone APK launches directly into a clean RTL login',
@@ -49,8 +97,8 @@ void main() {
     expect(find.byKey(const Key('preview_female_theme')), findsNothing);
     expect(find.text('معاينة تصميم فقط — لا حساب مالي متصل'), findsNothing);
     expect(find.text('معاينة الواجهات التجريبية'), findsNothing);
-    final featurePosition = tester.getRect(
-        find.byKey(const Key('login_feature_highlights')));
+    final featurePosition =
+        tester.getRect(find.byKey(const Key('login_feature_highlights')));
     // The feature row must not be completely below the visible Android screen.
     expect(featurePosition.top, lessThan(780),
         reason: 'All four approved feature tiles were pushed off-screen.');

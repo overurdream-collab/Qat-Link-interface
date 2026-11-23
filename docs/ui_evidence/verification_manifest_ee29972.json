@@ -1,0 +1,25 @@
+{
+  "app_source_commit": "65649f5fb006365f7a24c7ef77787b0fb08ded21",
+  "ci_commit": "ee2997299dbb5b252875bcc25065acad8e7a1926",
+  "ci_run": 45097454439,
+  "source_object_ids": {
+    "lib": "9e5161a613c5ed7da9e52369818a77f0ddcfe552",
+    "assets": "05e8cc25a3213e00e92c1a034cf0bb5ca4c2803b",
+    "pubspec.yaml": "92e0b1944603b475749f195dfe04cf990d7dca2e",
+    "pubspec.lock": "a08abcc1786d8b771e485b4954ce91b0f67da243"
+  },
+  "scope": "Application code/assets unchanged after owner-reference implementation; later commits strengthen tests and CI. Final docs-only commit must not be represented as another APK build.",
+  "flutter_tests": 1359,
+  "ui_audit_tests": 1086,
+  "golden_images": 950,
+  "screen_source_files": 18,
+  "screen_export_files": 1,
+  "visual_states": 34,
+  "modified_screen_source_files": 10,
+  "issue_items": {
+    "fixed": 10,
+    "partially_fixed": 1,
+    "remaining": 4
+  },
+  "android_result": "PENDING"
+}

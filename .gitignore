@@ -1,0 +1,11 @@
+.dart_tool/
+.flutter-plugins-dependencies
+build/
+android/
+.idea/
+.metadata
+*.iml
+node_modules/
+test/**/failures/
+__pycache__/
+*.pyc

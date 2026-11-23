@@ -1,3 +1,4 @@
+import '../helpers/brand_artwork_expectations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:qat_link/main_ui_preview.dart';
@@ -7,8 +8,9 @@ void main() {
   testWidgets('offline preview starts on correct Arabic login and RTL',
       (tester) async {
     await tester.pumpWidget(const MaqwatiUiPreview());
-    expect(find.byKey(const Key('approved_blue_3d_maqwati_wordmark')), findsOneWidget);
-    expect(find.text('كل يوم حكاية'), findsOneWidget);
+    expect(find.byKey(const Key('approved_blue_3d_maqwati_wordmark')),
+        findsOneWidget);
+    expectApprovedBrandArtwork(tester);
     expect(find.byKey(const Key('login_submit')), findsOneWidget);
     expect(
       Directionality.of(tester.element(find.byKey(const Key('login_submit')))),
@@ -16,7 +18,8 @@ void main() {
     );
   });
 
-  testWidgets('preview female option changes global theme without changing debt colors',
+  testWidgets(
+      'preview female option changes global theme without changing debt colors',
       (tester) async {
     await tester.pumpWidget(const MaqwatiUiPreview());
     await tester.tap(find.byKey(const Key('preview_female_theme')));
@@ -36,8 +39,12 @@ void main() {
 
     expect(find.byKey(const Key('customer_nav_0')), findsOneWidget);
     expect(find.byKey(const Key('customer_nav_4')), findsOneWidget);
-    expect(find.textContaining('لا تعرض بيانات أو أرصدة حقيقية'), findsOneWidget);
-    expect(Directionality.of(tester.element(find.byKey(const Key('customer_nav_0')))), TextDirection.rtl);
+    expect(
+        find.textContaining('لا تعرض بيانات أو أرصدة حقيقية'), findsOneWidget);
+    expect(
+        Directionality.of(
+            tester.element(find.byKey(const Key('customer_nav_0')))),
+        TextDirection.rtl);
 
     final app = tester.widget<MaterialApp>(find.byType(MaterialApp));
     expect(app.theme!.colorScheme.primary, AppColors.pinkPrimary);

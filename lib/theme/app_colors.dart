@@ -10,7 +10,7 @@ abstract final class AppColors {
   static const Color cyan = Color(0xFF73DCF6);
   static const Color sea = Color(0xFF4358F5);
   static const Color ink = Color(0xFF111A4B);
-  static const Color muted = Color(0xFF767FAE);
+  static const Color muted = Color(0xFF59638C);
   static const Color background = Color(0xFFF2F3FF);
   static const Color card = Color(0xFFFFFFFF);
   static const Color cardBorder = Color(0xFFE0E3F9);
@@ -88,6 +88,23 @@ class AppThemeColors extends ThemeExtension<AppThemeColors> {
     required this.pendingBackground,
   });
 
+  /// Readable brand text on the two standard surfaces; status colors are separate.
+  Color get link {
+    var value = petrol;
+    double ratio(Color surface) {
+      final a = value.computeLuminance();
+      final b = surface.computeLuminance();
+      return (a > b ? a + .05 : b + .05) / (a > b ? b + .05 : a + .05);
+    }
+
+    if (background.computeLuminance() > .5) {
+      while (ratio(background) < 4.5 || ratio(card) < 4.5) {
+        value = Color.alphaBlend(const Color(0x0D000000), value);
+      }
+    }
+    return value;
+  }
+
   final Color background;
   final Color card;
   final Color cardBorder;
@@ -143,7 +160,7 @@ class AppThemeColors extends ThemeExtension<AppThemeColors> {
     mint: AppColors.pinkSecondary,
     cyan: Color(0xFF8551B2),
     text: AppColors.pinkInk,
-    muted: Color(0xFF866A82),
+    muted: Color(0xFF71576D),
     success: AppColors.success,
     danger: AppColors.red,
     pendingText: AppColors.amber,
@@ -168,25 +185,35 @@ class AppThemeColors extends ThemeExtension<AppThemeColors> {
 
   @override
   AppThemeColors copyWith({
-    Color? background, Color? card, Color? cardBorder, Color? pale,
-    Color? petrol, Color? mint, Color? cyan, Color? text, Color? muted,
-    Color? success, Color? danger, Color? pendingText,
+    Color? background,
+    Color? card,
+    Color? cardBorder,
+    Color? pale,
+    Color? petrol,
+    Color? mint,
+    Color? cyan,
+    Color? text,
+    Color? muted,
+    Color? success,
+    Color? danger,
+    Color? pendingText,
     Color? pendingBackground,
-  }) => AppThemeColors(
-    background: background ?? this.background,
-    card: card ?? this.card,
-    cardBorder: cardBorder ?? this.cardBorder,
-    pale: pale ?? this.pale,
-    petrol: petrol ?? this.petrol,
-    mint: mint ?? this.mint,
-    cyan: cyan ?? this.cyan,
-    text: text ?? this.text,
-    muted: muted ?? this.muted,
-    success: success ?? this.success,
-    danger: danger ?? this.danger,
-    pendingText: pendingText ?? this.pendingText,
-    pendingBackground: pendingBackground ?? this.pendingBackground,
-  );
+  }) =>
+      AppThemeColors(
+        background: background ?? this.background,
+        card: card ?? this.card,
+        cardBorder: cardBorder ?? this.cardBorder,
+        pale: pale ?? this.pale,
+        petrol: petrol ?? this.petrol,
+        mint: mint ?? this.mint,
+        cyan: cyan ?? this.cyan,
+        text: text ?? this.text,
+        muted: muted ?? this.muted,
+        success: success ?? this.success,
+        danger: danger ?? this.danger,
+        pendingText: pendingText ?? this.pendingText,
+        pendingBackground: pendingBackground ?? this.pendingBackground,
+      );
 
   @override
   AppThemeColors lerp(ThemeExtension<AppThemeColors>? other, double t) {
@@ -204,13 +231,15 @@ class AppThemeColors extends ThemeExtension<AppThemeColors> {
       success: Color.lerp(success, other.success, t)!,
       danger: Color.lerp(danger, other.danger, t)!,
       pendingText: Color.lerp(pendingText, other.pendingText, t)!,
-      pendingBackground: Color.lerp(pendingBackground, other.pendingBackground, t)!,
+      pendingBackground:
+          Color.lerp(pendingBackground, other.pendingBackground, t)!,
     );
   }
 }
 
 extension AppContextColors on BuildContext {
-  AppThemeColors get colors => Theme.of(this).extension<AppThemeColors>() ??
+  AppThemeColors get colors =>
+      Theme.of(this).extension<AppThemeColors>() ??
       (Theme.of(this).brightness == Brightness.dark
           ? AppThemeColors.dark
           : AppThemeColors.light);
@@ -262,10 +291,14 @@ abstract final class AppGradients {
 
   static LinearGradient forCurrency(String code, {bool pink = false}) {
     switch (code.toUpperCase()) {
-      case 'YER': return pink ? pinkYer : yer;
-      case 'SAR': return pink ? pinkSar : sar;
-      case 'USD': return pink ? pinkUsd : usd;
-      default: throw ArgumentError.value(code, 'code', 'Unsupported currency');
+      case 'YER':
+        return pink ? pinkYer : yer;
+      case 'SAR':
+        return pink ? pinkSar : sar;
+      case 'USD':
+        return pink ? pinkUsd : usd;
+      default:
+        throw ArgumentError.value(code, 'code', 'Unsupported currency');
     }
   }
 

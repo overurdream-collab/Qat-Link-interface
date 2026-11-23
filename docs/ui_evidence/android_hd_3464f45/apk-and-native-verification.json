@@ -1,0 +1,118 @@
+{
+  "phone": {
+    "artifact_id": 14790015920,
+    "zip_sha256": "27909d43f52fd34c5f796fe87de1e33ea11f206a99218b0064ec38e36aea09e6",
+    "zip_bytes": 36685353,
+    "apk_sha256": "b1ac4420c19184deda4d7464b37af3c8f0cb37c4d2715e59e73fd3ad11d2b8c0",
+    "apk_bytes": 68884579,
+    "package": "com.maqwatilink.ui_audit_preview",
+    "label": "مقوتي لينك",
+    "internet_permission": false,
+    "assets": [
+      {
+        "name": "maqwati_approved_character.png",
+        "dimensions": [
+          1086,
+          1448
+        ],
+        "sha256": "78b3fdb73e0797458c6be300f53036d443d82fdf131e7406c40dcda511d7bb09",
+        "source_bytes_match": true
+      },
+      {
+        "name": "maqwati_feminine_character.png",
+        "dimensions": [
+          1024,
+          1536
+        ],
+        "sha256": "3865559b25069dfc3f443380b537bdc67ee0b62458f569cef7cca3c531241e13",
+        "source_bytes_match": true
+      },
+      {
+        "name": "maqwati_brand_logo.png",
+        "dimensions": [
+          1254,
+          1254
+        ],
+        "sha256": "171af3e84e1d7146df1bf3e93c85cb1880f466fefc06a140ab94356f9aa8047f",
+        "source_bytes_match": true
+      }
+    ],
+    "native_result": {
+      "installed": true,
+      "launched": true,
+      "themes": 4,
+      "widths": [
+        320,
+        360,
+        390,
+        430,
+        600,
+        800
+      ],
+      "captures": 27,
+      "theme_size_captures": 24,
+      "form_flow_captures": 3,
+      "offline_gate": true,
+      "remember_label_toggle": true,
+      "scope": "offline login; no authentication or financial E2E"
+    },
+    "native_zip_sha256": "a2ed9f81f0d557ca7059f7ef6dbcaf516e6ea2eb999e27e6d0d0236fb99abd46"
+  },
+  "developer": {
+    "artifact_id": 14790075365,
+    "zip_sha256": "5102b5e38f4bb40e8767c35cacd749a13ea16c16d7efa0db0346ea02c6aacd12",
+    "zip_bytes": 36690330,
+    "apk_sha256": "28e810aefad476b64008bd33d807be6c75be4541b87e840a51bff52e7638708f",
+    "apk_bytes": 68884783,
+    "package": "com.maqwatilink.ui_audit_developer",
+    "label": "مقوتي لينك — فحص",
+    "internet_permission": false,
+    "assets": [
+      {
+        "name": "maqwati_approved_character.png",
+        "dimensions": [
+          1086,
+          1448
+        ],
+        "sha256": "78b3fdb73e0797458c6be300f53036d443d82fdf131e7406c40dcda511d7bb09",
+        "source_bytes_match": true
+      },
+      {
+        "name": "maqwati_feminine_character.png",
+        "dimensions": [
+          1024,
+          1536
+        ],
+        "sha256": "3865559b25069dfc3f443380b537bdc67ee0b62458f569cef7cca3c531241e13",
+        "source_bytes_match": true
+      },
+      {
+        "name": "maqwati_brand_logo.png",
+        "dimensions": [
+          1254,
+          1254
+        ],
+        "sha256": "171af3e84e1d7146df1bf3e93c85cb1880f466fefc06a140ab94356f9aa8047f",
+        "source_bytes_match": true
+      }
+    ],
+    "native_result": {
+      "installed": true,
+      "launched": true,
+      "themes": 4,
+      "widths": [
+        320,
+        360,
+        390,
+        430,
+        600,
+        800
+      ],
+      "captures": 92,
+      "role_tab_and_modal_captures": 52,
+      "extra_home_size_captures": 40,
+      "scope": "existing offline unverified shells; no auth or financial E2E"
+    },
+    "native_zip_sha256": "f585bcd04e4396e6c8ba96af705bc8726363d6b78501b4642b488081f7b32852"
+  }
+}

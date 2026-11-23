@@ -1,0 +1,4 @@
+00:00 +0: loading /workspace/maqwati/test/ui_audit/pdf_identity_test.dart
+00:00 +0: PDF preserves the full male character
+00:00 +1: PDF preserves the full female character
+00:00 +2: All tests passed!

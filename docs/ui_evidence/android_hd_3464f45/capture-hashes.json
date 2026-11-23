@@ -1,0 +1,478 @@
+[
+  {
+    "path": "phone/blue_day_320.png",
+    "sha256": "74690bcff9c62e9383e4b06e5ae258607fda84867c076ccb893465b911f74f98"
+  },
+  {
+    "path": "phone/blue_day_360.png",
+    "sha256": "b5828ecc8092df8ebc719655e6cc138cccb2a0aeeffce1256f9f19aab2455797"
+  },
+  {
+    "path": "phone/blue_day_390.png",
+    "sha256": "abc961512fad4dc06bdaa3c132374b4e8916f758795d6c164181890cf3af72ae"
+  },
+  {
+    "path": "phone/blue_day_430.png",
+    "sha256": "b9cdafb1ae60f1d9e07f2cc86842853efa4f9fb0c834bbdbdfc4b3a3642c4366"
+  },
+  {
+    "path": "phone/blue_day_600.png",
+    "sha256": "b0ae5675d0514eb4dec86f1a0f7f821476f4669e89006ce4c79b5f18d38abad1"
+  },
+  {
+    "path": "phone/blue_day_800.png",
+    "sha256": "b907b1bdbe76b7e7d0adca5d120da394a96eb8a783ac45e95a3eb80fb692f4d7"
+  },
+  {
+    "path": "phone/blue_night_320.png",
+    "sha256": "7f47673bc873f756891df7716eaead6f919ffb1d45a74feb279afda8e33dcbde"
+  },
+  {
+    "path": "phone/blue_night_360.png",
+    "sha256": "08071d0aeded291119a71eb22b3a368b898b9de09c8531ce7b9ba23f95a8350f"
+  },
+  {
+    "path": "phone/blue_night_390.png",
+    "sha256": "89bf0149aff6ea863b9c0852edd91bc2518db2345fb55ddc0456d93133379606"
+  },
+  {
+    "path": "phone/blue_night_430.png",
+    "sha256": "53d65e287739afdb61f9e13bd5fcd1988d6c85faf912311dae0da55e2f9a1d5c"
+  },
+  {
+    "path": "phone/blue_night_600.png",
+    "sha256": "ed214f829b9b27b0de0540358a7cb3bd5e2dd824954a8d80351bf75504369596"
+  },
+  {
+    "path": "phone/blue_night_800.png",
+    "sha256": "4f3d65ad97dc1b8307bc363186d2d5c766f5b959ab7291c7d2678f7af0802846"
+  },
+  {
+    "path": "phone/form_keyboard_390.png",
+    "sha256": "3e8d92c6afa605fe793d39e968ef5d9ab18bc56822d49c3f96b6696a5bf6f9fb"
+  },
+  {
+    "path": "phone/form_offline_gate_390.png",
+    "sha256": "8d76d7550a7b41bcf5a5de426cd10974274d63fff8c540a17008aca2d97994c2"
+  },
+  {
+    "path": "phone/form_validation_390.png",
+    "sha256": "ae40c9081fa5751414e14b514a1b85b276aeb1c22626e8f3e544e889d85a04f5"
+  },
+  {
+    "path": "phone/pink_day_320.png",
+    "sha256": "ee97e906fc0f28815593e3d6ec9b796cabf333fd7d8ea70797040a25f7e32f9f"
+  },
+  {
+    "path": "phone/pink_day_360.png",
+    "sha256": "463a876091b32e6fef4e4fb598d1d53f652af24d649305b5d3248a1d9144ccf9"
+  },
+  {
+    "path": "phone/pink_day_390.png",
+    "sha256": "7c67b2c699e017ae1466984362a44bddfdbb955ab4ee3a0e7ecdd5ab1e453fae"
+  },
+  {
+    "path": "phone/pink_day_430.png",
+    "sha256": "26bebfb03c640274907dc56a0fa54304f42dfaac4db27b7c437c190931642e2c"
+  },
+  {
+    "path": "phone/pink_day_600.png",
+    "sha256": "ac19d61f238233ae488ae3b4f23b520e5723b00b16f43fced428a56da7835c00"
+  },
+  {
+    "path": "phone/pink_day_800.png",
+    "sha256": "656adb998fb8550ea5c3c0686436814276e4b36cb8a4c44aa3e880ab3f8d0e09"
+  },
+  {
+    "path": "phone/pink_night_320.png",
+    "sha256": "22b41b21aba7a4fe6fd33d2f22aededf5875ea26a80b4f6534a7888f9d05f7b2"
+  },
+  {
+    "path": "phone/pink_night_360.png",
+    "sha256": "525d9f944e8fb291b355fb6908812f15ef7aee042d52fec55e7474eae8a594c4"
+  },
+  {
+    "path": "phone/pink_night_390.png",
+    "sha256": "c7cc04658ba00cb239966a361660087b080e39b01250fcfdb7392917d5e54a68"
+  },
+  {
+    "path": "phone/pink_night_430.png",
+    "sha256": "c5afa7d255d27ac9c070f4b3eaca58318c4f9828a51b38c21a5ea956277d179f"
+  },
+  {
+    "path": "phone/pink_night_600.png",
+    "sha256": "3dbd6abbd2186e0767396831ee3bcdd6f2a53e19a0c5e1e301de32460b19e379"
+  },
+  {
+    "path": "phone/pink_night_800.png",
+    "sha256": "8fc7e53debd3e3750b6b6bb28bc9aea7254200254f14d8984347f38f126fbe31"
+  },
+  {
+    "path": "developer/customer_blue_day_320_home.png",
+    "sha256": "5d1f8b773d4a9ac3bab4f0e174e7cc6136d3db8ee096f27af54d2d75c9d685fc"
+  },
+  {
+    "path": "developer/customer_blue_day_360_home.png",
+    "sha256": "38dc9e90658b5e6bf20bb13476d3914a4935ed75d828abe19b6b942e9f83657e"
+  },
+  {
+    "path": "developer/customer_blue_day_390_notifications.png",
+    "sha256": "015a49b21fe01f6db0062fb940f269297c3e5dedc647110718cf8665130bb0f8"
+  },
+  {
+    "path": "developer/customer_blue_day_390_settings.png",
+    "sha256": "4c7589cdef160536f2ccac4261dc81268a1ca724cb41d10576c05fd3b6a02710"
+  },
+  {
+    "path": "developer/customer_blue_day_390_tab0.png",
+    "sha256": "e4200bcfd23dee1c88a8f16fcdc1ec49631c4450113f8577a302f86273760fd7"
+  },
+  {
+    "path": "developer/customer_blue_day_390_tab1.png",
+    "sha256": "dc644b92ae4f0899050d3fa5208c397d7e463a7302b29a787d35307fa3719ecf"
+  },
+  {
+    "path": "developer/customer_blue_day_390_tab2.png",
+    "sha256": "31c5e424ed5f6dc398f8f5261216e8a867f43420981777c1588a5860c0d75cb9"
+  },
+  {
+    "path": "developer/customer_blue_day_390_tab3.png",
+    "sha256": "15a9897853c950bd8e9818f28ba4519a39cb0fa6643132b1db3e65abd391a4e5"
+  },
+  {
+    "path": "developer/customer_blue_day_390_tab4.png",
+    "sha256": "c26a89f4575b8210f83ffd2b060efb9f968fe2586251be29d80b6334b97b40f0"
+  },
+  {
+    "path": "developer/customer_blue_day_430_home.png",
+    "sha256": "0e3d1e17638f5eb1259b70ae2a8183556f64278e3ba544714e873d1ac037dda9"
+  },
+  {
+    "path": "developer/customer_blue_day_600_home.png",
+    "sha256": "4e036cc7ac0f5bc97b8b083467c183a5f30c582543d73ea7f28c8644e7bf8747"
+  },
+  {
+    "path": "developer/customer_blue_day_800_home.png",
+    "sha256": "70d95c26a747748faee54bd01b3e614056defc3487501ca06f4ccba21956a132"
+  },
+  {
+    "path": "developer/customer_blue_night_320_home.png",
+    "sha256": "0dd5daea81a4909e5abaf42f286683763d28a9f73ff0d9852a659c14a852c979"
+  },
+  {
+    "path": "developer/customer_blue_night_360_home.png",
+    "sha256": "68d6e508b1157f1d7cd20193956f48736f1dda2034813a8c46bfecc0da007827"
+  },
+  {
+    "path": "developer/customer_blue_night_390_notifications.png",
+    "sha256": "3a049f5b58d8b692bf5a52709a2e61a53efe7ff19c94e7e1979123ff94cb3baa"
+  },
+  {
+    "path": "developer/customer_blue_night_390_settings.png",
+    "sha256": "c86b75e45d400ce2afd0f57c0f071d2db3588cc56912d9fd98e21a837e3feac2"
+  },
+  {
+    "path": "developer/customer_blue_night_390_tab0.png",
+    "sha256": "a73f1446a80aaa507b9df456010fbeb81531e4d69aac507734d34bc813702cb7"
+  },
+  {
+    "path": "developer/customer_blue_night_390_tab1.png",
+    "sha256": "9d3721e0c3d5fd8dadb3b957ec8be092fe1e9ebf2e3fe48b1fbfb77ba99f1c91"
+  },
+  {
+    "path": "developer/customer_blue_night_390_tab2.png",
+    "sha256": "48de49bb3c94d9036777cb22605876b95a2c4ace710d5c10f372a4c9fed5273e"
+  },
+  {
+    "path": "developer/customer_blue_night_390_tab3.png",
+    "sha256": "20f422d0ef5a51ec660ee8ae513b337d25cbd31e42ed0a9e14e2a92db1ff6673"
+  },
+  {
+    "path": "developer/customer_blue_night_390_tab4.png",
+    "sha256": "b587181376aa415b63b4ace215495892830b46ebf54c33af383c79146e1aebb5"
+  },
+  {
+    "path": "developer/customer_blue_night_430_home.png",
+    "sha256": "5bd98f5d39e1132a53bfc73815cdc3e6bfdb848ccd917a5501d2dcd520e69311"
+  },
+  {
+    "path": "developer/customer_blue_night_600_home.png",
+    "sha256": "b49b2c73c027a1134e79a62d40134e883615b2bc91feb36e3a412621d54451ce"
+  },
+  {
+    "path": "developer/customer_blue_night_800_home.png",
+    "sha256": "3815af38110da9c01814d1f73e945809294166007a0a1d1702e89c384daa52f2"
+  },
+  {
+    "path": "developer/customer_pink_day_320_home.png",
+    "sha256": "c00d581cd7ac3fbb360d236769dc42a437749c1006a505c68001a7579c586c9b"
+  },
+  {
+    "path": "developer/customer_pink_day_360_home.png",
+    "sha256": "7229ca1653c4cac8f3690cddb24afb5ccae5b2124634cb616cf1d54a1b069217"
+  },
+  {
+    "path": "developer/customer_pink_day_390_notifications.png",
+    "sha256": "208b80fbb17cac4ef283287a79d37acf91082269a88d6c879308db266814c054"
+  },
+  {
+    "path": "developer/customer_pink_day_390_settings.png",
+    "sha256": "f7fb1a2f3c2fcd0decf357c938c6cc8a8f30f2083a55239f09e3e9839a40b7de"
+  },
+  {
+    "path": "developer/customer_pink_day_390_tab0.png",
+    "sha256": "f11037cb45cfac40b2fb393637ec91d51ab55f0a85b34ba304fd5522dcba7606"
+  },
+  {
+    "path": "developer/customer_pink_day_390_tab1.png",
+    "sha256": "a456d6b85cf095a418eed3e916f2f0f68abda116ef7114d4295b72327526e59b"
+  },
+  {
+    "path": "developer/customer_pink_day_390_tab2.png",
+    "sha256": "2646a220b7fb0ea0cea917be73b8a6ee660dd46a0af23a029136df067652ea68"
+  },
+  {
+    "path": "developer/customer_pink_day_390_tab3.png",
+    "sha256": "c74ee6f383319bb2c36dad82e17d53767602791044352811a09ffd09b8becc47"
+  },
+  {
+    "path": "developer/customer_pink_day_390_tab4.png",
+    "sha256": "36de62dd6aac492c60de0af9e837267e0f4457395320ea2f4b06362854613182"
+  },
+  {
+    "path": "developer/customer_pink_day_430_home.png",
+    "sha256": "dafb5c3fb44aa6e10ce658755118922d9d47d8ee2f673598b325b2531474b720"
+  },
+  {
+    "path": "developer/customer_pink_day_600_home.png",
+    "sha256": "31b25f0781c474f702cc22675efd87c3a659d80fb278927f4dd949bb87273692"
+  },
+  {
+    "path": "developer/customer_pink_day_800_home.png",
+    "sha256": "fd4d97cb80edb0edccb5cb6f53391732058579b05a449675038a27831ea0373e"
+  },
+  {
+    "path": "developer/customer_pink_night_320_home.png",
+    "sha256": "222635f770eb814b4ae1e750439cfcacdd342741c6c82106a0360093f158a1da"
+  },
+  {
+    "path": "developer/customer_pink_night_360_home.png",
+    "sha256": "bf9a1ebb56058962d882c5cf90fbd0c3619128916b232e7e9e49fe166f850c6b"
+  },
+  {
+    "path": "developer/customer_pink_night_390_notifications.png",
+    "sha256": "ce79b1c70a8fd9160a06b3364c82d72ffc37d716d3ff0e99e3847110063f7237"
+  },
+  {
+    "path": "developer/customer_pink_night_390_settings.png",
+    "sha256": "57b0b3d19658eb087e2b3869bc48c5966b97600ba264cdf133644f33022e0608"
+  },
+  {
+    "path": "developer/customer_pink_night_390_tab0.png",
+    "sha256": "3a1c8da3fad52c80aabde10bd6db6fe9bf263a28480e1af7f3fdb1661e6b64e1"
+  },
+  {
+    "path": "developer/customer_pink_night_390_tab1.png",
+    "sha256": "d3933b7f5fc931353f2a1e5d46a334399416f60f9c7ffb40ce75dc47fa0b9519"
+  },
+  {
+    "path": "developer/customer_pink_night_390_tab2.png",
+    "sha256": "8414f6aa9ba7f60a7b8cd588aaf22348f231dceb3fb324b257e7c6c5c43320e6"
+  },
+  {
+    "path": "developer/customer_pink_night_390_tab3.png",
+    "sha256": "2e529aa29002625ec850fadc0034e5e86d00728de30d9dd1925433249ab878ad"
+  },
+  {
+    "path": "developer/customer_pink_night_390_tab4.png",
+    "sha256": "dc1ea4232fe023ffa7828662d28d4d9e3cb61de388d47281d931b838cf15b15f"
+  },
+  {
+    "path": "developer/customer_pink_night_430_home.png",
+    "sha256": "0319b185adc2f8cbe8a288b7d5866997e2b966b722e6a4902e528de1eccee59e"
+  },
+  {
+    "path": "developer/customer_pink_night_600_home.png",
+    "sha256": "c9ee1b9e43cad6ea911da13c91cb53951079daf16be2f3bad4156b8891438b9e"
+  },
+  {
+    "path": "developer/customer_pink_night_800_home.png",
+    "sha256": "1c63f77af3e3ddf107315a339c065e71fbf50cafbc18ae43d2ae7c618bcfc45a"
+  },
+  {
+    "path": "developer/merchant_blue_day_320_home.png",
+    "sha256": "d071174b5e97beb9c5075b9a9ba319d36eb962c4deb91bee42a5f824014799c4"
+  },
+  {
+    "path": "developer/merchant_blue_day_360_home.png",
+    "sha256": "6aadc8e1d9d530d13569932edb2ae5c061b822d4faa923bf1037054f9423cea1"
+  },
+  {
+    "path": "developer/merchant_blue_day_390_notifications.png",
+    "sha256": "b0179aaa62e68e77248af44c2a38a205316ce68c3709a6a2492a917f95ba7940"
+  },
+  {
+    "path": "developer/merchant_blue_day_390_settings.png",
+    "sha256": "5e6e4f6cd03e415f5ba7efbb4611350372091cd086d70bd0a14dfc99778f744f"
+  },
+  {
+    "path": "developer/merchant_blue_day_390_tab0.png",
+    "sha256": "1a0125e3af21445b426564ddd702e78d4c7c2cb1e62f6fa0f2a308ba604ad8a5"
+  },
+  {
+    "path": "developer/merchant_blue_day_390_tab1.png",
+    "sha256": "2637787075d05164de8ab0f5bc577657d123a5b99285720a10ca955fd86b8fd0"
+  },
+  {
+    "path": "developer/merchant_blue_day_390_tab2.png",
+    "sha256": "300bbec212173817d45a847298258e77df18a0ffacc544a5812f4f7d556a7ade"
+  },
+  {
+    "path": "developer/merchant_blue_day_390_tab3.png",
+    "sha256": "7557ca9fc9790ecd6b99b6d2db5ccca1db7e65e2a4e0e28db2fe4514319f3ec0"
+  },
+  {
+    "path": "developer/merchant_blue_day_430_home.png",
+    "sha256": "6321ac17c9b3b343f3b6ae3e16314d24da534b0247cad4e4d5e67b8ff6a7403e"
+  },
+  {
+    "path": "developer/merchant_blue_day_600_home.png",
+    "sha256": "0d7043d09d8acd34aab5c7f592d49e9bd3fdae42626036ba276f3896a3c5cac9"
+  },
+  {
+    "path": "developer/merchant_blue_day_800_home.png",
+    "sha256": "4eccb08e202af839cb3d85c47f468b702b2ec08b50a3d2ca6b9abc65b5447f2c"
+  },
+  {
+    "path": "developer/merchant_blue_night_320_home.png",
+    "sha256": "e174d680d4837d2a6602c4b65f98bf776ebfb9637b9a64a270ba92ba5d3c8749"
+  },
+  {
+    "path": "developer/merchant_blue_night_360_home.png",
+    "sha256": "f2fabee920b490d5719a3abacbd26afcaa7f38ad852f6dc5efe9caa129a66307"
+  },
+  {
+    "path": "developer/merchant_blue_night_390_notifications.png",
+    "sha256": "9071577aba955aeaabd7d48d272d7d21c88c7c584e30d6e50b1cbab37fcab1e8"
+  },
+  {
+    "path": "developer/merchant_blue_night_390_settings.png",
+    "sha256": "353c7349c0eb4bc70740ab1b36eef61b2fc3341971f48d092d4d2e093148453e"
+  },
+  {
+    "path": "developer/merchant_blue_night_390_tab0.png",
+    "sha256": "4a5ad4368c10b62a069c5eab51ef021d34561f5e720743f1bb8c2088ed293ef0"
+  },
+  {
+    "path": "developer/merchant_blue_night_390_tab1.png",
+    "sha256": "5bc6623c2f2e0600cdf945498484f88c6ac743913032f39cec3f4662643a285c"
+  },
+  {
+    "path": "developer/merchant_blue_night_390_tab2.png",
+    "sha256": "806aaa06357ad3ed8b636bef5c37ef7d61c628847c53bddbf8e242451e3ad071"
+  },
+  {
+    "path": "developer/merchant_blue_night_390_tab3.png",
+    "sha256": "b0c86c20bbe5db9275db224f09410435dab289277c63c1e1f4b1d34b4f12a553"
+  },
+  {
+    "path": "developer/merchant_blue_night_430_home.png",
+    "sha256": "8e6bebc56254d9dc3dab43db458aafd3281e185cb912652219bbbb1c4c702407"
+  },
+  {
+    "path": "developer/merchant_blue_night_600_home.png",
+    "sha256": "227731f3875da3464cea43980b25255f7d44fbae146a03391b892be21c1e8834"
+  },
+  {
+    "path": "developer/merchant_blue_night_800_home.png",
+    "sha256": "acfb023020b3d6976eb533f444fb62369f14448298faf2fb1c1fc010b6c82340"
+  },
+  {
+    "path": "developer/merchant_pink_day_320_home.png",
+    "sha256": "44d489d317e43aa1f55cfdd1902d183964578f11abd37d479466552d36162a82"
+  },
+  {
+    "path": "developer/merchant_pink_day_360_home.png",
+    "sha256": "9469e0a4b321b9b51b58eebf6ef58f20608bd673ccaf0e17e513876b905b97a3"
+  },
+  {
+    "path": "developer/merchant_pink_day_390_notifications.png",
+    "sha256": "8f815ad6880ff5910af54b4af1d9a58701b16586cb382b80b0a86fdefcf8d5ce"
+  },
+  {
+    "path": "developer/merchant_pink_day_390_settings.png",
+    "sha256": "80087560c57cf6f344630b3a9f5cb3aea7b3ee7dc2a261718ce3ce5f2fe644df"
+  },
+  {
+    "path": "developer/merchant_pink_day_390_tab0.png",
+    "sha256": "4d38b21219c66dac9903723d07492151a15b8caaaf2d31bdbb050749cf178234"
+  },
+  {
+    "path": "developer/merchant_pink_day_390_tab1.png",
+    "sha256": "0a1b3c05cb77b17ee9493b069692783666e6c55fdc8f2a9f8c0910138900c618"
+  },
+  {
+    "path": "developer/merchant_pink_day_390_tab2.png",
+    "sha256": "657f2395bdc2b8a78affe2dc018b1bcff3ef48dd2d2c22227c1ce493f7918cba"
+  },
+  {
+    "path": "developer/merchant_pink_day_390_tab3.png",
+    "sha256": "684c268fb1fd1c134f0519ea87dd59832db0df90bd8ca354b21b18a59cf40bf0"
+  },
+  {
+    "path": "developer/merchant_pink_day_430_home.png",
+    "sha256": "d6c8c99a161cb03eee07465522619a2f085bf3cc14b1e6a3180104ce3d7c1b3f"
+  },
+  {
+    "path": "developer/merchant_pink_day_600_home.png",
+    "sha256": "3b8d0f8cd15fdcae66b20fcdaaa99ea086f58089766b6a69eff60cec251ecf98"
+  },
+  {
+    "path": "developer/merchant_pink_day_800_home.png",
+    "sha256": "d615ee67812b7cf956dcbbc76bb8cf6bc9c38546cb4d5b40fbb0ad185ecd5428"
+  },
+  {
+    "path": "developer/merchant_pink_night_320_home.png",
+    "sha256": "19234af264eb9449bdd9b2ccd366c1814af6448537a54dbd834f7091cfca6c04"
+  },
+  {
+    "path": "developer/merchant_pink_night_360_home.png",
+    "sha256": "372338b40e21a8b82c3230d2563f683bcbb1ce4dc4f942e65dabdc0fd321239a"
+  },
+  {
+    "path": "developer/merchant_pink_night_390_notifications.png",
+    "sha256": "f3254feccffc10bfb1a8fa9605e6b86f4cd1feb6b6e0b1ee4f8f5bf7125f6af6"
+  },
+  {
+    "path": "developer/merchant_pink_night_390_settings.png",
+    "sha256": "d32600d134684d6f21c5e69099a766df726edd3117c35b7fa09abbf2fa43b904"
+  },
+  {
+    "path": "developer/merchant_pink_night_390_tab0.png",
+    "sha256": "ae9a1cae1b1b5d02fdc59dcc2e6d929f80317c75ea0a29b57a5d0a9f67838e7d"
+  },
+  {
+    "path": "developer/merchant_pink_night_390_tab1.png",
+    "sha256": "4cf501e04fb9c9f4dc415d32745771a08a2cb9769fb6a03255a1932258a13476"
+  },
+  {
+    "path": "developer/merchant_pink_night_390_tab2.png",
+    "sha256": "886422bec778c2bd01e0ee6d8dab7442fbd4f5a2752b693beaec217898e4505d"
+  },
+  {
+    "path": "developer/merchant_pink_night_390_tab3.png",
+    "sha256": "8e39ed998ff8ed3865a7b3430c765713d483fa1b5e7ef3c2d4bcd9722dd18d64"
+  },
+  {
+    "path": "developer/merchant_pink_night_430_home.png",
+    "sha256": "8cfc5b6ce0ce4e930330b73fcae2a6325478a932b2296b04943ce038e0833bed"
+  },
+  {
+    "path": "developer/merchant_pink_night_600_home.png",
+    "sha256": "bce6db9e41f9358664d2bada9ed24f8e90b301cdf4daeaf430a01f4f95696f41"
+  },
+  {
+    "path": "developer/merchant_pink_night_800_home.png",
+    "sha256": "5e6baef5dcf031dc989114c75552fd05d2b95a917f803f6a3c046cd9ed7eacc7"
+  }
+]

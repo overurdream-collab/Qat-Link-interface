@@ -1,0 +1,128 @@
+{
+  "date_utc": "2026-11-23",
+  "release_url": "https://github.com/overurdream-collab/Qat-Link-interface/releases/tag/maqwati-test-45116030353",
+  "source_commit": "80636f8d2738f5b4e92517b8ce695b0a26488aa7",
+  "app_equivalent_to": "3464f459672f941c311fc9e03f0bf167597f1c1b",
+  "source_diff_paths": [
+    ".github/workflows/maqwati-test-apps.yml",
+    "scripts/android_developer_smoke.py",
+    "scripts/android_ui_smoke.py"
+  ],
+  "ci_url": "https://github.com/overurdream-collab/Qat-Link-interface/actions/runs/45116030353",
+  "ci_jobs": [
+    {
+      "name": "backend",
+      "conclusion": "success",
+      "html_url": "https://github.com/overurdream-collab/Qat-Link-interface/actions/runs/45116030353/job/137498972064"
+    },
+    {
+      "name": "verification",
+      "conclusion": "success",
+      "html_url": "https://github.com/overurdream-collab/Qat-Link-interface/actions/runs/45116030353/job/137498972334"
+    },
+    {
+      "name": "android",
+      "conclusion": "success",
+      "html_url": "https://github.com/overurdream-collab/Qat-Link-interface/actions/runs/45116030353/job/137500240650"
+    },
+    {
+      "name": "android-developer",
+      "conclusion": "success",
+      "html_url": "https://github.com/overurdream-collab/Qat-Link-interface/actions/runs/45116030353/job/137500240674"
+    },
+    {
+      "name": "android-smoke",
+      "conclusion": "success",
+      "html_url": "https://github.com/overurdream-collab/Qat-Link-interface/actions/runs/45116030353/job/137501695275"
+    },
+    {
+      "name": "android-developer-smoke",
+      "conclusion": "success",
+      "html_url": "https://github.com/overurdream-collab/Qat-Link-interface/actions/runs/45116030353/job/137501894224"
+    },
+    {
+      "name": "publish-test-apps",
+      "conclusion": "success",
+      "html_url": "https://github.com/overurdream-collab/Qat-Link-interface/actions/runs/45116030353/job/137504000378"
+    }
+  ],
+  "download_test": "Unauthenticated curl -L GET; full body downloaded; no Authorization header or GitHub login used",
+  "apks": [
+    {
+      "name": "maqwati-test-login.apk",
+      "url": "https://github.com/overurdream-collab/Qat-Link-interface/releases/download/maqwati-test-45116030353/maqwati-test-login.apk",
+      "http_status": 200,
+      "bytes": 68884583,
+      "sha256": "fcba366cff84ce3b581f79ac06249fdd595dfe9415c4e73615f8b1036ca9d6ac",
+      "matches_published_github_digest": true,
+      "zip_crc": "PASS",
+      "package": "com.maqwatilink.testing.login20261123",
+      "label": "Maqwati اختبار",
+      "internet_permission": false,
+      "images": [
+        {
+          "name": "maqwati_approved_character.png",
+          "dimensions": [
+            1086,
+            1448
+          ],
+          "matches_hd_source": true
+        },
+        {
+          "name": "maqwati_feminine_character.png",
+          "dimensions": [
+            1024,
+            1536
+          ],
+          "matches_hd_source": true
+        },
+        {
+          "name": "maqwati_brand_logo.png",
+          "dimensions": [
+            1254,
+            1254
+          ],
+          "matches_hd_source": true
+        }
+      ]
+    },
+    {
+      "name": "maqwati-test-browse.apk",
+      "url": "https://github.com/overurdream-collab/Qat-Link-interface/releases/download/maqwati-test-45116030353/maqwati-test-browse.apk",
+      "http_status": 200,
+      "bytes": 68884767,
+      "sha256": "7efe8196c120f5ca054bbd41588c2e3e01df8a3a7aaf4c26f90afb5b1fd8d16d",
+      "matches_published_github_digest": true,
+      "zip_crc": "PASS",
+      "package": "com.maqwatilink.testing.browse20261123",
+      "label": "Maqwati تصفح",
+      "internet_permission": false,
+      "images": [
+        {
+          "name": "maqwati_approved_character.png",
+          "dimensions": [
+            1086,
+            1448
+          ],
+          "matches_hd_source": true
+        },
+        {
+          "name": "maqwati_feminine_character.png",
+          "dimensions": [
+            1024,
+            1536
+          ],
+          "matches_hd_source": true
+        },
+        {
+          "name": "maqwati_brand_logo.png",
+          "dimensions": [
+            1254,
+            1254
+          ],
+          "matches_hd_source": true
+        }
+      ]
+    }
+  ]
+}

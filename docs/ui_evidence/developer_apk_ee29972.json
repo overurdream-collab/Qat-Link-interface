@@ -1,0 +1,10 @@
+{
+  "artifact_id": 14784441234,
+  "ci_commit": "ee2997299dbb5b252875bcc25065acad8e7a1926",
+  "zip_bytes": 30811707,
+  "zip_sha256": "8ba0c8d12cd8b278939035844e716af34e4b203b0f59c4e950f8a0d4b536255a",
+  "apk_bytes": 62861699,
+  "apk_sha256": "0c7ca435baf7a7d9fae21030ad7a3c9fad8076d26bce5424e8ea5db9d751bfc6",
+  "package": "com.maqwatilink.ui_audit_developer",
+  "internet_permission": false
+}

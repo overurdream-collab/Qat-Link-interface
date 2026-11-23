@@ -1,0 +1,708 @@
+00:00 +0: loading /workspace/maqwati/test/ui_audit/login_matrix_test.dart
+00:00 +0: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: (setUpAll)
+00:00 +0: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_day body and secondary text contrast
+00:00 +1: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_day home uses the decodable correct character
+00:00 +2: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_day 320.0 baseline
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: null
+  Actual: FlutterError:<Golden "goldens/login_blue_day_320.png": Pixel test failed, 13.39%, 38566px
+diff detected.
+          Failure feedback can be found at /workspace/maqwati/test/ui_audit/failures>
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/login_matrix_test.dart:122:13)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///workspace/maqwati/test/ui_audit/login_matrix_test.dart line 122
+The test description was:
+  blue_day 320.0 baseline
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:03 +2 -1: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_day 320.0 baseline [E]
+  Test failed. See exception logs above.
+  The test description was: blue_day 320.0 baseline
+  
+00:03 +2 -1: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_day 320.0 keyboard_large_text
+00:03 +3 -1: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_day 360.0 baseline
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: null
+  Actual: FlutterError:<Golden "goldens/login_blue_day_360.png": Pixel test failed, 15.73%, 50968px
+diff detected.
+          Failure feedback can be found at /workspace/maqwati/test/ui_audit/failures>
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/login_matrix_test.dart:122:13)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///workspace/maqwati/test/ui_audit/login_matrix_test.dart line 122
+The test description was:
+  blue_day 360.0 baseline
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:04 +3 -2: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_day 360.0 baseline [E]
+  Test failed. See exception logs above.
+  The test description was: blue_day 360.0 baseline
+  
+00:04 +3 -2: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_day 360.0 keyboard_large_text
+00:04 +4 -2: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_day 390.0 baseline
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: null
+  Actual: FlutterError:<Golden "goldens/login_blue_day_390.png": Pixel test failed, 17.56%, 61620px
+diff detected.
+          Failure feedback can be found at /workspace/maqwati/test/ui_audit/failures>
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/login_matrix_test.dart:122:13)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///workspace/maqwati/test/ui_audit/login_matrix_test.dart line 122
+The test description was:
+  blue_day 390.0 baseline
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:05 +4 -3: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_day 390.0 baseline [E]
+  Test failed. See exception logs above.
+  The test description was: blue_day 390.0 baseline
+  
+00:05 +4 -3: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_day 390.0 keyboard_large_text
+00:05 +5 -3: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_day 430.0 baseline
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: null
+  Actual: FlutterError:<Golden "goldens/login_blue_day_430.png": Pixel test failed, 18.90%, 73146px
+diff detected.
+          Failure feedback can be found at /workspace/maqwati/test/ui_audit/failures>
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/login_matrix_test.dart:122:13)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///workspace/maqwati/test/ui_audit/login_matrix_test.dart line 122
+The test description was:
+  blue_day 430.0 baseline
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:06 +5 -4: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_day 430.0 baseline [E]
+  Test failed. See exception logs above.
+  The test description was: blue_day 430.0 baseline
+  
+00:06 +5 -4: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_day 430.0 keyboard_large_text
+00:07 +6 -4: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_day 600.0 baseline
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: null
+  Actual: FlutterError:<Golden "goldens/login_blue_day_600.png": Pixel test failed, 16.34%, 88216px
+diff detected.
+          Failure feedback can be found at /workspace/maqwati/test/ui_audit/failures>
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/login_matrix_test.dart:122:13)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///workspace/maqwati/test/ui_audit/login_matrix_test.dart line 122
+The test description was:
+  blue_day 600.0 baseline
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:08 +6 -5: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_day 600.0 baseline [E]
+  Test failed. See exception logs above.
+  The test description was: blue_day 600.0 baseline
+  
+00:08 +6 -5: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_day 600.0 keyboard_large_text
+00:08 +7 -5: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_day 800.0 baseline
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: null
+  Actual: FlutterError:<Golden "goldens/login_blue_day_800.png": Pixel test failed, 12.25%, 88225px
+diff detected.
+          Failure feedback can be found at /workspace/maqwati/test/ui_audit/failures>
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/login_matrix_test.dart:122:13)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///workspace/maqwati/test/ui_audit/login_matrix_test.dart line 122
+The test description was:
+  blue_day 800.0 baseline
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:09 +7 -6: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_day 800.0 baseline [E]
+  Test failed. See exception logs above.
+  The test description was: blue_day 800.0 baseline
+  
+00:09 +7 -6: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_day 800.0 keyboard_large_text
+00:09 +8 -6: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_night body and secondary text contrast
+00:09 +9 -6: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_night home uses the decodable correct character
+00:09 +10 -6: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_night 320.0 baseline
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: null
+  Actual: FlutterError:<Golden "goldens/login_blue_night_320.png": Pixel test failed, 13.40%,
+38603px diff detected.
+          Failure feedback can be found at /workspace/maqwati/test/ui_audit/failures>
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/login_matrix_test.dart:122:13)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///workspace/maqwati/test/ui_audit/login_matrix_test.dart line 122
+The test description was:
+  blue_night 320.0 baseline
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:11 +10 -7: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_night 320.0 baseline [E]
+  Test failed. See exception logs above.
+  The test description was: blue_night 320.0 baseline
+  
+00:11 +10 -7: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_night 320.0 keyboard_large_text
+00:11 +11 -7: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_night 360.0 baseline
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: null
+  Actual: FlutterError:<Golden "goldens/login_blue_night_360.png": Pixel test failed, 15.74%,
+51001px diff detected.
+          Failure feedback can be found at /workspace/maqwati/test/ui_audit/failures>
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/login_matrix_test.dart:122:13)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///workspace/maqwati/test/ui_audit/login_matrix_test.dart line 122
+The test description was:
+  blue_night 360.0 baseline
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:12 +11 -8: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_night 360.0 baseline [E]
+  Test failed. See exception logs above.
+  The test description was: blue_night 360.0 baseline
+  
+00:12 +11 -8: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_night 360.0 keyboard_large_text
+00:12 +12 -8: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_night 390.0 baseline
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: null
+  Actual: FlutterError:<Golden "goldens/login_blue_night_390.png": Pixel test failed, 17.57%,
+61657px diff detected.
+          Failure feedback can be found at /workspace/maqwati/test/ui_audit/failures>
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/login_matrix_test.dart:122:13)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///workspace/maqwati/test/ui_audit/login_matrix_test.dart line 122
+The test description was:
+  blue_night 390.0 baseline
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:13 +12 -9: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_night 390.0 baseline [E]
+  Test failed. See exception logs above.
+  The test description was: blue_night 390.0 baseline
+  
+00:13 +12 -9: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_night 390.0 keyboard_large_text
+00:13 +13 -9: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_night 430.0 baseline
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: null
+  Actual: FlutterError:<Golden "goldens/login_blue_night_430.png": Pixel test failed, 18.91%,
+73200px diff detected.
+          Failure feedback can be found at /workspace/maqwati/test/ui_audit/failures>
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/login_matrix_test.dart:122:13)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///workspace/maqwati/test/ui_audit/login_matrix_test.dart line 122
+The test description was:
+  blue_night 430.0 baseline
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:14 +13 -10: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_night 430.0 baseline [E]
+  Test failed. See exception logs above.
+  The test description was: blue_night 430.0 baseline
+  
+00:14 +13 -10: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_night 430.0 keyboard_large_text
+00:14 +14 -10: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_night 600.0 baseline
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: null
+  Actual: FlutterError:<Golden "goldens/login_blue_night_600.png": Pixel test failed, 16.35%,
+88304px diff detected.
+          Failure feedback can be found at /workspace/maqwati/test/ui_audit/failures>
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/login_matrix_test.dart:122:13)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///workspace/maqwati/test/ui_audit/login_matrix_test.dart line 122
+The test description was:
+  blue_night 600.0 baseline
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:15 +14 -11: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_night 600.0 baseline [E]
+  Test failed. See exception logs above.
+  The test description was: blue_night 600.0 baseline
+  
+00:15 +14 -11: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_night 600.0 keyboard_large_text
+00:15 +15 -11: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_night 800.0 baseline
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: null
+  Actual: FlutterError:<Golden "goldens/login_blue_night_800.png": Pixel test failed, 12.26%,
+88305px diff detected.
+          Failure feedback can be found at /workspace/maqwati/test/ui_audit/failures>
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/login_matrix_test.dart:122:13)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///workspace/maqwati/test/ui_audit/login_matrix_test.dart line 122
+The test description was:
+  blue_night 800.0 baseline
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:16 +15 -12: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_night 800.0 baseline [E]
+  Test failed. See exception logs above.
+  The test description was: blue_night 800.0 baseline
+  
+00:16 +15 -12: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_night 800.0 keyboard_large_text
+00:17 +16 -12: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_day body and secondary text contrast
+00:17 +17 -12: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_day home uses the decodable correct character
+00:17 +18 -12: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_day 320.0 baseline
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: null
+  Actual: FlutterError:<Golden "goldens/login_pink_day_320.png": Pixel test failed, 12.95%, 37309px
+diff detected.
+          Failure feedback can be found at /workspace/maqwati/test/ui_audit/failures>
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/login_matrix_test.dart:122:13)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///workspace/maqwati/test/ui_audit/login_matrix_test.dart line 122
+The test description was:
+  pink_day 320.0 baseline
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:18 +18 -13: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_day 320.0 baseline [E]
+  Test failed. See exception logs above.
+  The test description was: pink_day 320.0 baseline
+  
+00:18 +18 -13: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_day 320.0 keyboard_large_text
+00:18 +19 -13: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_day 360.0 baseline
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: null
+  Actual: FlutterError:<Golden "goldens/login_pink_day_360.png": Pixel test failed, 15.26%, 49440px
+diff detected.
+          Failure feedback can be found at /workspace/maqwati/test/ui_audit/failures>
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/login_matrix_test.dart:122:13)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///workspace/maqwati/test/ui_audit/login_matrix_test.dart line 122
+The test description was:
+  pink_day 360.0 baseline
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:19 +19 -14: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_day 360.0 baseline [E]
+  Test failed. See exception logs above.
+  The test description was: pink_day 360.0 baseline
+  
+00:19 +19 -14: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_day 360.0 keyboard_large_text
+00:19 +20 -14: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_day 390.0 baseline
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: null
+  Actual: FlutterError:<Golden "goldens/login_pink_day_390.png": Pixel test failed, 17.03%, 59760px
+diff detected.
+          Failure feedback can be found at /workspace/maqwati/test/ui_audit/failures>
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/login_matrix_test.dart:122:13)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///workspace/maqwati/test/ui_audit/login_matrix_test.dart line 122
+The test description was:
+  pink_day 390.0 baseline
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:20 +20 -15: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_day 390.0 baseline [E]
+  Test failed. See exception logs above.
+  The test description was: pink_day 390.0 baseline
+  
+00:20 +20 -15: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_day 390.0 keyboard_large_text
+00:20 +21 -15: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_day 430.0 baseline
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: null
+  Actual: FlutterError:<Golden "goldens/login_pink_day_430.png": Pixel test failed, 18.28%, 70733px
+diff detected.
+          Failure feedback can be found at /workspace/maqwati/test/ui_audit/failures>
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/login_matrix_test.dart:122:13)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///workspace/maqwati/test/ui_audit/login_matrix_test.dart line 122
+The test description was:
+  pink_day 430.0 baseline
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:21 +21 -16: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_day 430.0 baseline [E]
+  Test failed. See exception logs above.
+  The test description was: pink_day 430.0 baseline
+  
+00:21 +21 -16: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_day 430.0 keyboard_large_text
+00:21 +22 -16: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_day 600.0 baseline
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: null
+  Actual: FlutterError:<Golden "goldens/login_pink_day_600.png": Pixel test failed, 15.94%, 86065px
+diff detected.
+          Failure feedback can be found at /workspace/maqwati/test/ui_audit/failures>
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/login_matrix_test.dart:122:13)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///workspace/maqwati/test/ui_audit/login_matrix_test.dart line 122
+The test description was:
+  pink_day 600.0 baseline
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:22 +22 -17: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_day 600.0 baseline [E]
+  Test failed. See exception logs above.
+  The test description was: pink_day 600.0 baseline
+  
+00:22 +22 -17: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_day 600.0 keyboard_large_text
+00:22 +23 -17: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_day 800.0 baseline
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: null
+  Actual: FlutterError:<Golden "goldens/login_pink_day_800.png": Pixel test failed, 11.95%, 86065px
+diff detected.
+          Failure feedback can be found at /workspace/maqwati/test/ui_audit/failures>
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/login_matrix_test.dart:122:13)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///workspace/maqwati/test/ui_audit/login_matrix_test.dart line 122
+The test description was:
+  pink_day 800.0 baseline
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:23 +23 -18: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_day 800.0 baseline [E]
+  Test failed. See exception logs above.
+  The test description was: pink_day 800.0 baseline
+  
+00:23 +23 -18: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_day 800.0 keyboard_large_text
+00:23 +24 -18: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_night body and secondary text contrast
+00:23 +25 -18: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_night home uses the decodable correct character
+00:23 +26 -18: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_night 320.0 baseline
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: null
+  Actual: FlutterError:<Golden "goldens/login_pink_night_320.png": Pixel test failed, 12.95%,
+37298px diff detected.
+          Failure feedback can be found at /workspace/maqwati/test/ui_audit/failures>
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/login_matrix_test.dart:122:13)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///workspace/maqwati/test/ui_audit/login_matrix_test.dart line 122
+The test description was:
+  pink_night 320.0 baseline
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:24 +26 -19: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_night 320.0 baseline [E]
+  Test failed. See exception logs above.
+  The test description was: pink_night 320.0 baseline
+  
+00:24 +26 -19: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_night 320.0 keyboard_large_text
+00:24 +27 -19: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_night 360.0 baseline
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: null
+  Actual: FlutterError:<Golden "goldens/login_pink_night_360.png": Pixel test failed, 15.26%,
+49456px diff detected.
+          Failure feedback can be found at /workspace/maqwati/test/ui_audit/failures>
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/login_matrix_test.dart:122:13)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///workspace/maqwati/test/ui_audit/login_matrix_test.dart line 122
+The test description was:
+  pink_night 360.0 baseline
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:25 +27 -20: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_night 360.0 baseline [E]
+  Test failed. See exception logs above.
+  The test description was: pink_night 360.0 baseline
+  
+00:25 +27 -20: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_night 360.0 keyboard_large_text
+00:25 +28 -20: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_night 390.0 baseline
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: null
+  Actual: FlutterError:<Golden "goldens/login_pink_night_390.png": Pixel test failed, 17.04%,
+59818px diff detected.
+          Failure feedback can be found at /workspace/maqwati/test/ui_audit/failures>
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/login_matrix_test.dart:122:13)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///workspace/maqwati/test/ui_audit/login_matrix_test.dart line 122
+The test description was:
+  pink_night 390.0 baseline
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:26 +28 -21: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_night 390.0 baseline [E]
+  Test failed. See exception logs above.
+  The test description was: pink_night 390.0 baseline
+  
+00:26 +28 -21: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_night 390.0 keyboard_large_text
+00:26 +29 -21: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_night 430.0 baseline
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: null
+  Actual: FlutterError:<Golden "goldens/login_pink_night_430.png": Pixel test failed, 18.30%,
+70805px diff detected.
+          Failure feedback can be found at /workspace/maqwati/test/ui_audit/failures>
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/login_matrix_test.dart:122:13)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///workspace/maqwati/test/ui_audit/login_matrix_test.dart line 122
+The test description was:
+  pink_night 430.0 baseline
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:27 +29 -22: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_night 430.0 baseline [E]
+  Test failed. See exception logs above.
+  The test description was: pink_night 430.0 baseline
+  
+00:27 +29 -22: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_night 430.0 keyboard_large_text
+00:27 +30 -22: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_night 600.0 baseline
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: null
+  Actual: FlutterError:<Golden "goldens/login_pink_night_600.png": Pixel test failed, 15.95%,
+86132px diff detected.
+          Failure feedback can be found at /workspace/maqwati/test/ui_audit/failures>
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/login_matrix_test.dart:122:13)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///workspace/maqwati/test/ui_audit/login_matrix_test.dart line 122
+The test description was:
+  pink_night 600.0 baseline
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:28 +30 -23: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_night 600.0 baseline [E]
+  Test failed. See exception logs above.
+  The test description was: pink_night 600.0 baseline
+  
+00:28 +30 -23: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_night 600.0 keyboard_large_text
+00:28 +31 -23: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_night 800.0 baseline
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: null
+  Actual: FlutterError:<Golden "goldens/login_pink_night_800.png": Pixel test failed, 11.96%,
+86132px diff detected.
+          Failure feedback can be found at /workspace/maqwati/test/ui_audit/failures>
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/login_matrix_test.dart:122:13)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///workspace/maqwati/test/ui_audit/login_matrix_test.dart line 122
+The test description was:
+  pink_night 800.0 baseline
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:29 +31 -24: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_night 800.0 baseline [E]
+  Test failed. See exception logs above.
+  The test description was: pink_night 800.0 baseline
+  
+00:29 +31 -24: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_night 800.0 keyboard_large_text
+00:29 +32 -24: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: (tearDownAll)
+00:29 +32 -24: loading /workspace/maqwati/test/premium/approved_login_20261122_test.dart
+00:30 +32 -24: /workspace/maqwati/test/premium/approved_login_20261122_test.dart: Owner-approved brand is blue 3D without a checkmark and uses every day a story
+00:31 +33 -24: /workspace/maqwati/test/premium/approved_login_20261122_test.dart: Approved login keeps actual phone/PIN safety and expected controls
+00:32 +34 -24: loading /workspace/maqwati/test/screens/phone_preview_asset_and_layout_test.dart
+00:33 +34 -24: /workspace/maqwati/test/screens/phone_preview_asset_and_layout_test.dart: both approved mascot asset files decode on Flutter
+00:33 +35 -24: /workspace/maqwati/test/screens/phone_preview_asset_and_layout_test.dart: adopted HD characters and logo decode with real alpha transparency
+00:33 +36 -24: /workspace/maqwati/test/screens/phone_preview_asset_and_layout_test.dart: every bundled character and banner image decodes
+00:34 +37 -24: /workspace/maqwati/test/screens/phone_preview_asset_and_layout_test.dart: phone APK launches directly into a clean RTL login
+00:35 +38 -24: loading /workspace/maqwati/test/screens/approved_login_glass_frame_test.dart
+00:36 +38 -24: /workspace/maqwati/test/screens/approved_login_glass_frame_test.dart: approved login glass frame: female=false dark=false width=320.0
+00:38 +39 -24: /workspace/maqwati/test/screens/approved_login_glass_frame_test.dart: approved login glass frame: female=false dark=false width=390.0
+00:38 +40 -24: /workspace/maqwati/test/screens/approved_login_glass_frame_test.dart: approved login glass frame: female=false dark=true width=320.0
+00:38 +41 -24: /workspace/maqwati/test/screens/approved_login_glass_frame_test.dart: approved login glass frame: female=false dark=true width=390.0
+00:38 +42 -24: /workspace/maqwati/test/screens/approved_login_glass_frame_test.dart: approved login glass frame: female=true dark=false width=320.0
+00:39 +43 -24: /workspace/maqwati/test/screens/approved_login_glass_frame_test.dart: approved login glass frame: female=true dark=false width=390.0
+00:39 +44 -24: /workspace/maqwati/test/screens/approved_login_glass_frame_test.dart: approved login glass frame: female=true dark=true width=320.0
+00:39 +45 -24: /workspace/maqwati/test/screens/approved_login_glass_frame_test.dart: approved login glass frame: female=true dark=true width=390.0
+00:39 +46 -24: Some tests failed.
+
+Failing tests:
+  /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_day 320.0 baseline
+  /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_day 360.0 baseline
+  /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_day 390.0 baseline
+  /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_day 430.0 baseline
+  ... and 20 more

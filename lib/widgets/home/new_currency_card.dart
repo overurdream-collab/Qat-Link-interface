@@ -18,6 +18,7 @@ class CurrencyCardData {
 
   final CurrencyCode currency;
   final String debts;
+
   /// Approved debts minus approved payments. Null preserves legacy callers.
   final String? balance;
   final bool isCredit;
@@ -33,22 +34,24 @@ class NewCurrencyCard extends StatelessWidget {
 
   final CurrencyCardData data;
 
-  LinearGradient _gradient(BuildContext context) => switch (data.currency) {
-    CurrencyCode.yer => context.premium.yer,
-    CurrencyCode.sar => context.premium.sar,
-    CurrencyCode.usd => context.premium.usd,
-  };
+  LinearGradient _gradient(BuildContext context) =>
+      context.premium.forWhiteText(switch (data.currency) {
+        CurrencyCode.yer => context.premium.yer,
+        CurrencyCode.sar => context.premium.sar,
+        CurrencyCode.usd => context.premium.usd,
+      });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 220,
+      height: 220 * MediaQuery.textScalerOf(context).scale(1),
       margin: const EdgeInsets.symmetric(horizontal: 4),
       padding: const EdgeInsets.fromLTRB(17, 16, 17, 17),
       decoration: BoxDecoration(
         gradient: _gradient(context),
         borderRadius: BorderRadius.circular(32),
-        border: Border.all(color: Colors.white.withValues(alpha: .65), width: 1.5),
+        border:
+            Border.all(color: Colors.white.withValues(alpha: .65), width: 1.5),
         boxShadow: [
           BoxShadow(
             color: context.premium.shadow,
@@ -58,150 +61,89 @@ class NewCurrencyCard extends StatelessWidget {
         ],
       ),
       clipBehavior: Clip.antiAlias,
-      child: LayoutBuilder(
-        builder: (context, constraints) => Stack(
-          children: [
-            Positioned(
-              top: -137,
-              left: -107,
-              child: Container(
-                height: 225, width: 225,
-                decoration: const BoxDecoration(
-                  color: Color(0x0AFFFFFF),
-                  shape: BoxShape.circle,
-                ),
-              ),
-            ),
-            Positioned(
-              bottom: -150,
-              right: -76,
-              child: Container(
-                height: 215, width: 215,
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: const Color(0x30FFFFFF),
-                    width: 3,
-                  ),
-                  shape: BoxShape.circle,
-                ),
-              ),
-            ),
-            Positioned.fill(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Expanded(child: Text(
-                        FinanceDisplay.currencyName(data.currency),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                          color: Colors.white, fontSize: 16,
-                          fontWeight: FontWeight.w800,
-                        ),
-                      )),
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 9, vertical: 5,
-                        ),
-                        decoration: BoxDecoration(
-                          color: Colors.white24,
-                          border: Border.all(color: Colors.white30),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Text(
-                          '${FinanceDisplay.currencyCode(data.currency)} · ${FinanceDisplay.currencySymbol(data.currency)}',
-                          style: const TextStyle(color: Colors.white, fontSize: 10),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 8),
-                  Text(data.balance == null
-                    ? 'إجمالي الديون المعتمدة'
-                    : data.isCredit ? 'رصيد دائن لصالح العميل' : 'صافي الرصيد المعتمد',
-                    style: const TextStyle(fontSize: 11, color: Colors.white70)),
-                  FittedBox(
-                    fit: BoxFit.scaleDown,
-                    alignment: Alignment.centerRight,
-                    child: Text(
-                      data.balance ?? data.debts,
-                      style: const TextStyle(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(children: [
+            Expanded(
+                child: Text(FinanceDisplay.currencyName(data.currency),
+                    style: const TextStyle(
                         color: Colors.white,
-                        fontSize: 30,
-                        height: 1.5,
-                        fontWeight: FontWeight.w900,
-                      ),
-                    ),
-                  ),
-                  const Spacer(),
-                  Row(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w800))),
+            const SizedBox(width: 6),
+            Text(FinanceDisplay.currencyCode(data.currency),
+                textDirection: TextDirection.ltr,
+                style: const TextStyle(color: Colors.white, fontSize: 10)),
+          ]),
+          const SizedBox(height: 8),
+          Row(children: [
+            Expanded(
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Expanded(
-                        child: _MiniKpi(
-                          icon: Icons.check_rounded,
-                          label: 'المسدد المعتمد',
-                          value: data.payments,
-                        ),
-                      ),
-                      const SizedBox(width: 9),
-                      Expanded(
-                        child: _MiniKpi(
-                          icon: Icons.schedule_rounded,
-                          label: 'المعلق',
-                          value: data.pending,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            Positioned(
-              top: 59,
-              left: 5,
-              child: SizedBox(
-                width: 87,
-                height: 87,
-                child: Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    SizedBox.expand(
-                      child: CircularProgressIndicator(
-                        value: data.collectionRate.isFinite
-                            ? data.collectionRate.clamp(0.0, 1.0).toDouble()
-                            : 0.0,
-                        strokeWidth: 9,
-                        backgroundColor: Colors.white30,
-                        valueColor: const AlwaysStoppedAnimation<Color>(
-                          Colors.white,
-                        ),
-                      ),
-                    ),
-                    Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          data.collectionRate.isNaN
-                              ? '—'
-                              : '${(data.collectionRate * 100).round()}%',
+                  Text(
+                      data.balance == null
+                          ? 'إجمالي الديون المعتمدة'
+                          : data.isCredit
+                              ? 'رصيد دائن لصالح العميل'
+                              : 'صافي الرصيد المعتمد',
+                      style:
+                          const TextStyle(fontSize: 11, color: Colors.white)),
+                  // Keep every digit readable and available on narrow cards.
+                  SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Text(data.balance ?? data.debts,
+                          textDirection: TextDirection.ltr,
                           style: const TextStyle(
-                            color: Colors.white, fontSize: 15,
-                            fontWeight: FontWeight.w900,
-                          ),
-                        ),
-                        const Text('نسبة التحصيل', style: TextStyle(
-                          color: Colors.white, fontSize: 8,
-                        )),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
+                              color: Colors.white,
+                              fontSize: 26,
+                              height: 1.5,
+                              fontWeight: FontWeight.w900))),
+                ])),
+            const SizedBox(width: 10),
+            SizedBox(
+                width: 68,
+                height: 68,
+                child: Stack(alignment: Alignment.center, children: [
+                  SizedBox.expand(
+                      child: CircularProgressIndicator(
+                          value: data.collectionRate.isFinite
+                              ? data.collectionRate.clamp(0.0, 1.0)
+                              : 0,
+                          strokeWidth: 7,
+                          backgroundColor: Colors.white30,
+                          valueColor: const AlwaysStoppedAnimation<Color>(
+                              Colors.white))),
+                  Column(mainAxisSize: MainAxisSize.min, children: [
+                    Text(
+                        data.collectionRate.isFinite
+                            ? '${(data.collectionRate * 100).round()}%'
+                            : '—',
+                        style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 13,
+                            fontWeight: FontWeight.w900)),
+                    const Text('نسبة التحصيل',
+                        style: TextStyle(color: Colors.white, fontSize: 8)),
+                  ]),
+                ])),
+          ]),
+          const Spacer(),
+          Row(children: [
+            Expanded(
+                child: _MiniKpi(
+                    icon: Icons.check_rounded,
+                    label: 'المسدد المعتمد',
+                    value: data.payments)),
+            const SizedBox(width: 9),
+            Expanded(
+                child: _MiniKpi(
+                    icon: Icons.schedule_rounded,
+                    label: 'المعلق',
+                    value: data.pending)),
+          ]),
+        ],
       ),
     );
   }
@@ -223,7 +165,7 @@ class _MiniKpi extends StatelessWidget {
       constraints: const BoxConstraints(minHeight: 54),
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
       decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: .21),
+        color: Colors.black.withValues(alpha: .1),
         border: Border.all(color: Colors.white24),
         borderRadius: BorderRadius.circular(20),
       ),
@@ -235,11 +177,13 @@ class _MiniKpi extends StatelessWidget {
               Icon(icon, color: Colors.white, size: 12),
               const SizedBox(width: 3),
               Expanded(
-                child: Text(label,
+                child: Text(
+                  label,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
-                    color: Colors.white, fontSize: 9,
+                    color: Colors.white,
+                    fontSize: 9,
                   ),
                 ),
               ),
@@ -249,9 +193,12 @@ class _MiniKpi extends StatelessWidget {
           FittedBox(
             fit: BoxFit.scaleDown,
             alignment: Alignment.centerRight,
-            child: Text(value, style: const TextStyle(
-              color: Colors.white, fontSize: 16, fontWeight: FontWeight.w800,
-            )),
+            child: Text(value,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w800,
+                )),
           ),
         ],
       ),

@@ -19,7 +19,7 @@ abstract final class AppTheme {
     final scheme = ColorScheme(
       brightness: isDark ? Brightness.dark : Brightness.light,
       primary: c.petrol,
-      onPrimary: isDark ? c.background : Colors.white,
+      onPrimary: isDark ? c.background : (pink ? Colors.white : c.text),
       primaryContainer: c.pale,
       onPrimaryContainer: c.text,
       secondary: c.mint,
@@ -109,7 +109,8 @@ abstract final class AppTheme {
       filledButtonTheme: FilledButtonThemeData(
         style: FilledButton.styleFrom(
           // Premium blue-violet / orchid buttons with legible light foreground.
-          foregroundColor: isDark ? c.background : Colors.white,
+          foregroundColor: scheme.onPrimary,
+          textStyle: const TextStyle(fontFamily: 'Cairo'),
           backgroundColor: c.petrol,
           minimumSize: const Size(48, 48),
           shape: RoundedRectangleBorder(
@@ -120,26 +121,32 @@ abstract final class AppTheme {
       // Shared component styling prevents per-page brand drift.
       textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
-          foregroundColor: c.petrol,
-          textStyle: const TextStyle(fontWeight: FontWeight.w700),
+          foregroundColor: c.link,
+          textStyle:
+              const TextStyle(fontFamily: 'Cairo', fontWeight: FontWeight.w700),
         ),
       ),
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
-          foregroundColor: c.petrol,
+          foregroundColor: c.link,
           minimumSize: const Size(48, 46),
           side: BorderSide(color: c.cardBorder, width: 1.3),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(14),
           ),
-          textStyle: const TextStyle(fontWeight: FontWeight.w700),
+          textStyle:
+              const TextStyle(fontFamily: 'Cairo', fontWeight: FontWeight.w700),
         ),
+      ),
+      segmentedButtonTheme: SegmentedButtonThemeData(
+        style: ButtonStyle(
+            textStyle: WidgetStatePropertyAll(TextStyle(fontFamily: 'Cairo'))),
       ),
       chipTheme: base.chipTheme.copyWith(
         backgroundColor: c.card,
         selectedColor: c.pale,
         side: BorderSide(color: c.cardBorder),
-        labelStyle: TextStyle(color: c.text),
+        labelStyle: TextStyle(color: c.text, fontFamily: 'Cairo'),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
         ),

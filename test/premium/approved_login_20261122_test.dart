@@ -3,10 +3,12 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:qat_link/features/auth/registration_role.dart';
 import 'package:qat_link/screens/login_screen.dart';
 import 'package:qat_link/theme/app_theme.dart';
+import 'package:qat_link/theme/premium_tokens.dart';
 import 'package:qat_link/widgets/auth/auth_brand_hero.dart';
 
 void main() {
-  testWidgets('Owner-approved brand is blue 3D without a checkmark and uses every day a story',
+  testWidgets(
+      'Owner-approved brand is blue 3D without a checkmark and uses every day a story',
       (tester) async {
     await tester.pumpWidget(MaterialApp(
       theme: AppTheme.build(dark: false),
@@ -16,12 +18,24 @@ void main() {
     expect(find.byKey(const Key('approved_blue_3d_maqwati_wordmark')),
         findsOneWidget);
     expect(find.byKey(const Key('approved_login_tagline')), findsOneWidget);
-    expect(find.text('كل يوم حكاية'), findsOneWidget);
+    final logo = tester.widget<Image>(
+        find.byKey(const Key('approved_blue_3d_maqwati_wordmark')));
+    final provider = logo.image is ResizeImage
+        ? (logo.image as ResizeImage).imageProvider
+        : logo.image;
+    expect((provider as AssetImage).assetName, PremiumTokens.logoAsset);
+    expect(
+        tester
+            .widget<Semantics>(find.byKey(const Key('approved_login_tagline')))
+            .properties
+            .label,
+        'كل يوم حكاية');
     expect(find.byIcon(Icons.done_all_rounded), findsNothing);
     expect(find.text('تعاملاتك بثقة وسهولة'), findsNothing);
   });
 
-  testWidgets('Approved login keeps actual phone/PIN safety and expected controls',
+  testWidgets(
+      'Approved login keeps actual phone/PIN safety and expected controls',
       (tester) async {
     await tester.pumpWidget(MaterialApp(
       theme: AppTheme.build(dark: false),
@@ -41,7 +55,12 @@ void main() {
     expect(find.text('إنشاء حساب جديد'), findsOneWidget);
     expect(find.text('خدمة العملاء'), findsOneWidget);
     expect(find.textContaining('GiC'), findsOneWidget);
-    expect(find.text('كل يوم حكاية'), findsOneWidget);
+    expect(
+        tester
+            .widget<Semantics>(find.byKey(const Key('approved_login_tagline')))
+            .properties
+            .label,
+        'كل يوم حكاية');
     expect(find.text('Google'), findsNothing);
     expect(find.text('Apple'), findsNothing);
   });

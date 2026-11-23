@@ -1,0 +1,6 @@
+Original job: https://github.com/overurdream-collab/Qat-Link-interface/actions/runs/45097454439/job/137440382397
+Selected original lines only; this is not the complete CI job log.
+2026-11-23T02:00:24.8533774Z 🎉 1359 tests passed.
+2026-11-23T01:58:19.7127619Z ##[group]Run flutter analyze --no-fatal-infos
+2026-11-23T01:58:30.1100060Z 2734 issues found. (ran in 9.6s)
+2026-11-23T01:58:30.1421474Z ##[group]Run flutter test

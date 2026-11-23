@@ -1,0 +1,48 @@
+{
+  "authorization": "Owner: قم بذلك, then supplied latest standalone male portrait",
+  "male_reference": "approved_male_owner_20261123.jpg",
+  "male_note": "Latest curved jambiya portrait, replacing earlier generated straight-sheath review candidate",
+  "logo_note": "Fixed approved graphic includes tagline; no recoloring per theme",
+  "derivative_method": "Image tool transparent derivatives; not original-pixel preservation",
+  "runtime_assets": [
+    {
+      "file": "assets/images/maqwati_approved_character.png",
+      "dimensions": [
+        1086,
+        1448
+      ],
+      "mode": "RGBA",
+      "sha256": "78b3fdb73e0797458c6be300f53036d443d82fdf131e7406c40dcda511d7bb09",
+      "alpha_range": [
+        0,
+        255
+      ]
+    },
+    {
+      "file": "assets/images/maqwati_feminine_character.png",
+      "dimensions": [
+        1024,
+        1536
+      ],
+      "mode": "RGBA",
+      "sha256": "3865559b25069dfc3f443380b537bdc67ee0b62458f569cef7cca3c531241e13",
+      "alpha_range": [
+        0,
+        254
+      ]
+    },
+    {
+      "file": "assets/images/maqwati_brand_logo.png",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "mode": "RGBA",
+      "sha256": "171af3e84e1d7146df1bf3e93c85cb1880f466fefc06a140ab94356f9aa8047f",
+      "alpha_range": [
+        0,
+        255
+      ]
+    }
+  ]
+}

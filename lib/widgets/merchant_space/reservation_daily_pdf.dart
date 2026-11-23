@@ -57,18 +57,23 @@ abstract final class ReservationDailyPdf {
     return doc.save();
   }
 
-  static Future<bool> printFile(Uint8List pdf, {
+  static Future<bool> printFile(
+    Uint8List pdf, {
     required DateTime day,
-  }) => Printing.layoutPdf(
-    name: 'maqwati_preparation_${_date(day)}.pdf',
-    onLayout: (_) async => pdf,
-  );
+  }) =>
+      Printing.layoutPdf(
+        name: 'maqwati_preparation_${_date(day)}.pdf',
+        onLayout: (_) async => pdf,
+      );
 
-  static Future<bool> shareFile(Uint8List pdf, {
+  static Future<bool> shareFile(
+    Uint8List pdf, {
     required DateTime day,
-  }) => Printing.sharePdf(
-    bytes: pdf, filename: 'maqwati_preparation_${_date(day)}.pdf',
-  );
+  }) =>
+      Printing.sharePdf(
+        bytes: pdf,
+        filename: 'maqwati_preparation_${_date(day)}.pdf',
+      );
 
   static Future<Uint8List> _renderPage({
     required DateTime day,
@@ -84,18 +89,24 @@ abstract final class ReservationDailyPdf {
     final recorder = ui.PictureRecorder();
     final canvas = ui.Canvas(recorder);
     canvas.scale(scale);
-    const petrol = ui.Color(0xFF176B70);
-    const text = ui.Color(0xFF172B30);
-    const muted = ui.Color(0xFF566A71);
+    const petrol = ui.Color(0xFF3653B8);
+    const text = ui.Color(0xFF111A4B);
+    const muted = ui.Color(0xFF59638C);
     const white = ui.Color(0xFFFFFFFF);
-    const pale = ui.Color(0xFFF2F8F7);
+    const pale = ui.Color(0xFFF2F3FF);
 
     void fill(double x, double y, double w, double h, ui.Color color) {
-      canvas.drawRect(ui.Rect.fromLTWH(x,y,w,h),
-          ui.Paint()..color=color);
+      canvas.drawRect(ui.Rect.fromLTWH(x, y, w, h), ui.Paint()..color = color);
     }
-    void label(String value, double right, double top, double maxWidth, {
-      double size = 14, bool bold = false, ui.Color color = text,
+
+    void label(
+      String value,
+      double right,
+      double top,
+      double maxWidth, {
+      double size = 14,
+      bool bold = false,
+      ui.Color color = text,
       int maxLines = 1,
     }) {
       final painter = material.TextPainter(
@@ -107,92 +118,101 @@ abstract final class ReservationDailyPdf {
           text: value,
           style: material.TextStyle(
             fontSize: size,
-            fontWeight: bold
-                ? material.FontWeight.w700 : material.FontWeight.w400,
+            fontWeight:
+                bold ? material.FontWeight.w700 : material.FontWeight.w400,
             color: material.Color(color.toARGB32()),
           ),
         ),
       )..layout(maxWidth: maxWidth);
-      painter.paint(canvas, ui.Offset(right-maxWidth, top));
+      painter.paint(canvas, ui.Offset(right - maxWidth, top));
     }
 
-    fill(0,0,_width,_height,white);
-    fill(0,0,_width,108,petrol);
+    fill(0, 0, _width, _height, white);
+    fill(0, 0, _width, 108, petrol);
     label('مقوتي لنك • كشف تجهيز الحجوزات', 755, 14, 665,
-      size: 28, bold: true, color: white);
-    label('نسخة محلية غير متزامنة — ليست إثبات حجز مؤكد',
-      749, 65, 695, size: 14, color: white);
-    label('صفحة ${page+1} من $pages', 200, 85, 150,
-      color: white, size: 11);
+        size: 28, bold: true, color: white);
+    label('نسخة محلية غير متزامنة — ليست إثبات حجز مؤكد', 749, 65, 695,
+        size: 14, color: white);
+    label('صفحة ${page + 1} من $pages', 200, 85, 150, color: white, size: 11);
 
-    fill(34,128,728,129,pale);
-    label('المتجر: $storeName', 742, 139, 665,
-      size: 18, bold: true);
-    label('الموقع: ${governorate ?? 'غير محدد'}'
+    fill(34, 128, 728, 129, pale);
+    label('المتجر: $storeName', 742, 139, 665, size: 18, bold: true);
+    label(
+        'الموقع: ${governorate ?? 'غير محدد'}'
         '${marketName.trim().isEmpty ? '' : ' • $marketName'}',
-      742, 170, 665, size: 13, color: muted);
-    label('التاريخ: ${_date(day)}', 742, 196, 660,
-      size: 14, bold: true);
-    label('الحجوزات النشطة: ${summary.activeCount}    '
-      'الربطات المطلوبة: ${summary.totalBundles}    '
-      'جاهز: ${summary.readyCount}',
-      742, 227, 670, size: 13, color: petrol, bold: true);
+        742,
+        170,
+        665,
+        size: 13,
+        color: muted);
+    label('التاريخ: ${_date(day)}', 742, 196, 660, size: 14, bold: true);
+    label(
+        'الحجوزات النشطة: ${summary.activeCount}    '
+        'الربطات المطلوبة: ${summary.totalBundles}    '
+        'جاهز: ${summary.readyCount}',
+        742,
+        227,
+        670,
+        size: 13,
+        color: petrol,
+        bold: true);
 
     if (page == 0) {
       label('ملخص تجهيز الأصناف', 749, 275, 680,
-        size: 18, color: petrol, bold: true);
+          size: 18, color: petrol, bold: true);
       final summaryLine = summary.bundlesByItem.isEmpty
           ? 'لا توجد حجوزات نشطة لهذا اليوم'
-          : summary.bundlesByItem.entries.map(
-              (e) => '${e.key}: ${e.value} ربطة').join('   |   ');
-      label(summaryLine, 747, 306, 690, size: 14,
-        maxLines: 2);
+          : summary.bundlesByItem.entries
+              .map((e) => '${e.key}: ${e.value} ربطة')
+              .join('   |   ');
+      label(summaryLine, 747, 306, 690, size: 14, maxLines: 2);
     }
     label('تفاصيل الحجوزات', 749, 365, 680,
-      size: 18, color: petrol, bold: true);
-    fill(34,403,726,43,petrol);
-    label('اسم العميل', 747, 414, 152, size: 13,
-      color: white, bold: true);
-    label('الهاتف', 586, 414, 117, size: 13,
-      color: white, bold: true);
-    label('الصنف', 458, 414, 132, size: 13,
-      color: white, bold: true);
-    label('الربطات', 314, 414, 59, size: 13,
-      color: white, bold: true);
-    label('الوقت', 248, 414, 72, size: 13,
-      color: white, bold: true);
-    label('الحالة', 166, 414, 125, size: 13,
-      color: white, bold: true);
+        size: 18, color: petrol, bold: true);
+    fill(34, 403, 726, 43, petrol);
+    label('اسم العميل', 747, 414, 152, size: 13, color: white, bold: true);
+    label('الهاتف', 586, 414, 117, size: 13, color: white, bold: true);
+    label('الصنف', 458, 414, 132, size: 13, color: white, bold: true);
+    label('الربطات', 314, 414, 59, size: 13, color: white, bold: true);
+    label('الوقت', 248, 414, 72, size: 13, color: white, bold: true);
+    label('الحالة', 166, 414, 125, size: 13, color: white, bold: true);
 
     if (rows.isEmpty) {
-      label('لا توجد حجوزات في اليوم المحدد',
-          744, 476, 660, size: 16, color: muted);
+      label('لا توجد حجوزات في اليوم المحدد', 744, 476, 660,
+          size: 16, color: muted);
     }
-    for (var i=0;i<rows.length;i++) {
-      final reservation=rows[i];
-      final y=451.0+i*29;
-      if (i.isEven) fill(34,y,726,29,pale);
-      label(reservation.customerName,747,y+6,152,size:11);
-      label(reservation.phone.isEmpty ? '—' : reservation.phone,
-          586,y+6,117,size:11);
-      label(reservation.item,458,y+6,132,size:11);
-      label('${reservation.bundles}',314,y+6,59,size:11,bold:true);
-      label(reservation.pickupTime,248,y+6,72,size:11);
-      label(reservation.status.label,166,y+6,125,size:10);
+    for (var i = 0; i < rows.length; i++) {
+      final reservation = rows[i];
+      final y = 451.0 + i * 29;
+      if (i.isEven) fill(34, y, 726, 29, pale);
+      label(reservation.customerName, 747, y + 6, 152, size: 11);
+      label(
+          reservation.phone.isEmpty ? '—' : reservation.phone, 586, y + 6, 117,
+          size: 11);
+      label(reservation.item, 458, y + 6, 132, size: 11);
+      label('${reservation.bundles}', 314, y + 6, 59, size: 11, bold: true);
+      label(reservation.pickupTime, 248, y + 6, 72, size: 11);
+      label(reservation.status.label, 166, y + 6, 125, size: 10);
     }
 
-    fill(34,1056,727,1,const ui.Color(0xFFDBE9EB));
-    label('يُستخدم الكشف لمتابعة التجهيز فقط؛ '
-      'ولا ينشئ ديناً أو حركة مالية.', 751,1065,705,
-      size:12,color:muted);
-    label('البيانات مخزنة مؤقتاً في الذاكرة وتختفي عند إعادة التشغيل.',
-      751,1090,705,size:11,color:muted);
+    fill(34, 1056, 727, 1, const ui.Color(0xFFE0E3F9));
+    label(
+        'يُستخدم الكشف لمتابعة التجهيز فقط؛ '
+        'ولا ينشئ ديناً أو حركة مالية.',
+        751,
+        1065,
+        705,
+        size: 12,
+        color: muted);
+    label('البيانات مخزنة مؤقتاً في الذاكرة وتختفي عند إعادة التشغيل.', 751,
+        1090, 705,
+        size: 11, color: muted);
 
-    final picture=recorder.endRecording();
-    final image=await picture.toImage(
-        (_width*scale).toInt(),(_height*scale).toInt());
+    final picture = recorder.endRecording();
+    final image = await picture.toImage(
+        (_width * scale).toInt(), (_height * scale).toInt());
     try {
-      final bytes=await image.toByteData(format:ui.ImageByteFormat.png);
+      final bytes = await image.toByteData(format: ui.ImageByteFormat.png);
       if (bytes == null) throw StateError('PDF page rendering failed');
       return bytes.buffer.asUint8List();
     } finally {

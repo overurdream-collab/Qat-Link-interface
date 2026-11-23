@@ -1,0 +1,1261 @@
+00:00 +0: loading /workspace/maqwati/test/screens/reminder_quick_booking_sheet_widget_test.dart
+00:00 +0: /workspace/maqwati/test/screens/reminder_quick_booking_sheet_widget_test.dart: merchant name, quantity and ONE confirm action show immediately
+00:00 +1: /workspace/maqwati/test/screens/reminder_quick_booking_sheet_widget_test.dart: unverified recipient cannot confirm booking
+00:00 +2: /workspace/maqwati/test/screens/reminder_quick_booking_sheet_widget_test.dart: one press sends fixed campaign and chosen quantity, no fake success
+00:01 +3: /workspace/maqwati/test/screens/reminder_quick_booking_sheet_widget_test.dart: one submission stays single while backend request is pending
+00:01 +4: /workspace/maqwati/test/screens/reminder_quick_booking_sheet_widget_test.dart: ignore is visible immediately and does not submit
+00:01 +5: loading /workspace/maqwati/test/screens/merchant_bookings_screen_widget_test.dart
+00:01 +5: /workspace/maqwati/test/screens/merchant_bookings_screen_widget_test.dart: dedicated booking screen includes share, sales and debt preview
+00:03 +6: /workspace/maqwati/test/screens/merchant_bookings_screen_widget_test.dart: merchant selects all bookings or a specific person without creating debts
+00:03 +7: loading /workspace/maqwati/test/screens/yemen_ui_preview_widget_test.dart
+00:04 +7: /workspace/maqwati/test/screens/yemen_ui_preview_widget_test.dart: offline preview starts on correct Arabic login and RTL
+00:05 +8: /workspace/maqwati/test/screens/yemen_ui_preview_widget_test.dart: preview female option changes global theme without changing debt colors
+00:05 +9: /workspace/maqwati/test/screens/yemen_ui_preview_widget_test.dart: customer preview stays RTL, private-account-safe and pink
+00:06 +10: /workspace/maqwati/test/screens/yemen_ui_preview_widget_test.dart: merchant preview has shared navigation but no live identity
+00:06 +11: loading /workspace/maqwati/test/screens/customer_joined_claims_panel_widget_test.dart
+00:07 +11: /workspace/maqwati/test/screens/customer_joined_claims_panel_widget_test.dart: all old requests appear after joining without being approved
+00:07 +12: /workspace/maqwati/test/screens/customer_joined_claims_panel_widget_test.dart: unverified identity sees zero previous claims
+00:07 +13: /workspace/maqwati/test/screens/customer_joined_claims_panel_widget_test.dart: each accept action requires explicit customer confirmation
+00:08 +14: /workspace/maqwati/test/screens/customer_joined_claims_panel_widget_test.dart: customer may reject individual claim without approving others
+00:08 +15: loading /workspace/maqwati/test/screens/customer_details_screen_widget_test.dart
+00:08 +15: /workspace/maqwati/test/screens/customer_details_screen_widget_test.dart: customer card opens full details instead of old mini sheet
+00:09 +16: /workspace/maqwati/test/screens/customer_details_screen_widget_test.dart: detail view shows profile, period, currencies and statement
+00:09 +17: /workspace/maqwati/test/screens/customer_details_screen_widget_test.dart: a relationship that loses approval hides all private data
+00:09 +18: /workspace/maqwati/test/screens/customer_details_screen_widget_test.dart: detail page back button invokes navigation callback
+00:10 +19: loading /workspace/maqwati/test/screens/client_store_booking_sheet_widget_test.dart
+00:10 +19: /workspace/maqwati/test/screens/client_store_booking_sheet_widget_test.dart: unknown or unlinked customer cannot request a booking
+00:11 +20: /workspace/maqwati/test/screens/client_store_booking_sheet_widget_test.dart: approved customer cannot submit when intake gate is closed
+00:11 +21: /workspace/maqwati/test/screens/client_store_booking_sheet_widget_test.dart: approved customer still cannot submit without a backend
+00:11 +22: loading /workspace/maqwati/test/screens/merchant_space_screen_widget_test.dart
+00:11 +22: /workspace/maqwati/test/screens/merchant_space_screen_widget_test.dart: store page has approved banner/status/address and booking CTA
+00:12 +23: /workspace/maqwati/test/screens/merchant_space_screen_widget_test.dart: anonymous merchants cannot create any customer booking
+00:12 +24: /workspace/maqwati/test/screens/merchant_space_screen_widget_test.dart: broadcast preview does not send or create financial entries
+00:13 +25: /workspace/maqwati/test/screens/merchant_space_screen_widget_test.dart: studio and engagement dashboard show no invented statistics
+00:13 +26: loading /workspace/maqwati/test/screens/phone_preview_asset_and_layout_test.dart
+00:14 +26: /workspace/maqwati/test/screens/phone_preview_asset_and_layout_test.dart: both approved mascot asset files decode on Flutter
+00:14 +27: /workspace/maqwati/test/screens/phone_preview_asset_and_layout_test.dart: every bundled character and banner image decodes
+00:14 +28: /workspace/maqwati/test/screens/phone_preview_asset_and_layout_test.dart: phone APK launches directly into a clean RTL login
+00:15 +29: loading /workspace/maqwati/test/screens/fin15_amendments_screen_test.dart
+00:15 +29: /workspace/maqwati/test/screens/fin15_amendments_screen_test.dart: merchant must confirm exact original/new amount before responding
+00:16 +30: /workspace/maqwati/test/screens/fin15_amendments_screen_test.dart: customer proposal sends new exact amount only after explicit submit
+00:16 +31: /workspace/maqwati/test/screens/fin15_amendments_screen_test.dart: same original and proposed amount cannot create amendment
+00:17 +32: loading /workspace/maqwati/test/screens/yemen_modern_fintech_brand_test.dart
+00:17 +32: /workspace/maqwati/test/screens/yemen_modern_fintech_brand_test.dart: Arabic onboarding uses the corrected brand and Yemeni tagline
+00:18 +33: /workspace/maqwati/test/screens/yemen_modern_fintech_brand_test.dart: onboarding layout remains RTL independently of system locale
+00:18 +34: /workspace/maqwati/test/screens/yemen_modern_fintech_brand_test.dart: female onboarding switches brand pink but keeps finance red
+00:19 +35: /workspace/maqwati/test/screens/yemen_modern_fintech_brand_test.dart: login remains usable at narrow Android width
+00:19 +36: loading /workspace/maqwati/test/screens/login_feature_highlights_test.dart
+00:20 +36: /workspace/maqwati/test/screens/login_feature_highlights_test.dart: compact login highlights fit pink=false dark=false width=320.0
+00:20 +37: /workspace/maqwati/test/screens/login_feature_highlights_test.dart: compact login highlights fit pink=false dark=false width=390.0
+00:20 +38: /workspace/maqwati/test/screens/login_feature_highlights_test.dart: compact login highlights fit pink=false dark=false width=430.0
+00:20 +39: /workspace/maqwati/test/screens/login_feature_highlights_test.dart: compact login highlights fit pink=false dark=true width=320.0
+00:20 +40: /workspace/maqwati/test/screens/login_feature_highlights_test.dart: compact login highlights fit pink=false dark=true width=390.0
+00:20 +41: /workspace/maqwati/test/screens/login_feature_highlights_test.dart: compact login highlights fit pink=false dark=true width=430.0
+00:20 +42: /workspace/maqwati/test/screens/login_feature_highlights_test.dart: compact login highlights fit pink=true dark=false width=320.0
+00:20 +43: /workspace/maqwati/test/screens/login_feature_highlights_test.dart: compact login highlights fit pink=true dark=false width=390.0
+00:20 +44: /workspace/maqwati/test/screens/login_feature_highlights_test.dart: compact login highlights fit pink=true dark=false width=430.0
+00:20 +45: /workspace/maqwati/test/screens/login_feature_highlights_test.dart: compact login highlights fit pink=true dark=true width=320.0
+00:20 +46: /workspace/maqwati/test/screens/login_feature_highlights_test.dart: compact login highlights fit pink=true dark=true width=390.0
+00:20 +47: /workspace/maqwati/test/screens/login_feature_highlights_test.dart: compact login highlights fit pink=true dark=true width=430.0
+00:20 +48: loading /workspace/maqwati/test/screens/fin08_customer_claims_screen_test.dart
+00:21 +48: /workspace/maqwati/test/screens/fin08_customer_claims_screen_test.dart: renders pending verified claim, but no automatic accept
+00:22 +49: /workspace/maqwati/test/screens/fin08_customer_claims_screen_test.dart: backend failure does not claim success; older requests paginated
+00:22 +50: /workspace/maqwati/test/screens/fin08_customer_claims_screen_test.dart: FIN-14 selects one claim and requires per-currency review confirmation before batch write
+00:22 +51: /workspace/maqwati/test/screens/fin08_customer_claims_screen_test.dart: FIN-14 server failure does not report batch success or clear selection
+00:22 +52: loading /workspace/maqwati/test/screens/green_identity_test.dart
+00:23 +52: /workspace/maqwati/test/screens/green_identity_test.dart: the independent premium concept matches its design tokens
+00:23 +53: /workspace/maqwati/test/screens/green_identity_test.dart: premium concept opens Arabic login with the mascot and tagline
+00:24 +54: /workspace/maqwati/test/screens/green_identity_test.dart: female profile still uses pink rather than forcing premium
+00:24 +55: loading /workspace/maqwati/test/screens/merchant_reminder_campaign_widget_test.dart
+00:25 +55: /workspace/maqwati/test/screens/merchant_reminder_campaign_widget_test.dart: merchant selects reminder audience and sees no invented reads
+00:26 +56: loading /workspace/maqwati/test/screens/movement_screen_widget_test.dart
+00:27 +56: /workspace/maqwati/test/screens/movement_screen_widget_test.dart: movement screen retains approved global header and bottom navigation
+00:28 +57: /workspace/maqwati/test/screens/movement_screen_widget_test.dart: movement tab keeps theme toggle and opens the report preview
+00:29 +58: loading /workspace/maqwati/test/screens/merchant_approval_center_screen_test.dart
+00:30 +58: /workspace/maqwati/test/screens/merchant_approval_center_screen_test.dart: approval inbox separates directions and never fakes a decision
+00:30 +59: loading /workspace/maqwati/test/screens/merchant_financial_assistant_screen_test.dart
+00:31 +59: /workspace/maqwati/test/screens/merchant_financial_assistant_screen_test.dart: assistant includes off-app debt and payments per currency
+00:32 +60: loading /workspace/maqwati/test/screens/customer_app_shell_widget_test.dart
+00:32 +60: /workspace/maqwati/test/screens/customer_app_shell_widget_test.dart: customer preview exposes the five customer destinations but no private account data
+00:33 +61: /workspace/maqwati/test/screens/customer_app_shell_widget_test.dart: customer balances include approved operations per currency only
+00:34 +62: /workspace/maqwati/test/screens/customer_app_shell_widget_test.dart: discover keeps store opening and booking availability independent
+00:34 +63: loading /workspace/maqwati/test/screens/customer_store_rating_sheet_widget_test.dart
+00:34 +63: /workspace/maqwati/test/screens/customer_store_rating_sheet_widget_test.dart: client cannot rate without an approved purchase
+00:35 +64: /workspace/maqwati/test/screens/customer_store_rating_sheet_widget_test.dart: with approved purchase ratings remain gated until backend
+00:35 +65: loading /workspace/maqwati/test/screens/fin08_customer_relationships_screen_test.dart
+00:36 +65: /workspace/maqwati/test/screens/fin08_customer_relationships_screen_test.dart: relationship consent requires distinct confirmation and never silently approves debts
+00:37 +66: /workspace/maqwati/test/screens/fin08_customer_relationships_screen_test.dart: failed relationship rejection stays pending in displayed state
+00:37 +67: loading /workspace/maqwati/test/screens/fin08_merchant_book_screen_test.dart
+00:37 +67: /workspace/maqwati/test/screens/fin08_merchant_book_screen_test.dart: restores merchant contacts and shows pending amounts as non-approved
+00:38 +68: /workspace/maqwati/test/screens/fin08_merchant_book_screen_test.dart: failed claim save retains idempotency key on retry, does not claim approval
+00:39 +69: /workspace/maqwati/test/screens/fin08_merchant_book_screen_test.dart: copy pending statement requires confirmation and fetches ALL pages without approved rows
+00:39 +70: /workspace/maqwati/test/screens/fin08_merchant_book_screen_test.dart: failed subsequent page does not replace clipboard with incomplete statement
+00:39 +71: /workspace/maqwati/test/screens/fin08_merchant_book_screen_test.dart: merchant explicitly registers a pending payment, not a debt
+00:39 +72: loading /workspace/maqwati/test/screens/green_customer_layout_refresh_test.dart
+00:40 +72: /workspace/maqwati/test/screens/green_customer_layout_refresh_test.dart: customer home matches merchant banner and has 3 sliding currencies
+
+Warning: A call to drag() with finder "Found 1 widget with key [<'customer_currency_pager'>]: [
+  PageView-[<'customer_currency_pager'>](dependencies: [Directionality, ScrollConfiguration], state: _PageViewState#e43b0(scrollDirection: horizontal, PageController#8816e(one client, offset 0.0), null)),
+]" derived an Offset (Offset(400.0, 572.3)) that would not hit test on the specified widget.
+Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
+The finder corresponds to this RenderBox: RenderClipRect#7f4c9 relayoutBoundary=up8
+The hit test result at that offset is: HitTestResult(RenderDecoratedBox#a5e20@Offset(400.0, 65.3), RenderStack#1fbbd@Offset(400.0, 75.3), RenderConstrainedBox#d81d1@Offset(400.0, 75.3), RenderFlex#b4cc4@Offset(400.0, 512.3), RenderPadding#4bcd5@Offset(400.0, 512.3), RenderCustomMultiChildLayoutBox#9cf24@Offset(400.0, 512.3), _RenderInkFeatures#356e6@Offset(400.0, 512.3), RenderPhysicalModel#e591e@Offset(400.0, 512.3), RenderFlex#4cd97@Offset(400.0, 572.3), RenderPadding#20e43@Offset(400.0, 572.3), RenderCustomMultiChildLayoutBox#2b0bf@Offset(400.0, 572.3), _RenderInkFeatures#aa92b@Offset(400.0, 572.3), RenderPhysicalModel#61ca7@Offset(400.0, 572.3), RenderSemanticsAnnotations#90386@Offset(400.0, 572.3), RenderRepaintBoundary#419c2@Offset(400.0, 572.3), RenderIgnorePointer#f4204@Offset(400.0, 572.3), RenderAnimatedOpacity#efdfb@Offset(400.0, 572.3), RenderAnimatedOpacity#16a98@Offset(400.0, 572.3), _RenderColoredBox#61cbd@Offset(400.0, 572.3), RenderAnimatedOpacity#e6d50@Offset(400.0, 572.3), RenderIgnorePointer#dd8b5@Offset(400.0, 572.3), RenderAnimatedOpacity#55297@Offset(400.0, 572.3), RenderRepaintBoundary#2e999@Offset(400.0, 572.3), RenderSemanticsAnnotations#bea42@Offset(400.0, 572.3), RenderOffstage#3dd9b@Offset(400.0, 572.3), RenderSemanticsAnnotations#9c9ee@Offset(400.0, 572.3), _RenderTheater#c329a@Offset(400.0, 572.3), RenderAbsorbPointer#6e006@Offset(400.0, 572.3), RenderPointerListener#55f7c@Offset(400.0, 572.3), RenderSemanticsAnnotations#a83eb@Offset(400.0, 572.3), RenderSemanticsAnnotations#9bf44@Offset(400.0, 572.3), RenderSemanticsAnnotations#bb29a@Offset(400.0, 572.3), RenderSemanticsAnnotations#0f1d1@Offset(400.0, 572.3), RenderTapRegionSurface#0fd65@Offset(400.0, 572.3), RenderSemanticsAnnotations#54053@Offset(400.0, 572.3), RenderSemanticsAnnotations#64931@Offset(400.0, 572.3), HitTestEntry<HitTestTarget>#0e630(_ReusableRenderView#42dc2), HitTestEntry<HitTestTarget>#47fe0(<AutomatedTestWidgetsFlutterBinding>))
+#0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
+#1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
+#2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
+#3      main.<anonymous closure> (file:///workspace/maqwati/test/screens/green_customer_layout_refresh_test.dart:21:18)
+<asynchronous suspension>
+#4      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#5      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+#6      StackZoneSpecification._registerCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:114:42)
+<asynchronous suspension>
+To silence this warning, pass "warnIfMissed: false" to "drag()".
+To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to true.
+
+00:41 +73: /workspace/maqwati/test/screens/green_customer_layout_refresh_test.dart: studio navigation floats above a cradle and stays tappable
+00:41 +74: /workspace/maqwati/test/screens/green_customer_layout_refresh_test.dart: discover heading describes stores operating now
+00:42 +75: /workspace/maqwati/test/screens/green_customer_layout_refresh_test.dart: top button order is notifications then theme then settings in RTL
+00:42 +76: /workspace/maqwati/test/screens/green_customer_layout_refresh_test.dart: settings contain profile, packages, security and about
+00:42 +77: /workspace/maqwati/test/screens/green_customer_layout_refresh_test.dart: merchant movement has one report action at bottom only
+00:43 +78: loading /workspace/maqwati/test/screens/approved_login_glass_frame_test.dart
+00:43 +78: /workspace/maqwati/test/screens/approved_login_glass_frame_test.dart: approved login glass frame: female=false dark=false width=320.0
+00:44 +79: /workspace/maqwati/test/screens/approved_login_glass_frame_test.dart: approved login glass frame: female=false dark=false width=390.0
+00:44 +80: /workspace/maqwati/test/screens/approved_login_glass_frame_test.dart: approved login glass frame: female=false dark=true width=320.0
+00:44 +81: /workspace/maqwati/test/screens/approved_login_glass_frame_test.dart: approved login glass frame: female=false dark=true width=390.0
+00:44 +82: /workspace/maqwati/test/screens/approved_login_glass_frame_test.dart: approved login glass frame: female=true dark=false width=320.0
+00:44 +83: /workspace/maqwati/test/screens/approved_login_glass_frame_test.dart: approved login glass frame: female=true dark=false width=390.0
+00:44 +84: /workspace/maqwati/test/screens/approved_login_glass_frame_test.dart: approved login glass frame: female=true dark=true width=320.0
+00:44 +85: /workspace/maqwati/test/screens/approved_login_glass_frame_test.dart: approved login glass frame: female=true dark=true width=390.0
+00:44 +86: loading /workspace/maqwati/test/screens/fin13_relationship_ledger_screen_test.dart
+00:45 +86: /workspace/maqwati/test/screens/fin13_relationship_ledger_screen_test.dart: customer ledger displays server credit, approves only other party and controls future policy
+00:46 +87: /workspace/maqwati/test/screens/fin13_relationship_ledger_screen_test.dart: merchant new debt posts only a server request and never changes displayed balances
+00:46 +88: /workspace/maqwati/test/screens/fin13_relationship_ledger_screen_test.dart: FIN-14 selects registered operation and requires explicit confirmation
+00:47 +89: /workspace/maqwati/test/screens/fin13_relationship_ledger_screen_test.dart: FIN-14 creator cannot check/select own pending operation
+00:47 +90: loading /workspace/maqwati/test/screens/customer_ui_screenshots_test.dart
+00:47 +90: /workspace/maqwati/test/screens/customer_ui_screenshots_test.dart: captures the five customer interfaces with synthetic data
+00:49 +91: loading /workspace/maqwati/test/screens/fin16_credit_limits_screen_test.dart
+00:50 +91: /workspace/maqwati/test/screens/fin16_credit_limits_screen_test.dart: customer sees approved account credit and separate pending exposure without edit
+00:50 +92: /workspace/maqwati/test/screens/fin16_credit_limits_screen_test.dart: merchant requires explicit confirmation for limit setting and disable
+00:51 +93: /workspace/maqwati/test/screens/fin16_credit_limits_screen_test.dart: server error never changes locally displayed policy
+00:51 +94: loading /workspace/maqwati/test/screens/home_financial_assistant_navigation_test.dart
+00:52 +94: /workspace/maqwati/test/screens/home_financial_assistant_navigation_test.dart: merchant home opens the financial assistant screen
+00:53 +95: loading /workspace/maqwati/test/screens/customers_screen_widget_test.dart
+00:53 +95: /workspace/maqwati/test/screens/customers_screen_widget_test.dart: customers page has required CTA, search, metrics and filters
+00:54 +96: /workspace/maqwati/test/screens/customers_screen_widget_test.dart: compact currency and status dropdowns preserve their selections
+00:54 +97: /workspace/maqwati/test/screens/customers_screen_widget_test.dart: a customer without approved relationship stays off the list
+00:55 +98: /workspace/maqwati/test/screens/customers_screen_widget_test.dart: merchant can add an unregistered contact without approved relationship
+00:55 +99: /workspace/maqwati/test/screens/customers_screen_widget_test.dart: a privately recorded pending debt stays separate from approved balances
+00:55 +100: loading /workspace/maqwati/test/screens/merchant_pending_contact_details_screen_test.dart
+00:56 +100: /workspace/maqwati/test/screens/merchant_pending_contact_details_screen_test.dart: off-app payment lowers operational net but not approved ledger
+00:57 +101: loading /workspace/maqwati/test/screens/auth_screens_widget_test.dart
+00:58 +101: /workspace/maqwati/test/screens/auth_screens_widget_test.dart: app opens login without exposing private finance tabs
+00:58 +102: /workspace/maqwati/test/screens/auth_screens_widget_test.dart: phone login hides developer preview links
+00:59 +103: /workspace/maqwati/test/screens/auth_screens_widget_test.dart: registered role options stay on a separate page
+00:59 +104: /workspace/maqwati/test/screens/auth_screens_widget_test.dart: login form does not grant a session on valid local inputs
+00:59 +105: /workspace/maqwati/test/screens/auth_screens_widget_test.dart: login supports the approved night theme
+01:00 +106: /workspace/maqwati/test/screens/auth_screens_widget_test.dart: female registration selects pink identity and male restores base
+01:00 +107: loading /workspace/maqwati/test/services/fin14_batch_gateway_test.dart
+01:01 +107: /workspace/maqwati/test/services/fin14_batch_gateway_test.dart: customer selects exact historical claims and sees separate currency review totals
+01:01 +108: /workspace/maqwati/test/services/fin14_batch_gateway_test.dart: a relationship batch uses independently authorized ledger route
+01:01 +109: /workspace/maqwati/test/services/fin14_batch_gateway_test.dart: a batch cannot have zero or over 50 items
+01:01 +110: /workspace/maqwati/test/services/fin14_batch_gateway_test.dart: client rejects a server response not scoped to selected items
+01:01 +111: loading /workspace/maqwati/test/services/app_state_test.dart
+01:01 +111: /workspace/maqwati/test/services/app_state_test.dart: customer account exists independently of merchant relationships
+01:01 +112: /workspace/maqwati/test/services/app_state_test.dart: relationship requires creator declaration and other party approval
+01:01 +113: /workspace/maqwati/test/services/app_state_test.dart: creator cannot approve their own relationship request a second time
+01:01 +114: /workspace/maqwati/test/services/app_state_test.dart: movement cannot be created before relationship approval
+01:01 +115: /workspace/maqwati/test/services/app_state_test.dart: creator declaration plus other party approval finalizes movement
+01:01 +116: /workspace/maqwati/test/services/app_state_test.dart: movement rejection is terminal and records its reason
+01:01 +117: /workspace/maqwati/test/services/app_state_test.dart: duplicate customer phone is rejected
+01:01 +118: loading /workspace/maqwati/test/services/fin16_credit_gateway_test.dart
+01:02 +118: /workspace/maqwati/test/services/fin16_credit_gateway_test.dart: credit GET is scoped and keeps exact signed approved and pending currencies separate
+01:02 +119: /workspace/maqwati/test/services/fin16_credit_gateway_test.dart: merchant limit update/disable sends Decimal as string and returns verified currency
+01:02 +120: /workspace/maqwati/test/services/fin16_credit_gateway_test.dart: missing currencies, false ledger scope and invalid approved money fail closed
+01:02 +121: loading /workspace/maqwati/test/services/fin08_pending_statement_test.dart
+01:02 +121: /workspace/maqwati/test/services/fin08_pending_statement_test.dart: money subtotal keeps exact decimal precision without binary float or rounding
+01:02 +122: /workspace/maqwati/test/services/fin08_pending_statement_test.dart: unacknowledged ledger statement has explicit disclaimer and no currency mixing
+01:02 +123: /workspace/maqwati/test/services/fin08_pending_statement_test.dart: unapproved merchant payments are not misreported as debt
+01:02 +124: loading /workspace/maqwati/test/services/fin08_api_client_test.dart
+01:03 +124: /workspace/maqwati/test/services/fin08_api_client_test.dart: rejects unencrypted non-loopback transport
+01:03 +125: /workspace/maqwati/test/services/fin08_api_client_test.dart: does not call server when there is no authenticated session
+01:03 +126: /workspace/maqwati/test/services/fin08_api_client_test.dart: loads every page of verified historical claims and preserves per-claim stage
+01:03 +127: /workspace/maqwati/test/services/fin08_api_client_test.dart: posts decimal amount as string, preserves caller idempotency key and stays pending
+01:03 +128: /workspace/maqwati/test/services/fin08_api_client_test.dart: HTTP conflict is error; never claims a successful approval
+01:03 +129: /workspace/maqwati/test/services/fin08_api_client_test.dart: merchant summary remains separate per currency and cannot pretend to be full ledger
+01:03 +130: /workspace/maqwati/test/services/fin08_api_client_test.dart: relation request and customer decision use independent authenticated endpoints
+01:03 +131: loading /workspace/maqwati/test/services/fin13_ledger_gateway_test.dart
+01:03 +131: /workspace/maqwati/test/services/fin13_ledger_gateway_test.dart: verified approved ledger balances and dated signed statement parse exact Decimal
+01:03 +132: /workspace/maqwati/test/services/fin13_ledger_gateway_test.dart: payment request, decision, policy, reversal and cursor remain server-backed
+01:03 +133: /workspace/maqwati/test/services/fin13_ledger_gateway_test.dart: rejects non-authoritative scope rather than showing false approved balances
+01:04 +134: loading /workspace/maqwati/test/services/fin15_amendment_gateway_test.dart
+01:04 +134: /workspace/maqwati/test/services/fin15_amendment_gateway_test.dart: historical proposal sends exact decimal, reason and stable key through verified JWT
+01:04 +135: /workspace/maqwati/test/services/fin15_amendment_gateway_test.dart: modern proposal, merchant response and private inbox use proper scoped routes
+01:04 +136: /workspace/maqwati/test/services/fin15_amendment_gateway_test.dart: malformed source or invalid amount fail closed
+01:04 +137: loading /workspace/maqwati/test/services/merchant_pending_book_test.dart
+01:05 +137: /workspace/maqwati/test/services/merchant_pending_book_test.dart: merchant records unregistered contact and debt without app account
+01:05 +138: /workspace/maqwati/test/services/merchant_pending_book_test.dart: local tenant isolation blocks foreign contacts and statements
+01:05 +139: /workspace/maqwati/test/services/merchant_pending_book_test.dart: one merchant cannot create duplicate phone or claim ids
+01:05 +140: /workspace/maqwati/test/services/merchant_pending_book_test.dart: invalid amount, phone, or merchant identity is rejected
+01:05 +141: /workspace/maqwati/test/services/merchant_pending_book_test.dart: report filters period and currency without combining approved ledger
+01:05 +142: /workspace/maqwati/test/services/merchant_pending_book_test.dart: off-app payments reduce operational net by currency only
+01:05 +143: /workspace/maqwati/test/services/merchant_pending_book_test.dart: off-app payment requires the exact merchant contact and unique id
+01:05 +144: /workspace/maqwati/test/services/merchant_pending_book_test.dart: claimed debt cannot be directly approved as a financial movement
+01:05 +145: loading /workspace/maqwati/test/services/movement_calculator_test.dart
+01:05 +145: /workspace/maqwati/test/services/movement_calculator_test.dart: exact decimal balance excludes pending and rejected records
+01:05 +146: /workspace/maqwati/test/services/movement_calculator_test.dart: currencies are calculated independently
+01:05 +147: /workspace/maqwati/test/services/movement_calculator_test.dart: overpayment creates a negative balance
+01:05 +148: loading /workspace/maqwati/test/widgets/movement_view_model_test.dart
+01:06 +148: /workspace/maqwati/test/widgets/movement_view_model_test.dart: Movement HTML financial summary rules gross includes pending, excludes rejected and older dates
+01:06 +149: /workspace/maqwati/test/widgets/movement_view_model_test.dart: Movement HTML financial summary rules filtered status changes list but not the approved totals
+01:06 +150: /workspace/maqwati/test/widgets/movement_view_model_test.dart: Movement HTML financial summary rules search finds customer name, phone, and operation ID
+01:06 +151: /workspace/maqwati/test/widgets/movement_view_model_test.dart: Movement HTML financial summary rules date ranges are inclusive at both local day boundaries
+01:06 +152: /workspace/maqwati/test/widgets/movement_view_model_test.dart: Movement HTML financial summary rules all currencies remain separate even in all-currency mode
+01:06 +153: /workspace/maqwati/test/widgets/movement_view_model_test.dart: Movement HTML financial summary rules day grouping preserves newest-first list order
+01:06 +154: /workspace/maqwati/test/widgets/movement_view_model_test.dart: Movement HTML financial summary rules negative credit balances are not masked by the UI totals
+01:06 +155: loading /workspace/maqwati/test/widgets/merchant_space_models_test.dart
+01:06 +155: /workspace/maqwati/test/widgets/merchant_space_models_test.dart: daily summary groups active bundles by qat variety and orders by pickup time
+01:06 +156: /workspace/maqwati/test/widgets/merchant_space_models_test.dart: collected orders are excluded from outstanding preparation
+01:06 +157: /workspace/maqwati/test/widgets/merchant_space_models_test.dart: broadcast audience requires approved relationship and merchant context
+01:06 +158: /workspace/maqwati/test/widgets/merchant_space_models_test.dart: overpayment credit never puts a customer in unpaid segment
+01:06 +159: loading /workspace/maqwati/test/widgets/home_banner_carousel_test.dart
+01:07 +159: /workspace/maqwati/test/widgets/home_banner_carousel_test.dart: seven original campaign banners use the owner-approved priority
+01:07 +160: /workspace/maqwati/test/widgets/home_banner_carousel_test.dart: home displays first blue 16:9 ad and seven indicators
+01:07 +161: /workspace/maqwati/test/widgets/home_banner_carousel_test.dart: female theme prioritizes pink banner without changing ledger red
+01:07 +162: /workspace/maqwati/test/widgets/home_banner_carousel_test.dart: pink night retains female-priority banners and dark financial semantics
+01:07 +163: /workspace/maqwati/test/widgets/home_banner_carousel_test.dart: carousel advances after six seconds
+01:07 +164: loading /workspace/maqwati/test/widgets/customers_view_model_test.dart
+01:08 +164: /workspace/maqwati/test/widgets/customers_view_model_test.dart: a profile without approved join never appears as a merchant customer
+01:08 +165: /workspace/maqwati/test/widgets/customers_view_model_test.dart: approved balance excludes pending and rejected, and is not an opening debt
+01:08 +166: /workspace/maqwati/test/widgets/customers_view_model_test.dart: all currencies remain separate, and duplicate client cards are explicit
+01:08 +167: /workspace/maqwati/test/widgets/customers_view_model_test.dart: debt filters ignore pending; pending counts are movements not customers
+01:08 +168: /workspace/maqwati/test/widgets/customers_view_model_test.dart: Arabic name and phone searches are normalized
+01:08 +169: /workspace/maqwati/test/widgets/customers_view_model_test.dart: highest debt is the default within a selected currency
+01:08 +170: /workspace/maqwati/test/widgets/customers_view_model_test.dart: negative customer credits are not converted to zero
+01:08 +171: /workspace/maqwati/test/widgets/customers_view_model_test.dart: merchant scoping prevents showing other merchants in the same state
+01:08 +172: loading /workspace/maqwati/test/widgets/merchant_debt_status_summary_test.dart
+01:08 +172: /workspace/maqwati/test/widgets/merchant_debt_status_summary_test.dart: three stages remain independent; USD and YER never combined
+01:08 +173: /workspace/maqwati/test/widgets/merchant_debt_status_summary_test.dart: unapproved relationship never grants recognized or waiting consent
+01:08 +174: /workspace/maqwati/test/widgets/merchant_debt_status_summary_test.dart: verified transfer removes private claim from outside-app bucket
+01:08 +175: /workspace/maqwati/test/widgets/merchant_debt_status_summary_test.dart: approved net is signed; lack of merchant identity shows no figures
+01:08 +176: loading /workspace/maqwati/test/widgets/booking_intake_policy_test.dart
+01:09 +176: /workspace/maqwati/test/widgets/booking_intake_policy_test.dart: no anonymous, unlinked, pending-linked or suspended customer booking
+01:09 +177: /workspace/maqwati/test/widgets/booking_intake_policy_test.dart: closed gate always rejects even approved client, all-day opens fully
+01:09 +178: /workspace/maqwati/test/widgets/booking_intake_policy_test.dart: daily 08:00–20:00 window uses Sana'a timezone and exclusive close
+01:09 +179: /workspace/maqwati/test/widgets/booking_intake_policy_test.dart: overnight 20:00–02:00 works either side of midnight
+01:09 +180: /workspace/maqwati/test/widgets/booking_intake_policy_test.dart: same from-to is invalid unless 24 hour mode
+01:09 +181: /workspace/maqwati/test/widgets/booking_intake_policy_test.dart: nightly reminder reaches only active approved linked customers
+01:09 +182: /workspace/maqwati/test/widgets/booking_intake_policy_test.dart: reminder denies opt-out or unknown consent even when relation approved
+01:09 +183: loading /workspace/maqwati/test/widgets/quick_actions/quick_action_sheets_widget_test.dart
+01:09 +183: /workspace/maqwati/test/widgets/quick_actions/quick_action_sheets_widget_test.dart: the quick action menu has exactly three configured options
+01:10 +184: /workspace/maqwati/test/widgets/quick_actions/quick_action_sheets_widget_test.dart: new debt requires selecting approved customer from the list
+01:10 +185: /workspace/maqwati/test/widgets/quick_actions/quick_action_sheets_widget_test.dart: payment uses the same approved-customer picker and workflow
+01:11 +186: /workspace/maqwati/test/widgets/quick_actions/quick_action_sheets_widget_test.dart: without merchant identity, no customers are exposed
+01:11 +187: /workspace/maqwati/test/widgets/quick_actions/quick_action_sheets_widget_test.dart: ambiguous comma decimal input is rejected rather than reinterpreted
+01:11 +188: /workspace/maqwati/test/widgets/quick_actions/quick_action_sheets_widget_test.dart: unregistered merchant contact can receive a private pending debt
+01:11 +189: /workspace/maqwati/test/widgets/quick_actions/quick_action_sheets_widget_test.dart: unapproved merchant contacts cannot be selected for payments
+01:11 +190: /workspace/maqwati/test/widgets/quick_actions/quick_action_sheets_widget_test.dart: pending contact selector never exposes another merchant
+01:11 +191: loading /workspace/maqwati/test/widgets/quick_actions/approved_customer_picker_test.dart
+01:12 +191: /workspace/maqwati/test/widgets/quick_actions/approved_customer_picker_test.dart: requires an authenticated merchant context
+01:12 +192: /workspace/maqwati/test/widgets/quick_actions/approved_customer_picker_test.dart: only approved relationship and active customer can be chosen
+01:12 +193: /workspace/maqwati/test/widgets/quick_actions/approved_customer_picker_test.dart: other merchants cannot select this merchant customers
+01:12 +194: /workspace/maqwati/test/widgets/quick_actions/approved_customer_picker_test.dart: customer search matches name and normalized phone
+01:12 +195: /workspace/maqwati/test/widgets/quick_actions/approved_customer_picker_test.dart: a formerly-approved customer cannot pass the final selection check
+01:12 +196: /workspace/maqwati/test/widgets/quick_actions/approved_customer_picker_test.dart: inactive accounts do not appear
+01:12 +197: loading /workspace/maqwati/test/widgets/merchant_space_daily_pdf_test.dart
+01:12 +197: /workspace/maqwati/test/widgets/merchant_space_daily_pdf_test.dart: daily booking preparation list creates a genuine Arabic A4 PDF
+01:13 +198: loading /workspace/maqwati/test/widgets/merchant_rating_policy_test.dart
+01:13 +198: /workspace/maqwati/test/widgets/merchant_rating_policy_test.dart: rating requires approved merchant-customer relationship and purchase
+01:13 +199: /workspace/maqwati/test/widgets/merchant_rating_policy_test.dart: one effective review per customer; hidden/pending cannot inflate rating
+01:13 +200: /workspace/maqwati/test/widgets/merchant_rating_policy_test.dart: rankings require at least five trusted reviewers and bayesian correction
+01:13 +201: /workspace/maqwati/test/widgets/merchant_rating_policy_test.dart: most requested ranks distinct customers who approved debts, not sales
+01:13 +202: loading /workspace/maqwati/test/widgets/merchant_pending_statement_pdf_test.dart
+01:14 +202: /workspace/maqwati/test/widgets/merchant_pending_statement_pdf_test.dart: off-app statement PDF is real and contains synthetic test activity
+01:14 +203: loading /workspace/maqwati/test/widgets/night_reminder_campaign_test.dart
+01:15 +203: /workspace/maqwati/test/widgets/night_reminder_campaign_test.dart: yesterday audience includes distinct confirmed reservations only
+01:15 +204: /workspace/maqwati/test/widgets/night_reminder_campaign_test.dart: previous seven calendar days excludes old, unconfirmed and other merchant
+01:15 +205: /workspace/maqwati/test/widgets/night_reminder_campaign_test.dart: all approved and favorites still honor link, account and opt-in
+01:15 +206: /workspace/maqwati/test/widgets/night_reminder_campaign_test.dart: opened and confirmed statistics require trustworthy scoped distinct events
+01:15 +207: /workspace/maqwati/test/widgets/night_reminder_campaign_test.dart: quick confirm requires delivered linked active customer and open intake
+01:15 +208: loading /workspace/maqwati/test/widgets/worker_preparation_pdf_test.dart
+01:15 +208: /workspace/maqwati/test/widgets/worker_preparation_pdf_test.dart: large-format workers report generates offline multipage A4 PDF
+01:16 +209: loading /workspace/maqwati/test/widgets/daily_debt_query_test.dart
+01:16 +209: /workspace/maqwati/test/widgets/daily_debt_query_test.dart: debt counted only after customer approval, by consent day and currency
+01:16 +210: /workspace/maqwati/test/widgets/daily_debt_query_test.dart: pending approval from yesterday remains excluded from today total
+01:16 +211: loading /workspace/maqwati/test/widgets/customer_statement_calculator_test.dart
+01:17 +211: /workspace/maqwati/test/widgets/customer_statement_calculator_test.dart: opening balance is historical approved debt minus payments
+01:17 +212: /workspace/maqwati/test/widgets/customer_statement_calculator_test.dart: status tabs filter rows but cannot change financial totals
+01:17 +213: /workspace/maqwati/test/widgets/customer_statement_calculator_test.dart: selected currency cannot include different currency movements
+01:17 +214: /workspace/maqwati/test/widgets/customer_statement_calculator_test.dart: missing merchant identity, pending relationship and wrong merchant are denied
+01:17 +215: /workspace/maqwati/test/widgets/customer_statement_calculator_test.dart: negative closing balance is preserved as customer credit
+01:17 +216: /workspace/maqwati/test/widgets/customer_statement_calculator_test.dart: rejects invalid backwards periods
+01:17 +217: loading /workspace/maqwati/test/widgets/customer_statement_pdf_test.dart
+01:17 +217: /workspace/maqwati/test/widgets/customer_statement_pdf_test.dart: offline Arabic statement renderer outputs a real PDF document
+01:18 +218: loading /workspace/maqwati/test/widgets/joined_customer_claims_query_test.dart
+01:18 +218: /workspace/maqwati/test/widgets/joined_customer_claims_query_test.dart: newly verified customer receives ALL prior claims as pending
+01:18 +219: /workspace/maqwati/test/widgets/joined_customer_claims_query_test.dart: no OTP-verified match means NO account history even same phone
+01:18 +220: /workspace/maqwati/test/widgets/joined_customer_claims_query_test.dart: conflicting verified account ownership fails closed for the contact
+01:18 +221: /workspace/maqwati/test/widgets/joined_customer_claims_query_test.dart: duplicate claims or matches never duplicate the customer inbox
+01:18 +222: /workspace/maqwati/test/widgets/joined_customer_claims_query_test.dart: each claim retains its own decision and no automatic approval
+01:18 +223: /workspace/maqwati/test/widgets/joined_customer_claims_query_test.dart: joined claims transition to waiting-for-customer, NEVER approved
+01:18 +224: /workspace/maqwati/test/widgets/joined_customer_claims_query_test.dart: rejected claim disappears from both pending balances
+01:18 +225: /workspace/maqwati/test/widgets/joined_customer_claims_query_test.dart: verified backend transfer never double counts the same claim
+01:18 +226: loading /workspace/maqwati/test/widgets/booking_debt_planner_test.dart
+01:19 +226: /workspace/maqwati/test/widgets/booking_debt_planner_test.dart: one click builds separate requests per customer and currency
+01:19 +227: /workspace/maqwati/test/widgets/booking_debt_planner_test.dart: strictly excludes paid, not-collected, unpriced, and unlinked bookings
+01:19 +228: /workspace/maqwati/test/widgets/booking_debt_planner_test.dart: tenant fail-closed, replay protection and subsets are deterministic
+01:19 +229: /workspace/maqwati/test/widgets/booking_debt_planner_test.dart: proposals count only collected orders with a price, per currency
+01:19 +230: /workspace/maqwati/test/widgets/booking_debt_planner_test.dart: cannot convert another merchant's booking even for the same client
+01:19 +231: loading /workspace/maqwati/test/ui_audit/currency_accessibility_test.dart
+01:19 +231: /workspace/maqwati/test/ui_audit/currency_accessibility_test.dart: (setUpAll)
+01:19 +231: /workspace/maqwati/test/ui_audit/currency_accessibility_test.dart: long approved amount false false CurrencyCode.yer 220.0 1.0
+01:20 +232: /workspace/maqwati/test/ui_audit/currency_accessibility_test.dart: long approved amount false false CurrencyCode.yer 220.0 1.6
+01:20 +233: /workspace/maqwati/test/ui_audit/currency_accessibility_test.dart: long approved amount false false CurrencyCode.yer 320.0 1.0
+01:20 +234: /workspace/maqwati/test/ui_audit/currency_accessibility_test.dart: long approved amount false false CurrencyCode.yer 320.0 1.6
+01:20 +235: /workspace/maqwati/test/ui_audit/currency_accessibility_test.dart: long approved amount false false CurrencyCode.sar 220.0 1.0
+01:20 +236: /workspace/maqwati/test/ui_audit/currency_accessibility_test.dart: long approved amount false false CurrencyCode.sar 220.0 1.6
+01:20 +237: /workspace/maqwati/test/ui_audit/currency_accessibility_test.dart: long approved amount false false CurrencyCode.sar 320.0 1.0
+01:20 +238: /workspace/maqwati/test/ui_audit/currency_accessibility_test.dart: long approved amount false false CurrencyCode.sar 320.0 1.6
+01:20 +239: /workspace/maqwati/test/ui_audit/currency_accessibility_test.dart: long approved amount false false CurrencyCode.usd 220.0 1.0
+01:20 +240: /workspace/maqwati/test/ui_audit/currency_accessibility_test.dart: long approved amount false false CurrencyCode.usd 220.0 1.6
+01:20 +241: /workspace/maqwati/test/ui_audit/currency_accessibility_test.dart: long approved amount false false CurrencyCode.usd 320.0 1.0
+01:20 +242: /workspace/maqwati/test/ui_audit/currency_accessibility_test.dart: long approved amount false false CurrencyCode.usd 320.0 1.6
+01:20 +243: /workspace/maqwati/test/ui_audit/currency_accessibility_test.dart: long approved amount false true CurrencyCode.yer 220.0 1.0
+01:21 +244: /workspace/maqwati/test/ui_audit/currency_accessibility_test.dart: long approved amount false true CurrencyCode.yer 220.0 1.6
+01:21 +245: /workspace/maqwati/test/ui_audit/currency_accessibility_test.dart: long approved amount false true CurrencyCode.yer 320.0 1.0
+01:21 +246: /workspace/maqwati/test/ui_audit/currency_accessibility_test.dart: long approved amount false true CurrencyCode.yer 320.0 1.6
+01:21 +247: /workspace/maqwati/test/ui_audit/currency_accessibility_test.dart: long approved amount false true CurrencyCode.sar 220.0 1.0
+01:21 +248: /workspace/maqwati/test/ui_audit/currency_accessibility_test.dart: long approved amount false true CurrencyCode.sar 220.0 1.6
+01:21 +249: /workspace/maqwati/test/ui_audit/currency_accessibility_test.dart: long approved amount false true CurrencyCode.sar 320.0 1.0
+01:21 +250: /workspace/maqwati/test/ui_audit/currency_accessibility_test.dart: long approved amount false true CurrencyCode.sar 320.0 1.6
+01:21 +251: /workspace/maqwati/test/ui_audit/currency_accessibility_test.dart: long approved amount false true CurrencyCode.usd 220.0 1.0
+01:21 +252: /workspace/maqwati/test/ui_audit/currency_accessibility_test.dart: long approved amount false true CurrencyCode.usd 220.0 1.6
+01:21 +253: /workspace/maqwati/test/ui_audit/currency_accessibility_test.dart: long approved amount false true CurrencyCode.usd 320.0 1.0
+01:21 +254: /workspace/maqwati/test/ui_audit/currency_accessibility_test.dart: long approved amount false true CurrencyCode.usd 320.0 1.6
+01:21 +255: /workspace/maqwati/test/ui_audit/currency_accessibility_test.dart: long approved amount true false CurrencyCode.yer 220.0 1.0
+01:21 +256: /workspace/maqwati/test/ui_audit/currency_accessibility_test.dart: long approved amount true false CurrencyCode.yer 220.0 1.6
+01:21 +257: /workspace/maqwati/test/ui_audit/currency_accessibility_test.dart: long approved amount true false CurrencyCode.yer 320.0 1.0
+01:21 +258: /workspace/maqwati/test/ui_audit/currency_accessibility_test.dart: long approved amount true false CurrencyCode.yer 320.0 1.6
+01:21 +259: /workspace/maqwati/test/ui_audit/currency_accessibility_test.dart: long approved amount true false CurrencyCode.sar 220.0 1.0
+01:21 +260: /workspace/maqwati/test/ui_audit/currency_accessibility_test.dart: long approved amount true false CurrencyCode.sar 220.0 1.6
+01:21 +261: /workspace/maqwati/test/ui_audit/currency_accessibility_test.dart: long approved amount true false CurrencyCode.sar 320.0 1.0
+01:21 +262: /workspace/maqwati/test/ui_audit/currency_accessibility_test.dart: long approved amount true false CurrencyCode.sar 320.0 1.6
+01:21 +263: /workspace/maqwati/test/ui_audit/currency_accessibility_test.dart: long approved amount true false CurrencyCode.usd 220.0 1.0
+01:21 +264: /workspace/maqwati/test/ui_audit/currency_accessibility_test.dart: long approved amount true false CurrencyCode.usd 220.0 1.6
+01:21 +265: /workspace/maqwati/test/ui_audit/currency_accessibility_test.dart: long approved amount true false CurrencyCode.usd 320.0 1.0
+01:21 +266: /workspace/maqwati/test/ui_audit/currency_accessibility_test.dart: long approved amount true false CurrencyCode.usd 320.0 1.6
+01:21 +267: /workspace/maqwati/test/ui_audit/currency_accessibility_test.dart: long approved amount true true CurrencyCode.yer 220.0 1.0
+01:21 +268: /workspace/maqwati/test/ui_audit/currency_accessibility_test.dart: long approved amount true true CurrencyCode.yer 220.0 1.6
+01:21 +269: /workspace/maqwati/test/ui_audit/currency_accessibility_test.dart: long approved amount true true CurrencyCode.yer 320.0 1.0
+01:21 +270: /workspace/maqwati/test/ui_audit/currency_accessibility_test.dart: long approved amount true true CurrencyCode.yer 320.0 1.6
+01:21 +271: /workspace/maqwati/test/ui_audit/currency_accessibility_test.dart: long approved amount true true CurrencyCode.sar 220.0 1.0
+01:21 +272: /workspace/maqwati/test/ui_audit/currency_accessibility_test.dart: long approved amount true true CurrencyCode.sar 220.0 1.6
+01:21 +273: /workspace/maqwati/test/ui_audit/currency_accessibility_test.dart: long approved amount true true CurrencyCode.sar 320.0 1.0
+01:21 +274: /workspace/maqwati/test/ui_audit/currency_accessibility_test.dart: long approved amount true true CurrencyCode.sar 320.0 1.6
+01:22 +275: /workspace/maqwati/test/ui_audit/currency_accessibility_test.dart: long approved amount true true CurrencyCode.usd 220.0 1.0
+01:22 +276: /workspace/maqwati/test/ui_audit/currency_accessibility_test.dart: long approved amount true true CurrencyCode.usd 220.0 1.6
+01:22 +277: /workspace/maqwati/test/ui_audit/currency_accessibility_test.dart: long approved amount true true CurrencyCode.usd 320.0 1.0
+01:22 +278: /workspace/maqwati/test/ui_audit/currency_accessibility_test.dart: long approved amount true true CurrencyCode.usd 320.0 1.6
+01:22 +279: /workspace/maqwati/test/ui_audit/currency_accessibility_test.dart: (tearDownAll)
+01:22 +279: loading /workspace/maqwati/test/ui_audit/pdf_identity_test.dart
+01:22 +279: /workspace/maqwati/test/ui_audit/pdf_identity_test.dart: PDF preserves the full male character
+01:22 +280: /workspace/maqwati/test/ui_audit/pdf_identity_test.dart: PDF preserves the full female character
+01:22 +281: loading /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart
+01:23 +281: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: (setUpAll)
+01:23 +281: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog registration_blue_day_320_1.0
+01:24 +282: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog details_blue_day_320_1.0
+01:24 +283: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog pending_contact_blue_day_320_1.0
+01:24 +284: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog assistant_blue_day_320_1.0
+01:25 +285: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog approvals_blue_day_320_1.0
+01:25 +286: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog bookings_blue_day_320_1.0
+01:25 +287: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog claims_blue_day_320_1.0
+01:25 +288: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog relationships_blue_day_320_1.0
+01:25 +289: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog merchant_book_blue_day_320_1.0
+01:25 +290: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog ledger_blue_day_320_1.0
+01:25 +291: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog amendments_blue_day_320_1.0
+01:25 +292: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog credit_blue_day_320_1.0
+01:26 +293: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog public_store_blue_day_320_1.0
+01:26 +294: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog registration_blue_day_320_1.6
+01:26 +295: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog details_blue_day_320_1.6
+01:26 +296: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog pending_contact_blue_day_320_1.6
+01:26 +297: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog assistant_blue_day_320_1.6
+01:26 +298: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog approvals_blue_day_320_1.6
+01:26 +299: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog bookings_blue_day_320_1.6
+01:26 +300: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog claims_blue_day_320_1.6
+01:26 +301: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog relationships_blue_day_320_1.6
+01:26 +302: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog merchant_book_blue_day_320_1.6
+01:26 +303: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog ledger_blue_day_320_1.6
+01:26 +304: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog amendments_blue_day_320_1.6
+01:26 +305: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog credit_blue_day_320_1.6
+01:27 +306: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog public_store_blue_day_320_1.6
+01:27 +307: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog registration_blue_day_360_1.0
+01:27 +308: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog details_blue_day_360_1.0
+01:27 +309: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog pending_contact_blue_day_360_1.0
+01:27 +310: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog assistant_blue_day_360_1.0
+01:27 +311: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog approvals_blue_day_360_1.0
+01:27 +312: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog bookings_blue_day_360_1.0
+01:27 +313: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog claims_blue_day_360_1.0
+01:27 +314: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog relationships_blue_day_360_1.0
+01:27 +315: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog merchant_book_blue_day_360_1.0
+01:27 +316: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog ledger_blue_day_360_1.0
+01:27 +317: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog amendments_blue_day_360_1.0
+01:28 +318: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog credit_blue_day_360_1.0
+01:28 +319: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog public_store_blue_day_360_1.0
+01:28 +320: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog registration_blue_day_390_1.0
+01:28 +321: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog details_blue_day_390_1.0
+01:28 +322: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog pending_contact_blue_day_390_1.0
+01:28 +323: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog assistant_blue_day_390_1.0
+01:28 +324: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog approvals_blue_day_390_1.0
+01:28 +325: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog bookings_blue_day_390_1.0
+01:29 +326: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog claims_blue_day_390_1.0
+01:29 +327: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog relationships_blue_day_390_1.0
+01:29 +328: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog merchant_book_blue_day_390_1.0
+01:29 +329: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog ledger_blue_day_390_1.0
+01:29 +330: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog amendments_blue_day_390_1.0
+01:29 +331: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog credit_blue_day_390_1.0
+01:29 +332: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog public_store_blue_day_390_1.0
+01:29 +333: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog registration_blue_day_430_1.0
+01:29 +334: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog details_blue_day_430_1.0
+01:29 +335: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog pending_contact_blue_day_430_1.0
+01:30 +336: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog assistant_blue_day_430_1.0
+01:30 +337: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog approvals_blue_day_430_1.0
+01:30 +338: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog bookings_blue_day_430_1.0
+01:30 +339: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog claims_blue_day_430_1.0
+01:30 +340: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog relationships_blue_day_430_1.0
+01:30 +341: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog merchant_book_blue_day_430_1.0
+01:30 +342: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog ledger_blue_day_430_1.0
+01:30 +343: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog amendments_blue_day_430_1.0
+01:30 +344: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog credit_blue_day_430_1.0
+01:30 +345: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog public_store_blue_day_430_1.0
+01:30 +346: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog registration_blue_day_600_1.0
+01:31 +347: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog details_blue_day_600_1.0
+01:31 +348: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog pending_contact_blue_day_600_1.0
+01:31 +349: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog assistant_blue_day_600_1.0
+01:31 +350: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog approvals_blue_day_600_1.0
+01:31 +351: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog bookings_blue_day_600_1.0
+01:31 +352: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog claims_blue_day_600_1.0
+01:31 +353: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog relationships_blue_day_600_1.0
+01:31 +354: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog merchant_book_blue_day_600_1.0
+01:31 +355: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog ledger_blue_day_600_1.0
+01:31 +356: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog amendments_blue_day_600_1.0
+01:31 +357: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog credit_blue_day_600_1.0
+01:31 +358: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog public_store_blue_day_600_1.0
+01:31 +359: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog registration_blue_day_800_1.0
+01:32 +360: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog details_blue_day_800_1.0
+01:32 +361: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog pending_contact_blue_day_800_1.0
+01:32 +362: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog assistant_blue_day_800_1.0
+01:32 +363: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog approvals_blue_day_800_1.0
+01:32 +364: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog bookings_blue_day_800_1.0
+01:32 +365: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog claims_blue_day_800_1.0
+01:32 +366: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog relationships_blue_day_800_1.0
+01:32 +367: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog merchant_book_blue_day_800_1.0
+01:32 +368: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog ledger_blue_day_800_1.0
+01:32 +369: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog amendments_blue_day_800_1.0
+01:32 +370: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog credit_blue_day_800_1.0
+01:32 +371: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog public_store_blue_day_800_1.0
+01:33 +372: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog registration_blue_night_320_1.0
+01:33 +373: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog details_blue_night_320_1.0
+01:33 +374: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog pending_contact_blue_night_320_1.0
+01:33 +375: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog assistant_blue_night_320_1.0
+01:33 +376: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog approvals_blue_night_320_1.0
+01:33 +377: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog bookings_blue_night_320_1.0
+01:33 +378: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog claims_blue_night_320_1.0
+01:33 +379: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog relationships_blue_night_320_1.0
+01:33 +380: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog merchant_book_blue_night_320_1.0
+01:33 +381: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog ledger_blue_night_320_1.0
+01:33 +382: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog amendments_blue_night_320_1.0
+01:33 +383: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog credit_blue_night_320_1.0
+01:33 +384: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog public_store_blue_night_320_1.0
+01:33 +385: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog registration_blue_night_320_1.6
+01:33 +386: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog details_blue_night_320_1.6
+01:34 +387: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog pending_contact_blue_night_320_1.6
+01:34 +388: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog assistant_blue_night_320_1.6
+01:34 +389: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog approvals_blue_night_320_1.6
+01:34 +390: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog bookings_blue_night_320_1.6
+01:34 +391: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog claims_blue_night_320_1.6
+01:34 +392: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog relationships_blue_night_320_1.6
+01:34 +393: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog merchant_book_blue_night_320_1.6
+01:34 +394: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog ledger_blue_night_320_1.6
+01:34 +395: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog amendments_blue_night_320_1.6
+01:34 +396: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog credit_blue_night_320_1.6
+01:34 +397: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog public_store_blue_night_320_1.6
+01:34 +398: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog registration_blue_night_360_1.0
+01:34 +399: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog details_blue_night_360_1.0
+01:34 +400: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog pending_contact_blue_night_360_1.0
+01:34 +401: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog assistant_blue_night_360_1.0
+01:34 +402: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog approvals_blue_night_360_1.0
+01:34 +403: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog bookings_blue_night_360_1.0
+01:35 +404: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog claims_blue_night_360_1.0
+01:35 +405: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog relationships_blue_night_360_1.0
+01:35 +406: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog merchant_book_blue_night_360_1.0
+01:35 +407: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog ledger_blue_night_360_1.0
+01:35 +408: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog amendments_blue_night_360_1.0
+01:35 +409: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog credit_blue_night_360_1.0
+01:35 +410: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog public_store_blue_night_360_1.0
+01:35 +411: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog registration_blue_night_390_1.0
+01:35 +412: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog details_blue_night_390_1.0
+01:35 +413: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog pending_contact_blue_night_390_1.0
+01:35 +414: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog assistant_blue_night_390_1.0
+01:35 +415: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog approvals_blue_night_390_1.0
+01:35 +416: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog bookings_blue_night_390_1.0
+01:35 +417: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog claims_blue_night_390_1.0
+01:36 +418: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog relationships_blue_night_390_1.0
+01:36 +419: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog merchant_book_blue_night_390_1.0
+01:36 +420: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog ledger_blue_night_390_1.0
+01:36 +421: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog amendments_blue_night_390_1.0
+01:36 +422: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog credit_blue_night_390_1.0
+01:36 +423: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog public_store_blue_night_390_1.0
+01:36 +424: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog registration_blue_night_430_1.0
+01:36 +425: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog details_blue_night_430_1.0
+01:36 +426: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog pending_contact_blue_night_430_1.0
+01:36 +427: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog assistant_blue_night_430_1.0
+01:36 +428: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog approvals_blue_night_430_1.0
+01:36 +429: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog bookings_blue_night_430_1.0
+01:36 +430: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog claims_blue_night_430_1.0
+01:37 +431: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog relationships_blue_night_430_1.0
+01:37 +432: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog merchant_book_blue_night_430_1.0
+01:37 +433: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog ledger_blue_night_430_1.0
+01:37 +434: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog amendments_blue_night_430_1.0
+01:37 +435: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog credit_blue_night_430_1.0
+01:37 +436: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog public_store_blue_night_430_1.0
+01:37 +437: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog registration_blue_night_600_1.0
+01:37 +438: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog details_blue_night_600_1.0
+01:37 +439: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog pending_contact_blue_night_600_1.0
+01:37 +440: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog assistant_blue_night_600_1.0
+01:37 +441: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog approvals_blue_night_600_1.0
+01:37 +442: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog bookings_blue_night_600_1.0
+01:37 +443: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog claims_blue_night_600_1.0
+01:37 +444: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog relationships_blue_night_600_1.0
+01:38 +445: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog merchant_book_blue_night_600_1.0
+01:38 +446: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog ledger_blue_night_600_1.0
+01:38 +447: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog amendments_blue_night_600_1.0
+01:38 +448: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog credit_blue_night_600_1.0
+01:38 +449: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog public_store_blue_night_600_1.0
+01:38 +450: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog registration_blue_night_800_1.0
+01:38 +451: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog details_blue_night_800_1.0
+01:38 +452: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog pending_contact_blue_night_800_1.0
+01:38 +453: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog assistant_blue_night_800_1.0
+01:38 +454: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog approvals_blue_night_800_1.0
+01:38 +455: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog bookings_blue_night_800_1.0
+01:38 +456: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog claims_blue_night_800_1.0
+01:38 +457: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog relationships_blue_night_800_1.0
+01:39 +458: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog merchant_book_blue_night_800_1.0
+01:39 +459: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog ledger_blue_night_800_1.0
+01:39 +460: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog amendments_blue_night_800_1.0
+01:39 +461: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog credit_blue_night_800_1.0
+01:39 +462: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog public_store_blue_night_800_1.0
+01:39 +463: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog registration_pink_day_320_1.0
+01:39 +464: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog details_pink_day_320_1.0
+01:39 +465: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog pending_contact_pink_day_320_1.0
+01:39 +466: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog assistant_pink_day_320_1.0
+01:39 +467: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog approvals_pink_day_320_1.0
+01:39 +468: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog bookings_pink_day_320_1.0
+01:39 +469: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog claims_pink_day_320_1.0
+01:39 +470: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog relationships_pink_day_320_1.0
+01:39 +471: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog merchant_book_pink_day_320_1.0
+01:39 +472: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog ledger_pink_day_320_1.0
+01:39 +473: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog amendments_pink_day_320_1.0
+01:40 +474: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog credit_pink_day_320_1.0
+01:40 +475: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog public_store_pink_day_320_1.0
+01:40 +476: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog registration_pink_day_320_1.6
+01:40 +477: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog details_pink_day_320_1.6
+01:40 +478: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog pending_contact_pink_day_320_1.6
+01:40 +479: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog assistant_pink_day_320_1.6
+01:40 +480: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog approvals_pink_day_320_1.6
+01:40 +481: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog bookings_pink_day_320_1.6
+01:40 +482: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog claims_pink_day_320_1.6
+01:40 +483: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog relationships_pink_day_320_1.6
+01:40 +484: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog merchant_book_pink_day_320_1.6
+01:40 +485: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog ledger_pink_day_320_1.6
+01:40 +486: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog amendments_pink_day_320_1.6
+01:40 +487: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog credit_pink_day_320_1.6
+01:40 +488: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog public_store_pink_day_320_1.6
+01:40 +489: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog registration_pink_day_360_1.0
+01:40 +490: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog details_pink_day_360_1.0
+01:40 +491: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog pending_contact_pink_day_360_1.0
+01:41 +492: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog assistant_pink_day_360_1.0
+01:41 +493: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog approvals_pink_day_360_1.0
+01:41 +494: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog bookings_pink_day_360_1.0
+01:41 +495: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog claims_pink_day_360_1.0
+01:41 +496: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog relationships_pink_day_360_1.0
+01:41 +497: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog merchant_book_pink_day_360_1.0
+01:41 +498: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog ledger_pink_day_360_1.0
+01:41 +499: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog amendments_pink_day_360_1.0
+01:41 +500: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog credit_pink_day_360_1.0
+01:41 +501: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog public_store_pink_day_360_1.0
+01:41 +502: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog registration_pink_day_390_1.0
+01:41 +503: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog details_pink_day_390_1.0
+01:41 +504: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog pending_contact_pink_day_390_1.0
+01:41 +505: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog assistant_pink_day_390_1.0
+01:42 +506: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog approvals_pink_day_390_1.0
+01:42 +507: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog bookings_pink_day_390_1.0
+01:42 +508: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog claims_pink_day_390_1.0
+01:42 +509: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog relationships_pink_day_390_1.0
+01:42 +510: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog merchant_book_pink_day_390_1.0
+01:42 +511: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog ledger_pink_day_390_1.0
+01:42 +512: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog amendments_pink_day_390_1.0
+01:42 +513: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog credit_pink_day_390_1.0
+01:42 +514: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog public_store_pink_day_390_1.0
+01:42 +515: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog registration_pink_day_430_1.0
+01:42 +516: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog details_pink_day_430_1.0
+01:42 +517: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog pending_contact_pink_day_430_1.0
+01:43 +518: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog assistant_pink_day_430_1.0
+01:43 +519: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog approvals_pink_day_430_1.0
+01:43 +520: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog bookings_pink_day_430_1.0
+01:43 +521: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog claims_pink_day_430_1.0
+01:43 +522: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog relationships_pink_day_430_1.0
+01:43 +523: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog merchant_book_pink_day_430_1.0
+01:43 +524: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog ledger_pink_day_430_1.0
+01:43 +525: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog amendments_pink_day_430_1.0
+01:43 +526: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog credit_pink_day_430_1.0
+01:43 +527: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog public_store_pink_day_430_1.0
+01:43 +528: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog registration_pink_day_600_1.0
+01:43 +529: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog details_pink_day_600_1.0
+01:43 +530: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog pending_contact_pink_day_600_1.0
+01:43 +531: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog assistant_pink_day_600_1.0
+01:43 +532: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog approvals_pink_day_600_1.0
+01:44 +533: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog bookings_pink_day_600_1.0
+01:44 +534: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog claims_pink_day_600_1.0
+01:44 +535: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog relationships_pink_day_600_1.0
+01:44 +536: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog merchant_book_pink_day_600_1.0
+01:44 +537: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog ledger_pink_day_600_1.0
+01:44 +538: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog amendments_pink_day_600_1.0
+01:44 +539: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog credit_pink_day_600_1.0
+01:44 +540: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog public_store_pink_day_600_1.0
+01:44 +541: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog registration_pink_day_800_1.0
+01:44 +542: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog details_pink_day_800_1.0
+01:44 +543: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog pending_contact_pink_day_800_1.0
+01:44 +544: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog assistant_pink_day_800_1.0
+01:44 +545: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog approvals_pink_day_800_1.0
+01:45 +546: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog bookings_pink_day_800_1.0
+01:45 +547: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog claims_pink_day_800_1.0
+01:45 +548: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog relationships_pink_day_800_1.0
+01:45 +549: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog merchant_book_pink_day_800_1.0
+01:45 +550: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog ledger_pink_day_800_1.0
+01:45 +551: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog amendments_pink_day_800_1.0
+01:45 +552: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog credit_pink_day_800_1.0
+01:45 +553: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog public_store_pink_day_800_1.0
+01:45 +554: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog registration_pink_night_320_1.0
+01:45 +555: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog details_pink_night_320_1.0
+01:45 +556: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog pending_contact_pink_night_320_1.0
+01:45 +557: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog assistant_pink_night_320_1.0
+01:45 +558: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog approvals_pink_night_320_1.0
+01:45 +559: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog bookings_pink_night_320_1.0
+01:45 +560: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog claims_pink_night_320_1.0
+01:46 +561: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog relationships_pink_night_320_1.0
+01:46 +562: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog merchant_book_pink_night_320_1.0
+01:46 +563: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog ledger_pink_night_320_1.0
+01:46 +564: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog amendments_pink_night_320_1.0
+01:46 +565: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog credit_pink_night_320_1.0
+01:46 +566: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog public_store_pink_night_320_1.0
+01:46 +567: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog registration_pink_night_320_1.6
+01:46 +568: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog details_pink_night_320_1.6
+01:46 +569: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog pending_contact_pink_night_320_1.6
+01:46 +570: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog assistant_pink_night_320_1.6
+01:46 +571: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog approvals_pink_night_320_1.6
+01:46 +572: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog bookings_pink_night_320_1.6
+01:46 +573: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog claims_pink_night_320_1.6
+01:46 +574: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog relationships_pink_night_320_1.6
+01:46 +575: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog merchant_book_pink_night_320_1.6
+01:46 +576: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog ledger_pink_night_320_1.6
+01:46 +577: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog amendments_pink_night_320_1.6
+01:46 +578: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog credit_pink_night_320_1.6
+01:46 +579: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog public_store_pink_night_320_1.6
+01:46 +580: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog registration_pink_night_360_1.0
+01:46 +581: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog details_pink_night_360_1.0
+01:46 +582: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog pending_contact_pink_night_360_1.0
+01:47 +583: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog assistant_pink_night_360_1.0
+01:47 +584: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog approvals_pink_night_360_1.0
+01:47 +585: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog bookings_pink_night_360_1.0
+01:47 +586: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog claims_pink_night_360_1.0
+01:47 +587: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog relationships_pink_night_360_1.0
+01:47 +588: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog merchant_book_pink_night_360_1.0
+01:47 +589: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog ledger_pink_night_360_1.0
+01:47 +590: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog amendments_pink_night_360_1.0
+01:47 +591: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog credit_pink_night_360_1.0
+01:47 +592: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog public_store_pink_night_360_1.0
+01:47 +593: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog registration_pink_night_390_1.0
+01:47 +594: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog details_pink_night_390_1.0
+01:47 +595: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog pending_contact_pink_night_390_1.0
+01:47 +596: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog assistant_pink_night_390_1.0
+01:47 +597: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog approvals_pink_night_390_1.0
+01:48 +598: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog bookings_pink_night_390_1.0
+01:48 +599: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog claims_pink_night_390_1.0
+01:48 +600: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog relationships_pink_night_390_1.0
+01:48 +601: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog merchant_book_pink_night_390_1.0
+01:48 +602: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog ledger_pink_night_390_1.0
+01:48 +603: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog amendments_pink_night_390_1.0
+01:48 +604: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog credit_pink_night_390_1.0
+01:48 +605: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog public_store_pink_night_390_1.0
+01:48 +606: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog registration_pink_night_430_1.0
+01:48 +607: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog details_pink_night_430_1.0
+01:48 +608: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog pending_contact_pink_night_430_1.0
+01:48 +609: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog assistant_pink_night_430_1.0
+01:48 +610: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog approvals_pink_night_430_1.0
+01:48 +611: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog bookings_pink_night_430_1.0
+01:49 +612: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog claims_pink_night_430_1.0
+01:49 +613: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog relationships_pink_night_430_1.0
+01:49 +614: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog merchant_book_pink_night_430_1.0
+01:49 +615: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog ledger_pink_night_430_1.0
+01:49 +616: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog amendments_pink_night_430_1.0
+01:49 +617: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog credit_pink_night_430_1.0
+01:49 +618: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog public_store_pink_night_430_1.0
+01:49 +619: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog registration_pink_night_600_1.0
+01:49 +620: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog details_pink_night_600_1.0
+01:49 +621: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog pending_contact_pink_night_600_1.0
+01:49 +622: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog assistant_pink_night_600_1.0
+01:49 +623: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog approvals_pink_night_600_1.0
+01:49 +624: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog bookings_pink_night_600_1.0
+01:49 +625: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog claims_pink_night_600_1.0
+01:49 +626: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog relationships_pink_night_600_1.0
+01:49 +627: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog merchant_book_pink_night_600_1.0
+01:50 +628: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog ledger_pink_night_600_1.0
+01:50 +629: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog amendments_pink_night_600_1.0
+01:50 +630: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog credit_pink_night_600_1.0
+01:50 +631: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog public_store_pink_night_600_1.0
+01:50 +632: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog registration_pink_night_800_1.0
+01:50 +633: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog details_pink_night_800_1.0
+01:50 +634: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog pending_contact_pink_night_800_1.0
+01:50 +635: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog assistant_pink_night_800_1.0
+01:50 +636: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog approvals_pink_night_800_1.0
+01:50 +637: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog bookings_pink_night_800_1.0
+01:50 +638: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog claims_pink_night_800_1.0
+01:50 +639: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog relationships_pink_night_800_1.0
+01:50 +640: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog merchant_book_pink_night_800_1.0
+01:50 +641: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog ledger_pink_night_800_1.0
+01:50 +642: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog amendments_pink_night_800_1.0
+01:51 +643: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog credit_pink_night_800_1.0
+01:51 +644: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog public_store_pink_night_800_1.0
+01:51 +645: /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: (tearDownAll)
+01:51 +645: loading /workspace/maqwati/test/ui_audit/login_matrix_test.dart
+01:51 +645: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: (setUpAll)
+01:51 +645: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_day body and secondary text contrast
+01:51 +646: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_day home uses the decodable correct character
+01:52 +647: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_day 320.0 baseline
+01:53 +648: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_day 320.0 keyboard_large_text
+01:53 +649: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_day 360.0 baseline
+01:53 +650: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_day 360.0 keyboard_large_text
+01:53 +651: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_day 390.0 baseline
+01:53 +652: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_day 390.0 keyboard_large_text
+01:53 +653: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_day 430.0 baseline
+01:53 +654: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_day 430.0 keyboard_large_text
+01:54 +655: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_day 600.0 baseline
+01:54 +656: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_day 600.0 keyboard_large_text
+01:54 +657: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_day 800.0 baseline
+01:54 +658: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_day 800.0 keyboard_large_text
+01:54 +659: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_night body and secondary text contrast
+01:54 +660: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_night home uses the decodable correct character
+01:54 +661: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_night 320.0 baseline
+01:54 +662: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_night 320.0 keyboard_large_text
+01:54 +663: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_night 360.0 baseline
+01:54 +664: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_night 360.0 keyboard_large_text
+01:55 +665: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_night 390.0 baseline
+01:55 +666: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_night 390.0 keyboard_large_text
+01:55 +667: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_night 430.0 baseline
+01:55 +668: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_night 430.0 keyboard_large_text
+01:55 +669: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_night 600.0 baseline
+01:55 +670: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_night 600.0 keyboard_large_text
+01:55 +671: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_night 800.0 baseline
+01:56 +672: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_night 800.0 keyboard_large_text
+01:56 +673: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_day body and secondary text contrast
+01:56 +674: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_day home uses the decodable correct character
+01:56 +675: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_day 320.0 baseline
+01:56 +676: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_day 320.0 keyboard_large_text
+01:56 +677: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_day 360.0 baseline
+01:56 +678: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_day 360.0 keyboard_large_text
+01:56 +679: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_day 390.0 baseline
+01:56 +680: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_day 390.0 keyboard_large_text
+01:56 +681: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_day 430.0 baseline
+01:56 +682: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_day 430.0 keyboard_large_text
+01:57 +683: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_day 600.0 baseline
+01:57 +684: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_day 600.0 keyboard_large_text
+01:57 +685: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_day 800.0 baseline
+01:57 +686: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_day 800.0 keyboard_large_text
+01:57 +687: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_night body and secondary text contrast
+01:57 +688: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_night home uses the decodable correct character
+01:57 +689: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_night 320.0 baseline
+01:57 +690: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_night 320.0 keyboard_large_text
+01:57 +691: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_night 360.0 baseline
+01:57 +692: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_night 360.0 keyboard_large_text
+01:57 +693: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_night 390.0 baseline
+01:58 +694: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_night 390.0 keyboard_large_text
+01:58 +695: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_night 430.0 baseline
+01:58 +696: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_night 430.0 keyboard_large_text
+01:58 +697: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_night 600.0 baseline
+01:58 +698: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_night 600.0 keyboard_large_text
+01:58 +699: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_night 800.0 baseline
+01:58 +700: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_night 800.0 keyboard_large_text
+01:58 +701: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: (tearDownAll)
+01:58 +701: loading /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart
+01:59 +701: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: (setUpAll)
+01:59 +701: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_day_320_1.0_0
+02:00 +702: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_day_320_1.0_1
+02:01 +703: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_day_320_1.0_3
+02:01 +704: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_day_320_1.0_4
+02:02 +705: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_day_320_1.0_5
+02:02 +706: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_day_320_1.0_6
+02:02 +707: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_day_320_1.6_0
+02:03 +708: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_day_320_1.6_1
+02:03 +709: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_day_320_1.6_3
+02:03 +710: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_day_320_1.6_4
+02:04 +711: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_day_320_1.6_5
+02:04 +712: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_day_320_1.6_6
+02:04 +713: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_day_360_1.0_0
+02:04 +714: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_day_360_1.0_1
+02:05 +715: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_day_360_1.0_3
+02:05 +716: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_day_360_1.0_4
+02:05 +717: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_day_360_1.0_5
+02:05 +718: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_day_360_1.0_6
+02:06 +719: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_day_390_1.0_0
+02:06 +720: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_day_390_1.0_1
+02:06 +721: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_day_390_1.0_3
+02:06 +722: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_day_390_1.0_4
+02:07 +723: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_day_390_1.0_5
+02:07 +724: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_day_390_1.0_6
+02:07 +725: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_day_390_1.6_0
+02:07 +726: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_day_390_1.6_1
+02:07 +727: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_day_390_1.6_3
+02:08 +728: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_day_390_1.6_4
+02:08 +729: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_day_390_1.6_5
+02:08 +730: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_day_390_1.6_6
+02:08 +731: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_day_430_1.0_0
+02:08 +732: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_day_430_1.0_1
+02:09 +733: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_day_430_1.0_3
+02:09 +734: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_day_430_1.0_4
+02:09 +735: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_day_430_1.0_5
+02:09 +736: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_day_430_1.0_6
+02:10 +737: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_day_600_1.0_0
+02:10 +738: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_day_600_1.0_1
+02:10 +739: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_day_600_1.0_3
+02:10 +740: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_day_600_1.0_4
+02:11 +741: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_day_600_1.0_5
+02:11 +742: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_day_600_1.0_6
+02:11 +743: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_day_800_1.0_0
+02:11 +744: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_day_800_1.0_1
+02:11 +745: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_day_800_1.0_3
+02:12 +746: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_day_800_1.0_4
+02:12 +747: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_day_800_1.0_5
+02:12 +748: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_day_800_1.0_6
+02:12 +749: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_day_320_1.0_0
+02:13 +750: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_day_320_1.0_1
+02:13 +751: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_day_320_1.0_2
+02:13 +752: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_day_320_1.0_3
+02:13 +753: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_day_320_1.0_4
+02:13 +754: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_day_320_1.0_5
+02:13 +755: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_day_320_1.0_6
+02:14 +756: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_day_320_1.6_0
+02:14 +757: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_day_320_1.6_1
+02:14 +758: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_day_320_1.6_2
+02:14 +759: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_day_320_1.6_3
+02:14 +760: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_day_320_1.6_4
+02:14 +761: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_day_320_1.6_5
+02:14 +762: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_day_320_1.6_6
+02:14 +763: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_day_360_1.0_0
+02:14 +764: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_day_360_1.0_1
+02:15 +765: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_day_360_1.0_2
+02:15 +766: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_day_360_1.0_3
+02:15 +767: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_day_360_1.0_4
+02:15 +768: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_day_360_1.0_5
+02:15 +769: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_day_360_1.0_6
+02:15 +770: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_day_390_1.0_0
+02:15 +771: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_day_390_1.0_1
+02:16 +772: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_day_390_1.0_2
+02:16 +773: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_day_390_1.0_3
+02:16 +774: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_day_390_1.0_4
+02:16 +775: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_day_390_1.0_5
+02:16 +776: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_day_390_1.0_6
+02:16 +777: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_day_390_1.6_0
+02:16 +778: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_day_390_1.6_1
+02:17 +779: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_day_390_1.6_2
+02:17 +780: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_day_390_1.6_3
+02:17 +781: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_day_390_1.6_4
+02:17 +782: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_day_390_1.6_5
+02:17 +783: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_day_390_1.6_6
+02:17 +784: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_day_430_1.0_0
+02:17 +785: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_day_430_1.0_1
+02:17 +786: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_day_430_1.0_2
+02:17 +787: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_day_430_1.0_3
+02:18 +788: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_day_430_1.0_4
+02:18 +789: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_day_430_1.0_5
+02:18 +790: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_day_430_1.0_6
+02:18 +791: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_day_600_1.0_0
+02:18 +792: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_day_600_1.0_1
+02:18 +793: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_day_600_1.0_2
+02:19 +794: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_day_600_1.0_3
+02:19 +795: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_day_600_1.0_4
+02:19 +796: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_day_600_1.0_5
+02:19 +797: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_day_600_1.0_6
+02:19 +798: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_day_800_1.0_0
+02:19 +799: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_day_800_1.0_1
+02:19 +800: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_day_800_1.0_2
+02:20 +801: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_day_800_1.0_3
+02:20 +802: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_day_800_1.0_4
+02:20 +803: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_day_800_1.0_5
+02:20 +804: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_day_800_1.0_6
+02:20 +805: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_night_320_1.0_0
+02:20 +806: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_night_320_1.0_1
+02:20 +807: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_night_320_1.0_3
+02:21 +808: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_night_320_1.0_4
+02:21 +809: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_night_320_1.0_5
+02:21 +810: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_night_320_1.0_6
+02:21 +811: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_night_320_1.6_0
+02:22 +812: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_night_320_1.6_1
+02:22 +813: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_night_320_1.6_3
+02:22 +814: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_night_320_1.6_4
+02:22 +815: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_night_320_1.6_5
+02:22 +816: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_night_320_1.6_6
+02:22 +817: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_night_360_1.0_0
+02:22 +818: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_night_360_1.0_1
+02:23 +819: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_night_360_1.0_3
+02:23 +820: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_night_360_1.0_4
+02:23 +821: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_night_360_1.0_5
+02:23 +822: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_night_360_1.0_6
+02:23 +823: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_night_390_1.0_0
+02:24 +824: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_night_390_1.0_1
+02:24 +825: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_night_390_1.0_3
+02:24 +826: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_night_390_1.0_4
+02:24 +827: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_night_390_1.0_5
+02:25 +828: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_night_390_1.0_6
+02:25 +829: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_night_390_1.6_0
+02:25 +830: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_night_390_1.6_1
+02:25 +831: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_night_390_1.6_3
+02:25 +832: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_night_390_1.6_4
+02:25 +833: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_night_390_1.6_5
+02:26 +834: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_night_390_1.6_6
+02:26 +835: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_night_430_1.0_0
+02:26 +836: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_night_430_1.0_1
+02:26 +837: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_night_430_1.0_3
+02:26 +838: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_night_430_1.0_4
+02:26 +839: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_night_430_1.0_5
+02:27 +840: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_night_430_1.0_6
+02:27 +841: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_night_600_1.0_0
+02:27 +842: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_night_600_1.0_1
+02:27 +843: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_night_600_1.0_3
+02:28 +844: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_night_600_1.0_4
+02:28 +845: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_night_600_1.0_5
+02:28 +846: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_night_600_1.0_6
+02:28 +847: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_night_800_1.0_0
+02:28 +848: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_night_800_1.0_1
+02:29 +849: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_night_800_1.0_3
+02:29 +850: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_night_800_1.0_4
+02:29 +851: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_night_800_1.0_5
+02:29 +852: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_blue_night_800_1.0_6
+02:29 +853: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_night_320_1.0_0
+02:30 +854: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_night_320_1.0_1
+02:30 +855: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_night_320_1.0_2
+02:30 +856: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_night_320_1.0_3
+02:30 +857: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_night_320_1.0_4
+02:30 +858: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_night_320_1.0_5
+02:30 +859: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_night_320_1.0_6
+02:30 +860: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_night_320_1.6_0
+02:30 +861: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_night_320_1.6_1
+02:31 +862: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_night_320_1.6_2
+02:31 +863: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_night_320_1.6_3
+02:31 +864: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_night_320_1.6_4
+02:31 +865: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_night_320_1.6_5
+02:31 +866: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_night_320_1.6_6
+02:31 +867: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_night_360_1.0_0
+02:31 +868: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_night_360_1.0_1
+02:31 +869: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_night_360_1.0_2
+02:31 +870: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_night_360_1.0_3
+02:31 +871: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_night_360_1.0_4
+02:31 +872: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_night_360_1.0_5
+02:32 +873: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_night_360_1.0_6
+02:32 +874: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_night_390_1.0_0
+02:32 +875: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_night_390_1.0_1
+02:32 +876: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_night_390_1.0_2
+02:32 +877: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_night_390_1.0_3
+02:32 +878: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_night_390_1.0_4
+02:33 +879: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_night_390_1.0_5
+02:33 +880: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_night_390_1.0_6
+02:33 +881: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_night_390_1.6_0
+02:33 +882: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_night_390_1.6_1
+02:33 +883: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_night_390_1.6_2
+02:33 +884: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_night_390_1.6_3
+02:33 +885: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_night_390_1.6_4
+02:33 +886: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_night_390_1.6_5
+02:34 +887: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_night_390_1.6_6
+02:34 +888: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_night_430_1.0_0
+02:34 +889: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_night_430_1.0_1
+02:34 +890: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_night_430_1.0_2
+02:34 +891: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_night_430_1.0_3
+02:34 +892: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_night_430_1.0_4
+02:34 +893: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_night_430_1.0_5
+02:35 +894: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_night_430_1.0_6
+02:35 +895: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_night_600_1.0_0
+02:35 +896: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_night_600_1.0_1
+02:35 +897: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_night_600_1.0_2
+02:35 +898: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_night_600_1.0_3
+02:35 +899: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_night_600_1.0_4
+02:35 +900: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_night_600_1.0_5
+02:35 +901: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_night_600_1.0_6
+02:35 +902: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_night_800_1.0_0
+02:36 +903: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_night_800_1.0_1
+02:36 +904: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_night_800_1.0_2
+02:36 +905: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_night_800_1.0_3
+02:36 +906: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_night_800_1.0_4
+02:36 +907: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_night_800_1.0_5
+02:36 +908: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_blue_night_800_1.0_6
+02:36 +909: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_day_320_1.0_0
+02:37 +910: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_day_320_1.0_1
+02:37 +911: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_day_320_1.0_3
+02:37 +912: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_day_320_1.0_4
+02:37 +913: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_day_320_1.0_5
+02:37 +914: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_day_320_1.0_6
+02:37 +915: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_day_320_1.6_0
+02:38 +916: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_day_320_1.6_1
+02:38 +917: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_day_320_1.6_3
+02:38 +918: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_day_320_1.6_4
+02:38 +919: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_day_320_1.6_5
+02:38 +920: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_day_320_1.6_6
+02:38 +921: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_day_360_1.0_0
+02:39 +922: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_day_360_1.0_1
+02:39 +923: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_day_360_1.0_3
+02:39 +924: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_day_360_1.0_4
+02:39 +925: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_day_360_1.0_5
+02:39 +926: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_day_360_1.0_6
+02:39 +927: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_day_390_1.0_0
+02:40 +928: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_day_390_1.0_1
+02:40 +929: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_day_390_1.0_3
+02:40 +930: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_day_390_1.0_4
+02:40 +931: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_day_390_1.0_5
+02:40 +932: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_day_390_1.0_6
+02:40 +933: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_day_390_1.6_0
+02:41 +934: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_day_390_1.6_1
+02:41 +935: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_day_390_1.6_3
+02:41 +936: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_day_390_1.6_4
+02:41 +937: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_day_390_1.6_5
+02:41 +938: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_day_390_1.6_6
+02:41 +939: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_day_430_1.0_0
+02:42 +940: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_day_430_1.0_1
+02:42 +941: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_day_430_1.0_3
+02:42 +942: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_day_430_1.0_4
+02:42 +943: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_day_430_1.0_5
+02:42 +944: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_day_430_1.0_6
+02:43 +945: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_day_600_1.0_0
+02:43 +946: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_day_600_1.0_1
+02:43 +947: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_day_600_1.0_3
+02:43 +948: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_day_600_1.0_4
+02:43 +949: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_day_600_1.0_5
+02:43 +950: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_day_600_1.0_6
+02:44 +951: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_day_800_1.0_0
+02:44 +952: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_day_800_1.0_1
+02:44 +953: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_day_800_1.0_3
+02:44 +954: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_day_800_1.0_4
+02:45 +955: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_day_800_1.0_5
+02:45 +956: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_day_800_1.0_6
+02:45 +957: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_day_320_1.0_0
+02:45 +958: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_day_320_1.0_1
+02:45 +959: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_day_320_1.0_2
+02:45 +960: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_day_320_1.0_3
+02:46 +961: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_day_320_1.0_4
+02:46 +962: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_day_320_1.0_5
+02:46 +963: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_day_320_1.0_6
+02:46 +964: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_day_320_1.6_0
+02:46 +965: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_day_320_1.6_1
+02:46 +966: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_day_320_1.6_2
+02:46 +967: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_day_320_1.6_3
+02:46 +968: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_day_320_1.6_4
+02:47 +969: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_day_320_1.6_5
+02:47 +970: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_day_320_1.6_6
+02:47 +971: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_day_360_1.0_0
+02:47 +972: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_day_360_1.0_1
+02:47 +973: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_day_360_1.0_2
+02:47 +974: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_day_360_1.0_3
+02:47 +975: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_day_360_1.0_4
+02:47 +976: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_day_360_1.0_5
+02:47 +977: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_day_360_1.0_6
+02:47 +978: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_day_390_1.0_0
+02:48 +979: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_day_390_1.0_1
+02:48 +980: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_day_390_1.0_2
+02:48 +981: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_day_390_1.0_3
+02:48 +982: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_day_390_1.0_4
+02:48 +983: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_day_390_1.0_5
+02:48 +984: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_day_390_1.0_6
+02:48 +985: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_day_390_1.6_0
+02:48 +986: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_day_390_1.6_1
+02:48 +987: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_day_390_1.6_2
+02:49 +988: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_day_390_1.6_3
+02:49 +989: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_day_390_1.6_4
+02:49 +990: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_day_390_1.6_5
+02:49 +991: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_day_390_1.6_6
+02:49 +992: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_day_430_1.0_0
+02:49 +993: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_day_430_1.0_1
+02:49 +994: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_day_430_1.0_2
+02:49 +995: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_day_430_1.0_3
+02:49 +996: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_day_430_1.0_4
+02:49 +997: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_day_430_1.0_5
+02:49 +998: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_day_430_1.0_6
+02:50 +999: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_day_600_1.0_0
+02:50 +1000: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_day_600_1.0_1
+02:50 +1001: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_day_600_1.0_2
+02:50 +1002: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_day_600_1.0_3
+02:50 +1003: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_day_600_1.0_4
+02:50 +1004: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_day_600_1.0_5
+02:50 +1005: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_day_600_1.0_6
+02:51 +1006: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_day_800_1.0_0
+02:51 +1007: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_day_800_1.0_1
+02:51 +1008: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_day_800_1.0_2
+02:51 +1009: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_day_800_1.0_3
+02:51 +1010: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_day_800_1.0_4
+02:51 +1011: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_day_800_1.0_5
+02:51 +1012: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_day_800_1.0_6
+02:51 +1013: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_night_320_1.0_0
+02:52 +1014: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_night_320_1.0_1
+02:52 +1015: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_night_320_1.0_3
+02:52 +1016: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_night_320_1.0_4
+02:52 +1017: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_night_320_1.0_5
+02:52 +1018: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_night_320_1.0_6
+02:52 +1019: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_night_320_1.6_0
+02:53 +1020: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_night_320_1.6_1
+02:53 +1021: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_night_320_1.6_3
+02:53 +1022: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_night_320_1.6_4
+02:53 +1023: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_night_320_1.6_5
+02:53 +1024: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_night_320_1.6_6
+02:53 +1025: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_night_360_1.0_0
+02:54 +1026: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_night_360_1.0_1
+02:54 +1027: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_night_360_1.0_3
+02:54 +1028: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_night_360_1.0_4
+02:54 +1029: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_night_360_1.0_5
+02:54 +1030: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_night_360_1.0_6
+02:54 +1031: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_night_390_1.0_0
+02:55 +1032: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_night_390_1.0_1
+02:55 +1033: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_night_390_1.0_3
+02:55 +1034: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_night_390_1.0_4
+02:55 +1035: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_night_390_1.0_5
+02:55 +1036: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_night_390_1.0_6
+02:55 +1037: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_night_390_1.6_0
+02:56 +1038: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_night_390_1.6_1
+02:56 +1039: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_night_390_1.6_3
+02:56 +1040: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_night_390_1.6_4
+02:56 +1041: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_night_390_1.6_5
+02:56 +1042: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_night_390_1.6_6
+02:56 +1043: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_night_430_1.0_0
+02:57 +1044: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_night_430_1.0_1
+02:57 +1045: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_night_430_1.0_3
+02:57 +1046: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_night_430_1.0_4
+02:57 +1047: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_night_430_1.0_5
+02:57 +1048: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_night_430_1.0_6
+02:57 +1049: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_night_600_1.0_0
+02:58 +1050: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_night_600_1.0_1
+02:58 +1051: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_night_600_1.0_3
+02:58 +1052: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_night_600_1.0_4
+02:58 +1053: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_night_600_1.0_5
+02:58 +1054: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_night_600_1.0_6
+02:59 +1055: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_night_800_1.0_0
+02:59 +1056: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_night_800_1.0_1
+02:59 +1057: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_night_800_1.0_3
+02:59 +1058: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_night_800_1.0_4
+03:00 +1059: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_night_800_1.0_5
+03:00 +1060: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout merchant_pink_night_800_1.0_6
+03:00 +1061: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_night_320_1.0_0
+03:00 +1062: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_night_320_1.0_1
+03:00 +1063: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_night_320_1.0_2
+03:01 +1064: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_night_320_1.0_3
+03:01 +1065: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_night_320_1.0_4
+03:01 +1066: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_night_320_1.0_5
+03:01 +1067: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_night_320_1.0_6
+03:01 +1068: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_night_320_1.6_0
+03:01 +1069: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_night_320_1.6_1
+03:01 +1070: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_night_320_1.6_2
+03:01 +1071: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_night_320_1.6_3
+03:01 +1072: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_night_320_1.6_4
+03:02 +1073: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_night_320_1.6_5
+03:02 +1074: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_night_320_1.6_6
+03:02 +1075: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_night_360_1.0_0
+03:02 +1076: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_night_360_1.0_1
+03:02 +1077: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_night_360_1.0_2
+03:02 +1078: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_night_360_1.0_3
+03:02 +1079: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_night_360_1.0_4
+03:02 +1080: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_night_360_1.0_5
+03:02 +1081: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_night_360_1.0_6
+03:03 +1082: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_night_390_1.0_0
+03:03 +1083: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_night_390_1.0_1
+03:03 +1084: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_night_390_1.0_2
+03:03 +1085: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_night_390_1.0_3
+03:03 +1086: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_night_390_1.0_4
+03:03 +1087: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_night_390_1.0_5
+03:04 +1088: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_night_390_1.0_6
+03:04 +1089: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_night_390_1.6_0
+03:04 +1090: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_night_390_1.6_1
+03:04 +1091: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_night_390_1.6_2
+03:04 +1092: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_night_390_1.6_3
+03:04 +1093: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_night_390_1.6_4
+03:04 +1094: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_night_390_1.6_5
+03:04 +1095: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_night_390_1.6_6
+03:05 +1096: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_night_430_1.0_0
+03:05 +1097: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_night_430_1.0_1
+03:05 +1098: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_night_430_1.0_2
+03:05 +1099: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_night_430_1.0_3
+03:05 +1100: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_night_430_1.0_4
+03:05 +1101: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_night_430_1.0_5
+03:05 +1102: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_night_430_1.0_6
+03:05 +1103: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_night_600_1.0_0
+03:05 +1104: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_night_600_1.0_1
+03:06 +1105: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_night_600_1.0_2
+03:06 +1106: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_night_600_1.0_3
+03:06 +1107: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_night_600_1.0_4
+03:06 +1108: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_night_600_1.0_5
+03:06 +1109: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_night_600_1.0_6
+03:06 +1110: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_night_800_1.0_0
+03:06 +1111: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_night_800_1.0_1
+03:06 +1112: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_night_800_1.0_2
+03:07 +1113: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_night_800_1.0_3
+03:07 +1114: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_night_800_1.0_4
+03:07 +1115: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_night_800_1.0_5
+03:07 +1116: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: role layout customer_pink_night_800_1.0_6
+03:07 +1117: /workspace/maqwati/test/ui_audit/role_layout_matrix_test.dart: (tearDownAll)
+03:07 +1117: loading /workspace/maqwati/test/features/auth/auth_input_validation_test.dart
+03:08 +1117: /workspace/maqwati/test/features/auth/auth_input_validation_test.dart: the three registration categories are exactly the approved choices
+03:08 +1118: /workspace/maqwati/test/features/auth/auth_input_validation_test.dart: Yemeni phone and international phone formats are accepted
+03:08 +1119: /workspace/maqwati/test/features/auth/auth_input_validation_test.dart: four digit PIN and confirmation are validated without saving
+03:08 +1120: /workspace/maqwati/test/features/auth/auth_input_validation_test.dart: full name requires at least two parts
+03:08 +1121: loading /workspace/maqwati/test/premium/feminine_theme_test.dart
+03:08 +1121: /workspace/maqwati/test/premium/feminine_theme_test.dart: Female light theme uses rose and orchid, not blue controls
+03:08 +1122: /workspace/maqwati/test/premium/feminine_theme_test.dart: Female night theme has its own readable rose-plum palette
+03:08 +1123: /workspace/maqwati/test/premium/feminine_theme_test.dart: Financial-status colors remain independent of female theme
+03:08 +1124: /workspace/maqwati/test/premium/feminine_theme_test.dart: Non-female account retains original blue-violet palette
+03:08 +1125: loading /workspace/maqwati/test/premium/approved_login_20261122_test.dart
+03:09 +1125: /workspace/maqwati/test/premium/approved_login_20261122_test.dart: Owner-approved brand is blue 3D without a checkmark and uses every day a story
+03:10 +1126: /workspace/maqwati/test/premium/approved_login_20261122_test.dart: Approved login keeps actual phone/PIN safety and expected controls
+03:10 +1127: loading /workspace/maqwati/test/premium/hero_responsive_test.dart
+03:10 +1127: /workspace/maqwati/test/premium/hero_responsive_test.dart: Premium hero fits RTL width 320.0
+03:11 +1128: /workspace/maqwati/test/premium/hero_responsive_test.dart: Premium hero fits RTL width 360.0
+03:11 +1129: /workspace/maqwati/test/premium/hero_responsive_test.dart: Premium hero fits RTL width 390.0
+03:11 +1130: /workspace/maqwati/test/premium/hero_responsive_test.dart: Premium hero fits RTL width 430.0
+03:11 +1131: loading /workspace/maqwati/test/premium/login_premium_test.dart
+03:12 +1131: /workspace/maqwati/test/premium/login_premium_test.dart: Premium login remains phone + PIN only and never authenticates locally
+03:13 +1132: loading /workspace/maqwati/test/premium/wallet_premium_test.dart
+03:13 +1132: /workspace/maqwati/test/premium/wallet_premium_test.dart: YER premium wallet keeps approved and pending separated
+03:14 +1133: loading /workspace/maqwati/test/premium/credit_balance_test.dart
+03:14 +1133: /workspace/maqwati/test/premium/credit_balance_test.dart: Negative approved net is labelled as credit to customer
+03:15 +1134: loading /workspace/maqwati/test/theme/premium_identity_tokens_test.dart
+03:15 +1134: /workspace/maqwati/test/theme/premium_identity_tokens_test.dart: official brand tokens and separate currency gradients are exact
+03:15 +1135: /workspace/maqwati/test/theme/premium_identity_tokens_test.dart: Cairo and all four theme backgrounds remain consistent
+03:15 +1136: loading /workspace/maqwati/test/theme/visual_theme_coverage_test.dart
+03:16 +1136: /workspace/maqwati/test/theme/visual_theme_coverage_test.dart: blue light uses an active premium palette on the brand header
+03:16 +1137: /workspace/maqwati/test/theme/visual_theme_coverage_test.dart: blue light applies its own YER gradient
+03:16 +1138: /workspace/maqwati/test/theme/visual_theme_coverage_test.dart: blue light applies its own SAR gradient
+03:17 +1139: /workspace/maqwati/test/theme/visual_theme_coverage_test.dart: blue light applies its own USD gradient
+03:17 +1140: /workspace/maqwati/test/theme/visual_theme_coverage_test.dart: blue dark uses an active premium palette on the brand header
+03:17 +1141: /workspace/maqwati/test/theme/visual_theme_coverage_test.dart: blue dark applies its own YER gradient
+03:17 +1142: /workspace/maqwati/test/theme/visual_theme_coverage_test.dart: blue dark applies its own SAR gradient
+03:17 +1143: /workspace/maqwati/test/theme/visual_theme_coverage_test.dart: blue dark applies its own USD gradient
+03:17 +1144: /workspace/maqwati/test/theme/visual_theme_coverage_test.dart: pink light uses an active premium palette on the brand header
+03:17 +1145: /workspace/maqwati/test/theme/visual_theme_coverage_test.dart: pink light applies its own YER gradient
+03:17 +1146: /workspace/maqwati/test/theme/visual_theme_coverage_test.dart: pink light applies its own SAR gradient
+03:17 +1147: /workspace/maqwati/test/theme/visual_theme_coverage_test.dart: pink light applies its own USD gradient
+03:17 +1148: /workspace/maqwati/test/theme/visual_theme_coverage_test.dart: pink dark uses an active premium palette on the brand header
+03:17 +1149: /workspace/maqwati/test/theme/visual_theme_coverage_test.dart: pink dark applies its own YER gradient
+03:17 +1150: /workspace/maqwati/test/theme/visual_theme_coverage_test.dart: pink dark applies its own SAR gradient
+03:17 +1151: /workspace/maqwati/test/theme/visual_theme_coverage_test.dart: pink dark applies its own USD gradient
+03:17 +1152: loading /workspace/maqwati/test/theme/approved_ui_test.dart
+03:18 +1152: /workspace/maqwati/test/theme/approved_ui_test.dart: Cairo Arabic typeface is applied across base, dark and female themes
+03:18 +1153: /workspace/maqwati/test/theme/approved_ui_test.dart: Premium daylight tokens are exact
+03:18 +1154: /workspace/maqwati/test/theme/approved_ui_test.dart: approved night colors are exact
+03:18 +1155: /workspace/maqwati/test/theme/approved_ui_test.dart: hero and currency gradients match the official blue/purple reference palette
+03:18 +1156: /workspace/maqwati/test/theme/approved_ui_test.dart: shared chrome has the five approved tabs and top buttons
+03:19 +1157: /workspace/maqwati/test/theme/approved_ui_test.dart: theme toggle retains header and navigation
+03:19 +1158: /workspace/maqwati/test/theme/approved_ui_test.dart: quick add offers three actions but no automatic financial write
+03:20 +1159: All tests passed!

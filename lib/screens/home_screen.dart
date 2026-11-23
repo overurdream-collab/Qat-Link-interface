@@ -32,7 +32,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final PageController _currencyController = PageController(viewportFraction: .73, initialPage: 150);
+  final PageController _currencyController =
+      PageController(viewportFraction: .73, initialPage: 150);
   int _currencyPage = 0;
 
   @override
@@ -45,13 +46,16 @@ class _HomeScreenState extends State<HomeScreen> {
     final cards = <CurrencyCardData>[];
     for (final currency in CurrencyCode.values) {
       final debts = MovementCalculator.approvedDebts(
-        movements, currency: currency,
+        movements,
+        currency: currency,
       );
       final payments = MovementCalculator.approvedPayments(
-        movements, currency: currency,
+        movements,
+        currency: currency,
       );
       final pending = MovementCalculator.pendingTotal(
-        movements, currency: currency,
+        movements,
+        currency: currency,
       );
       final debtDouble = double.tryParse(debts.toString()) ?? 0;
       final paidDouble = double.tryParse(payments.toString()) ?? 0;
@@ -107,16 +111,18 @@ class _HomeScreenState extends State<HomeScreen> {
             const AppSectionTitle(title: 'أرصدة المتجر'),
             const SizedBox(height: 10),
             SizedBox(
-              height: 230,
+              height: 230 * MediaQuery.textScalerOf(context).scale(1),
               child: PageView.builder(
                 controller: _currencyController,
                 itemCount: currencies.length * 101,
-                onPageChanged: (index) => setState(() => _currencyPage = index % currencies.length),
+                onPageChanged: (index) =>
+                    setState(() => _currencyPage = index % currencies.length),
                 itemBuilder: (context, index) => AnimatedScale(
                   scale: _currencyPage == index % currencies.length ? 1 : .89,
                   duration: const Duration(milliseconds: 260),
                   curve: Curves.easeOutCubic,
-                  child: NewCurrencyCard(data: currencies[index % currencies.length]),
+                  child: NewCurrencyCard(
+                      data: currencies[index % currencies.length]),
                 ),
               ),
             ),
@@ -149,7 +155,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 14),
                 child: Column(
                   children: [
-                    for (var i = 0; i < waitingForClient.take(3).length; i++) ...[
+                    for (var i = 0;
+                        i < waitingForClient.take(3).length;
+                        i++) ...[
                       if (i > 0) Divider(color: c.cardBorder, height: 1),
                       _waitingRow(waitingForClient[i], c),
                     ],
@@ -288,9 +296,12 @@ class _HomeScreenState extends State<HomeScreen> {
           color: c.pendingBackground,
           borderRadius: BorderRadius.circular(10),
         ),
-        child: Text(label, style: TextStyle(
-          color: c.pendingText, fontSize: 8, fontWeight: FontWeight.w800,
-        )),
+        child: Text(label,
+            style: TextStyle(
+              color: c.pendingText,
+              fontSize: 8,
+              fontWeight: FontWeight.w800,
+            )),
       );
 
   Widget _waitingRow(MovementModel m, AppThemeColors c) => Padding(
@@ -308,12 +319,17 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(_customerName(m.customerId), style: TextStyle(
-                    color: c.text, fontWeight: FontWeight.w800, fontSize: 12,
-                  )),
-                  Text(_date(m.createdAt), style: TextStyle(
-                    color: c.muted, fontSize: 9,
-                  )),
+                  Text(_customerName(m.customerId),
+                      style: TextStyle(
+                        color: c.text,
+                        fontWeight: FontWeight.w800,
+                        fontSize: 12,
+                      )),
+                  Text(_date(m.createdAt),
+                      style: TextStyle(
+                        color: c.muted,
+                        fontSize: 9,
+                      )),
                 ],
               ),
             ),
@@ -323,7 +339,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 Text(
                   '${FinanceDisplay.amount(m.amount)} ${FinanceDisplay.currencySymbol(m.currency)}',
                   style: TextStyle(
-                    color: c.petrol, fontWeight: FontWeight.w800, fontSize: 12,
+                    color: c.petrol,
+                    fontWeight: FontWeight.w800,
+                    fontSize: 12,
                   ),
                 ),
                 Text(
@@ -347,7 +365,8 @@ class _HomeScreenState extends State<HomeScreen> {
           borderRadius: BorderRadius.circular(20),
           onTap: () => Navigator.of(context).push<void>(
             MaterialPageRoute<void>(
-              builder: (_) => MerchantFinancialAssistantScreen(state: widget.state),
+              builder: (_) =>
+                  MerchantFinancialAssistantScreen(state: widget.state),
             ),
           ),
           child: Container(
@@ -379,11 +398,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('المساعد المالي الذكي', style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w900,
-                      )),
+                      Text('المساعد المالي الذكي',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w900,
+                          )),
                       SizedBox(height: 4),
                       Text(
                         'افهم وضعك المالي، واتخذ قرارات أفضل، وجنّب نفسك الخسارة.',

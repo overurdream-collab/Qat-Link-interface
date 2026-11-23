@@ -16,14 +16,27 @@ class LoginFeatureHighlights extends StatelessWidget {
   Widget build(BuildContext context) {
     final visual = context.premium;
     const features = <({String keyName, String label, IconData icon})>[
-      (keyName: 'ledger', label: 'دفتر حسابات', icon: Icons.receipt_long_rounded),
-      (keyName: 'studio', label: 'استوديو', icon: Icons.movie_creation_outlined),
-      (keyName: 'bookings', label: 'حجوزات', icon: Icons.event_available_rounded),
-      (keyName: 'insights', label: 'مؤشرات مالية', icon: Icons.trending_up_rounded),
+      (
+        keyName: 'ledger',
+        label: 'دفتر حسابات',
+        icon: Icons.receipt_long_rounded
+      ),
+      (keyName: 'studio', label: 'استوديو', icon: Icons.movie_creation_rounded),
+      (
+        keyName: 'bookings',
+        label: 'حجوزات',
+        icon: Icons.event_available_rounded
+      ),
+      (
+        keyName: 'insights',
+        label: 'مؤشرات مالية',
+        icon: Icons.trending_up_rounded
+      ),
     ];
 
     return Semantics(
       container: true,
+      excludeSemantics: true,
       label: 'مميزات مقوتي لينك: دفتر حسابات، استوديو، حجوزات، مؤشرات مالية',
       child: Row(
         key: const Key('login_feature_highlights'),
@@ -34,7 +47,10 @@ class LoginFeatureHighlights extends StatelessWidget {
             Expanded(
               child: Container(
                 key: Key('login_feature_${features[i].keyName}'),
-                height: _tileHeight,
+                constraints: BoxConstraints(
+                  minHeight:
+                      _tileHeight * MediaQuery.textScalerOf(context).scale(1),
+                ),
                 padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 7),
                 decoration: BoxDecoration(
                   color: visual.surface,
@@ -67,7 +83,6 @@ class LoginFeatureHighlights extends StatelessWidget {
                       maxLines: 2,
                       softWrap: true,
                       overflow: TextOverflow.ellipsis,
-                      textScaler: TextScaler.noScaling,
                       style: TextStyle(
                         color: visual.ink,
                         fontSize: 10,

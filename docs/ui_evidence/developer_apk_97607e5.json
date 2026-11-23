@@ -1,0 +1,11 @@
+{
+  "ci_commit": "97607e5e629377fab2731b0081a56c978d7e3f5e",
+  "artifact_id": 14784024879,
+  "zip_bytes": 30812301,
+  "zip_sha256": "8896b9d6f475cc4d7346ffd7be6fdd2175422db126c084516c56eff9e3d816d7",
+  "apk_bytes": 62861719,
+  "apk_sha256": "765689bf9202c4107b250869fdd8fd9aeb7670e23315eb4c9e59c132deda9ebc",
+  "arabic_label": "مقوتي لينك — فحص",
+  "package": "com.maqwatilink.ui_audit_developer",
+  "internet_permission": false
+}

@@ -1,0 +1,60 @@
+00:00 +0: loading /workspace/maqwati/test/ui_audit/login_matrix_test.dart
+00:00 +0: (setUpAll)
+00:00 +0: blue_day body and secondary text contrast
+00:00 +1: blue_day home uses the decodable correct character
+00:00 +2: blue_day 320.0 baseline
+00:01 +3: blue_day 320.0 keyboard_large_text
+00:01 +4: blue_day 360.0 baseline
+00:01 +5: blue_day 360.0 keyboard_large_text
+00:01 +6: blue_day 390.0 baseline
+00:02 +7: blue_day 390.0 keyboard_large_text
+00:02 +8: blue_day 430.0 baseline
+00:02 +9: blue_day 430.0 keyboard_large_text
+00:02 +10: blue_day 600.0 baseline
+00:02 +11: blue_day 600.0 keyboard_large_text
+00:02 +12: blue_day 800.0 baseline
+00:02 +13: blue_day 800.0 keyboard_large_text
+00:02 +14: blue_night body and secondary text contrast
+00:02 +15: blue_night home uses the decodable correct character
+00:02 +16: blue_night 320.0 baseline
+00:03 +17: blue_night 320.0 keyboard_large_text
+00:03 +18: blue_night 360.0 baseline
+00:03 +19: blue_night 360.0 keyboard_large_text
+00:03 +20: blue_night 390.0 baseline
+00:03 +21: blue_night 390.0 keyboard_large_text
+00:03 +22: blue_night 430.0 baseline
+00:03 +23: blue_night 430.0 keyboard_large_text
+00:03 +24: blue_night 600.0 baseline
+00:04 +25: blue_night 600.0 keyboard_large_text
+00:04 +26: blue_night 800.0 baseline
+00:04 +27: blue_night 800.0 keyboard_large_text
+00:04 +28: pink_day body and secondary text contrast
+00:04 +29: pink_day home uses the decodable correct character
+00:04 +30: pink_day 320.0 baseline
+00:04 +31: pink_day 320.0 keyboard_large_text
+00:04 +32: pink_day 360.0 baseline
+00:04 +33: pink_day 360.0 keyboard_large_text
+00:04 +34: pink_day 390.0 baseline
+00:05 +35: pink_day 390.0 keyboard_large_text
+00:05 +36: pink_day 430.0 baseline
+00:05 +37: pink_day 430.0 keyboard_large_text
+00:05 +38: pink_day 600.0 baseline
+00:05 +39: pink_day 600.0 keyboard_large_text
+00:05 +40: pink_day 800.0 baseline
+00:05 +41: pink_day 800.0 keyboard_large_text
+00:05 +42: pink_night body and secondary text contrast
+00:05 +43: pink_night home uses the decodable correct character
+00:05 +44: pink_night 320.0 baseline
+00:06 +45: pink_night 320.0 keyboard_large_text
+00:06 +46: pink_night 360.0 baseline
+00:06 +47: pink_night 360.0 keyboard_large_text
+00:06 +48: pink_night 390.0 baseline
+00:06 +49: pink_night 390.0 keyboard_large_text
+00:06 +50: pink_night 430.0 baseline
+00:06 +51: pink_night 430.0 keyboard_large_text
+00:06 +52: pink_night 600.0 baseline
+00:06 +53: pink_night 600.0 keyboard_large_text
+00:06 +54: pink_night 800.0 baseline
+00:07 +55: pink_night 800.0 keyboard_large_text
+00:07 +56: (tearDownAll)
+00:07 +56: All tests passed!

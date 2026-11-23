@@ -1,0 +1,27 @@
+{
+  "ci_commit": "ee2997299dbb5b252875bcc25065acad8e7a1926",
+  "artifact_id": 14784261266,
+  "zip_bytes": 30807434,
+  "zip_sha256": "9c2a74726415ec46e72ef0c2adf4dcbbecd49b7565a857790f73a0f9551e08a1",
+  "apk_bytes": 62861499,
+  "apk_sha256": "6f9fd47e3e7a8d050ee152f9402db35cf484806dcbccf9322c51e3977794d1bb",
+  "character_assets": [
+    {
+      "name": "maqwati_approved_character.png",
+      "dimensions": [
+        168,
+        200
+      ],
+      "source_bytes_match": true
+    },
+    {
+      "name": "maqwati_feminine_character.png",
+      "dimensions": [
+        172,
+        199
+      ],
+      "source_bytes_match": true
+    }
+  ],
+  "corrupt_legacy_jpeg_bundled": false
+}

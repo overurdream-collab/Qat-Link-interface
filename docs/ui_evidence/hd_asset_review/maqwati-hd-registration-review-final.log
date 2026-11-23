@@ -1,0 +1,2127 @@
+00:00 +0: loading /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart
+00:00 +0: (setUpAll)
+00:00 +0: screen catalog registration_blue_day_320_1.0
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞═════════════════
+The following assertion was thrown while running async test code:
+Golden "goldens/catalog/registration_blue_day_320_1.0.png": Pixel
+test failed, 11.61%, 33424px diff detected.
+Failure feedback can be found at
+/workspace/maqwati/test/ui_audit/failures
+
+When the exception was thrown, this was the stack:
+#0      LocalFileComparator.compare (package:flutter_test/src/_goldens_io.dart:108:5)
+<asynchronous suspension>
+#1      MatchesGoldenFile.matchAsync.<anonymous closure> (package:flutter_test/src/_matchers_io.dart:124:32)
+<asynchronous suspension>
+<asynchronous suspension>
+#3      _expect.<anonymous closure> (package:matcher/src/expect/expect.dart:153:17)
+<asynchronous suspension>
+<asynchronous suspension>
+#5      expectLater.<anonymous closure> (package:flutter_test/src/widget_tester.dart:508:19)
+<asynchronous suspension>
+#6      main.<anonymous closure>.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart:171:25)
+<asynchronous suspension>
+#7      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#8      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 3 frames from dart:async and package:stack_trace)
+
+The exception was caught asynchronously.
+═════════════════════════════════════════════════════════════════
+
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞═════════════════
+The following TestFailure was thrown running a test:
+Expected: null
+  Actual: FlutterError:<Golden
+"goldens/catalog/registration_blue_day_320_1.0.png": Pixel test
+failed, 11.61%, 33424px diff detected.
+          Failure feedback can be found at
+/workspace/maqwati/test/ui_audit/failures>
+Overflow while scrolling lazy content (step 0)
+
+When the exception was thrown, this was the stack:
+#4      auditVerticalContent (file:///workspace/maqwati/test/ui_audit/scroll_audit.dart:18:5)
+<asynchronous suspension>
+#5      main.<anonymous closure>.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart:175:23)
+<asynchronous suspension>
+#6      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#7      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///workspace/maqwati/test/ui_audit/scroll_audit.dart line 18
+The test description was:
+  screen catalog registration_blue_day_320_1.0
+═════════════════════════════════════════════════════════════════
+
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: null
+  Actual: FlutterError:<Golden "goldens/catalog/registration_blue_day_320_1.0.png": Pixel test
+failed, 11.61%, 33424px diff detected.
+          Failure feedback can be found at /workspace/maqwati/test/ui_audit/failures>
+Overflow while scrolling lazy content (step 0)
+
+When the exception was thrown, this was the stack:
+#4      auditVerticalContent (file:///workspace/maqwati/test/ui_audit/scroll_audit.dart:18:5)
+<asynchronous suspension>
+#5      main.<anonymous closure>.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart:175:23)
+<asynchronous suspension>
+#6      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#7      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///workspace/maqwati/test/ui_audit/scroll_audit.dart line 18
+The test description was:
+  screen catalog registration_blue_day_320_1.0
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:02 +0 -1: screen catalog registration_blue_day_320_1.0 [E]
+  Test failed. See exception logs above.
+  The test description was: screen catalog registration_blue_day_320_1.0
+  
+00:02 +0 -1: screen catalog registration_blue_day_320_1.6
+00:03 +1 -1: screen catalog registration_blue_day_360_1.0
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞═════════════════
+The following assertion was thrown while running async test code:
+Golden "goldens/catalog/registration_blue_day_360_1.0.png": Pixel
+test failed, 11.23%, 36385px diff detected.
+Failure feedback can be found at
+/workspace/maqwati/test/ui_audit/failures
+
+When the exception was thrown, this was the stack:
+#0      LocalFileComparator.compare (package:flutter_test/src/_goldens_io.dart:108:5)
+<asynchronous suspension>
+#1      MatchesGoldenFile.matchAsync.<anonymous closure> (package:flutter_test/src/_matchers_io.dart:124:32)
+<asynchronous suspension>
+<asynchronous suspension>
+#3      _expect.<anonymous closure> (package:matcher/src/expect/expect.dart:153:17)
+<asynchronous suspension>
+<asynchronous suspension>
+#5      expectLater.<anonymous closure> (package:flutter_test/src/widget_tester.dart:508:19)
+<asynchronous suspension>
+#6      main.<anonymous closure>.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart:171:25)
+<asynchronous suspension>
+#7      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#8      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 3 frames from dart:async and package:stack_trace)
+
+The exception was caught asynchronously.
+═════════════════════════════════════════════════════════════════
+
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞═════════════════
+The following TestFailure was thrown running a test:
+Expected: null
+  Actual: FlutterError:<Golden
+"goldens/catalog/registration_blue_day_360_1.0.png": Pixel test
+failed, 11.23%, 36385px diff detected.
+          Failure feedback can be found at
+/workspace/maqwati/test/ui_audit/failures>
+Overflow while scrolling lazy content (step 0)
+
+When the exception was thrown, this was the stack:
+#4      auditVerticalContent (file:///workspace/maqwati/test/ui_audit/scroll_audit.dart:18:5)
+<asynchronous suspension>
+#5      main.<anonymous closure>.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart:175:23)
+<asynchronous suspension>
+#6      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#7      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///workspace/maqwati/test/ui_audit/scroll_audit.dart line 18
+The test description was:
+  screen catalog registration_blue_day_360_1.0
+═════════════════════════════════════════════════════════════════
+
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: null
+  Actual: FlutterError:<Golden "goldens/catalog/registration_blue_day_360_1.0.png": Pixel test
+failed, 11.23%, 36385px diff detected.
+          Failure feedback can be found at /workspace/maqwati/test/ui_audit/failures>
+Overflow while scrolling lazy content (step 0)
+
+When the exception was thrown, this was the stack:
+#4      auditVerticalContent (file:///workspace/maqwati/test/ui_audit/scroll_audit.dart:18:5)
+<asynchronous suspension>
+#5      main.<anonymous closure>.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart:175:23)
+<asynchronous suspension>
+#6      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#7      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///workspace/maqwati/test/ui_audit/scroll_audit.dart line 18
+The test description was:
+  screen catalog registration_blue_day_360_1.0
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:04 +1 -2: screen catalog registration_blue_day_360_1.0 [E]
+  Test failed. See exception logs above.
+  The test description was: screen catalog registration_blue_day_360_1.0
+  
+00:04 +1 -2: screen catalog registration_blue_day_390_1.0
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞═════════════════
+The following assertion was thrown while running async test code:
+Golden "goldens/catalog/registration_blue_day_390_1.0.png": Pixel
+test failed, 11.32%, 39750px diff detected.
+Failure feedback can be found at
+/workspace/maqwati/test/ui_audit/failures
+
+When the exception was thrown, this was the stack:
+#0      LocalFileComparator.compare (package:flutter_test/src/_goldens_io.dart:108:5)
+<asynchronous suspension>
+#1      MatchesGoldenFile.matchAsync.<anonymous closure> (package:flutter_test/src/_matchers_io.dart:124:32)
+<asynchronous suspension>
+<asynchronous suspension>
+#3      _expect.<anonymous closure> (package:matcher/src/expect/expect.dart:153:17)
+<asynchronous suspension>
+<asynchronous suspension>
+#5      expectLater.<anonymous closure> (package:flutter_test/src/widget_tester.dart:508:19)
+<asynchronous suspension>
+#6      main.<anonymous closure>.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart:171:25)
+<asynchronous suspension>
+#7      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#8      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 3 frames from dart:async and package:stack_trace)
+
+The exception was caught asynchronously.
+═════════════════════════════════════════════════════════════════
+
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞═════════════════
+The following TestFailure was thrown running a test:
+Expected: null
+  Actual: FlutterError:<Golden
+"goldens/catalog/registration_blue_day_390_1.0.png": Pixel test
+failed, 11.32%, 39750px diff detected.
+          Failure feedback can be found at
+/workspace/maqwati/test/ui_audit/failures>
+Overflow while scrolling lazy content (step 0)
+
+When the exception was thrown, this was the stack:
+#4      auditVerticalContent (file:///workspace/maqwati/test/ui_audit/scroll_audit.dart:18:5)
+<asynchronous suspension>
+#5      main.<anonymous closure>.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart:175:23)
+<asynchronous suspension>
+#6      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#7      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///workspace/maqwati/test/ui_audit/scroll_audit.dart line 18
+The test description was:
+  screen catalog registration_blue_day_390_1.0
+═════════════════════════════════════════════════════════════════
+
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: null
+  Actual: FlutterError:<Golden "goldens/catalog/registration_blue_day_390_1.0.png": Pixel test
+failed, 11.32%, 39750px diff detected.
+          Failure feedback can be found at /workspace/maqwati/test/ui_audit/failures>
+Overflow while scrolling lazy content (step 0)
+
+When the exception was thrown, this was the stack:
+#4      auditVerticalContent (file:///workspace/maqwati/test/ui_audit/scroll_audit.dart:18:5)
+<asynchronous suspension>
+#5      main.<anonymous closure>.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart:175:23)
+<asynchronous suspension>
+#6      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#7      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///workspace/maqwati/test/ui_audit/scroll_audit.dart line 18
+The test description was:
+  screen catalog registration_blue_day_390_1.0
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:05 +1 -3: screen catalog registration_blue_day_390_1.0 [E]
+  Test failed. See exception logs above.
+  The test description was: screen catalog registration_blue_day_390_1.0
+  
+00:05 +1 -3: screen catalog registration_blue_day_430_1.0
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞═════════════════
+The following assertion was thrown while running async test code:
+Golden "goldens/catalog/registration_blue_day_430_1.0.png": Pixel
+test failed, 11.67%, 45150px diff detected.
+Failure feedback can be found at
+/workspace/maqwati/test/ui_audit/failures
+
+When the exception was thrown, this was the stack:
+#0      LocalFileComparator.compare (package:flutter_test/src/_goldens_io.dart:108:5)
+<asynchronous suspension>
+#1      MatchesGoldenFile.matchAsync.<anonymous closure> (package:flutter_test/src/_matchers_io.dart:124:32)
+<asynchronous suspension>
+<asynchronous suspension>
+#3      _expect.<anonymous closure> (package:matcher/src/expect/expect.dart:153:17)
+<asynchronous suspension>
+<asynchronous suspension>
+#5      expectLater.<anonymous closure> (package:flutter_test/src/widget_tester.dart:508:19)
+<asynchronous suspension>
+#6      main.<anonymous closure>.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart:171:25)
+<asynchronous suspension>
+#7      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#8      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 3 frames from dart:async and package:stack_trace)
+
+The exception was caught asynchronously.
+═════════════════════════════════════════════════════════════════
+
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞═════════════════
+The following TestFailure was thrown running a test:
+Expected: null
+  Actual: FlutterError:<Golden
+"goldens/catalog/registration_blue_day_430_1.0.png": Pixel test
+failed, 11.67%, 45150px diff detected.
+          Failure feedback can be found at
+/workspace/maqwati/test/ui_audit/failures>
+Overflow while scrolling lazy content (step 0)
+
+When the exception was thrown, this was the stack:
+#4      auditVerticalContent (file:///workspace/maqwati/test/ui_audit/scroll_audit.dart:18:5)
+<asynchronous suspension>
+#5      main.<anonymous closure>.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart:175:23)
+<asynchronous suspension>
+#6      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#7      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///workspace/maqwati/test/ui_audit/scroll_audit.dart line 18
+The test description was:
+  screen catalog registration_blue_day_430_1.0
+═════════════════════════════════════════════════════════════════
+
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: null
+  Actual: FlutterError:<Golden "goldens/catalog/registration_blue_day_430_1.0.png": Pixel test
+failed, 11.67%, 45150px diff detected.
+          Failure feedback can be found at /workspace/maqwati/test/ui_audit/failures>
+Overflow while scrolling lazy content (step 0)
+
+When the exception was thrown, this was the stack:
+#4      auditVerticalContent (file:///workspace/maqwati/test/ui_audit/scroll_audit.dart:18:5)
+<asynchronous suspension>
+#5      main.<anonymous closure>.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart:175:23)
+<asynchronous suspension>
+#6      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#7      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///workspace/maqwati/test/ui_audit/scroll_audit.dart line 18
+The test description was:
+  screen catalog registration_blue_day_430_1.0
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:06 +1 -4: screen catalog registration_blue_day_430_1.0 [E]
+  Test failed. See exception logs above.
+  The test description was: screen catalog registration_blue_day_430_1.0
+  
+00:06 +1 -4: screen catalog registration_blue_day_600_1.0
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞═════════════════
+The following assertion was thrown while running async test code:
+Golden "goldens/catalog/registration_blue_day_600_1.0.png": Pixel
+test failed, 9.91%, 53520px diff detected.
+Failure feedback can be found at
+/workspace/maqwati/test/ui_audit/failures
+
+When the exception was thrown, this was the stack:
+#0      LocalFileComparator.compare (package:flutter_test/src/_goldens_io.dart:108:5)
+<asynchronous suspension>
+#1      MatchesGoldenFile.matchAsync.<anonymous closure> (package:flutter_test/src/_matchers_io.dart:124:32)
+<asynchronous suspension>
+<asynchronous suspension>
+#3      _expect.<anonymous closure> (package:matcher/src/expect/expect.dart:153:17)
+<asynchronous suspension>
+<asynchronous suspension>
+#5      expectLater.<anonymous closure> (package:flutter_test/src/widget_tester.dart:508:19)
+<asynchronous suspension>
+#6      main.<anonymous closure>.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart:171:25)
+<asynchronous suspension>
+#7      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#8      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 3 frames from dart:async and package:stack_trace)
+
+The exception was caught asynchronously.
+═════════════════════════════════════════════════════════════════
+
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞═════════════════
+The following TestFailure was thrown running a test:
+Expected: null
+  Actual: FlutterError:<Golden
+"goldens/catalog/registration_blue_day_600_1.0.png": Pixel test
+failed, 9.91%, 53520px diff detected.
+          Failure feedback can be found at
+/workspace/maqwati/test/ui_audit/failures>
+Overflow while scrolling lazy content (step 0)
+
+When the exception was thrown, this was the stack:
+#4      auditVerticalContent (file:///workspace/maqwati/test/ui_audit/scroll_audit.dart:18:5)
+<asynchronous suspension>
+#5      main.<anonymous closure>.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart:175:23)
+<asynchronous suspension>
+#6      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#7      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///workspace/maqwati/test/ui_audit/scroll_audit.dart line 18
+The test description was:
+  screen catalog registration_blue_day_600_1.0
+═════════════════════════════════════════════════════════════════
+
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: null
+  Actual: FlutterError:<Golden "goldens/catalog/registration_blue_day_600_1.0.png": Pixel test
+failed, 9.91%, 53520px diff detected.
+          Failure feedback can be found at /workspace/maqwati/test/ui_audit/failures>
+Overflow while scrolling lazy content (step 0)
+
+When the exception was thrown, this was the stack:
+#4      auditVerticalContent (file:///workspace/maqwati/test/ui_audit/scroll_audit.dart:18:5)
+<asynchronous suspension>
+#5      main.<anonymous closure>.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart:175:23)
+<asynchronous suspension>
+#6      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#7      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///workspace/maqwati/test/ui_audit/scroll_audit.dart line 18
+The test description was:
+  screen catalog registration_blue_day_600_1.0
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:07 +1 -5: screen catalog registration_blue_day_600_1.0 [E]
+  Test failed. See exception logs above.
+  The test description was: screen catalog registration_blue_day_600_1.0
+  
+00:07 +1 -5: screen catalog registration_blue_day_800_1.0
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞═════════════════
+The following assertion was thrown while running async test code:
+Golden "goldens/catalog/registration_blue_day_800_1.0.png": Pixel
+test failed, 7.43%, 53520px diff detected.
+Failure feedback can be found at
+/workspace/maqwati/test/ui_audit/failures
+
+When the exception was thrown, this was the stack:
+#0      LocalFileComparator.compare (package:flutter_test/src/_goldens_io.dart:108:5)
+<asynchronous suspension>
+#1      MatchesGoldenFile.matchAsync.<anonymous closure> (package:flutter_test/src/_matchers_io.dart:124:32)
+<asynchronous suspension>
+<asynchronous suspension>
+#3      _expect.<anonymous closure> (package:matcher/src/expect/expect.dart:153:17)
+<asynchronous suspension>
+<asynchronous suspension>
+#5      expectLater.<anonymous closure> (package:flutter_test/src/widget_tester.dart:508:19)
+<asynchronous suspension>
+#6      main.<anonymous closure>.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart:171:25)
+<asynchronous suspension>
+#7      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#8      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 3 frames from dart:async and package:stack_trace)
+
+The exception was caught asynchronously.
+═════════════════════════════════════════════════════════════════
+
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞═════════════════
+The following TestFailure was thrown running a test:
+Expected: null
+  Actual: FlutterError:<Golden
+"goldens/catalog/registration_blue_day_800_1.0.png": Pixel test
+failed, 7.43%, 53520px diff detected.
+          Failure feedback can be found at
+/workspace/maqwati/test/ui_audit/failures>
+Overflow while scrolling lazy content (step 0)
+
+When the exception was thrown, this was the stack:
+#4      auditVerticalContent (file:///workspace/maqwati/test/ui_audit/scroll_audit.dart:18:5)
+<asynchronous suspension>
+#5      main.<anonymous closure>.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart:175:23)
+<asynchronous suspension>
+#6      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#7      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///workspace/maqwati/test/ui_audit/scroll_audit.dart line 18
+The test description was:
+  screen catalog registration_blue_day_800_1.0
+═════════════════════════════════════════════════════════════════
+
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: null
+  Actual: FlutterError:<Golden "goldens/catalog/registration_blue_day_800_1.0.png": Pixel test
+failed, 7.43%, 53520px diff detected.
+          Failure feedback can be found at /workspace/maqwati/test/ui_audit/failures>
+Overflow while scrolling lazy content (step 0)
+
+When the exception was thrown, this was the stack:
+#4      auditVerticalContent (file:///workspace/maqwati/test/ui_audit/scroll_audit.dart:18:5)
+<asynchronous suspension>
+#5      main.<anonymous closure>.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart:175:23)
+<asynchronous suspension>
+#6      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#7      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///workspace/maqwati/test/ui_audit/scroll_audit.dart line 18
+The test description was:
+  screen catalog registration_blue_day_800_1.0
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:08 +1 -6: screen catalog registration_blue_day_800_1.0 [E]
+  Test failed. See exception logs above.
+  The test description was: screen catalog registration_blue_day_800_1.0
+  
+00:08 +1 -6: screen catalog registration_blue_night_320_1.0
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞═════════════════
+The following assertion was thrown while running async test code:
+Golden "goldens/catalog/registration_blue_night_320_1.0.png":
+Pixel test failed, 11.61%, 33429px diff detected.
+Failure feedback can be found at
+/workspace/maqwati/test/ui_audit/failures
+
+When the exception was thrown, this was the stack:
+#0      LocalFileComparator.compare (package:flutter_test/src/_goldens_io.dart:108:5)
+<asynchronous suspension>
+#1      MatchesGoldenFile.matchAsync.<anonymous closure> (package:flutter_test/src/_matchers_io.dart:124:32)
+<asynchronous suspension>
+<asynchronous suspension>
+#3      _expect.<anonymous closure> (package:matcher/src/expect/expect.dart:153:17)
+<asynchronous suspension>
+<asynchronous suspension>
+#5      expectLater.<anonymous closure> (package:flutter_test/src/widget_tester.dart:508:19)
+<asynchronous suspension>
+#6      main.<anonymous closure>.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart:171:25)
+<asynchronous suspension>
+#7      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#8      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 3 frames from dart:async and package:stack_trace)
+
+The exception was caught asynchronously.
+═════════════════════════════════════════════════════════════════
+
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞═════════════════
+The following TestFailure was thrown running a test:
+Expected: null
+  Actual: FlutterError:<Golden
+"goldens/catalog/registration_blue_night_320_1.0.png": Pixel test
+failed, 11.61%, 33429px diff detected.
+          Failure feedback can be found at
+/workspace/maqwati/test/ui_audit/failures>
+Overflow while scrolling lazy content (step 0)
+
+When the exception was thrown, this was the stack:
+#4      auditVerticalContent (file:///workspace/maqwati/test/ui_audit/scroll_audit.dart:18:5)
+<asynchronous suspension>
+#5      main.<anonymous closure>.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart:175:23)
+<asynchronous suspension>
+#6      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#7      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///workspace/maqwati/test/ui_audit/scroll_audit.dart line 18
+The test description was:
+  screen catalog registration_blue_night_320_1.0
+═════════════════════════════════════════════════════════════════
+
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: null
+  Actual: FlutterError:<Golden "goldens/catalog/registration_blue_night_320_1.0.png": Pixel test
+failed, 11.61%, 33429px diff detected.
+          Failure feedback can be found at /workspace/maqwati/test/ui_audit/failures>
+Overflow while scrolling lazy content (step 0)
+
+When the exception was thrown, this was the stack:
+#4      auditVerticalContent (file:///workspace/maqwati/test/ui_audit/scroll_audit.dart:18:5)
+<asynchronous suspension>
+#5      main.<anonymous closure>.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart:175:23)
+<asynchronous suspension>
+#6      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#7      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///workspace/maqwati/test/ui_audit/scroll_audit.dart line 18
+The test description was:
+  screen catalog registration_blue_night_320_1.0
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:09 +1 -7: screen catalog registration_blue_night_320_1.0 [E]
+  Test failed. See exception logs above.
+  The test description was: screen catalog registration_blue_night_320_1.0
+  
+00:09 +1 -7: screen catalog registration_blue_night_320_1.6
+00:09 +2 -7: screen catalog registration_blue_night_360_1.0
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞═════════════════
+The following assertion was thrown while running async test code:
+Golden "goldens/catalog/registration_blue_night_360_1.0.png":
+Pixel test failed, 11.22%, 36366px diff detected.
+Failure feedback can be found at
+/workspace/maqwati/test/ui_audit/failures
+
+When the exception was thrown, this was the stack:
+#0      LocalFileComparator.compare (package:flutter_test/src/_goldens_io.dart:108:5)
+<asynchronous suspension>
+#1      MatchesGoldenFile.matchAsync.<anonymous closure> (package:flutter_test/src/_matchers_io.dart:124:32)
+<asynchronous suspension>
+<asynchronous suspension>
+#3      _expect.<anonymous closure> (package:matcher/src/expect/expect.dart:153:17)
+<asynchronous suspension>
+<asynchronous suspension>
+#5      expectLater.<anonymous closure> (package:flutter_test/src/widget_tester.dart:508:19)
+<asynchronous suspension>
+#6      main.<anonymous closure>.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart:171:25)
+<asynchronous suspension>
+#7      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#8      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 3 frames from dart:async and package:stack_trace)
+
+The exception was caught asynchronously.
+═════════════════════════════════════════════════════════════════
+
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞═════════════════
+The following TestFailure was thrown running a test:
+Expected: null
+  Actual: FlutterError:<Golden
+"goldens/catalog/registration_blue_night_360_1.0.png": Pixel test
+failed, 11.22%, 36366px diff detected.
+          Failure feedback can be found at
+/workspace/maqwati/test/ui_audit/failures>
+Overflow while scrolling lazy content (step 0)
+
+When the exception was thrown, this was the stack:
+#4      auditVerticalContent (file:///workspace/maqwati/test/ui_audit/scroll_audit.dart:18:5)
+<asynchronous suspension>
+#5      main.<anonymous closure>.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart:175:23)
+<asynchronous suspension>
+#6      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#7      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///workspace/maqwati/test/ui_audit/scroll_audit.dart line 18
+The test description was:
+  screen catalog registration_blue_night_360_1.0
+═════════════════════════════════════════════════════════════════
+
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: null
+  Actual: FlutterError:<Golden "goldens/catalog/registration_blue_night_360_1.0.png": Pixel test
+failed, 11.22%, 36366px diff detected.
+          Failure feedback can be found at /workspace/maqwati/test/ui_audit/failures>
+Overflow while scrolling lazy content (step 0)
+
+When the exception was thrown, this was the stack:
+#4      auditVerticalContent (file:///workspace/maqwati/test/ui_audit/scroll_audit.dart:18:5)
+<asynchronous suspension>
+#5      main.<anonymous closure>.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart:175:23)
+<asynchronous suspension>
+#6      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#7      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///workspace/maqwati/test/ui_audit/scroll_audit.dart line 18
+The test description was:
+  screen catalog registration_blue_night_360_1.0
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:10 +2 -8: screen catalog registration_blue_night_360_1.0 [E]
+  Test failed. See exception logs above.
+  The test description was: screen catalog registration_blue_night_360_1.0
+  
+00:10 +2 -8: screen catalog registration_blue_night_390_1.0
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞═════════════════
+The following assertion was thrown while running async test code:
+Golden "goldens/catalog/registration_blue_night_390_1.0.png":
+Pixel test failed, 11.35%, 39826px diff detected.
+Failure feedback can be found at
+/workspace/maqwati/test/ui_audit/failures
+
+When the exception was thrown, this was the stack:
+#0      LocalFileComparator.compare (package:flutter_test/src/_goldens_io.dart:108:5)
+<asynchronous suspension>
+#1      MatchesGoldenFile.matchAsync.<anonymous closure> (package:flutter_test/src/_matchers_io.dart:124:32)
+<asynchronous suspension>
+<asynchronous suspension>
+#3      _expect.<anonymous closure> (package:matcher/src/expect/expect.dart:153:17)
+<asynchronous suspension>
+<asynchronous suspension>
+#5      expectLater.<anonymous closure> (package:flutter_test/src/widget_tester.dart:508:19)
+<asynchronous suspension>
+#6      main.<anonymous closure>.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart:171:25)
+<asynchronous suspension>
+#7      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#8      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 3 frames from dart:async and package:stack_trace)
+
+The exception was caught asynchronously.
+═════════════════════════════════════════════════════════════════
+
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞═════════════════
+The following TestFailure was thrown running a test:
+Expected: null
+  Actual: FlutterError:<Golden
+"goldens/catalog/registration_blue_night_390_1.0.png": Pixel test
+failed, 11.35%, 39826px diff detected.
+          Failure feedback can be found at
+/workspace/maqwati/test/ui_audit/failures>
+Overflow while scrolling lazy content (step 0)
+
+When the exception was thrown, this was the stack:
+#4      auditVerticalContent (file:///workspace/maqwati/test/ui_audit/scroll_audit.dart:18:5)
+<asynchronous suspension>
+#5      main.<anonymous closure>.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart:175:23)
+<asynchronous suspension>
+#6      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#7      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///workspace/maqwati/test/ui_audit/scroll_audit.dart line 18
+The test description was:
+  screen catalog registration_blue_night_390_1.0
+═════════════════════════════════════════════════════════════════
+
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: null
+  Actual: FlutterError:<Golden "goldens/catalog/registration_blue_night_390_1.0.png": Pixel test
+failed, 11.35%, 39826px diff detected.
+          Failure feedback can be found at /workspace/maqwati/test/ui_audit/failures>
+Overflow while scrolling lazy content (step 0)
+
+When the exception was thrown, this was the stack:
+#4      auditVerticalContent (file:///workspace/maqwati/test/ui_audit/scroll_audit.dart:18:5)
+<asynchronous suspension>
+#5      main.<anonymous closure>.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart:175:23)
+<asynchronous suspension>
+#6      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#7      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///workspace/maqwati/test/ui_audit/scroll_audit.dart line 18
+The test description was:
+  screen catalog registration_blue_night_390_1.0
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:11 +2 -9: screen catalog registration_blue_night_390_1.0 [E]
+  Test failed. See exception logs above.
+  The test description was: screen catalog registration_blue_night_390_1.0
+  
+00:11 +2 -9: screen catalog registration_blue_night_430_1.0
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞═════════════════
+The following assertion was thrown while running async test code:
+Golden "goldens/catalog/registration_blue_night_430_1.0.png":
+Pixel test failed, 11.69%, 45226px diff detected.
+Failure feedback can be found at
+/workspace/maqwati/test/ui_audit/failures
+
+When the exception was thrown, this was the stack:
+#0      LocalFileComparator.compare (package:flutter_test/src/_goldens_io.dart:108:5)
+<asynchronous suspension>
+#1      MatchesGoldenFile.matchAsync.<anonymous closure> (package:flutter_test/src/_matchers_io.dart:124:32)
+<asynchronous suspension>
+<asynchronous suspension>
+#3      _expect.<anonymous closure> (package:matcher/src/expect/expect.dart:153:17)
+<asynchronous suspension>
+<asynchronous suspension>
+#5      expectLater.<anonymous closure> (package:flutter_test/src/widget_tester.dart:508:19)
+<asynchronous suspension>
+#6      main.<anonymous closure>.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart:171:25)
+<asynchronous suspension>
+#7      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#8      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 3 frames from dart:async and package:stack_trace)
+
+The exception was caught asynchronously.
+═════════════════════════════════════════════════════════════════
+
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞═════════════════
+The following TestFailure was thrown running a test:
+Expected: null
+  Actual: FlutterError:<Golden
+"goldens/catalog/registration_blue_night_430_1.0.png": Pixel test
+failed, 11.69%, 45226px diff detected.
+          Failure feedback can be found at
+/workspace/maqwati/test/ui_audit/failures>
+Overflow while scrolling lazy content (step 0)
+
+When the exception was thrown, this was the stack:
+#4      auditVerticalContent (file:///workspace/maqwati/test/ui_audit/scroll_audit.dart:18:5)
+<asynchronous suspension>
+#5      main.<anonymous closure>.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart:175:23)
+<asynchronous suspension>
+#6      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#7      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///workspace/maqwati/test/ui_audit/scroll_audit.dart line 18
+The test description was:
+  screen catalog registration_blue_night_430_1.0
+═════════════════════════════════════════════════════════════════
+
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: null
+  Actual: FlutterError:<Golden "goldens/catalog/registration_blue_night_430_1.0.png": Pixel test
+failed, 11.69%, 45226px diff detected.
+          Failure feedback can be found at /workspace/maqwati/test/ui_audit/failures>
+Overflow while scrolling lazy content (step 0)
+
+When the exception was thrown, this was the stack:
+#4      auditVerticalContent (file:///workspace/maqwati/test/ui_audit/scroll_audit.dart:18:5)
+<asynchronous suspension>
+#5      main.<anonymous closure>.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart:175:23)
+<asynchronous suspension>
+#6      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#7      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///workspace/maqwati/test/ui_audit/scroll_audit.dart line 18
+The test description was:
+  screen catalog registration_blue_night_430_1.0
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:11 +2 -10: screen catalog registration_blue_night_430_1.0 [E]
+  Test failed. See exception logs above.
+  The test description was: screen catalog registration_blue_night_430_1.0
+  
+00:11 +2 -10: screen catalog registration_blue_night_600_1.0
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞═════════════════
+The following assertion was thrown while running async test code:
+Golden "goldens/catalog/registration_blue_night_600_1.0.png":
+Pixel test failed, 9.93%, 53596px diff detected.
+Failure feedback can be found at
+/workspace/maqwati/test/ui_audit/failures
+
+When the exception was thrown, this was the stack:
+#0      LocalFileComparator.compare (package:flutter_test/src/_goldens_io.dart:108:5)
+<asynchronous suspension>
+#1      MatchesGoldenFile.matchAsync.<anonymous closure> (package:flutter_test/src/_matchers_io.dart:124:32)
+<asynchronous suspension>
+<asynchronous suspension>
+#3      _expect.<anonymous closure> (package:matcher/src/expect/expect.dart:153:17)
+<asynchronous suspension>
+<asynchronous suspension>
+#5      expectLater.<anonymous closure> (package:flutter_test/src/widget_tester.dart:508:19)
+<asynchronous suspension>
+#6      main.<anonymous closure>.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart:171:25)
+<asynchronous suspension>
+#7      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#8      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 3 frames from dart:async and package:stack_trace)
+
+The exception was caught asynchronously.
+═════════════════════════════════════════════════════════════════
+
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞═════════════════
+The following TestFailure was thrown running a test:
+Expected: null
+  Actual: FlutterError:<Golden
+"goldens/catalog/registration_blue_night_600_1.0.png": Pixel test
+failed, 9.93%, 53596px diff detected.
+          Failure feedback can be found at
+/workspace/maqwati/test/ui_audit/failures>
+Overflow while scrolling lazy content (step 0)
+
+When the exception was thrown, this was the stack:
+#4      auditVerticalContent (file:///workspace/maqwati/test/ui_audit/scroll_audit.dart:18:5)
+<asynchronous suspension>
+#5      main.<anonymous closure>.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart:175:23)
+<asynchronous suspension>
+#6      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#7      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///workspace/maqwati/test/ui_audit/scroll_audit.dart line 18
+The test description was:
+  screen catalog registration_blue_night_600_1.0
+═════════════════════════════════════════════════════════════════
+
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: null
+  Actual: FlutterError:<Golden "goldens/catalog/registration_blue_night_600_1.0.png": Pixel test
+failed, 9.93%, 53596px diff detected.
+          Failure feedback can be found at /workspace/maqwati/test/ui_audit/failures>
+Overflow while scrolling lazy content (step 0)
+
+When the exception was thrown, this was the stack:
+#4      auditVerticalContent (file:///workspace/maqwati/test/ui_audit/scroll_audit.dart:18:5)
+<asynchronous suspension>
+#5      main.<anonymous closure>.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart:175:23)
+<asynchronous suspension>
+#6      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#7      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///workspace/maqwati/test/ui_audit/scroll_audit.dart line 18
+The test description was:
+  screen catalog registration_blue_night_600_1.0
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:12 +2 -11: screen catalog registration_blue_night_600_1.0 [E]
+  Test failed. See exception logs above.
+  The test description was: screen catalog registration_blue_night_600_1.0
+  
+00:12 +2 -11: screen catalog registration_blue_night_800_1.0
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞═════════════════
+The following assertion was thrown while running async test code:
+Golden "goldens/catalog/registration_blue_night_800_1.0.png":
+Pixel test failed, 7.44%, 53596px diff detected.
+Failure feedback can be found at
+/workspace/maqwati/test/ui_audit/failures
+
+When the exception was thrown, this was the stack:
+#0      LocalFileComparator.compare (package:flutter_test/src/_goldens_io.dart:108:5)
+<asynchronous suspension>
+#1      MatchesGoldenFile.matchAsync.<anonymous closure> (package:flutter_test/src/_matchers_io.dart:124:32)
+<asynchronous suspension>
+<asynchronous suspension>
+#3      _expect.<anonymous closure> (package:matcher/src/expect/expect.dart:153:17)
+<asynchronous suspension>
+<asynchronous suspension>
+#5      expectLater.<anonymous closure> (package:flutter_test/src/widget_tester.dart:508:19)
+<asynchronous suspension>
+#6      main.<anonymous closure>.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart:171:25)
+<asynchronous suspension>
+#7      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#8      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 3 frames from dart:async and package:stack_trace)
+
+The exception was caught asynchronously.
+═════════════════════════════════════════════════════════════════
+
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞═════════════════
+The following TestFailure was thrown running a test:
+Expected: null
+  Actual: FlutterError:<Golden
+"goldens/catalog/registration_blue_night_800_1.0.png": Pixel test
+failed, 7.44%, 53596px diff detected.
+          Failure feedback can be found at
+/workspace/maqwati/test/ui_audit/failures>
+Overflow while scrolling lazy content (step 0)
+
+When the exception was thrown, this was the stack:
+#4      auditVerticalContent (file:///workspace/maqwati/test/ui_audit/scroll_audit.dart:18:5)
+<asynchronous suspension>
+#5      main.<anonymous closure>.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart:175:23)
+<asynchronous suspension>
+#6      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#7      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///workspace/maqwati/test/ui_audit/scroll_audit.dart line 18
+The test description was:
+  screen catalog registration_blue_night_800_1.0
+═════════════════════════════════════════════════════════════════
+
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: null
+  Actual: FlutterError:<Golden "goldens/catalog/registration_blue_night_800_1.0.png": Pixel test
+failed, 7.44%, 53596px diff detected.
+          Failure feedback can be found at /workspace/maqwati/test/ui_audit/failures>
+Overflow while scrolling lazy content (step 0)
+
+When the exception was thrown, this was the stack:
+#4      auditVerticalContent (file:///workspace/maqwati/test/ui_audit/scroll_audit.dart:18:5)
+<asynchronous suspension>
+#5      main.<anonymous closure>.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart:175:23)
+<asynchronous suspension>
+#6      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#7      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///workspace/maqwati/test/ui_audit/scroll_audit.dart line 18
+The test description was:
+  screen catalog registration_blue_night_800_1.0
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:13 +2 -12: screen catalog registration_blue_night_800_1.0 [E]
+  Test failed. See exception logs above.
+  The test description was: screen catalog registration_blue_night_800_1.0
+  
+00:13 +2 -12: screen catalog registration_pink_day_320_1.0
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞═════════════════
+The following assertion was thrown while running async test code:
+Golden "goldens/catalog/registration_pink_day_320_1.0.png": Pixel
+test failed, 11.56%, 33298px diff detected.
+Failure feedback can be found at
+/workspace/maqwati/test/ui_audit/failures
+
+When the exception was thrown, this was the stack:
+#0      LocalFileComparator.compare (package:flutter_test/src/_goldens_io.dart:108:5)
+<asynchronous suspension>
+#1      MatchesGoldenFile.matchAsync.<anonymous closure> (package:flutter_test/src/_matchers_io.dart:124:32)
+<asynchronous suspension>
+<asynchronous suspension>
+#3      _expect.<anonymous closure> (package:matcher/src/expect/expect.dart:153:17)
+<asynchronous suspension>
+<asynchronous suspension>
+#5      expectLater.<anonymous closure> (package:flutter_test/src/widget_tester.dart:508:19)
+<asynchronous suspension>
+#6      main.<anonymous closure>.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart:171:25)
+<asynchronous suspension>
+#7      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#8      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 3 frames from dart:async and package:stack_trace)
+
+The exception was caught asynchronously.
+═════════════════════════════════════════════════════════════════
+
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞═════════════════
+The following TestFailure was thrown running a test:
+Expected: null
+  Actual: FlutterError:<Golden
+"goldens/catalog/registration_pink_day_320_1.0.png": Pixel test
+failed, 11.56%, 33298px diff detected.
+          Failure feedback can be found at
+/workspace/maqwati/test/ui_audit/failures>
+Overflow while scrolling lazy content (step 0)
+
+When the exception was thrown, this was the stack:
+#4      auditVerticalContent (file:///workspace/maqwati/test/ui_audit/scroll_audit.dart:18:5)
+<asynchronous suspension>
+#5      main.<anonymous closure>.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart:175:23)
+<asynchronous suspension>
+#6      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#7      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///workspace/maqwati/test/ui_audit/scroll_audit.dart line 18
+The test description was:
+  screen catalog registration_pink_day_320_1.0
+═════════════════════════════════════════════════════════════════
+
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: null
+  Actual: FlutterError:<Golden "goldens/catalog/registration_pink_day_320_1.0.png": Pixel test
+failed, 11.56%, 33298px diff detected.
+          Failure feedback can be found at /workspace/maqwati/test/ui_audit/failures>
+Overflow while scrolling lazy content (step 0)
+
+When the exception was thrown, this was the stack:
+#4      auditVerticalContent (file:///workspace/maqwati/test/ui_audit/scroll_audit.dart:18:5)
+<asynchronous suspension>
+#5      main.<anonymous closure>.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart:175:23)
+<asynchronous suspension>
+#6      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#7      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///workspace/maqwati/test/ui_audit/scroll_audit.dart line 18
+The test description was:
+  screen catalog registration_pink_day_320_1.0
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:14 +2 -13: screen catalog registration_pink_day_320_1.0 [E]
+  Test failed. See exception logs above.
+  The test description was: screen catalog registration_pink_day_320_1.0
+  
+00:14 +2 -13: screen catalog registration_pink_day_320_1.6
+00:14 +3 -13: screen catalog registration_pink_day_360_1.0
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞═════════════════
+The following assertion was thrown while running async test code:
+Golden "goldens/catalog/registration_pink_day_360_1.0.png": Pixel
+test failed, 11.34%, 36756px diff detected.
+Failure feedback can be found at
+/workspace/maqwati/test/ui_audit/failures
+
+When the exception was thrown, this was the stack:
+#0      LocalFileComparator.compare (package:flutter_test/src/_goldens_io.dart:108:5)
+<asynchronous suspension>
+#1      MatchesGoldenFile.matchAsync.<anonymous closure> (package:flutter_test/src/_matchers_io.dart:124:32)
+<asynchronous suspension>
+<asynchronous suspension>
+#3      _expect.<anonymous closure> (package:matcher/src/expect/expect.dart:153:17)
+<asynchronous suspension>
+<asynchronous suspension>
+#5      expectLater.<anonymous closure> (package:flutter_test/src/widget_tester.dart:508:19)
+<asynchronous suspension>
+#6      main.<anonymous closure>.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart:171:25)
+<asynchronous suspension>
+#7      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#8      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 3 frames from dart:async and package:stack_trace)
+
+The exception was caught asynchronously.
+═════════════════════════════════════════════════════════════════
+
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞═════════════════
+The following TestFailure was thrown running a test:
+Expected: null
+  Actual: FlutterError:<Golden
+"goldens/catalog/registration_pink_day_360_1.0.png": Pixel test
+failed, 11.34%, 36756px diff detected.
+          Failure feedback can be found at
+/workspace/maqwati/test/ui_audit/failures>
+Overflow while scrolling lazy content (step 0)
+
+When the exception was thrown, this was the stack:
+#4      auditVerticalContent (file:///workspace/maqwati/test/ui_audit/scroll_audit.dart:18:5)
+<asynchronous suspension>
+#5      main.<anonymous closure>.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart:175:23)
+<asynchronous suspension>
+#6      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#7      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///workspace/maqwati/test/ui_audit/scroll_audit.dart line 18
+The test description was:
+  screen catalog registration_pink_day_360_1.0
+═════════════════════════════════════════════════════════════════
+
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: null
+  Actual: FlutterError:<Golden "goldens/catalog/registration_pink_day_360_1.0.png": Pixel test
+failed, 11.34%, 36756px diff detected.
+          Failure feedback can be found at /workspace/maqwati/test/ui_audit/failures>
+Overflow while scrolling lazy content (step 0)
+
+When the exception was thrown, this was the stack:
+#4      auditVerticalContent (file:///workspace/maqwati/test/ui_audit/scroll_audit.dart:18:5)
+<asynchronous suspension>
+#5      main.<anonymous closure>.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart:175:23)
+<asynchronous suspension>
+#6      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#7      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///workspace/maqwati/test/ui_audit/scroll_audit.dart line 18
+The test description was:
+  screen catalog registration_pink_day_360_1.0
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:15 +3 -14: screen catalog registration_pink_day_360_1.0 [E]
+  Test failed. See exception logs above.
+  The test description was: screen catalog registration_pink_day_360_1.0
+  
+00:15 +3 -14: screen catalog registration_pink_day_390_1.0
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞═════════════════
+The following assertion was thrown while running async test code:
+Golden "goldens/catalog/registration_pink_day_390_1.0.png": Pixel
+test failed, 11.43%, 40134px diff detected.
+Failure feedback can be found at
+/workspace/maqwati/test/ui_audit/failures
+
+When the exception was thrown, this was the stack:
+#0      LocalFileComparator.compare (package:flutter_test/src/_goldens_io.dart:108:5)
+<asynchronous suspension>
+#1      MatchesGoldenFile.matchAsync.<anonymous closure> (package:flutter_test/src/_matchers_io.dart:124:32)
+<asynchronous suspension>
+<asynchronous suspension>
+#3      _expect.<anonymous closure> (package:matcher/src/expect/expect.dart:153:17)
+<asynchronous suspension>
+<asynchronous suspension>
+#5      expectLater.<anonymous closure> (package:flutter_test/src/widget_tester.dart:508:19)
+<asynchronous suspension>
+#6      main.<anonymous closure>.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart:171:25)
+<asynchronous suspension>
+#7      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#8      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 3 frames from dart:async and package:stack_trace)
+
+The exception was caught asynchronously.
+═════════════════════════════════════════════════════════════════
+
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞═════════════════
+The following TestFailure was thrown running a test:
+Expected: null
+  Actual: FlutterError:<Golden
+"goldens/catalog/registration_pink_day_390_1.0.png": Pixel test
+failed, 11.43%, 40134px diff detected.
+          Failure feedback can be found at
+/workspace/maqwati/test/ui_audit/failures>
+Overflow while scrolling lazy content (step 0)
+
+When the exception was thrown, this was the stack:
+#4      auditVerticalContent (file:///workspace/maqwati/test/ui_audit/scroll_audit.dart:18:5)
+<asynchronous suspension>
+#5      main.<anonymous closure>.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart:175:23)
+<asynchronous suspension>
+#6      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#7      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///workspace/maqwati/test/ui_audit/scroll_audit.dart line 18
+The test description was:
+  screen catalog registration_pink_day_390_1.0
+═════════════════════════════════════════════════════════════════
+
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: null
+  Actual: FlutterError:<Golden "goldens/catalog/registration_pink_day_390_1.0.png": Pixel test
+failed, 11.43%, 40134px diff detected.
+          Failure feedback can be found at /workspace/maqwati/test/ui_audit/failures>
+Overflow while scrolling lazy content (step 0)
+
+When the exception was thrown, this was the stack:
+#4      auditVerticalContent (file:///workspace/maqwati/test/ui_audit/scroll_audit.dart:18:5)
+<asynchronous suspension>
+#5      main.<anonymous closure>.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart:175:23)
+<asynchronous suspension>
+#6      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#7      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///workspace/maqwati/test/ui_audit/scroll_audit.dart line 18
+The test description was:
+  screen catalog registration_pink_day_390_1.0
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:15 +3 -15: screen catalog registration_pink_day_390_1.0 [E]
+  Test failed. See exception logs above.
+  The test description was: screen catalog registration_pink_day_390_1.0
+  
+00:15 +3 -15: screen catalog registration_pink_day_430_1.0
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞═════════════════
+The following assertion was thrown while running async test code:
+Golden "goldens/catalog/registration_pink_day_430_1.0.png": Pixel
+test failed, 11.77%, 45534px diff detected.
+Failure feedback can be found at
+/workspace/maqwati/test/ui_audit/failures
+
+When the exception was thrown, this was the stack:
+#0      LocalFileComparator.compare (package:flutter_test/src/_goldens_io.dart:108:5)
+<asynchronous suspension>
+#1      MatchesGoldenFile.matchAsync.<anonymous closure> (package:flutter_test/src/_matchers_io.dart:124:32)
+<asynchronous suspension>
+<asynchronous suspension>
+#3      _expect.<anonymous closure> (package:matcher/src/expect/expect.dart:153:17)
+<asynchronous suspension>
+<asynchronous suspension>
+#5      expectLater.<anonymous closure> (package:flutter_test/src/widget_tester.dart:508:19)
+<asynchronous suspension>
+#6      main.<anonymous closure>.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart:171:25)
+<asynchronous suspension>
+#7      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#8      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 3 frames from dart:async and package:stack_trace)
+
+The exception was caught asynchronously.
+═════════════════════════════════════════════════════════════════
+
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞═════════════════
+The following TestFailure was thrown running a test:
+Expected: null
+  Actual: FlutterError:<Golden
+"goldens/catalog/registration_pink_day_430_1.0.png": Pixel test
+failed, 11.77%, 45534px diff detected.
+          Failure feedback can be found at
+/workspace/maqwati/test/ui_audit/failures>
+Overflow while scrolling lazy content (step 0)
+
+When the exception was thrown, this was the stack:
+#4      auditVerticalContent (file:///workspace/maqwati/test/ui_audit/scroll_audit.dart:18:5)
+<asynchronous suspension>
+#5      main.<anonymous closure>.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart:175:23)
+<asynchronous suspension>
+#6      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#7      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///workspace/maqwati/test/ui_audit/scroll_audit.dart line 18
+The test description was:
+  screen catalog registration_pink_day_430_1.0
+═════════════════════════════════════════════════════════════════
+
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: null
+  Actual: FlutterError:<Golden "goldens/catalog/registration_pink_day_430_1.0.png": Pixel test
+failed, 11.77%, 45534px diff detected.
+          Failure feedback can be found at /workspace/maqwati/test/ui_audit/failures>
+Overflow while scrolling lazy content (step 0)
+
+When the exception was thrown, this was the stack:
+#4      auditVerticalContent (file:///workspace/maqwati/test/ui_audit/scroll_audit.dart:18:5)
+<asynchronous suspension>
+#5      main.<anonymous closure>.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart:175:23)
+<asynchronous suspension>
+#6      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#7      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///workspace/maqwati/test/ui_audit/scroll_audit.dart line 18
+The test description was:
+  screen catalog registration_pink_day_430_1.0
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:16 +3 -16: screen catalog registration_pink_day_430_1.0 [E]
+  Test failed. See exception logs above.
+  The test description was: screen catalog registration_pink_day_430_1.0
+  
+00:16 +3 -16: screen catalog registration_pink_day_600_1.0
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞═════════════════
+The following assertion was thrown while running async test code:
+Golden "goldens/catalog/registration_pink_day_600_1.0.png": Pixel
+test failed, 9.98%, 53904px diff detected.
+Failure feedback can be found at
+/workspace/maqwati/test/ui_audit/failures
+
+When the exception was thrown, this was the stack:
+#0      LocalFileComparator.compare (package:flutter_test/src/_goldens_io.dart:108:5)
+<asynchronous suspension>
+#1      MatchesGoldenFile.matchAsync.<anonymous closure> (package:flutter_test/src/_matchers_io.dart:124:32)
+<asynchronous suspension>
+<asynchronous suspension>
+#3      _expect.<anonymous closure> (package:matcher/src/expect/expect.dart:153:17)
+<asynchronous suspension>
+<asynchronous suspension>
+#5      expectLater.<anonymous closure> (package:flutter_test/src/widget_tester.dart:508:19)
+<asynchronous suspension>
+#6      main.<anonymous closure>.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart:171:25)
+<asynchronous suspension>
+#7      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#8      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 3 frames from dart:async and package:stack_trace)
+
+The exception was caught asynchronously.
+═════════════════════════════════════════════════════════════════
+
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞═════════════════
+The following TestFailure was thrown running a test:
+Expected: null
+  Actual: FlutterError:<Golden
+"goldens/catalog/registration_pink_day_600_1.0.png": Pixel test
+failed, 9.98%, 53904px diff detected.
+          Failure feedback can be found at
+/workspace/maqwati/test/ui_audit/failures>
+Overflow while scrolling lazy content (step 0)
+
+When the exception was thrown, this was the stack:
+#4      auditVerticalContent (file:///workspace/maqwati/test/ui_audit/scroll_audit.dart:18:5)
+<asynchronous suspension>
+#5      main.<anonymous closure>.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart:175:23)
+<asynchronous suspension>
+#6      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#7      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///workspace/maqwati/test/ui_audit/scroll_audit.dart line 18
+The test description was:
+  screen catalog registration_pink_day_600_1.0
+═════════════════════════════════════════════════════════════════
+
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: null
+  Actual: FlutterError:<Golden "goldens/catalog/registration_pink_day_600_1.0.png": Pixel test
+failed, 9.98%, 53904px diff detected.
+          Failure feedback can be found at /workspace/maqwati/test/ui_audit/failures>
+Overflow while scrolling lazy content (step 0)
+
+When the exception was thrown, this was the stack:
+#4      auditVerticalContent (file:///workspace/maqwati/test/ui_audit/scroll_audit.dart:18:5)
+<asynchronous suspension>
+#5      main.<anonymous closure>.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart:175:23)
+<asynchronous suspension>
+#6      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#7      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///workspace/maqwati/test/ui_audit/scroll_audit.dart line 18
+The test description was:
+  screen catalog registration_pink_day_600_1.0
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:17 +3 -17: screen catalog registration_pink_day_600_1.0 [E]
+  Test failed. See exception logs above.
+  The test description was: screen catalog registration_pink_day_600_1.0
+  
+00:17 +3 -17: screen catalog registration_pink_day_800_1.0
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞═════════════════
+The following assertion was thrown while running async test code:
+Golden "goldens/catalog/registration_pink_day_800_1.0.png": Pixel
+test failed, 7.49%, 53904px diff detected.
+Failure feedback can be found at
+/workspace/maqwati/test/ui_audit/failures
+
+When the exception was thrown, this was the stack:
+#0      LocalFileComparator.compare (package:flutter_test/src/_goldens_io.dart:108:5)
+<asynchronous suspension>
+#1      MatchesGoldenFile.matchAsync.<anonymous closure> (package:flutter_test/src/_matchers_io.dart:124:32)
+<asynchronous suspension>
+<asynchronous suspension>
+#3      _expect.<anonymous closure> (package:matcher/src/expect/expect.dart:153:17)
+<asynchronous suspension>
+<asynchronous suspension>
+#5      expectLater.<anonymous closure> (package:flutter_test/src/widget_tester.dart:508:19)
+<asynchronous suspension>
+#6      main.<anonymous closure>.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart:171:25)
+<asynchronous suspension>
+#7      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#8      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 3 frames from dart:async and package:stack_trace)
+
+The exception was caught asynchronously.
+═════════════════════════════════════════════════════════════════
+
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞═════════════════
+The following TestFailure was thrown running a test:
+Expected: null
+  Actual: FlutterError:<Golden
+"goldens/catalog/registration_pink_day_800_1.0.png": Pixel test
+failed, 7.49%, 53904px diff detected.
+          Failure feedback can be found at
+/workspace/maqwati/test/ui_audit/failures>
+Overflow while scrolling lazy content (step 0)
+
+When the exception was thrown, this was the stack:
+#4      auditVerticalContent (file:///workspace/maqwati/test/ui_audit/scroll_audit.dart:18:5)
+<asynchronous suspension>
+#5      main.<anonymous closure>.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart:175:23)
+<asynchronous suspension>
+#6      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#7      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///workspace/maqwati/test/ui_audit/scroll_audit.dart line 18
+The test description was:
+  screen catalog registration_pink_day_800_1.0
+═════════════════════════════════════════════════════════════════
+
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: null
+  Actual: FlutterError:<Golden "goldens/catalog/registration_pink_day_800_1.0.png": Pixel test
+failed, 7.49%, 53904px diff detected.
+          Failure feedback can be found at /workspace/maqwati/test/ui_audit/failures>
+Overflow while scrolling lazy content (step 0)
+
+When the exception was thrown, this was the stack:
+#4      auditVerticalContent (file:///workspace/maqwati/test/ui_audit/scroll_audit.dart:18:5)
+<asynchronous suspension>
+#5      main.<anonymous closure>.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart:175:23)
+<asynchronous suspension>
+#6      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#7      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///workspace/maqwati/test/ui_audit/scroll_audit.dart line 18
+The test description was:
+  screen catalog registration_pink_day_800_1.0
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:17 +3 -18: screen catalog registration_pink_day_800_1.0 [E]
+  Test failed. See exception logs above.
+  The test description was: screen catalog registration_pink_day_800_1.0
+  
+00:17 +3 -18: screen catalog registration_pink_night_320_1.0
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞═════════════════
+The following assertion was thrown while running async test code:
+Golden "goldens/catalog/registration_pink_night_320_1.0.png":
+Pixel test failed, 11.57%, 33320px diff detected.
+Failure feedback can be found at
+/workspace/maqwati/test/ui_audit/failures
+
+When the exception was thrown, this was the stack:
+#0      LocalFileComparator.compare (package:flutter_test/src/_goldens_io.dart:108:5)
+<asynchronous suspension>
+#1      MatchesGoldenFile.matchAsync.<anonymous closure> (package:flutter_test/src/_matchers_io.dart:124:32)
+<asynchronous suspension>
+<asynchronous suspension>
+#3      _expect.<anonymous closure> (package:matcher/src/expect/expect.dart:153:17)
+<asynchronous suspension>
+<asynchronous suspension>
+#5      expectLater.<anonymous closure> (package:flutter_test/src/widget_tester.dart:508:19)
+<asynchronous suspension>
+#6      main.<anonymous closure>.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart:171:25)
+<asynchronous suspension>
+#7      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#8      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 3 frames from dart:async and package:stack_trace)
+
+The exception was caught asynchronously.
+═════════════════════════════════════════════════════════════════
+
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞═════════════════
+The following TestFailure was thrown running a test:
+Expected: null
+  Actual: FlutterError:<Golden
+"goldens/catalog/registration_pink_night_320_1.0.png": Pixel test
+failed, 11.57%, 33320px diff detected.
+          Failure feedback can be found at
+/workspace/maqwati/test/ui_audit/failures>
+Overflow while scrolling lazy content (step 0)
+
+When the exception was thrown, this was the stack:
+#4      auditVerticalContent (file:///workspace/maqwati/test/ui_audit/scroll_audit.dart:18:5)
+<asynchronous suspension>
+#5      main.<anonymous closure>.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart:175:23)
+<asynchronous suspension>
+#6      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#7      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///workspace/maqwati/test/ui_audit/scroll_audit.dart line 18
+The test description was:
+  screen catalog registration_pink_night_320_1.0
+═════════════════════════════════════════════════════════════════
+
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: null
+  Actual: FlutterError:<Golden "goldens/catalog/registration_pink_night_320_1.0.png": Pixel test
+failed, 11.57%, 33320px diff detected.
+          Failure feedback can be found at /workspace/maqwati/test/ui_audit/failures>
+Overflow while scrolling lazy content (step 0)
+
+When the exception was thrown, this was the stack:
+#4      auditVerticalContent (file:///workspace/maqwati/test/ui_audit/scroll_audit.dart:18:5)
+<asynchronous suspension>
+#5      main.<anonymous closure>.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart:175:23)
+<asynchronous suspension>
+#6      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#7      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///workspace/maqwati/test/ui_audit/scroll_audit.dart line 18
+The test description was:
+  screen catalog registration_pink_night_320_1.0
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:18 +3 -19: screen catalog registration_pink_night_320_1.0 [E]
+  Test failed. See exception logs above.
+  The test description was: screen catalog registration_pink_night_320_1.0
+  
+00:18 +3 -19: screen catalog registration_pink_night_320_1.6
+00:18 +4 -19: screen catalog registration_pink_night_360_1.0
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞═════════════════
+The following assertion was thrown while running async test code:
+Golden "goldens/catalog/registration_pink_night_360_1.0.png":
+Pixel test failed, 11.35%, 36764px diff detected.
+Failure feedback can be found at
+/workspace/maqwati/test/ui_audit/failures
+
+When the exception was thrown, this was the stack:
+#0      LocalFileComparator.compare (package:flutter_test/src/_goldens_io.dart:108:5)
+<asynchronous suspension>
+#1      MatchesGoldenFile.matchAsync.<anonymous closure> (package:flutter_test/src/_matchers_io.dart:124:32)
+<asynchronous suspension>
+<asynchronous suspension>
+#3      _expect.<anonymous closure> (package:matcher/src/expect/expect.dart:153:17)
+<asynchronous suspension>
+<asynchronous suspension>
+#5      expectLater.<anonymous closure> (package:flutter_test/src/widget_tester.dart:508:19)
+<asynchronous suspension>
+#6      main.<anonymous closure>.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart:171:25)
+<asynchronous suspension>
+#7      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#8      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 3 frames from dart:async and package:stack_trace)
+
+The exception was caught asynchronously.
+═════════════════════════════════════════════════════════════════
+
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞═════════════════
+The following TestFailure was thrown running a test:
+Expected: null
+  Actual: FlutterError:<Golden
+"goldens/catalog/registration_pink_night_360_1.0.png": Pixel test
+failed, 11.35%, 36764px diff detected.
+          Failure feedback can be found at
+/workspace/maqwati/test/ui_audit/failures>
+Overflow while scrolling lazy content (step 0)
+
+When the exception was thrown, this was the stack:
+#4      auditVerticalContent (file:///workspace/maqwati/test/ui_audit/scroll_audit.dart:18:5)
+<asynchronous suspension>
+#5      main.<anonymous closure>.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart:175:23)
+<asynchronous suspension>
+#6      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#7      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///workspace/maqwati/test/ui_audit/scroll_audit.dart line 18
+The test description was:
+  screen catalog registration_pink_night_360_1.0
+═════════════════════════════════════════════════════════════════
+
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: null
+  Actual: FlutterError:<Golden "goldens/catalog/registration_pink_night_360_1.0.png": Pixel test
+failed, 11.35%, 36764px diff detected.
+          Failure feedback can be found at /workspace/maqwati/test/ui_audit/failures>
+Overflow while scrolling lazy content (step 0)
+
+When the exception was thrown, this was the stack:
+#4      auditVerticalContent (file:///workspace/maqwati/test/ui_audit/scroll_audit.dart:18:5)
+<asynchronous suspension>
+#5      main.<anonymous closure>.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart:175:23)
+<asynchronous suspension>
+#6      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#7      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///workspace/maqwati/test/ui_audit/scroll_audit.dart line 18
+The test description was:
+  screen catalog registration_pink_night_360_1.0
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:19 +4 -20: screen catalog registration_pink_night_360_1.0 [E]
+  Test failed. See exception logs above.
+  The test description was: screen catalog registration_pink_night_360_1.0
+  
+00:19 +4 -20: screen catalog registration_pink_night_390_1.0
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞═════════════════
+The following assertion was thrown while running async test code:
+Golden "goldens/catalog/registration_pink_night_390_1.0.png":
+Pixel test failed, 11.45%, 40185px diff detected.
+Failure feedback can be found at
+/workspace/maqwati/test/ui_audit/failures
+
+When the exception was thrown, this was the stack:
+#0      LocalFileComparator.compare (package:flutter_test/src/_goldens_io.dart:108:5)
+<asynchronous suspension>
+#1      MatchesGoldenFile.matchAsync.<anonymous closure> (package:flutter_test/src/_matchers_io.dart:124:32)
+<asynchronous suspension>
+<asynchronous suspension>
+#3      _expect.<anonymous closure> (package:matcher/src/expect/expect.dart:153:17)
+<asynchronous suspension>
+<asynchronous suspension>
+#5      expectLater.<anonymous closure> (package:flutter_test/src/widget_tester.dart:508:19)
+<asynchronous suspension>
+#6      main.<anonymous closure>.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart:171:25)
+<asynchronous suspension>
+#7      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#8      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 3 frames from dart:async and package:stack_trace)
+
+The exception was caught asynchronously.
+═════════════════════════════════════════════════════════════════
+
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞═════════════════
+The following TestFailure was thrown running a test:
+Expected: null
+  Actual: FlutterError:<Golden
+"goldens/catalog/registration_pink_night_390_1.0.png": Pixel test
+failed, 11.45%, 40185px diff detected.
+          Failure feedback can be found at
+/workspace/maqwati/test/ui_audit/failures>
+Overflow while scrolling lazy content (step 0)
+
+When the exception was thrown, this was the stack:
+#4      auditVerticalContent (file:///workspace/maqwati/test/ui_audit/scroll_audit.dart:18:5)
+<asynchronous suspension>
+#5      main.<anonymous closure>.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart:175:23)
+<asynchronous suspension>
+#6      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#7      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///workspace/maqwati/test/ui_audit/scroll_audit.dart line 18
+The test description was:
+  screen catalog registration_pink_night_390_1.0
+═════════════════════════════════════════════════════════════════
+
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: null
+  Actual: FlutterError:<Golden "goldens/catalog/registration_pink_night_390_1.0.png": Pixel test
+failed, 11.45%, 40185px diff detected.
+          Failure feedback can be found at /workspace/maqwati/test/ui_audit/failures>
+Overflow while scrolling lazy content (step 0)
+
+When the exception was thrown, this was the stack:
+#4      auditVerticalContent (file:///workspace/maqwati/test/ui_audit/scroll_audit.dart:18:5)
+<asynchronous suspension>
+#5      main.<anonymous closure>.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart:175:23)
+<asynchronous suspension>
+#6      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#7      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///workspace/maqwati/test/ui_audit/scroll_audit.dart line 18
+The test description was:
+  screen catalog registration_pink_night_390_1.0
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:19 +4 -21: screen catalog registration_pink_night_390_1.0 [E]
+  Test failed. See exception logs above.
+  The test description was: screen catalog registration_pink_night_390_1.0
+  
+00:19 +4 -21: screen catalog registration_pink_night_430_1.0
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞═════════════════
+The following assertion was thrown while running async test code:
+Golden "goldens/catalog/registration_pink_night_430_1.0.png":
+Pixel test failed, 11.78%, 45585px diff detected.
+Failure feedback can be found at
+/workspace/maqwati/test/ui_audit/failures
+
+When the exception was thrown, this was the stack:
+#0      LocalFileComparator.compare (package:flutter_test/src/_goldens_io.dart:108:5)
+<asynchronous suspension>
+#1      MatchesGoldenFile.matchAsync.<anonymous closure> (package:flutter_test/src/_matchers_io.dart:124:32)
+<asynchronous suspension>
+<asynchronous suspension>
+#3      _expect.<anonymous closure> (package:matcher/src/expect/expect.dart:153:17)
+<asynchronous suspension>
+<asynchronous suspension>
+#5      expectLater.<anonymous closure> (package:flutter_test/src/widget_tester.dart:508:19)
+<asynchronous suspension>
+#6      main.<anonymous closure>.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart:171:25)
+<asynchronous suspension>
+#7      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#8      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 3 frames from dart:async and package:stack_trace)
+
+The exception was caught asynchronously.
+═════════════════════════════════════════════════════════════════
+
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞═════════════════
+The following TestFailure was thrown running a test:
+Expected: null
+  Actual: FlutterError:<Golden
+"goldens/catalog/registration_pink_night_430_1.0.png": Pixel test
+failed, 11.78%, 45585px diff detected.
+          Failure feedback can be found at
+/workspace/maqwati/test/ui_audit/failures>
+Overflow while scrolling lazy content (step 0)
+
+When the exception was thrown, this was the stack:
+#4      auditVerticalContent (file:///workspace/maqwati/test/ui_audit/scroll_audit.dart:18:5)
+<asynchronous suspension>
+#5      main.<anonymous closure>.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart:175:23)
+<asynchronous suspension>
+#6      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#7      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///workspace/maqwati/test/ui_audit/scroll_audit.dart line 18
+The test description was:
+  screen catalog registration_pink_night_430_1.0
+═════════════════════════════════════════════════════════════════
+
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: null
+  Actual: FlutterError:<Golden "goldens/catalog/registration_pink_night_430_1.0.png": Pixel test
+failed, 11.78%, 45585px diff detected.
+          Failure feedback can be found at /workspace/maqwati/test/ui_audit/failures>
+Overflow while scrolling lazy content (step 0)
+
+When the exception was thrown, this was the stack:
+#4      auditVerticalContent (file:///workspace/maqwati/test/ui_audit/scroll_audit.dart:18:5)
+<asynchronous suspension>
+#5      main.<anonymous closure>.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart:175:23)
+<asynchronous suspension>
+#6      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#7      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///workspace/maqwati/test/ui_audit/scroll_audit.dart line 18
+The test description was:
+  screen catalog registration_pink_night_430_1.0
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:20 +4 -22: screen catalog registration_pink_night_430_1.0 [E]
+  Test failed. See exception logs above.
+  The test description was: screen catalog registration_pink_night_430_1.0
+  
+00:20 +4 -22: screen catalog registration_pink_night_600_1.0
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞═════════════════
+The following assertion was thrown while running async test code:
+Golden "goldens/catalog/registration_pink_night_600_1.0.png":
+Pixel test failed, 9.99%, 53955px diff detected.
+Failure feedback can be found at
+/workspace/maqwati/test/ui_audit/failures
+
+When the exception was thrown, this was the stack:
+#0      LocalFileComparator.compare (package:flutter_test/src/_goldens_io.dart:108:5)
+<asynchronous suspension>
+#1      MatchesGoldenFile.matchAsync.<anonymous closure> (package:flutter_test/src/_matchers_io.dart:124:32)
+<asynchronous suspension>
+<asynchronous suspension>
+#3      _expect.<anonymous closure> (package:matcher/src/expect/expect.dart:153:17)
+<asynchronous suspension>
+<asynchronous suspension>
+#5      expectLater.<anonymous closure> (package:flutter_test/src/widget_tester.dart:508:19)
+<asynchronous suspension>
+#6      main.<anonymous closure>.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart:171:25)
+<asynchronous suspension>
+#7      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#8      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 3 frames from dart:async and package:stack_trace)
+
+The exception was caught asynchronously.
+═════════════════════════════════════════════════════════════════
+
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞═════════════════
+The following TestFailure was thrown running a test:
+Expected: null
+  Actual: FlutterError:<Golden
+"goldens/catalog/registration_pink_night_600_1.0.png": Pixel test
+failed, 9.99%, 53955px diff detected.
+          Failure feedback can be found at
+/workspace/maqwati/test/ui_audit/failures>
+Overflow while scrolling lazy content (step 0)
+
+When the exception was thrown, this was the stack:
+#4      auditVerticalContent (file:///workspace/maqwati/test/ui_audit/scroll_audit.dart:18:5)
+<asynchronous suspension>
+#5      main.<anonymous closure>.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart:175:23)
+<asynchronous suspension>
+#6      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#7      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///workspace/maqwati/test/ui_audit/scroll_audit.dart line 18
+The test description was:
+  screen catalog registration_pink_night_600_1.0
+═════════════════════════════════════════════════════════════════
+
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: null
+  Actual: FlutterError:<Golden "goldens/catalog/registration_pink_night_600_1.0.png": Pixel test
+failed, 9.99%, 53955px diff detected.
+          Failure feedback can be found at /workspace/maqwati/test/ui_audit/failures>
+Overflow while scrolling lazy content (step 0)
+
+When the exception was thrown, this was the stack:
+#4      auditVerticalContent (file:///workspace/maqwati/test/ui_audit/scroll_audit.dart:18:5)
+<asynchronous suspension>
+#5      main.<anonymous closure>.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart:175:23)
+<asynchronous suspension>
+#6      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#7      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///workspace/maqwati/test/ui_audit/scroll_audit.dart line 18
+The test description was:
+  screen catalog registration_pink_night_600_1.0
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:21 +4 -23: screen catalog registration_pink_night_600_1.0 [E]
+  Test failed. See exception logs above.
+  The test description was: screen catalog registration_pink_night_600_1.0
+  
+00:21 +4 -23: screen catalog registration_pink_night_800_1.0
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞═════════════════
+The following assertion was thrown while running async test code:
+Golden "goldens/catalog/registration_pink_night_800_1.0.png":
+Pixel test failed, 7.49%, 53955px diff detected.
+Failure feedback can be found at
+/workspace/maqwati/test/ui_audit/failures
+
+When the exception was thrown, this was the stack:
+#0      LocalFileComparator.compare (package:flutter_test/src/_goldens_io.dart:108:5)
+<asynchronous suspension>
+#1      MatchesGoldenFile.matchAsync.<anonymous closure> (package:flutter_test/src/_matchers_io.dart:124:32)
+<asynchronous suspension>
+<asynchronous suspension>
+#3      _expect.<anonymous closure> (package:matcher/src/expect/expect.dart:153:17)
+<asynchronous suspension>
+<asynchronous suspension>
+#5      expectLater.<anonymous closure> (package:flutter_test/src/widget_tester.dart:508:19)
+<asynchronous suspension>
+#6      main.<anonymous closure>.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart:171:25)
+<asynchronous suspension>
+#7      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#8      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 3 frames from dart:async and package:stack_trace)
+
+The exception was caught asynchronously.
+═════════════════════════════════════════════════════════════════
+
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞═════════════════
+The following TestFailure was thrown running a test:
+Expected: null
+  Actual: FlutterError:<Golden
+"goldens/catalog/registration_pink_night_800_1.0.png": Pixel test
+failed, 7.49%, 53955px diff detected.
+          Failure feedback can be found at
+/workspace/maqwati/test/ui_audit/failures>
+Overflow while scrolling lazy content (step 0)
+
+When the exception was thrown, this was the stack:
+#4      auditVerticalContent (file:///workspace/maqwati/test/ui_audit/scroll_audit.dart:18:5)
+<asynchronous suspension>
+#5      main.<anonymous closure>.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart:175:23)
+<asynchronous suspension>
+#6      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#7      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///workspace/maqwati/test/ui_audit/scroll_audit.dart line 18
+The test description was:
+  screen catalog registration_pink_night_800_1.0
+═════════════════════════════════════════════════════════════════
+
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: null
+  Actual: FlutterError:<Golden "goldens/catalog/registration_pink_night_800_1.0.png": Pixel test
+failed, 7.49%, 53955px diff detected.
+          Failure feedback can be found at /workspace/maqwati/test/ui_audit/failures>
+Overflow while scrolling lazy content (step 0)
+
+When the exception was thrown, this was the stack:
+#4      auditVerticalContent (file:///workspace/maqwati/test/ui_audit/scroll_audit.dart:18:5)
+<asynchronous suspension>
+#5      main.<anonymous closure>.<anonymous closure> (file:///workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart:175:23)
+<asynchronous suspension>
+#6      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#7      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///workspace/maqwati/test/ui_audit/scroll_audit.dart line 18
+The test description was:
+  screen catalog registration_pink_night_800_1.0
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:22 +4 -24: screen catalog registration_pink_night_800_1.0 [E]
+  Test failed. See exception logs above.
+  The test description was: screen catalog registration_pink_night_800_1.0
+  
+00:22 +4 -24: (tearDownAll)
+00:22 +4 -24: Some tests failed.
+
+Failing tests:
+  /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog registration_blue_day_320_1.0
+  /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog registration_blue_day_360_1.0
+  /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog registration_blue_day_390_1.0
+  /workspace/maqwati/test/ui_audit/screen_catalog_matrix_test.dart: screen catalog registration_blue_day_430_1.0
+  ... and 20 more

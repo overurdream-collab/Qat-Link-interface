@@ -1,0 +1,52 @@
+00:00 +0: loading /workspace/maqwati/test/ui_audit/currency_accessibility_test.dart
+00:00 +0: (setUpAll)
+00:00 +0: long approved amount false false CurrencyCode.yer 220.0 1.0
+00:00 +1: long approved amount false false CurrencyCode.yer 220.0 1.6
+00:01 +2: long approved amount false false CurrencyCode.yer 320.0 1.0
+00:01 +3: long approved amount false false CurrencyCode.yer 320.0 1.6
+00:01 +4: long approved amount false false CurrencyCode.sar 220.0 1.0
+00:01 +5: long approved amount false false CurrencyCode.sar 220.0 1.6
+00:01 +6: long approved amount false false CurrencyCode.sar 320.0 1.0
+00:01 +7: long approved amount false false CurrencyCode.sar 320.0 1.6
+00:01 +8: long approved amount false false CurrencyCode.usd 220.0 1.0
+00:01 +9: long approved amount false false CurrencyCode.usd 220.0 1.6
+00:01 +10: long approved amount false false CurrencyCode.usd 320.0 1.0
+00:01 +11: long approved amount false false CurrencyCode.usd 320.0 1.6
+00:01 +12: long approved amount false true CurrencyCode.yer 220.0 1.0
+00:01 +13: long approved amount false true CurrencyCode.yer 220.0 1.6
+00:01 +14: long approved amount false true CurrencyCode.yer 320.0 1.0
+00:01 +15: long approved amount false true CurrencyCode.yer 320.0 1.6
+00:01 +16: long approved amount false true CurrencyCode.sar 220.0 1.0
+00:01 +17: long approved amount false true CurrencyCode.sar 220.0 1.6
+00:01 +18: long approved amount false true CurrencyCode.sar 320.0 1.0
+00:02 +19: long approved amount false true CurrencyCode.sar 320.0 1.6
+00:02 +20: long approved amount false true CurrencyCode.usd 220.0 1.0
+00:02 +21: long approved amount false true CurrencyCode.usd 220.0 1.6
+00:02 +22: long approved amount false true CurrencyCode.usd 320.0 1.0
+00:02 +23: long approved amount false true CurrencyCode.usd 320.0 1.6
+00:02 +24: long approved amount true false CurrencyCode.yer 220.0 1.0
+00:02 +25: long approved amount true false CurrencyCode.yer 220.0 1.6
+00:02 +26: long approved amount true false CurrencyCode.yer 320.0 1.0
+00:02 +27: long approved amount true false CurrencyCode.yer 320.0 1.6
+00:02 +28: long approved amount true false CurrencyCode.sar 220.0 1.0
+00:02 +29: long approved amount true false CurrencyCode.sar 220.0 1.6
+00:02 +30: long approved amount true false CurrencyCode.sar 320.0 1.0
+00:02 +31: long approved amount true false CurrencyCode.sar 320.0 1.6
+00:02 +32: long approved amount true false CurrencyCode.usd 220.0 1.0
+00:02 +33: long approved amount true false CurrencyCode.usd 220.0 1.6
+00:02 +34: long approved amount true false CurrencyCode.usd 320.0 1.0
+00:02 +35: long approved amount true false CurrencyCode.usd 320.0 1.6
+00:02 +36: long approved amount true true CurrencyCode.yer 220.0 1.0
+00:02 +37: long approved amount true true CurrencyCode.yer 220.0 1.6
+00:02 +38: long approved amount true true CurrencyCode.yer 320.0 1.0
+00:03 +39: long approved amount true true CurrencyCode.yer 320.0 1.6
+00:03 +40: long approved amount true true CurrencyCode.sar 220.0 1.0
+00:03 +41: long approved amount true true CurrencyCode.sar 220.0 1.6
+00:03 +42: long approved amount true true CurrencyCode.sar 320.0 1.0
+00:03 +43: long approved amount true true CurrencyCode.sar 320.0 1.6
+00:03 +44: long approved amount true true CurrencyCode.usd 220.0 1.0
+00:03 +45: long approved amount true true CurrencyCode.usd 220.0 1.6
+00:03 +46: long approved amount true true CurrencyCode.usd 320.0 1.0
+00:03 +47: long approved amount true true CurrencyCode.usd 320.0 1.6
+00:03 +48: (tearDownAll)
+00:03 +48: All tests passed!

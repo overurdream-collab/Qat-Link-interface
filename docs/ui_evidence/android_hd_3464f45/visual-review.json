@@ -1,0 +1,28 @@
+{
+  "source_commit": "3464f459672f941c311fc9e03f0bf167597f1c1b",
+  "review_method": "Visual inspection of decoded native screenshots and contact sheets; not an exhaustive pixel review or owner sign-off",
+  "reviewed": [
+    "phone-matrix.png (24 theme/width starts)",
+    "phone/blue_day_390.png",
+    "phone/pink_night_390.png",
+    "phone/form_validation_390.png",
+    "phone/form_keyboard_390.png",
+    "phone/form_offline_gate_390.png",
+    "developer-blue_day.png (13 states)",
+    "developer-blue_night.png (13 states)",
+    "developer-pink_day.png (13 states)",
+    "developer-pink_night.png (13 states)"
+  ],
+  "findings": {
+    "asset_visibility": "PASS: latest male curved jambiya, female without jambiya, bitmap logo all visible; no generic user icon fallback",
+    "theme_character_selection": "PASS for interface characters; approved marketing banners explicitly exempted by owner",
+    "logo_language_overlap": "No overlap in inspected screenshots; rectangle assertion also enforced in widget matrix",
+    "native_layout_scope": "No RenderFlex/crash/missing-asset signatures found in collected logs; form controls reachable by scrolling, not all footer items fit in the initial viewport",
+    "native_ime_scope": "blue_day at390 only; other themes have widget-level keyboard coverage, not native IME evidence",
+    "parity": "NOT VERIFIED: generated derivatives are not pixel-identical masters; glow, CTA gradient and composition still differ from original login",
+    "accessibility": "FAIL for full acceptance: local primary-text contrast and35x37dp header targets remain; TalkBack manual verification absent"
+  },
+  "all_native_pngs_decoded": 119,
+  "phone_captures": 27,
+  "developer_captures": 92
+}

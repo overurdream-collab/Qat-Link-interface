@@ -1,0 +1,420 @@
+00:00 +0: loading /workspace/maqwati/test/screens/reminder_quick_booking_sheet_widget_test.dart
+00:00 +0: /workspace/maqwati/test/screens/reminder_quick_booking_sheet_widget_test.dart: merchant name, quantity and ONE confirm action show immediately
+00:00 +1: /workspace/maqwati/test/screens/reminder_quick_booking_sheet_widget_test.dart: unverified recipient cannot confirm booking
+00:00 +2: /workspace/maqwati/test/screens/reminder_quick_booking_sheet_widget_test.dart: one press sends fixed campaign and chosen quantity, no fake success
+00:01 +3: /workspace/maqwati/test/screens/reminder_quick_booking_sheet_widget_test.dart: one submission stays single while backend request is pending
+00:01 +4: /workspace/maqwati/test/screens/reminder_quick_booking_sheet_widget_test.dart: ignore is visible immediately and does not submit
+00:01 +5: loading /workspace/maqwati/test/screens/merchant_bookings_screen_widget_test.dart
+00:07 +5: /workspace/maqwati/test/screens/merchant_bookings_screen_widget_test.dart: dedicated booking screen includes share, sales and debt preview
+00:10 +6: /workspace/maqwati/test/screens/merchant_bookings_screen_widget_test.dart: merchant selects all bookings or a specific person without creating debts
+00:11 +7: loading /workspace/maqwati/test/screens/yemen_ui_preview_widget_test.dart
+00:12 +7: /workspace/maqwati/test/screens/yemen_ui_preview_widget_test.dart: offline preview starts on correct Arabic login and RTL
+00:14 +8: /workspace/maqwati/test/screens/yemen_ui_preview_widget_test.dart: preview female option changes global theme without changing debt colors
+00:14 +9: /workspace/maqwati/test/screens/yemen_ui_preview_widget_test.dart: customer preview stays RTL, private-account-safe and pink
+00:15 +10: /workspace/maqwati/test/screens/yemen_ui_preview_widget_test.dart: merchant preview has shared navigation but no live identity
+00:16 +11: loading /workspace/maqwati/test/screens/customer_joined_claims_panel_widget_test.dart
+00:16 +11: /workspace/maqwati/test/screens/customer_joined_claims_panel_widget_test.dart: all old requests appear after joining without being approved
+00:17 +12: /workspace/maqwati/test/screens/customer_joined_claims_panel_widget_test.dart: unverified identity sees zero previous claims
+00:17 +13: /workspace/maqwati/test/screens/customer_joined_claims_panel_widget_test.dart: each accept action requires explicit customer confirmation
+00:18 +14: /workspace/maqwati/test/screens/customer_joined_claims_panel_widget_test.dart: customer may reject individual claim without approving others
+00:18 +15: loading /workspace/maqwati/test/screens/customer_details_screen_widget_test.dart
+00:19 +15: /workspace/maqwati/test/screens/customer_details_screen_widget_test.dart: customer card opens full details instead of old mini sheet
+00:20 +16: /workspace/maqwati/test/screens/customer_details_screen_widget_test.dart: detail view shows profile, period, currencies and statement
+00:21 +17: /workspace/maqwati/test/screens/customer_details_screen_widget_test.dart: a relationship that loses approval hides all private data
+00:21 +18: /workspace/maqwati/test/screens/customer_details_screen_widget_test.dart: detail page back button invokes navigation callback
+00:21 +19: loading /workspace/maqwati/test/screens/client_store_booking_sheet_widget_test.dart
+00:21 +19: /workspace/maqwati/test/screens/client_store_booking_sheet_widget_test.dart: unknown or unlinked customer cannot request a booking
+00:22 +20: /workspace/maqwati/test/screens/client_store_booking_sheet_widget_test.dart: approved customer cannot submit when intake gate is closed
+00:22 +21: /workspace/maqwati/test/screens/client_store_booking_sheet_widget_test.dart: approved customer still cannot submit without a backend
+00:22 +22: loading /workspace/maqwati/test/screens/merchant_space_screen_widget_test.dart
+00:23 +22: /workspace/maqwati/test/screens/merchant_space_screen_widget_test.dart: store page has approved banner/status/address and booking CTA
+00:24 +23: /workspace/maqwati/test/screens/merchant_space_screen_widget_test.dart: anonymous merchants cannot create any customer booking
+00:24 +24: /workspace/maqwati/test/screens/merchant_space_screen_widget_test.dart: broadcast preview does not send or create financial entries
+00:25 +25: /workspace/maqwati/test/screens/merchant_space_screen_widget_test.dart: studio and engagement dashboard show no invented statistics
+00:25 +26: loading /workspace/maqwati/test/screens/phone_preview_asset_and_layout_test.dart
+00:26 +26: /workspace/maqwati/test/screens/phone_preview_asset_and_layout_test.dart: both approved mascot asset files decode on Flutter
+00:26 +27: /workspace/maqwati/test/screens/phone_preview_asset_and_layout_test.dart: phone APK launches directly into a clean RTL login
+00:27 +28: loading /workspace/maqwati/test/screens/fin15_amendments_screen_test.dart
+00:27 +28: /workspace/maqwati/test/screens/fin15_amendments_screen_test.dart: merchant must confirm exact original/new amount before responding
+00:28 +29: /workspace/maqwati/test/screens/fin15_amendments_screen_test.dart: customer proposal sends new exact amount only after explicit submit
+00:28 +30: /workspace/maqwati/test/screens/fin15_amendments_screen_test.dart: same original and proposed amount cannot create amendment
+00:29 +31: loading /workspace/maqwati/test/screens/yemen_modern_fintech_brand_test.dart
+00:29 +31: /workspace/maqwati/test/screens/yemen_modern_fintech_brand_test.dart: Arabic onboarding uses the corrected brand and Yemeni tagline
+00:30 +32: /workspace/maqwati/test/screens/yemen_modern_fintech_brand_test.dart: onboarding layout remains RTL independently of system locale
+00:30 +33: /workspace/maqwati/test/screens/yemen_modern_fintech_brand_test.dart: female onboarding switches brand pink but keeps finance red
+00:31 +34: /workspace/maqwati/test/screens/yemen_modern_fintech_brand_test.dart: login remains usable at narrow Android width
+00:31 +35: loading /workspace/maqwati/test/screens/login_feature_highlights_test.dart
+00:32 +35: /workspace/maqwati/test/screens/login_feature_highlights_test.dart: compact login highlights fit pink=false dark=false width=320.0
+00:32 +36: /workspace/maqwati/test/screens/login_feature_highlights_test.dart: compact login highlights fit pink=false dark=false width=390.0
+00:32 +37: /workspace/maqwati/test/screens/login_feature_highlights_test.dart: compact login highlights fit pink=false dark=false width=430.0
+00:32 +38: /workspace/maqwati/test/screens/login_feature_highlights_test.dart: compact login highlights fit pink=false dark=true width=320.0
+00:32 +39: /workspace/maqwati/test/screens/login_feature_highlights_test.dart: compact login highlights fit pink=false dark=true width=390.0
+00:32 +40: /workspace/maqwati/test/screens/login_feature_highlights_test.dart: compact login highlights fit pink=false dark=true width=430.0
+00:32 +41: /workspace/maqwati/test/screens/login_feature_highlights_test.dart: compact login highlights fit pink=true dark=false width=320.0
+00:32 +42: /workspace/maqwati/test/screens/login_feature_highlights_test.dart: compact login highlights fit pink=true dark=false width=390.0
+00:32 +43: /workspace/maqwati/test/screens/login_feature_highlights_test.dart: compact login highlights fit pink=true dark=false width=430.0
+00:32 +44: /workspace/maqwati/test/screens/login_feature_highlights_test.dart: compact login highlights fit pink=true dark=true width=320.0
+00:32 +45: /workspace/maqwati/test/screens/login_feature_highlights_test.dart: compact login highlights fit pink=true dark=true width=390.0
+00:33 +46: /workspace/maqwati/test/screens/login_feature_highlights_test.dart: compact login highlights fit pink=true dark=true width=430.0
+00:33 +47: loading /workspace/maqwati/test/screens/fin08_customer_claims_screen_test.dart
+00:33 +47: /workspace/maqwati/test/screens/fin08_customer_claims_screen_test.dart: renders pending verified claim, but no automatic accept
+00:34 +48: /workspace/maqwati/test/screens/fin08_customer_claims_screen_test.dart: backend failure does not claim success; older requests paginated
+00:34 +49: /workspace/maqwati/test/screens/fin08_customer_claims_screen_test.dart: FIN-14 selects one claim and requires per-currency review confirmation before batch write
+00:35 +50: /workspace/maqwati/test/screens/fin08_customer_claims_screen_test.dart: FIN-14 server failure does not report batch success or clear selection
+00:35 +51: loading /workspace/maqwati/test/screens/green_identity_test.dart
+00:35 +51: /workspace/maqwati/test/screens/green_identity_test.dart: the independent premium concept matches its design tokens
+00:35 +52: /workspace/maqwati/test/screens/green_identity_test.dart: premium concept opens Arabic login with the mascot and tagline
+00:37 +53: /workspace/maqwati/test/screens/green_identity_test.dart: female profile still uses pink rather than forcing premium
+00:37 +54: loading /workspace/maqwati/test/screens/merchant_reminder_campaign_widget_test.dart
+00:37 +54: /workspace/maqwati/test/screens/merchant_reminder_campaign_widget_test.dart: merchant selects reminder audience and sees no invented reads
+00:39 +55: loading /workspace/maqwati/test/screens/movement_screen_widget_test.dart
+00:39 +55: /workspace/maqwati/test/screens/movement_screen_widget_test.dart: movement screen retains approved global header and bottom navigation
+00:41 +56: /workspace/maqwati/test/screens/movement_screen_widget_test.dart: movement tab keeps theme toggle and opens the report preview
+00:42 +57: loading /workspace/maqwati/test/screens/merchant_approval_center_screen_test.dart
+00:42 +57: /workspace/maqwati/test/screens/merchant_approval_center_screen_test.dart: approval inbox separates directions and never fakes a decision
+00:43 +58: loading /workspace/maqwati/test/screens/merchant_financial_assistant_screen_test.dart
+00:44 +58: /workspace/maqwati/test/screens/merchant_financial_assistant_screen_test.dart: assistant includes off-app debt and payments per currency
+00:45 +59: loading /workspace/maqwati/test/screens/customer_app_shell_widget_test.dart
+00:45 +59: /workspace/maqwati/test/screens/customer_app_shell_widget_test.dart: customer preview exposes the five customer destinations but no private account data
+00:46 +60: /workspace/maqwati/test/screens/customer_app_shell_widget_test.dart: customer balances include approved operations per currency only
+00:47 +61: /workspace/maqwati/test/screens/customer_app_shell_widget_test.dart: discover keeps store opening and booking availability independent
+00:47 +62: loading /workspace/maqwati/test/screens/customer_store_rating_sheet_widget_test.dart
+00:47 +62: /workspace/maqwati/test/screens/customer_store_rating_sheet_widget_test.dart: client cannot rate without an approved purchase
+00:48 +63: /workspace/maqwati/test/screens/customer_store_rating_sheet_widget_test.dart: with approved purchase ratings remain gated until backend
+00:48 +64: loading /workspace/maqwati/test/screens/fin08_customer_relationships_screen_test.dart
+00:49 +64: /workspace/maqwati/test/screens/fin08_customer_relationships_screen_test.dart: relationship consent requires distinct confirmation and never silently approves debts
+00:50 +65: /workspace/maqwati/test/screens/fin08_customer_relationships_screen_test.dart: failed relationship rejection stays pending in displayed state
+00:50 +66: loading /workspace/maqwati/test/screens/fin08_merchant_book_screen_test.dart
+00:50 +66: /workspace/maqwati/test/screens/fin08_merchant_book_screen_test.dart: restores merchant contacts and shows pending amounts as non-approved
+00:51 +67: /workspace/maqwati/test/screens/fin08_merchant_book_screen_test.dart: failed claim save retains idempotency key on retry, does not claim approval
+00:52 +68: /workspace/maqwati/test/screens/fin08_merchant_book_screen_test.dart: copy pending statement requires confirmation and fetches ALL pages without approved rows
+00:52 +69: /workspace/maqwati/test/screens/fin08_merchant_book_screen_test.dart: failed subsequent page does not replace clipboard with incomplete statement
+00:52 +70: /workspace/maqwati/test/screens/fin08_merchant_book_screen_test.dart: merchant explicitly registers a pending payment, not a debt
+00:52 +71: loading /workspace/maqwati/test/screens/green_customer_layout_refresh_test.dart
+00:53 +71: /workspace/maqwati/test/screens/green_customer_layout_refresh_test.dart: customer home matches merchant banner and has 3 sliding currencies
+
+Warning: A call to drag() with finder "Found 1 widget with key [<'customer_currency_pager'>]: [
+  PageView-[<'customer_currency_pager'>](dependencies: [Directionality, ScrollConfiguration], state: _PageViewState#e323b(scrollDirection: horizontal, PageController#70fcd(one client, offset 0.0), null)),
+]" derived an Offset (Offset(400.0, 572.3)) that would not hit test on the specified widget.
+Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
+The finder corresponds to this RenderBox: RenderClipRect#c9f62 relayoutBoundary=up8
+The hit test result at that offset is: HitTestResult(RenderDecoratedBox#90413@Offset(400.0, 65.3), RenderStack#41457@Offset(400.0, 75.3), RenderConstrainedBox#0e367@Offset(400.0, 75.3), RenderFlex#eb589@Offset(400.0, 512.3), RenderPadding#c9552@Offset(400.0, 512.3), RenderCustomMultiChildLayoutBox#8a8c9@Offset(400.0, 512.3), _RenderInkFeatures#20563@Offset(400.0, 512.3), RenderPhysicalModel#46d06@Offset(400.0, 512.3), RenderFlex#787de@Offset(400.0, 572.3), RenderPadding#9d3c2@Offset(400.0, 572.3), RenderCustomMultiChildLayoutBox#23e72@Offset(400.0, 572.3), _RenderInkFeatures#d467a@Offset(400.0, 572.3), RenderPhysicalModel#9f5a2@Offset(400.0, 572.3), RenderSemanticsAnnotations#04f46@Offset(400.0, 572.3), RenderRepaintBoundary#95d72@Offset(400.0, 572.3), RenderIgnorePointer#70c20@Offset(400.0, 572.3), RenderAnimatedOpacity#6483c@Offset(400.0, 572.3), RenderAnimatedOpacity#b7b70@Offset(400.0, 572.3), _RenderColoredBox#08c8b@Offset(400.0, 572.3), RenderAnimatedOpacity#91f66@Offset(400.0, 572.3), RenderIgnorePointer#8f667@Offset(400.0, 572.3), RenderAnimatedOpacity#8f01b@Offset(400.0, 572.3), RenderRepaintBoundary#9d155@Offset(400.0, 572.3), RenderSemanticsAnnotations#715d4@Offset(400.0, 572.3), RenderOffstage#f6003@Offset(400.0, 572.3), RenderSemanticsAnnotations#2b4cd@Offset(400.0, 572.3), _RenderTheater#2b457@Offset(400.0, 572.3), RenderAbsorbPointer#07278@Offset(400.0, 572.3), RenderPointerListener#6bcdf@Offset(400.0, 572.3), RenderSemanticsAnnotations#4ca7c@Offset(400.0, 572.3), RenderSemanticsAnnotations#02107@Offset(400.0, 572.3), RenderSemanticsAnnotations#1c1f0@Offset(400.0, 572.3), RenderSemanticsAnnotations#bc4ab@Offset(400.0, 572.3), RenderTapRegionSurface#ccbfa@Offset(400.0, 572.3), RenderSemanticsAnnotations#5dbe1@Offset(400.0, 572.3), RenderSemanticsAnnotations#46ab1@Offset(400.0, 572.3), HitTestEntry<HitTestTarget>#2a2c1(_ReusableRenderView#a989a), HitTestEntry<HitTestTarget>#e119f(<AutomatedTestWidgetsFlutterBinding>))
+#0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
+#1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
+#2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
+#3      main.<anonymous closure> (file:///workspace/maqwati/test/screens/green_customer_layout_refresh_test.dart:19:18)
+<asynchronous suspension>
+#4      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#5      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1952:5)
+<asynchronous suspension>
+#6      StackZoneSpecification._registerCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:114:42)
+<asynchronous suspension>
+To silence this warning, pass "warnIfMissed: false" to "drag()".
+To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to true.
+
+00:55 +72: /workspace/maqwati/test/screens/green_customer_layout_refresh_test.dart: studio navigation floats above a cradle and stays tappable
+00:55 +73: /workspace/maqwati/test/screens/green_customer_layout_refresh_test.dart: discover heading describes stores operating now
+00:55 +74: /workspace/maqwati/test/screens/green_customer_layout_refresh_test.dart: top button order is notifications then theme then settings in RTL
+00:56 +75: /workspace/maqwati/test/screens/green_customer_layout_refresh_test.dart: settings contain profile, packages, security and about
+00:56 +76: /workspace/maqwati/test/screens/green_customer_layout_refresh_test.dart: merchant movement has one report action at bottom only
+00:56 +77: loading /workspace/maqwati/test/screens/approved_login_glass_frame_test.dart
+00:57 +77: /workspace/maqwati/test/screens/approved_login_glass_frame_test.dart: approved login glass frame: female=false dark=false width=320.0
+00:58 +78: /workspace/maqwati/test/screens/approved_login_glass_frame_test.dart: approved login glass frame: female=false dark=false width=390.0
+00:58 +79: /workspace/maqwati/test/screens/approved_login_glass_frame_test.dart: approved login glass frame: female=false dark=true width=320.0
+00:58 +80: /workspace/maqwati/test/screens/approved_login_glass_frame_test.dart: approved login glass frame: female=false dark=true width=390.0
+00:58 +81: /workspace/maqwati/test/screens/approved_login_glass_frame_test.dart: approved login glass frame: female=true dark=false width=320.0
+00:58 +82: /workspace/maqwati/test/screens/approved_login_glass_frame_test.dart: approved login glass frame: female=true dark=false width=390.0
+00:58 +83: /workspace/maqwati/test/screens/approved_login_glass_frame_test.dart: approved login glass frame: female=true dark=true width=320.0
+00:58 +84: /workspace/maqwati/test/screens/approved_login_glass_frame_test.dart: approved login glass frame: female=true dark=true width=390.0
+00:58 +85: loading /workspace/maqwati/test/screens/fin13_relationship_ledger_screen_test.dart
+00:59 +85: /workspace/maqwati/test/screens/fin13_relationship_ledger_screen_test.dart: customer ledger displays server credit, approves only other party and controls future policy
+01:00 +86: /workspace/maqwati/test/screens/fin13_relationship_ledger_screen_test.dart: merchant new debt posts only a server request and never changes displayed balances
+01:00 +87: /workspace/maqwati/test/screens/fin13_relationship_ledger_screen_test.dart: FIN-14 selects registered operation and requires explicit confirmation
+01:01 +88: /workspace/maqwati/test/screens/fin13_relationship_ledger_screen_test.dart: FIN-14 creator cannot check/select own pending operation
+01:01 +89: loading /workspace/maqwati/test/screens/customer_ui_screenshots_test.dart
+01:01 +89: /workspace/maqwati/test/screens/customer_ui_screenshots_test.dart: captures the five customer interfaces with synthetic data
+01:04 +90: loading /workspace/maqwati/test/screens/fin16_credit_limits_screen_test.dart
+01:04 +90: /workspace/maqwati/test/screens/fin16_credit_limits_screen_test.dart: customer sees approved account credit and separate pending exposure without edit
+01:05 +91: /workspace/maqwati/test/screens/fin16_credit_limits_screen_test.dart: merchant requires explicit confirmation for limit setting and disable
+01:06 +92: /workspace/maqwati/test/screens/fin16_credit_limits_screen_test.dart: server error never changes locally displayed policy
+01:06 +93: loading /workspace/maqwati/test/screens/home_financial_assistant_navigation_test.dart
+01:07 +93: /workspace/maqwati/test/screens/home_financial_assistant_navigation_test.dart: merchant home opens the financial assistant screen
+01:08 +94: loading /workspace/maqwati/test/screens/customers_screen_widget_test.dart
+01:09 +94: /workspace/maqwati/test/screens/customers_screen_widget_test.dart: customers page has required CTA, search, metrics and filters
+01:10 +95: /workspace/maqwati/test/screens/customers_screen_widget_test.dart: compact currency and status dropdowns preserve their selections
+01:10 +96: /workspace/maqwati/test/screens/customers_screen_widget_test.dart: a customer without approved relationship stays off the list
+01:10 +97: /workspace/maqwati/test/screens/customers_screen_widget_test.dart: merchant can add an unregistered contact without approved relationship
+01:11 +98: /workspace/maqwati/test/screens/customers_screen_widget_test.dart: a privately recorded pending debt stays separate from approved balances
+01:11 +99: loading /workspace/maqwati/test/screens/merchant_pending_contact_details_screen_test.dart
+01:12 +99: /workspace/maqwati/test/screens/merchant_pending_contact_details_screen_test.dart: off-app payment lowers operational net but not approved ledger
+01:13 +100: loading /workspace/maqwati/test/screens/auth_screens_widget_test.dart
+01:14 +100: /workspace/maqwati/test/screens/auth_screens_widget_test.dart: app opens login without exposing private finance tabs
+01:14 +101: /workspace/maqwati/test/screens/auth_screens_widget_test.dart: phone login hides developer preview links
+01:15 +102: /workspace/maqwati/test/screens/auth_screens_widget_test.dart: registered role options stay on a separate page
+01:15 +103: /workspace/maqwati/test/screens/auth_screens_widget_test.dart: login form does not grant a session on valid local inputs
+01:15 +104: /workspace/maqwati/test/screens/auth_screens_widget_test.dart: login supports the approved night theme
+01:16 +105: /workspace/maqwati/test/screens/auth_screens_widget_test.dart: female registration selects pink identity and male restores base
+01:16 +106: loading /workspace/maqwati/test/services/fin14_batch_gateway_test.dart
+01:17 +106: /workspace/maqwati/test/services/fin14_batch_gateway_test.dart: customer selects exact historical claims and sees separate currency review totals
+01:17 +107: /workspace/maqwati/test/services/fin14_batch_gateway_test.dart: a relationship batch uses independently authorized ledger route
+01:17 +108: /workspace/maqwati/test/services/fin14_batch_gateway_test.dart: a batch cannot have zero or over 50 items
+01:17 +109: /workspace/maqwati/test/services/fin14_batch_gateway_test.dart: client rejects a server response not scoped to selected items
+01:17 +110: loading /workspace/maqwati/test/services/app_state_test.dart
+01:17 +110: /workspace/maqwati/test/services/app_state_test.dart: customer account exists independently of merchant relationships
+01:17 +111: /workspace/maqwati/test/services/app_state_test.dart: relationship requires creator declaration and other party approval
+01:17 +112: /workspace/maqwati/test/services/app_state_test.dart: creator cannot approve their own relationship request a second time
+01:17 +113: /workspace/maqwati/test/services/app_state_test.dart: movement cannot be created before relationship approval
+01:17 +114: /workspace/maqwati/test/services/app_state_test.dart: creator declaration plus other party approval finalizes movement
+01:17 +115: /workspace/maqwati/test/services/app_state_test.dart: movement rejection is terminal and records its reason
+01:17 +116: /workspace/maqwati/test/services/app_state_test.dart: duplicate customer phone is rejected
+01:17 +117: loading /workspace/maqwati/test/services/fin16_credit_gateway_test.dart
+01:18 +117: /workspace/maqwati/test/services/fin16_credit_gateway_test.dart: credit GET is scoped and keeps exact signed approved and pending currencies separate
+01:18 +118: /workspace/maqwati/test/services/fin16_credit_gateway_test.dart: merchant limit update/disable sends Decimal as string and returns verified currency
+01:18 +119: /workspace/maqwati/test/services/fin16_credit_gateway_test.dart: missing currencies, false ledger scope and invalid approved money fail closed
+01:18 +120: loading /workspace/maqwati/test/services/fin08_pending_statement_test.dart
+01:18 +120: /workspace/maqwati/test/services/fin08_pending_statement_test.dart: money subtotal keeps exact decimal precision without binary float or rounding
+01:18 +121: /workspace/maqwati/test/services/fin08_pending_statement_test.dart: unacknowledged ledger statement has explicit disclaimer and no currency mixing
+01:19 +122: /workspace/maqwati/test/services/fin08_pending_statement_test.dart: unapproved merchant payments are not misreported as debt
+01:19 +123: loading /workspace/maqwati/test/services/fin08_api_client_test.dart
+01:19 +123: /workspace/maqwati/test/services/fin08_api_client_test.dart: rejects unencrypted non-loopback transport
+01:19 +124: /workspace/maqwati/test/services/fin08_api_client_test.dart: does not call server when there is no authenticated session
+01:19 +125: /workspace/maqwati/test/services/fin08_api_client_test.dart: loads every page of verified historical claims and preserves per-claim stage
+01:19 +126: /workspace/maqwati/test/services/fin08_api_client_test.dart: posts decimal amount as string, preserves caller idempotency key and stays pending
+01:19 +127: /workspace/maqwati/test/services/fin08_api_client_test.dart: HTTP conflict is error; never claims a successful approval
+01:19 +128: /workspace/maqwati/test/services/fin08_api_client_test.dart: merchant summary remains separate per currency and cannot pretend to be full ledger
+01:19 +129: /workspace/maqwati/test/services/fin08_api_client_test.dart: relation request and customer decision use independent authenticated endpoints
+01:19 +130: loading /workspace/maqwati/test/services/fin13_ledger_gateway_test.dart
+01:20 +130: /workspace/maqwati/test/services/fin13_ledger_gateway_test.dart: verified approved ledger balances and dated signed statement parse exact Decimal
+01:20 +131: /workspace/maqwati/test/services/fin13_ledger_gateway_test.dart: payment request, decision, policy, reversal and cursor remain server-backed
+01:20 +132: /workspace/maqwati/test/services/fin13_ledger_gateway_test.dart: rejects non-authoritative scope rather than showing false approved balances
+01:20 +133: loading /workspace/maqwati/test/services/fin15_amendment_gateway_test.dart
+01:20 +133: /workspace/maqwati/test/services/fin15_amendment_gateway_test.dart: historical proposal sends exact decimal, reason and stable key through verified JWT
+01:20 +134: /workspace/maqwati/test/services/fin15_amendment_gateway_test.dart: modern proposal, merchant response and private inbox use proper scoped routes
+01:20 +135: /workspace/maqwati/test/services/fin15_amendment_gateway_test.dart: malformed source or invalid amount fail closed
+01:20 +136: loading /workspace/maqwati/test/services/merchant_pending_book_test.dart
+01:21 +136: /workspace/maqwati/test/services/merchant_pending_book_test.dart: merchant records unregistered contact and debt without app account
+01:21 +137: /workspace/maqwati/test/services/merchant_pending_book_test.dart: local tenant isolation blocks foreign contacts and statements
+01:21 +138: /workspace/maqwati/test/services/merchant_pending_book_test.dart: one merchant cannot create duplicate phone or claim ids
+01:21 +139: /workspace/maqwati/test/services/merchant_pending_book_test.dart: invalid amount, phone, or merchant identity is rejected
+01:21 +140: /workspace/maqwati/test/services/merchant_pending_book_test.dart: report filters period and currency without combining approved ledger
+01:21 +141: /workspace/maqwati/test/services/merchant_pending_book_test.dart: off-app payments reduce operational net by currency only
+01:21 +142: /workspace/maqwati/test/services/merchant_pending_book_test.dart: off-app payment requires the exact merchant contact and unique id
+01:21 +143: /workspace/maqwati/test/services/merchant_pending_book_test.dart: claimed debt cannot be directly approved as a financial movement
+01:21 +144: loading /workspace/maqwati/test/services/movement_calculator_test.dart
+01:21 +144: /workspace/maqwati/test/services/movement_calculator_test.dart: exact decimal balance excludes pending and rejected records
+01:21 +145: /workspace/maqwati/test/services/movement_calculator_test.dart: currencies are calculated independently
+01:21 +146: /workspace/maqwati/test/services/movement_calculator_test.dart: overpayment creates a negative balance
+01:21 +147: loading /workspace/maqwati/test/widgets/movement_view_model_test.dart
+01:22 +147: /workspace/maqwati/test/widgets/movement_view_model_test.dart: Movement HTML financial summary rules gross includes pending, excludes rejected and older dates
+01:22 +148: /workspace/maqwati/test/widgets/movement_view_model_test.dart: Movement HTML financial summary rules filtered status changes list but not the approved totals
+01:22 +149: /workspace/maqwati/test/widgets/movement_view_model_test.dart: Movement HTML financial summary rules search finds customer name, phone, and operation ID
+01:22 +150: /workspace/maqwati/test/widgets/movement_view_model_test.dart: Movement HTML financial summary rules date ranges are inclusive at both local day boundaries
+01:22 +151: /workspace/maqwati/test/widgets/movement_view_model_test.dart: Movement HTML financial summary rules all currencies remain separate even in all-currency mode
+01:22 +152: /workspace/maqwati/test/widgets/movement_view_model_test.dart: Movement HTML financial summary rules day grouping preserves newest-first list order
+01:22 +153: /workspace/maqwati/test/widgets/movement_view_model_test.dart: Movement HTML financial summary rules negative credit balances are not masked by the UI totals
+01:22 +154: loading /workspace/maqwati/test/widgets/merchant_space_models_test.dart
+01:22 +154: /workspace/maqwati/test/widgets/merchant_space_models_test.dart: daily summary groups active bundles by qat variety and orders by pickup time
+01:22 +155: /workspace/maqwati/test/widgets/merchant_space_models_test.dart: collected orders are excluded from outstanding preparation
+01:22 +156: /workspace/maqwati/test/widgets/merchant_space_models_test.dart: broadcast audience requires approved relationship and merchant context
+01:22 +157: /workspace/maqwati/test/widgets/merchant_space_models_test.dart: overpayment credit never puts a customer in unpaid segment
+01:22 +158: loading /workspace/maqwati/test/widgets/home_banner_carousel_test.dart
+01:23 +158: /workspace/maqwati/test/widgets/home_banner_carousel_test.dart: seven original campaign banners use the owner-approved priority
+01:23 +159: /workspace/maqwati/test/widgets/home_banner_carousel_test.dart: home displays first blue 16:9 ad and seven indicators
+01:23 +160: /workspace/maqwati/test/widgets/home_banner_carousel_test.dart: female theme prioritizes pink banner without changing ledger red
+01:23 +161: /workspace/maqwati/test/widgets/home_banner_carousel_test.dart: pink night retains female-priority banners and dark financial semantics
+01:23 +162: /workspace/maqwati/test/widgets/home_banner_carousel_test.dart: carousel advances after six seconds
+01:24 +163: loading /workspace/maqwati/test/widgets/customers_view_model_test.dart
+01:24 +163: /workspace/maqwati/test/widgets/customers_view_model_test.dart: a profile without approved join never appears as a merchant customer
+01:24 +164: /workspace/maqwati/test/widgets/customers_view_model_test.dart: approved balance excludes pending and rejected, and is not an opening debt
+01:24 +165: /workspace/maqwati/test/widgets/customers_view_model_test.dart: all currencies remain separate, and duplicate client cards are explicit
+01:24 +166: /workspace/maqwati/test/widgets/customers_view_model_test.dart: debt filters ignore pending; pending counts are movements not customers
+01:24 +167: /workspace/maqwati/test/widgets/customers_view_model_test.dart: Arabic name and phone searches are normalized
+01:24 +168: /workspace/maqwati/test/widgets/customers_view_model_test.dart: highest debt is the default within a selected currency
+01:24 +169: /workspace/maqwati/test/widgets/customers_view_model_test.dart: negative customer credits are not converted to zero
+01:24 +170: /workspace/maqwati/test/widgets/customers_view_model_test.dart: merchant scoping prevents showing other merchants in the same state
+01:24 +171: loading /workspace/maqwati/test/widgets/merchant_debt_status_summary_test.dart
+01:25 +171: /workspace/maqwati/test/widgets/merchant_debt_status_summary_test.dart: three stages remain independent; USD and YER never combined
+01:25 +172: /workspace/maqwati/test/widgets/merchant_debt_status_summary_test.dart: unapproved relationship never grants recognized or waiting consent
+01:25 +173: /workspace/maqwati/test/widgets/merchant_debt_status_summary_test.dart: verified transfer removes private claim from outside-app bucket
+01:25 +174: /workspace/maqwati/test/widgets/merchant_debt_status_summary_test.dart: approved net is signed; lack of merchant identity shows no figures
+01:25 +175: loading /workspace/maqwati/test/widgets/booking_intake_policy_test.dart
+01:25 +175: /workspace/maqwati/test/widgets/booking_intake_policy_test.dart: no anonymous, unlinked, pending-linked or suspended customer booking
+01:25 +176: /workspace/maqwati/test/widgets/booking_intake_policy_test.dart: closed gate always rejects even approved client, all-day opens fully
+01:25 +177: /workspace/maqwati/test/widgets/booking_intake_policy_test.dart: daily 08:00–20:00 window uses Sana'a timezone and exclusive close
+01:25 +178: /workspace/maqwati/test/widgets/booking_intake_policy_test.dart: overnight 20:00–02:00 works either side of midnight
+01:25 +179: /workspace/maqwati/test/widgets/booking_intake_policy_test.dart: same from-to is invalid unless 24 hour mode
+01:25 +180: /workspace/maqwati/test/widgets/booking_intake_policy_test.dart: nightly reminder reaches only active approved linked customers
+01:25 +181: /workspace/maqwati/test/widgets/booking_intake_policy_test.dart: reminder denies opt-out or unknown consent even when relation approved
+01:25 +182: loading /workspace/maqwati/test/widgets/quick_actions/quick_action_sheets_widget_test.dart
+01:26 +182: /workspace/maqwati/test/widgets/quick_actions/quick_action_sheets_widget_test.dart: the quick action menu has exactly three configured options
+01:27 +183: /workspace/maqwati/test/widgets/quick_actions/quick_action_sheets_widget_test.dart: new debt requires selecting approved customer from the list
+01:27 +184: /workspace/maqwati/test/widgets/quick_actions/quick_action_sheets_widget_test.dart: payment uses the same approved-customer picker and workflow
+01:27 +185: /workspace/maqwati/test/widgets/quick_actions/quick_action_sheets_widget_test.dart: without merchant identity, no customers are exposed
+01:27 +186: /workspace/maqwati/test/widgets/quick_actions/quick_action_sheets_widget_test.dart: ambiguous comma decimal input is rejected rather than reinterpreted
+01:28 +187: /workspace/maqwati/test/widgets/quick_actions/quick_action_sheets_widget_test.dart: unregistered merchant contact can receive a private pending debt
+01:28 +188: /workspace/maqwati/test/widgets/quick_actions/quick_action_sheets_widget_test.dart: unapproved merchant contacts cannot be selected for payments
+01:28 +189: /workspace/maqwati/test/widgets/quick_actions/quick_action_sheets_widget_test.dart: pending contact selector never exposes another merchant
+01:28 +190: loading /workspace/maqwati/test/widgets/quick_actions/approved_customer_picker_test.dart
+01:29 +190: /workspace/maqwati/test/widgets/quick_actions/approved_customer_picker_test.dart: requires an authenticated merchant context
+01:29 +191: /workspace/maqwati/test/widgets/quick_actions/approved_customer_picker_test.dart: only approved relationship and active customer can be chosen
+01:29 +192: /workspace/maqwati/test/widgets/quick_actions/approved_customer_picker_test.dart: other merchants cannot select this merchant customers
+01:29 +193: /workspace/maqwati/test/widgets/quick_actions/approved_customer_picker_test.dart: customer search matches name and normalized phone
+01:29 +194: /workspace/maqwati/test/widgets/quick_actions/approved_customer_picker_test.dart: a formerly-approved customer cannot pass the final selection check
+01:29 +195: /workspace/maqwati/test/widgets/quick_actions/approved_customer_picker_test.dart: inactive accounts do not appear
+01:29 +196: loading /workspace/maqwati/test/widgets/merchant_space_daily_pdf_test.dart
+01:29 +196: /workspace/maqwati/test/widgets/merchant_space_daily_pdf_test.dart: daily booking preparation list creates a genuine Arabic A4 PDF
+01:29 +197: loading /workspace/maqwati/test/widgets/merchant_rating_policy_test.dart
+01:30 +197: /workspace/maqwati/test/widgets/merchant_rating_policy_test.dart: rating requires approved merchant-customer relationship and purchase
+01:30 +198: /workspace/maqwati/test/widgets/merchant_rating_policy_test.dart: one effective review per customer; hidden/pending cannot inflate rating
+01:30 +199: /workspace/maqwati/test/widgets/merchant_rating_policy_test.dart: rankings require at least five trusted reviewers and bayesian correction
+01:30 +200: /workspace/maqwati/test/widgets/merchant_rating_policy_test.dart: most requested ranks distinct customers who approved debts, not sales
+01:30 +201: loading /workspace/maqwati/test/widgets/merchant_pending_statement_pdf_test.dart
+01:31 +201: /workspace/maqwati/test/widgets/merchant_pending_statement_pdf_test.dart: off-app statement PDF is real and contains synthetic test activity
+01:31 +202: loading /workspace/maqwati/test/widgets/night_reminder_campaign_test.dart
+01:32 +202: /workspace/maqwati/test/widgets/night_reminder_campaign_test.dart: yesterday audience includes distinct confirmed reservations only
+01:32 +203: /workspace/maqwati/test/widgets/night_reminder_campaign_test.dart: previous seven calendar days excludes old, unconfirmed and other merchant
+01:32 +204: /workspace/maqwati/test/widgets/night_reminder_campaign_test.dart: all approved and favorites still honor link, account and opt-in
+01:32 +205: /workspace/maqwati/test/widgets/night_reminder_campaign_test.dart: opened and confirmed statistics require trustworthy scoped distinct events
+01:32 +206: /workspace/maqwati/test/widgets/night_reminder_campaign_test.dart: quick confirm requires delivered linked active customer and open intake
+01:32 +207: loading /workspace/maqwati/test/widgets/worker_preparation_pdf_test.dart
+01:32 +207: /workspace/maqwati/test/widgets/worker_preparation_pdf_test.dart: large-format workers report generates offline multipage A4 PDF
+01:33 +208: loading /workspace/maqwati/test/widgets/daily_debt_query_test.dart
+01:33 +208: /workspace/maqwati/test/widgets/daily_debt_query_test.dart: debt counted only after customer approval, by consent day and currency
+01:33 +209: /workspace/maqwati/test/widgets/daily_debt_query_test.dart: pending approval from yesterday remains excluded from today total
+01:33 +210: loading /workspace/maqwati/test/widgets/customer_statement_calculator_test.dart
+01:34 +210: /workspace/maqwati/test/widgets/customer_statement_calculator_test.dart: opening balance is historical approved debt minus payments
+01:34 +211: /workspace/maqwati/test/widgets/customer_statement_calculator_test.dart: status tabs filter rows but cannot change financial totals
+01:34 +212: /workspace/maqwati/test/widgets/customer_statement_calculator_test.dart: selected currency cannot include different currency movements
+01:34 +213: /workspace/maqwati/test/widgets/customer_statement_calculator_test.dart: missing merchant identity, pending relationship and wrong merchant are denied
+01:34 +214: /workspace/maqwati/test/widgets/customer_statement_calculator_test.dart: negative closing balance is preserved as customer credit
+01:34 +215: /workspace/maqwati/test/widgets/customer_statement_calculator_test.dart: rejects invalid backwards periods
+01:34 +216: loading /workspace/maqwati/test/widgets/customer_statement_pdf_test.dart
+01:35 +216: /workspace/maqwati/test/widgets/customer_statement_pdf_test.dart: offline Arabic statement renderer outputs a real PDF document
+01:35 +217: loading /workspace/maqwati/test/widgets/joined_customer_claims_query_test.dart
+01:36 +217: /workspace/maqwati/test/widgets/joined_customer_claims_query_test.dart: newly verified customer receives ALL prior claims as pending
+01:36 +218: /workspace/maqwati/test/widgets/joined_customer_claims_query_test.dart: no OTP-verified match means NO account history even same phone
+01:36 +219: /workspace/maqwati/test/widgets/joined_customer_claims_query_test.dart: conflicting verified account ownership fails closed for the contact
+01:36 +220: /workspace/maqwati/test/widgets/joined_customer_claims_query_test.dart: duplicate claims or matches never duplicate the customer inbox
+01:36 +221: /workspace/maqwati/test/widgets/joined_customer_claims_query_test.dart: each claim retains its own decision and no automatic approval
+01:36 +222: /workspace/maqwati/test/widgets/joined_customer_claims_query_test.dart: joined claims transition to waiting-for-customer, NEVER approved
+01:36 +223: /workspace/maqwati/test/widgets/joined_customer_claims_query_test.dart: rejected claim disappears from both pending balances
+01:36 +224: /workspace/maqwati/test/widgets/joined_customer_claims_query_test.dart: verified backend transfer never double counts the same claim
+01:36 +225: loading /workspace/maqwati/test/widgets/booking_debt_planner_test.dart
+01:36 +225: /workspace/maqwati/test/widgets/booking_debt_planner_test.dart: one click builds separate requests per customer and currency
+01:36 +226: /workspace/maqwati/test/widgets/booking_debt_planner_test.dart: strictly excludes paid, not-collected, unpriced, and unlinked bookings
+01:36 +227: /workspace/maqwati/test/widgets/booking_debt_planner_test.dart: tenant fail-closed, replay protection and subsets are deterministic
+01:36 +228: /workspace/maqwati/test/widgets/booking_debt_planner_test.dart: proposals count only collected orders with a price, per currency
+01:36 +229: /workspace/maqwati/test/widgets/booking_debt_planner_test.dart: cannot convert another merchant's booking even for the same client
+01:36 +230: loading /workspace/maqwati/test/ui_audit/login_matrix_test.dart
+01:37 +230: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: (setUpAll)
+01:37 +230: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_day body and secondary text contrast
+01:37 +231: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_day home uses the decodable correct character
+01:37 +232: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_day 320.0 baseline
+01:38 +233: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_day 320.0 keyboard_large_text
+01:38 +234: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_day 360.0 baseline
+01:38 +235: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_day 360.0 keyboard_large_text
+01:38 +236: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_day 390.0 baseline
+01:38 +237: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_day 390.0 keyboard_large_text
+01:39 +238: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_day 430.0 baseline
+01:39 +239: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_day 430.0 keyboard_large_text
+01:39 +240: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_day 600.0 baseline
+01:39 +241: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_day 600.0 keyboard_large_text
+01:39 +242: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_day 800.0 baseline
+01:39 +243: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_day 800.0 keyboard_large_text
+01:39 +244: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_night body and secondary text contrast
+01:39 +245: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_night home uses the decodable correct character
+01:39 +246: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_night 320.0 baseline
+01:39 +247: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_night 320.0 keyboard_large_text
+01:40 +248: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_night 360.0 baseline
+01:40 +249: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_night 360.0 keyboard_large_text
+01:40 +250: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_night 390.0 baseline
+01:40 +251: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_night 390.0 keyboard_large_text
+01:40 +252: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_night 430.0 baseline
+01:40 +253: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_night 430.0 keyboard_large_text
+01:40 +254: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_night 600.0 baseline
+01:40 +255: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_night 600.0 keyboard_large_text
+01:41 +256: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_night 800.0 baseline
+01:41 +257: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: blue_night 800.0 keyboard_large_text
+01:41 +258: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_day body and secondary text contrast
+01:41 +259: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_day home uses the decodable correct character
+01:41 +260: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_day 320.0 baseline
+01:41 +261: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_day 320.0 keyboard_large_text
+01:41 +262: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_day 360.0 baseline
+01:41 +263: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_day 360.0 keyboard_large_text
+01:41 +264: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_day 390.0 baseline
+01:42 +265: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_day 390.0 keyboard_large_text
+01:42 +266: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_day 430.0 baseline
+01:42 +267: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_day 430.0 keyboard_large_text
+01:42 +268: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_day 600.0 baseline
+01:42 +269: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_day 600.0 keyboard_large_text
+01:42 +270: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_day 800.0 baseline
+01:42 +271: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_day 800.0 keyboard_large_text
+01:42 +272: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_night body and secondary text contrast
+01:42 +273: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_night home uses the decodable correct character
+01:42 +274: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_night 320.0 baseline
+01:43 +275: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_night 320.0 keyboard_large_text
+01:43 +276: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_night 360.0 baseline
+01:43 +277: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_night 360.0 keyboard_large_text
+01:43 +278: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_night 390.0 baseline
+01:43 +279: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_night 390.0 keyboard_large_text
+01:43 +280: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_night 430.0 baseline
+01:43 +281: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_night 430.0 keyboard_large_text
+01:43 +282: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_night 600.0 baseline
+01:43 +283: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_night 600.0 keyboard_large_text
+01:43 +284: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_night 800.0 baseline
+01:44 +285: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: pink_night 800.0 keyboard_large_text
+01:44 +286: /workspace/maqwati/test/ui_audit/login_matrix_test.dart: (tearDownAll)
+01:44 +286: loading /workspace/maqwati/test/features/auth/auth_input_validation_test.dart
+01:44 +286: /workspace/maqwati/test/features/auth/auth_input_validation_test.dart: the three registration categories are exactly the approved choices
+01:44 +287: /workspace/maqwati/test/features/auth/auth_input_validation_test.dart: Yemeni phone and international phone formats are accepted
+01:44 +288: /workspace/maqwati/test/features/auth/auth_input_validation_test.dart: four digit PIN and confirmation are validated without saving
+01:44 +289: /workspace/maqwati/test/features/auth/auth_input_validation_test.dart: full name requires at least two parts
+01:44 +290: loading /workspace/maqwati/test/premium/feminine_theme_test.dart
+01:45 +290: /workspace/maqwati/test/premium/feminine_theme_test.dart: Female light theme uses rose and orchid, not blue controls
+01:45 +291: /workspace/maqwati/test/premium/feminine_theme_test.dart: Female night theme has its own readable rose-plum palette
+01:45 +292: /workspace/maqwati/test/premium/feminine_theme_test.dart: Financial-status colors remain independent of female theme
+01:45 +293: /workspace/maqwati/test/premium/feminine_theme_test.dart: Non-female account retains original blue-violet palette
+01:45 +294: loading /workspace/maqwati/test/premium/approved_login_20261122_test.dart
+01:45 +294: /workspace/maqwati/test/premium/approved_login_20261122_test.dart: Owner-approved brand is blue 3D without a checkmark and uses every day a story
+01:46 +295: /workspace/maqwati/test/premium/approved_login_20261122_test.dart: Approved login keeps actual phone/PIN safety and expected controls
+01:46 +296: loading /workspace/maqwati/test/premium/hero_responsive_test.dart
+01:47 +296: /workspace/maqwati/test/premium/hero_responsive_test.dart: Premium hero fits RTL width 320.0
+01:47 +297: /workspace/maqwati/test/premium/hero_responsive_test.dart: Premium hero fits RTL width 360.0
+01:47 +298: /workspace/maqwati/test/premium/hero_responsive_test.dart: Premium hero fits RTL width 390.0
+01:47 +299: /workspace/maqwati/test/premium/hero_responsive_test.dart: Premium hero fits RTL width 430.0
+01:47 +300: loading /workspace/maqwati/test/premium/login_premium_test.dart
+01:48 +300: /workspace/maqwati/test/premium/login_premium_test.dart: Premium login remains phone + PIN only and never authenticates locally
+01:49 +301: loading /workspace/maqwati/test/premium/wallet_premium_test.dart
+01:49 +301: /workspace/maqwati/test/premium/wallet_premium_test.dart: YER premium wallet keeps approved and pending separated
+01:50 +302: loading /workspace/maqwati/test/premium/credit_balance_test.dart
+01:51 +302: /workspace/maqwati/test/premium/credit_balance_test.dart: Negative approved net is labelled as credit to customer
+01:51 +303: loading /workspace/maqwati/test/theme/premium_identity_tokens_test.dart
+01:51 +303: /workspace/maqwati/test/theme/premium_identity_tokens_test.dart: official brand tokens and separate currency gradients are exact
+01:51 +304: /workspace/maqwati/test/theme/premium_identity_tokens_test.dart: Cairo and all four theme backgrounds remain consistent
+01:52 +305: loading /workspace/maqwati/test/theme/visual_theme_coverage_test.dart
+01:52 +305: /workspace/maqwati/test/theme/visual_theme_coverage_test.dart: blue light uses an active premium palette on the brand header
+01:53 +306: /workspace/maqwati/test/theme/visual_theme_coverage_test.dart: blue light applies its own YER gradient
+01:53 +307: /workspace/maqwati/test/theme/visual_theme_coverage_test.dart: blue light applies its own SAR gradient
+01:53 +308: /workspace/maqwati/test/theme/visual_theme_coverage_test.dart: blue light applies its own USD gradient
+01:53 +309: /workspace/maqwati/test/theme/visual_theme_coverage_test.dart: blue dark uses an active premium palette on the brand header
+01:53 +310: /workspace/maqwati/test/theme/visual_theme_coverage_test.dart: blue dark applies its own YER gradient
+01:53 +311: /workspace/maqwati/test/theme/visual_theme_coverage_test.dart: blue dark applies its own SAR gradient
+01:53 +312: /workspace/maqwati/test/theme/visual_theme_coverage_test.dart: blue dark applies its own USD gradient
+01:53 +313: /workspace/maqwati/test/theme/visual_theme_coverage_test.dart: pink light uses an active premium palette on the brand header
+01:53 +314: /workspace/maqwati/test/theme/visual_theme_coverage_test.dart: pink light applies its own YER gradient
+01:53 +315: /workspace/maqwati/test/theme/visual_theme_coverage_test.dart: pink light applies its own SAR gradient
+01:53 +316: /workspace/maqwati/test/theme/visual_theme_coverage_test.dart: pink light applies its own USD gradient
+01:53 +317: /workspace/maqwati/test/theme/visual_theme_coverage_test.dart: pink dark uses an active premium palette on the brand header
+01:53 +318: /workspace/maqwati/test/theme/visual_theme_coverage_test.dart: pink dark applies its own YER gradient
+01:53 +319: /workspace/maqwati/test/theme/visual_theme_coverage_test.dart: pink dark applies its own SAR gradient
+01:53 +320: /workspace/maqwati/test/theme/visual_theme_coverage_test.dart: pink dark applies its own USD gradient
+01:53 +321: loading /workspace/maqwati/test/theme/approved_ui_test.dart
+01:54 +321: /workspace/maqwati/test/theme/approved_ui_test.dart: Cairo Arabic typeface is applied across base, dark and female themes
+01:54 +322: /workspace/maqwati/test/theme/approved_ui_test.dart: Premium daylight tokens are exact
+01:54 +323: /workspace/maqwati/test/theme/approved_ui_test.dart: approved night colors are exact
+01:54 +324: /workspace/maqwati/test/theme/approved_ui_test.dart: hero and currency gradients match the official blue/purple reference palette
+01:54 +325: /workspace/maqwati/test/theme/approved_ui_test.dart: shared chrome has the five approved tabs and top buttons
+01:55 +326: /workspace/maqwati/test/theme/approved_ui_test.dart: theme toggle retains header and navigation
+01:55 +327: /workspace/maqwati/test/theme/approved_ui_test.dart: quick add offers three actions but no automatic financial write
+01:56 +328: All tests passed!
