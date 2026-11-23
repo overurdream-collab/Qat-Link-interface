@@ -1,0 +1,2099 @@
+{
+  "previous_commit": "eefecda322e272fce8bea685ac525a4df73f7f3d",
+  "old_count": 950,
+  "new_count": 950,
+  "changed_count": 418,
+  "targeted_tests_passed": 838,
+  "changes": [
+    {
+      "path": "test/ui_audit/goldens/catalog/registration_blue_day_320_1.0.png",
+      "before_sha256": "68345f63285ec2fd32f491170653e443095e98691b3f9d31afeb09609b48f596",
+      "after_sha256": "f80a813a02c460fc4d5813c26e8186fb91055a5032a77a3b61c333a4eb128f77"
+    },
+    {
+      "path": "test/ui_audit/goldens/catalog/registration_blue_day_360_1.0.png",
+      "before_sha256": "94df8a16fdc03fe0713368bfb9505618882c2248d38107e8f43e102875d66285",
+      "after_sha256": "23bb7bd992e5217755c5cae12ec9e0e27a4f282e4bccda8291438b150f77b1cf"
+    },
+    {
+      "path": "test/ui_audit/goldens/catalog/registration_blue_day_390_1.0.png",
+      "before_sha256": "fbd73d0b2abb0d0cae695839da4ff350958d9eeab95567da40f3977ec4971c21",
+      "after_sha256": "825de5a86599297c04760aa8560f417ff1a723b071bb4a28aa5f7d122f0a74d9"
+    },
+    {
+      "path": "test/ui_audit/goldens/catalog/registration_blue_day_430_1.0.png",
+      "before_sha256": "55f4ccda9807c4675231eb6e624f85480cbae2b5930b05d5a2e6ff7ffd851606",
+      "after_sha256": "130c99c2beb3e028fb1de72de6efab4ea981e38f02374fb49104a13f3209a3d2"
+    },
+    {
+      "path": "test/ui_audit/goldens/catalog/registration_blue_day_600_1.0.png",
+      "before_sha256": "732f94a325b2afefca11a961674f8d4f54de859a1ed7762d0dbe316c5171b512",
+      "after_sha256": "554bb63a364af645c80095007ca2a81e8516a353f3ddd69101ea7a8d3639bbcc"
+    },
+    {
+      "path": "test/ui_audit/goldens/catalog/registration_blue_day_800_1.0.png",
+      "before_sha256": "b0d3ddad572919896dfd744f1e92539cf671371148ee77edfe823bdc37201b8e",
+      "after_sha256": "26fb975f894e6c467e25b12275a736c3139c9533ba5f798b32a49205ec5b0b04"
+    },
+    {
+      "path": "test/ui_audit/goldens/catalog/registration_blue_night_320_1.0.png",
+      "before_sha256": "e26c6cc9a2b1f68de0a578393c2fbe59db65b14d11cee1c036b666885864e26c",
+      "after_sha256": "b07a5efaf1c4176e97acee745e38811b06e3c53cc38cbc7f71f04a192e9df89e"
+    },
+    {
+      "path": "test/ui_audit/goldens/catalog/registration_blue_night_360_1.0.png",
+      "before_sha256": "6b156ec8df53432da861320a4c8b39246dda2ab6ba73d1c814ae2620f697351e",
+      "after_sha256": "10e3d8d5a751de1f5ddffce617667be7d4a5972457b08e96c5bb0241315e904d"
+    },
+    {
+      "path": "test/ui_audit/goldens/catalog/registration_blue_night_390_1.0.png",
+      "before_sha256": "1111a296b85e8d0a4138eef022e474fd2ab8e01ca54f5522e2d150218135cd5f",
+      "after_sha256": "cfa058e4ac29099d5c4a2e699c844d1af89ae0891cd408b84b99a96afd27ac32"
+    },
+    {
+      "path": "test/ui_audit/goldens/catalog/registration_blue_night_430_1.0.png",
+      "before_sha256": "cd98dd96b044e9d6136d146b6aa5ced11e5669a86579e3121c6e6bc3699f5b1c",
+      "after_sha256": "f303bd6dba67c87264f2d47f4c388a83ffcd96b9a327ad123b45464273b462bd"
+    },
+    {
+      "path": "test/ui_audit/goldens/catalog/registration_blue_night_600_1.0.png",
+      "before_sha256": "a8c9f382f27e12df11960265d835e5a330aca60abe3fa2d2bba359028c41149c",
+      "after_sha256": "b23970cdd95d51ed0b00e6f0619febe181d3ea8e44dfea9e43cb53d51a987807"
+    },
+    {
+      "path": "test/ui_audit/goldens/catalog/registration_blue_night_800_1.0.png",
+      "before_sha256": "76873e3b66b589671ddaec8e3402ac9aab9a86f0978f5274c464a30c3e94adcc",
+      "after_sha256": "02da2e905e77370042d5b61b9349877fa467a936445f1a4e213c116dcd5c1dbe"
+    },
+    {
+      "path": "test/ui_audit/goldens/catalog/registration_pink_day_320_1.0.png",
+      "before_sha256": "4fbbe427f083b96dd0bbca823a9ecb563e16b717d28a1f624fbb440d6143f17f",
+      "after_sha256": "13a8b69e2e590f0f70f9d4bfef8dbc48ef51e11ca9d5fac7ed31fee4d19fa3b9"
+    },
+    {
+      "path": "test/ui_audit/goldens/catalog/registration_pink_day_360_1.0.png",
+      "before_sha256": "424fc2fdb2ee98674caef5bbcfbe71e97318050bb7ab41a14096cb5eb41deaac",
+      "after_sha256": "4f3951332cd72b69f28ac4d3a863248bc5fb3663105dda508d83cf5d3f7ec9f3"
+    },
+    {
+      "path": "test/ui_audit/goldens/catalog/registration_pink_day_390_1.0.png",
+      "before_sha256": "fe95b7bc490144552f09f61bb6fab819fff8c32217eabcef3ca8028eb6982721",
+      "after_sha256": "99a5156fdbd135b18ca81d65c40806a538ec71b6e69c859ef7c60a7d84d05610"
+    },
+    {
+      "path": "test/ui_audit/goldens/catalog/registration_pink_day_430_1.0.png",
+      "before_sha256": "1192543011bf4cb96386697f6b029a24c01321225060d40b2ddfe3c12c4ee414",
+      "after_sha256": "d063a13531a91dd0bf6924f052a8b85d027660ecb4c3d92a47fb644fdba482a6"
+    },
+    {
+      "path": "test/ui_audit/goldens/catalog/registration_pink_day_600_1.0.png",
+      "before_sha256": "28619eefa9a19ce3b88b1a6e1a544dc44b9a51cd26ba68abcb49d204db17a5b3",
+      "after_sha256": "eed45e29011a51d15f2a58af9ceb9034af97c911077e20d7b6095383959d88cc"
+    },
+    {
+      "path": "test/ui_audit/goldens/catalog/registration_pink_day_800_1.0.png",
+      "before_sha256": "9720bbd8bf79f94adab1c1ae05f9609ca15418a9f66c23fa1d83ce89836410bc",
+      "after_sha256": "c3a684599db409d9b6bb21063bac501761abbe81fb9b72d329a926bb0fdacf3f"
+    },
+    {
+      "path": "test/ui_audit/goldens/catalog/registration_pink_night_320_1.0.png",
+      "before_sha256": "8472f46df7b71f9e5df0de4ec93ddb599439accc54c03a4aca4844497daadb62",
+      "after_sha256": "f5e0c05ba7b1c5d2212ca1300543d33b938ec7e66a7a5439d23ef92fcc7982e0"
+    },
+    {
+      "path": "test/ui_audit/goldens/catalog/registration_pink_night_360_1.0.png",
+      "before_sha256": "4ef6b1f78e33a623ba6cbe49c88d0c6941179636e77f85632a2c590b1df0328b",
+      "after_sha256": "4b170a8732896d055288c3352c9c979ce45f75c8ae009663ceba3dd98cbdb792"
+    },
+    {
+      "path": "test/ui_audit/goldens/catalog/registration_pink_night_390_1.0.png",
+      "before_sha256": "50ac46d8d01ff9f09e5d5f778bb5ccf7cb60fd765dfeacd52761cb80cf6a78f9",
+      "after_sha256": "c29ab082f3baf4d3a5223101e3981f100fb8447679d6fdeec4d6e854a8bddf37"
+    },
+    {
+      "path": "test/ui_audit/goldens/catalog/registration_pink_night_430_1.0.png",
+      "before_sha256": "c09d9ffcfea9be154a6b1e43eb61c0e2e1245fc0b01d2a84d32e087b3f3e310e",
+      "after_sha256": "3b0704ef8b3e97a76f27b611d622ba9f646b6ec0595c2f715a7b39bb3982655b"
+    },
+    {
+      "path": "test/ui_audit/goldens/catalog/registration_pink_night_600_1.0.png",
+      "before_sha256": "a9d35bb7e2dc1a1744613089ac42ffa2f3eaec21fe9816683dd4dcd736ba3ad6",
+      "after_sha256": "f15d3e624217477137340b3b60ac23ba08880e3aad3052d63d1d310a737bd30b"
+    },
+    {
+      "path": "test/ui_audit/goldens/catalog/registration_pink_night_800_1.0.png",
+      "before_sha256": "39c87d98ac59147060af197f452001a531764af114106b695f699567e6aa07ff",
+      "after_sha256": "2d8788614b97fe831bf53120bbf8ee7881bda6282182f0d10c1de02d298774db"
+    },
+    {
+      "path": "test/ui_audit/goldens/login_blue_day_320.png",
+      "before_sha256": "7a8a9a98f5a20c70087b6cb7da2f2f35d946046ebb21e406a6f3ca1f848ffa31",
+      "after_sha256": "6a2fa2c239a885ea9823d1850fac217f7688c126f39cefa083297d0f0a4526ca"
+    },
+    {
+      "path": "test/ui_audit/goldens/login_blue_day_360.png",
+      "before_sha256": "12c121b6ed79f7c8badc93cf5f49c611800952084063938855df19ec309a6f17",
+      "after_sha256": "65094f0b1109ed9592c779589604e93eb11b5e62ebbb1e8854a207f911279740"
+    },
+    {
+      "path": "test/ui_audit/goldens/login_blue_day_390.png",
+      "before_sha256": "1a9fe068beed3afb24328b68a5aa640a8b18d0d48e8c67038d0d764fed59dde9",
+      "after_sha256": "5c0478143e500ef39d8b0404475607a1a9652e5f7586625b621cdb038b544648"
+    },
+    {
+      "path": "test/ui_audit/goldens/login_blue_day_430.png",
+      "before_sha256": "35829de6a0f898c1d4996ac9694a912bb29ac154ecc7e2629a90c6e7623b6efa",
+      "after_sha256": "146dd1159d1e1edcd712363bef34a0df6cfd1f6d507e50275314e0a3b265f7a5"
+    },
+    {
+      "path": "test/ui_audit/goldens/login_blue_day_600.png",
+      "before_sha256": "5a631ed849446ffef3b821773fad7de836ffde81b2d945a9dec5a390d17db670",
+      "after_sha256": "8ca5ba394b69fb7e6f4a65d48af1e6afbd456dc9ea4d577a66a2321898687ddc"
+    },
+    {
+      "path": "test/ui_audit/goldens/login_blue_day_800.png",
+      "before_sha256": "41a7b1a6ef276d5b2fb4c40acb6f0f3b5dee21a0ee54e8d5d9ccce23f1b676d6",
+      "after_sha256": "5442370379bdbe2cb6037ad21c32385d795ab60bb4eae18cb4703451ea2ea479"
+    },
+    {
+      "path": "test/ui_audit/goldens/login_blue_night_320.png",
+      "before_sha256": "84d33996ef393e28a3b5ffd29a7a36f2e6aca918b75863e0b07102e230fe00c6",
+      "after_sha256": "24fe72a70c32d31a423e796a01e68f6dfd074c66cf204e940da168380954e996"
+    },
+    {
+      "path": "test/ui_audit/goldens/login_blue_night_360.png",
+      "before_sha256": "198cada2cad9c5e8a412ffa0de35b42eb43e0cbc836991451a7458d5a7a3b9db",
+      "after_sha256": "761b1010f787556c2099a90a5501d1cc227ff41778ccb4dd4c88c3c654d78b9f"
+    },
+    {
+      "path": "test/ui_audit/goldens/login_blue_night_390.png",
+      "before_sha256": "cb4e311cda876d3d622bd3ea5bcc8d113639e804090cd35c8ae98eb8208d79f7",
+      "after_sha256": "d508c14d464f1d436c01994ed6fbbb944f53faad303a6a1bf432739011fc9253"
+    },
+    {
+      "path": "test/ui_audit/goldens/login_blue_night_430.png",
+      "before_sha256": "0aaf8a8a5e30ee0df3eb37467ca8ef8be3c9a9dd02352d4116d3fd0a8ebbc4b2",
+      "after_sha256": "45ef07bbff8ad74b6c1885a293f911bd74a1f51f3a1e086163e7975fced49743"
+    },
+    {
+      "path": "test/ui_audit/goldens/login_blue_night_600.png",
+      "before_sha256": "e9616b79a963a2d1cd52434a4ff3c176a075de05b311ac71a57cb31b9173806b",
+      "after_sha256": "84da83020393a29cebe07091ce16525cef9bf7aab2e484b4f248d7f4a0ba671e"
+    },
+    {
+      "path": "test/ui_audit/goldens/login_blue_night_800.png",
+      "before_sha256": "0748601698ab182631dfd0977e62f6ccb687a1f20eb0c9b3849c23b890d46fff",
+      "after_sha256": "d222c5e006742e7f0966d9eb7f5c113836a76514653c22d1d73cb21d4b553c7e"
+    },
+    {
+      "path": "test/ui_audit/goldens/login_pink_day_320.png",
+      "before_sha256": "288043612f51150743d93dbe6254c57b4ae289bd8bff80af8302d7270ad48885",
+      "after_sha256": "ded3d6eb32ec0ddbc38680285a44ef0756495bceee20f4814480a76fcd429f9c"
+    },
+    {
+      "path": "test/ui_audit/goldens/login_pink_day_360.png",
+      "before_sha256": "6aa8261b7ecf49f6250838cd2bfc57a360cca9b9a8fe516ab0a99a43c5992822",
+      "after_sha256": "1b68c58ded6edb478161a17462a94f720444d18998a6d21cca2c0ef6a40c7423"
+    },
+    {
+      "path": "test/ui_audit/goldens/login_pink_day_390.png",
+      "before_sha256": "e54b917ca7033853049f6455e8454d6de47925f5e13f2a06a5602942d2c63e0a",
+      "after_sha256": "4671d67684e4f9bb0bc3d0fbba4fcaf905e2a09307cc42d1e409e452c7f0d191"
+    },
+    {
+      "path": "test/ui_audit/goldens/login_pink_day_430.png",
+      "before_sha256": "5002dbbd6ccef0eacfbd0f299d83b9d91d8cbfe2c67412c067945886e803780e",
+      "after_sha256": "1982aa8839a1eba19ab6f528707e8d4b55c44def57edc5621cd94b76758e11a3"
+    },
+    {
+      "path": "test/ui_audit/goldens/login_pink_day_600.png",
+      "before_sha256": "acd2f81dfd79300d687cd03e7fe5e23a1488a83eb3dead6572895088ddc7aa38",
+      "after_sha256": "765f4ddf143326c778055437d3b4e617109074d53db9a7df201c3ee70b38ec55"
+    },
+    {
+      "path": "test/ui_audit/goldens/login_pink_day_800.png",
+      "before_sha256": "6775a3cb22a20266979ae90b39ce8ffa749885bd9a3c82c56ff43a714c7c0244",
+      "after_sha256": "592238b72b3620eb2e3b2c1e1c295d1f21ea638149f354c3b493b1d2c5dfb54b"
+    },
+    {
+      "path": "test/ui_audit/goldens/login_pink_night_320.png",
+      "before_sha256": "b646dc4a2dfe3a5e15ffcaef335715ba230a674b1136e14daa8e36d09c5eadc2",
+      "after_sha256": "d53f26fbc4a8a0cc32deaa2b17988464c1ad92db206e5dd6142da16737622aa7"
+    },
+    {
+      "path": "test/ui_audit/goldens/login_pink_night_360.png",
+      "before_sha256": "0d2932915d771b99dc35f3dde5bf8904d7eaf74a109013334f54b08fc5103582",
+      "after_sha256": "987d7082f1110174b3841c54f29a49dafa67718d0f912867a83aa11a0b2e7a66"
+    },
+    {
+      "path": "test/ui_audit/goldens/login_pink_night_390.png",
+      "before_sha256": "95fb6ee55ee327f2f230093cdcc6b21e00b36c079c7e57541ec241a001223076",
+      "after_sha256": "3303a207e73593237d045641524555839d4fd2de97ff7762c30dc247a8293c91"
+    },
+    {
+      "path": "test/ui_audit/goldens/login_pink_night_430.png",
+      "before_sha256": "238f16dfe7ddc66b09e03c87a13d8a6ba4a4c67fe9c98f0c71a1aac904271af7",
+      "after_sha256": "468db8806ce0ee1628d54c7aec8008c177baf10f30456a49c4246d3c95915138"
+    },
+    {
+      "path": "test/ui_audit/goldens/login_pink_night_600.png",
+      "before_sha256": "c34141c78ca903d78a980af0e4d06cdd530c7fb63a4fdec2185b9e60b2e98516",
+      "after_sha256": "3feff0f9e4d8da82593d234c1863b0ae33520e94c7b5e787cd11979a6a600ee7"
+    },
+    {
+      "path": "test/ui_audit/goldens/login_pink_night_800.png",
+      "before_sha256": "75e8801e8ef35b33646196aa74365805db8808efb291883707c7a5d3ae3b0206",
+      "after_sha256": "e5a7b432cfb48c0ea1a15d6f4de7b68360495f230aab0dff7ada46debb3df56b"
+    },
+    {
+      "path": "test/ui_audit/goldens/pdf/character_female.png",
+      "before_sha256": "94f7c97804d04c9612d8cf237a5688206113b21f8f7497e1c3eadfc5ace9b01f",
+      "after_sha256": "99a0314deeaa8ee162bc5a34942961a2c4e7fa39efe7bf95cb2ea6564fa3daa3"
+    },
+    {
+      "path": "test/ui_audit/goldens/pdf/character_male.png",
+      "before_sha256": "0a145ac22e2f12e34b1de64263e5a04c47916f4c5593b20a48966204ea9d903f",
+      "after_sha256": "373a61627d864fd681ebf7e31e49a60b8b34b4b5d15f9a270afa2eb15a502278"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_blue_day_320_1.0_0.png",
+      "before_sha256": "f37d30a346a37b4dc8aeb3e525dab92b3a06c978f27fa527475eb81f09b3e3f3",
+      "after_sha256": "1067a8e8fa12b3f12e5977024e5753bcca5fd48e5de0d036d60c578beefd605b"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_blue_day_320_1.0_1.png",
+      "before_sha256": "63ae25c4acf279b9ed00e8e7d0159fe8e54f04ff0c234717ea13d1b6c46e3ca1",
+      "after_sha256": "aaf1185339ed105ce58d5c312fc9954a5945b8717c0b39813f8e83dc065da4cc"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_blue_day_320_1.0_2.png",
+      "before_sha256": "4f5f704f1d6331765573ca92d62dbed9d9f2c27d207d503213a1d4fd3bff51fb",
+      "after_sha256": "74c2fea2a576d848d3dff5dcc2f87d6fb524f56dfc8c8a78fdfbb762f4c48418"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_blue_day_320_1.0_3.png",
+      "before_sha256": "f4ef6b77cebc45d6c638d46d4716c38f3655aebaa93fe0763ae6c7e340dbe573",
+      "after_sha256": "154bd3bab9a28b7197216b7d5ac8a5b4cf847f95b103596d147c966ecacba0d2"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_blue_day_320_1.0_4.png",
+      "before_sha256": "9d446dca2796320b6d92933a3a28749e13677f958f0423cfe8901572eaf6c3ef",
+      "after_sha256": "6e89d69c19c4b44220aa4179f6b6b8a0bf48d490ada74b764b95cb1ecc9d3693"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_blue_day_320_1.0_5.png",
+      "before_sha256": "46fb9ff098ee5f7bb3d76bc7c6ee3cc57781fdbf827160ce2602785eee98919f",
+      "after_sha256": "df1d9f878ae6a70f2014b9f98ef1482a2a3c6785918e8ca300e693073d0bec85"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_blue_day_320_1.0_6.png",
+      "before_sha256": "e587c8837d1d1f47e1d17df030e9be45f130745c60515ad8cbc8e15fbb08b037",
+      "after_sha256": "3263c7e48e7cff5a9d6d1b0e87490b8fc518eda7ee786e2282d346905343c62c"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_blue_day_360_1.0_0.png",
+      "before_sha256": "a4f6086311a090a6cb02c6e7e80e7c37899e81a0162c3a80dd558cfc3c6dc858",
+      "after_sha256": "214eb253e80bef21ad138eabbbc3e3fbf34efc965f5647386041ec1800a89169"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_blue_day_360_1.0_1.png",
+      "before_sha256": "3c1c44f0b49179f65dbf38d1966ff20602a7b8e3352312e2d2d43a5790140fc0",
+      "after_sha256": "5dc94ac75afdd1d7e381548f0aeb0490628449e8cf47dad657c41e5e6d87495b"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_blue_day_360_1.0_2.png",
+      "before_sha256": "c42499b1ae2f3c54d46c3ee323da8cb0f5a01589593851b04e3aafd8477c5a61",
+      "after_sha256": "016018cd5060e3ad270aebbca8c75913e9d7bf54c35304b7c2fa2bf1dd1b4466"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_blue_day_360_1.0_3.png",
+      "before_sha256": "ecc7004e2073899c8983112479ba6e83d2213c0ef90aef69dfc4bb13ae227f78",
+      "after_sha256": "d5974986b2719e960cfcefa59b39785087624941a13bab7d93200d4470ad89bb"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_blue_day_360_1.0_4.png",
+      "before_sha256": "6cb6eff62702648840e636ebf1d2111dc798b673f99108d4e4c155a5c11c571a",
+      "after_sha256": "9e24112aa87a76b437592d694991973841ea2320973c24f6170b893d23eceecc"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_blue_day_360_1.0_5.png",
+      "before_sha256": "e1eff33da9c1dd8a43f3d7c900d988464c6f7e7894ef4e80a44c4480d34082eb",
+      "after_sha256": "ec684ae4ba73a1a6aeeb124c64728274f8775d754206a5daf174a00506f37fdd"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_blue_day_360_1.0_6.png",
+      "before_sha256": "a3bdddb166d2c01c652da356b6625be60c27b634eda36c989aa645e08a5d620c",
+      "after_sha256": "1c889f0fbde00ce80cc5c486a54af38ef5286d4f1dccffe8814c2e7e4315a7dd"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_blue_day_390_1.0_0.png",
+      "before_sha256": "66541513fcbf149f28588f7dc2c046cc40379dda5efd9d07852020a79e52ed49",
+      "after_sha256": "48274522c0d0416b96ee898b8845effe2eff2dfc4582fc7e3365fbee3fccccec"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_blue_day_390_1.0_1.png",
+      "before_sha256": "e8b060d2b221f9196e30f7e279d9e635c9030a5c82d8d53ffe4589a576d17775",
+      "after_sha256": "69bfb749fadfe6e648d3f78bca834f8f187fe1dc40c95956381905e71205ce84"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_blue_day_390_1.0_2.png",
+      "before_sha256": "845724bf40142b9d416588811dc48be1e1a453a9d072a3e19272de07eeb1184d",
+      "after_sha256": "ae3a124dccb9da2b6b90613c6cf79fb3c8c4c6b30b227c20807f198a24c5bfa0"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_blue_day_390_1.0_3.png",
+      "before_sha256": "625c785dde447dc04b4a20bd716aa981705b5f3f219cb1f8e6d7b649331d3590",
+      "after_sha256": "50211a3bbabe55f999fe6a68ff4630c5dbfb51029efce7e44515da1336cbe05e"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_blue_day_390_1.0_4.png",
+      "before_sha256": "f36f3ef23a22993483aa3d5bc80d194b16430833906fa6e5deb7992f88728cc2",
+      "after_sha256": "2cd68bc87a19ac60da673822934ce5f37d9d3761472a4622582c82170810ca89"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_blue_day_390_1.0_5.png",
+      "before_sha256": "58fe217cacd28b4bb02286e5deddd074c35ba560b82f6fae2cb6753014401ba9",
+      "after_sha256": "df453d13c9a1e7c2f9b0d9d1d20d3b8e2406dfaecceb222d9cab261d71abd6a8"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_blue_day_390_1.0_6.png",
+      "before_sha256": "6cdfee2237cd54ee14436f32095a85cfdd5bf1ed858a35e859b477a31e93e3fa",
+      "after_sha256": "1eb381d10cff74adcf699573419aeec20c9257adb9d81c9eeac1b738d0dace21"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_blue_day_430_1.0_0.png",
+      "before_sha256": "5b2fb0142fa38962a59d8da960442d8e4b050ba003fa0adadc722acbba1e9713",
+      "after_sha256": "86a8e157fdc888ac9fcff8dfa3c9c1dd9cbdb95139d9ade4f229929cd03c905b"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_blue_day_430_1.0_1.png",
+      "before_sha256": "834f7309e11364e38055a78d8e4c4f1bbeba992b8efdb20776ceff2313416948",
+      "after_sha256": "b4aa42d710a0a1196326127c9c181f4e05745d618f71c1357bf37f2914e31d70"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_blue_day_430_1.0_2.png",
+      "before_sha256": "700c00d3959c8dc266b370f641fd3ec2db8775062958d2d4de58ccb01928c6c8",
+      "after_sha256": "f9c8de6847e7d0419e2e2abdd14caf220bec19ee5da864c3ee5f1c7913511cd9"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_blue_day_430_1.0_3.png",
+      "before_sha256": "155240a1dd688b968879b8f3827c22c0075d0129ed94becd6b0ada68d29a03fe",
+      "after_sha256": "74361e054f2916657e15aa1402cbd4078b721bb1b69770ad9441e2222345e602"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_blue_day_430_1.0_4.png",
+      "before_sha256": "561310d1e81b69d1c903b790542979ab82de215691e3325ac27519432eeeece4",
+      "after_sha256": "48da5828bbccf1ffc8f9f20affa7c8f6f78f8363ecb61a8422342c2f2e8baa98"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_blue_day_430_1.0_5.png",
+      "before_sha256": "e3fe2d06b60eeea0fc3bc4eb0202cbcc8fed7c25473f509d4553c475ae5d5ef9",
+      "after_sha256": "6302c6b51639c2b11355b9c564205b6e88748fb8abd54052b36a05251c32f2ec"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_blue_day_430_1.0_6.png",
+      "before_sha256": "7be53799dfa00f543e885e3950f50aa49763f427a1319132fb97f18e8fb3bedf",
+      "after_sha256": "8db918b5a87af5f475bfc42a50168c7330240415e99b4ae9d2e23e08c79d22d2"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_blue_day_600_1.0_0.png",
+      "before_sha256": "b06ed1b8cf836e8c90931abf65581cdb630861e145ff41a765380db07c709037",
+      "after_sha256": "0f73cd58ca75fe808a68d9702b6a367f146191f4e1b46683074c5333bda976fc"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_blue_day_600_1.0_1.png",
+      "before_sha256": "b4803d8150a71b92ebb7167a7eb51b22bfd38765c3cc3b3110fe87bf6af6456d",
+      "after_sha256": "91c1af54c3781138c8bd157ef942a8dee33140fdfc8dca367b02834ce03b5aba"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_blue_day_600_1.0_2.png",
+      "before_sha256": "9fc335fe15c9820cf3e57e097e0fe94fef2996b94dbc7c972141efee49fae7d4",
+      "after_sha256": "fef07e104d51dcec8b42110aa1da30379f5e56a43d1f7afa289a0fad1281bdcc"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_blue_day_600_1.0_3.png",
+      "before_sha256": "5bc6e8dfc5a7d56fbe5ed39407977fc4a1cdb02b725682a79c8765f808d8da39",
+      "after_sha256": "02b166f99466fa669caa6becd346038866e04a36a4267c67d0a6fd8522cf9a5c"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_blue_day_600_1.0_4.png",
+      "before_sha256": "df48340f37bfa64e0dc5df50bf9f2721e0554c9be70e9248849c569390c42055",
+      "after_sha256": "578bd6102af9c4bef2eb8dcfa73135f2b0bd5ea68605ceb0080b14dfaa57c7f9"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_blue_day_600_1.0_5.png",
+      "before_sha256": "effb9551b18548ab1b09e778d49960b7183e4dc6a13949a23c39422d3cf00658",
+      "after_sha256": "85862518334d34050ff5bca1596bc6f5d784cf591651a9df7090ab99e6709cbc"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_blue_day_600_1.0_6.png",
+      "before_sha256": "ad91cf18b31c5d1d502f18284642d11dd84d760af5e95100ecfecc8004cae031",
+      "after_sha256": "06c75f9a17b4e0b1aee903b2008412403727913878c819c4a9b148dd8af3d3fb"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_blue_day_800_1.0_0.png",
+      "before_sha256": "c4ccb9304875fe4dbcaa023bb457f21d37a180be52729bf054a2e1ef4eeb9aba",
+      "after_sha256": "844f6eee8f600342c4f96c4aa7fec806efb9e59cf413e42494a7ab6e7d241b91"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_blue_day_800_1.0_1.png",
+      "before_sha256": "fb61425c80c65aa0a0f72869dfd0b0255dfc45342137525b0c96c1b7ef98d04d",
+      "after_sha256": "08f6ef549be0eb9b003479c27e81e107b802f5b5c3960756fc45e0322f5147e6"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_blue_day_800_1.0_2.png",
+      "before_sha256": "f68ba0ff5587384e6ea7d64d779012e6b9e975d1fb82ae87a605a302c9ead5ed",
+      "after_sha256": "e875452d6545cb24133b43ec778280bf31300eae24b8ef9e74cf2cc8275603cf"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_blue_day_800_1.0_3.png",
+      "before_sha256": "3bc3bf739fb4ed8ce63aafef2033dc071cdc4e4df1b06609549304994dfafd16",
+      "after_sha256": "0f4736e8530a29d76fc9369c3414e2154d333b6003d09c6d07528c187008c997"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_blue_day_800_1.0_4.png",
+      "before_sha256": "600d6b8e4015f983c936192a46e2181ecce56d20d94c0f66679fbcb7565441a2",
+      "after_sha256": "e93fe7c778bc13de83ab78f3b55051a7b3f915801e38c0fecd9b643a94f5ca3b"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_blue_day_800_1.0_5.png",
+      "before_sha256": "c9c9b71a9f3bcdf4eb2e105c97a2d3ddda5940624fb6d414eba3f43ac42dd2d7",
+      "after_sha256": "86674cdff2466b57f10370a38713d0618b9283bbed5d6625c05919e5dce02599"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_blue_day_800_1.0_6.png",
+      "before_sha256": "7034764d63ccabbf0eea25c6a6851d5a985da7a0b62b616bf2c8d2a8c4d56c78",
+      "after_sha256": "383f90d857b40977bce88fc5f78e46483445d561a54142970f72c6ad74303a48"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_blue_night_320_1.0_0.png",
+      "before_sha256": "c660ef900843e511d47c2d2f20cc8e9461e845d711f9566fdcd71fedf45d1563",
+      "after_sha256": "3dc1010d4fb6c3e98e38bf93540d54d7d45038e59c56de916b96229a5afdc897"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_blue_night_320_1.0_1.png",
+      "before_sha256": "42bae0711b568900b5c6ab77927538d6ab18776852eb14eb6e32bd0ee282f1b2",
+      "after_sha256": "6b1666625ac01711f4c403a614a19f954908e2c68258b5d6938b678c2c0f6af3"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_blue_night_320_1.0_2.png",
+      "before_sha256": "5a2bfbadb15bef8127fd1643fa4df9233f72ef05f2b226aaabcec53963fd9605",
+      "after_sha256": "f962872a4e0f9f6bf8a511e9b85aeac061472ffabc8e7ff5e6fb9d2ef0c38f1f"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_blue_night_320_1.0_3.png",
+      "before_sha256": "bcc5202a7e4b51acaac98f6df193e8c0fce9297e0b45ecb38ba4dfa26445b139",
+      "after_sha256": "af868b2e2a4b75c3f2a001d46591fbcd7a28c76af9ab538e77fcfd553ad30f17"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_blue_night_320_1.0_4.png",
+      "before_sha256": "abae1782656a35d9378842970b44a75dc5816579e87796f52d04ad58fe10d9ad",
+      "after_sha256": "2fe0cbfd06f4212a8adc41271a1f616a9d15e8351921e46fc03e5ed74b4b856a"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_blue_night_320_1.0_5.png",
+      "before_sha256": "c6070f56f43369e9ec95ca42d57a7b1f3f30df81d6d2b11d713755d0859e7e3d",
+      "after_sha256": "6b0002900af13214b9f6d7db9256b4e198cd0da88a39979ffcc7cb5abb00f89b"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_blue_night_320_1.0_6.png",
+      "before_sha256": "063367444725a18103a0043999001ae05a6ad7ac1c5bf39e33e4e995ea49d799",
+      "after_sha256": "6eea82f9732d827c195a4689008bc38492a384a96a068ef54a426ab83c37d51b"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_blue_night_360_1.0_0.png",
+      "before_sha256": "5b44ca16d3434c1d7d02dc7ef41849f4fd2b66e6d8b2e3c465fc7b5c6ef89eff",
+      "after_sha256": "acda1b2b945f575c6426f32f452a406ce76fe459da7f621f6be695a6347155c6"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_blue_night_360_1.0_1.png",
+      "before_sha256": "d1932429baed5cc9ecd734b9c35aaeec38b524d2f2f1bcd7ec6ee1933c79e169",
+      "after_sha256": "96bb747eeba956398625351fcbdbcb9974748646310abe68d0d64aaa1a961afc"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_blue_night_360_1.0_2.png",
+      "before_sha256": "3473a6f72efca7870673d70d111664cd3e31b6f98ac33aa995bf2e3464781400",
+      "after_sha256": "e1084de76c612e23e8dc3b643c55ef8789591969f068b8edfc0ca341bcdfc1dc"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_blue_night_360_1.0_3.png",
+      "before_sha256": "bb9b6163582e9e6539d325b023c4a995b5002ed177c2e88db1708562d370912b",
+      "after_sha256": "f53bcc8c0e48527f542962907c3cf98aa1f638ecaff6ec8569dae94fff756352"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_blue_night_360_1.0_4.png",
+      "before_sha256": "41694d0d1e530d9280fbcc8fc487002e4393bce964c269a958a15672e2f8f995",
+      "after_sha256": "5140902513a1c3e6802971ce156db26e02465732a24d65f36c32260c93acb520"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_blue_night_360_1.0_5.png",
+      "before_sha256": "672866023787ab0d93ef2ba6df2b8be96d899cc4fd4cd607d9c746c72f61802f",
+      "after_sha256": "747967f05eedf75e7a0fbf8ef3c5c2e4aa11ddd0e0ba42055e219a57ff5ea917"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_blue_night_360_1.0_6.png",
+      "before_sha256": "8410fdc6ef134349ae6490e9310f7b0790a380596943787a012b7f6eb57b891c",
+      "after_sha256": "4ef7d3d298dfb736140eb7300db641af7b71e62209c5051ae6290ad053c1be92"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_blue_night_390_1.0_0.png",
+      "before_sha256": "46cf005f8bbe92a6694ab42ef53c99479ddc7a62163bd94c29118d1c135fb1cb",
+      "after_sha256": "4e6d244968f54253cccdb56a58f412349e37909de6f504ed2ccfd46f669d5ba6"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_blue_night_390_1.0_1.png",
+      "before_sha256": "c93191a8d986ea81ca2712cce315814149d31119c10401599d67661ed7942d9a",
+      "after_sha256": "68b5dd27a64c21125f7a1b295ea3de6046d4b0614254c9cd1547c8d6b967c6e5"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_blue_night_390_1.0_2.png",
+      "before_sha256": "195e6f2779e2b0ff419b126f16e70bdf741ade48d812a6c7624d24ec321fdd16",
+      "after_sha256": "b6059571a666d1b469c0642c0ebb4f303666ae27745f50f9ee30cf723f43440a"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_blue_night_390_1.0_3.png",
+      "before_sha256": "30fb437102a605a60e6772fd888a0632434c4c32f92c4c749ed13fd1ef49fb06",
+      "after_sha256": "bc256b530cf5d0ca88e4df548454fb19bbf95393908a75688ebcc5e3c46160cb"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_blue_night_390_1.0_4.png",
+      "before_sha256": "9b6e8fc84a1d96e65f0c6621fb714cad9611bcff7e84a637649039b7f310fc72",
+      "after_sha256": "75361ecef17193b2214c3ed022097c67d0ba503fa2ee9cfedcc8c7a0f344a464"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_blue_night_390_1.0_5.png",
+      "before_sha256": "025fac595c67989d5aed2ab324cff925201c35b85fe4cd491e798333eea12dc3",
+      "after_sha256": "c6f077259999ce61a360eaeff53068fa6fe4c0cf1237e78b14eeb0c6619a3158"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_blue_night_390_1.0_6.png",
+      "before_sha256": "099bff103f59e4375635f638fb483b791f4f6c70bc8ffcf67d73583fd9c93ccf",
+      "after_sha256": "d69bfe0f807335a12071694c72d247d94fba9b94b91b346af2d8d4e25d74a96d"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_blue_night_430_1.0_0.png",
+      "before_sha256": "0d5ca5440e858a9e6544258e689d33fcc64f90f523875c7bc3acb54cc7eb355e",
+      "after_sha256": "19627651ac6f37e210ce93e07531b2b9681f8a5691e8b36480c7d141d680a45e"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_blue_night_430_1.0_1.png",
+      "before_sha256": "39bc30b05a07687b9a4e5b23ac55cae3e2024d25a34b13804f507c4fc772688b",
+      "after_sha256": "2a6e936e65f6334f8f704f3316172a206739edc67e164d9b71761f4a0e72f048"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_blue_night_430_1.0_2.png",
+      "before_sha256": "82b181b865c3a6432c3e3c771d5d0e3a4d9bb7e2c6d8c98047bbd5ae4cd7ab09",
+      "after_sha256": "f567301ff6863b10ee37535b802c5b07ed440fa5c27c81e605c6bf16f0d59df1"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_blue_night_430_1.0_3.png",
+      "before_sha256": "81a9abcfd2df3d5bdb88f2b91e6b24ddca4520835c903867736d7f05ae025fb5",
+      "after_sha256": "17a876383ac2938f38953dbe40451c07c7f19e19d930acbe1e42520c98ee64c9"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_blue_night_430_1.0_4.png",
+      "before_sha256": "673613c495d10e6d20b18835447c0f68a36fe308cce09b72464539bd298e74bd",
+      "after_sha256": "f5e6ad71a8ddf584f7cd2ce0f3429cd74d4de7b4f058cfd466bc40e274ebe965"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_blue_night_430_1.0_5.png",
+      "before_sha256": "31827bd8b839eda32562e8c610c514066657a72c3ad35744ab2af2b4abb01052",
+      "after_sha256": "bed0025462d6d990ace9ffbf5c4fefb4be9c9b0b84fc2ee6a94da97c4f6d35e6"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_blue_night_430_1.0_6.png",
+      "before_sha256": "68f8883b13e4b07c37c6e7504ace8f48704df6e90b0a2c2834effc3ed509b808",
+      "after_sha256": "79a0608c09e882881629403d2b75e0d9609cccc644f19fc962bf55326e3c44e5"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_blue_night_600_1.0_0.png",
+      "before_sha256": "41bdf5c5d7b0c37de16c9d89ecc4d11fb67f602cc569bde56a4f3e59233649e4",
+      "after_sha256": "0941d2cbef11f417c2cd849d479f37e306320cec1d070f0bc234c3e9bfe8266b"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_blue_night_600_1.0_1.png",
+      "before_sha256": "c3cdc256b3e14cca0a3fc44705ba995666510560708ff505bf27a2b70a34b8c0",
+      "after_sha256": "5461bba674ed32cc578098e45d29dce4fc778d1b2a636d102662ea4534e25a28"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_blue_night_600_1.0_2.png",
+      "before_sha256": "3f46f74e09ba61bb9410a2214127e668b8490483a6636e68eea3c664803b0ad7",
+      "after_sha256": "6717ef15bc83374b46539e49b67a639e2b02d59fb4bd9b43a04bad9e82544baf"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_blue_night_600_1.0_3.png",
+      "before_sha256": "1fbf558352338997c7381bff4de4a2e7280f5da9c6e7f69d78d7841fc3f37224",
+      "after_sha256": "3dde9cff4c6507bd5d8269ba6d162bde33288221ad0a1d6253b479bc21dae1a3"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_blue_night_600_1.0_4.png",
+      "before_sha256": "254d16ad7131c1752d0eec401a37e896bca5a3001824626aec0b2cc785b21745",
+      "after_sha256": "d664639d3979434a7865512a6dd32850c71411ba423feca02c0886203db10116"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_blue_night_600_1.0_5.png",
+      "before_sha256": "b4a2b4d1be0dad9de92976fc5a3523d6a573aee9b37c295c39e239caf20cb6df",
+      "after_sha256": "3764c81d94155ae17f7baaff0ffb9de0fef50cdfe7ad32b27819f51163485675"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_blue_night_600_1.0_6.png",
+      "before_sha256": "d7384b1debf5567e222b776ea38f0808b29258773661e1bb4764689e4c9df97c",
+      "after_sha256": "c049cf27a7fcd67fc70263b4748d70cda1c5fdb17253649b9258f06ed84ec734"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_blue_night_800_1.0_0.png",
+      "before_sha256": "b1e9ab79b953cf02da3ce44e1b8bc40a743279ba58ac821ed3d7a0423f5f2ece",
+      "after_sha256": "d5c62e0c4195136f30747f0a58a05df662d5e1d5d769b52490e85a10c0c6560b"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_blue_night_800_1.0_1.png",
+      "before_sha256": "6f71dbffeb867105acc9d8739a0eb868a526242e97be9c5a14618305e6dcf6f5",
+      "after_sha256": "70ae0e771fe742b2edba1cdbdc958f48f3c525f74b58a5d2716c69f45dd2c452"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_blue_night_800_1.0_2.png",
+      "before_sha256": "3a5aa399c4b396d7c0df21914cf34c8cbcd64fa670d0dfbe2fab320c571b0925",
+      "after_sha256": "63c488ed0761067b4289c44ce02ea0e6ed4ef918b0657d6cc64714a18d679c5b"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_blue_night_800_1.0_3.png",
+      "before_sha256": "b3e21c2162ed96e16c698ebfbcde9b60dc5710f96d7e66db4405be99eddf34a5",
+      "after_sha256": "8330a2ce7984ca9334b2b1bac8e05aa0e16d1e97c5211eea745309155b9607bf"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_blue_night_800_1.0_4.png",
+      "before_sha256": "991fc96d3bc56f533bfccc98a33bad80340c9ceb7ff9d377919f54912de67dc7",
+      "after_sha256": "2b791de04fd5e2817c556b6b6ec0988b0de5edb9e0b29777ea259bd0c69552d9"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_blue_night_800_1.0_5.png",
+      "before_sha256": "c2473d8201cf402b1a80638328828fddcafe5e570b24a7eade448ddc468921fb",
+      "after_sha256": "f610d8bb89da06a5c13adf3e443adfb4e3d283f5af5d04375003221ef421ed0e"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_blue_night_800_1.0_6.png",
+      "before_sha256": "520f9170543132a1bc184ce4929a1ea270500523ea04c36feea19dbc89a4fc1e",
+      "after_sha256": "f59ce4717edacdb1ab94a877a2ccf23eb55f23c93748a152826e859ed56fbc2f"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_pink_day_320_1.0_0.png",
+      "before_sha256": "5da9c807296b010e89246cf804d3748b91ead510aa0a89e0011e20b645997183",
+      "after_sha256": "ad7cd75a1a3fc1e377aba2d9aed54481cc5c7e91f95d401f8f0ad4026e906e5a"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_pink_day_320_1.0_1.png",
+      "before_sha256": "3d8da26a1b02022aef875980679edbe6349082f8fea0a92d360847890f4b6b51",
+      "after_sha256": "e3b2f6254ab980f3802e09ba24f71e3d6fe3db042c068d02f389c6f584f77782"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_pink_day_320_1.0_2.png",
+      "before_sha256": "33899bcc819c155c68515000586dbc747de318169c4692c116fc46459caac12b",
+      "after_sha256": "f1ad7c8ccfc0ce15e2da7e38ba4634b37aff1ebcd374bb50de01f4671bf651b4"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_pink_day_320_1.0_3.png",
+      "before_sha256": "625d80b98bf448aa8769b77d4ae42f82a62c43933f2c877e3ac30a0f0fe66981",
+      "after_sha256": "3508ee571e14e67bb380f3012071623b686293f0d032ece03f9f00deac652c8d"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_pink_day_320_1.0_4.png",
+      "before_sha256": "3a830dc7e3a2e1d81429fccf52080311bfc8f19b76448a9bb55f68d7807955e3",
+      "after_sha256": "c82271d3fbd80f497a6a21c0ac76487ac56be2a84115d40304c7e34999204e99"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_pink_day_320_1.0_5.png",
+      "before_sha256": "7b3dffc3b6e51718dd8d9c81587f16b7b22059ee3afb7568de92f0a560b0506d",
+      "after_sha256": "6f3c3e9a3494078ec301a2cf514166f955526a9568d1026d5299a4dc048d4ee1"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_pink_day_320_1.0_6.png",
+      "before_sha256": "e6d6209d6099ef3ee05ef2617e8ab8b53dba376240e3134cd2cfd997c92c2dfe",
+      "after_sha256": "c30b88c52f768d4421037a5a98c52c8617eef881352e20e042666e0564f7f24b"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_pink_day_360_1.0_0.png",
+      "before_sha256": "b5a67f360b4e730ca1dcba56abddae7b5a0b414673666bdfc42049f26143fb0d",
+      "after_sha256": "4a0dcb082478a135c3bdb79ade936c4483fc229922549cdb56b14102c5194538"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_pink_day_360_1.0_1.png",
+      "before_sha256": "e0bd6e8968fb82736c916eef2c1b0a0624e14409ac057f737fd3884a42541226",
+      "after_sha256": "851034a7edc11b8aeb3f2eec0787b42eea58df1240600d4970e960e7eeb8dcb9"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_pink_day_360_1.0_2.png",
+      "before_sha256": "715fb752a8321a0b68081f8f1b335f345c398dca8d375b93cbd9b73bd592a76f",
+      "after_sha256": "8999f3e0b693fa10d60a996875290cebcf65520e5fe12d91881d3688546d0599"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_pink_day_360_1.0_3.png",
+      "before_sha256": "cc1f3472516aff1bad001b5eea240ccffc2c6f98b6740bcbbed147a399d0f84b",
+      "after_sha256": "53a3a8b4c1bfb4ac713e2f20dd53bd14f7f18f841eab0fbc652494a4f9b2b4ce"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_pink_day_360_1.0_4.png",
+      "before_sha256": "0f74dab93cbea08efaf5f4c088d1ac99fa872ca197adc4fdfcb50c3a36b4d08f",
+      "after_sha256": "f1a1046a66634ce2a26254116685d0a7e5f13e1d7c4ad31eb022c21e6b78c00b"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_pink_day_360_1.0_5.png",
+      "before_sha256": "cfb0d78a59b583ec2d4f0b572d5de9071ef7234a3882fbf3bb35fcdafa757bf6",
+      "after_sha256": "3f7fb3878fb028bb494b2318df1d6be624a47b51515e184e3379c8046c0c33ce"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_pink_day_360_1.0_6.png",
+      "before_sha256": "b8b8ec4c288c959f00d73ea50fd46ac75419347485a2dd468f14cdb697b91a80",
+      "after_sha256": "a2d6d883071ad8ca06e7edaea45c25cfcc8fba9393da3bbe472eaff3d4b6688c"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_pink_day_390_1.0_0.png",
+      "before_sha256": "78ded88a26112c82a8e7b87db0d9f4c688612e551a8dd745e1d01feb47c118e0",
+      "after_sha256": "e6d94be7b9e242389824d9c9414d8a1f0f8bbb9a4ba66e477502ec5405b8ba44"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_pink_day_390_1.0_1.png",
+      "before_sha256": "e69db2a24ece1d093e2457c59dcf47e76f674abe9c972f07221d9ac66f97e0f1",
+      "after_sha256": "0f984cfb42369eaf53b90202cf0edac7ba636c0d0ebfce2861247f3f033567ce"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_pink_day_390_1.0_2.png",
+      "before_sha256": "caed65ec9e596b55aec060d9072bf069afa0037723a637c4dc36bb9e8da1b619",
+      "after_sha256": "2d4a1573ce479e0b1998aa9ee9ee01bbb495e40fd20eccc50723f28e2d2b5bdc"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_pink_day_390_1.0_3.png",
+      "before_sha256": "44d2dddb67f39417e444053a33220b6bd44a1a381b2923e7d563619d3a47a5b8",
+      "after_sha256": "d3132e99c881baea81cbabc26b282a20086f504412851da870a64b332e151071"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_pink_day_390_1.0_4.png",
+      "before_sha256": "5ed08d32edde4a42219b3f1bef063ff5ffbbf1cb326741be5e3c3eecc56a80cd",
+      "after_sha256": "83026aa5146a22683f5c706a1b203c6d0577c56e92a4a8b616f4fc2383b5e7d6"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_pink_day_390_1.0_5.png",
+      "before_sha256": "9fa3f94705c1f8cff327a3f769040a705b5d2c9405b5dbc2ee5abe05d6f2d360",
+      "after_sha256": "721c4afc32f2a30392b63d024327666811f54eff989b899b585aec1961f28783"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_pink_day_390_1.0_6.png",
+      "before_sha256": "2877b54a501f86b528ee5f4148a6e31fe724b0f89478b3c6fdc8758af0357ffd",
+      "after_sha256": "3713966a509f2877acdee6dee96855c76aa9f9664de030ad60298df14be457af"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_pink_day_430_1.0_0.png",
+      "before_sha256": "966bab1e80c86d512dbfea0b69167a14ad1c5e2f8688c1d3181389f5002eb6ab",
+      "after_sha256": "2df3894e704a61bbebbd20d10f9c4b56827d249ae276899cd36660567d344a01"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_pink_day_430_1.0_1.png",
+      "before_sha256": "73ce2da9a702ab13fc1bc24c306efaffdbb0c074d02f51ae8c013262235c0a99",
+      "after_sha256": "cfc05a7c17312ddf625fe8e5f20ba07f32e30150e74d73faf2bd70e1e6a621ef"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_pink_day_430_1.0_2.png",
+      "before_sha256": "bbd0eb1d6376883f8b89cde486633abf986ca59f3dcc1aa497f67dd1b98c0419",
+      "after_sha256": "783f8e69c40aa81a2dcc2d570352c1778086e76c87ec1f829bd8c500528551fd"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_pink_day_430_1.0_3.png",
+      "before_sha256": "3edf0b1f28dc73e4c5defb9266a57d0f6d10e1900277a699e708844befaae88e",
+      "after_sha256": "fdca49cf9044f020a394c9a13bcf27ca09b114cbf8c74603be4d26f3bc856254"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_pink_day_430_1.0_4.png",
+      "before_sha256": "5a0d98f2b3da1faf0543dbbed3eb49b5002fc68af49efba6efc0929a9fce3d3f",
+      "after_sha256": "a45f04849d92781ee977852cd9fdd7ab74e4a5dc6e9f6831876098a7fc5642b5"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_pink_day_430_1.0_5.png",
+      "before_sha256": "fad742ef22b958c904239823128bea7e5722c205deb42cd98e0e5dd91901b41d",
+      "after_sha256": "f1c355c68bbef1f4b1583b7e6363566a19e9270bfeb9cafb9cad7d6711b76f93"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_pink_day_430_1.0_6.png",
+      "before_sha256": "fb731bf556007ff270d0a9475e91b7c625b574b49a05311c087aa96a2d13033f",
+      "after_sha256": "4220875cf0692bbf19b14cda184093d2ec2dc7334e2687096b564689c1333797"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_pink_day_600_1.0_0.png",
+      "before_sha256": "13797e506636fd84284ce90f212ae536fe56f8c6ebbcf9f4a132c70195cc174c",
+      "after_sha256": "126c3223d459d4629cdd720c7888a9152e5725ffb66d6386ed73f3412e6eb066"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_pink_day_600_1.0_1.png",
+      "before_sha256": "45f065350c0b86d95ad0a5dd8afa03b601ebe45ba13636cbb67519aa07e9c986",
+      "after_sha256": "50b98f8ed4f06678c73b5514da027899b062fa8b955e41aec1fbee9798ef8a96"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_pink_day_600_1.0_2.png",
+      "before_sha256": "1dacd39774e9d97f5b6958847ee9130a844c1da71221df778b25d08625f690da",
+      "after_sha256": "20feb553480bd2762e2f7d09aefbd2f317289351c0ac9d5db7c85d015999d8d2"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_pink_day_600_1.0_3.png",
+      "before_sha256": "059b49d25b95de39f9b1e78c1f0cf39a3536e9d9a458059a3693ab02226e3597",
+      "after_sha256": "99fc8b24d7f894acd0d3cf8160c5694ba280a6c354441b5ae515080bc4fa6cf4"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_pink_day_600_1.0_4.png",
+      "before_sha256": "b7d77d47073665480059b64d50a126cc359444e7e89b0c6984b747136c593144",
+      "after_sha256": "f1095599163e88067d96656c77d617318ac6f1ad100d90b8a4b23a73dfb83db1"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_pink_day_600_1.0_5.png",
+      "before_sha256": "24360ea2ce26c160c48c0b7a082aa04194de5235596d432f91c3b6b5d82f1282",
+      "after_sha256": "2b91d31488675f708645017e8b921184d0afde13748b47cfb41e7c4f22facf88"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_pink_day_600_1.0_6.png",
+      "before_sha256": "b3dd1f5422adc0de0a84951d3c6af06033825a481c90b486d3d8310a89099ef8",
+      "after_sha256": "1d121acdcc22084a91a7e38e241091b88412438636f7afe7c23600690dc209d3"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_pink_day_800_1.0_0.png",
+      "before_sha256": "3f0638cc28a1bc9fe42cd85cb2e42d6cd82ce53e115e104f2797b723d5599845",
+      "after_sha256": "b9768f422a0326fb79fb3a571e0f37f4651f45ae78ff9ba235e90b7be0d0e1e7"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_pink_day_800_1.0_1.png",
+      "before_sha256": "440ea12543ef0860059a28dd25afe7800a8d8dde5bf0fed0fa9bc1498888e2ea",
+      "after_sha256": "e689ef00a31b4b3203bb77931d25df1224e8c30b377335974e47ba730ba95777"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_pink_day_800_1.0_2.png",
+      "before_sha256": "105df0164cabcc7f13d11683357faaf4c3eb54ad8a6deb74258ea455732c23d0",
+      "after_sha256": "1da27b595b42b01f71d76e2a9076301d9b727c6ba3ff73641ce50d207247b525"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_pink_day_800_1.0_3.png",
+      "before_sha256": "8a49e34cde531bcc3c8faa747e4377b6675d19c1834f0db1cd3b816a1e418775",
+      "after_sha256": "b020c7cdf2fc91409131b5f5563cbb724d056dc26cf7614c473869aaf3c113c0"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_pink_day_800_1.0_4.png",
+      "before_sha256": "9103c76f65166b081794b7cd567d103d86f003f9996494e24f81fefbf8f8e613",
+      "after_sha256": "8d3717cab6392651a14b806cb9af3e42358f68dc02ca49c7d6d4dd4f3027da98"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_pink_day_800_1.0_5.png",
+      "before_sha256": "2816a93e09bcb283727a0f1a49f894f6ef9073206ba9efaa3901f29330c535b6",
+      "after_sha256": "b31b739a1ad598cea0f67628edd4afb50a96c3196a26bf71cafc8a26f6335083"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_pink_day_800_1.0_6.png",
+      "before_sha256": "c921ab19e82f913ab80709509c94c243bd70a1a05a27bb01c256f54e61f64df8",
+      "after_sha256": "a5cfa653068e118e337e9c452a69c2ef7bbdda29bcbecbf587a1b3e380ca8202"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_pink_night_320_1.0_0.png",
+      "before_sha256": "d648370023d10cfdfbe492a4a9fc12220e829715988cb8fcfa557e27141b1140",
+      "after_sha256": "d6dd57259c8233f7b255775a19aa546b29b873fea4f344b8b19397fc7851146d"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_pink_night_320_1.0_1.png",
+      "before_sha256": "03fd8087e7fe5bca584161145895b719582cb4af21fa769b11ac093b98882518",
+      "after_sha256": "23a574e4af040029297a56f9f701534866438aeba7de0cab56a51502c3d8fd62"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_pink_night_320_1.0_2.png",
+      "before_sha256": "a5421ff4c7e6afefa86b95213ca46f405cc1e915595fe28ea9bb02f6424d89d0",
+      "after_sha256": "82676f3e2023966ef67e2dc9730eac7fd6d83e632895f9b7f9e256a5e8c896f6"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_pink_night_320_1.0_3.png",
+      "before_sha256": "1fdbc2b50bf484547c6d2d9730a4952b46e66bfa22f5a7553ddcccd75abe0dc8",
+      "after_sha256": "c2fde2080a759e5908fbff338a8adb692c64f3288947b8b06d1fa2faed0acc1a"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_pink_night_320_1.0_4.png",
+      "before_sha256": "fd9a8fc51e98e2e2da9dbbad448efd0a8bf6217dd308d63f8f26f2ca88fadb24",
+      "after_sha256": "3883e7908707f284277bc68e9080d92d3fe5aec07cb95c4ce573aff07f36bde9"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_pink_night_320_1.0_5.png",
+      "before_sha256": "521b4963463dcb996b604da845389951177d14ef703ad95303a066f236f1f08e",
+      "after_sha256": "b45023aa51d62ff3ef04bd7652ba6e2ccdba2bd8a2026e845f16b851b21b6418"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_pink_night_320_1.0_6.png",
+      "before_sha256": "176187ef46fd193d09b7ccd2c55cae5caf9783e0928a66214a87294ab1ad1584",
+      "after_sha256": "a96c900cedbced53a6a44f85d36b2349ba5928ff995ab786cfaae42508bdac99"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_pink_night_360_1.0_0.png",
+      "before_sha256": "8f5d6d4f28057a4a26357b5f2da0f597e9203676118cd73d2fb9513f089580bd",
+      "after_sha256": "854da91e3c7b27690ce3f97923e24d86f02a07a0d273214f08f8faa87ed876bd"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_pink_night_360_1.0_1.png",
+      "before_sha256": "8b591539983fd5fa78ab33390cdf4a035b140dbcd60aa38407af46b6ce564dea",
+      "after_sha256": "f029df1f2fa1ce75eaa1e610c02e7a18036d55ee5f95557eb0150e820f350225"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_pink_night_360_1.0_2.png",
+      "before_sha256": "cf651c7714fb8159ebfe9453d15fef21616cb312ab641132c8a1e2e864fe65f7",
+      "after_sha256": "9f7cb18f8cb1169d2366e2e124c8da798827d657b5ad1c923d1055ee4166e456"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_pink_night_360_1.0_3.png",
+      "before_sha256": "903707d8db4d56dc7c5d8b96e6cccc5baebfce8d3d1c356b4fe893902f19a5b8",
+      "after_sha256": "25280742f5092e99a5730f7ac870d8c7316e7e05ab2f9e84bbf89c3d26a7e26d"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_pink_night_360_1.0_4.png",
+      "before_sha256": "01b1fe76de29cbe36857c8d5cbaa5e1cec3c4d5923ef07cbcb81665aa5bb6861",
+      "after_sha256": "5aecc18c0aba39bb8baf6adbac4206639e56829e0090624cd31c182ebaa70b37"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_pink_night_360_1.0_5.png",
+      "before_sha256": "e928d67aa1fd2f38643bf7bfffecafed1ab3222ba9d2f4583f17ef731b739732",
+      "after_sha256": "fed26ae827eb625c8726c1c51483f036f359108cd2e969248d9b547fb7d53076"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_pink_night_360_1.0_6.png",
+      "before_sha256": "f18522accd919a3ff565d0bbf6419fdcc565861f7a80002b0fb4a4e5479e8f3b",
+      "after_sha256": "5391c69fc403ac1fe190b45ebd98304466ad135a336662c37f12d7dc604cb5fd"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_pink_night_390_1.0_0.png",
+      "before_sha256": "a6d140cf18b15d7d2b845ac6ba36fd6423e480379b8523b4d85f5f7b7641490e",
+      "after_sha256": "31197e73f323a8126a88ef12a3505c1a30f212c62d2cb17c304ab9707cb43e30"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_pink_night_390_1.0_1.png",
+      "before_sha256": "fdd0b5979a9b8a65cfb05b716caea6ef77be26fbad667e5e5c6f83b856285046",
+      "after_sha256": "e2bae1c81b8c836947f17e7c108265dbf6cf438c39d79832b4136f99015b456a"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_pink_night_390_1.0_2.png",
+      "before_sha256": "36987b74f18f6658e1b466483d48aa8f68467eb3ef489ab8cce2b90cea6f07aa",
+      "after_sha256": "d1571044fe36227b0a7c2f04914348a80d053ae3bd4eec987d09adc1de20a669"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_pink_night_390_1.0_3.png",
+      "before_sha256": "0a70e3e90c88ebdcdb0a37daeaf256662d18be32b79a8758eaa2cc2117925fcb",
+      "after_sha256": "fd0f2ee76c4e434cd414db5657113cb87d6d223cc7201aec80df226d2aad001a"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_pink_night_390_1.0_4.png",
+      "before_sha256": "7c7806dbcf45f509728439275b132f116a0483352c18496b1ffc7d2b4f0e530c",
+      "after_sha256": "b2368e9ee82a08fea0f61951dd9b1ee7386abe095f65b14534ff6664c1b8a27c"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_pink_night_390_1.0_5.png",
+      "before_sha256": "50b8b3feb4b525016a703b92f946cc1f4f0eb275ece58841fc4668f26628dd41",
+      "after_sha256": "218ae88197acc914fa3c208d8e378ee17d899dbbed9044d621545139a3aaa4af"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_pink_night_390_1.0_6.png",
+      "before_sha256": "d8d0bb2c3f0d7485ffaff6fc1633e51ce1dcd93152a253e0e90353d39ed5cdc0",
+      "after_sha256": "4cb89b4e4b43a6afcbc83d4b631e619f9739fb5216a246c36058d231e2530295"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_pink_night_430_1.0_0.png",
+      "before_sha256": "70945482f354b20c90c66c35e40296cf156a5d66d8210d2828eb13095f57d1e3",
+      "after_sha256": "5ddd4756dfeee86f65b0131eacaeee6b3fc87c9dfbc4e40130ca4b68a1ace20e"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_pink_night_430_1.0_1.png",
+      "before_sha256": "607cbb11445a34df0b16cfdab59ec7277331b057b670e714fbcb60ed3b5d2f1b",
+      "after_sha256": "4ad77f7d0f843357746fbf714eebc069b377da8a1c97a85b5fa501db35ff44db"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_pink_night_430_1.0_2.png",
+      "before_sha256": "0eb9c80de494d4e90e227784c7f4912ae5106c6803de1df083dace75be67e948",
+      "after_sha256": "b16a360f8d9d8e959e47739c118b5a23ff43086cdbca4d2bbe3ef19a1d0a495e"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_pink_night_430_1.0_3.png",
+      "before_sha256": "575f8eff023fb6da5464830ad1fe7f611c337f606a556483444e47fa5e1d09a2",
+      "after_sha256": "f65c3e19a2f3105a22137ae2fa2a8df5fe7f27cfe078544cb65aa7aa41707acc"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_pink_night_430_1.0_4.png",
+      "before_sha256": "a56aeb8858fc1e4fe55fce14f852970bc07a21e7c4a2d8131b568a44aa69f375",
+      "after_sha256": "48145261610ebbe70e8d3f955bb32d98973fa2ace98d0d81525fb54dd4b30af0"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_pink_night_430_1.0_5.png",
+      "before_sha256": "dc80ce58bd93a5e49251e4025eb6fa2e5cbf41df129c6f462762f4004d091cb3",
+      "after_sha256": "1efc8f8348a6f781b8592c216dbfb9b6a5cb6fc3ec42aa778151b9aa87f5012d"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_pink_night_430_1.0_6.png",
+      "before_sha256": "e81ade9cfa12a3f01b2a50691268f08fe90a43dd884d376357599487bfb6fc36",
+      "after_sha256": "8fe1c09bb5b5c713d8daa9dd1df2ef4bf368c6f91ac9a33a66b29ec117e0fd60"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_pink_night_600_1.0_0.png",
+      "before_sha256": "6278d1446f616753bab6fed17a53f56d2ed57ba8ebc5ef7ddcff3af66a9946ed",
+      "after_sha256": "bcac728e98d022e4dbeae50832f6a657e95f87bdf5bb0725059a8d02fd0761f6"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_pink_night_600_1.0_1.png",
+      "before_sha256": "1355dbf13e960804b45c989fbab174346cbd01d25f498aee1a75180a9103ad96",
+      "after_sha256": "1f9848cb50c1d732b5c803fdfa3f3996fce5b4a2271f439940fc08d1f5efc032"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_pink_night_600_1.0_2.png",
+      "before_sha256": "57128054a2291079c62d3e2c29a4fe9e1d36c8bb9cb4a02979af0fe2b06b6831",
+      "after_sha256": "284d96b2848e6e8c46b295ca6364ff24c83e2f82d1bd049168867eeb745b50a7"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_pink_night_600_1.0_3.png",
+      "before_sha256": "5a5b7552d1f18a0b956a07b11efae347d92c75fe1375c9c7e06bd002e02298bf",
+      "after_sha256": "a7982b7690cee1d469361731f8a8a16f828965752ca303eb5dcd427bf9384970"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_pink_night_600_1.0_4.png",
+      "before_sha256": "2722b01d3ee6ef95f0c961fc4ac2c8c9b48223a1a78764c46b04927282c6d56b",
+      "after_sha256": "096eec197d22ce9f10e1c95814f3468c903d9731f5274f42d551815d3f814240"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_pink_night_600_1.0_5.png",
+      "before_sha256": "72d189621c53b58a12f220f98f2029734283e31ea7f7f3bafecb53c34169ddd1",
+      "after_sha256": "c9ccd9d60a8e2d1f0bda945f526265a980d455826428b0f7ab047f2379abdad6"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_pink_night_600_1.0_6.png",
+      "before_sha256": "bfd623bd4ff152d30824fc43f8026933123fc1fe89c418c77e61f9c6e7e52088",
+      "after_sha256": "e63c8db8384ed527387051cf32c6868f070689e8835a43c42a904ea8cb1cd583"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_pink_night_800_1.0_0.png",
+      "before_sha256": "f16b33870fc37eb7efd425f209779ec8352450c6aa46b927b55421a218db2b8a",
+      "after_sha256": "b6fb4675cdb5fab2fd577f3ce241844dc906e9e1e9df0dcf064f6c2d985ac21e"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_pink_night_800_1.0_1.png",
+      "before_sha256": "b6e0e2203495a8e400780db74d4ded5647ef9e03ba537557eebc505d2f60324f",
+      "after_sha256": "9248720eac15e4da8198110f4c7242551482212cb7482e46408963bf9a76f137"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_pink_night_800_1.0_2.png",
+      "before_sha256": "9f6479b42e6588e635c75a11679c61747dff60b55bca2e8347c00a5befb78b2b",
+      "after_sha256": "df0c4a1611389cc1848d40e2a58c65f05b3ae0aa684fd124b4103e35dd86bc17"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_pink_night_800_1.0_3.png",
+      "before_sha256": "cea53b8b25a8c5c944fa0a00460f518e4f9c665fd9dbfa0574aa73a80d453386",
+      "after_sha256": "fbdafd543710ba517e0153d8ebe56cb3b949308df251be89ced4a1bf7184d86f"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_pink_night_800_1.0_4.png",
+      "before_sha256": "1eda5d907150fe18d2b37bd3205538472878204b14dfdaa46e482da21ee58492",
+      "after_sha256": "95df672a25e0368d81a78371a70a3e3c76dcb3732234d368d836ec40a7a4851e"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_pink_night_800_1.0_5.png",
+      "before_sha256": "33522c89f5f2d4b68710d91153fb0e6d4c7e35a077e5560fea3cd6157159c0f1",
+      "after_sha256": "36cef24f781cd25194a23e2e5f44a7ae360914116ac961b6daae55f39f38c49e"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/customer_pink_night_800_1.0_6.png",
+      "before_sha256": "0430326799f8dd2969a53fd2cd3892f108179172fda89cf3d50bca07093bf01f",
+      "after_sha256": "37a574738db089cb1a03152685c2a0ac511b5e02c15d1bc2acc0a6eb11ff1850"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_blue_day_320_1.0_0.png",
+      "before_sha256": "6951cdf50edf5a67cf9a4f2ed1a549620be2bea380378de1dd29e8080955b088",
+      "after_sha256": "b1426afebaa42c23486640ae10f8c1cdd904d7ba72a686ba7358696057ce76d6"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_blue_day_320_1.0_1.png",
+      "before_sha256": "585ea1cbb326bb83dafcc997137b593c8a0be222cf485a3c2b5683bb0584ed56",
+      "after_sha256": "03cc376d039d3cbe12798b3c54e042799c716e852e7a1466a3947350e03cd424"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_blue_day_320_1.0_3.png",
+      "before_sha256": "f3477e5f4c751c3c6c1221e112029aa28b686e53ee3e5f9d09faec301ca9c609",
+      "after_sha256": "2bba1472c7986ff15d1586bbe613931b4b8b833dd6251345aa6485fdd7a8e959"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_blue_day_320_1.0_4.png",
+      "before_sha256": "2b5b23dd6b021cbebdc1542cc444b7e26e81b7826d39169b58d6452e4cf5e18a",
+      "after_sha256": "c3e186017ccd8b775da198fb5b433582c98c4de067a1061116de317aa2b63a86"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_blue_day_320_1.0_5.png",
+      "before_sha256": "c2d164e8f375cc02f37d699948a4b06f3dd165b802a546b6ec8bb79ceff21cdd",
+      "after_sha256": "6939821239df730e2ab7a658292e0ddd11ccf01b12c0af270a6fe34ed593e2fd"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_blue_day_320_1.0_6.png",
+      "before_sha256": "88e162163de2bcb19d0a266b36b8859575e25506fcb2fc54e76e4638861cc579",
+      "after_sha256": "ffa89d1617e8c8538bfafbd9680cec058183bc84fba27618b149037a5b7891af"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_blue_day_360_1.0_0.png",
+      "before_sha256": "4660f6468232915f528ed6e197e06fc156e51d435baafa5127939fdc665f0743",
+      "after_sha256": "a4441830d692f87ad400ae6c757cab7a4ec2aa34a15b5c8c0c6d47a859a0fc77"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_blue_day_360_1.0_1.png",
+      "before_sha256": "7ec9c543601702de9084a84d765f3f6dfbb02727efa0fa90e5891592be3ccf58",
+      "after_sha256": "41026ff5cc0dd39cef15f9cd39602dbbcc0c642f359fdf7b18456c3079f8e2b9"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_blue_day_360_1.0_3.png",
+      "before_sha256": "4692a857a41599d5e5b5c80527c65133f50b4ed3bdcf8799d6e1ccde4a5caf1e",
+      "after_sha256": "93960cf9befc1543d51f638cfd7bef3ff12e6532435f14bbecb554e811d9d666"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_blue_day_360_1.0_4.png",
+      "before_sha256": "30b902fbd42945d54f342a09e99ac519ef284ec55f53eca1d9eba8c35a54b2b6",
+      "after_sha256": "7747035b20cbaf7e261e967650fb18be1fefc8e8e90cc5dfc98c8721c85b5864"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_blue_day_360_1.0_5.png",
+      "before_sha256": "be2badb079f577ea3764a7775a21c0168ac528050f7bf0a2927b842ae96933be",
+      "after_sha256": "67c0969e8b3117320ab64d4ee072eb3aedfbddd43316224db7654bc72a4455dc"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_blue_day_360_1.0_6.png",
+      "before_sha256": "db80cc133359802a8e18ad73243baff91fcecf67fee4a6ced624d137433929ea",
+      "after_sha256": "925cb6ac9ba1d9f89b92167518a8f1af065adfed75040a029d6a3cf607825a16"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_blue_day_390_1.0_0.png",
+      "before_sha256": "ec565ca4ce084688ed74f4b046fc4c0ea6d3463020cc34093601c160ca81bf43",
+      "after_sha256": "c53db8288b363d88fd521608667a63ad965e95cac2651ab30c1e02ed74a50ad1"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_blue_day_390_1.0_1.png",
+      "before_sha256": "93fbe1bc63f7fbd1ea183a1ecb4969a87c8be666948aa123e3b5f964469e8022",
+      "after_sha256": "a558bcca4cdfd286b34258b19a69e3321785f68339fa26ec510e32c999eadfa3"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_blue_day_390_1.0_3.png",
+      "before_sha256": "0a2dec00034c3d2c37b7fd13a790919d325cf882e97938a63e48577b1fd35cd4",
+      "after_sha256": "b6a47fc2fde379667d2e979c95f7756eea9e6293769e17b6efe36e1852e6adb3"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_blue_day_390_1.0_4.png",
+      "before_sha256": "94ce8dadebfbeb71afbadc11a370a1ab06df09e487bb08ca17aedffe8b7234ed",
+      "after_sha256": "468cdc59b901c2a14635c240f034d4b1d227b137db6830508bb380e8bed99839"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_blue_day_390_1.0_5.png",
+      "before_sha256": "d0fd00f916fa1ec952576da72e8644c12d4549f4b5b984a3c0a83f91a0859cfd",
+      "after_sha256": "32a66df364c337d41ab31f37b90199da25943edad209870494c9db4f0f9c4ec2"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_blue_day_390_1.0_6.png",
+      "before_sha256": "08d6eb06111e21d87d1f8c7f97403f19638aa9fb96ea23b6b7d1c4d9e911abdd",
+      "after_sha256": "8b0348a9eba620dadf6f9deb4692dcededa1d4f474c3f0b00eaf77730386db51"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_blue_day_430_1.0_0.png",
+      "before_sha256": "2e448e49bb92092110a33152820ed1e7eb8a2761d3b563f55379a6b2e28fc1ad",
+      "after_sha256": "4fbbb6abce48ccb894490002a011d8cbe1ceed44e2e3e8b65fc0e3f40b85cd98"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_blue_day_430_1.0_1.png",
+      "before_sha256": "6f0f0dbeb2204fd477cc52145f7b84d451813ab3ace0bfb2ada4fb411e3f57fa",
+      "after_sha256": "3662a1467f15ccb4aead58c7972426c5ebb445c7ccbf0f0154dd932ab607ca21"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_blue_day_430_1.0_3.png",
+      "before_sha256": "f8828de66332aab8d15a406c8350a0ea4cc57096e0ea6ed593feecd598c20af5",
+      "after_sha256": "d90479f34958cd848b848e23f1ca33b092b4d70db5594c2fae026ed6172dfd37"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_blue_day_430_1.0_4.png",
+      "before_sha256": "7c20b19d3834d3bef6b2376c3996b06f3901ed134f7dc722868eba6ca1aa6ae4",
+      "after_sha256": "26d51039c22a1f11a5e469985c43d055601bd30015873793974cf501cb2ff53f"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_blue_day_430_1.0_5.png",
+      "before_sha256": "4fc770017b6092f46e49b66d3b02ad61d65ffdc31efe83bea058649ca18631e0",
+      "after_sha256": "e45388ba931146e439da7f5ee37ece4918e242863cd289d55760c796f7b851c2"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_blue_day_430_1.0_6.png",
+      "before_sha256": "bf64e6b6378a5e590904f30808a68ee0da411d9297c3597db2ed72f7502ff1a4",
+      "after_sha256": "04a5a9ed7b947123b2fe8d3006823d763674907a005a5d7a453834ad630591ae"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_blue_day_600_1.0_0.png",
+      "before_sha256": "49942b959741791069d73b878dfa8727de13617f694d169a7488adaa37960fd7",
+      "after_sha256": "cc5a3ad2c66ec9ce50b134bf4dc5321cf044bdb59490503b93c798c1c24ecc2d"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_blue_day_600_1.0_1.png",
+      "before_sha256": "f752dc095c295e5d4e6b945a7b43fe6a3abb1037ccb2749be670c85e93557cd2",
+      "after_sha256": "dd62e252d4e67901e63bdb1ff879ec9373bbce3e1d78e418096f16a682ef81c6"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_blue_day_600_1.0_3.png",
+      "before_sha256": "9b7b7de24b19c87d7c3819b0f77f85eaff166efd8d49afdabbdb8061d81381ea",
+      "after_sha256": "ebc54d3d81dc167a1af070f68ba0ff330a782fdbe4aff33be0dcb64ad7f80afe"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_blue_day_600_1.0_4.png",
+      "before_sha256": "a3c6b048c6310168feca24ac4738f2064d6c929d055f964ff8037483f28802fc",
+      "after_sha256": "0db50f790aeaf0f5007c048fab3c2d30ac2936515f3f4026e46528efeb27c43a"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_blue_day_600_1.0_5.png",
+      "before_sha256": "6513c081c992ccb0c3375a83b893f537d1cb55af8897e1544b7e037ae5795692",
+      "after_sha256": "7cf3f56ff8d79a2d243740c85f73a352e19893102ef82cdb49fb07a9ed393d2c"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_blue_day_600_1.0_6.png",
+      "before_sha256": "a613aadb468b33b5fa4121b133e5b33755261ef0dca1eedfc098a67acaeaf823",
+      "after_sha256": "12b2d9dc84afd88bbb539604cb25a392de08476851d6e7ebc411ce168e91d427"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_blue_day_800_1.0_0.png",
+      "before_sha256": "7acb77705b990617efdd6e657d4e2b565298cb71dd3c42ebdfa84040f39f739f",
+      "after_sha256": "17649e69b95e367b3a8352c78a99abc1050d20352e4cc0d42d385586d3d9ed77"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_blue_day_800_1.0_1.png",
+      "before_sha256": "838de3b6acf24f352556f3f5c1a0b023ebd9b852abcfa777f56d8931c43d78f7",
+      "after_sha256": "9a16170894a09dfc2b1723aedc3174d2526a7e6fe31df3b1533860b152357e57"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_blue_day_800_1.0_3.png",
+      "before_sha256": "3f05634336477efb818c46aba13d1a6119b01ac81847c12c320e76cf260073fd",
+      "after_sha256": "46ed60985c0204579b8f5c00074dc5455e77def275ca7b9576e4c5029c5984aa"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_blue_day_800_1.0_4.png",
+      "before_sha256": "5bb4af6fa334eec9b5da74b9c325b6bbd48a6bee876aba091a729ce4919bbd84",
+      "after_sha256": "7d07e27828ca33bba5197677f38f51a620bde5eceb5a0370b3832e55e8a519ab"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_blue_day_800_1.0_5.png",
+      "before_sha256": "872ad03361aca1b4621ec0264b2cecd6f5f256f622b6c38c2d2bd687213b19d5",
+      "after_sha256": "001601d47852d62f5ef1eb29047d911c219153cfe4964632a2fd3a4c54c4f230"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_blue_day_800_1.0_6.png",
+      "before_sha256": "77045409f0d9525f885626fe7e23d5c75615e4cda939474ce20d89420fc8dfdd",
+      "after_sha256": "ff2fadf01541cd5d1b7022b5022400e50cc47930b1e8d1052d88b98a910efadf"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_blue_night_320_1.0_0.png",
+      "before_sha256": "699e83e1ed84238cfd9c971148cb1ce4916c169bb9efd36ddb5dade3eedce9d4",
+      "after_sha256": "9383bac3645c89d2af8b3d8e7849a01bb024775104cefb17d7891c6cdfe5955c"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_blue_night_320_1.0_1.png",
+      "before_sha256": "c5793c21271badf658130710ae94e704faf5b3eb6f531b92eeddc4af87a99125",
+      "after_sha256": "9090297307593702c3f4af39a43266171ea4094b5ec4a62fc35308486d7a73b5"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_blue_night_320_1.0_3.png",
+      "before_sha256": "4ff1d480971c60dabb52fe4faa001e451486a8f5772f05b297898e007a8070ea",
+      "after_sha256": "0c6f7efbe3c5a97190d965c19098d38647b7294c7d3728fdb5f5f9f1723b1523"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_blue_night_320_1.0_4.png",
+      "before_sha256": "6a402c9f8fb8dd2aeeecae6cab4f8a9f2e99874cee1d0c50b1c269955bda9178",
+      "after_sha256": "ea2e03338ff981d3c5b06d41ffaafb40b3ea72ae2f0af67dd5c6bad5e5b66669"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_blue_night_320_1.0_5.png",
+      "before_sha256": "d71b75afbaa967a70b8a181aac13dbc76613af92737d0cf4b84f0e25a7cfcd21",
+      "after_sha256": "79610d88f32a4de57af8be797556a50698e2d5d52074bde7e1faa84dce7f2811"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_blue_night_320_1.0_6.png",
+      "before_sha256": "7edf0bfce0dec6b420f99a016daa1d040da3b81220b747c773a6b8c4ec80a4b4",
+      "after_sha256": "53507b629dead12d34b110dbeeef6fb92f0f3cc1404f8e49aeaf590350116e12"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_blue_night_360_1.0_0.png",
+      "before_sha256": "1c0270f8709ca56e85e61809bd725b52b9abf8c5c81fd8cb5a35f7e1acd86f08",
+      "after_sha256": "2fc262ce513f095cbf6bace55ca1b3730095b897b46934d59c4daa7b21d21e76"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_blue_night_360_1.0_1.png",
+      "before_sha256": "fe6da161daea51141ea05ef2fb23a6acd4b0ef237f96119f6f2a7ca6d3e1f73a",
+      "after_sha256": "94d1355418dfe69d759d506d909d01638276f7de0cfc8aadbd9cb640d43a6549"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_blue_night_360_1.0_3.png",
+      "before_sha256": "96dd1e7694863ebca05b54bb90f4e37511fc25b0a08d45621f1d4da3a3a6e675",
+      "after_sha256": "90ce784965fe9405550b4cefa8ae18b909f19efd2b2cf1d455cc37f61f8d32d5"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_blue_night_360_1.0_4.png",
+      "before_sha256": "7f04d8d45fc28f7382109aa9bade95486587121718e39f790a1b6a31fb3ea3b6",
+      "after_sha256": "9f0a2c915699ecf97222186a03bb3635c25f20a61a55367fd3ae396af119603e"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_blue_night_360_1.0_5.png",
+      "before_sha256": "99e6fc2836093bcbcf6adbbb337f6e2a91d7d425ea4082762f7e6ae96a55c22b",
+      "after_sha256": "b71af672ac429f95430359506d459afff4d2d221785d1c27181dbbf4c6290abe"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_blue_night_360_1.0_6.png",
+      "before_sha256": "cabba8bfc063b019f9bb9aebcf4c171a46269dc96a132c537f16fb7f728af94c",
+      "after_sha256": "5688af8a4737d4328376c04730fd9199fef31a461591940e8718c9ba9133a491"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_blue_night_390_1.0_0.png",
+      "before_sha256": "44de5e044ded066c427ce33e80188e4be1c424d757f2586b82575a65a5bf13c9",
+      "after_sha256": "757f39bff7095911ae06e9a4352f5ec632eb5ccb448afc021666aee74aaa5ece"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_blue_night_390_1.0_1.png",
+      "before_sha256": "487e19db3ba8ae01b2012ed4f05cf0630abfa6fd7233ef30aadd37cd69e74628",
+      "after_sha256": "f8c4d3266f46046f5f856f362139a885779b39e1e77ab1d2150a95e23d2bd52e"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_blue_night_390_1.0_3.png",
+      "before_sha256": "ec6d681361d2e7cd73999d6766d98e2ea9c15186735bab0106a63fd34de98faf",
+      "after_sha256": "80273fa5334d7da036e2f0b677438151799bddb117c788a13502cbf1ba1053e9"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_blue_night_390_1.0_4.png",
+      "before_sha256": "467f337fcc060ddf752aefd4a8111fadddfcfaca90a1b1632f1b25e85474a16a",
+      "after_sha256": "e3af40b76afc797d5185a044ace9ec7ea2f7626f4f992fddc52060cc0aa2c766"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_blue_night_390_1.0_5.png",
+      "before_sha256": "3122bad2fb9c89fff32cc9f27bb63ab0f15f7ec8c6cc85213e639725a7a658bb",
+      "after_sha256": "2f9f398439ab7fb02e54045c656074a321822bf82742cf91712f340f38b3cc19"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_blue_night_390_1.0_6.png",
+      "before_sha256": "b324c00d03123cd2d3146aa7b050cc021a4701bba10bc516d427e16ade33c814",
+      "after_sha256": "a5fa571b814e975d073260114055a885b59d86d107eb06212fba3f792da70f66"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_blue_night_430_1.0_0.png",
+      "before_sha256": "4ea4811eae4ee8747e16edc326bcfa5aff0b63a851a66de633a4e83ad0aeb982",
+      "after_sha256": "b00ac97e3ca3d465f4eb50d1a626500e6f260dcba9e803410bd2bce5c0cf2b6d"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_blue_night_430_1.0_1.png",
+      "before_sha256": "be5fda8b9f88833f74fd027549bc480f6a28ab9915323e26ed18c348ef35cdcf",
+      "after_sha256": "333cc1c1ed4bdfea8eb1bf0b4472875f9ee9b351d8324a771a1c1950863e638e"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_blue_night_430_1.0_3.png",
+      "before_sha256": "b86a5591ff674cfd8baad93fc943f271e80821a82f9ce865bd411b6929538b1f",
+      "after_sha256": "5aeef95e13bd637c06b1062bb912da442b276a9a6569ed50d2fc14b363041909"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_blue_night_430_1.0_4.png",
+      "before_sha256": "1b4c8c5b7748cd5eee65e6f977d18b34428e760e51248df2c86aeb2760c6893b",
+      "after_sha256": "b57d4d97817b70f533e98478f2e727ff653295201745891dce4888fefb187d7a"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_blue_night_430_1.0_5.png",
+      "before_sha256": "4edb3ea37ecdc80967a709194e6ab8738909097b3e6f5bc25b0fd476a8417553",
+      "after_sha256": "ea36efece1f58ca58ccd3649d7ec035b4eaccff7d6625006e6ef1f87c2eeba72"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_blue_night_430_1.0_6.png",
+      "before_sha256": "66462a7e7d0af03e2e3a169478d8db1b5744d398b81a1304645d89e30d8e8e5c",
+      "after_sha256": "ce460ff92f47e78fbb216da618c689fa1f04b1f2dc0213d3767bf98152ea4203"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_blue_night_600_1.0_0.png",
+      "before_sha256": "b8edeecad80ded0135a40656fe32b97843c1098969593fa3637c3fba831f609a",
+      "after_sha256": "3c7d35fb62f52d54d3c3c5a30092e48918cf4180fa6a50f4acb138ffeb570cac"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_blue_night_600_1.0_1.png",
+      "before_sha256": "4afc291c8898577a75edc827c92d7a7b592380a3306cbbd8b2ae7299b7c0d64d",
+      "after_sha256": "b25f14d39f918308ee8c865a498286351627657fe7f4d16e60c45549a8ba0b3e"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_blue_night_600_1.0_3.png",
+      "before_sha256": "caad2e24d29819c6494f8b79d05ff0665e9a9c732565f3b88141c429f30fd332",
+      "after_sha256": "e90dce46ea7381328e53d75b9df5e3664a6857d51712b8b14afeb684fccb72ca"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_blue_night_600_1.0_4.png",
+      "before_sha256": "0a047b72036c9315c63224991ed0439c363a6f43f8b4aeb29e863866294f4774",
+      "after_sha256": "bc80dfcf3fe26dbfafd6cb2acba021ae5b48a327c6bc989b406d284cb4b68e70"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_blue_night_600_1.0_5.png",
+      "before_sha256": "a52cb8dfec582a3d83cdc8b7d44d68664870cefa6281263ba3c0cc9f474937e5",
+      "after_sha256": "b18e67f58402c729bb4a2965085e917c1983c497271969d611cb5cbae0d83d53"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_blue_night_600_1.0_6.png",
+      "before_sha256": "522860d0448262bbbfc510578398eb956528d89616710e7c02c9ccd89b70a92a",
+      "after_sha256": "2db71b840c77acf98626427e341f73731165cd321b90d2923eda937a1cec35bc"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_blue_night_800_1.0_0.png",
+      "before_sha256": "840947bbba5c2207e6b4a51e52237f17c01707319ecf27e394d748092977d5a2",
+      "after_sha256": "48769452f2463f7f021840be2a72691a972fadfbe61c0351916bef8bffd829cd"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_blue_night_800_1.0_1.png",
+      "before_sha256": "a6fcbdaca42a98ea7ac1524ebcbd3a87d88ddbaf2e69fcddd297ff9947380ae6",
+      "after_sha256": "903c5ba68ab050ce67164f116b422477b777a538e27074a44e4933e63240ab88"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_blue_night_800_1.0_3.png",
+      "before_sha256": "f0bcdf4cec7283a2462010df9e62ee07e2ce309ae13eecf4362f9763e7829ec1",
+      "after_sha256": "d4bf57a02882ff2efa484092b3f0a37fce9cc05cdf009e9dba31b62080afdf54"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_blue_night_800_1.0_4.png",
+      "before_sha256": "6175cb73d633491772a753386e86e3aa95a53676ee48c5d5c4611ce3a2673c29",
+      "after_sha256": "bc9def139002bb387bdcd2c31e86e01fce95a8681ac0eb7c728de906f19cecdf"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_blue_night_800_1.0_5.png",
+      "before_sha256": "2cbfb9796e28a0b1912704e83951cb593a40bd813e3dd07e17179f9c515ebe7b",
+      "after_sha256": "5e326596d21043d2b3a09355e2e9cc16a1dd275e6995ddbad122c28fe31989be"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_blue_night_800_1.0_6.png",
+      "before_sha256": "ea867c8af35fee7a8fea67e6dd87b0f88d4ffd0d334dda200eb37a78db509d94",
+      "after_sha256": "b36abaeaf3bbed839a064936965bb4ed7b62f4d1a44dd6bda854922a8f04d9de"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_pink_day_320_1.0_0.png",
+      "before_sha256": "1db0d5ce4f7e86dc7225a6adec49a2a64186301b6b0d50183dbce4d68629ab8f",
+      "after_sha256": "73649dc7433b5d6be93569deca8887226b4d10a378aaee1745f4205195032f1d"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_pink_day_320_1.0_1.png",
+      "before_sha256": "7808a58630e2b123d6235d8c9fb0b91a65ea63b69dc2554bf0fdf7db0803259d",
+      "after_sha256": "6a170f8195ca87eb14b8304e751e8bb34247a3f5c91e6260d0faa4ec3e902506"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_pink_day_320_1.0_3.png",
+      "before_sha256": "b8a54bb24ecbc46335f275c1a1cafc79eee980e86d30c8f7be6fbd43f9384820",
+      "after_sha256": "c67033a87d75b482f5c568a5a19f7889903dfdc0600da36e2ddac1b2cd949aa0"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_pink_day_320_1.0_4.png",
+      "before_sha256": "92eb9ac169df73f9f1e1a7def7eb1a48af391e85f2e44a0b944d9c9bfd0a1b9a",
+      "after_sha256": "d3b9bc339c659d94a004f54c1343ffb686e3be0c32b7608a097258100dc8cb68"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_pink_day_320_1.0_5.png",
+      "before_sha256": "bdf9f439b39ea173f84c47e1463b185e3dc6eca1eab1f5f7449a839501c20cae",
+      "after_sha256": "cd8cdda1fd321747bc0446ab075856ebdbbb317d6ebf14c4d1c19930a2958858"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_pink_day_320_1.0_6.png",
+      "before_sha256": "fc90c8bed47c49a18f7709b70d83519cc7367aab65ac3cef92206842d037f5fb",
+      "after_sha256": "2d3a849149e9cf2a160610b415cea19ccc3c2acf992a36b28bafd093e3403e6f"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_pink_day_360_1.0_0.png",
+      "before_sha256": "e2de69bb10830759e2143a240e853a75d8a162cc144fb9e2044757c89a228ff8",
+      "after_sha256": "4c084bdf90281e936df69da21e95ef29a035ec5c54b100930046f9c59469c178"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_pink_day_360_1.0_1.png",
+      "before_sha256": "637478a00d5b5ce7a88d68fa52439c945a986ede81d554f12de0864591f489d1",
+      "after_sha256": "3e26e4f2f301e48d6fffaeaefa6ec82606b185bbaa7e7ffa10cbb1f1d8fd3fdc"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_pink_day_360_1.0_3.png",
+      "before_sha256": "7447f913e5275eb5c668ae34f42f1a04930ad72e28077faa1b6a2bd72b91a676",
+      "after_sha256": "aa2b82dd8e0485cd142c2f60585b35b064e964f30fc08958ce11c172a4ff5935"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_pink_day_360_1.0_4.png",
+      "before_sha256": "013449b978931d7f86cc11e44320d632ac91586aa5210b4204df955b51084e7d",
+      "after_sha256": "e3bf214f31b2685ff809801740ffc2244c6159d2cfeccf11311050ec02a1e550"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_pink_day_360_1.0_5.png",
+      "before_sha256": "6f0fbfb726947bc3f520e15fdeaa6891a50168d2e946565f40ef790caa143729",
+      "after_sha256": "b6259d7b799a3c9efbc69c71f445c6a02032693c0b278f40f001b9d41ed392d5"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_pink_day_360_1.0_6.png",
+      "before_sha256": "9f5aac966861c7a214187f1fe60064587fa845e8615d7b3b2cd5603fbefcbafa",
+      "after_sha256": "ca9a2a621951d6c29fbcc49014f53d8f96238cf7d49f2afcdaa24aed6d6d56f3"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_pink_day_390_1.0_0.png",
+      "before_sha256": "1f1e02b119cc7be84aa6258d5ae7c725a1aab6eae7091b80a20848df9013ff45",
+      "after_sha256": "ecdc4322a7e1ac8a31dfca554d67899b510308e16b15578a050fb251433a7811"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_pink_day_390_1.0_1.png",
+      "before_sha256": "424b3c02928bc553a56b04e0c509b021e40b8d675c45cef1213037800dfbba6a",
+      "after_sha256": "26a1ee9e244fd6a0bb750a7de704145372ef7079ababed7f6c89475941a0c6cf"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_pink_day_390_1.0_3.png",
+      "before_sha256": "019ad5bff2762828fd59e145260556b4475f4033dcf1865d55f75af5aae8f40c",
+      "after_sha256": "0f3522a4d64ef359b11b3afe4fd9e27e47141ef53ed747d92069c53b66827ee3"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_pink_day_390_1.0_4.png",
+      "before_sha256": "40fb0f1bd1cc87f01f42bb5a1b3aa287700d6d48b5e70fe02ba8f07865443770",
+      "after_sha256": "9c1dfe48bbaf46bde80585ba593d83847626299ce5fc441f3584f48bcdbb24c5"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_pink_day_390_1.0_5.png",
+      "before_sha256": "0a84f32744368004f6fbe78912314d9308ee16d9f0b42e5edfb2ac9fcbfc4604",
+      "after_sha256": "f1f7e422ce43907857575f496e970df33a841faa418037dedc7c02e18f8c18e3"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_pink_day_390_1.0_6.png",
+      "before_sha256": "443d613d9fd55e80676c0d0538f443ff4db01588ca38618cbdd45841e86c0f22",
+      "after_sha256": "578368a81f6e312d4c768fcaef0ba411ab0176fdca2542d0d3756acf8c8f2cba"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_pink_day_430_1.0_0.png",
+      "before_sha256": "3f4f39143d08cc0143be0f93482c0d574d207a4cdf528ec73d336e62e607ec90",
+      "after_sha256": "da86cb04bccc2439bef788179fe01a58f8ff00d79ffc800731f1c64d1e13b4a0"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_pink_day_430_1.0_1.png",
+      "before_sha256": "f05ed959b551b7bb7c5529fe09e6d941c17850c6cc6509359e1a2d1ea31d217b",
+      "after_sha256": "825f255e1ce655cf284cb9cac868a7fc3cb219d80ef956cc760faea7f14811a3"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_pink_day_430_1.0_3.png",
+      "before_sha256": "a2d3c6a77926c14a904241d888fb45f39e3effe1796d41165102b18f3c4930d0",
+      "after_sha256": "7bcf2fe70cfc2da72c170b0fe82395c7d4b595ad7cd93788f86d082a6ad726a3"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_pink_day_430_1.0_4.png",
+      "before_sha256": "da983cf3f54a0ec364398b653346257bc4b3f696cf1c76ccd0375295241f0c39",
+      "after_sha256": "3b458091d40d4fd2724f49c79555b504eef20d0efa718eb8cc44ee90171092fa"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_pink_day_430_1.0_5.png",
+      "before_sha256": "e6045602ec551698c468b93a86a094cbae2d2321c36a08c4011c077559e13573",
+      "after_sha256": "da2a4b3799634bd6a91f4cc335131732a11ce42dd56d9376319e16540937fba4"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_pink_day_430_1.0_6.png",
+      "before_sha256": "9378b2836b1783413b62843d9532693f030610709a6bf72bb43afd69da28fff0",
+      "after_sha256": "c4b0888fb7086586f48d3f7f1015d10f73cff303572f7c0d012f231577d6c663"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_pink_day_600_1.0_0.png",
+      "before_sha256": "294f8c9c2be4904bd4092cae2cadfa46a897ffbc84362cb1b00ab5ac74685ad4",
+      "after_sha256": "c891f9f17007cc79faef7ad65de5ca58a2dd4965116e24ef3788757e908372b9"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_pink_day_600_1.0_1.png",
+      "before_sha256": "e61c423603c3849cb20d48b784f59af4137ae58114bf6f8f5a9b5d88deb1610f",
+      "after_sha256": "2d0d45fa211ee37f3babb5cb1efc83434f6c630f9a4968ca89aa8bb7723e8fa3"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_pink_day_600_1.0_3.png",
+      "before_sha256": "bff607d6a7ac0df544bb65851c0583d8769e6f2c982e277fdca7fd4d2827dd10",
+      "after_sha256": "63e36207ffd9c6bd195598fddb86a4158e4006e3e7026072d93e79e3c45183ce"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_pink_day_600_1.0_4.png",
+      "before_sha256": "0dcdc8ba6f7cff28db003e0d01f28dfa124c931d3bd1d3a0f419c17c1f10d6c4",
+      "after_sha256": "11514f23f4203eb9ae564411c72d054e1b8601aa7aa354e03ffb20d2bb1137f2"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_pink_day_600_1.0_5.png",
+      "before_sha256": "9cef1f4659612161a82aa7412e39715c97833afbcdec6358b4e7ca8d70166758",
+      "after_sha256": "e8ba9a3edeba74e4cc8710d81cbd64d1b92ea7128178c4cd87e205f33733e888"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_pink_day_600_1.0_6.png",
+      "before_sha256": "41a047395e0dd402d563ecc167a7b8661e13922030d6a210558dd059fcfa3ddd",
+      "after_sha256": "32b84b7c46257bcff965e5daca0b5a1cb3505de827db091df84482d4664771a3"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_pink_day_800_1.0_0.png",
+      "before_sha256": "917ab3be844a583bec79999fff74243b3b03a85e201fdcfa85f87f947bb26f1c",
+      "after_sha256": "18c868a11cfac75566f5ffed93b542738e41609e00a5d1d434244f7ab145dc36"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_pink_day_800_1.0_1.png",
+      "before_sha256": "11bb274d0e4fc3f823cde2ac090741b0aea5174f5f91aa0d0d88a1b193d7a85c",
+      "after_sha256": "9fe17feb90214dcb7812f168d49088575cb8402c88ec76d0c8a5e5f527f06bff"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_pink_day_800_1.0_3.png",
+      "before_sha256": "44d3cc6c228fef593d668f419bd82c16db2fbb18f546d13a9039176c4112259c",
+      "after_sha256": "8cdf74d97f614e1135c8dfc5909a606051961423943e7fde6f113db2ef33e7ab"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_pink_day_800_1.0_4.png",
+      "before_sha256": "87c6db737e729b415d2b73ccb1aba9b02fb6e5d5cff43e719fbe10a79e610923",
+      "after_sha256": "2f17802aadb1d380d4770d0f25643cf59d34839a3b0de35db9b4ef44907ffe85"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_pink_day_800_1.0_5.png",
+      "before_sha256": "67bc4c0f6cfdf0f79859b6eb4a5971765fe935e2cb2970e243bbbe93ae443bb5",
+      "after_sha256": "279879ca63af60911e840c31335d71c1f9e89dacacff5992913836e553d89d9a"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_pink_day_800_1.0_6.png",
+      "before_sha256": "9ad632ec81ac310cc9b3b266cb31333185da3003139a8624801b3579532b9fc9",
+      "after_sha256": "8946aabda5074a0df92bffd27e8b666d995fbb80ca51077588fb1069092be927"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_pink_night_320_1.0_0.png",
+      "before_sha256": "c4669de7826553854626094cadd1f45a85dff71a50c6ad882b83ab8c26d34638",
+      "after_sha256": "38e786c253b361d714678d9ffc3722247e4d4f27a7dc5f2e7914e5a81c2bbdb8"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_pink_night_320_1.0_1.png",
+      "before_sha256": "e6dbab68a50f62fab47fd32ff0622ac76e26d35923384311210e96c5c62c68c3",
+      "after_sha256": "bff8a0fcbf82d3e3bd2190c7bb55d5cabf529f99cf47eb9c246bd78eeccfe7d2"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_pink_night_320_1.0_3.png",
+      "before_sha256": "a5b794f6569a9e749c1c5aae05247c25506da5c38d25e987d34994da9bbdf51e",
+      "after_sha256": "ef58166978a153cd1df6a7898ff2bdbadbf9ba260ce195aa0f51c1a6ab92c733"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_pink_night_320_1.0_4.png",
+      "before_sha256": "aa24d42f1add812c5f416fd5fbbe51339a8cd8be09bc186bbaeab2df3e8792a8",
+      "after_sha256": "0dbb78aec752a5aa3a5fb3e8c4e7084d4765a98b02d277899194ed6be04ed175"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_pink_night_320_1.0_5.png",
+      "before_sha256": "60b830147a6839fca1b058b678a3d27f9c78ef8ef95739c5c4adeedd9e2715f7",
+      "after_sha256": "3341d4e3673bb467c0bad30fe0c04b6a92c340982a43b10b855611d7b61fb583"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_pink_night_320_1.0_6.png",
+      "before_sha256": "6544071cb7e5b115d36a819547fa6859c856b5433c64e62a32d68282b1510879",
+      "after_sha256": "bf7affaaf75143bfca31569d5dec76f49d2e69bbe7df524d08f364598be3d895"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_pink_night_360_1.0_0.png",
+      "before_sha256": "bf1d661f0a8c5f3714c62692ff79a67547f621dc038c5ea8b7032ec710c37396",
+      "after_sha256": "601693dc8a4bbef4566769216ed49ab5b9e4eaa1e61730f609222c60584cbae5"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_pink_night_360_1.0_1.png",
+      "before_sha256": "f742fad4309911d98ac092f3f169c0e13ba55f49b8d249da78246e3014668d98",
+      "after_sha256": "22e9f568cdd04f866d4720476e96ecb8e40b769318a4bc9f3ca8712661a5d355"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_pink_night_360_1.0_3.png",
+      "before_sha256": "2bb64ccd35766e8884cc4e69a4b178a6a571b797e4db6f218a3717051d03e1d9",
+      "after_sha256": "4106b863dc46396aea4d4d733db16fd15bb919f6c997b24396912eb1c97452f6"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_pink_night_360_1.0_4.png",
+      "before_sha256": "46668ef0e96ab0c9666af229c51eb3ca9f39f4fe32813e6e6cc0747d438d8c03",
+      "after_sha256": "d9367e766ead0b759062f37f1448736b7196e17776b7b5de9e5b7c785b4edfd4"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_pink_night_360_1.0_5.png",
+      "before_sha256": "268374205c5d678250e09bd7813be3b4bb53446f14acec339ab74765aaa1dc63",
+      "after_sha256": "9872ff04749d1ebe78984db38ac7b3f9aee6aebd3f5ac15438299f064ef80655"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_pink_night_360_1.0_6.png",
+      "before_sha256": "8ec7ae07162024440625f31a654c5c6c6b762a032c7edcb3b0be68044b642c53",
+      "after_sha256": "c726a1a8f10f0f0b0df26d10d0e1de8196e5aa76a8a4aefd87ed1b8db8832530"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_pink_night_390_1.0_0.png",
+      "before_sha256": "791a51352c488d0ac695b6c085d4cdbe11c307873437abf1c53ca7fb86e463d4",
+      "after_sha256": "12ba9702a53281cf180751738b5d16a7156721528c276f3e32d33dff7934ff6d"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_pink_night_390_1.0_1.png",
+      "before_sha256": "5bec02ab257ed03815f2799677b645ac5fe212df597b3f50b44281de2456ddee",
+      "after_sha256": "417b00953f02b4c72bd92ef71068adf58384fcb1d1ae490cbc65252621e9e944"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_pink_night_390_1.0_3.png",
+      "before_sha256": "8eb70afeadd5322a4551e99e6a213470dba3ca2f9c51dd87f3628df88dc53449",
+      "after_sha256": "2284ceabd9b8cfcd94b02cf16b97a2a96b07ff183490225fb1607eb02d619f1b"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_pink_night_390_1.0_4.png",
+      "before_sha256": "29bfddc4925452c3a3e633c4053ef7b2a0733742bdf24376d35cc6765744861e",
+      "after_sha256": "e911dc6f2e71d8417164be5a1583123c8a17ecf28548121e8950309d7a9cf305"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_pink_night_390_1.0_5.png",
+      "before_sha256": "267031854c5d7fc14192d72d14ecb5adeeb2fdcca76f2cfa59ca29ecb17193a2",
+      "after_sha256": "4162b81a288f9592d6dc4f964be593c1af6dba22b940a533b33ea71d6f044f0b"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_pink_night_390_1.0_6.png",
+      "before_sha256": "a7096a1e83e587050e43e2a54ad11ad949677014bffb7f2358664fee496e4c5b",
+      "after_sha256": "4d3a570e92b7935f26f3a1c83d68bdd45b3688d69f75ca8decff5c3351081b97"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_pink_night_430_1.0_0.png",
+      "before_sha256": "fd1e36ede646a5e3607144c7e3be9f76e4e47b878b42eab416e6f3a4991b65e3",
+      "after_sha256": "8004a11e8e72fa2776788358db8aac0f90a3b7f0a5f77f35dc59310b4b66b287"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_pink_night_430_1.0_1.png",
+      "before_sha256": "fea6e12c8abd059bc35b55e00a41a4da7b2fb0eda25210ad4e2ce5e0e09fa8d1",
+      "after_sha256": "4d6b655c9df78ef05aa1048ea84074204721c36da6e013aa3e50f8af59bd4759"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_pink_night_430_1.0_3.png",
+      "before_sha256": "40f5fc0855b447214d7dc78b12b7c1a8585eded754d3285843ca16433b90590f",
+      "after_sha256": "a774733cc47c9000173c346e36c014da94fb1ddf7c58adb56c2a5b5144dbbc35"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_pink_night_430_1.0_4.png",
+      "before_sha256": "ab5034cc2c350673d520c6474a2b09bbdf2226489bd0231e993f74ec1e87ba70",
+      "after_sha256": "20d703ccdf36bff6a1dacf9baad8e98d77f86bc5672583359e9ef20617b569e2"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_pink_night_430_1.0_5.png",
+      "before_sha256": "0483d1b6a623b96cb21ea7263438598edf0aaee3927de6ebfa9fa3033d7034e0",
+      "after_sha256": "3ffc3d4ab1f62cb10ead4d64a551d8827d5675e92a728c29211d2ecaa0bb1ea4"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_pink_night_430_1.0_6.png",
+      "before_sha256": "445a016b7edebedb347dc6bffc8cd9cabaa9d16cf1b3ed268cc4de3a4ca180dd",
+      "after_sha256": "1e10c49e44aa181bb7dc71ce830b6ce9bbcfbef83fc6e657723e6037cb00c43f"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_pink_night_600_1.0_0.png",
+      "before_sha256": "e4054cb89f788a3258f77a9b7fcf339474fd65cf5a057cb6eafd1096c93a5d31",
+      "after_sha256": "6e4baf5924015d4371f351b0762bbb9232167d0d0f3a68a8dc0be5ea270c62f2"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_pink_night_600_1.0_1.png",
+      "before_sha256": "4c79d33e2efc3dee1735dc55e199c90a9db61bb7242aa90a093cc0722a9234e3",
+      "after_sha256": "ded5be029ee19e8e29159da67111953fbdfbbe2f04ab573dafdade9208e98506"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_pink_night_600_1.0_3.png",
+      "before_sha256": "3f26c6dc17ab02510946467ba915460a5e4ad2b46eeddb26b298f1a75d6dc3c1",
+      "after_sha256": "d84f0bc8ccf667a8b4d308142a0d358df1f50d763e20152fa8d228cd5b1d0e4e"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_pink_night_600_1.0_4.png",
+      "before_sha256": "fbddf836247b0531baa39ddaa78f4c76048aa69f41092f8247ca5920371881ac",
+      "after_sha256": "a783c3a819df5b247c28a4bfbd5aebaeda71051be911f6eaa25d0b35428146cd"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_pink_night_600_1.0_5.png",
+      "before_sha256": "296919196432e7eecbd6d7f6ad0fd5dff8ce5c285ec948664132e11c8793864d",
+      "after_sha256": "a1410a347c8631a85f2655e16a0b6e519ef3b5f87cb9c2628217341892d734ad"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_pink_night_600_1.0_6.png",
+      "before_sha256": "bb151fb68abfd3582ef78d166e36e3d05207e29c10069700f1bf6cef81515922",
+      "after_sha256": "394934bfac6eca61ebecb029dbfa38f81ea620edc7cdd89edf126d1e416966a2"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_pink_night_800_1.0_0.png",
+      "before_sha256": "515f6274554c14bc439d9023918bdeb11be981c58bed0264fe942e03a7a1136f",
+      "after_sha256": "272776c56ee01784fe8e52a728100a1c73577925d2f67564a2b85af79e4dfce7"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_pink_night_800_1.0_1.png",
+      "before_sha256": "dcaa89176172a152577b1e226e50c40f1ae8cee7cc3439f9b68fdf22325ad4f6",
+      "after_sha256": "ccb906085af9a968027eacad843a8a3bcaba50eacd53e56c6881c014202310dc"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_pink_night_800_1.0_3.png",
+      "before_sha256": "05dc5603050677046309688fc485977e9706e595400736da0855676d2793d4f4",
+      "after_sha256": "13060cfb86ff5965cb2a16e95f284e6f63a8de312d0a67c38b4f96a84eeb5b65"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_pink_night_800_1.0_4.png",
+      "before_sha256": "006bc571bf1fa7ae1a13ad906e6935a89c7dbbada69de45e0d76a5d1538f8585",
+      "after_sha256": "eaee3d28dcdb987b44a768ded6595d4c996449bdb38d2bca0e919b3eb6056b88"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_pink_night_800_1.0_5.png",
+      "before_sha256": "b3f8dcec1b99f249568c9c08e484d55647d1546e77cc66a6e236e769d9c9f1e7",
+      "after_sha256": "44acf2ef9db23efcb9e58aa181e763f893acb8839a9e35ae7e9c64e8205f6e2f"
+    },
+    {
+      "path": "test/ui_audit/goldens/roles/merchant_pink_night_800_1.0_6.png",
+      "before_sha256": "62561dabd00bda3105ff748b433b6a0d06216a51e7589336693db852f03ed0d2",
+      "after_sha256": "de6e558f93c773fed826ec957479b4fb80aeea6b5cfcfe297e6d40835a9e942d"
+    },
+    {
+      "path": "test/ui_audit/goldens/scroll_end/customer_blue_day_390_1.0_0.png",
+      "before_sha256": "c1c7dd80cb09820ef2d91b157def44e6bdb10396331b5fd4edd30d8af7e2e31a",
+      "after_sha256": "6096a4db8190eb58417abf7a5d56877fe5a3e73fde031e5f2f820ecb6269e3a0"
+    },
+    {
+      "path": "test/ui_audit/goldens/scroll_end/customer_blue_day_390_1.0_1.png",
+      "before_sha256": "e8b060d2b221f9196e30f7e279d9e635c9030a5c82d8d53ffe4589a576d17775",
+      "after_sha256": "69bfb749fadfe6e648d3f78bca834f8f187fe1dc40c95956381905e71205ce84"
+    },
+    {
+      "path": "test/ui_audit/goldens/scroll_end/customer_blue_day_390_1.0_2.png",
+      "before_sha256": "845724bf40142b9d416588811dc48be1e1a453a9d072a3e19272de07eeb1184d",
+      "after_sha256": "ae3a124dccb9da2b6b90613c6cf79fb3c8c4c6b30b227c20807f198a24c5bfa0"
+    },
+    {
+      "path": "test/ui_audit/goldens/scroll_end/customer_blue_day_390_1.0_3.png",
+      "before_sha256": "625c785dde447dc04b4a20bd716aa981705b5f3f219cb1f8e6d7b649331d3590",
+      "after_sha256": "50211a3bbabe55f999fe6a68ff4630c5dbfb51029efce7e44515da1336cbe05e"
+    },
+    {
+      "path": "test/ui_audit/goldens/scroll_end/customer_blue_day_390_1.0_4.png",
+      "before_sha256": "f36f3ef23a22993483aa3d5bc80d194b16430833906fa6e5deb7992f88728cc2",
+      "after_sha256": "2cd68bc87a19ac60da673822934ce5f37d9d3761472a4622582c82170810ca89"
+    },
+    {
+      "path": "test/ui_audit/goldens/scroll_end/customer_blue_day_390_1.0_5.png",
+      "before_sha256": "58fe217cacd28b4bb02286e5deddd074c35ba560b82f6fae2cb6753014401ba9",
+      "after_sha256": "df453d13c9a1e7c2f9b0d9d1d20d3b8e2406dfaecceb222d9cab261d71abd6a8"
+    },
+    {
+      "path": "test/ui_audit/goldens/scroll_end/customer_blue_day_390_1.0_6.png",
+      "before_sha256": "55af29c3c5f9e77fcf522bc97ea84bb9885802c7669fb9b556570314707bce40",
+      "after_sha256": "d3231862fdede3de67c6ac1a86c5d4b40885da9e09925397578b55766d5fb146"
+    },
+    {
+      "path": "test/ui_audit/goldens/scroll_end/customer_blue_night_390_1.0_0.png",
+      "before_sha256": "b950274169c1b074becd906ad575ebb37c8db3c69f170a74ab738dd8c77dba31",
+      "after_sha256": "2876a9eec457348c70a113a61d67be1fbde8abe28db9c9db504146575b9629e6"
+    },
+    {
+      "path": "test/ui_audit/goldens/scroll_end/customer_blue_night_390_1.0_1.png",
+      "before_sha256": "c93191a8d986ea81ca2712cce315814149d31119c10401599d67661ed7942d9a",
+      "after_sha256": "68b5dd27a64c21125f7a1b295ea3de6046d4b0614254c9cd1547c8d6b967c6e5"
+    },
+    {
+      "path": "test/ui_audit/goldens/scroll_end/customer_blue_night_390_1.0_2.png",
+      "before_sha256": "195e6f2779e2b0ff419b126f16e70bdf741ade48d812a6c7624d24ec321fdd16",
+      "after_sha256": "b6059571a666d1b469c0642c0ebb4f303666ae27745f50f9ee30cf723f43440a"
+    },
+    {
+      "path": "test/ui_audit/goldens/scroll_end/customer_blue_night_390_1.0_3.png",
+      "before_sha256": "30fb437102a605a60e6772fd888a0632434c4c32f92c4c749ed13fd1ef49fb06",
+      "after_sha256": "bc256b530cf5d0ca88e4df548454fb19bbf95393908a75688ebcc5e3c46160cb"
+    },
+    {
+      "path": "test/ui_audit/goldens/scroll_end/customer_blue_night_390_1.0_4.png",
+      "before_sha256": "9b6e8fc84a1d96e65f0c6621fb714cad9611bcff7e84a637649039b7f310fc72",
+      "after_sha256": "75361ecef17193b2214c3ed022097c67d0ba503fa2ee9cfedcc8c7a0f344a464"
+    },
+    {
+      "path": "test/ui_audit/goldens/scroll_end/customer_blue_night_390_1.0_5.png",
+      "before_sha256": "025fac595c67989d5aed2ab324cff925201c35b85fe4cd491e798333eea12dc3",
+      "after_sha256": "c6f077259999ce61a360eaeff53068fa6fe4c0cf1237e78b14eeb0c6619a3158"
+    },
+    {
+      "path": "test/ui_audit/goldens/scroll_end/customer_blue_night_390_1.0_6.png",
+      "before_sha256": "724c1d492ab868accb239090587e49c55ee8c4d35def5cb2efd706bfb80ec13c",
+      "after_sha256": "51e94a8b8e18cb27960a7e3469b394a88253285b63688c01c26e96ddde3ff34b"
+    },
+    {
+      "path": "test/ui_audit/goldens/scroll_end/customer_pink_day_390_1.0_0.png",
+      "before_sha256": "412eda7c27b3f11f3a8cd49fa0138749c655a6ec9967669c3e9b0c7ac6441d45",
+      "after_sha256": "70b9d66a405e92a27545ef37ddc734c329af15fd2d9a606bfee6de6db6d1e749"
+    },
+    {
+      "path": "test/ui_audit/goldens/scroll_end/customer_pink_day_390_1.0_1.png",
+      "before_sha256": "e69db2a24ece1d093e2457c59dcf47e76f674abe9c972f07221d9ac66f97e0f1",
+      "after_sha256": "0f984cfb42369eaf53b90202cf0edac7ba636c0d0ebfce2861247f3f033567ce"
+    },
+    {
+      "path": "test/ui_audit/goldens/scroll_end/customer_pink_day_390_1.0_2.png",
+      "before_sha256": "caed65ec9e596b55aec060d9072bf069afa0037723a637c4dc36bb9e8da1b619",
+      "after_sha256": "2d4a1573ce479e0b1998aa9ee9ee01bbb495e40fd20eccc50723f28e2d2b5bdc"
+    },
+    {
+      "path": "test/ui_audit/goldens/scroll_end/customer_pink_day_390_1.0_3.png",
+      "before_sha256": "44d2dddb67f39417e444053a33220b6bd44a1a381b2923e7d563619d3a47a5b8",
+      "after_sha256": "d3132e99c881baea81cbabc26b282a20086f504412851da870a64b332e151071"
+    },
+    {
+      "path": "test/ui_audit/goldens/scroll_end/customer_pink_day_390_1.0_4.png",
+      "before_sha256": "5ed08d32edde4a42219b3f1bef063ff5ffbbf1cb326741be5e3c3eecc56a80cd",
+      "after_sha256": "83026aa5146a22683f5c706a1b203c6d0577c56e92a4a8b616f4fc2383b5e7d6"
+    },
+    {
+      "path": "test/ui_audit/goldens/scroll_end/customer_pink_day_390_1.0_5.png",
+      "before_sha256": "9fa3f94705c1f8cff327a3f769040a705b5d2c9405b5dbc2ee5abe05d6f2d360",
+      "after_sha256": "721c4afc32f2a30392b63d024327666811f54eff989b899b585aec1961f28783"
+    },
+    {
+      "path": "test/ui_audit/goldens/scroll_end/customer_pink_day_390_1.0_6.png",
+      "before_sha256": "2e0c7393265e9178f52427be65eba968ec80b041d99f0a671d171ca1b80aa286",
+      "after_sha256": "72586540c4c38b654d3b4900d8d44e060397c317788ed4826ab3463008379f8f"
+    },
+    {
+      "path": "test/ui_audit/goldens/scroll_end/customer_pink_night_390_1.0_0.png",
+      "before_sha256": "38922d806612f71bcfeff148055c502aef7f4459ae4f245c9fe12d7a00865f33",
+      "after_sha256": "f488da7cbbd26e6762a4620c208a7ae189e619fb318734b5bf4b1f1929ee675e"
+    },
+    {
+      "path": "test/ui_audit/goldens/scroll_end/customer_pink_night_390_1.0_1.png",
+      "before_sha256": "fdd0b5979a9b8a65cfb05b716caea6ef77be26fbad667e5e5c6f83b856285046",
+      "after_sha256": "e2bae1c81b8c836947f17e7c108265dbf6cf438c39d79832b4136f99015b456a"
+    },
+    {
+      "path": "test/ui_audit/goldens/scroll_end/customer_pink_night_390_1.0_2.png",
+      "before_sha256": "36987b74f18f6658e1b466483d48aa8f68467eb3ef489ab8cce2b90cea6f07aa",
+      "after_sha256": "d1571044fe36227b0a7c2f04914348a80d053ae3bd4eec987d09adc1de20a669"
+    },
+    {
+      "path": "test/ui_audit/goldens/scroll_end/customer_pink_night_390_1.0_3.png",
+      "before_sha256": "0a70e3e90c88ebdcdb0a37daeaf256662d18be32b79a8758eaa2cc2117925fcb",
+      "after_sha256": "fd0f2ee76c4e434cd414db5657113cb87d6d223cc7201aec80df226d2aad001a"
+    },
+    {
+      "path": "test/ui_audit/goldens/scroll_end/customer_pink_night_390_1.0_4.png",
+      "before_sha256": "7c7806dbcf45f509728439275b132f116a0483352c18496b1ffc7d2b4f0e530c",
+      "after_sha256": "b2368e9ee82a08fea0f61951dd9b1ee7386abe095f65b14534ff6664c1b8a27c"
+    },
+    {
+      "path": "test/ui_audit/goldens/scroll_end/customer_pink_night_390_1.0_5.png",
+      "before_sha256": "50b8b3feb4b525016a703b92f946cc1f4f0eb275ece58841fc4668f26628dd41",
+      "after_sha256": "218ae88197acc914fa3c208d8e378ee17d899dbbed9044d621545139a3aaa4af"
+    },
+    {
+      "path": "test/ui_audit/goldens/scroll_end/customer_pink_night_390_1.0_6.png",
+      "before_sha256": "ac976787d81f1bcff627f03f7381ff6079d4c3817d9d96a0650b0e1448cab11e",
+      "after_sha256": "1ba3546fc90cdfa7cdb655402a3891fef94419f37d93b7a51e437bd998d54416"
+    },
+    {
+      "path": "test/ui_audit/goldens/scroll_end/merchant_blue_day_390_1.0_0.png",
+      "before_sha256": "8fa0330242f5071afba685007873e45f14bd8938d319a8f13da40955c74b3119",
+      "after_sha256": "bb89f3053797df06551c8d439eee11cc60b5815bd30da316f62fc8762adb5fdb"
+    },
+    {
+      "path": "test/ui_audit/goldens/scroll_end/merchant_blue_day_390_1.0_1.png",
+      "before_sha256": "93fbe1bc63f7fbd1ea183a1ecb4969a87c8be666948aa123e3b5f964469e8022",
+      "after_sha256": "a558bcca4cdfd286b34258b19a69e3321785f68339fa26ec510e32c999eadfa3"
+    },
+    {
+      "path": "test/ui_audit/goldens/scroll_end/merchant_blue_day_390_1.0_3.png",
+      "before_sha256": "49f4b11a7d769f23ece033645e8f306650abb176bd0564128ede8470ba7a4fe1",
+      "after_sha256": "e45471264abd4c013df028b90b2ea6e381ff0279a0a3a69abafba8bc4026d053"
+    },
+    {
+      "path": "test/ui_audit/goldens/scroll_end/merchant_blue_day_390_1.0_4.png",
+      "before_sha256": "69b095ace5519078f510e82a2b544df97e47186f63559a76050c332ef0b2cecb",
+      "after_sha256": "e8dbbf60fa58bc0dd0037a0d20eb3d33fed31b8362f0dca821c0c2eade2f0573"
+    },
+    {
+      "path": "test/ui_audit/goldens/scroll_end/merchant_blue_day_390_1.0_5.png",
+      "before_sha256": "d0fd00f916fa1ec952576da72e8644c12d4549f4b5b984a3c0a83f91a0859cfd",
+      "after_sha256": "32a66df364c337d41ab31f37b90199da25943edad209870494c9db4f0f9c4ec2"
+    },
+    {
+      "path": "test/ui_audit/goldens/scroll_end/merchant_blue_day_390_1.0_6.png",
+      "before_sha256": "52eb1a26bd7a98ca0f9e43f9258f22f0d7af2fece3aceccc0f155a2945e28cd1",
+      "after_sha256": "41f7346879bc45e61009d9d456f0ba6459ea12111543b86305c7c78c08b2b15e"
+    },
+    {
+      "path": "test/ui_audit/goldens/scroll_end/merchant_blue_night_390_1.0_0.png",
+      "before_sha256": "c5100c34c53704beedd463c3cb6cd21836d8a064c901a2b773113c234cb3b8ec",
+      "after_sha256": "9ee23ff7610b72f742eb673e536ec8c10964c7dbc8ef1da2da62dece388c1240"
+    },
+    {
+      "path": "test/ui_audit/goldens/scroll_end/merchant_blue_night_390_1.0_1.png",
+      "before_sha256": "487e19db3ba8ae01b2012ed4f05cf0630abfa6fd7233ef30aadd37cd69e74628",
+      "after_sha256": "f8c4d3266f46046f5f856f362139a885779b39e1e77ab1d2150a95e23d2bd52e"
+    },
+    {
+      "path": "test/ui_audit/goldens/scroll_end/merchant_blue_night_390_1.0_3.png",
+      "before_sha256": "16801e7a1b44bc44d76a37859c700a9db5bc85a0ca9df492466b03b5e3f41e97",
+      "after_sha256": "e3db9a7023418995647010aa4c7e5d40c088f82322cf700c60468f2a23d0b766"
+    },
+    {
+      "path": "test/ui_audit/goldens/scroll_end/merchant_blue_night_390_1.0_4.png",
+      "before_sha256": "5f4c16c8c64288192d987cbce62885e4297b452db9964f4512ef3743a3b08431",
+      "after_sha256": "7a98009b7451e7d71d0a3a49088608a58aa7fbeca338e197994a6079c7e80c43"
+    },
+    {
+      "path": "test/ui_audit/goldens/scroll_end/merchant_blue_night_390_1.0_5.png",
+      "before_sha256": "3122bad2fb9c89fff32cc9f27bb63ab0f15f7ec8c6cc85213e639725a7a658bb",
+      "after_sha256": "2f9f398439ab7fb02e54045c656074a321822bf82742cf91712f340f38b3cc19"
+    },
+    {
+      "path": "test/ui_audit/goldens/scroll_end/merchant_blue_night_390_1.0_6.png",
+      "before_sha256": "35823170fae9d16c2925246278e6c14947d911ec4f74fb81efe677b6fa0c0a65",
+      "after_sha256": "827885cc9339f163efb5f710231c9a4c4877a2035b9a347bae2fdaa05558846b"
+    },
+    {
+      "path": "test/ui_audit/goldens/scroll_end/merchant_pink_day_390_1.0_0.png",
+      "before_sha256": "3833853ab6d7af5ec0d6f017159caaab0208c73faddc45232391bd129d931e83",
+      "after_sha256": "65ee3f4aba21308b97ef88d9063c30db36c3b44fa9e4afb672dfe54a22416d26"
+    },
+    {
+      "path": "test/ui_audit/goldens/scroll_end/merchant_pink_day_390_1.0_1.png",
+      "before_sha256": "424b3c02928bc553a56b04e0c509b021e40b8d675c45cef1213037800dfbba6a",
+      "after_sha256": "26a1ee9e244fd6a0bb750a7de704145372ef7079ababed7f6c89475941a0c6cf"
+    },
+    {
+      "path": "test/ui_audit/goldens/scroll_end/merchant_pink_day_390_1.0_3.png",
+      "before_sha256": "f4b769f90ba0f7c230487b079285544ec0e252378616eb5a19e01631feb50b28",
+      "after_sha256": "7e9c0c6fc07b74e14a05fb513a0467dc1ba4fee51d11e7f1f5c0be05b1eb3c74"
+    },
+    {
+      "path": "test/ui_audit/goldens/scroll_end/merchant_pink_day_390_1.0_4.png",
+      "before_sha256": "2110b198007b9b0928ccf7e94f64b2d1c37dd9faad028d7571106c15a08b0752",
+      "after_sha256": "5901374743a7b5ec8fcaa60f338bc3f58c3a775e6a89fc0e8ff62fc5c52c11b4"
+    },
+    {
+      "path": "test/ui_audit/goldens/scroll_end/merchant_pink_day_390_1.0_5.png",
+      "before_sha256": "0a84f32744368004f6fbe78912314d9308ee16d9f0b42e5edfb2ac9fcbfc4604",
+      "after_sha256": "f1f7e422ce43907857575f496e970df33a841faa418037dedc7c02e18f8c18e3"
+    },
+    {
+      "path": "test/ui_audit/goldens/scroll_end/merchant_pink_day_390_1.0_6.png",
+      "before_sha256": "f1de1d977a448423e3bbc7ee00bb1862940cf08cc63de39ec82e3655e946a24f",
+      "after_sha256": "b93eea13a0d5085339f6c35c90b1fcc56ebfe41c5820d200461b4353767953a7"
+    },
+    {
+      "path": "test/ui_audit/goldens/scroll_end/merchant_pink_night_390_1.0_0.png",
+      "before_sha256": "ec22e63ec86c623c2c1024720169800d4a9cde6970deb07562f1ee784a9c3eba",
+      "after_sha256": "aed0ad7086840ebe7f96c817f59adb3c71449c2cdee72d75cc495362871f4454"
+    },
+    {
+      "path": "test/ui_audit/goldens/scroll_end/merchant_pink_night_390_1.0_1.png",
+      "before_sha256": "5bec02ab257ed03815f2799677b645ac5fe212df597b3f50b44281de2456ddee",
+      "after_sha256": "417b00953f02b4c72bd92ef71068adf58384fcb1d1ae490cbc65252621e9e944"
+    },
+    {
+      "path": "test/ui_audit/goldens/scroll_end/merchant_pink_night_390_1.0_3.png",
+      "before_sha256": "c588b226098ac8dfcd29ca881c1f71359649c1c7fb9f62050162f19f94fdf2a2",
+      "after_sha256": "6f99ca9a369de7256bb83613d20ed82c12a5158f7ad247a6e9437c45c9ee101f"
+    },
+    {
+      "path": "test/ui_audit/goldens/scroll_end/merchant_pink_night_390_1.0_4.png",
+      "before_sha256": "4413711ebcaefc1024f9a9ebd9a3c138eea1889c1b1c4e096ec722eb7d02e850",
+      "after_sha256": "6aec7ced8991b5a1b8c371e31634e3b48537b82e688bde4e55b00335b94d75e0"
+    },
+    {
+      "path": "test/ui_audit/goldens/scroll_end/merchant_pink_night_390_1.0_5.png",
+      "before_sha256": "267031854c5d7fc14192d72d14ecb5adeeb2fdcca76f2cfa59ca29ecb17193a2",
+      "after_sha256": "4162b81a288f9592d6dc4f964be593c1af6dba22b940a533b33ea71d6f044f0b"
+    },
+    {
+      "path": "test/ui_audit/goldens/scroll_end/merchant_pink_night_390_1.0_6.png",
+      "before_sha256": "2a23dab90b54f8660f69137fdf1090d2e1ad9210a770571b7ca71afd3816ab7b",
+      "after_sha256": "0b7299c9ed77e1f6d7e7fa80bae670a830200ab1c0f9326cbeaff3d9d2c249c8"
+    },
+    {
+      "path": "test/ui_audit/goldens/scroll_end/registration_blue_day_390_1.0.png",
+      "before_sha256": "70d433939fb663a88204a9931efdc90c57e5b6d20c186973074100f1fcb591cb",
+      "after_sha256": "a2b9ebd3f5a9ed4b7def27cef6db80a052ac5da53530cf0623ec4ee45a04791f"
+    },
+    {
+      "path": "test/ui_audit/goldens/scroll_end/registration_blue_night_390_1.0.png",
+      "before_sha256": "b9cf9e19fa64c0f63137ffe7bf48a12804127527c1c0dd94a6a860871d8c6237",
+      "after_sha256": "6fcfc0000042ecd361f5ceceb2dc2a49f19261a377e73e5e5ead5f0467470742"
+    },
+    {
+      "path": "test/ui_audit/goldens/scroll_end/registration_pink_day_390_1.0.png",
+      "before_sha256": "95696142044e9819504b0b5d48ea79a4b596adb865ab1146f9e50e8ecb3b5bd8",
+      "after_sha256": "05d9ab4ea203ae871fd6335025e56a9262b15f9575b687df7310c1f5e6c2c8d1"
+    },
+    {
+      "path": "test/ui_audit/goldens/scroll_end/registration_pink_night_390_1.0.png",
+      "before_sha256": "e60bcb978b3696bb517815413bf035e9ded3cb7efd940e255d8f77cb3ab33fd8",
+      "after_sha256": "b9e18589541098a8b522385e0985b41169af57e99b118903c81bd7dfd08cbba3"
+    }
+  ]
+}

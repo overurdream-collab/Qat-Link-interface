@@ -237,7 +237,7 @@
     },
     {
       "path": "lib/widgets/app_chrome.dart",
-      "lines": 303,
+      "lines": 304,
       "classes": [
         "AppTopBar",
         "AppSquareIconButton",
@@ -250,7 +250,7 @@
     },
     {
       "path": "lib/widgets/auth/auth_brand_hero.dart",
-      "lines": 113,
+      "lines": 124,
       "classes": [
         "AuthBrandHero"
       ],
@@ -348,7 +348,7 @@
     },
     {
       "path": "lib/widgets/customers/pdf_brand_mascot.dart",
-      "lines": 54,
+      "lines": 58,
       "classes": [
         "PdfBrandMascot"
       ],
@@ -389,7 +389,7 @@
     },
     {
       "path": "lib/widgets/home/premium_home_hero.dart",
-      "lines": 141,
+      "lines": 145,
       "classes": [
         "PremiumHomeHero"
       ],
