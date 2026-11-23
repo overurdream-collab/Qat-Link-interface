@@ -1,3 +1,4 @@
+import 'image_audit.dart';
 import 'scroll_audit.dart';
 import 'package:clock/clock.dart';
 import 'package:flutter/material.dart';
@@ -164,6 +165,7 @@ void main() {
                             child: Scaffold(body: screen)),
                       ));
                       await tester.pumpAndSettle();
+                      await auditDecodedImages(tester);
                       expect(tester.takeException(), isNull, reason: id);
                       if (scale == 1) {
                         await expectLater(

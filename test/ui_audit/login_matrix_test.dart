@@ -1,3 +1,4 @@
+import 'image_audit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -70,6 +71,7 @@ void main() {
         expect((image.image as AssetImage).assetName, visual.characterAsset);
         expect(image.errorBuilder, isNull);
         await tester.pumpAndSettle();
+        await auditDecodedImages(tester);
         expect(tester.takeException(), isNull);
       });
       for (final width in <double>[320, 360, 390, 430, 600, 800]) {
@@ -100,6 +102,7 @@ void main() {
                       onOpenCustomerPreview: () {})),
             ));
             await tester.pumpAndSettle();
+            await auditDecodedImages(tester);
             if (!stress) {
               await expectLater(
                   find.byKey(const Key('capture')),
@@ -109,10 +112,12 @@ void main() {
             await tester.ensureVisible(find.byKey(const Key('login_submit')));
             await tester.tap(find.byKey(const Key('login_submit')));
             await tester.pumpAndSettle();
+            await auditDecodedImages(tester);
             expect(tester.takeException(), isNull);
             await tester
                 .ensureVisible(find.byKey(const Key('login_customer_support')));
             await tester.pumpAndSettle();
+            await auditDecodedImages(tester);
             expect(tester.takeException(), isNull);
             expect(
                 find.byKey(const Key('open_customer_preview')), findsNothing);

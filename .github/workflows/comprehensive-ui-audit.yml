@@ -11,6 +11,41 @@ concurrency:
 permissions:
   contents: read
 jobs:
+  backend:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: ui_audit
+          POSTGRES_PASSWORD: ui_audit_test_only
+          POSTGRES_DB: ui_audit
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd="pg_isready -U ui_audit -d ui_audit"
+          --health-interval=5s
+          --health-timeout=5s
+          --health-retries=10
+    env:
+      FIN08_TEST_DATABASE_URL: postgres://ui_audit:ui_audit_test_only@127.0.0.1:5432/ui_audit
+      PGPASSWORD: ui_audit_test_only
+    defaults:
+      run:
+        working-directory: server
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install --no-audit --no-fund
+      - run: npm run check
+      - name: Apply this branch's migrations to disposable PostgreSQL
+        run: |
+          for schema in sql/00*.sql; do
+            psql -v ON_ERROR_STOP=1 -h 127.0.0.1 -U ui_audit -d ui_audit -f "$schema"
+          done
+      - run: npm test
   verification:
     runs-on: ubuntu-latest
     timeout-minutes: 25
@@ -36,7 +71,7 @@ jobs:
             build/customer-ui-screenshots/
           retention-days: 7
   android:
-    needs: verification
+    needs: [verification, backend]
     runs-on: ubuntu-latest
     timeout-minutes: 35
     steps:

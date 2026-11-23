@@ -1,0 +1,58 @@
+[
+  {
+    "label": "reference blue directly on card",
+    "foreground": "328BF5",
+    "background": "FFFFFF",
+    "ratio": 3.4162,
+    "normal_text": "FAIL",
+    "essential_icon": "PASS"
+  },
+  {
+    "label": "reference blue directly on canvas",
+    "foreground": "328BF5",
+    "background": "F2F3FF",
+    "ratio": 3.0973,
+    "normal_text": "FAIL",
+    "essential_icon": "PASS"
+  },
+  {
+    "label": "reference berry directly on card",
+    "foreground": "AD3379",
+    "background": "FFFFFF",
+    "ratio": 5.955,
+    "normal_text": "PASS",
+    "essential_icon": "PASS"
+  },
+  {
+    "label": "blue muted on card",
+    "foreground": "59638C",
+    "background": "FFFFFF",
+    "ratio": 5.8525,
+    "normal_text": "PASS",
+    "essential_icon": "PASS"
+  },
+  {
+    "label": "pink muted on canvas",
+    "foreground": "71576D",
+    "background": "FFEFF6",
+    "ratio": 5.7602,
+    "normal_text": "PASS",
+    "essential_icon": "PASS"
+  },
+  {
+    "label": "semantic rejection on white",
+    "foreground": "C04444",
+    "background": "FFFFFF",
+    "ratio": 5.0583,
+    "normal_text": "PASS",
+    "essential_icon": "PASS"
+  },
+  {
+    "label": "semantic approved on white",
+    "foreground": "16845B",
+    "background": "FFFFFF",
+    "ratio": 4.6816,
+    "normal_text": "PASS",
+    "essential_icon": "PASS"
+  }
+]

@@ -1,3 +1,4 @@
+import 'image_audit.dart';
 import 'scroll_audit.dart';
 import 'package:flutter/material.dart';
 import 'package:clock/clock.dart';
@@ -75,6 +76,7 @@ void main() {
                           ),
                         ));
                         await tester.pumpAndSettle();
+                        await auditDecodedImages(tester);
                         if (tab >= 5) {
                           await tester.tap(
                               find.byTooltip(tab == 5 ? 'التنبيهات' : 'الضبط'));
@@ -93,6 +95,7 @@ void main() {
                               .tap(find.byKey(Key('customer_nav_$tab')));
                         }
                         await tester.pumpAndSettle();
+                        await auditDecodedImages(tester);
                         expect(tester.takeException(), isNull, reason: id);
                         if (scale == 1) {
                           await expectLater(
