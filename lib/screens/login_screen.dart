@@ -79,6 +79,26 @@ class _LoginScreenState extends State<LoginScreen> {
     _notConnected('تسجيل الدخول');
   }
 
+  InputDecoration _inputDecoration(BuildContext context) {
+    final c = context.colors;
+    final border = Color.alphaBlend(
+        c.muted.withValues(alpha: widget.isDark ? .6 : .8), c.card);
+    OutlineInputBorder outline(Color color) => OutlineInputBorder(
+        borderRadius: BorderRadius.circular(30),
+        borderSide: BorderSide(color: color));
+    return InputDecoration(
+      filled: true,
+      fillColor: c.card,
+      enabledBorder: outline(border),
+      border: outline(border),
+      focusedBorder: outline(c.petrol),
+      errorBorder: outline(c.danger),
+      focusedErrorBorder: outline(c.danger),
+      labelStyle: TextStyle(color: c.muted),
+      floatingLabelStyle: TextStyle(color: c.link),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final c = context.colors;
@@ -142,59 +162,113 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Tooltip(
-                                    message: 'اللغة العربية',
-                                    child: Container(
-                                      padding: const EdgeInsets.symmetric(
-                                        horizontal: 13,
-                                        vertical: 9,
-                                      ),
-                                      decoration: BoxDecoration(
-                                        color: context.premium.surface,
-                                        borderRadius: BorderRadius.circular(27),
-                                        border: Border.all(
-                                            color: context.premium.outline),
-                                      ),
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.min,
+                              LayoutBuilder(builder: (context, constraints) {
+                                final heroWidth =
+                                    constraints.maxWidth + (compact ? 24 : 36);
+                                final heroHeight =
+                                    (heroWidth * .69).clamp(210.0, 270.0);
+                                return SizedBox(
+                                    height: heroHeight,
+                                    child: Stack(
+                                        clipBehavior: Clip.none,
                                         children: [
-                                          Icon(Icons.language_rounded,
-                                              color: context.premium.accent,
-                                              size: 19),
-                                          const SizedBox(width: 7),
-                                          Text('العربية',
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.w800,
-                                                color: context.premium.ink,
+                                          Positioned.fill(
+                                              child: OverflowBox(
+                                            minWidth: heroWidth,
+                                            maxWidth: heroWidth,
+                                            minHeight: heroHeight,
+                                            maxHeight: heroHeight,
+                                            child: AuthBrandHero(
+                                                displayHeight: heroHeight,
+                                                artFraction: .53,
+                                                referenceStyle: true),
+                                          )),
+                                          Positioned(
+                                              top: 20,
+                                              left: 0,
+                                              right: 0,
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Container(
+                                                    decoration: BoxDecoration(
+                                                        color: context
+                                                            .premium.surface,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(27),
+                                                        border: Border.all(
+                                                            color: context
+                                                                .premium
+                                                                .outline)),
+                                                    child:
+                                                        DropdownButtonHideUnderline(
+                                                            child:
+                                                                DropdownButton<
+                                                                    String>(
+                                                      key: const Key(
+                                                          'login_language'),
+                                                      value: 'ar',
+                                                      isDense: true,
+                                                      padding: const EdgeInsets
+                                                          .symmetric(
+                                                          horizontal: 12,
+                                                          vertical: 12),
+                                                      iconSize: 18,
+                                                      icon: Icon(
+                                                          Icons
+                                                              .keyboard_arrow_down_rounded,
+                                                          color: context
+                                                              .premium.accent),
+                                                      style: TextStyle(
+                                                          fontFamily: 'Cairo',
+                                                          color: context
+                                                              .premium.ink,
+                                                          fontSize: 14,
+                                                          fontWeight:
+                                                              FontWeight.w800),
+                                                      items: const [
+                                                        DropdownMenuItem(
+                                                            value: 'ar',
+                                                            child: Row(
+                                                                mainAxisSize:
+                                                                    MainAxisSize
+                                                                        .min,
+                                                                children: [
+                                                                  Icon(
+                                                                      Icons
+                                                                          .language_rounded,
+                                                                      size: 19),
+                                                                  SizedBox(
+                                                                      width: 7),
+                                                                  Text(
+                                                                      'العربية')
+                                                                ]))
+                                                      ],
+                                                      onChanged: (_) {},
+                                                    )),
+                                                  ),
+                                                  IconButton(
+                                                    tooltip: widget.isDark
+                                                        ? 'الوضع النهاري'
+                                                        : 'الوضع الليلي',
+                                                    onPressed:
+                                                        widget.onToggleTheme,
+                                                    icon: Icon(
+                                                      widget.isDark
+                                                          ? Icons
+                                                              .light_mode_outlined
+                                                          : Icons
+                                                              .dark_mode_outlined,
+                                                      color: c.petrol,
+                                                    ),
+                                                  ),
+                                                ],
                                               )),
-                                          const SizedBox(width: 4),
-                                          Icon(
-                                              Icons.keyboard_arrow_down_rounded,
-                                              color: context.premium.accent,
-                                              size: 19),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  IconButton(
-                                    tooltip: widget.isDark
-                                        ? 'الوضع النهاري'
-                                        : 'الوضع الليلي',
-                                    onPressed: widget.onToggleTheme,
-                                    icon: Icon(
-                                      widget.isDark
-                                          ? Icons.light_mode_outlined
-                                          : Icons.dark_mode_outlined,
-                                      color: c.petrol,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              AuthBrandHero(compact: compact),
+                                        ]));
+                              }),
                               SizedBox(height: compact ? 0 : 3),
                               Container(
                                 padding: EdgeInsets.fromLTRB(
@@ -226,7 +300,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
                                           color: context.premium.ink,
-                                          fontSize: 24,
+                                          fontSize: 26,
                                           fontWeight: FontWeight.w900,
                                         ),
                                       ),
@@ -249,12 +323,39 @@ class _LoginScreenState extends State<LoginScreen> {
                                         autofillHints: const [
                                           AutofillHints.telephoneNumber
                                         ],
-                                        decoration: const InputDecoration(
+                                        decoration:
+                                            _inputDecoration(context).copyWith(
                                           labelText: 'رقم الجوال',
                                           hintText: '771234567',
                                           prefixIcon:
                                               Icon(Icons.phone_android_rounded),
-                                          suffixText: '+967',
+                                          suffixIcon: Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 12),
+                                            child: Row(
+                                                mainAxisSize: MainAxisSize.min,
+                                                textDirection:
+                                                    TextDirection.ltr,
+                                                children: [
+                                                  Text('+967',
+                                                      textDirection:
+                                                          TextDirection.ltr,
+                                                      key: const Key(
+                                                          'login_country_code'),
+                                                      style: TextStyle(
+                                                          color: context
+                                                              .premium.ink,
+                                                          fontSize: 14,
+                                                          fontWeight:
+                                                              FontWeight.w800)),
+                                                  const SizedBox(width: 10),
+                                                  Container(
+                                                      width: 1,
+                                                      height: 24,
+                                                      color: context
+                                                          .premium.outline)
+                                                ]),
+                                          ),
                                         ),
                                         validator: AuthInputValidation.phone,
                                       ),
@@ -274,7 +375,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                           ),
                                           LengthLimitingTextInputFormatter(4),
                                         ],
-                                        decoration: InputDecoration(
+                                        decoration:
+                                            _inputDecoration(context).copyWith(
                                           labelText: 'رمز الدخول',
                                           hintText: '••••',
                                           counterText: '',
@@ -298,33 +400,52 @@ class _LoginScreenState extends State<LoginScreen> {
                                         ),
                                         validator: AuthInputValidation.pin,
                                       ),
-                                      Row(
+                                      Wrap(
+                                        alignment: WrapAlignment.spaceBetween,
+                                        crossAxisAlignment:
+                                            WrapCrossAlignment.center,
+                                        spacing: 8,
                                         children: [
-                                          Flexible(
-                                            child: TextButton(
-                                              key: const Key(
-                                                  'login_forgot_password'),
-                                              onPressed: () => _notConnected(
-                                                  'استعادة رمز الدخول'),
-                                              child: const FittedBox(
-                                                fit: BoxFit.scaleDown,
-                                                child: Text('نسيت رمز الدخول؟'),
-                                              ),
-                                            ),
-                                          ),
-                                          const SizedBox(width: 4),
-                                          Text('تذكرني',
-                                              style: TextStyle(
-                                                color: context.premium.ink,
-                                                fontSize: 11,
-                                                fontWeight: FontWeight.w700,
-                                              )),
-                                          Checkbox(
-                                            key: const Key('login_remember_me'),
-                                            value: _rememberMe,
-                                            activeColor: context.premium.accent,
-                                            onChanged: (value) => setState(() =>
-                                                _rememberMe = value ?? false),
+                                          MergeSemantics(
+                                              child: InkWell(
+                                                  onTap: () => setState(() =>
+                                                      _rememberMe =
+                                                          !_rememberMe),
+                                                  borderRadius:
+                                                      BorderRadius.circular(12),
+                                                  child: Row(
+                                                      mainAxisSize:
+                                                          MainAxisSize.min,
+                                                      children: [
+                                                        Checkbox(
+                                                          key: const Key(
+                                                              'login_remember_me'),
+                                                          value: _rememberMe,
+                                                          activeColor: context
+                                                              .premium.accent,
+                                                          onChanged: (value) =>
+                                                              setState(() =>
+                                                                  _rememberMe =
+                                                                      value ??
+                                                                          false),
+                                                        ),
+                                                        Text('تذكرني',
+                                                            style: TextStyle(
+                                                                color: context
+                                                                    .premium
+                                                                    .ink,
+                                                                fontSize: 12,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w700)),
+                                                      ]))),
+                                          TextButton(
+                                            key: const Key(
+                                                'login_forgot_password'),
+                                            onPressed: () => _notConnected(
+                                                'استعادة رمز الدخول'),
+                                            child:
+                                                const Text('نسيت رمز الدخول؟'),
                                           ),
                                         ],
                                       ),
@@ -366,47 +487,37 @@ class _LoginScreenState extends State<LoginScreen> {
                                         ),
                                       ),
                                       SizedBox(height: compact ? 6 : 13),
-                                      Text(
-                                        'ليس لديك حساب؟',
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          color: c.muted,
-                                          fontSize: 12,
-                                        ),
-                                      ),
-                                      SizedBox(height: compact ? 2 : 7),
-                                      OutlinedButton.icon(
-                                        key: const Key('open_registration'),
-                                        onPressed: () =>
-                                            Navigator.of(context).push(
-                                          MaterialPageRoute<void>(
-                                            builder: (_) => RegistrationScreen(
-                                              isDark: widget.isDark,
-                                              onToggleTheme:
-                                                  widget.onToggleTheme,
-                                              onGenderChanged:
-                                                  widget.onGenderChanged,
-                                            ),
+                                      Wrap(
+                                        alignment: WrapAlignment.center,
+                                        crossAxisAlignment:
+                                            WrapCrossAlignment.center,
+                                        spacing: 4,
+                                        children: [
+                                          Text('ليس لديك حساب؟',
+                                              style: TextStyle(
+                                                  color: c.muted,
+                                                  fontSize: 12)),
+                                          TextButton.icon(
+                                            key: const Key('open_registration'),
+                                            onPressed: () => Navigator.of(
+                                                    context)
+                                                .push(MaterialPageRoute<void>(
+                                                    builder: (_) => RegistrationScreen(
+                                                        isDark: widget.isDark,
+                                                        onToggleTheme:
+                                                            widget
+                                                                .onToggleTheme,
+                                                        onGenderChanged: widget
+                                                            .onGenderChanged))),
+                                            iconAlignment: IconAlignment.end,
+                                            icon: const Icon(
+                                                Icons.chevron_left_rounded),
+                                            label: const Text('إنشاء حساب جديد',
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.w800)),
                                           ),
-                                        ),
-                                        style: OutlinedButton.styleFrom(
-                                          minimumSize:
-                                              const Size.fromHeight(47),
-                                          foregroundColor:
-                                              context.premium.accent,
-                                          side: BorderSide(
-                                              color: context.premium.accent,
-                                              width: 1.5),
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(18),
-                                          ),
-                                        ),
-                                        icon: const Icon(
-                                            Icons.person_add_alt_rounded),
-                                        label: const Text('إنشاء حساب جديد',
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.w800)),
+                                        ],
                                       ),
                                       if (widget.showPreviewLinks) ...[
                                         const SizedBox(height: 7),

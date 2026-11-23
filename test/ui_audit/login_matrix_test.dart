@@ -30,6 +30,18 @@ void main() {
       }
 
       test('$name body and secondary text contrast', () {
+        expect(contrast(colors.text, colors.pale), greaterThanOrEqualTo(4.5));
+        for (final status in [
+          colors.success,
+          colors.danger,
+          colors.pendingText
+        ]) {
+          expect(contrast(status, colors.card), greaterThanOrEqualTo(4.5));
+        }
+
+        for (final stop in visual.accessibleAction.colors) {
+          expect(contrast(Colors.white, stop), greaterThanOrEqualTo(4.5));
+        }
         for (final stop in [
           visual.action,
           visual.hero,

@@ -70,17 +70,21 @@ class PremiumVisualPalette extends ThemeExtension<PremiumVisualPalette> {
 
   /// Keep the approved decorative gradient; darken only text-bearing CTAs
   /// enough for white text, including the bright cyan endpoint.
-  LinearGradient get accessibleAction => forWhiteText(action);
+  LinearGradient get accessibleAction =>
+      forWhiteText(action, minimumContrast: 4.5);
 
   /// Render text-bearing surfaces with the original hue and a darker tone.
   /// 7:1 at stops leaves headroom for the subtle glass highlights.
-  LinearGradient forWhiteText(LinearGradient gradient) => LinearGradient(
+  LinearGradient forWhiteText(LinearGradient gradient,
+          {double minimumContrast = 7}) =>
+      LinearGradient(
         begin: gradient.begin,
         end: gradient.end,
         stops: gradient.stops,
         colors: gradient.colors.map((color) {
           var adjusted = color;
-          while ((1.05 / (adjusted.computeLuminance() + .05)) < 7) {
+          while (
+              (1.05 / (adjusted.computeLuminance() + .05)) < minimumContrast) {
             adjusted = Color.alphaBlend(const Color(0x0D000000), adjusted);
           }
           return adjusted;

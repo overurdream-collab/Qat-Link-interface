@@ -439,7 +439,7 @@ class _CustomerDetailsScreenState extends State<CustomerDetailsScreen> {
           _sectionHeader(c, Icons.currency_exchange_rounded, 'العملة'),
           const SizedBox(height: 10),
           SizedBox(
-            height: 96,
+            height: 96 * MediaQuery.textScalerOf(context).scale(1),
             child: ListView.separated(
               scrollDirection: Axis.horizontal,
               itemCount: CurrencyCode.values.length,
@@ -452,7 +452,7 @@ class _CustomerDetailsScreenState extends State<CustomerDetailsScreen> {
                   onTap: () => setState(() => _currency = currency),
                   borderRadius: BorderRadius.circular(12),
                   child: Container(
-                    width: 139,
+                    width: 139 * MediaQuery.textScalerOf(context).scale(1),
                     padding: const EdgeInsets.all(11),
                     decoration: BoxDecoration(
                       color: selected ? c.pale : c.card,
@@ -714,6 +714,7 @@ class _CustomerDetailsScreenState extends State<CustomerDetailsScreen> {
   }
 
   Widget _summarySection(AppThemeColors c, CustomerStatement statement) {
+    final textScale = MediaQuery.textScalerOf(context).scale(1);
     final stats = <(String, Decimal, Color)>[
       ('إجمالي الديون المعتمدة', statement.approvedDebts, c.danger),
       ('إجمالي التحصيل المعتمد', statement.approvedPayments, c.success),
@@ -737,7 +738,7 @@ class _CustomerDetailsScreenState extends State<CustomerDetailsScreen> {
               crossAxisCount: 2,
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
-              childAspectRatio: 2.0,
+              childAspectRatio: 2.0 / (textScale < 1 ? 1 : textScale),
               crossAxisSpacing: 8,
               mainAxisSpacing: 8,
               children: [
@@ -745,7 +746,7 @@ class _CustomerDetailsScreenState extends State<CustomerDetailsScreen> {
                   Container(
                     padding: const EdgeInsets.all(9),
                     decoration: BoxDecoration(
-                      color: item.$3 == c.petrol ? c.pale : c.background,
+                      color: item.$3 == c.petrol ? c.pale : c.card,
                       borderRadius: BorderRadius.circular(10),
                       border: Border.all(color: c.cardBorder),
                     ),
@@ -754,7 +755,9 @@ class _CustomerDetailsScreenState extends State<CustomerDetailsScreen> {
                       children: [
                         Text(item.$1,
                             maxLines: 2,
-                            style: TextStyle(color: c.muted, fontSize: 10)),
+                            style: TextStyle(
+                                color: item.$3 == c.petrol ? c.text : c.muted,
+                                fontSize: 10)),
                         const Spacer(),
                         FittedBox(
                           fit: BoxFit.scaleDown,
@@ -762,7 +765,7 @@ class _CustomerDetailsScreenState extends State<CustomerDetailsScreen> {
                             '${FinanceDisplay.amount(item.$2)} '
                             '${FinanceDisplay.currencyCode(statement.currency)}',
                             style: TextStyle(
-                              color: item.$3,
+                              color: item.$3 == c.petrol ? c.text : item.$3,
                               fontWeight: FontWeight.w900,
                               fontSize: 14,
                             ),

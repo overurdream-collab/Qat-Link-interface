@@ -1,0 +1,15 @@
+{
+  "installed": true,
+  "launched": true,
+  "themes": 4,
+  "widths": [
+    320,
+    360,
+    390,
+    430,
+    600,
+    800
+  ],
+  "captures": 24,
+  "scope": "offline login; no authentication or financial E2E"
+}

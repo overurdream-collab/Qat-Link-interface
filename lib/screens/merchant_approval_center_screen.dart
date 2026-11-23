@@ -27,8 +27,8 @@ class MerchantApprovalCenterScreen extends StatefulWidget {
 
 class _MerchantApprovalCenterScreenState
     extends State<MerchantApprovalCenterScreen> {
-  late _ApprovalView _view = _ApprovalView
-      .values[widget.initialView.clamp(0, _ApprovalView.values.length - 1).toInt()];
+  late _ApprovalView _view = _ApprovalView.values[
+      widget.initialView.clamp(0, _ApprovalView.values.length - 1).toInt()];
 
   String _customerName(String id) {
     for (final customer in widget.state.customers.value) {
@@ -81,8 +81,8 @@ class _MerchantApprovalCenterScreenState
                       child: Text(
                         'هذه معاينة من بيانات الذاكرة على هذا الجهاز. '
                         'لا يمكن اعتماد أو رفض عملية حتى يتصل الحساب الموثق بالخادم.',
-                        style: TextStyle(
-                            color: c.text, fontSize: 11, height: 1.5),
+                        style:
+                            TextStyle(color: c.text, fontSize: 11, height: 1.5),
                       ),
                     ),
                   ],
@@ -133,8 +133,7 @@ class _MerchantApprovalCenterScreenState
                   padding: const EdgeInsets.all(24),
                   child: Column(
                     children: [
-                      Icon(Icons.task_alt_rounded,
-                          color: c.success, size: 34),
+                      Icon(Icons.task_alt_rounded, color: c.success, size: 34),
                       const SizedBox(height: 8),
                       Text(
                         _view == _ApprovalView.needsMerchant
@@ -166,8 +165,7 @@ class _MerchantApprovalCenterScreenState
                 color: c.petrol, fontSize: 11, fontWeight: FontWeight.w900)),
       );
 
-  Widget _relationCard(AppThemeColors c, RelationshipModel relation) =>
-      Padding(
+  Widget _relationCard(AppThemeColors c, RelationshipModel relation) => Padding(
         padding: const EdgeInsets.only(bottom: 8),
         child: AppSurface(
           padding: const EdgeInsets.all(13),
@@ -196,8 +194,7 @@ class _MerchantApprovalCenterScreenState
         ),
       );
 
-  Widget _movementCard(AppThemeColors c, MovementModel movement) =>
-      Padding(
+  Widget _movementCard(AppThemeColors c, MovementModel movement) => Padding(
         padding: const EdgeInsets.only(bottom: 8),
         child: AppSurface(
           padding: const EdgeInsets.all(13),
@@ -234,8 +231,8 @@ class _MerchantApprovalCenterScreenState
                   Text(
                     '${FinanceDisplay.amount(movement.amount)} '
                     '${FinanceDisplay.currencySymbol(movement.currency)}',
-                    style: TextStyle(
-                        color: c.petrol, fontWeight: FontWeight.w900),
+                    style:
+                        TextStyle(color: c.petrol, fontWeight: FontWeight.w900),
                   ),
                 ],
               ),
@@ -245,16 +242,21 @@ class _MerchantApprovalCenterScreenState
                     style: TextStyle(color: c.muted, fontSize: 11)),
               ],
               const SizedBox(height: 9),
-              Row(
+              Wrap(
+                alignment: WrapAlignment.spaceBetween,
+                crossAxisAlignment: WrapCrossAlignment.center,
+                spacing: 8,
+                runSpacing: 6,
                 children: [
-                  Icon(Icons.schedule_rounded, color: c.muted, size: 14),
-                  const SizedBox(width: 4),
-                  Text('بانتظار الطرف الآخر',
-                      style: TextStyle(
-                          color: c.pendingText,
-                          fontSize: 10,
-                          fontWeight: FontWeight.w800)),
-                  const Spacer(),
+                  Row(mainAxisSize: MainAxisSize.min, children: [
+                    Icon(Icons.schedule_rounded, color: c.muted, size: 14),
+                    const SizedBox(width: 4),
+                    Text('بانتظار الطرف الآخر',
+                        style: TextStyle(
+                            color: c.pendingText,
+                            fontSize: 10,
+                            fontWeight: FontWeight.w800)),
+                  ]),
                   Text('القرار غير متاح دون اتصال موثق',
                       style: TextStyle(color: c.muted, fontSize: 9)),
                 ],

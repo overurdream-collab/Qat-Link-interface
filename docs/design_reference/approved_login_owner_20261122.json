@@ -1,0 +1,15 @@
+{
+  "source": "Owner image attached in this conversation on 2026-11-22",
+  "sha256": "7c133ab74b73d04c762f3ed5596716a721784d1932748026ec3885cc53f91485",
+  "dimensions": [
+    861,
+    1280
+  ],
+  "analysis_crop_only": [
+    134,
+    44,
+    726,
+    1240
+  ],
+  "method": "Manual viewport approximation. No SSIM or exact pixel parity asserted. Original bytes unchanged; image is not an app background."
+}

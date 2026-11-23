@@ -42,7 +42,7 @@
     },
     {
       "path": "lib/screens/customer_details_screen.dart",
-      "lines": 826,
+      "lines": 829,
       "classes": [
         "CustomerDetailsScreen",
         "_CustomerDetailsScreenState"
@@ -134,7 +134,7 @@
     },
     {
       "path": "lib/screens/login_screen.dart",
-      "lines": 553,
+      "lines": 664,
       "classes": [
         "LoginScreen",
         "_LoginScreenState",
@@ -145,7 +145,7 @@
     },
     {
       "path": "lib/screens/merchant_approval_center_screen.dart",
-      "lines": 266,
+      "lines": 268,
       "classes": [
         "MerchantApprovalCenterScreen",
         "_MerchantApprovalCenterScreenState"
@@ -250,12 +250,13 @@
     },
     {
       "path": "lib/widgets/auth/auth_brand_hero.dart",
-      "lines": 215,
+      "lines": 272,
       "classes": [
         "AuthBrandHero",
-        "_RaisedMaqwatiWordmark"
+        "_RaisedMaqwatiWordmark",
+        "_BrandWavePainter"
       ],
-      "literal_colors": 28,
+      "literal_colors": 29,
       "visual_review": "NOT VERIFIED"
     },
     {
@@ -339,7 +340,7 @@
     },
     {
       "path": "lib/widgets/customers/merchant_pending_statement_pdf.dart",
-      "lines": 221,
+      "lines": 223,
       "classes": [
         "MerchantPendingStatementPdf",
         "_PdfRow"
@@ -598,7 +599,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "lines": 334,
+      "lines": 338,
       "classes": [
         "PremiumTokens",
         "PremiumVisualPalette",

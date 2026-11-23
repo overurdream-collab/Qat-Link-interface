@@ -784,7 +784,7 @@ class _MerchantSpaceTabState extends State<MerchantSpaceTab> {
         height: 178 * MediaQuery.textScalerOf(context).scale(1),
         clipBehavior: Clip.antiAlias,
         decoration: BoxDecoration(
-          gradient: context.premium.accessibleAction,
+          gradient: context.premium.forWhiteText(context.premium.action),
           borderRadius: BorderRadius.circular(23),
           boxShadow: AppColors.cardShadow,
         ),

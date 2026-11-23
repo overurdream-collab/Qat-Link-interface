@@ -1,29 +1,37 @@
-# مصفوفة الثيمات
+# مصفوفة الثيمات — الجولة الحالية 2026-11-23
 
-| النطاق | أزرق نهاري | أزرق ليلي | وردي نهاري | وردي ليلي |
+كل PASS يخص الحالات المثبتة، ولا يساوي اعتماد التطبيق الإنتاجي. الجرد: **18 ملف شاشة فعلياً + ملف تصدير merchant_tabs**؛ التغطية المرئية **34 حالة شاشة/نافذة** (الدخول + 33 حالة)، لا 34 شاشة مستقلة.
+
+| الاختبار | أزرق نهاري | أزرق ليلي | وردي نهاري | وردي ليلي |
 |---|---|---|---|---|
-| الدخول: 320/360/390/430/600/800dp | PASS تخطيط | PASS تخطيط | PASS تخطيط | PASS تخطيط |
-| الدخول: 640dp ارتفاع، لوحة 260dp، خط 160%، تحقق حقول فارغة | PASS | PASS | PASS | PASS |
-| Golden الدخول: ارتفاع 900dp، Cairo وأيقونات فعلية | 6 صور | 6 صور | 6 صور | 6 صور |
-| مطابقة الصور المرجعية للمالك | NOT VERIFIED | NOT VERIFIED | NOT VERIFIED | NOT VERIFIED |
-| هوية PNG في الرئيسية | PASS Widget | PASS Widget | PASS Widget | PASS Widget |
-| النص الأساسي والثانوي على الأسطح المحددة | PASS | PASS | PASS | PASS |
-| جميع المكونات وجميع الشاشات | NOT VERIFIED | NOT VERIFIED | NOT VERIFIED | NOT VERIFIED |
-| Android فعلي/محاكي | NOT VERIFIED | NOT VERIFIED | NOT VERIFIED | NOT VERIFIED |
+| الدخول + 33 حالة، العروض 320/360/390/430/600/800dp | Widget/Golden | Widget/Golden | Widget/Golden | Widget/Golden |
+| مراجعة صور البداية عند 390dp | تمت | تمت | تمت | تمت |
+| نهايات تمرير الحالات الـ33 عند 390dp | Golden | Golden | Golden | Golden |
+| 160% عند 320dp، و390dp للتبويبات؛ بناء المحتوى الكسول بالتمرير | Layout | Layout | Layout | Layout |
+| دخول بارتفاع 640dp ولوحة محاكاة 260dp وخط 160% ورسائل تحقق | Layout | Layout | Layout | Layout |
+| YER/SAR/USD وأرقام طويلة ببطاقات 220/320dp وخط 100/160% | PASS | PASS | PASS | PASS |
+| الحقول، تذكرني، قائمة العربية، رمز البلد LTR، حدود الإدخال | PASS | PASS | PASS | PASS |
+| شخصية الواجهة وPDF حسب الهوية | رجل | رجل | أنثى | أنثى |
+| دقة الشخصية الأصلية النهائية | FAIL HD | FAIL HD | FAIL HD | FAIL HD |
+| مطابقة مرجع المالك بدقة | NOT VERIFIED | لا مرجع ليلي | لا مرجع أنثوي | لا مرجع أنثوي |
+| Android للنسخة 4c1e15d: 6 عروض لكل ثيم | PASS دخول | PASS دخول | PASS دخول | PASS دخول |
+| Android للتعديل الأحدث المبني على صورة المالك | PENDING CI | PENDING CI | PENDING CI | PENDING CI |
 
-الاختبار: `test/ui_audit/login_matrix_test.dart`، 56 اختباراً (48 تخطيطاً + 4 هوية + 4 مجموعات تباين).
-RTL فعلي عبر localizations العربية في المصفوفة؛ الوصول بالتمرير إلى زر الدخول والدعم مثبت. لا تدعي المصفوفة اختبار كل أسماء المستخدمين الطويلة والعملات والقوائم في باقي الشاشات.
-الصور: `test/ui_audit/goldens/`. هذه baselines مولّدة من التنفيذ، وليست صور موافقة من المالك. CI يقارن بها دون `--update-goldens`.
+## الاختبارات والصور
 
-## الجولة الثانية — التغطية الموسعة
-| النطاق | أزرق نهاري | أزرق ليلي | وردي نهاري | وردي ليلي |
-|---|---|---|---|---|
-| 13 تبويباً/نافذة للتاجر والعميل × 6 عروض | Widget/Golden | Widget/Golden | Widget/Golden | Widget/Golden |
-| 13 شاشة تفصيلية × 6 عروض | Widget/Golden | Widget/Golden | Widget/Golden | Widget/Golden |
-| خط 160% عند 320dp؛ وعند 390dp للتبويبات | Layout | Layout | Layout | Layout |
-| تمرير حتى نهاية القوائم وبناء المحتوى الكسول | Layout | Layout | Layout | Layout |
-| أرقام مالية طويلة YER/SAR/USD، 220/320dp، 100/160% | PASS | PASS | PASS | PASS |
-| شخصية PDF حسب الهوية | رجل | رجل/ورق فاتح | أنثى | أنثى/ورق فاتح |
-| Android APK على محاكي API35 | PENDING | PENDING | PENDING | PENDING |
+| الملف داخل test/ui_audit | الحالات |
+|---|---:|
+| role_layout_matrix_test.dart: 13 تبويباً/نافذة | 416 |
+| screen_catalog_matrix_test.dart: 13 شاشة تفصيلية | 364 |
+| populated_financial_matrix_test.dart: 7 حالات مالية | 196 |
+| login_matrix_test.dart | 56 |
+| currency_accessibility_test.dart | 48 |
+| pdf_identity_test.dart | 2 |
+| reference_controls_test.dart | 4 |
+| مجموع تدقيق الواجهات | **1086** |
 
-الجرد التفصيلي في fixtures `role_layout_matrix_test.dart` و`screen_catalog_matrix_test.dart`. لا تمثل لقطات الحالات المقفلة نجاح تكامل هوية إنتاجي. البيانات المزروعة للاختبارات في test فقط. مرجع المالك الأصلي منتظر حسب رد المستخدم؛ البانرات التسويقية استُثنيت صراحة بموافقته.
+**950 Golden**: 34×4×6 = 816 صورة بداية، 33×4 = 132 نهاية تمرير، وشخصيتا PDF. CI يقارن بالصور المثبتة دون تحديثها؛ هذه صور التنفيذ، وليست موافقة المالك. `scripts/build_ui_contact_sheets.py` يجمع صور البداية والنهاية للمراجعة.
+
+الحالات المالية تستعمل AppState الحقيقي داخل test فقط: ديون معتمدة 1,234,567.8901 ودفعات معتمدة 234,567.8901 لكل عملة، وعمليات معلقة منفصلة. لا بيانات مصطنعة أو جلسات اختبار داخل المنتج. الشاشات المقفلة أو إثبات هوية test لا تعني نجاح مصادقة إنتاجي.
+
+RTL عربي فعلي وCairo وأيقونات Material محملة. ورق PDF فاتح حتى في الثيم الليلي للطباعة. استثناء البانرات التسويقية المعتمدة وافق عليه المالك صراحة؛ لا يمتد لشخصيات الواجهة أو PDF.
