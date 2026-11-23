@@ -1,0 +1,284 @@
+name: Maqwati test apps - distinct Android identities
+on:
+  push:
+    branches: [build/maqwati-test-apps-unique-id-20261123]
+  pull_request:
+    branches: [build/maqwati-test-apps-unique-id-20261123]
+  workflow_dispatch:
+concurrency:
+  group: test-apps-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
+permissions:
+  contents: read
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: ui_audit
+          POSTGRES_PASSWORD: ui_audit_test_only
+          POSTGRES_DB: ui_audit
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd="pg_isready -U ui_audit -d ui_audit"
+          --health-interval=5s
+          --health-timeout=5s
+          --health-retries=10
+    env:
+      FIN08_TEST_DATABASE_URL: postgres://ui_audit:ui_audit_test_only@127.0.0.1:5432/ui_audit
+      PGPASSWORD: ui_audit_test_only
+    defaults:
+      run:
+        working-directory: server
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install --no-audit --no-fund
+      - run: npm run check
+      - name: Apply this branch's migrations to disposable PostgreSQL
+        run: |
+          for schema in sql/00*.sql; do
+            psql -v ON_ERROR_STOP=1 -h 127.0.0.1 -U ui_audit -d ui_audit -f "$schema"
+          done
+      - run: npm test
+  verification:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.44.6'
+          channel: stable
+          cache: true
+      - run: flutter pub get
+      - run: flutter analyze --no-fatal-infos
+      - run: flutter test
+      - name: Upload evidence (never update golden baselines in CI)
+        if: always()
+        continue-on-error: true
+        uses: actions/upload-artifact@v4
+        with:
+          name: ui-audit-evidence
+          path: |
+            test/ui_audit/goldens/
+            test/ui_audit/failures/
+            build/customer-ui-screenshots/
+            build/ui-pdf-proof/
+          retention-days: 7
+  android:
+    needs: [verification, backend]
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.44.6'
+          channel: stable
+          cache: true
+      - run: flutter create --platforms=android --org com.maqwatilink --project-name qat_link .
+      - name: Isolate the offline preview package
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path('android/app/build.gradle.kts')
+          s = p.read_text()
+          old = 'applicationId = "com.maqwatilink.qat_link"'
+          assert old in s
+          p.write_text(s.replace(old, 'applicationId = "com.maqwatilink.testing.login20261123"'))
+          manifest = Path('android/app/src/main/AndroidManifest.xml')
+          xml = manifest.read_text()
+          assert 'android:label="qat_link"' in xml
+          manifest.write_text(xml.replace('android:label="qat_link"', 'android:label="Maqwati اختبار"'))
+          PY
+      - run: flutter build apk --release -t lib/main_phone_preview.dart
+      - name: Verify APK identity, bundled mascots and offline permission
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import os, subprocess, zipfile
+          apk = Path('build/app/outputs/flutter-apk/app-release.apk')
+          sdk = Path(os.environ['ANDROID_HOME'])
+          aapt = sorted((sdk/'build-tools').glob('*/aapt'))[-1]
+          badging = subprocess.check_output([str(aapt),'dump','badging',str(apk)],text=True)
+          perms = subprocess.check_output([str(aapt),'dump','permissions',str(apk)],text=True)
+          assert "name='com.maqwatilink.testing.login20261123'" in badging
+          assert "application-label:'Maqwati اختبار'" in badging
+          assert 'android.permission.INTERNET' not in perms
+          with zipfile.ZipFile(apk) as z:
+              for name in ['maqwati_approved_character.png','maqwati_feminine_character.png','maqwati_brand_logo.png']:
+                  data = z.read('assets/flutter_assets/assets/images/'+name)
+                  assert data.startswith(b'\x89PNG\r\n\x1a\n')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: maqwati-test-login-apk
+          path: build/app/outputs/flutter-apk/app-release.apk
+          retention-days: 7
+  android-smoke:
+    env:
+      ANDROID_PREVIEW_PACKAGE: com.maqwatilink.testing.login20261123
+    needs: android
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: actions/download-artifact@v4
+        with:
+          name: maqwati-test-login-apk
+          path: build/app/outputs/flutter-apk/
+      - name: Enable KVM for the Android emulator
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: Install and exercise the actual offline APK
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          arch: x86_64
+          disable-animations: true
+          script: python3 scripts/android_ui_smoke.py
+      - name: Upload native Android evidence, including failures
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: maqwati-test-login-smoke
+          path: build/android-smoke/
+          retention-days: 7
+  android-developer:
+    needs: [verification, backend]
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.44.6'
+          channel: stable
+          cache: true
+      - run: flutter create --platforms=android --org com.maqwatilink --project-name qat_link .
+      - name: Isolate the offline preview package
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path('android/app/build.gradle.kts')
+          s = p.read_text()
+          old = 'applicationId = "com.maqwatilink.qat_link"'
+          assert old in s
+          p.write_text(s.replace(old, 'applicationId = "com.maqwatilink.testing.browse20261123"'))
+          manifest = Path('android/app/src/main/AndroidManifest.xml')
+          xml = manifest.read_text()
+          assert 'android:label="qat_link"' in xml
+          manifest.write_text(xml.replace('android:label="qat_link"', 'android:label="Maqwati تصفح"'))
+          PY
+      - run: flutter build apk --release -t lib/main_ui_preview.dart
+      - name: Verify APK identity, bundled mascots and offline permission
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import os, subprocess, zipfile
+          apk = Path('build/app/outputs/flutter-apk/app-release.apk')
+          sdk = Path(os.environ['ANDROID_HOME'])
+          aapt = sorted((sdk/'build-tools').glob('*/aapt'))[-1]
+          badging = subprocess.check_output([str(aapt),'dump','badging',str(apk)],text=True)
+          perms = subprocess.check_output([str(aapt),'dump','permissions',str(apk)],text=True)
+          assert "name='com.maqwatilink.testing.browse20261123'" in badging
+          assert "application-label:'Maqwati تصفح'" in badging
+          assert 'android.permission.INTERNET' not in perms
+          with zipfile.ZipFile(apk) as z:
+              for name in ['maqwati_approved_character.png','maqwati_feminine_character.png','maqwati_brand_logo.png']:
+                  data = z.read('assets/flutter_assets/assets/images/'+name)
+                  assert data.startswith(b'\x89PNG\r\n\x1a\n')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: maqwati-test-browse-apk
+          path: build/app/outputs/flutter-apk/app-release.apk
+          retention-days: 7
+  android-developer-smoke:
+    env:
+      ANDROID_PREVIEW_PACKAGE: com.maqwatilink.testing.browse20261123
+    needs: android-developer
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: actions/download-artifact@v4
+        with:
+          name: maqwati-test-browse-apk
+          path: build/app/outputs/flutter-apk/
+      - name: Enable KVM for the Android emulator
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: Install and exercise the actual offline APK
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          arch: x86_64
+          disable-animations: true
+          script: python3 scripts/android_developer_smoke.py
+      - name: Upload native Android evidence, including failures
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: maqwati-test-browse-smoke
+          path: build/android-developer-smoke/
+          retention-days: 7
+
+  publish-test-apps:
+    needs: [android-smoke, android-developer-smoke]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: maqwati-test-login-apk
+          path: build/release/login
+      - uses: actions/download-artifact@v4
+        with:
+          name: maqwati-test-browse-apk
+          path: build/release/browse
+      - name: Prepare two uniquely named standalone APKs
+        run: |
+          mv build/release/login/app-release.apk maqwati-test-login.apk
+          mv build/release/browse/app-release.apk maqwati-test-browse.apk
+          test -s maqwati-test-login.apk
+          test -s maqwati-test-browse.apk
+          sha256sum maqwati-test-login.apk maqwati-test-browse.apk
+      - name: Publish Android testing prerelease
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          gh release create "maqwati-test-${{ github.run_id }}" \
+            maqwati-test-login.apk maqwati-test-browse.apk \
+            --target "${{ github.sha }}" \
+            --title "Maqwati اختبار / تصفح — Android" \
+            --notes "Offline test APKs only. Distinct application IDs and launcher names, so they install beside existing Maqwati apps. Login: com.maqwatilink.testing.login20261123 (Maqwati اختبار). Browse: com.maqwatilink.testing.browse20261123 (Maqwati تصفح). No live authentication or financial operations." \
+            --prerelease
