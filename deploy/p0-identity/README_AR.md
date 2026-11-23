@@ -1,5 +1,5 @@
 # تشغيل خدمة هوية مقوتي لينك P0 في بيئة اختبار مستقلة
-**الحالة: دليل جاهزية تشغيل، ليس تقرير نشر فعلي.** آخر تحديث: 2026-11-19.
+**الحالة: دليل جاهزية تشغيل، ليس تقرير نشر فعلي.** آخر تحديث: 2026-11-23.
 المستودع: `overurdream-collab/Qat-Link-interface`، الفرع `feat/p0-auth-identity-integration-20261118`، PR #61.
 
 ## الهدف وقاعدة عدم الإضرار
@@ -9,9 +9,10 @@
 ## ما تحقق في GitHub
 1. `server/sql/008_p0_identity_accounts.sql` أصلح النسخة المكررة والمكسورة، ويتضمن قيد `^[+]967[0-9]{9}$`.
 2. `server/test/p0_identity_schema_checks.sql` و`identity-postgres-schema` يختبران ترحيل القاعدة في PostgreSQL 16 مؤقتة، والأرقام الصحيحة والخاطئة وتكرار الهوية، دون لمس قاعدة مستخدم.
-3. `server/src/identity_server.mjs`: `GET /healthz` لا يعيد ready إلا إذا استطاع الوصول إلى جدول `identity_accounts`.
+3. `server/src/identity_server.mjs`: `GET /healthz` لا يعيد ready إلا إذا استطاع الوصول إلى جدولي `identity_accounts` و`identity_sessions`.
 4. `deploy/p0-identity/compose.yml`: قاعدة جديدة في Volume مستقل، خدمة Node مستقلة، منفذ المضيف **مقيد بـ127.0.0.1** لتوجيهه بواسطة وكيل HTTPS موثوق، وشبكتان خارجيتان *موجودتان مسبقاً* تحددهما نتائج الفحص.
 5. `server/Dockerfile.identity`: صورة هوية مستقلة مستخدم Node غير root، وملف البيئة المحلي محجوب بـ `.gitignore`.
+6. `server/sql/010_p0_identity_session_devices.sql`: يربط كل جلسة بمعرف جهاز ثابت ويشترط تطابقه عند التجديد.
 
 ## المرحلة 0 — فحص قراءة فقط، دون إرسال رسائل
 في نسخة حديثة من **Qat-Link-interface** على Windows:
@@ -36,8 +37,8 @@ docker compose -f .\deploy\p0-identity\compose.yml --env-file .\deploy\p0-identi
 ## المرحلة 2 — ترحيل القاعدة وتفعيل الهوية (كتابة، تتطلب موافقة تشغيل)
 في نافذة صيانة وبخطوات منفصلة:
 1. تشغيل **identity-db فقط**، بحجم منفصل عن FIN25 وFIN08. تحقق من اسم المشروع واسم Volume قبل الخطوة.
-2. تطبيق `server/sql/008_p0_identity_accounts.sql` باستخدام مستخدم ترحيل مسؤول `identity_owner` على **قاعدة الهوية الجديدة فقط**. تأكد من عدم وجود جدول `identity_accounts` مسبقاً بمخطط مختلف؛ `CREATE IF NOT EXISTS` ليس أداة ترقية لمخططات قديمة.
-3. إنشاء `identity_app` وتخصيص كلمة مرور عشوائية، مع `GRANT CONNECT/USAGE` ثم `GRANT SELECT,INSERT,UPDATE ON identity_accounts`. لا تضع كلمة المرور في أوامر محفوظة في history.
+2. تطبيق `server/sql/008_p0_identity_accounts.sql` ثم `server/sql/009_p0_identity_sessions.sql` ثم `server/sql/010_p0_identity_session_devices.sql` باستخدام مستخدم ترحيل مسؤول `identity_owner` على **قاعدة الهوية الجديدة فقط**. تأكد من عدم وجود جدول `identity_accounts` مسبقاً بمخطط مختلف؛ `CREATE IF NOT EXISTS` ليس أداة ترقية لمخططات قديمة.
+3. إنشاء `identity_app` وتخصيص كلمة مرور عشوائية، مع `GRANT CONNECT/USAGE` ثم `GRANT SELECT,INSERT,UPDATE ON identity_accounts, identity_sessions`. لا تضع كلمة المرور في أوامر محفوظة في history.
 4. تشغيل خدمة `identity` وحدها على المنفذ المحلي 8090؛ اختبار `GET http://127.0.0.1:8090/healthz` يجب أن يعيد `{"status":"ready"}`، وبدون جدول يجب أن يعيد 503. هذا الفحص وحده لا يثبت صحة SMS أو FIN08.
 5. نشر *نطاق هوية HTTPS موثوق ومستقر* يوجّه إلى منفذ الهوية المحلي. لا تعتمد Quick Tunnel متغيراً لهوية الحساب، ولا تعرّض المسارات الداخلية أو منفذ قاعدة البيانات للإنترنت.
 

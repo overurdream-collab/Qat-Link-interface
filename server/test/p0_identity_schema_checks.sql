@@ -33,4 +33,35 @@ BEGIN
     WHEN unique_violation THEN NULL;
   END;
 END $$;
+DO $$
+DECLARE session_id uuid := gen_random_uuid();
+BEGIN
+  INSERT INTO identity_sessions(id,subject,role,refresh_hash,device_id,expires_at)
+  VALUES (session_id,'11111111-1111-4111-8111-111111111111','merchant',
+          repeat('a',64),'33333333-3333-4333-8333-333333333333',now()+interval '30 days');
+  BEGIN
+    INSERT INTO identity_sessions(id,subject,role,refresh_hash,device_id,expires_at)
+    VALUES (gen_random_uuid(),'11111111-1111-4111-8111-111111111111','merchant',
+            repeat('a',64),'33333333-3333-4333-8333-333333333333',now()+interval '30 days');
+    RAISE EXCEPTION 'Duplicate refresh hash accepted' USING ERRCODE='P0002';
+  EXCEPTION
+    WHEN unique_violation THEN NULL;
+  END;
+  BEGIN
+    INSERT INTO identity_sessions(id,subject,role,refresh_hash,device_id,expires_at)
+    VALUES (gen_random_uuid(),'11111111-1111-4111-8111-111111111111','merchant',
+            'not-a-hash','33333333-3333-4333-8333-333333333333',now()+interval '30 days');
+    RAISE EXCEPTION 'Invalid refresh hash accepted' USING ERRCODE='P0002';
+  EXCEPTION
+    WHEN check_violation THEN NULL;
+  END;
+  BEGIN
+    INSERT INTO identity_sessions(id,subject,role,refresh_hash,device_id,expires_at)
+    VALUES (gen_random_uuid(),'11111111-1111-4111-8111-111111111111','merchant',
+            repeat('b',64),'not-a-device',now()+interval '30 days');
+    RAISE EXCEPTION 'Invalid device id accepted' USING ERRCODE='P0002';
+  EXCEPTION
+    WHEN check_violation THEN NULL;
+  END;
+END $$;
 ROLLBACK;

@@ -32,12 +32,52 @@ test('FIN-09 merchant restores private contacts and every claim stage without cr
       const second = await store.listContacts(merchant,{ limit:1,cursor:first.next_cursor });
       assert.deepEqual(new Set([first.items[0].contact_id,second.items[0].contact_id]),new Set([contact.id,another.id]));
       assert.equal(second.next_cursor,null);
+      const nameSearch=await store.listContacts(merchant,{ q:'before app' });
+      assert.deepEqual(nameSearch.items.map(row=>row.contact_id),[contact.id]);
+      const phoneSearch=await store.listContacts(merchant,{ q:phone.slice(-7) });
+      assert.deepEqual(new Set(phoneSearch.items.map(row=>row.contact_id)),new Set([contact.id]));
+      assert.equal((await store.listContacts(merchant,{ q:'no-such-client-'+suffix })).items.length,0);
+      await assert.rejects(()=>store.listContacts(merchant,{ q:'x'.repeat(81) }),{status:422});
+      await assert.rejects(()=>store.listContacts(merchant,{ q:'bad\u0000term' }),{status:422});
       await assert.rejects(()=>store.listContacts(other,{ limit:1,cursor:first.next_cursor }),{status:422});
       await assert.rejects(()=>store.listContactClaims(other,contact.id,{}),{status:404});
       const before = await store.listContactClaims(merchant,contact.id,{});
       assert.deepEqual(new Set(before.items.map(row=>row.claim_id)),new Set([a.id,b.id]));
       assert.ok(before.items.every(row=>row.stage==='outside_app'));
       assert.ok(before.items.every(row=>typeof row.amount==='string'));
+      const amountSearch=await store.listContactClaims(merchant,contact.id,{ q:'100.50' });
+      assert.deepEqual(amountSearch.items.map(row=>row.claim_id),[a.id]);
+      assert.deepEqual(new Set((await store.listContactClaims(merchant,contact.id,{ type:'debt' })).items
+        .map(row=>row.claim_id)),new Set([a.id,b.id]));
+      assert.equal((await store.listContactClaims(merchant,contact.id,{ type:'payment' })).items.length,0);
+      assert.deepEqual((await store.listContactClaims(merchant,contact.id,{ currency:'USD' })).items
+        .map(row=>row.claim_id),[b.id]);
+      assert.equal((await store.listContactClaims(merchant,contact.id,{ currency:'SAR' })).items.length,0);
+      await assert.rejects(()=>store.listContactClaims(merchant,contact.id,{ type:'refund' }),{status:422});
+      await assert.rejects(()=>store.listContactClaims(merchant,contact.id,{ currency:'EUR' }),{status:422});
+      const day=new Date(a.created_at).toISOString().slice(0,10);
+      assert.deepEqual(new Set((await store.listContactClaims(merchant,contact.id,{
+        from:day,to:day })).items.map(row=>row.claim_id)),new Set([a.id,b.id]));
+      assert.equal((await store.listContactClaims(merchant,contact.id,{
+        from:'2999-01-01' })).items.length,0);
+      assert.equal((await store.listContactClaims(merchant,contact.id,{
+        to:'2000-01-01' })).items.length,0);
+      await assert.rejects(()=>store.listContactClaims(merchant,contact.id,{
+        from:'2026-13-01' }),{status:422});
+      await assert.rejects(()=>store.listContactClaims(merchant,contact.id,{
+        sort:'name' }),{status:422});
+      const highest=await store.listContactClaims(merchant,contact.id,{
+        sort:'amount_desc',limit:1 });
+      assert.equal(highest.items[0].claim_id,a.id);
+      assert.ok(highest.next_cursor);
+      const secondHighest=await store.listContactClaims(merchant,contact.id,{
+        sort:'amount_desc',limit:1,cursor:highest.next_cursor });
+      assert.equal(secondHighest.items[0].claim_id,b.id);
+      await assert.rejects(()=>store.listContactClaims(merchant,contact.id,{
+        sort:'newest',limit:1,cursor:highest.next_cursor }),{status:422});
+      assert.equal((await store.listContactClaims(merchant,contact.id,{
+        sort:'amount_asc',limit:1 })).items[0].claim_id,b.id);
+      await assert.rejects(()=>store.listContactClaims(merchant,contact.id,{ q:'x'.repeat(81) }),{status:422});
       const otherPage = await store.listContactClaims(merchant,another.id,{});
       assert.deepEqual(otherPage.items.map(row=>row.claim_id),[c.id]);
       assert.equal(otherPage.items[0].currency,'SAR');

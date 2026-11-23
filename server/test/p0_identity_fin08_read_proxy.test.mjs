@@ -24,7 +24,15 @@ test('FIN08 read proxy: allows only role-owned GET routes, passes JWT unchanged'
   assert.equal(calls[0].headers.authorization,session);
   assert.equal((await proxy({method:'GET',url:'/v1/customer/relationships',
     authorization:session,account:customer})).items.length,0);
-  assert.equal(calls.length,2);
+  await proxy({method:'GET',url:'/v1/merchant/relationships?limit=5',
+    authorization:session,account:merchant});
+  await proxy({method:'GET',url:'/v1/relationships/11111111-1111-1111-1111-111111111111/balances',
+    authorization:session,account:customer});
+  await proxy({method:'GET',url:'/v1/relationships/11111111-1111-1111-1111-111111111111/statement?currency=YER&from=2026-01-01&to=2026-01-31',
+    authorization:session,account:merchant});
+  await proxy({method:'GET',url:'/v1/merchant/contacts/11111111-1111-1111-1111-111111111111/claims?q=75&type=debt&currency=YER&from=2026-11-01&to=2026-11-30&sort=amount_desc&limit=20',
+    authorization:session,account:merchant});
+  assert.equal(calls.length,6);
 });
 
 test('FIN08 read proxy: deny mutations, other roles, internal routes and query spoofing',async()=>{
@@ -37,8 +45,15 @@ test('FIN08 read proxy: deny mutations, other roles, internal routes and query s
     {method:'POST',url:'/v1/merchant/contacts',account:merchant},
     {method:'GET',url:'/v1/merchant/contacts',account:customer},
     {method:'GET',url:'/v1/internal/merchant-profiles',account:merchant},
-    {method:'GET',url:'/v1/merchant/amendments',account:merchant},
+    {method:'GET',url:'/v1/merchant/amendments',account:customer},
+    {method:'GET',url:'/v1/merchant/relationships',account:customer},
+    {method:'GET',url:'/v1/relationships/11111111-1111-1111-1111-111111111111/balances',
+      account:{id:'identity-service',role:'identity_service'}},
+    {method:'POST',url:'/v1/relationships/11111111-1111-1111-1111-111111111111/operations',
+      account:merchant},
     {method:'GET',url:'/v1/merchant/contacts?merchant_id=other',account:merchant},
+    {method:'GET',url:'/v1/merchant/contacts/11111111-1111-1111-1111-111111111111/claims?unknown=1',
+      account:merchant},
     {method:'GET',url:'/v1/merchant/contacts/../../internal/merchant-profiles',account:merchant},
   ]) {
     await assert.rejects(proxy({ ...args, authorization:session }));

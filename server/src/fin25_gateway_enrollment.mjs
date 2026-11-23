@@ -37,8 +37,8 @@ const server=http.createServer(async(req,res)=>{
    if(typeof id!=='string'||!/^[0-9a-f-]{36}$/i.test(id)||typeof body.publicKeyPem!=='string'||body.publicKeyPem.length>4096)throw Object.assign(Error('Invalid device'),{status:400});
    let publicKey;
    try { publicKey=createPublicKey(body.publicKeyPem); } catch { throw Object.assign(Error('Invalid public key'),{status:400}); }
-   if(publicKey.asymmetricKeyType!=='rsa'||(publicKey.asymmetricKeyDetails?.modulusLength||0)<2048)
-    throw Object.assign(Error('RSA public key of at least 2048 bits required'),{status:400});
+   if(publicKey.asymmetricKeyType!=='rsa'||(publicKey.asymmetricKeyDetails?.modulusLength||0)<3072)
+    throw Object.assign(Error('RSA public key of at least 3072 bits required'),{status:400});
    const fp=fingerprint(body.publicKeyPem);
    const result=await pool.query("INSERT INTO fin25_gateway_devices(device_id,public_key_spki_pem,fingerprint_sha256) VALUES($1,$2,$3) ON CONFLICT DO NOTHING RETURNING device_id",[id,body.publicKeyPem,fp]);
    if(!result.rowCount){

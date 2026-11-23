@@ -6,6 +6,9 @@ import { createIdentityLogic, IdentityError } from './identity_logic.mjs';
 import { createFinanceProvisioner } from './identity_finance_provisioner.mjs';
 import { createIdentitySessionLimiter } from './identity_session_limiter.mjs';
 import { createIdentityFinanceReadProxy } from './identity_fin08_read_proxy.mjs';
+import { createIdentityFinanceWriteProxy } from './identity_fin08_write_proxy.mjs';
+import { createIdentityFinanceLimiter } from './identity_finance_limiter.mjs';
+import { readBody } from './request_body.mjs';
 
 const env = process.env;
 const required = [
@@ -57,6 +60,18 @@ const logic = createIdentityLogic({
 // still mandatory before public exposure; reverse proxies may share one peer IP.
 const sessionLimiter = createIdentitySessionLimiter();
 const financeRead = createIdentityFinanceReadProxy({fetchImpl: fetch, financeBaseUrl:env.FIN08_INTERNAL_BASE_URL});
+const financeWrite = createIdentityFinanceWriteProxy({fetchImpl: fetch, financeBaseUrl:env.FIN08_INTERNAL_BASE_URL});
+function positiveIntEnv(name, fallback) {
+  const raw=env[name];
+  if(raw===undefined) return fallback;
+  const value=Number(raw);
+  if(!Number.isInteger(value) || value<1) throw new Error('Invalid numeric setting: '+name);
+  return value;
+}
+const financeLimiter = createIdentityFinanceLimiter({
+  readPerMinute:positiveIntEnv('IDENTITY_FINANCE_READ_PER_MINUTE',120),
+  writePerMinute:positiveIntEnv('IDENTITY_FINANCE_WRITE_PER_MINUTE',20)
+});
 const respond=(res,status,value,extraHeaders={})=>{
   res.writeHead(status,{'content-type':'application/json; charset=utf-8',
     'cache-control':'no-store','x-content-type-options':'nosniff',...extraHeaders});
@@ -70,6 +85,7 @@ const api=createServer(async(req,res)=>{
       // Never reveal connection strings, table contents or key material.
       try {
         await pool.query('SELECT subject FROM identity_accounts LIMIT 0');
+        await pool.query('SELECT id,device_id FROM identity_sessions LIMIT 0');
         return respond(res,200,{status:'ready'});
       } catch {
         return respond(res,503,{status:'unavailable'});
@@ -77,35 +93,58 @@ const api=createServer(async(req,res)=>{
     }
     if(req.method==='GET' && path==='/v1/identity/me')
       return respond(res,200,await logic.me(req.headers.authorization));
-    // Read-only financial data through the already-networked Identity service.
+    // Financial data through the already-networked Identity service.
     // Validate this session before calling FIN08; FIN08 also verifies its JWT.
-    if(req.method==='GET' &&
-      (path.startsWith('/v1/merchant/') || path.startsWith('/v1/customer/'))) {
+    const isFinancePath=path.startsWith('/v1/merchant/') ||
+      path.startsWith('/v1/customer/') || path.startsWith('/v1/relationships/');
+    if(req.method==='GET' && isFinancePath) {
       const account=(await logic.me(req.headers.authorization)).account;
+      const budget=financeLimiter.check(account.id,'read');
+      if(!budget.allowed) return respond(res,429,{error:'Too many financial requests'},
+        {'retry-after':String(budget.retryAfterSeconds)});
       return respond(res,200,await financeRead({
         method:req.method,url:req.url,
         authorization:req.headers.authorization,account
       }));
     }
-    if(req.method!=='POST' || path!=='/v1/identity/session') return respond(res,404,{error:'Not found'});
-    if(req.headers['content-type']?.split(';')[0].trim()!=='application/json')
-      return respond(res,415,{error:'JSON required'});
+    if(req.method==='POST' && isFinancePath) {
+      if(req.headers['content-type']?.split(';')[0].trim()!=='application/json')
+        throw new IdentityError(415,'JSON required');
+      const account=(await logic.me(req.headers.authorization)).account;
+      const budget=financeLimiter.check(account.id,'write');
+      if(!budget.allowed) return respond(res,429,{error:'Too many financial requests'},
+        {'retry-after':String(budget.retryAfterSeconds)});
+      const body=await readBody(req,65536);
+      const result=await financeWrite({
+        url:req.url,authorization:req.headers.authorization,account,body,
+        idempotencyKey:req.headers['idempotency-key']
+      });
+      return respond(res,result.status,result.data);
+    }
+    const identityPosts=new Set(['/v1/identity/session','/v1/identity/refresh','/v1/identity/logout']);
+    if(req.method!=='POST' || !identityPosts.has(path)) return respond(res,404,{error:'Not found'});
     // Never trust client-controlled Forwarded/X-Forwarded-For values here.
     const budget = sessionLimiter.check(req.socket.remoteAddress);
     if (!budget.allowed) {
       return respond(res,429,{error:'Too many session requests'},
         {'retry-after':String(budget.retryAfterSeconds)});
     }
-    let length=0,body='';
-    for await(const chunk of req) {
-      length+=chunk.length;
-      if(length>4096) throw new IdentityError(413,'Request too large');
-      body+=chunk.toString('utf8');
+    const body=await readBody(req,4096);
+    let input={};
+    if(body.trim()!=='') {
+      if(req.headers['content-type']?.split(';')[0].trim()!=='application/json')
+        throw new IdentityError(415,'JSON required');
+      try {input=JSON.parse(body);} catch {throw new IdentityError(400,'Invalid JSON');}
+      if(!input || typeof input!=='object' || Array.isArray(input)) throw new IdentityError(400,'Invalid JSON');
+    } else if(path!=='/v1/identity/logout') {
+      throw new IdentityError(400,'Invalid JSON');
     }
-    let input;
-    try {input=JSON.parse(body);} catch {throw new IdentityError(400,'Invalid JSON');}
-    if(!input || typeof input!=='object' || Array.isArray(input)) throw new IdentityError(400,'Invalid JSON');
-    const result=await logic.exchange(input);
+    let result;
+    if(path==='/v1/identity/session') result=await logic.exchange(input);
+    else if(path==='/v1/identity/refresh') result=await logic.refresh(input);
+    else result=await logic.logout({
+      header:req.headers.authorization, refreshToken:input.refreshToken
+    });
     return respond(res,200,result);
   } catch(e) {
     if(e instanceof IdentityError) return respond(res,e.status,{error:e.message});

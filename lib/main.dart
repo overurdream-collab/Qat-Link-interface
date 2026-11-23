@@ -3,9 +3,12 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'screens/home_screen.dart';
 import 'screens/customer_details_screen.dart';
-import 'screens/login_screen.dart';
 import 'screens/merchant_tabs.dart';
+import 'screens/session_gate.dart';
 import 'services/app_state.dart';
+import 'services/device_identity.dart';
+import 'services/identity_session_client.dart';
+import 'services/session_store.dart';
 import 'theme/app_colors.dart';
 import 'theme/app_theme.dart';
 import 'widgets/app_chrome.dart';
@@ -19,11 +22,18 @@ import 'models/merchant_pending_models.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+  SessionStore.instance = SecureSessionStore();
+  DeviceIdentityStore.instance = SecureDeviceIdentityStore();
   runApp(const QatLinkApp());
 }
 
 class QatLinkApp extends StatefulWidget {
-  const QatLinkApp({super.key});
+  const QatLinkApp({super.key, this.sessionStore, this.sessionClient,
+      this.deviceStore});
+
+  final SessionStore? sessionStore;
+  final IdentitySessionClient? sessionClient;
+  final DeviceIdentityStore? deviceStore;
 
   @override
   State<QatLinkApp> createState() => _QatLinkAppState();
@@ -31,6 +41,14 @@ class QatLinkApp extends StatefulWidget {
 
 class _QatLinkAppState extends State<QatLinkApp> {
   ThemeMode _themeMode = ThemeMode.light;
+
+  void _toggleTheme() {
+    setState(() {
+      _themeMode = _themeMode == ThemeMode.dark
+          ? ThemeMode.light
+          : ThemeMode.dark;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,13 +65,12 @@ class _QatLinkAppState extends State<QatLinkApp> {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      home: LoginScreen(
+      home: SessionGate(
         isDark: _themeMode == ThemeMode.dark,
-        onToggleTheme: () => setState(() {
-          _themeMode = _themeMode == ThemeMode.dark
-              ? ThemeMode.light
-              : ThemeMode.dark;
-        }),
+        onToggleTheme: _toggleTheme,
+        store: widget.sessionStore,
+        client: widget.sessionClient,
+        deviceStore: widget.deviceStore,
       ),
     );
   }

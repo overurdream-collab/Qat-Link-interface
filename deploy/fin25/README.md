@@ -18,9 +18,11 @@ OTP_INTERNAL_API_KEY=REPLACE_WITH_RANDOM_SECRET
 JWT_PUBLIC_KEY_PEM=-----BEGIN PUBLIC KEY-----\n...\n-----END PUBLIC KEY-----
 JWT_ISSUER=REPLACE_WITH_REAL_IDENTITY_ISSUER
 JWT_AUDIENCE=REPLACE_WITH_REAL_IDENTITY_AUDIENCE
+FIN25_DOCKER_NETWORK=fin25-test-net
 OTP_ENABLED=false
 FIN25_SMS_DISPATCH_ENABLED=false
 ```
+`FIN25_DOCKER_NETWORK` must be the **existing** network shared with the identity container (verify with `docker network ls`); do not create a new network to force Compose to pass.
 Use your real issuer's **public** key only, never its signing private key. Place trusted `certs/server.crt` and `certs/server.key` (do not commit) in this directory. On Windows Docker Desktop, host.docker.internal resolves to the host; ensure PostgreSQL permits the Docker network and only test DB credentials.
 
 Run from `deploy/fin25`:

@@ -53,7 +53,7 @@ jobs:
         with:
           node-version: '22'
       - name: Check identity service syntax
-        run: node --check scripts/fin25_identity_live_pilot.mjs && node --check server/src/fin25_otp_transport.mjs && node --check server/src/identity_logic.mjs && node --check server/src/identity_session_limiter.mjs && node --check server/src/identity_finance_provisioner.mjs && node --check server/src/identity_server.mjs && node --check scripts/check_identity_runtime_trust.mjs
+        run: node --check scripts/fin25_identity_live_pilot.mjs && node --check server/src/fin25_otp_transport.mjs && node --check server/src/identity_logic.mjs && node --check server/src/identity_session_limiter.mjs && node --check server/src/identity_finance_provisioner.mjs && node --check server/src/identity_server.mjs && node --check server/src/identity_fin08_write_proxy.mjs && node --check server/src/identity_finance_limiter.mjs && node --check server/src/request_body.mjs && node --check scripts/check_identity_runtime_trust.mjs
       - name: Verify trust preflight fails safely without local credentials
         run: |
           if node scripts/check_identity_runtime_trust.mjs > preflight.log 2>&1; then
@@ -212,7 +212,10 @@ jobs:
       - name: Install PostgreSQL client
         run: sudo apt-get update -qq && sudo apt-get install -y -qq postgresql-client
       - name: Apply identity schema to isolated disposable database
-        run: psql -X -v ON_ERROR_STOP=1 -f server/sql/008_p0_identity_accounts.sql
+        run: |
+          psql -X -v ON_ERROR_STOP=1 -f server/sql/008_p0_identity_accounts.sql
+          psql -X -v ON_ERROR_STOP=1 -f server/sql/009_p0_identity_sessions.sql
+          psql -X -v ON_ERROR_STOP=1 -f server/sql/010_p0_identity_session_devices.sql
       - name: Test phone constraint, duplicate protection, transaction rollback
         run: psql -X -v ON_ERROR_STOP=1 -f server/test/p0_identity_schema_checks.sql
       - uses: actions/setup-node@v4

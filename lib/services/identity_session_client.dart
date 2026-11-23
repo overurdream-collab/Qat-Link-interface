@@ -12,15 +12,20 @@ class IdentitySessionException implements Exception {
 
 class IdentitySession {
   const IdentitySession({required this.accessToken, required this.id,
-      required this.role, this.displayName});
+      required this.role, this.displayName, this.refreshToken});
   final String accessToken;
   final String id;
   final String role;
   final String? displayName;
+  final String? refreshToken;
 }
 
 /// Identity API origin is build-configured, NOT user-editable.
 /// This is not the FIN25 OTP transport endpoint.
+final _deviceIdPattern = RegExp(
+    r'^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[1-5][a-fA-F0-9]{3}-'
+    r'[89abAB][a-fA-F0-9]{3}-[a-fA-F0-9]{12}$');
+
 class IdentitySessionClient {
   IdentitySessionClient({required this.baseUri, required this.httpClient,
       this.timeout = const Duration(seconds: 12), this.pilotAccessKey}) {
@@ -46,8 +51,66 @@ class IdentitySessionClient {
     on ArgumentError { return null; }
   }
 
+  /// Re-validates a stored access token against the issuer before restoring
+  /// any workspace. Throws [IdentitySessionException] when the token is
+  /// expired, revoked, or the account is no longer provisioned.
+  Future<IdentitySession> confirm({required String accessToken}) async {
+    if (accessToken.length < 50) {
+      throw const IdentitySessionException('الجلسة المحفوظة غير صالحة.');
+    }
+    try {
+      final response = await httpClient.get(
+        baseUri.resolve('v1/identity/me'),
+        headers: {
+          'authorization': 'Bearer $accessToken',
+          'accept': 'application/json',
+          if (pilotAccessKey != null) 'x-pilot-key': pilotAccessKey!,
+        },
+      ).timeout(timeout);
+      if (response.statusCode == 401 || response.statusCode == 403) {
+        throw IdentitySessionException('انتهت الجلسة. سجّل الدخول من جديد.',
+            statusCode: response.statusCode);
+      }
+      if (response.statusCode != 200) {
+        throw IdentitySessionException('تعذر التحقق من الجلسة.',
+            statusCode: response.statusCode);
+      }
+      final body = jsonDecode(response.body);
+      if (body is! Map<String, dynamic> ||
+          body['account'] is! Map<String, dynamic>) {
+        throw const IdentitySessionException('رد التحقق من الجلسة غير صالح.');
+      }
+      final account = body['account'] as Map<String, dynamic>;
+      final id = account['id'];
+      final role = account['role'];
+      final displayName = account['displayName'];
+      if (id is! String ||
+          role is! String ||
+          !['merchant', 'customer'].contains(role)) {
+        throw const IdentitySessionException('حساب الجلسة غير مدعوم.');
+      }
+      return IdentitySession(
+        accessToken: accessToken,
+        id: id,
+        role: role,
+        displayName: displayName is String ? displayName : null,
+      );
+    } on IdentitySessionException {
+      rethrow;
+    } on TimeoutException {
+      throw const IdentitySessionException('انتهت مهلة التحقق من الجلسة.');
+    } on FormatException {
+      throw const IdentitySessionException('رد التحقق من الجلسة غير مفهوم.');
+    } on http.ClientException {
+      throw const IdentitySessionException('تعذر الاتصال بخدمة الهوية.');
+    }
+  }
+
   Future<IdentitySession> exchange({required String proofToken,
-      String? requestedRole, String? displayName}) async {
+      required String deviceId, String? requestedRole, String? displayName}) async {
+    if (!_deviceIdPattern.hasMatch(deviceId)) {
+      throw const IdentitySessionException('معرف الجهاز غير صالح.');
+    }
     if (requestedRole != null && requestedRole != 'merchant' &&
         requestedRole != 'customer') {
       throw const IdentitySessionException('هذا النوع من الحسابات غير متاح حالياً.');
@@ -63,6 +126,7 @@ class IdentitySessionClient {
           if (pilotAccessKey != null) 'x-pilot-key': pilotAccessKey!},
         body: jsonEncode({
           'proofToken': proofToken,
+          'deviceId': deviceId,
           if (requestedRole != null) 'requestedRole': requestedRole,
           if (displayName != null) 'displayName': displayName.trim(),
         }),
@@ -111,8 +175,10 @@ class IdentitySessionClient {
       }
 
     final access = payload['accessToken'];
+    final refresh = payload['refreshToken'];
     final account = payload['account'];
     if (access is! String || access.length < 50 ||
+        refresh is! String || refresh.length < 40 ||
         account is! Map<String, dynamic> ||
         account['id'] is! String ||
         !['merchant','customer'].contains(account['role']) ||
@@ -146,6 +212,84 @@ class IdentitySessionClient {
         throw const IdentitySessionException('تعذر تأكيد اتصال الهوية.');
       }
     return IdentitySession(accessToken:access,id:account['id'] as String,
-      role:account['role'] as String,displayName:account['displayName'] as String?);
+      role:account['role'] as String,displayName:account['displayName'] as String?,
+      refreshToken:refresh);
+  }
+
+  /// Rotates a stored refresh token. The server invalidates the previous token
+  /// before returning a new access/refresh pair.
+  Future<IdentitySession> refresh({required String refreshToken,
+      required String deviceId}) async {
+    if (!RegExp(r'^[A-Za-z0-9_-]{43}$').hasMatch(refreshToken)) {
+      throw const IdentitySessionException('رمز تجديد الجلسة غير صالح.');
+    }
+    if (!_deviceIdPattern.hasMatch(deviceId)) {
+      throw const IdentitySessionException('معرف الجهاز غير صالح.');
+    }
+    String access;
+    String nextRefresh;
+    try {
+      final response = await httpClient.post(
+        baseUri.resolve('v1/identity/refresh'),
+        headers: {'content-type':'application/json','accept':'application/json',
+          if (pilotAccessKey != null) 'x-pilot-key': pilotAccessKey!},
+        body: jsonEncode({'refreshToken': refreshToken, 'deviceId': deviceId}),
+      ).timeout(timeout);
+      if (response.statusCode == 401 || response.statusCode == 403) {
+        throw IdentitySessionException('انتهت الجلسة. سجّل الدخول من جديد.',
+            statusCode: response.statusCode);
+      }
+      if (response.statusCode != 200) {
+        throw IdentitySessionException('تعذر تجديد الجلسة.',
+            statusCode: response.statusCode);
+      }
+      final decoded = jsonDecode(response.body);
+      if (decoded is! Map<String, dynamic>) {
+        throw const IdentitySessionException('رد تجديد الجلسة غير صالح.');
+      }
+      final accessValue = decoded['accessToken'];
+      final refreshValue = decoded['refreshToken'];
+      if (accessValue is! String || accessValue.length < 50 ||
+          refreshValue is! String || refreshValue.length < 40) {
+        throw const IdentitySessionException('رد تجديد الجلسة غير صالح.');
+      }
+      access = accessValue;
+      nextRefresh = refreshValue;
+    } on IdentitySessionException { rethrow; }
+      on TimeoutException {
+        throw const IdentitySessionException('انتهت مهلة تجديد الجلسة.');
+      } on FormatException {
+        throw const IdentitySessionException('رد تجديد الجلسة غير مفهوم.');
+      } on http.ClientException {
+        throw const IdentitySessionException('تعذر الاتصال بخدمة الهوية.');
+      }
+    final confirmed = await confirm(accessToken: access);
+    return IdentitySession(accessToken: access, id: confirmed.id,
+      role: confirmed.role, displayName: confirmed.displayName,
+      refreshToken: nextRefresh);
+  }
+
+  /// Revokes the server-side session. Local storage must be cleared by the
+  /// caller even when this throws (for example, when offline).
+  Future<void> logout({required String accessToken, String? refreshToken}) async {
+    try {
+      final response = await httpClient.post(
+        baseUri.resolve('v1/identity/logout'),
+        headers: {'authorization':'Bearer $accessToken',
+          'content-type':'application/json','accept':'application/json',
+          if (pilotAccessKey != null) 'x-pilot-key': pilotAccessKey!},
+        body: jsonEncode({
+          if (refreshToken != null) 'refreshToken': refreshToken,
+        }),
+      ).timeout(timeout);
+      if (response.statusCode == 200 || response.statusCode == 204) return;
+      throw IdentitySessionException('تعذر إنهاء الجلسة على الخادم.',
+          statusCode: response.statusCode);
+    } on IdentitySessionException { rethrow; }
+      on TimeoutException {
+        throw const IdentitySessionException('انتهت مهلة إنهاء الجلسة.');
+      } on http.ClientException {
+        throw const IdentitySessionException('تعذر الاتصال بخدمة الهوية.');
+      }
   }
 }

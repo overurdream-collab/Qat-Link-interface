@@ -11,7 +11,7 @@ on:
     paths:
       - 'server/sql/009_fin25_gateway_isolated.sql'
       - 'server/sql/010_fin25_otp_isolated.sql'
-      - 'server/test/fin25_postgres_integration.mjs'
+      - 'server/fin25_postgres_integration.mjs'
       - '.github/workflows/fin25-postgres.yml'
 jobs:
   integration:

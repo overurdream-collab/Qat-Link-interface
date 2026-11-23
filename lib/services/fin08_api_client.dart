@@ -124,7 +124,8 @@ class Fin08MerchantContact {
 class Fin08MerchantClaim {
   const Fin08MerchantClaim({required this.id, required this.contactId,
     required this.amount, required this.currency, required this.createdAt,
-    required this.stage, this.description, this.type=MovementType.debt});
+    required this.stage, this.description, this.type=MovementType.debt,
+    this.relationshipId, this.relationshipStatus});
   final String id;
   final String contactId;
   final Decimal amount;
@@ -133,6 +134,8 @@ class Fin08MerchantClaim {
   final DateTime createdAt;
   final Fin08Stage stage;
   final MovementType type;
+  final String? relationshipId;
+  final String? relationshipStatus;
 
   factory Fin08MerchantClaim.fromJson(Map<String, dynamic> json) =>
       Fin08MerchantClaim(
@@ -144,6 +147,8 @@ class Fin08MerchantClaim {
         createdAt: _date(json, 'created_at'),
         stage: Fin08Stage.fromWire(_str(json, 'stage')),
         type: _movementType(json['type']),
+        relationshipId: json['relationship_id'] as String?,
+        relationshipStatus: json['relationship_status'] as String?,
       );
 }
 
@@ -264,9 +269,36 @@ class Fin08CurrencyBuckets {
 }
 
 /// Enables mock transport and customer/merchant UI without fake success.
+class Fin08MerchantRelationship {
+  const Fin08MerchantRelationship({required this.id,required this.contactId,
+    required this.contactName,required this.status,required this.createdAt,
+    this.decidedAt});
+  final String id;
+  final String contactId;
+  final String contactName;
+  final String status;
+  final DateTime createdAt;
+  final DateTime? decidedAt;
+  bool get canOpenLedger => status == 'approved';
+  factory Fin08MerchantRelationship.fromJson(Map<String,dynamic> json) {
+    final state=_str(json,'status');
+    if(!['pending','approved','rejected'].contains(state)) {
+      throw const FormatException('Unknown relationship status');
+    }
+    return Fin08MerchantRelationship(
+      id:_str(json,'relationship_id'),
+      contactId:_str(json,'contact_id'),
+      contactName:_str(json,'contact_display_name'),
+      status:state,
+      createdAt:_date(json,'created_at'),
+      decidedAt:json['decided_at'] is String ? _date(json,'decided_at') : null,
+    );
+  }
+}
+
 abstract class Fin08ClaimsGateway {
-  Future<Fin08Page<Fin08MerchantContact>> merchantContacts({String? cursor,int limit=50});
-  Future<Fin08Page<Fin08MerchantClaim>> merchantClaims(String contactId,{String? cursor,int limit=50});
+  Future<Fin08Page<Fin08MerchantContact>> merchantContacts({String? cursor,int limit=50,String? search});
+  Future<Fin08Page<Fin08MerchantClaim>> merchantClaims(String contactId,{String? cursor,int limit=50,String? search,MovementType? type,CurrencyCode? currency,String? from,String? to,String sort='newest'});
   Future<Fin08MerchantContact> createMerchantContact({required String name,required String phone});
   Future<Fin08ClaimReceipt> createMerchantClaim({required String contactId,required Decimal amount,
     required CurrencyCode currency,required String idempotencyKey,String? description,
@@ -279,7 +311,11 @@ abstract class Fin08ClaimsGateway {
   Future<Fin08ClaimDecisionReceipt> decidePreviousClaim(String claimId,{required bool accept});
 }
 
-class Fin08HttpClaimsGateway implements Fin08ClaimsGateway {
+abstract class Fin08MerchantRelationshipsGateway {
+  Future<Fin08Page<Fin08MerchantRelationship>> merchantRelationships({String? cursor,int limit=50});
+}
+
+class Fin08HttpClaimsGateway implements Fin08ClaimsGateway, Fin08MerchantRelationshipsGateway {
   Fin08HttpClaimsGateway({required this.baseUri,required this.client,
     required this.accessToken, this.timeout=const Duration(seconds:20)}) {
     final secure=baseUri.scheme=='https';
@@ -368,13 +404,27 @@ class Fin08HttpClaimsGateway implements Fin08ClaimsGateway {
   };
 
   @override
-  Future<Fin08Page<Fin08MerchantContact>> merchantContacts({String? cursor,int limit=50}) async =>
-      _parsePage(await _request('GET','v1/merchant/contacts',query:_pagination(cursor,limit)),Fin08MerchantContact.fromJson);
+  Future<Fin08Page<Fin08MerchantContact>> merchantContacts({String? cursor,int limit=50,String? search}) async =>
+      _parsePage(await _request('GET','v1/merchant/contacts',
+        query:{..._pagination(cursor,limit),if((search??'').trim().isNotEmpty)'q':search!.trim()}),
+        Fin08MerchantContact.fromJson);
 
   @override
-  Future<Fin08Page<Fin08MerchantClaim>> merchantClaims(String contactId,{String? cursor,int limit=50}) async =>
+  Future<Fin08Page<Fin08MerchantRelationship>> merchantRelationships({String? cursor,int limit=50}) async =>
+      _parsePage(await _request('GET','v1/merchant/relationships',query:_pagination(cursor,limit)),
+        Fin08MerchantRelationship.fromJson);
+
+  @override
+  Future<Fin08Page<Fin08MerchantClaim>> merchantClaims(String contactId,{String? cursor,int limit=50,String? search,MovementType? type,CurrencyCode? currency,String? from,String? to,String sort='newest'}) async =>
       _parsePage(await _request('GET','v1/merchant/contacts/${Uri.encodeComponent(contactId)}/claims',
-        query:_pagination(cursor,limit)),Fin08MerchantClaim.fromJson);
+        query:{..._pagination(cursor,limit),
+          if((search??'').trim().isNotEmpty)'q':search!.trim(),
+          if(type!=null)'type':type.name,
+          if(currency!=null)'currency':currency.name.toUpperCase(),
+          if(from!=null&&from.isNotEmpty)'from':from,
+          if(to!=null&&to.isNotEmpty)'to':to,
+          if(sort!='newest')'sort':sort}),
+        Fin08MerchantClaim.fromJson);
 
   @override
   Future<Fin08MerchantContact> createMerchantContact({required String name,required String phone}) async =>

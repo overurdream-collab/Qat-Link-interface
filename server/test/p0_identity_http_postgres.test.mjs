@@ -48,6 +48,8 @@ test('P0 HTTP + real PostgreSQL: synthetic FIN25 proof -> identity JWT -> FIN08,
   const verifyFin25=createVerifier({publicKey:fin25PublicKey,issuer:fin25Issuer,audience:fin25Audience});
   const proofs=new Map();
   const finance=[];
+  const deviceId=randomUUID();
+  const otherDevice=randomUUID();
   const pool=new Pool({connectionString});
   const fin25=createServer(async(req,res)=>{
     if(req.url!=='/v1/internal/otp/proof' || req.method!=='POST') {
@@ -108,7 +110,7 @@ test('P0 HTTP + real PostgreSQL: synthetic FIN25 proof -> identity JWT -> FIN08,
     async function exchange({phone,role,name}) {
       const proofToken=randomUUID()+randomUUID();
       proofs.set(proofToken,phone);
-      const payload={proofToken};
+      const payload={proofToken,deviceId};
       if(role)payload.requestedRole=role;
       if(name)payload.displayName=name;
       const response=await fetch(origin+'/v1/identity/session',{
@@ -127,6 +129,38 @@ test('P0 HTTP + real PostgreSQL: synthetic FIN25 proof -> identity JWT -> FIN08,
       authorization:'Bearer '+m.payload.accessToken}});
     assert.equal(merchantMe.status,200);
     assert.equal((await merchantMe.json()).account.id,m.payload.account.id);
+    assert.equal(typeof m.payload.refreshToken,'string');
+
+    const wrongDevice=await fetch(origin+'/v1/identity/refresh',{
+      method:'POST',headers:{'content-type':'application/json'},
+      body:JSON.stringify({refreshToken:m.payload.refreshToken,deviceId:otherDevice})
+    });
+    assert.equal(wrongDevice.status,401);
+    const refreshed=await fetch(origin+'/v1/identity/refresh',{
+      method:'POST',headers:{'content-type':'application/json'},
+      body:JSON.stringify({refreshToken:m.payload.refreshToken,deviceId})
+    });
+    assert.equal(refreshed.status,200);
+    const refreshedBody=await refreshed.json();
+    assert.notEqual(refreshedBody.accessToken,m.payload.accessToken);
+    assert.notEqual(refreshedBody.refreshToken,m.payload.refreshToken);
+    const refreshedMe=await fetch(origin+'/v1/identity/me',{headers:{
+      authorization:'Bearer '+refreshedBody.accessToken}});
+    assert.equal(refreshedMe.status,200);
+    const reuse=await fetch(origin+'/v1/identity/refresh',{
+      method:'POST',headers:{'content-type':'application/json'},
+      body:JSON.stringify({refreshToken:m.payload.refreshToken,deviceId})
+    });
+    assert.equal(reuse.status,401);
+    const loggedOut=await fetch(origin+'/v1/identity/logout',{
+      method:'POST',headers:{'content-type':'application/json',
+        authorization:'Bearer '+refreshedBody.accessToken},
+      body:JSON.stringify({refreshToken:refreshedBody.refreshToken})
+    });
+    assert.equal(loggedOut.status,200);
+    const afterLogout=await fetch(origin+'/v1/identity/me',{headers:{
+      authorization:'Bearer '+refreshedBody.accessToken}});
+    assert.equal(afterLogout.status,401);
 
     const c=await exchange({phone:'+967772345678',role:'customer'});
     assert.equal(c.response.status,200);
@@ -141,7 +175,7 @@ test('P0 HTTP + real PostgreSQL: synthetic FIN25 proof -> identity JWT -> FIN08,
 
     const bad=await fetch(origin+'/v1/identity/session',{method:'POST',
       headers:{'content-type':'application/json'},
-      body:JSON.stringify({proofToken:randomUUID()+randomUUID(),requestedRole:'merchant',displayName:'غير معروف'})});
+      body:JSON.stringify({proofToken:randomUUID()+randomUUID(),requestedRole:'merchant',displayName:'غير معروف',deviceId})});
     assert.equal(bad.status,401);
 
     // Actual HTTP security assertion: even malformed JSON session bodies consume

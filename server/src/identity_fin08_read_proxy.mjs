@@ -3,11 +3,18 @@
 import { IdentityError } from './identity_logic.mjs';
 
 const routeRole = [
-  { pattern: /^\/v1\/merchant\/contacts$/, role: 'merchant' },
-  { pattern: /^\/v1\/merchant\/contacts\/[a-f0-9-]{36}\/claims$/i, role: 'merchant' },
-  { pattern: /^\/v1\/merchant\/claims\/summary$/, role: 'merchant' },
-  { pattern: /^\/v1\/customer\/relationships$/, role: 'customer' },
-  { pattern: /^\/v1\/customer\/previous-claims$/, role: 'customer' },
+  { pattern: /^\/v1\/merchant\/contacts$/, roles: ['merchant'] },
+  { pattern: /^\/v1\/merchant\/contacts\/[a-f0-9-]{36}\/claims$/i, roles: ['merchant'] },
+  { pattern: /^\/v1\/merchant\/claims\/summary$/, roles: ['merchant'] },
+  { pattern: /^\/v1\/merchant\/relationships$/, roles: ['merchant'] },
+  { pattern: /^\/v1\/merchant\/amendments$/, roles: ['merchant'] },
+  { pattern: /^\/v1\/customer\/relationships$/, roles: ['customer'] },
+  { pattern: /^\/v1\/customer\/previous-claims$/, roles: ['customer'] },
+  { pattern: /^\/v1\/customer\/amendments$/, roles: ['customer'] },
+  {
+    pattern: /^\/v1\/relationships\/[a-f0-9-]{36}\/(balances|operations|statement|auto-approval|credit-limits)$/i,
+    roles: ['merchant', 'customer'],
+  },
 ];
 
 export function createIdentityFinanceReadProxy({ fetchImpl, financeBaseUrl }) {
@@ -22,14 +29,14 @@ export function createIdentityFinanceReadProxy({ fetchImpl, financeBaseUrl }) {
     const path=new URL(url,'http://localhost');
     const match=routeRole.find(item=>item.pattern.test(path.pathname));
     if(!match) throw new IdentityError(404,'Not found');
-    if(!account || account.role!==match.role) throw new IdentityError(403,'Role not allowed');
+    if(!account || !match.roles.includes(account.role)) throw new IdentityError(403,'Role not allowed');
     if(typeof authorization!=='string' || !authorization.startsWith('Bearer ')) {
       throw new IdentityError(401,'Authentication required');
     }
     // Pagination is the only supported query input. The actual FIN08 service
     // validates cursor ownership and the account-scoped JWT independently.
     for(const key of path.searchParams.keys()) {
-      if(!['cursor','limit'].includes(key)) throw new IdentityError(400,'Invalid query');
+      if(!['cursor','limit','currency','from','to','q','type','sort'].includes(key)) throw new IdentityError(400,'Invalid query');
     }
     const target=new URL(path.pathname+path.search,base);
     const abort=new AbortController();

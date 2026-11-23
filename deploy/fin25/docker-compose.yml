@@ -38,5 +38,13 @@ services:
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile:ro
       - ./certs:/etc/caddy/certs:ro
+    networks:
+      - default
+      - fin25-existing
     depends_on: [enrollment,otp]
     restart: unless-stopped
+
+networks:
+  fin25-existing:
+    external: true
+    name: ${FIN25_DOCKER_NETWORK:?FIN25_DOCKER_NETWORK required}

@@ -23,17 +23,25 @@
  handle @publicOtp {
    reverse_proxy otp:8083
  }
- @identity path /healthz /v1/identity/session /v1/identity/me
+ @identity path /healthz /v1/identity/session /v1/identity/refresh /v1/identity/logout /v1/identity/me
  handle @identity {
    reverse_proxy identity:8090
  }
- # FIN08 read-only routes, forwarded via existing Identity service;
- # POST/PUT/DELETE finance paths are NOT exposed.
+ # FIN08/FIN13 read routes, forwarded via existing Identity service.
+ # Only explicit GET paths are exposed here; mutations use the allowlist below.
  @financeRead {
    method GET
-   path /v1/merchant/contacts /v1/merchant/contacts/*/claims /v1/merchant/claims/summary /v1/customer/relationships /v1/customer/previous-claims
+   path /v1/merchant/contacts /v1/merchant/contacts/*/claims /v1/merchant/claims/summary /v1/merchant/relationships /v1/merchant/amendments /v1/customer/relationships /v1/customer/previous-claims /v1/customer/amendments /v1/relationships/*/balances /v1/relationships/*/operations /v1/relationships/*/statement /v1/relationships/*/auto-approval /v1/relationships/*/credit-limits
  }
  handle @financeRead {
+   reverse_proxy identity:8090
+ }
+ # Authenticated financial mutations are allowlisted in the Identity service.
+ @financeWrite {
+   method POST
+   path /v1/merchant/contacts /v1/merchant/claims /v1/merchant/relationship-requests /v1/customer/relationships/*/decision /v1/customer/relationships/*/auto-approval /v1/customer/previous-claims/*/decision /v1/customer/previous-claims/batch-decisions /v1/customer/previous-claims/*/amendments /v1/merchant/amendments/*/decision /v1/relationships/*/operations /v1/relationships/*/operations/*/decision /v1/relationships/*/operations/batch-decisions /v1/relationships/*/operations/*/amendments /v1/relationships/*/reversals /v1/relationships/*/credit-limits
+ }
+ handle @financeWrite {
    reverse_proxy identity:8090
  }
  @otp path /v1/gateway/poll /v1/gateway/result /v1/auth/otp/verify

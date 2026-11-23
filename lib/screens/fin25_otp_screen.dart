@@ -4,7 +4,8 @@ import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import '../services/fin25_otp_client.dart';
 import '../services/identity_session_client.dart';
-import 'identity_account_screen.dart';
+import 'role_home_screen.dart';
+import '../services/device_identity.dart';
 
 /// FIN25 phone verification and, when configured, a real Identity session.
 class Fin25OtpScreen extends StatefulWidget {
@@ -97,16 +98,18 @@ class _Fin25OtpScreenState extends State<Fin25OtpScreen> {
       if (_sessionClient != null) {
         setState(() { _message = 'جارٍ إنشاء جلسة الحساب الآمنة...'; });
         try {
+          final deviceId = await DeviceIdentityStore.instance.readOrCreate();
           final session = await _sessionClient.exchange(
             proofToken: proof,
             requestedRole: widget.requestedRole,
             displayName: widget.displayName,
+            deviceId: deviceId,
           );
           if (!mounted) return;
           setState(() { _verified = true; _message = 'تم توثيق الحساب.'; });
           Navigator.of(context).pushAndRemoveUntil(
             MaterialPageRoute<void>(
-              builder: (_) => IdentityAccountScreen(session: session)),
+              builder: (_) => RoleHomeScreen(session: session)),
             (route) => route.isFirst,
           );
         } on IdentitySessionException catch (error) {
