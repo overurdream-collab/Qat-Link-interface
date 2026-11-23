@@ -69,6 +69,7 @@ jobs:
             test/ui_audit/goldens/
             test/ui_audit/failures/
             build/customer-ui-screenshots/
+            build/ui-pdf-proof/
           retention-days: 7
   android:
     needs: [verification, backend]
@@ -114,7 +115,7 @@ jobs:
           assert "name='com.maqwatilink.ui_audit_preview'" in badging
           assert 'android.permission.INTERNET' not in perms
           with zipfile.ZipFile(apk) as z:
-              for name in ['maqwati_approved_character.png','maqwati_feminine_character.png']:
+              for name in ['maqwati_approved_character.png','maqwati_feminine_character.png','maqwati_brand_logo.png']:
                   data = z.read('assets/flutter_assets/assets/images/'+name)
                   assert data.startswith(b'\x89PNG\r\n\x1a\n')
           PY
@@ -200,7 +201,7 @@ jobs:
           assert "name='com.maqwatilink.ui_audit_developer'" in badging
           assert 'android.permission.INTERNET' not in perms
           with zipfile.ZipFile(apk) as z:
-              for name in ['maqwati_approved_character.png','maqwati_feminine_character.png']:
+              for name in ['maqwati_approved_character.png','maqwati_feminine_character.png','maqwati_brand_logo.png']:
                   data = z.read('assets/flutter_assets/assets/images/'+name)
                   assert data.startswith(b'\x89PNG\r\n\x1a\n')
           PY

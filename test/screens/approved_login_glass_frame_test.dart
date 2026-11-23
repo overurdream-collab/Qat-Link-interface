@@ -11,7 +11,8 @@ void main() {
   for (final female in <bool>[false, true]) {
     for (final dark in <bool>[false, true]) {
       for (final width in <double>[320, 390]) {
-        testWidgets('approved login glass frame: female=$female dark=$dark width=$width',
+        testWidgets(
+            'approved login glass frame: female=$female dark=$dark width=$width',
             (tester) async {
           tester.view.physicalSize = Size(width, 820);
           tester.view.devicePixelRatio = 1;
@@ -41,11 +42,16 @@ void main() {
               ? 'approved_feminine_login_mascot'
               : 'approved_masculine_login_mascot');
           final mascot = tester.widget<Image>(find.byKey(mascotKey));
-          expect((mascot.image as AssetImage).assetName,
+          final provider = mascot.image is ResizeImage
+              ? (mascot.image as ResizeImage).imageProvider
+              : mascot.image;
+          expect(
+              (provider as AssetImage).assetName,
               female
                   ? 'assets/images/maqwati_feminine_character.png'
                   : 'assets/images/maqwati_approved_character.png');
-          expect(find.byKey(const Key('approved_login_tagline')), findsOneWidget);
+          expect(
+              find.byKey(const Key('approved_login_tagline')), findsOneWidget);
           expect(find.byKey(const Key('login_phone')), findsOneWidget);
           expect(find.byKey(const Key('login_pin')), findsOneWidget);
           await tester.ensureVisible(find.byKey(const Key('login_submit')));

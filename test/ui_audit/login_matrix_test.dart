@@ -68,7 +68,10 @@ void main() {
         await tester.pumpWidget(MaterialApp(
             theme: theme, home: const Scaffold(body: PremiumHomeHero())));
         final image = tester.widget<Image>(find.byType(Image));
-        expect((image.image as AssetImage).assetName, visual.characterAsset);
+        final provider = image.image is ResizeImage
+            ? (image.image as ResizeImage).imageProvider
+            : image.image;
+        expect((provider as AssetImage).assetName, visual.characterAsset);
         expect(image.errorBuilder, isNull);
         await tester.pumpAndSettle();
         await auditDecodedImages(tester);
@@ -103,6 +106,14 @@ void main() {
             ));
             await tester.pumpAndSettle();
             await auditDecodedImages(tester);
+            expect(
+                tester
+                    .getRect(find
+                        .byKey(const Key('approved_blue_3d_maqwati_wordmark')))
+                    .overlaps(tester
+                        .getRect(find.byKey(const Key('login_language')))),
+                isFalse,
+                reason: 'The logo must remain clear of the language control');
             if (!stress) {
               await expectLater(
                   find.byKey(const Key('capture')),

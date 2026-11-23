@@ -237,7 +237,7 @@
     },
     {
       "path": "lib/widgets/app_chrome.dart",
-      "lines": 302,
+      "lines": 303,
       "classes": [
         "AppTopBar",
         "AppSquareIconButton",
@@ -250,13 +250,11 @@
     },
     {
       "path": "lib/widgets/auth/auth_brand_hero.dart",
-      "lines": 273,
+      "lines": 113,
       "classes": [
-        "AuthBrandHero",
-        "_RaisedMaqwatiWordmark",
-        "_BrandWavePainter"
+        "AuthBrandHero"
       ],
-      "literal_colors": 29,
+      "literal_colors": 4,
       "visual_review": "NOT VERIFIED"
     },
     {
@@ -599,7 +597,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "lines": 338,
+      "lines": 339,
       "classes": [
         "PremiumTokens",
         "PremiumVisualPalette",
@@ -670,16 +668,24 @@
     {
       "path": "assets/images/maqwati_approved_character.png",
       "size": [
-        168,
-        200
+        1086,
+        1448
+      ],
+      "decode": "PASS"
+    },
+    {
+      "path": "assets/images/maqwati_brand_logo.png",
+      "size": [
+        1254,
+        1254
       ],
       "decode": "PASS"
     },
     {
       "path": "assets/images/maqwati_feminine_character.png",
       "size": [
-        172,
-        199
+        1024,
+        1536
       ],
       "decode": "PASS"
     },

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 /// MAQWATI LINK premium soft-UI tokens imported from the dedicated source branch.
 /// Decorative gradients never encode financial approval state.
 abstract final class PremiumTokens {
+  static const String logoAsset = 'assets/images/maqwati_brand_logo.png';
   static const Color canvas = Color(0xFFF2F3FF);
   static const Color ink = Color(0xFF111A4B);
   static const Color secondaryInk = Color(0xFF59638C);

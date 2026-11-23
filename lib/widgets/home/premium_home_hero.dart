@@ -126,6 +126,10 @@ class PremiumHomeHero extends StatelessWidget {
                           context.premium.characterAsset,
                           alignment: Alignment.bottomCenter,
                           fit: BoxFit.contain,
+                          cacheHeight:
+                              (174 * MediaQuery.devicePixelRatioOf(context))
+                                  .ceil(),
+                          filterQuality: FilterQuality.high,
                         ),
                       ),
                     ],

@@ -42,7 +42,8 @@ abstract final class PdfBrandMascot {
     canvas.save();
     canvas.clipRRect(shape);
     canvas.drawImageRect(image, ui.Rect.fromLTWH(0, 0, w, h), target,
-        ui.Paint()..filterQuality = ui.FilterQuality.high);
+        // Mipmapped minification keeps dense HD embroidery smooth in badges.
+        ui.Paint()..filterQuality = ui.FilterQuality.medium);
     canvas.restore();
     canvas.drawRRect(
         shape,

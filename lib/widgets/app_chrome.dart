@@ -46,6 +46,8 @@ class AppTopBar extends StatelessWidget {
               width: 40,
               height: 40,
               fit: BoxFit.cover,
+              alignment: Alignment.topCenter,
+              cacheWidth: (40 * MediaQuery.devicePixelRatioOf(context)).ceil(),
             ),
           ),
           const SizedBox(width: 7),

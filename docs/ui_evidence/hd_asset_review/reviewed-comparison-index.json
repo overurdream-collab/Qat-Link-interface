@@ -1,0 +1,4349 @@
+{
+  "note": "Diagnostic outputs before baseline adoption; includes first render plus final focused rerenders. No baseline was changed while inspecting these files.",
+  "comparisons": [
+    {
+      "actual": "test/ui_audit/failures/character_female_testImage.png",
+      "master_sha256": "94f7c97804d04c9612d8cf237a5688206113b21f8f7497e1c3eadfc5ace9b01f",
+      "actual_sha256": "99a0314deeaa8ee162bc5a34942961a2c4e7fa39efe7bf95cb2ea6564fa3daa3",
+      "changed_pixels": 4136,
+      "bounds": [
+        13,
+        6,
+        87,
+        94
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/character_male_testImage.png",
+      "master_sha256": "0a145ac22e2f12e34b1de64263e5a04c47916f4c5593b20a48966204ea9d903f",
+      "actual_sha256": "373a61627d864fd681ebf7e31e49a60b8b34b4b5d15f9a270afa2eb15a502278",
+      "changed_pixels": 4115,
+      "bounds": [
+        16,
+        6,
+        86,
+        94
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_blue_day_320_1.0_0_testImage.png",
+      "master_sha256": "f37d30a346a37b4dc8aeb3e525dab92b3a06c978f27fa527475eb81f09b3e3f3",
+      "actual_sha256": "4d3477800601344a0626f017e0791168e907f8106b5e4aa364ceedac84286c6c",
+      "changed_pixels": 890,
+      "bounds": [
+        268,
+        20,
+        303,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_blue_day_320_1.0_1_testImage.png",
+      "master_sha256": "63ae25c4acf279b9ed00e8e7d0159fe8e54f04ff0c234717ea13d1b6c46e3ca1",
+      "actual_sha256": "07494ca1ee385d3867823d7bc83923e99a7126ad98f50c1a2ec55ee15bf9e59f",
+      "changed_pixels": 890,
+      "bounds": [
+        268,
+        20,
+        303,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_blue_day_320_1.0_2_testImage.png",
+      "master_sha256": "4f5f704f1d6331765573ca92d62dbed9d9f2c27d207d503213a1d4fd3bff51fb",
+      "actual_sha256": "466856ad92a8a57b9119b54330b8ecaa7d8005de7d7ce3abd6f1fe8ff6567c94",
+      "changed_pixels": 890,
+      "bounds": [
+        268,
+        20,
+        303,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_blue_day_320_1.0_3_testImage.png",
+      "master_sha256": "f4ef6b77cebc45d6c638d46d4716c38f3655aebaa93fe0763ae6c7e340dbe573",
+      "actual_sha256": "7a4c02477c78d4f617d12a1094d172f464ab4e463690ea2132103c9750e2f389",
+      "changed_pixels": 890,
+      "bounds": [
+        268,
+        20,
+        303,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_blue_day_320_1.0_4_testImage.png",
+      "master_sha256": "9d446dca2796320b6d92933a3a28749e13677f958f0423cfe8901572eaf6c3ef",
+      "actual_sha256": "e10f289961f80839d20daff36af3ad2bcbd972984a3b3875d7c9204122705ab4",
+      "changed_pixels": 890,
+      "bounds": [
+        268,
+        20,
+        303,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_blue_day_320_1.0_5_testImage.png",
+      "master_sha256": "46fb9ff098ee5f7bb3d76bc7c6ee3cc57781fdbf827160ce2602785eee98919f",
+      "actual_sha256": "e5972c33300fc809a695c99f85ffeb310954a10211ec2059079db5767dd94844",
+      "changed_pixels": 875,
+      "bounds": [
+        268,
+        20,
+        303,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_blue_day_320_1.0_6_testImage.png",
+      "master_sha256": "e587c8837d1d1f47e1d17df030e9be45f130745c60515ad8cbc8e15fbb08b037",
+      "actual_sha256": "cf988192a912f5956ff9e45f5d79fc362c4a3948ad04a85552e0a5f29362ff1e",
+      "changed_pixels": 875,
+      "bounds": [
+        268,
+        20,
+        303,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_blue_day_360_1.0_0_testImage.png",
+      "master_sha256": "a4f6086311a090a6cb02c6e7e80e7c37899e81a0162c3a80dd558cfc3c6dc858",
+      "actual_sha256": "d0d3927c136e95667b4aaf0c632458eb35d674f5eb5185403719b42787a9ca92",
+      "changed_pixels": 890,
+      "bounds": [
+        308,
+        20,
+        343,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_blue_day_360_1.0_1_testImage.png",
+      "master_sha256": "3c1c44f0b49179f65dbf38d1966ff20602a7b8e3352312e2d2d43a5790140fc0",
+      "actual_sha256": "e8e4ce95479aff65457523b16ebe37ee44cf912861392180c85d8f17b66f704c",
+      "changed_pixels": 890,
+      "bounds": [
+        308,
+        20,
+        343,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_blue_day_360_1.0_2_testImage.png",
+      "master_sha256": "c42499b1ae2f3c54d46c3ee323da8cb0f5a01589593851b04e3aafd8477c5a61",
+      "actual_sha256": "ad13afb264dff52f71fa08cb5773c70cf0a1c19068b9d0ad8e9134d2693a2251",
+      "changed_pixels": 890,
+      "bounds": [
+        308,
+        20,
+        343,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_blue_day_360_1.0_3_testImage.png",
+      "master_sha256": "ecc7004e2073899c8983112479ba6e83d2213c0ef90aef69dfc4bb13ae227f78",
+      "actual_sha256": "388fef96dfdc5f43b48d4e9cfc68cc0cb2305dee98129d13059830f7df10bea5",
+      "changed_pixels": 890,
+      "bounds": [
+        308,
+        20,
+        343,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_blue_day_360_1.0_4_testImage.png",
+      "master_sha256": "6cb6eff62702648840e636ebf1d2111dc798b673f99108d4e4c155a5c11c571a",
+      "actual_sha256": "154f2140663accdfbf2a26edf4b07131bc6c82a14c5178ebe6d11780e4f725fa",
+      "changed_pixels": 890,
+      "bounds": [
+        308,
+        20,
+        343,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_blue_day_360_1.0_5_testImage.png",
+      "master_sha256": "e1eff33da9c1dd8a43f3d7c900d988464c6f7e7894ef4e80a44c4480d34082eb",
+      "actual_sha256": "8cebb4877083e69aa01e665f9e3a01c7931b91766444e6a3f93d4a386d2e34e5",
+      "changed_pixels": 875,
+      "bounds": [
+        308,
+        20,
+        343,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_blue_day_360_1.0_6_testImage.png",
+      "master_sha256": "a3bdddb166d2c01c652da356b6625be60c27b634eda36c989aa645e08a5d620c",
+      "actual_sha256": "5bb21d2105e732776700a3e54fad660b9559f4fa53782920f6dafdad624517ee",
+      "changed_pixels": 875,
+      "bounds": [
+        308,
+        20,
+        343,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_blue_day_390_1.0_0_testImage.png",
+      "master_sha256": "66541513fcbf149f28588f7dc2c046cc40379dda5efd9d07852020a79e52ed49",
+      "actual_sha256": "48274522c0d0416b96ee898b8845effe2eff2dfc4582fc7e3365fbee3fccccec",
+      "changed_pixels": 838,
+      "bounds": [
+        338,
+        20,
+        373,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_blue_day_390_1.0_1_testImage.png",
+      "master_sha256": "e8b060d2b221f9196e30f7e279d9e635c9030a5c82d8d53ffe4589a576d17775",
+      "actual_sha256": "69bfb749fadfe6e648d3f78bca834f8f187fe1dc40c95956381905e71205ce84",
+      "changed_pixels": 838,
+      "bounds": [
+        338,
+        20,
+        373,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_blue_day_390_1.0_2_testImage.png",
+      "master_sha256": "845724bf40142b9d416588811dc48be1e1a453a9d072a3e19272de07eeb1184d",
+      "actual_sha256": "ae3a124dccb9da2b6b90613c6cf79fb3c8c4c6b30b227c20807f198a24c5bfa0",
+      "changed_pixels": 838,
+      "bounds": [
+        338,
+        20,
+        373,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_blue_day_390_1.0_3_testImage.png",
+      "master_sha256": "625c785dde447dc04b4a20bd716aa981705b5f3f219cb1f8e6d7b649331d3590",
+      "actual_sha256": "50211a3bbabe55f999fe6a68ff4630c5dbfb51029efce7e44515da1336cbe05e",
+      "changed_pixels": 838,
+      "bounds": [
+        338,
+        20,
+        373,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_blue_day_390_1.0_4_testImage.png",
+      "master_sha256": "f36f3ef23a22993483aa3d5bc80d194b16430833906fa6e5deb7992f88728cc2",
+      "actual_sha256": "2cd68bc87a19ac60da673822934ce5f37d9d3761472a4622582c82170810ca89",
+      "changed_pixels": 838,
+      "bounds": [
+        338,
+        20,
+        373,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_blue_day_390_1.0_5_testImage.png",
+      "master_sha256": "58fe217cacd28b4bb02286e5deddd074c35ba560b82f6fae2cb6753014401ba9",
+      "actual_sha256": "df453d13c9a1e7c2f9b0d9d1d20d3b8e2406dfaecceb222d9cab261d71abd6a8",
+      "changed_pixels": 829,
+      "bounds": [
+        338,
+        20,
+        373,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_blue_day_390_1.0_6_testImage.png",
+      "master_sha256": "6cdfee2237cd54ee14436f32095a85cfdd5bf1ed858a35e859b477a31e93e3fa",
+      "actual_sha256": "1eb381d10cff74adcf699573419aeec20c9257adb9d81c9eeac1b738d0dace21",
+      "changed_pixels": 829,
+      "bounds": [
+        338,
+        20,
+        373,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_blue_day_430_1.0_0_testImage.png",
+      "master_sha256": "5b2fb0142fa38962a59d8da960442d8e4b050ba003fa0adadc722acbba1e9713",
+      "actual_sha256": "0347d1dfc97a5d4dc9983cdb4f96bc96eb53d3982f6e70138b4e12c51f580b90",
+      "changed_pixels": 890,
+      "bounds": [
+        378,
+        20,
+        413,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_blue_day_430_1.0_1_testImage.png",
+      "master_sha256": "834f7309e11364e38055a78d8e4c4f1bbeba992b8efdb20776ceff2313416948",
+      "actual_sha256": "d012ecbd8c9da5c1be0b2ac56fed21949a400fcc50d5adebab2df397efb0a211",
+      "changed_pixels": 890,
+      "bounds": [
+        378,
+        20,
+        413,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_blue_day_430_1.0_2_testImage.png",
+      "master_sha256": "700c00d3959c8dc266b370f641fd3ec2db8775062958d2d4de58ccb01928c6c8",
+      "actual_sha256": "b39c1a328f439e24c7a5f81867bdc4e7ebc98ca0e5993130218b20a32d65b70f",
+      "changed_pixels": 890,
+      "bounds": [
+        378,
+        20,
+        413,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_blue_day_430_1.0_3_testImage.png",
+      "master_sha256": "155240a1dd688b968879b8f3827c22c0075d0129ed94becd6b0ada68d29a03fe",
+      "actual_sha256": "d75ba5bf0ee5108a9112ff1bb13880dc19b30811e727794aee10ab768491588f",
+      "changed_pixels": 890,
+      "bounds": [
+        378,
+        20,
+        413,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_blue_day_430_1.0_4_testImage.png",
+      "master_sha256": "561310d1e81b69d1c903b790542979ab82de215691e3325ac27519432eeeece4",
+      "actual_sha256": "10232648c76b09618260d76822386ed069d2dcb0a3af851af579cf7f4bb4c051",
+      "changed_pixels": 890,
+      "bounds": [
+        378,
+        20,
+        413,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_blue_day_430_1.0_5_testImage.png",
+      "master_sha256": "e3fe2d06b60eeea0fc3bc4eb0202cbcc8fed7c25473f509d4553c475ae5d5ef9",
+      "actual_sha256": "ee776ab604cc50034acaa43a2c784dde1768a9ec2b32a59c412b277d9981977d",
+      "changed_pixels": 875,
+      "bounds": [
+        378,
+        20,
+        413,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_blue_day_430_1.0_6_testImage.png",
+      "master_sha256": "7be53799dfa00f543e885e3950f50aa49763f427a1319132fb97f18e8fb3bedf",
+      "actual_sha256": "da047e5908b962b23ff2392aa7ec04ecfd1bb1c416ba5def9577d9a57789d1e9",
+      "changed_pixels": 875,
+      "bounds": [
+        378,
+        20,
+        413,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_blue_day_600_1.0_0_testImage.png",
+      "master_sha256": "b06ed1b8cf836e8c90931abf65581cdb630861e145ff41a765380db07c709037",
+      "actual_sha256": "06ab3f137cdfe1aee01a796f0a3e7002e1d0660f983b28cba787e98407689072",
+      "changed_pixels": 890,
+      "bounds": [
+        548,
+        20,
+        583,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_blue_day_600_1.0_1_testImage.png",
+      "master_sha256": "b4803d8150a71b92ebb7167a7eb51b22bfd38765c3cc3b3110fe87bf6af6456d",
+      "actual_sha256": "69b2dc8043a9585be5672b3148e3e65883028d8081bb645ad7ee61bd4af78dcd",
+      "changed_pixels": 890,
+      "bounds": [
+        548,
+        20,
+        583,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_blue_day_600_1.0_2_testImage.png",
+      "master_sha256": "9fc335fe15c9820cf3e57e097e0fe94fef2996b94dbc7c972141efee49fae7d4",
+      "actual_sha256": "a2102117e02b665e2e5ece804474ffe5c3230b1ed6ba81aaa1873566a08a99ab",
+      "changed_pixels": 890,
+      "bounds": [
+        548,
+        20,
+        583,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_blue_day_600_1.0_3_testImage.png",
+      "master_sha256": "5bc6e8dfc5a7d56fbe5ed39407977fc4a1cdb02b725682a79c8765f808d8da39",
+      "actual_sha256": "2afddcdedf777a3c05d4dca390b90ef14771e0441adfc0d96517d0e2d2b6103a",
+      "changed_pixels": 890,
+      "bounds": [
+        548,
+        20,
+        583,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_blue_day_600_1.0_4_testImage.png",
+      "master_sha256": "df48340f37bfa64e0dc5df50bf9f2721e0554c9be70e9248849c569390c42055",
+      "actual_sha256": "e630a7ccafb30d105d8e6cd91f7e3c5bd4731609ed1f32b7b4b694b6bc35bdfc",
+      "changed_pixels": 890,
+      "bounds": [
+        548,
+        20,
+        583,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_blue_day_600_1.0_5_testImage.png",
+      "master_sha256": "effb9551b18548ab1b09e778d49960b7183e4dc6a13949a23c39422d3cf00658",
+      "actual_sha256": "c1eff5f05a17963458b354612585f5cb3801f3d616999fe7e9313be13c148fd9",
+      "changed_pixels": 875,
+      "bounds": [
+        548,
+        20,
+        583,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_blue_day_600_1.0_6_testImage.png",
+      "master_sha256": "ad91cf18b31c5d1d502f18284642d11dd84d760af5e95100ecfecc8004cae031",
+      "actual_sha256": "69d665e83b03d3e6830348ee93a2c17d2a19037ee7cd568f49ce7032b58dfdc8",
+      "changed_pixels": 875,
+      "bounds": [
+        548,
+        20,
+        583,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_blue_day_800_1.0_0_testImage.png",
+      "master_sha256": "c4ccb9304875fe4dbcaa023bb457f21d37a180be52729bf054a2e1ef4eeb9aba",
+      "actual_sha256": "5a876e6c400280e1f000805e6fe1d2bafa2c36dd8f4bee2e7abd2a80f790fd31",
+      "changed_pixels": 890,
+      "bounds": [
+        748,
+        20,
+        783,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_blue_day_800_1.0_1_testImage.png",
+      "master_sha256": "fb61425c80c65aa0a0f72869dfd0b0255dfc45342137525b0c96c1b7ef98d04d",
+      "actual_sha256": "a02dedaa67bc909e74641f1cd974f9d16dbf81b810fc19990fe6f15b7f250efc",
+      "changed_pixels": 890,
+      "bounds": [
+        748,
+        20,
+        783,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_blue_day_800_1.0_2_testImage.png",
+      "master_sha256": "f68ba0ff5587384e6ea7d64d779012e6b9e975d1fb82ae87a605a302c9ead5ed",
+      "actual_sha256": "7dc0b89e41563dbe19db861007d8b669c564e1ec272c5089ceda9e4beb5b7bcd",
+      "changed_pixels": 890,
+      "bounds": [
+        748,
+        20,
+        783,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_blue_day_800_1.0_3_testImage.png",
+      "master_sha256": "3bc3bf739fb4ed8ce63aafef2033dc071cdc4e4df1b06609549304994dfafd16",
+      "actual_sha256": "a4659db5e90d181ea5640a6ca740b2598e904c38cd456cd73b6a77da117dbb87",
+      "changed_pixels": 890,
+      "bounds": [
+        748,
+        20,
+        783,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_blue_day_800_1.0_4_testImage.png",
+      "master_sha256": "600d6b8e4015f983c936192a46e2181ecce56d20d94c0f66679fbcb7565441a2",
+      "actual_sha256": "b90d4198fe65dbae85c26a8b6958993e2e0e64b74a82dfdc63e3bf12b14d9bd8",
+      "changed_pixels": 890,
+      "bounds": [
+        748,
+        20,
+        783,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_blue_day_800_1.0_5_testImage.png",
+      "master_sha256": "c9c9b71a9f3bcdf4eb2e105c97a2d3ddda5940624fb6d414eba3f43ac42dd2d7",
+      "actual_sha256": "202c3dc7e8d7bf39021c9007caed9fda881ca08e1cf559645ec15764d19d2b0d",
+      "changed_pixels": 875,
+      "bounds": [
+        748,
+        20,
+        783,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_blue_day_800_1.0_6_testImage.png",
+      "master_sha256": "7034764d63ccabbf0eea25c6a6851d5a985da7a0b62b616bf2c8d2a8c4d56c78",
+      "actual_sha256": "2d3e5e458cd36c1580e06e954d29141db182792608030436fe8eb3cc1ae6333b",
+      "changed_pixels": 875,
+      "bounds": [
+        748,
+        20,
+        783,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_blue_night_320_1.0_0_testImage.png",
+      "master_sha256": "c660ef900843e511d47c2d2f20cc8e9461e845d711f9566fdcd71fedf45d1563",
+      "actual_sha256": "bd91bc0b5533cf5953daa517ee0d57094c39a1eba58d754b3b49da28a9a76ac1",
+      "changed_pixels": 892,
+      "bounds": [
+        268,
+        20,
+        303,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_blue_night_320_1.0_1_testImage.png",
+      "master_sha256": "42bae0711b568900b5c6ab77927538d6ab18776852eb14eb6e32bd0ee282f1b2",
+      "actual_sha256": "f9fdb09834e61491bc88bb87bc416f45baf01eee6ca7c3b77d421e5a9fdabd46",
+      "changed_pixels": 892,
+      "bounds": [
+        268,
+        20,
+        303,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_blue_night_320_1.0_2_testImage.png",
+      "master_sha256": "5a2bfbadb15bef8127fd1643fa4df9233f72ef05f2b226aaabcec53963fd9605",
+      "actual_sha256": "25e52fd3fb6bc6d477e9dfe3a7a760c84ccf23c515b6eea59a9b03d8844243b7",
+      "changed_pixels": 892,
+      "bounds": [
+        268,
+        20,
+        303,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_blue_night_320_1.0_3_testImage.png",
+      "master_sha256": "bcc5202a7e4b51acaac98f6df193e8c0fce9297e0b45ecb38ba4dfa26445b139",
+      "actual_sha256": "82a2960d137c62a52c0e937763f24554a5fd028c207d84b66b75911243e64374",
+      "changed_pixels": 892,
+      "bounds": [
+        268,
+        20,
+        303,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_blue_night_320_1.0_4_testImage.png",
+      "master_sha256": "abae1782656a35d9378842970b44a75dc5816579e87796f52d04ad58fe10d9ad",
+      "actual_sha256": "2a2eb15c015b1f1a8795c977c2f09fb99668dfba4cd86a520e0e32f82d866f90",
+      "changed_pixels": 892,
+      "bounds": [
+        268,
+        20,
+        303,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_blue_night_320_1.0_5_testImage.png",
+      "master_sha256": "c6070f56f43369e9ec95ca42d57a7b1f3f30df81d6d2b11d713755d0859e7e3d",
+      "actual_sha256": "e5c4a0bce54ff713136182c4617192698b20276b9d266c26a4eae0ab0bbbde65",
+      "changed_pixels": 888,
+      "bounds": [
+        268,
+        20,
+        303,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_blue_night_320_1.0_6_testImage.png",
+      "master_sha256": "063367444725a18103a0043999001ae05a6ad7ac1c5bf39e33e4e995ea49d799",
+      "actual_sha256": "8194e0524fe394b9905bf39e92756893f777d74b147ba41fca81dc08e298a1e8",
+      "changed_pixels": 888,
+      "bounds": [
+        268,
+        20,
+        303,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_blue_night_360_1.0_0_testImage.png",
+      "master_sha256": "5b44ca16d3434c1d7d02dc7ef41849f4fd2b66e6d8b2e3c465fc7b5c6ef89eff",
+      "actual_sha256": "610bfd3c9b60c851ecbebf57122379a6cf9d3de5a0c115ab65eac7d2bdf0d63b",
+      "changed_pixels": 892,
+      "bounds": [
+        308,
+        20,
+        343,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_blue_night_360_1.0_1_testImage.png",
+      "master_sha256": "d1932429baed5cc9ecd734b9c35aaeec38b524d2f2f1bcd7ec6ee1933c79e169",
+      "actual_sha256": "7c9d467755ad4078531ce4a5184a7b9ed3bfa7dd836e3550c462761322677ee8",
+      "changed_pixels": 892,
+      "bounds": [
+        308,
+        20,
+        343,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_blue_night_360_1.0_2_testImage.png",
+      "master_sha256": "3473a6f72efca7870673d70d111664cd3e31b6f98ac33aa995bf2e3464781400",
+      "actual_sha256": "ba2f27ef76f0363bc0081879e7253f4a7063ac50513aa7db511a3cae441865a1",
+      "changed_pixels": 892,
+      "bounds": [
+        308,
+        20,
+        343,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_blue_night_360_1.0_3_testImage.png",
+      "master_sha256": "bb9b6163582e9e6539d325b023c4a995b5002ed177c2e88db1708562d370912b",
+      "actual_sha256": "2bf0e897e7ad9f15a3dc45ddc95c13405dcb22d8641e650c0ffc9068edc6edd8",
+      "changed_pixels": 892,
+      "bounds": [
+        308,
+        20,
+        343,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_blue_night_360_1.0_4_testImage.png",
+      "master_sha256": "41694d0d1e530d9280fbcc8fc487002e4393bce964c269a958a15672e2f8f995",
+      "actual_sha256": "8d81f8a79fbe24e6abba3f97e25c2f8740113fece598f750933e823526c6f3db",
+      "changed_pixels": 892,
+      "bounds": [
+        308,
+        20,
+        343,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_blue_night_360_1.0_5_testImage.png",
+      "master_sha256": "672866023787ab0d93ef2ba6df2b8be96d899cc4fd4cd607d9c746c72f61802f",
+      "actual_sha256": "c053fc8451e4814edcf8ccdf315536a86b31888d27d53ae4745880293cabc7b8",
+      "changed_pixels": 888,
+      "bounds": [
+        308,
+        20,
+        343,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_blue_night_360_1.0_6_testImage.png",
+      "master_sha256": "8410fdc6ef134349ae6490e9310f7b0790a380596943787a012b7f6eb57b891c",
+      "actual_sha256": "9d4a3a1871c02d45abdd470a7f60471abb0c1e898bd2ee97769f926cc129749f",
+      "changed_pixels": 888,
+      "bounds": [
+        308,
+        20,
+        343,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_blue_night_390_1.0_0_testImage.png",
+      "master_sha256": "46cf005f8bbe92a6694ab42ef53c99479ddc7a62163bd94c29118d1c135fb1cb",
+      "actual_sha256": "4e6d244968f54253cccdb56a58f412349e37909de6f504ed2ccfd46f669d5ba6",
+      "changed_pixels": 838,
+      "bounds": [
+        338,
+        20,
+        373,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_blue_night_390_1.0_1_testImage.png",
+      "master_sha256": "c93191a8d986ea81ca2712cce315814149d31119c10401599d67661ed7942d9a",
+      "actual_sha256": "68b5dd27a64c21125f7a1b295ea3de6046d4b0614254c9cd1547c8d6b967c6e5",
+      "changed_pixels": 838,
+      "bounds": [
+        338,
+        20,
+        373,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_blue_night_390_1.0_2_testImage.png",
+      "master_sha256": "195e6f2779e2b0ff419b126f16e70bdf741ade48d812a6c7624d24ec321fdd16",
+      "actual_sha256": "b6059571a666d1b469c0642c0ebb4f303666ae27745f50f9ee30cf723f43440a",
+      "changed_pixels": 838,
+      "bounds": [
+        338,
+        20,
+        373,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_blue_night_390_1.0_3_testImage.png",
+      "master_sha256": "30fb437102a605a60e6772fd888a0632434c4c32f92c4c749ed13fd1ef49fb06",
+      "actual_sha256": "bc256b530cf5d0ca88e4df548454fb19bbf95393908a75688ebcc5e3c46160cb",
+      "changed_pixels": 838,
+      "bounds": [
+        338,
+        20,
+        373,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_blue_night_390_1.0_4_testImage.png",
+      "master_sha256": "9b6e8fc84a1d96e65f0c6621fb714cad9611bcff7e84a637649039b7f310fc72",
+      "actual_sha256": "75361ecef17193b2214c3ed022097c67d0ba503fa2ee9cfedcc8c7a0f344a464",
+      "changed_pixels": 838,
+      "bounds": [
+        338,
+        20,
+        373,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_blue_night_390_1.0_5_testImage.png",
+      "master_sha256": "025fac595c67989d5aed2ab324cff925201c35b85fe4cd491e798333eea12dc3",
+      "actual_sha256": "c6f077259999ce61a360eaeff53068fa6fe4c0cf1237e78b14eeb0c6619a3158",
+      "changed_pixels": 835,
+      "bounds": [
+        338,
+        20,
+        373,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_blue_night_390_1.0_6_testImage.png",
+      "master_sha256": "099bff103f59e4375635f638fb483b791f4f6c70bc8ffcf67d73583fd9c93ccf",
+      "actual_sha256": "d69bfe0f807335a12071694c72d247d94fba9b94b91b346af2d8d4e25d74a96d",
+      "changed_pixels": 835,
+      "bounds": [
+        338,
+        20,
+        373,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_blue_night_430_1.0_0_testImage.png",
+      "master_sha256": "0d5ca5440e858a9e6544258e689d33fcc64f90f523875c7bc3acb54cc7eb355e",
+      "actual_sha256": "96843586e0de87be3066b88b3dfcd4949595f13bf0d641a0d4d7b0c96348ddca",
+      "changed_pixels": 892,
+      "bounds": [
+        378,
+        20,
+        413,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_blue_night_430_1.0_1_testImage.png",
+      "master_sha256": "39bc30b05a07687b9a4e5b23ac55cae3e2024d25a34b13804f507c4fc772688b",
+      "actual_sha256": "8bf25d6bba87216f4a6ab76a8fd0b5caa1afd638dff64ce14a6028c56de4684b",
+      "changed_pixels": 892,
+      "bounds": [
+        378,
+        20,
+        413,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_blue_night_430_1.0_2_testImage.png",
+      "master_sha256": "82b181b865c3a6432c3e3c771d5d0e3a4d9bb7e2c6d8c98047bbd5ae4cd7ab09",
+      "actual_sha256": "acb126a5746505b58c4d7ab2519281eb98c0fd495b25dfdf8b243efab4476df2",
+      "changed_pixels": 892,
+      "bounds": [
+        378,
+        20,
+        413,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_blue_night_430_1.0_3_testImage.png",
+      "master_sha256": "81a9abcfd2df3d5bdb88f2b91e6b24ddca4520835c903867736d7f05ae025fb5",
+      "actual_sha256": "7eb5d1f1c9f791d3049671666827e50932c4894ece8748b8a0662aa5b58109dd",
+      "changed_pixels": 892,
+      "bounds": [
+        378,
+        20,
+        413,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_blue_night_430_1.0_4_testImage.png",
+      "master_sha256": "673613c495d10e6d20b18835447c0f68a36fe308cce09b72464539bd298e74bd",
+      "actual_sha256": "6dcf38e9a3c5b96f9965cce6d3e1fd7df938dce83830fdc3188bf5cf3cb0d8ec",
+      "changed_pixels": 892,
+      "bounds": [
+        378,
+        20,
+        413,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_blue_night_430_1.0_5_testImage.png",
+      "master_sha256": "31827bd8b839eda32562e8c610c514066657a72c3ad35744ab2af2b4abb01052",
+      "actual_sha256": "ee09105df274766224067a00913106b4e9fac6de4dd5d89ae57412d6d3909b6c",
+      "changed_pixels": 888,
+      "bounds": [
+        378,
+        20,
+        413,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_blue_night_430_1.0_6_testImage.png",
+      "master_sha256": "68f8883b13e4b07c37c6e7504ace8f48704df6e90b0a2c2834effc3ed509b808",
+      "actual_sha256": "38c9c921f5e34323a6370b89bc0d3b65d4cd04bd2705c1b4f45dd6d595a663b6",
+      "changed_pixels": 888,
+      "bounds": [
+        378,
+        20,
+        413,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_blue_night_600_1.0_0_testImage.png",
+      "master_sha256": "41bdf5c5d7b0c37de16c9d89ecc4d11fb67f602cc569bde56a4f3e59233649e4",
+      "actual_sha256": "96690ef58cca3bfea8b271f725cbcc0ab7b48a4ecee8ef341a2f64aad45cd019",
+      "changed_pixels": 892,
+      "bounds": [
+        548,
+        20,
+        583,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_blue_night_600_1.0_1_testImage.png",
+      "master_sha256": "c3cdc256b3e14cca0a3fc44705ba995666510560708ff505bf27a2b70a34b8c0",
+      "actual_sha256": "252e2126f86a99dfe1522e8c5811660e273269f26b5c619e7a80e1cad067e0d6",
+      "changed_pixels": 892,
+      "bounds": [
+        548,
+        20,
+        583,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_blue_night_600_1.0_2_testImage.png",
+      "master_sha256": "3f46f74e09ba61bb9410a2214127e668b8490483a6636e68eea3c664803b0ad7",
+      "actual_sha256": "6ff5d537ab2be9a7ab2f0f242fb5cf24571482032437804bbadb441907ac450a",
+      "changed_pixels": 892,
+      "bounds": [
+        548,
+        20,
+        583,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_blue_night_600_1.0_3_testImage.png",
+      "master_sha256": "1fbf558352338997c7381bff4de4a2e7280f5da9c6e7f69d78d7841fc3f37224",
+      "actual_sha256": "d2e19671e7fbd5bfc444e9818ddf51e72e2424557e4e84d2ef604397a94a971c",
+      "changed_pixels": 892,
+      "bounds": [
+        548,
+        20,
+        583,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_blue_night_600_1.0_4_testImage.png",
+      "master_sha256": "254d16ad7131c1752d0eec401a37e896bca5a3001824626aec0b2cc785b21745",
+      "actual_sha256": "6156d58b64e1417587a001d8537218b256c036b7f29d7b51b5520c499cbb1237",
+      "changed_pixels": 892,
+      "bounds": [
+        548,
+        20,
+        583,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_blue_night_600_1.0_5_testImage.png",
+      "master_sha256": "b4a2b4d1be0dad9de92976fc5a3523d6a573aee9b37c295c39e239caf20cb6df",
+      "actual_sha256": "34ef0479885310a2d4ddb0ddbba139352523dc40189f867c3912a59f6216651f",
+      "changed_pixels": 888,
+      "bounds": [
+        548,
+        20,
+        583,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_blue_night_600_1.0_6_testImage.png",
+      "master_sha256": "d7384b1debf5567e222b776ea38f0808b29258773661e1bb4764689e4c9df97c",
+      "actual_sha256": "fda2b6bca5936cee1547ed98979a1705f4d50f247aea1b2440199820929123dd",
+      "changed_pixels": 888,
+      "bounds": [
+        548,
+        20,
+        583,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_blue_night_800_1.0_0_testImage.png",
+      "master_sha256": "b1e9ab79b953cf02da3ce44e1b8bc40a743279ba58ac821ed3d7a0423f5f2ece",
+      "actual_sha256": "11ea71910ef7dfd6c425c1793e862e2f9feaa4ccd12820a239eb83d2cfd9314b",
+      "changed_pixels": 892,
+      "bounds": [
+        748,
+        20,
+        783,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_blue_night_800_1.0_1_testImage.png",
+      "master_sha256": "6f71dbffeb867105acc9d8739a0eb868a526242e97be9c5a14618305e6dcf6f5",
+      "actual_sha256": "07cd508bd492fa8b901d12b113651df0a095b31d491095f47bc08b2baf20ebe0",
+      "changed_pixels": 892,
+      "bounds": [
+        748,
+        20,
+        783,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_blue_night_800_1.0_2_testImage.png",
+      "master_sha256": "3a5aa399c4b396d7c0df21914cf34c8cbcd64fa670d0dfbe2fab320c571b0925",
+      "actual_sha256": "00eb8d26d2d9f22d1ee8498386a8d8c685a37fd9e59c125b04974928765a1773",
+      "changed_pixels": 892,
+      "bounds": [
+        748,
+        20,
+        783,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_blue_night_800_1.0_3_testImage.png",
+      "master_sha256": "b3e21c2162ed96e16c698ebfbcde9b60dc5710f96d7e66db4405be99eddf34a5",
+      "actual_sha256": "76cd96eaa52bacf8f5430efe6b15917f0574e67e72835a2daddc5dc2d1e94cd4",
+      "changed_pixels": 892,
+      "bounds": [
+        748,
+        20,
+        783,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_blue_night_800_1.0_4_testImage.png",
+      "master_sha256": "991fc96d3bc56f533bfccc98a33bad80340c9ceb7ff9d377919f54912de67dc7",
+      "actual_sha256": "10c84085333e850e4293f296ea0e48971884e2e347d45d1989fbf64c7b9dbcb3",
+      "changed_pixels": 892,
+      "bounds": [
+        748,
+        20,
+        783,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_blue_night_800_1.0_5_testImage.png",
+      "master_sha256": "c2473d8201cf402b1a80638328828fddcafe5e570b24a7eade448ddc468921fb",
+      "actual_sha256": "a6dbdabe19d2327f9901849db1f43ea0504eb007c3cbf453ca589c95421c70ea",
+      "changed_pixels": 888,
+      "bounds": [
+        748,
+        20,
+        783,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_blue_night_800_1.0_6_testImage.png",
+      "master_sha256": "520f9170543132a1bc184ce4929a1ea270500523ea04c36feea19dbc89a4fc1e",
+      "actual_sha256": "176d1c2cd9e9cda805a2957853e07ee6dc0fa8ccd459423ec53d05a9f6050cd2",
+      "changed_pixels": 888,
+      "bounds": [
+        748,
+        20,
+        783,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_pink_day_320_1.0_0_testImage.png",
+      "master_sha256": "5da9c807296b010e89246cf804d3748b91ead510aa0a89e0011e20b645997183",
+      "actual_sha256": "c5add3ead991805d66b30313f37916a79ce5a6907200524661a478dc185c6b6e",
+      "changed_pixels": 859,
+      "bounds": [
+        269,
+        20,
+        301,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_pink_day_320_1.0_1_testImage.png",
+      "master_sha256": "3d8da26a1b02022aef875980679edbe6349082f8fea0a92d360847890f4b6b51",
+      "actual_sha256": "1639d6df4ac33933cc76f987e59d5a88d299e47e68b12800f0667aad6b4b79c4",
+      "changed_pixels": 859,
+      "bounds": [
+        269,
+        20,
+        301,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_pink_day_320_1.0_2_testImage.png",
+      "master_sha256": "33899bcc819c155c68515000586dbc747de318169c4692c116fc46459caac12b",
+      "actual_sha256": "98f154c843101b917e39c5d8a6a4b6fdfbd34403100344431ac97006a2eaa78a",
+      "changed_pixels": 859,
+      "bounds": [
+        269,
+        20,
+        301,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_pink_day_320_1.0_3_testImage.png",
+      "master_sha256": "625d80b98bf448aa8769b77d4ae42f82a62c43933f2c877e3ac30a0f0fe66981",
+      "actual_sha256": "37b633743d6d28782e54fe177a1787fbf3a69612b3d9bf41f0fe6ee4825fd3b5",
+      "changed_pixels": 859,
+      "bounds": [
+        269,
+        20,
+        301,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_pink_day_320_1.0_4_testImage.png",
+      "master_sha256": "3a830dc7e3a2e1d81429fccf52080311bfc8f19b76448a9bb55f68d7807955e3",
+      "actual_sha256": "724bb992fa53269b7e6576208151aa55f392c83143976622196fedfc6a1b30fa",
+      "changed_pixels": 859,
+      "bounds": [
+        269,
+        20,
+        301,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_pink_day_320_1.0_5_testImage.png",
+      "master_sha256": "7b3dffc3b6e51718dd8d9c81587f16b7b22059ee3afb7568de92f0a560b0506d",
+      "actual_sha256": "d3eae647c01ab9708271e0f61a9024a70f1a95cb091ee3b9af45ec8fc40e3d00",
+      "changed_pixels": 859,
+      "bounds": [
+        269,
+        20,
+        301,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_pink_day_320_1.0_6_testImage.png",
+      "master_sha256": "e6d6209d6099ef3ee05ef2617e8ab8b53dba376240e3134cd2cfd997c92c2dfe",
+      "actual_sha256": "83428ec26d70e2f82f12c0d60361e7d220e9854c53bec851d33108147041cc6c",
+      "changed_pixels": 859,
+      "bounds": [
+        269,
+        20,
+        301,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_pink_day_360_1.0_0_testImage.png",
+      "master_sha256": "b5a67f360b4e730ca1dcba56abddae7b5a0b414673666bdfc42049f26143fb0d",
+      "actual_sha256": "c4b1ad6e2e6104dfac29f43f65b5e139333cb9220366bd4fdc67f310dc8e51b0",
+      "changed_pixels": 859,
+      "bounds": [
+        309,
+        20,
+        341,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_pink_day_360_1.0_1_testImage.png",
+      "master_sha256": "e0bd6e8968fb82736c916eef2c1b0a0624e14409ac057f737fd3884a42541226",
+      "actual_sha256": "fb20c11516520374a2918f840b4f36eed02c46f78a6ffaff0e4d5ee82971ae9e",
+      "changed_pixels": 859,
+      "bounds": [
+        309,
+        20,
+        341,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_pink_day_360_1.0_2_testImage.png",
+      "master_sha256": "715fb752a8321a0b68081f8f1b335f345c398dca8d375b93cbd9b73bd592a76f",
+      "actual_sha256": "2b0a66043924a993e96f9ebfaa50cff00e1eaeebfa7402026dc23ce46ac716ca",
+      "changed_pixels": 859,
+      "bounds": [
+        309,
+        20,
+        341,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_pink_day_360_1.0_3_testImage.png",
+      "master_sha256": "cc1f3472516aff1bad001b5eea240ccffc2c6f98b6740bcbbed147a399d0f84b",
+      "actual_sha256": "92a87fddd12aa0fc88ca0cc2c6d4e8278af223d4f28bab632d94780956950d38",
+      "changed_pixels": 859,
+      "bounds": [
+        309,
+        20,
+        341,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_pink_day_360_1.0_4_testImage.png",
+      "master_sha256": "0f74dab93cbea08efaf5f4c088d1ac99fa872ca197adc4fdfcb50c3a36b4d08f",
+      "actual_sha256": "8886ad2bb961371b7d8ba71552fd8cb6451e5cfb7151ee2dc6b4c131b0c8d23f",
+      "changed_pixels": 859,
+      "bounds": [
+        309,
+        20,
+        341,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_pink_day_360_1.0_5_testImage.png",
+      "master_sha256": "cfb0d78a59b583ec2d4f0b572d5de9071ef7234a3882fbf3bb35fcdafa757bf6",
+      "actual_sha256": "049b3fb0e2babe2afd682935b844e5d1190d95d4c6f6c34bdf0933ffc3471f9e",
+      "changed_pixels": 859,
+      "bounds": [
+        309,
+        20,
+        341,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_pink_day_360_1.0_6_testImage.png",
+      "master_sha256": "b8b8ec4c288c959f00d73ea50fd46ac75419347485a2dd468f14cdb697b91a80",
+      "actual_sha256": "9de469a2d88ffe6ccd2ce627bb2efedb536e4caf0f9cef4c8dcbbcaae5df6d01",
+      "changed_pixels": 859,
+      "bounds": [
+        309,
+        20,
+        341,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_pink_day_390_1.0_0_testImage.png",
+      "master_sha256": "78ded88a26112c82a8e7b87db0d9f4c688612e551a8dd745e1d01feb47c118e0",
+      "actual_sha256": "e6d94be7b9e242389824d9c9414d8a1f0f8bbb9a4ba66e477502ec5405b8ba44",
+      "changed_pixels": 844,
+      "bounds": [
+        339,
+        20,
+        371,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_pink_day_390_1.0_1_testImage.png",
+      "master_sha256": "e69db2a24ece1d093e2457c59dcf47e76f674abe9c972f07221d9ac66f97e0f1",
+      "actual_sha256": "0f984cfb42369eaf53b90202cf0edac7ba636c0d0ebfce2861247f3f033567ce",
+      "changed_pixels": 844,
+      "bounds": [
+        339,
+        20,
+        371,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_pink_day_390_1.0_2_testImage.png",
+      "master_sha256": "caed65ec9e596b55aec060d9072bf069afa0037723a637c4dc36bb9e8da1b619",
+      "actual_sha256": "2d4a1573ce479e0b1998aa9ee9ee01bbb495e40fd20eccc50723f28e2d2b5bdc",
+      "changed_pixels": 844,
+      "bounds": [
+        339,
+        20,
+        371,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_pink_day_390_1.0_3_testImage.png",
+      "master_sha256": "44d2dddb67f39417e444053a33220b6bd44a1a381b2923e7d563619d3a47a5b8",
+      "actual_sha256": "d3132e99c881baea81cbabc26b282a20086f504412851da870a64b332e151071",
+      "changed_pixels": 844,
+      "bounds": [
+        339,
+        20,
+        371,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_pink_day_390_1.0_4_testImage.png",
+      "master_sha256": "5ed08d32edde4a42219b3f1bef063ff5ffbbf1cb326741be5e3c3eecc56a80cd",
+      "actual_sha256": "83026aa5146a22683f5c706a1b203c6d0577c56e92a4a8b616f4fc2383b5e7d6",
+      "changed_pixels": 844,
+      "bounds": [
+        339,
+        20,
+        371,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_pink_day_390_1.0_5_testImage.png",
+      "master_sha256": "9fa3f94705c1f8cff327a3f769040a705b5d2c9405b5dbc2ee5abe05d6f2d360",
+      "actual_sha256": "721c4afc32f2a30392b63d024327666811f54eff989b899b585aec1961f28783",
+      "changed_pixels": 844,
+      "bounds": [
+        339,
+        20,
+        371,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_pink_day_390_1.0_6_testImage.png",
+      "master_sha256": "2877b54a501f86b528ee5f4148a6e31fe724b0f89478b3c6fdc8758af0357ffd",
+      "actual_sha256": "3713966a509f2877acdee6dee96855c76aa9f9664de030ad60298df14be457af",
+      "changed_pixels": 844,
+      "bounds": [
+        339,
+        20,
+        371,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_pink_day_430_1.0_0_testImage.png",
+      "master_sha256": "966bab1e80c86d512dbfea0b69167a14ad1c5e2f8688c1d3181389f5002eb6ab",
+      "actual_sha256": "99c6636091062054d68397b1c18517a65ddafe859f2b5e64dcb37737f4e1e823",
+      "changed_pixels": 859,
+      "bounds": [
+        379,
+        20,
+        411,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_pink_day_430_1.0_1_testImage.png",
+      "master_sha256": "73ce2da9a702ab13fc1bc24c306efaffdbb0c074d02f51ae8c013262235c0a99",
+      "actual_sha256": "acbfbd43628acb0e991a29ce23f7e881ddb1917128d0a051310113d560581b4f",
+      "changed_pixels": 859,
+      "bounds": [
+        379,
+        20,
+        411,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_pink_day_430_1.0_2_testImage.png",
+      "master_sha256": "bbd0eb1d6376883f8b89cde486633abf986ca59f3dcc1aa497f67dd1b98c0419",
+      "actual_sha256": "51770521c491bea1c6426bae0ddc516a50bf5e04c2a455883f02da7a605ba506",
+      "changed_pixels": 859,
+      "bounds": [
+        379,
+        20,
+        411,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_pink_day_430_1.0_3_testImage.png",
+      "master_sha256": "3edf0b1f28dc73e4c5defb9266a57d0f6d10e1900277a699e708844befaae88e",
+      "actual_sha256": "925559831a3c781cda550b799a30909b79f36a3466b183159bdb671f2db256d1",
+      "changed_pixels": 859,
+      "bounds": [
+        379,
+        20,
+        411,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_pink_day_430_1.0_4_testImage.png",
+      "master_sha256": "5a0d98f2b3da1faf0543dbbed3eb49b5002fc68af49efba6efc0929a9fce3d3f",
+      "actual_sha256": "8d0c1dada7fce813110d05429b6c277b30aa7c81ea4d08d818627c9b3fa3a3d8",
+      "changed_pixels": 859,
+      "bounds": [
+        379,
+        20,
+        411,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_pink_day_430_1.0_5_testImage.png",
+      "master_sha256": "fad742ef22b958c904239823128bea7e5722c205deb42cd98e0e5dd91901b41d",
+      "actual_sha256": "497541b8e7ac737b4f698a5a4b09a2bebbd400844c4eb3afcd2dce759e1e58cb",
+      "changed_pixels": 859,
+      "bounds": [
+        379,
+        20,
+        411,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_pink_day_430_1.0_6_testImage.png",
+      "master_sha256": "fb731bf556007ff270d0a9475e91b7c625b574b49a05311c087aa96a2d13033f",
+      "actual_sha256": "28c7462b6998cfacbda9921f1f87448952b9545dff24bc471170c5044820d49e",
+      "changed_pixels": 859,
+      "bounds": [
+        379,
+        20,
+        411,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_pink_day_600_1.0_0_testImage.png",
+      "master_sha256": "13797e506636fd84284ce90f212ae536fe56f8c6ebbcf9f4a132c70195cc174c",
+      "actual_sha256": "6a698e895c4496c63e781cdd7673b55916ae5466e52dd3e502a11fbb985d94a7",
+      "changed_pixels": 859,
+      "bounds": [
+        549,
+        20,
+        581,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_pink_day_600_1.0_1_testImage.png",
+      "master_sha256": "45f065350c0b86d95ad0a5dd8afa03b601ebe45ba13636cbb67519aa07e9c986",
+      "actual_sha256": "4a757813dfbe3ebd709ee31baa5aa5ffe64218d25b2eedb1379667f71fb4f7da",
+      "changed_pixels": 859,
+      "bounds": [
+        549,
+        20,
+        581,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_pink_day_600_1.0_2_testImage.png",
+      "master_sha256": "1dacd39774e9d97f5b6958847ee9130a844c1da71221df778b25d08625f690da",
+      "actual_sha256": "b4df37ec381e657d13589c96bd6946e8083a553062ec2a8a419542a884a4035c",
+      "changed_pixels": 859,
+      "bounds": [
+        549,
+        20,
+        581,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_pink_day_600_1.0_3_testImage.png",
+      "master_sha256": "059b49d25b95de39f9b1e78c1f0cf39a3536e9d9a458059a3693ab02226e3597",
+      "actual_sha256": "f9d12da3c0bf0779e0827eaea5ba68adfdf231d3c4e75a8b0c65f2e811acc153",
+      "changed_pixels": 859,
+      "bounds": [
+        549,
+        20,
+        581,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_pink_day_600_1.0_4_testImage.png",
+      "master_sha256": "b7d77d47073665480059b64d50a126cc359444e7e89b0c6984b747136c593144",
+      "actual_sha256": "d332e2c9f83368f42307fbfd612e0ed225a6d3564b38cd2a2ccb465bc35b9319",
+      "changed_pixels": 859,
+      "bounds": [
+        549,
+        20,
+        581,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_pink_day_600_1.0_5_testImage.png",
+      "master_sha256": "24360ea2ce26c160c48c0b7a082aa04194de5235596d432f91c3b6b5d82f1282",
+      "actual_sha256": "59976fe35f00991a82fa6bb982d8eadb5fdab5c7bc9282154fa464d627f95d30",
+      "changed_pixels": 859,
+      "bounds": [
+        549,
+        20,
+        581,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_pink_day_600_1.0_6_testImage.png",
+      "master_sha256": "b3dd1f5422adc0de0a84951d3c6af06033825a481c90b486d3d8310a89099ef8",
+      "actual_sha256": "c5845870fb237e143cf2be856d1a191c17c25163d514bcccd54a82f169402039",
+      "changed_pixels": 859,
+      "bounds": [
+        549,
+        20,
+        581,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_pink_day_800_1.0_0_testImage.png",
+      "master_sha256": "3f0638cc28a1bc9fe42cd85cb2e42d6cd82ce53e115e104f2797b723d5599845",
+      "actual_sha256": "7faae25b1cd6ad84d211f4d5afb1dc0d759870e7417ac70bde925cbdffeb823d",
+      "changed_pixels": 859,
+      "bounds": [
+        749,
+        20,
+        781,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_pink_day_800_1.0_1_testImage.png",
+      "master_sha256": "440ea12543ef0860059a28dd25afe7800a8d8dde5bf0fed0fa9bc1498888e2ea",
+      "actual_sha256": "6c800ff90df1116e6ac61d06acae9ce0f3f379bc530155914b784aea77af845c",
+      "changed_pixels": 859,
+      "bounds": [
+        749,
+        20,
+        781,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_pink_day_800_1.0_2_testImage.png",
+      "master_sha256": "105df0164cabcc7f13d11683357faaf4c3eb54ad8a6deb74258ea455732c23d0",
+      "actual_sha256": "35d15255ff493245e4984d3f36b21374743c134f68dd4d15ec96d32228e297aa",
+      "changed_pixels": 859,
+      "bounds": [
+        749,
+        20,
+        781,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_pink_day_800_1.0_3_testImage.png",
+      "master_sha256": "8a49e34cde531bcc3c8faa747e4377b6675d19c1834f0db1cd3b816a1e418775",
+      "actual_sha256": "196f854fcd72a4e77db68b51ef498e47e92822ac4175b88e1f05712d998a74dd",
+      "changed_pixels": 859,
+      "bounds": [
+        749,
+        20,
+        781,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_pink_day_800_1.0_4_testImage.png",
+      "master_sha256": "9103c76f65166b081794b7cd567d103d86f003f9996494e24f81fefbf8f8e613",
+      "actual_sha256": "e99952787565cbe93c4398e66382a4f9e81a7abd56e4e56a76e797cfaebd66d7",
+      "changed_pixels": 859,
+      "bounds": [
+        749,
+        20,
+        781,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_pink_day_800_1.0_5_testImage.png",
+      "master_sha256": "2816a93e09bcb283727a0f1a49f894f6ef9073206ba9efaa3901f29330c535b6",
+      "actual_sha256": "22d57184c82d8e302cabf96eac89bf5899b861c8018c2081352a0fc6b6d129cd",
+      "changed_pixels": 859,
+      "bounds": [
+        749,
+        20,
+        781,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_pink_day_800_1.0_6_testImage.png",
+      "master_sha256": "c921ab19e82f913ab80709509c94c243bd70a1a05a27bb01c256f54e61f64df8",
+      "actual_sha256": "10a0d05041c4f9d17a909f0bd517c91c4e80904f6cef1bd35fd9a2f560562952",
+      "changed_pixels": 859,
+      "bounds": [
+        749,
+        20,
+        781,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_pink_night_320_1.0_0_testImage.png",
+      "master_sha256": "d648370023d10cfdfbe492a4a9fc12220e829715988cb8fcfa557e27141b1140",
+      "actual_sha256": "55732792bf923d5c4ca5030e3b7f54203c75b2fcd7b574efeefa6b6001b3bf9a",
+      "changed_pixels": 862,
+      "bounds": [
+        269,
+        20,
+        301,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_pink_night_320_1.0_1_testImage.png",
+      "master_sha256": "03fd8087e7fe5bca584161145895b719582cb4af21fa769b11ac093b98882518",
+      "actual_sha256": "f049fe668f1f6b592e5e03b18af24157760a07b39fa75f2ed25613ed5a9b9b4e",
+      "changed_pixels": 862,
+      "bounds": [
+        269,
+        20,
+        301,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_pink_night_320_1.0_2_testImage.png",
+      "master_sha256": "a5421ff4c7e6afefa86b95213ca46f405cc1e915595fe28ea9bb02f6424d89d0",
+      "actual_sha256": "4b4149a0d5bbca7b17e3af41c0f481771145dbbdfe34ab24bb426adc4b4422ab",
+      "changed_pixels": 862,
+      "bounds": [
+        269,
+        20,
+        301,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_pink_night_320_1.0_3_testImage.png",
+      "master_sha256": "1fdbc2b50bf484547c6d2d9730a4952b46e66bfa22f5a7553ddcccd75abe0dc8",
+      "actual_sha256": "4c91bf3518dc4889b7fc21acc9821bf7a06d74de7403cb6f8207f74d8d963e75",
+      "changed_pixels": 862,
+      "bounds": [
+        269,
+        20,
+        301,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_pink_night_320_1.0_4_testImage.png",
+      "master_sha256": "fd9a8fc51e98e2e2da9dbbad448efd0a8bf6217dd308d63f8f26f2ca88fadb24",
+      "actual_sha256": "2186aeb4b88420ac925b410b621e9f6d837de615e12eda5e549ed50803123a88",
+      "changed_pixels": 862,
+      "bounds": [
+        269,
+        20,
+        301,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_pink_night_320_1.0_5_testImage.png",
+      "master_sha256": "521b4963463dcb996b604da845389951177d14ef703ad95303a066f236f1f08e",
+      "actual_sha256": "6817741e998ba9fcbe0bdee7109a8a5b71f04b4699c20b8861687c801d9e0596",
+      "changed_pixels": 860,
+      "bounds": [
+        269,
+        20,
+        301,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_pink_night_320_1.0_6_testImage.png",
+      "master_sha256": "176187ef46fd193d09b7ccd2c55cae5caf9783e0928a66214a87294ab1ad1584",
+      "actual_sha256": "cb60b9cbad731773f7b5779528bf9bd0a06bfd6b478fcacf9110873021df0aca",
+      "changed_pixels": 860,
+      "bounds": [
+        269,
+        20,
+        301,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_pink_night_360_1.0_0_testImage.png",
+      "master_sha256": "8f5d6d4f28057a4a26357b5f2da0f597e9203676118cd73d2fb9513f089580bd",
+      "actual_sha256": "bd2a93005b2e4085ff8a596932adbf0cd776ee2ad04144b2dd010bf3cabca8c4",
+      "changed_pixels": 862,
+      "bounds": [
+        309,
+        20,
+        341,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_pink_night_360_1.0_1_testImage.png",
+      "master_sha256": "8b591539983fd5fa78ab33390cdf4a035b140dbcd60aa38407af46b6ce564dea",
+      "actual_sha256": "3289058b280b6097221671076b15d8d53a73a7108dd672cd3b55f0d2d44b8c63",
+      "changed_pixels": 862,
+      "bounds": [
+        309,
+        20,
+        341,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_pink_night_360_1.0_2_testImage.png",
+      "master_sha256": "cf651c7714fb8159ebfe9453d15fef21616cb312ab641132c8a1e2e864fe65f7",
+      "actual_sha256": "1250e3c69724177c97137abe2c205ed80e0717bd656fb5a2a7e6f6b62151f496",
+      "changed_pixels": 862,
+      "bounds": [
+        309,
+        20,
+        341,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_pink_night_360_1.0_3_testImage.png",
+      "master_sha256": "903707d8db4d56dc7c5d8b96e6cccc5baebfce8d3d1c356b4fe893902f19a5b8",
+      "actual_sha256": "88067c341d1aa058b6f2a8dc0ddbbdd54bc2f1443e65588507877ba3bf8292e9",
+      "changed_pixels": 862,
+      "bounds": [
+        309,
+        20,
+        341,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_pink_night_360_1.0_4_testImage.png",
+      "master_sha256": "01b1fe76de29cbe36857c8d5cbaa5e1cec3c4d5923ef07cbcb81665aa5bb6861",
+      "actual_sha256": "0d9465aa77510b69e6907b59ceaf2f51b3716fbc3894c91acc1966f31bf09ea0",
+      "changed_pixels": 862,
+      "bounds": [
+        309,
+        20,
+        341,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_pink_night_360_1.0_5_testImage.png",
+      "master_sha256": "e928d67aa1fd2f38643bf7bfffecafed1ab3222ba9d2f4583f17ef731b739732",
+      "actual_sha256": "ce1572f3fe54957382bd0634c7710fe8547fb3cdc388a185a318dd5c8e72e206",
+      "changed_pixels": 860,
+      "bounds": [
+        309,
+        20,
+        341,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_pink_night_360_1.0_6_testImage.png",
+      "master_sha256": "f18522accd919a3ff565d0bbf6419fdcc565861f7a80002b0fb4a4e5479e8f3b",
+      "actual_sha256": "1271b1cae5cdb51e4959307ced6b2296a62d50fbb0b32a6182063cc5d4c86b66",
+      "changed_pixels": 860,
+      "bounds": [
+        309,
+        20,
+        341,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_pink_night_390_1.0_0_testImage.png",
+      "master_sha256": "a6d140cf18b15d7d2b845ac6ba36fd6423e480379b8523b4d85f5f7b7641490e",
+      "actual_sha256": "31197e73f323a8126a88ef12a3505c1a30f212c62d2cb17c304ab9707cb43e30",
+      "changed_pixels": 844,
+      "bounds": [
+        339,
+        20,
+        371,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_pink_night_390_1.0_1_testImage.png",
+      "master_sha256": "fdd0b5979a9b8a65cfb05b716caea6ef77be26fbad667e5e5c6f83b856285046",
+      "actual_sha256": "e2bae1c81b8c836947f17e7c108265dbf6cf438c39d79832b4136f99015b456a",
+      "changed_pixels": 844,
+      "bounds": [
+        339,
+        20,
+        371,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_pink_night_390_1.0_2_testImage.png",
+      "master_sha256": "36987b74f18f6658e1b466483d48aa8f68467eb3ef489ab8cce2b90cea6f07aa",
+      "actual_sha256": "d1571044fe36227b0a7c2f04914348a80d053ae3bd4eec987d09adc1de20a669",
+      "changed_pixels": 844,
+      "bounds": [
+        339,
+        20,
+        371,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_pink_night_390_1.0_3_testImage.png",
+      "master_sha256": "0a70e3e90c88ebdcdb0a37daeaf256662d18be32b79a8758eaa2cc2117925fcb",
+      "actual_sha256": "fd0f2ee76c4e434cd414db5657113cb87d6d223cc7201aec80df226d2aad001a",
+      "changed_pixels": 844,
+      "bounds": [
+        339,
+        20,
+        371,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_pink_night_390_1.0_4_testImage.png",
+      "master_sha256": "7c7806dbcf45f509728439275b132f116a0483352c18496b1ffc7d2b4f0e530c",
+      "actual_sha256": "b2368e9ee82a08fea0f61951dd9b1ee7386abe095f65b14534ff6664c1b8a27c",
+      "changed_pixels": 844,
+      "bounds": [
+        339,
+        20,
+        371,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_pink_night_390_1.0_5_testImage.png",
+      "master_sha256": "50b8b3feb4b525016a703b92f946cc1f4f0eb275ece58841fc4668f26628dd41",
+      "actual_sha256": "218ae88197acc914fa3c208d8e378ee17d899dbbed9044d621545139a3aaa4af",
+      "changed_pixels": 843,
+      "bounds": [
+        339,
+        20,
+        371,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_pink_night_390_1.0_6_testImage.png",
+      "master_sha256": "d8d0bb2c3f0d7485ffaff6fc1633e51ce1dcd93152a253e0e90353d39ed5cdc0",
+      "actual_sha256": "4cb89b4e4b43a6afcbc83d4b631e619f9739fb5216a246c36058d231e2530295",
+      "changed_pixels": 843,
+      "bounds": [
+        339,
+        20,
+        371,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_pink_night_430_1.0_0_testImage.png",
+      "master_sha256": "70945482f354b20c90c66c35e40296cf156a5d66d8210d2828eb13095f57d1e3",
+      "actual_sha256": "df90898d71d225bda2790a73c7e5a33dae74320738fc051f39beef7f55a75627",
+      "changed_pixels": 862,
+      "bounds": [
+        379,
+        20,
+        411,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_pink_night_430_1.0_1_testImage.png",
+      "master_sha256": "607cbb11445a34df0b16cfdab59ec7277331b057b670e714fbcb60ed3b5d2f1b",
+      "actual_sha256": "3c2eb1dbd90eea42d3933b171eede95e4ffee621d55af040d45009c1355123da",
+      "changed_pixels": 862,
+      "bounds": [
+        379,
+        20,
+        411,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_pink_night_430_1.0_2_testImage.png",
+      "master_sha256": "0eb9c80de494d4e90e227784c7f4912ae5106c6803de1df083dace75be67e948",
+      "actual_sha256": "64dc82fbe8107891bb344bf0c565b404e7d0eb17073763470046e9ac4cb5689c",
+      "changed_pixels": 862,
+      "bounds": [
+        379,
+        20,
+        411,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_pink_night_430_1.0_3_testImage.png",
+      "master_sha256": "575f8eff023fb6da5464830ad1fe7f611c337f606a556483444e47fa5e1d09a2",
+      "actual_sha256": "6fc3a11c4e74da7eb5bd30e62432b9a345c57ce6f8b8b7a7868c60ab7d9e5c8a",
+      "changed_pixels": 862,
+      "bounds": [
+        379,
+        20,
+        411,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_pink_night_430_1.0_4_testImage.png",
+      "master_sha256": "a56aeb8858fc1e4fe55fce14f852970bc07a21e7c4a2d8131b568a44aa69f375",
+      "actual_sha256": "8f34c1a5c80d2d7bf40043bc2be3476e7895cf66fe8214d67726255d9c4e0df7",
+      "changed_pixels": 862,
+      "bounds": [
+        379,
+        20,
+        411,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_pink_night_430_1.0_5_testImage.png",
+      "master_sha256": "dc80ce58bd93a5e49251e4025eb6fa2e5cbf41df129c6f462762f4004d091cb3",
+      "actual_sha256": "b85c924ddf25e97522aeb3dd5146f42961679585e2a0ced729b7cc7d1ce6c3f8",
+      "changed_pixels": 860,
+      "bounds": [
+        379,
+        20,
+        411,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_pink_night_430_1.0_6_testImage.png",
+      "master_sha256": "e81ade9cfa12a3f01b2a50691268f08fe90a43dd884d376357599487bfb6fc36",
+      "actual_sha256": "342e02a708c1ea75fa48ac1ad863023f909b7cdacc6095525eade30b80128af4",
+      "changed_pixels": 860,
+      "bounds": [
+        379,
+        20,
+        411,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_pink_night_600_1.0_0_testImage.png",
+      "master_sha256": "6278d1446f616753bab6fed17a53f56d2ed57ba8ebc5ef7ddcff3af66a9946ed",
+      "actual_sha256": "fdb73c9f3836e42e9f4ef26946e92b51e03e446ebcc95e49b72c34350de1b32b",
+      "changed_pixels": 862,
+      "bounds": [
+        549,
+        20,
+        581,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_pink_night_600_1.0_1_testImage.png",
+      "master_sha256": "1355dbf13e960804b45c989fbab174346cbd01d25f498aee1a75180a9103ad96",
+      "actual_sha256": "cea765f6b4cb6fb6040d11ac89043655643f1ffadb7d58c7329b0ad020012fc6",
+      "changed_pixels": 862,
+      "bounds": [
+        549,
+        20,
+        581,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_pink_night_600_1.0_2_testImage.png",
+      "master_sha256": "57128054a2291079c62d3e2c29a4fe9e1d36c8bb9cb4a02979af0fe2b06b6831",
+      "actual_sha256": "fd08875c9cb56291c2df43ad69fd90ecab543a1f3dc48e923cb7400fda356b8e",
+      "changed_pixels": 862,
+      "bounds": [
+        549,
+        20,
+        581,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_pink_night_600_1.0_3_testImage.png",
+      "master_sha256": "5a5b7552d1f18a0b956a07b11efae347d92c75fe1375c9c7e06bd002e02298bf",
+      "actual_sha256": "0886d63e9dc692f224914236466b4029b777fbb29c478928c1ea391a9f7094aa",
+      "changed_pixels": 862,
+      "bounds": [
+        549,
+        20,
+        581,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_pink_night_600_1.0_4_testImage.png",
+      "master_sha256": "2722b01d3ee6ef95f0c961fc4ac2c8c9b48223a1a78764c46b04927282c6d56b",
+      "actual_sha256": "acf3f98595f3e4a76726e455aab8e2f62f76922241b881b33588597c74af5fcc",
+      "changed_pixels": 862,
+      "bounds": [
+        549,
+        20,
+        581,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_pink_night_600_1.0_5_testImage.png",
+      "master_sha256": "72d189621c53b58a12f220f98f2029734283e31ea7f7f3bafecb53c34169ddd1",
+      "actual_sha256": "45809fe599d22ae4d5267b26100d1c9d15a0fbc668211a07f859c8925b79da24",
+      "changed_pixels": 860,
+      "bounds": [
+        549,
+        20,
+        581,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_pink_night_600_1.0_6_testImage.png",
+      "master_sha256": "bfd623bd4ff152d30824fc43f8026933123fc1fe89c418c77e61f9c6e7e52088",
+      "actual_sha256": "9d5d444f4d6fff39d51bdeb7c5447b63925a57ac7cd845491857b3e7118add49",
+      "changed_pixels": 860,
+      "bounds": [
+        549,
+        20,
+        581,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_pink_night_800_1.0_0_testImage.png",
+      "master_sha256": "f16b33870fc37eb7efd425f209779ec8352450c6aa46b927b55421a218db2b8a",
+      "actual_sha256": "b6472ac72c649458617c1995f9d78696a4753c2493377f23a6d465f5e9e6ad5e",
+      "changed_pixels": 862,
+      "bounds": [
+        749,
+        20,
+        781,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_pink_night_800_1.0_1_testImage.png",
+      "master_sha256": "b6e0e2203495a8e400780db74d4ded5647ef9e03ba537557eebc505d2f60324f",
+      "actual_sha256": "1d4fbec0a6a5c8c71443bc6c88c1a534ff24ad3efadd99f2c894934545f146ad",
+      "changed_pixels": 862,
+      "bounds": [
+        749,
+        20,
+        781,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_pink_night_800_1.0_2_testImage.png",
+      "master_sha256": "9f6479b42e6588e635c75a11679c61747dff60b55bca2e8347c00a5befb78b2b",
+      "actual_sha256": "10a6b0dae56368cd5e240519e4cbcc9511ee1099921d5b03af9f22e429a87605",
+      "changed_pixels": 862,
+      "bounds": [
+        749,
+        20,
+        781,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_pink_night_800_1.0_3_testImage.png",
+      "master_sha256": "cea53b8b25a8c5c944fa0a00460f518e4f9c665fd9dbfa0574aa73a80d453386",
+      "actual_sha256": "8823bf501706cbdfa5ec293d02839a5ad61ec55c563f7348d9d9c976ab5de2ef",
+      "changed_pixels": 862,
+      "bounds": [
+        749,
+        20,
+        781,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_pink_night_800_1.0_4_testImage.png",
+      "master_sha256": "1eda5d907150fe18d2b37bd3205538472878204b14dfdaa46e482da21ee58492",
+      "actual_sha256": "2dbc47d04bc3d7a4b4e9f79ba3ce7b45db2db9f6a22db02369421dabbd282522",
+      "changed_pixels": 862,
+      "bounds": [
+        749,
+        20,
+        781,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_pink_night_800_1.0_5_testImage.png",
+      "master_sha256": "33522c89f5f2d4b68710d91153fb0e6d4c7e35a077e5560fea3cd6157159c0f1",
+      "actual_sha256": "d0f70d61c2723291d72d05dc62c15fc8e1a43ff95e0273fc53a8466ef556f230",
+      "changed_pixels": 860,
+      "bounds": [
+        749,
+        20,
+        781,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/customer_pink_night_800_1.0_6_testImage.png",
+      "master_sha256": "0430326799f8dd2969a53fd2cd3892f108179172fda89cf3d50bca07093bf01f",
+      "actual_sha256": "952e2af74130d63dc8486e34bf29662a1ae1748a186909f0056580d235a6778e",
+      "changed_pixels": 860,
+      "bounds": [
+        749,
+        20,
+        781,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/login_blue_day_320_testImage.png",
+      "master_sha256": "7a8a9a98f5a20c70087b6cb7da2f2f35d946046ebb21e406a6f3ca1f848ffa31",
+      "actual_sha256": "6a2fa2c239a885ea9823d1850fac217f7688c126f39cefa083297d0f0a4526ca",
+      "changed_pixels": 38566,
+      "bounds": [
+        11,
+        20,
+        312,
+        230
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/login_blue_day_360_testImage.png",
+      "master_sha256": "12c121b6ed79f7c8badc93cf5f49c611800952084063938855df19ec309a6f17",
+      "actual_sha256": "65094f0b1109ed9592c779589604e93eb11b5e62ebbb1e8854a207f911279740",
+      "changed_pixels": 50968,
+      "bounds": [
+        13,
+        20,
+        352,
+        257
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/login_blue_day_390_testImage.png",
+      "master_sha256": "1a9fe068beed3afb24328b68a5aa640a8b18d0d48e8c67038d0d764fed59dde9",
+      "actual_sha256": "5c0478143e500ef39d8b0404475607a1a9652e5f7586625b621cdb038b544648",
+      "changed_pixels": 61620,
+      "bounds": [
+        13,
+        20,
+        382,
+        278
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/login_blue_day_430_testImage.png",
+      "master_sha256": "35829de6a0f898c1d4996ac9694a912bb29ac154ecc7e2629a90c6e7623b6efa",
+      "actual_sha256": "146dd1159d1e1edcd712363bef34a0df6cfd1f6d507e50275314e0a3b265f7a5",
+      "changed_pixels": 73146,
+      "bounds": [
+        11,
+        20,
+        422,
+        290
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/login_blue_day_600_testImage.png",
+      "master_sha256": "5a631ed849446ffef3b821773fad7de836ffde81b2d945a9dec5a390d17db670",
+      "actual_sha256": "8ca5ba394b69fb7e6f4a65d48af1e6afbd456dc9ea4d577a66a2321898687ddc",
+      "changed_pixels": 88216,
+      "bounds": [
+        55,
+        20,
+        548,
+        290
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/login_blue_day_800_testImage.png",
+      "master_sha256": "41a7b1a6ef276d5b2fb4c40acb6f0f3b5dee21a0ee54e8d5d9ccce23f1b676d6",
+      "actual_sha256": "5442370379bdbe2cb6037ad21c32385d795ab60bb4eae18cb4703451ea2ea479",
+      "changed_pixels": 88225,
+      "bounds": [
+        155,
+        20,
+        648,
+        290
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/login_blue_night_320_testImage.png",
+      "master_sha256": "84d33996ef393e28a3b5ffd29a7a36f2e6aca918b75863e0b07102e230fe00c6",
+      "actual_sha256": "24fe72a70c32d31a423e796a01e68f6dfd074c66cf204e940da168380954e996",
+      "changed_pixels": 38603,
+      "bounds": [
+        11,
+        20,
+        312,
+        230
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/login_blue_night_360_testImage.png",
+      "master_sha256": "198cada2cad9c5e8a412ffa0de35b42eb43e0cbc836991451a7458d5a7a3b9db",
+      "actual_sha256": "761b1010f787556c2099a90a5501d1cc227ff41778ccb4dd4c88c3c654d78b9f",
+      "changed_pixels": 51001,
+      "bounds": [
+        13,
+        20,
+        352,
+        257
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/login_blue_night_390_testImage.png",
+      "master_sha256": "cb4e311cda876d3d622bd3ea5bcc8d113639e804090cd35c8ae98eb8208d79f7",
+      "actual_sha256": "d508c14d464f1d436c01994ed6fbbb944f53faad303a6a1bf432739011fc9253",
+      "changed_pixels": 61657,
+      "bounds": [
+        13,
+        20,
+        382,
+        278
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/login_blue_night_430_testImage.png",
+      "master_sha256": "0aaf8a8a5e30ee0df3eb37467ca8ef8be3c9a9dd02352d4116d3fd0a8ebbc4b2",
+      "actual_sha256": "45ef07bbff8ad74b6c1885a293f911bd74a1f51f3a1e086163e7975fced49743",
+      "changed_pixels": 73200,
+      "bounds": [
+        11,
+        20,
+        422,
+        290
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/login_blue_night_600_testImage.png",
+      "master_sha256": "e9616b79a963a2d1cd52434a4ff3c176a075de05b311ac71a57cb31b9173806b",
+      "actual_sha256": "84da83020393a29cebe07091ce16525cef9bf7aab2e484b4f248d7f4a0ba671e",
+      "changed_pixels": 88304,
+      "bounds": [
+        55,
+        20,
+        548,
+        290
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/login_blue_night_800_testImage.png",
+      "master_sha256": "0748601698ab182631dfd0977e62f6ccb687a1f20eb0c9b3849c23b890d46fff",
+      "actual_sha256": "d222c5e006742e7f0966d9eb7f5c113836a76514653c22d1d73cb21d4b553c7e",
+      "changed_pixels": 88305,
+      "bounds": [
+        155,
+        20,
+        648,
+        290
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/login_pink_day_320_testImage.png",
+      "master_sha256": "288043612f51150743d93dbe6254c57b4ae289bd8bff80af8302d7270ad48885",
+      "actual_sha256": "ded3d6eb32ec0ddbc38680285a44ef0756495bceee20f4814480a76fcd429f9c",
+      "changed_pixels": 37309,
+      "bounds": [
+        13,
+        26,
+        312,
+        230
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/login_pink_day_360_testImage.png",
+      "master_sha256": "6aa8261b7ecf49f6250838cd2bfc57a360cca9b9a8fe516ab0a99a43c5992822",
+      "actual_sha256": "1b68c58ded6edb478161a17462a94f720444d18998a6d21cca2c0ef6a40c7423",
+      "changed_pixels": 49440,
+      "bounds": [
+        13,
+        27,
+        352,
+        257
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/login_pink_day_390_testImage.png",
+      "master_sha256": "e54b917ca7033853049f6455e8454d6de47925f5e13f2a06a5602942d2c63e0a",
+      "actual_sha256": "4671d67684e4f9bb0bc3d0fbba4fcaf905e2a09307cc42d1e409e452c7f0d191",
+      "changed_pixels": 59760,
+      "bounds": [
+        14,
+        27,
+        382,
+        278
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/login_pink_day_430_testImage.png",
+      "master_sha256": "5002dbbd6ccef0eacfbd0f299d83b9d91d8cbfe2c67412c067945886e803780e",
+      "actual_sha256": "1982aa8839a1eba19ab6f528707e8d4b55c44def57edc5621cd94b76758e11a3",
+      "changed_pixels": 70733,
+      "bounds": [
+        14,
+        28,
+        422,
+        290
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/login_pink_day_600_testImage.png",
+      "master_sha256": "acd2f81dfd79300d687cd03e7fe5e23a1488a83eb3dead6572895088ddc7aa38",
+      "actual_sha256": "765f4ddf143326c778055437d3b4e617109074d53db9a7df201c3ee70b38ec55",
+      "changed_pixels": 86065,
+      "bounds": [
+        58,
+        28,
+        548,
+        290
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/login_pink_day_800_testImage.png",
+      "master_sha256": "6775a3cb22a20266979ae90b39ce8ffa749885bd9a3c82c56ff43a714c7c0244",
+      "actual_sha256": "592238b72b3620eb2e3b2c1e1c295d1f21ea638149f354c3b493b1d2c5dfb54b",
+      "changed_pixels": 86065,
+      "bounds": [
+        158,
+        28,
+        648,
+        290
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/login_pink_night_320_testImage.png",
+      "master_sha256": "b646dc4a2dfe3a5e15ffcaef335715ba230a674b1136e14daa8e36d09c5eadc2",
+      "actual_sha256": "d53f26fbc4a8a0cc32deaa2b17988464c1ad92db206e5dd6142da16737622aa7",
+      "changed_pixels": 37298,
+      "bounds": [
+        13,
+        26,
+        312,
+        230
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/login_pink_night_360_testImage.png",
+      "master_sha256": "0d2932915d771b99dc35f3dde5bf8904d7eaf74a109013334f54b08fc5103582",
+      "actual_sha256": "987d7082f1110174b3841c54f29a49dafa67718d0f912867a83aa11a0b2e7a66",
+      "changed_pixels": 49456,
+      "bounds": [
+        13,
+        27,
+        352,
+        257
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/login_pink_night_390_testImage.png",
+      "master_sha256": "95fb6ee55ee327f2f230093cdcc6b21e00b36c079c7e57541ec241a001223076",
+      "actual_sha256": "3303a207e73593237d045641524555839d4fd2de97ff7762c30dc247a8293c91",
+      "changed_pixels": 59818,
+      "bounds": [
+        14,
+        27,
+        382,
+        278
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/login_pink_night_430_testImage.png",
+      "master_sha256": "238f16dfe7ddc66b09e03c87a13d8a6ba4a4c67fe9c98f0c71a1aac904271af7",
+      "actual_sha256": "468db8806ce0ee1628d54c7aec8008c177baf10f30456a49c4246d3c95915138",
+      "changed_pixels": 70805,
+      "bounds": [
+        14,
+        28,
+        422,
+        290
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/login_pink_night_600_testImage.png",
+      "master_sha256": "c34141c78ca903d78a980af0e4d06cdd530c7fb63a4fdec2185b9e60b2e98516",
+      "actual_sha256": "3feff0f9e4d8da82593d234c1863b0ae33520e94c7b5e787cd11979a6a600ee7",
+      "changed_pixels": 86132,
+      "bounds": [
+        58,
+        28,
+        548,
+        290
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/login_pink_night_800_testImage.png",
+      "master_sha256": "75e8801e8ef35b33646196aa74365805db8808efb291883707c7a5d3ae3b0206",
+      "actual_sha256": "e5a7b432cfb48c0ea1a15d6f4de7b68360495f230aab0dff7ada46debb3df56b",
+      "changed_pixels": 86132,
+      "bounds": [
+        158,
+        28,
+        648,
+        290
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_blue_day_320_1.0_0_testImage.png",
+      "master_sha256": "6951cdf50edf5a67cf9a4f2ed1a549620be2bea380378de1dd29e8080955b088",
+      "actual_sha256": "4a3ddf93d43c4727024b7d5cff03b51897fc33cc6a0c50c12b36c77dac820b95",
+      "changed_pixels": 10339,
+      "bounds": [
+        23,
+        20,
+        303,
+        258
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_blue_day_320_1.0_1_testImage.png",
+      "master_sha256": "585ea1cbb326bb83dafcc997137b593c8a0be222cf485a3c2b5683bb0584ed56",
+      "actual_sha256": "f930eef8141d46891b9d8a4385903aaff378f6ec60071edc36b3ab079d23ce66",
+      "changed_pixels": 890,
+      "bounds": [
+        268,
+        20,
+        303,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_blue_day_320_1.0_3_testImage.png",
+      "master_sha256": "f3477e5f4c751c3c6c1221e112029aa28b686e53ee3e5f9d09faec301ca9c609",
+      "actual_sha256": "793dd9ab20d1d24866d561382a0f8a3ebfdb69c456bfe75abdcf969481f4b7d9",
+      "changed_pixels": 890,
+      "bounds": [
+        268,
+        20,
+        303,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_blue_day_320_1.0_4_testImage.png",
+      "master_sha256": "2b5b23dd6b021cbebdc1542cc444b7e26e81b7826d39169b58d6452e4cf5e18a",
+      "actual_sha256": "658ba5f412183d7b02cf9a39c087e8b84da1c9ad440c536f37963594a0e8c974",
+      "changed_pixels": 890,
+      "bounds": [
+        268,
+        20,
+        303,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_blue_day_320_1.0_5_testImage.png",
+      "master_sha256": "c2d164e8f375cc02f37d699948a4b06f3dd165b802a546b6ec8bb79ceff21cdd",
+      "actual_sha256": "2c1e78549c89cff01464a8ec47ae4df8b6b3c11ec365280809b05d1302c19cd4",
+      "changed_pixels": 10295,
+      "bounds": [
+        23,
+        20,
+        303,
+        258
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_blue_day_320_1.0_6_testImage.png",
+      "master_sha256": "88e162163de2bcb19d0a266b36b8859575e25506fcb2fc54e76e4638861cc579",
+      "actual_sha256": "1cd1178752446d2897a6448613a909236d30c064e862b3bbb63570b9ce090b29",
+      "changed_pixels": 1003,
+      "bounds": [
+        63,
+        20,
+        303,
+        124
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_blue_day_360_1.0_0_testImage.png",
+      "master_sha256": "4660f6468232915f528ed6e197e06fc156e51d435baafa5127939fdc665f0743",
+      "actual_sha256": "583ae110e5bee7a42c05ce50709c5470dec51fd6440c43f5598d88dba5e80bfa",
+      "changed_pixels": 13098,
+      "bounds": [
+        23,
+        20,
+        343,
+        258
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_blue_day_360_1.0_1_testImage.png",
+      "master_sha256": "7ec9c543601702de9084a84d765f3f6dfbb02727efa0fa90e5891592be3ccf58",
+      "actual_sha256": "59ff91b7175e02b418fc97a22edfc14b4df1c277797672a1d0ff7a7ebb016ca7",
+      "changed_pixels": 890,
+      "bounds": [
+        308,
+        20,
+        343,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_blue_day_360_1.0_3_testImage.png",
+      "master_sha256": "4692a857a41599d5e5b5c80527c65133f50b4ed3bdcf8799d6e1ccde4a5caf1e",
+      "actual_sha256": "9d157d5f6611c9088d2fdf592a1f738f5a5845d8cc935dd1b299c170abcd9bde",
+      "changed_pixels": 890,
+      "bounds": [
+        308,
+        20,
+        343,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_blue_day_360_1.0_4_testImage.png",
+      "master_sha256": "30b902fbd42945d54f342a09e99ac519ef284ec55f53eca1d9eba8c35a54b2b6",
+      "actual_sha256": "da6f2084ecdfb6495da22556fb3a98b905f8e9eaebcfb4c625e9a78158f7a331",
+      "changed_pixels": 890,
+      "bounds": [
+        308,
+        20,
+        343,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_blue_day_360_1.0_5_testImage.png",
+      "master_sha256": "be2badb079f577ea3764a7775a21c0168ac528050f7bf0a2927b842ae96933be",
+      "actual_sha256": "1d0722c2fab48f11cc0dbb27b6f613db317b2b39e2e4c6e7c5612ca902415b1b",
+      "changed_pixels": 13034,
+      "bounds": [
+        23,
+        20,
+        343,
+        258
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_blue_day_360_1.0_6_testImage.png",
+      "master_sha256": "db80cc133359802a8e18ad73243baff91fcecf67fee4a6ced624d137433929ea",
+      "actual_sha256": "15acf733790391c0c6884b4d9babc0d56348bb9244d10f3085e6580045f7b672",
+      "changed_pixels": 2118,
+      "bounds": [
+        55,
+        20,
+        343,
+        124
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_blue_day_390_1.0_0_testImage.png",
+      "master_sha256": "ec565ca4ce084688ed74f4b046fc4c0ea6d3463020cc34093601c160ca81bf43",
+      "actual_sha256": "c53db8288b363d88fd521608667a63ad965e95cac2651ab30c1e02ed74a50ad1",
+      "changed_pixels": 13231,
+      "bounds": [
+        28,
+        20,
+        373,
+        258
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_blue_day_390_1.0_1_testImage.png",
+      "master_sha256": "93fbe1bc63f7fbd1ea183a1ecb4969a87c8be666948aa123e3b5f964469e8022",
+      "actual_sha256": "a558bcca4cdfd286b34258b19a69e3321785f68339fa26ec510e32c999eadfa3",
+      "changed_pixels": 838,
+      "bounds": [
+        338,
+        20,
+        373,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_blue_day_390_1.0_3_testImage.png",
+      "master_sha256": "0a2dec00034c3d2c37b7fd13a790919d325cf882e97938a63e48577b1fd35cd4",
+      "actual_sha256": "b6a47fc2fde379667d2e979c95f7756eea9e6293769e17b6efe36e1852e6adb3",
+      "changed_pixels": 838,
+      "bounds": [
+        338,
+        20,
+        373,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_blue_day_390_1.0_4_testImage.png",
+      "master_sha256": "94ce8dadebfbeb71afbadc11a370a1ab06df09e487bb08ca17aedffe8b7234ed",
+      "actual_sha256": "468cdc59b901c2a14635c240f034d4b1d227b137db6830508bb380e8bed99839",
+      "changed_pixels": 838,
+      "bounds": [
+        338,
+        20,
+        373,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_blue_day_390_1.0_5_testImage.png",
+      "master_sha256": "d0fd00f916fa1ec952576da72e8644c12d4549f4b5b984a3c0a83f91a0859cfd",
+      "actual_sha256": "32a66df364c337d41ab31f37b90199da25943edad209870494c9db4f0f9c4ec2",
+      "changed_pixels": 13173,
+      "bounds": [
+        29,
+        20,
+        373,
+        258
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_blue_day_390_1.0_6_testImage.png",
+      "master_sha256": "08d6eb06111e21d87d1f8c7f97403f19638aa9fb96ea23b6b7d1c4d9e911abdd",
+      "actual_sha256": "8b0348a9eba620dadf6f9deb4692dcededa1d4f474c3f0b00eaf77730386db51",
+      "changed_pixels": 2066,
+      "bounds": [
+        61,
+        20,
+        373,
+        124
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_blue_day_430_1.0_0_testImage.png",
+      "master_sha256": "2e448e49bb92092110a33152820ed1e7eb8a2761d3b563f55379a6b2e28fc1ad",
+      "actual_sha256": "fa36ca45305c010d0556a1a23e3a63f36ff1341c9846cf47abcba3e9ed4b1c0f",
+      "changed_pixels": 13579,
+      "bounds": [
+        30,
+        20,
+        413,
+        258
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_blue_day_430_1.0_1_testImage.png",
+      "master_sha256": "6f0f0dbeb2204fd477cc52145f7b84d451813ab3ace0bfb2ada4fb411e3f57fa",
+      "actual_sha256": "ee9d9532ef1e1b1419fb74429688f0cee4c23a9f26c928d16bc71edd767db040",
+      "changed_pixels": 890,
+      "bounds": [
+        378,
+        20,
+        413,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_blue_day_430_1.0_3_testImage.png",
+      "master_sha256": "f8828de66332aab8d15a406c8350a0ea4cc57096e0ea6ed593feecd598c20af5",
+      "actual_sha256": "5561424a599698874bc1dcd712a2bff00512b71e96772b387df402592b1f89c4",
+      "changed_pixels": 890,
+      "bounds": [
+        378,
+        20,
+        413,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_blue_day_430_1.0_4_testImage.png",
+      "master_sha256": "7c20b19d3834d3bef6b2376c3996b06f3901ed134f7dc722868eba6ca1aa6ae4",
+      "actual_sha256": "5390d71ad746a02ba7ee16f1c8680b05db78c3c39f2ae36bc1c86c5526156ac6",
+      "changed_pixels": 890,
+      "bounds": [
+        378,
+        20,
+        413,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_blue_day_430_1.0_5_testImage.png",
+      "master_sha256": "4fc770017b6092f46e49b66d3b02ad61d65ffdc31efe83bea058649ca18631e0",
+      "actual_sha256": "3a25fa97d6a9827b8a44f7a13194c74c150acf72205c50f389485b97f9254689",
+      "changed_pixels": 13499,
+      "bounds": [
+        30,
+        20,
+        413,
+        258
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_blue_day_430_1.0_6_testImage.png",
+      "master_sha256": "bf64e6b6378a5e590904f30808a68ee0da411d9297c3597db2ed72f7502ff1a4",
+      "actual_sha256": "6fcfd90a3225ea3af04dc7cb5fdaaec5060b42f9e65ff481bff91d026bd2d1cf",
+      "changed_pixels": 2155,
+      "bounds": [
+        64,
+        20,
+        413,
+        124
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_blue_day_600_1.0_0_testImage.png",
+      "master_sha256": "49942b959741791069d73b878dfa8727de13617f694d169a7488adaa37960fd7",
+      "actual_sha256": "2a5ade989aeafeb0e5909244975b26b61ce04d0a9a2a5fb05b28dfbbc8f9af93",
+      "changed_pixels": 13583,
+      "bounds": [
+        30,
+        20,
+        583,
+        258
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_blue_day_600_1.0_1_testImage.png",
+      "master_sha256": "f752dc095c295e5d4e6b945a7b43fe6a3abb1037ccb2749be670c85e93557cd2",
+      "actual_sha256": "f0ff5fc0c1d80bae46771d2ed511b5a7bda7ca8957aa87cfc390f1af332f8a23",
+      "changed_pixels": 890,
+      "bounds": [
+        548,
+        20,
+        583,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_blue_day_600_1.0_3_testImage.png",
+      "master_sha256": "9b7b7de24b19c87d7c3819b0f77f85eaff166efd8d49afdabbdb8061d81381ea",
+      "actual_sha256": "62de37055302d7e11c7f46fc53b121c78a3fe215d318e229a7fa18bb8ca2e213",
+      "changed_pixels": 890,
+      "bounds": [
+        548,
+        20,
+        583,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_blue_day_600_1.0_4_testImage.png",
+      "master_sha256": "a3c6b048c6310168feca24ac4738f2064d6c929d055f964ff8037483f28802fc",
+      "actual_sha256": "cd96678dbac3ebb1b00ae4946242fa845696b01eaca43603d8701e245d5cab32",
+      "changed_pixels": 890,
+      "bounds": [
+        548,
+        20,
+        583,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_blue_day_600_1.0_5_testImage.png",
+      "master_sha256": "6513c081c992ccb0c3375a83b893f537d1cb55af8897e1544b7e037ae5795692",
+      "actual_sha256": "972b8f4d47a3668cea56305a696e7532c1a8c1050f2230de4d32a5de03b8b492",
+      "changed_pixels": 13511,
+      "bounds": [
+        30,
+        20,
+        583,
+        258
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_blue_day_600_1.0_6_testImage.png",
+      "master_sha256": "a613aadb468b33b5fa4121b133e5b33755261ef0dca1eedfc098a67acaeaf823",
+      "actual_sha256": "1d3de5558719d7269b542e616bad6daf8017c59c891a186e1d49d32fad3b3325",
+      "changed_pixels": 2154,
+      "bounds": [
+        64,
+        20,
+        583,
+        124
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_blue_day_800_1.0_0_testImage.png",
+      "master_sha256": "7acb77705b990617efdd6e657d4e2b565298cb71dd3c42ebdfa84040f39f739f",
+      "actual_sha256": "3e5cce287ed71b0b40e5fc72e3c924f6f9cb939bd144a3de82647bf09f86bcb8",
+      "changed_pixels": 13584,
+      "bounds": [
+        30,
+        20,
+        783,
+        258
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_blue_day_800_1.0_1_testImage.png",
+      "master_sha256": "838de3b6acf24f352556f3f5c1a0b023ebd9b852abcfa777f56d8931c43d78f7",
+      "actual_sha256": "11a928f903f028fe14db8d85806b173977f9fc8d5ac2ae23f4d44e6194d8ae9d",
+      "changed_pixels": 890,
+      "bounds": [
+        748,
+        20,
+        783,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_blue_day_800_1.0_3_testImage.png",
+      "master_sha256": "3f05634336477efb818c46aba13d1a6119b01ac81847c12c320e76cf260073fd",
+      "actual_sha256": "6a1e5f33d61b21a897ffb1dd5ee3812cb8038f0e27db2bc49a3821aeafdb1fdf",
+      "changed_pixels": 890,
+      "bounds": [
+        748,
+        20,
+        783,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_blue_day_800_1.0_4_testImage.png",
+      "master_sha256": "5bb4af6fa334eec9b5da74b9c325b6bbd48a6bee876aba091a729ce4919bbd84",
+      "actual_sha256": "38c948d16140481f4e7cd4e7b8f923669813fb5bb258f175c20135812380c2b9",
+      "changed_pixels": 890,
+      "bounds": [
+        748,
+        20,
+        783,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_blue_day_800_1.0_5_testImage.png",
+      "master_sha256": "872ad03361aca1b4621ec0264b2cecd6f5f256f622b6c38c2d2bd687213b19d5",
+      "actual_sha256": "357c6a866e0940a8dacb5fa52793b019b57e60c6417234c22b947edd39a1aa9b",
+      "changed_pixels": 13528,
+      "bounds": [
+        30,
+        20,
+        783,
+        258
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_blue_day_800_1.0_6_testImage.png",
+      "master_sha256": "77045409f0d9525f885626fe7e23d5c75615e4cda939474ce20d89420fc8dfdd",
+      "actual_sha256": "9645043970d8ea0904c8273dd19dc99f513b0937d053aa712e24c14ac36668d7",
+      "changed_pixels": 5696,
+      "bounds": [
+        30,
+        20,
+        783,
+        258
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_blue_night_320_1.0_0_testImage.png",
+      "master_sha256": "699e83e1ed84238cfd9c971148cb1ce4916c169bb9efd36ddb5dade3eedce9d4",
+      "actual_sha256": "92954f801378b7b4b359a91195f6a4dc97ea51d140fc6894800291a0fba5cb5c",
+      "changed_pixels": 10344,
+      "bounds": [
+        23,
+        20,
+        303,
+        258
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_blue_night_320_1.0_1_testImage.png",
+      "master_sha256": "c5793c21271badf658130710ae94e704faf5b3eb6f531b92eeddc4af87a99125",
+      "actual_sha256": "163804d975d53113363b31121e218cc9d177145879c9a721af5a164f1655b6b8",
+      "changed_pixels": 892,
+      "bounds": [
+        268,
+        20,
+        303,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_blue_night_320_1.0_3_testImage.png",
+      "master_sha256": "4ff1d480971c60dabb52fe4faa001e451486a8f5772f05b297898e007a8070ea",
+      "actual_sha256": "0780c5f5e603515e3ae7fc37a5c6d705d0f8ded734bc02ad6b6b74235862be91",
+      "changed_pixels": 892,
+      "bounds": [
+        268,
+        20,
+        303,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_blue_night_320_1.0_4_testImage.png",
+      "master_sha256": "6a402c9f8fb8dd2aeeecae6cab4f8a9f2e99874cee1d0c50b1c269955bda9178",
+      "actual_sha256": "8c8ba53bc173d0f2cd2806067f96b61ae05464b707be0b2a1684bfa9a74b3d39",
+      "changed_pixels": 892,
+      "bounds": [
+        268,
+        20,
+        303,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_blue_night_320_1.0_5_testImage.png",
+      "master_sha256": "d71b75afbaa967a70b8a181aac13dbc76613af92737d0cf4b84f0e25a7cfcd21",
+      "actual_sha256": "7b03907bd80478d10e4ba9f11a6397377581b46ae70a806fd283687f981a85e4",
+      "changed_pixels": 10318,
+      "bounds": [
+        23,
+        20,
+        303,
+        258
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_blue_night_320_1.0_6_testImage.png",
+      "master_sha256": "7edf0bfce0dec6b420f99a016daa1d040da3b81220b747c773a6b8c4ec80a4b4",
+      "actual_sha256": "710bbc1156a78e20c3d1d848f88067f00ec7d296a09ef8ebae9f7ebfa0a1e1a0",
+      "changed_pixels": 1017,
+      "bounds": [
+        64,
+        20,
+        303,
+        124
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_blue_night_360_1.0_0_testImage.png",
+      "master_sha256": "1c0270f8709ca56e85e61809bd725b52b9abf8c5c81fd8cb5a35f7e1acd86f08",
+      "actual_sha256": "ea8149f1547c08a56333b14d6ad5b26a94d3c1dce93cf4bd40c6630a55a9a7ca",
+      "changed_pixels": 13100,
+      "bounds": [
+        23,
+        20,
+        343,
+        258
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_blue_night_360_1.0_1_testImage.png",
+      "master_sha256": "fe6da161daea51141ea05ef2fb23a6acd4b0ef237f96119f6f2a7ca6d3e1f73a",
+      "actual_sha256": "8b49fd63e32562edaceea3eea8102943b934119707d7bdef228009f9545bb347",
+      "changed_pixels": 892,
+      "bounds": [
+        308,
+        20,
+        343,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_blue_night_360_1.0_3_testImage.png",
+      "master_sha256": "96dd1e7694863ebca05b54bb90f4e37511fc25b0a08d45621f1d4da3a3a6e675",
+      "actual_sha256": "69442a0ac6b8e24fb277f6aa7f6ae6a0f8dbed6c2d93a8c7a67d0672402322da",
+      "changed_pixels": 892,
+      "bounds": [
+        308,
+        20,
+        343,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_blue_night_360_1.0_4_testImage.png",
+      "master_sha256": "7f04d8d45fc28f7382109aa9bade95486587121718e39f790a1b6a31fb3ea3b6",
+      "actual_sha256": "0432bc0c7b248eeabebc865e3e8be442c1ec89671a9f4f42ce857916be0c3542",
+      "changed_pixels": 892,
+      "bounds": [
+        308,
+        20,
+        343,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_blue_night_360_1.0_5_testImage.png",
+      "master_sha256": "99e6fc2836093bcbcf6adbbb337f6e2a91d7d425ea4082762f7e6ae96a55c22b",
+      "actual_sha256": "351422df9149d8e782455cf6b66a7212a6f141196b93feb57154207bea1a3d88",
+      "changed_pixels": 13048,
+      "bounds": [
+        23,
+        20,
+        343,
+        258
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_blue_night_360_1.0_6_testImage.png",
+      "master_sha256": "cabba8bfc063b019f9bb9aebcf4c171a46269dc96a132c537f16fb7f728af94c",
+      "actual_sha256": "fc2374cf45a509a1d1c8fd3ab2ba146b0b4898efd08ce2bfd0093fa8484537b4",
+      "changed_pixels": 2126,
+      "bounds": [
+        55,
+        20,
+        343,
+        124
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_blue_night_390_1.0_0_testImage.png",
+      "master_sha256": "44de5e044ded066c427ce33e80188e4be1c424d757f2586b82575a65a5bf13c9",
+      "actual_sha256": "757f39bff7095911ae06e9a4352f5ec632eb5ccb448afc021666aee74aaa5ece",
+      "changed_pixels": 13236,
+      "bounds": [
+        28,
+        20,
+        373,
+        258
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_blue_night_390_1.0_1_testImage.png",
+      "master_sha256": "487e19db3ba8ae01b2012ed4f05cf0630abfa6fd7233ef30aadd37cd69e74628",
+      "actual_sha256": "f8c4d3266f46046f5f856f362139a885779b39e1e77ab1d2150a95e23d2bd52e",
+      "changed_pixels": 838,
+      "bounds": [
+        338,
+        20,
+        373,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_blue_night_390_1.0_3_testImage.png",
+      "master_sha256": "ec6d681361d2e7cd73999d6766d98e2ea9c15186735bab0106a63fd34de98faf",
+      "actual_sha256": "80273fa5334d7da036e2f0b677438151799bddb117c788a13502cbf1ba1053e9",
+      "changed_pixels": 838,
+      "bounds": [
+        338,
+        20,
+        373,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_blue_night_390_1.0_4_testImage.png",
+      "master_sha256": "467f337fcc060ddf752aefd4a8111fadddfcfaca90a1b1632f1b25e85474a16a",
+      "actual_sha256": "e3af40b76afc797d5185a044ace9ec7ea2f7626f4f992fddc52060cc0aa2c766",
+      "changed_pixels": 838,
+      "bounds": [
+        338,
+        20,
+        373,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_blue_night_390_1.0_5_testImage.png",
+      "master_sha256": "3122bad2fb9c89fff32cc9f27bb63ab0f15f7ec8c6cc85213e639725a7a658bb",
+      "actual_sha256": "2f9f398439ab7fb02e54045c656074a321822bf82742cf91712f340f38b3cc19",
+      "changed_pixels": 13195,
+      "bounds": [
+        29,
+        20,
+        373,
+        258
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_blue_night_390_1.0_6_testImage.png",
+      "master_sha256": "b324c00d03123cd2d3146aa7b050cc021a4701bba10bc516d427e16ade33c814",
+      "actual_sha256": "a5fa571b814e975d073260114055a885b59d86d107eb06212fba3f792da70f66",
+      "changed_pixels": 2069,
+      "bounds": [
+        61,
+        20,
+        373,
+        124
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_blue_night_430_1.0_0_testImage.png",
+      "master_sha256": "4ea4811eae4ee8747e16edc326bcfa5aff0b63a851a66de633a4e83ad0aeb982",
+      "actual_sha256": "7e7ba1922c562f4ee0c6b8608986a076689851e84e5db68216174f09b30cab9f",
+      "changed_pixels": 13582,
+      "bounds": [
+        30,
+        20,
+        413,
+        258
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_blue_night_430_1.0_1_testImage.png",
+      "master_sha256": "be5fda8b9f88833f74fd027549bc480f6a28ab9915323e26ed18c348ef35cdcf",
+      "actual_sha256": "f74052f284cc9c9cca7fceb803a7e45e41b781f4a49ad51f2e4061e5c7824fba",
+      "changed_pixels": 892,
+      "bounds": [
+        378,
+        20,
+        413,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_blue_night_430_1.0_3_testImage.png",
+      "master_sha256": "b86a5591ff674cfd8baad93fc943f271e80821a82f9ce865bd411b6929538b1f",
+      "actual_sha256": "069fde6af4266a0ccb616249eb5bded0685bd216c449b00187af488b3214a076",
+      "changed_pixels": 892,
+      "bounds": [
+        378,
+        20,
+        413,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_blue_night_430_1.0_4_testImage.png",
+      "master_sha256": "1b4c8c5b7748cd5eee65e6f977d18b34428e760e51248df2c86aeb2760c6893b",
+      "actual_sha256": "ccc0d643486d6b468b0f1295476dd8ba94e854924e09d0b46f50aa3a55a3d38a",
+      "changed_pixels": 892,
+      "bounds": [
+        378,
+        20,
+        413,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_blue_night_430_1.0_5_testImage.png",
+      "master_sha256": "4edb3ea37ecdc80967a709194e6ab8738909097b3e6f5bc25b0fd476a8417553",
+      "actual_sha256": "e1a74c5701391776048a1ea4c7996fa57a3e26ec7b954b15fae8b92202f9082d",
+      "changed_pixels": 13517,
+      "bounds": [
+        31,
+        20,
+        413,
+        258
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_blue_night_430_1.0_6_testImage.png",
+      "master_sha256": "66462a7e7d0af03e2e3a169478d8db1b5744d398b81a1304645d89e30d8e8e5c",
+      "actual_sha256": "f0d58144a81a6dbb37e70e7a3dd1e57101bcedf85dedfe03f908b939d778f619",
+      "changed_pixels": 2170,
+      "bounds": [
+        64,
+        20,
+        413,
+        124
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_blue_night_600_1.0_0_testImage.png",
+      "master_sha256": "b8edeecad80ded0135a40656fe32b97843c1098969593fa3637c3fba831f609a",
+      "actual_sha256": "0b5ceb36e62ec28da98d20162eb5a605682ebbf66a589561cf8b3cea0e7356fd",
+      "changed_pixels": 13580,
+      "bounds": [
+        30,
+        20,
+        583,
+        258
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_blue_night_600_1.0_1_testImage.png",
+      "master_sha256": "4afc291c8898577a75edc827c92d7a7b592380a3306cbbd8b2ae7299b7c0d64d",
+      "actual_sha256": "abd7b39343c09427b4900d5850108cc510c69968389cb69d39678bf99264f29b",
+      "changed_pixels": 892,
+      "bounds": [
+        548,
+        20,
+        583,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_blue_night_600_1.0_3_testImage.png",
+      "master_sha256": "caad2e24d29819c6494f8b79d05ff0665e9a9c732565f3b88141c429f30fd332",
+      "actual_sha256": "a9edd5afad4467e3a18849ddf892a9253268aef52cef99e83cd1d1f6595189cb",
+      "changed_pixels": 892,
+      "bounds": [
+        548,
+        20,
+        583,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_blue_night_600_1.0_4_testImage.png",
+      "master_sha256": "0a047b72036c9315c63224991ed0439c363a6f43f8b4aeb29e863866294f4774",
+      "actual_sha256": "33eefa8bd39c69ce09b345dacbccf8f95b7bd0e7eb619edf14ceee704df92b65",
+      "changed_pixels": 892,
+      "bounds": [
+        548,
+        20,
+        583,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_blue_night_600_1.0_5_testImage.png",
+      "master_sha256": "a52cb8dfec582a3d83cdc8b7d44d68664870cefa6281263ba3c0cc9f474937e5",
+      "actual_sha256": "b13714a856b45df0899f524dc1fc31f6d4a5d0f4cc31769b1d7f770b3a6b65d0",
+      "changed_pixels": 13520,
+      "bounds": [
+        30,
+        20,
+        583,
+        258
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_blue_night_600_1.0_6_testImage.png",
+      "master_sha256": "522860d0448262bbbfc510578398eb956528d89616710e7c02c9ccd89b70a92a",
+      "actual_sha256": "4332bb785fe8197225d5de4294456bb4cfe841ddffae780b14ace65081a2c63a",
+      "changed_pixels": 2168,
+      "bounds": [
+        64,
+        20,
+        583,
+        124
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_blue_night_800_1.0_0_testImage.png",
+      "master_sha256": "840947bbba5c2207e6b4a51e52237f17c01707319ecf27e394d748092977d5a2",
+      "actual_sha256": "8bc7a4f63b883b9f24f987c7548fc9a879f395a763193ead4553c33a8fc4712d",
+      "changed_pixels": 13577,
+      "bounds": [
+        30,
+        20,
+        783,
+        258
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_blue_night_800_1.0_1_testImage.png",
+      "master_sha256": "a6fcbdaca42a98ea7ac1524ebcbd3a87d88ddbaf2e69fcddd297ff9947380ae6",
+      "actual_sha256": "7282baf3b1a9495a2e184911be4dc4af97e43ffe1e764c3e571cb305247e50e8",
+      "changed_pixels": 892,
+      "bounds": [
+        748,
+        20,
+        783,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_blue_night_800_1.0_3_testImage.png",
+      "master_sha256": "f0bcdf4cec7283a2462010df9e62ee07e2ce309ae13eecf4362f9763e7829ec1",
+      "actual_sha256": "5a3c2e79406aa6059a6913034486a09d356f83e779be85404c9815aab29f8ad5",
+      "changed_pixels": 892,
+      "bounds": [
+        748,
+        20,
+        783,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_blue_night_800_1.0_4_testImage.png",
+      "master_sha256": "6175cb73d633491772a753386e86e3aa95a53676ee48c5d5c4611ce3a2673c29",
+      "actual_sha256": "a30fe309da49d987630fc7cca4cdcabacd8fc226b5e82984095d007ce159f934",
+      "changed_pixels": 892,
+      "bounds": [
+        748,
+        20,
+        783,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_blue_night_800_1.0_5_testImage.png",
+      "master_sha256": "2cbfb9796e28a0b1912704e83951cb593a40bd813e3dd07e17179f9c515ebe7b",
+      "actual_sha256": "82ab3ec486a8f022267aca1adca7891e319455078105c779163c565d8972245d",
+      "changed_pixels": 13475,
+      "bounds": [
+        30,
+        20,
+        783,
+        258
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_blue_night_800_1.0_6_testImage.png",
+      "master_sha256": "ea867c8af35fee7a8fea67e6dd87b0f88d4ffd0d334dda200eb37a78db509d94",
+      "actual_sha256": "637e5162670a8b87ac96c735c161d0a2ec8907b24ae5829cc8d72b8fd0d9d549",
+      "changed_pixels": 5691,
+      "bounds": [
+        30,
+        20,
+        783,
+        258
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_pink_day_320_1.0_0_testImage.png",
+      "master_sha256": "1db0d5ce4f7e86dc7225a6adec49a2a64186301b6b0d50183dbce4d68629ab8f",
+      "actual_sha256": "78c1774e5ce67473574d0f015e4c797a4c79368321b44a8ab5672f3f15057347",
+      "changed_pixels": 11150,
+      "bounds": [
+        25,
+        20,
+        301,
+        258
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_pink_day_320_1.0_1_testImage.png",
+      "master_sha256": "7808a58630e2b123d6235d8c9fb0b91a65ea63b69dc2554bf0fdf7db0803259d",
+      "actual_sha256": "e1be3b0a9b3a3bfa26a0e714cdc4745bd027da9ce2478aeb8d59e0113b79f207",
+      "changed_pixels": 859,
+      "bounds": [
+        269,
+        20,
+        301,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_pink_day_320_1.0_3_testImage.png",
+      "master_sha256": "b8a54bb24ecbc46335f275c1a1cafc79eee980e86d30c8f7be6fbd43f9384820",
+      "actual_sha256": "8aaa5638d0f85ac41c62c50c56c4699a2f8c8164d11643a541e36e6d20f3ca38",
+      "changed_pixels": 859,
+      "bounds": [
+        269,
+        20,
+        301,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_pink_day_320_1.0_4_testImage.png",
+      "master_sha256": "92eb9ac169df73f9f1e1a7def7eb1a48af391e85f2e44a0b944d9c9bfd0a1b9a",
+      "actual_sha256": "6784bed52736a50abd70fd63f085999905f6b2643faea795d2e175d4e57f88ca",
+      "changed_pixels": 859,
+      "bounds": [
+        269,
+        20,
+        301,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_pink_day_320_1.0_5_testImage.png",
+      "master_sha256": "bdf9f439b39ea173f84c47e1463b185e3dc6eca1eab1f5f7449a839501c20cae",
+      "actual_sha256": "8ff8720a12e9e85776ee6aa226b4278e036a70ff6741b40c8a068160047ff9ff",
+      "changed_pixels": 11129,
+      "bounds": [
+        25,
+        20,
+        301,
+        258
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_pink_day_320_1.0_6_testImage.png",
+      "master_sha256": "fc90c8bed47c49a18f7709b70d83519cc7367aab65ac3cef92206842d037f5fb",
+      "actual_sha256": "6a5659de717fad5fe968f217b78f404303308370740b3f61ccb4064d2ebc43bb",
+      "changed_pixels": 1510,
+      "bounds": [
+        55,
+        20,
+        301,
+        124
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_pink_day_360_1.0_0_testImage.png",
+      "master_sha256": "e2de69bb10830759e2143a240e853a75d8a162cc144fb9e2044757c89a228ff8",
+      "actual_sha256": "6be1648911f18e330173a31abdd2c5d0240b8290cbffdda22333523a6faa4ca4",
+      "changed_pixels": 12107,
+      "bounds": [
+        26,
+        20,
+        341,
+        258
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_pink_day_360_1.0_1_testImage.png",
+      "master_sha256": "637478a00d5b5ce7a88d68fa52439c945a986ede81d554f12de0864591f489d1",
+      "actual_sha256": "f3f62dd972f909be29e78697b86461da845d86faba394107f87d9b732fa086cc",
+      "changed_pixels": 859,
+      "bounds": [
+        309,
+        20,
+        341,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_pink_day_360_1.0_3_testImage.png",
+      "master_sha256": "7447f913e5275eb5c668ae34f42f1a04930ad72e28077faa1b6a2bd72b91a676",
+      "actual_sha256": "599e8268a8b928e3222075aca55f07ddb105f01aa8f77225bcfc2a1f7eb34db1",
+      "changed_pixels": 859,
+      "bounds": [
+        309,
+        20,
+        341,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_pink_day_360_1.0_4_testImage.png",
+      "master_sha256": "013449b978931d7f86cc11e44320d632ac91586aa5210b4204df955b51084e7d",
+      "actual_sha256": "33d2bed1513f8924ac7d25690be834f954c0cfe63bbbc3ccf57c92eba773b37d",
+      "changed_pixels": 859,
+      "bounds": [
+        309,
+        20,
+        341,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_pink_day_360_1.0_5_testImage.png",
+      "master_sha256": "6f0fbfb726947bc3f520e15fdeaa6891a50168d2e946565f40ef790caa143729",
+      "actual_sha256": "698b6d699ef9440b0b16649d905f79ef93de1de5974cb74034e5aad48d6db6e0",
+      "changed_pixels": 12059,
+      "bounds": [
+        27,
+        20,
+        341,
+        258
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_pink_day_360_1.0_6_testImage.png",
+      "master_sha256": "9f5aac966861c7a214187f1fe60064587fa845e8615d7b3b2cd5603fbefcbafa",
+      "actual_sha256": "f8b02de4cb8d6461ac49e5fdd6db5d4b4606925ee255b7bcd77882fd1ec4af53",
+      "changed_pixels": 1609,
+      "bounds": [
+        61,
+        20,
+        341,
+        124
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_pink_day_390_1.0_0_testImage.png",
+      "master_sha256": "1f1e02b119cc7be84aa6258d5ae7c725a1aab6eae7091b80a20848df9013ff45",
+      "actual_sha256": "ecdc4322a7e1ac8a31dfca554d67899b510308e16b15578a050fb251433a7811",
+      "changed_pixels": 12967,
+      "bounds": [
+        26,
+        20,
+        371,
+        258
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_pink_day_390_1.0_1_testImage.png",
+      "master_sha256": "424b3c02928bc553a56b04e0c509b021e40b8d675c45cef1213037800dfbba6a",
+      "actual_sha256": "26a1ee9e244fd6a0bb750a7de704145372ef7079ababed7f6c89475941a0c6cf",
+      "changed_pixels": 844,
+      "bounds": [
+        339,
+        20,
+        371,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_pink_day_390_1.0_3_testImage.png",
+      "master_sha256": "019ad5bff2762828fd59e145260556b4475f4033dcf1865d55f75af5aae8f40c",
+      "actual_sha256": "0f3522a4d64ef359b11b3afe4fd9e27e47141ef53ed747d92069c53b66827ee3",
+      "changed_pixels": 844,
+      "bounds": [
+        339,
+        20,
+        371,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_pink_day_390_1.0_4_testImage.png",
+      "master_sha256": "40fb0f1bd1cc87f01f42bb5a1b3aa287700d6d48b5e70fe02ba8f07865443770",
+      "actual_sha256": "9c1dfe48bbaf46bde80585ba593d83847626299ce5fc441f3584f48bcdbb24c5",
+      "changed_pixels": 844,
+      "bounds": [
+        339,
+        20,
+        371,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_pink_day_390_1.0_5_testImage.png",
+      "master_sha256": "0a84f32744368004f6fbe78912314d9308ee16d9f0b42e5edfb2ac9fcbfc4604",
+      "actual_sha256": "f1f7e422ce43907857575f496e970df33a841faa418037dedc7c02e18f8c18e3",
+      "changed_pixels": 12906,
+      "bounds": [
+        27,
+        20,
+        371,
+        258
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_pink_day_390_1.0_6_testImage.png",
+      "master_sha256": "443d613d9fd55e80676c0d0538f443ff4db01588ca38618cbdd45841e86c0f22",
+      "actual_sha256": "578368a81f6e312d4c768fcaef0ba411ab0176fdca2542d0d3756acf8c8f2cba",
+      "changed_pixels": 1645,
+      "bounds": [
+        67,
+        20,
+        371,
+        124
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_pink_day_430_1.0_0_testImage.png",
+      "master_sha256": "3f4f39143d08cc0143be0f93482c0d574d207a4cdf528ec73d336e62e607ec90",
+      "actual_sha256": "4e0e9dc16659656379f400892808a49ef34ae13f6418928ada806e87008671a1",
+      "changed_pixels": 13757,
+      "bounds": [
+        26,
+        20,
+        411,
+        258
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_pink_day_430_1.0_1_testImage.png",
+      "master_sha256": "f05ed959b551b7bb7c5529fe09e6d941c17850c6cc6509359e1a2d1ea31d217b",
+      "actual_sha256": "29be54c6bba05a84ee6738490dde75c72e2574571fbb4dafda18db92609eb056",
+      "changed_pixels": 859,
+      "bounds": [
+        379,
+        20,
+        411,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_pink_day_430_1.0_3_testImage.png",
+      "master_sha256": "a2d3c6a77926c14a904241d888fb45f39e3effe1796d41165102b18f3c4930d0",
+      "actual_sha256": "ff1896eec0b349223c14b44e5d2b88219ed9a0c34a507dcc64822af7ff5247ba",
+      "changed_pixels": 859,
+      "bounds": [
+        379,
+        20,
+        411,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_pink_day_430_1.0_4_testImage.png",
+      "master_sha256": "da983cf3f54a0ec364398b653346257bc4b3f696cf1c76ccd0375295241f0c39",
+      "actual_sha256": "5549fd15856144141bc6e0d905d73d3f93b48da9a78f0f3ae5193d03386b962c",
+      "changed_pixels": 859,
+      "bounds": [
+        379,
+        20,
+        411,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_pink_day_430_1.0_5_testImage.png",
+      "master_sha256": "e6045602ec551698c468b93a86a094cbae2d2321c36a08c4011c077559e13573",
+      "actual_sha256": "a6e3c0b2fe7724a749277c12577ad7382c69668686f3785fe16ab53238470711",
+      "changed_pixels": 13675,
+      "bounds": [
+        28,
+        20,
+        411,
+        258
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_pink_day_430_1.0_6_testImage.png",
+      "master_sha256": "9378b2836b1783413b62843d9532693f030610709a6bf72bb43afd69da28fff0",
+      "actual_sha256": "8dfafe5ed16d06af609932ef842b1eefd9440ada48d509fa648c83e03dba56e2",
+      "changed_pixels": 1822,
+      "bounds": [
+        69,
+        20,
+        411,
+        124
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_pink_day_600_1.0_0_testImage.png",
+      "master_sha256": "294f8c9c2be4904bd4092cae2cadfa46a897ffbc84362cb1b00ab5ac74685ad4",
+      "actual_sha256": "f56ebfbb02cbe7ce6992b78a7705054aa31c2709f704240d925563ddf5a4ff1d",
+      "changed_pixels": 13761,
+      "bounds": [
+        26,
+        20,
+        581,
+        258
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_pink_day_600_1.0_1_testImage.png",
+      "master_sha256": "e61c423603c3849cb20d48b784f59af4137ae58114bf6f8f5a9b5d88deb1610f",
+      "actual_sha256": "333c3052ede5cf15745cbc1af7e75efbae2ea522ffed36e6ee4c9f1aad6bb449",
+      "changed_pixels": 859,
+      "bounds": [
+        549,
+        20,
+        581,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_pink_day_600_1.0_3_testImage.png",
+      "master_sha256": "bff607d6a7ac0df544bb65851c0583d8769e6f2c982e277fdca7fd4d2827dd10",
+      "actual_sha256": "011fc281775f8ef17f1bbb68b44d02fe4aa415f23f7de1390037bf9ed46a5aa4",
+      "changed_pixels": 859,
+      "bounds": [
+        549,
+        20,
+        581,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_pink_day_600_1.0_4_testImage.png",
+      "master_sha256": "0dcdc8ba6f7cff28db003e0d01f28dfa124c931d3bd1d3a0f419c17c1f10d6c4",
+      "actual_sha256": "1a81bf4dc981b717cdf2c7582aee7264613e3917a8f543924e8aabc2978cb492",
+      "changed_pixels": 859,
+      "bounds": [
+        549,
+        20,
+        581,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_pink_day_600_1.0_5_testImage.png",
+      "master_sha256": "9cef1f4659612161a82aa7412e39715c97833afbcdec6358b4e7ca8d70166758",
+      "actual_sha256": "754731819af5ff24d4e74c2ced4eabec0c9cc2bff4e95d2c2ca8a25aa39ea5c5",
+      "changed_pixels": 13662,
+      "bounds": [
+        26,
+        20,
+        581,
+        258
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_pink_day_600_1.0_6_testImage.png",
+      "master_sha256": "41a047395e0dd402d563ecc167a7b8661e13922030d6a210558dd059fcfa3ddd",
+      "actual_sha256": "234d8a01df1cfd235431511897bcf48ef51d90a229349cf22f48f681aa4a7413",
+      "changed_pixels": 1832,
+      "bounds": [
+        69,
+        20,
+        581,
+        124
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_pink_day_800_1.0_0_testImage.png",
+      "master_sha256": "917ab3be844a583bec79999fff74243b3b03a85e201fdcfa85f87f947bb26f1c",
+      "actual_sha256": "b1f879b0dc88638b374f3d0cc7324cbcac2a8da447dde16dc326437a71ee0592",
+      "changed_pixels": 13760,
+      "bounds": [
+        26,
+        20,
+        781,
+        258
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_pink_day_800_1.0_1_testImage.png",
+      "master_sha256": "11bb274d0e4fc3f823cde2ac090741b0aea5174f5f91aa0d0d88a1b193d7a85c",
+      "actual_sha256": "271718bc7e2a53f2211607a3adad5545da63aa12928eb510eec7eb07f45d1ed2",
+      "changed_pixels": 859,
+      "bounds": [
+        749,
+        20,
+        781,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_pink_day_800_1.0_3_testImage.png",
+      "master_sha256": "44d3cc6c228fef593d668f419bd82c16db2fbb18f546d13a9039176c4112259c",
+      "actual_sha256": "c2014cffa7c27297ed492bcb8a3dd8ed0603820c0c0bc67e506e2c79d6bc8cd5",
+      "changed_pixels": 859,
+      "bounds": [
+        749,
+        20,
+        781,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_pink_day_800_1.0_4_testImage.png",
+      "master_sha256": "87c6db737e729b415d2b73ccb1aba9b02fb6e5d5cff43e719fbe10a79e610923",
+      "actual_sha256": "738f6464f728e3ccaea1d81eb8bb845319162f8d03b747c58d90c1e60e2c457d",
+      "changed_pixels": 859,
+      "bounds": [
+        749,
+        20,
+        781,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_pink_day_800_1.0_5_testImage.png",
+      "master_sha256": "67bc4c0f6cfdf0f79859b6eb4a5971765fe935e2cb2970e243bbbe93ae443bb5",
+      "actual_sha256": "a0e41e6c61ba6bbadc52d91f4fda1b626885bceaf41fb428dc3a11a5f96de032",
+      "changed_pixels": 13713,
+      "bounds": [
+        26,
+        20,
+        781,
+        258
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_pink_day_800_1.0_6_testImage.png",
+      "master_sha256": "9ad632ec81ac310cc9b3b266cb31333185da3003139a8624801b3579532b9fc9",
+      "actual_sha256": "309ae0cff1fddc62dc9211cbcd2dd3b4daca5dac719403632d41f00bc59b7c55",
+      "changed_pixels": 6219,
+      "bounds": [
+        26,
+        20,
+        781,
+        258
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_pink_night_320_1.0_0_testImage.png",
+      "master_sha256": "c4669de7826553854626094cadd1f45a85dff71a50c6ad882b83ab8c26d34638",
+      "actual_sha256": "b68f46ee7dc56845371aa95ecd71d1887a00aa6a9a790756b59bcbc893de285c",
+      "changed_pixels": 11154,
+      "bounds": [
+        25,
+        20,
+        301,
+        258
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_pink_night_320_1.0_1_testImage.png",
+      "master_sha256": "e6dbab68a50f62fab47fd32ff0622ac76e26d35923384311210e96c5c62c68c3",
+      "actual_sha256": "25423ee102348422a4c1ada85195bed6ddf25a1b45227c3b19970ca9b906807a",
+      "changed_pixels": 862,
+      "bounds": [
+        269,
+        20,
+        301,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_pink_night_320_1.0_3_testImage.png",
+      "master_sha256": "a5b794f6569a9e749c1c5aae05247c25506da5c38d25e987d34994da9bbdf51e",
+      "actual_sha256": "de706b0ee05a7c2345393b10d31f697dd7458ccbaecd4b2d18598adcfe36aa1d",
+      "changed_pixels": 862,
+      "bounds": [
+        269,
+        20,
+        301,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_pink_night_320_1.0_4_testImage.png",
+      "master_sha256": "aa24d42f1add812c5f416fd5fbbe51339a8cd8be09bc186bbaeab2df3e8792a8",
+      "actual_sha256": "5c50bdcb674255fce5eb6eb841dd7b6cf56e51ec7921b2be6ce4171057336c5f",
+      "changed_pixels": 862,
+      "bounds": [
+        269,
+        20,
+        301,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_pink_night_320_1.0_5_testImage.png",
+      "master_sha256": "60b830147a6839fca1b058b678a3d27f9c78ef8ef95739c5c4adeedd9e2715f7",
+      "actual_sha256": "5acd5138706818c360e835536077bcde5b5ee00d687ea3715f92d874121b11dc",
+      "changed_pixels": 11123,
+      "bounds": [
+        26,
+        20,
+        301,
+        258
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_pink_night_320_1.0_6_testImage.png",
+      "master_sha256": "6544071cb7e5b115d36a819547fa6859c856b5433c64e62a32d68282b1510879",
+      "actual_sha256": "00623a907cad3eec6df9afd8c5bc3dfef111b54cd48a4bff5ddbc97ece7ab2cb",
+      "changed_pixels": 1514,
+      "bounds": [
+        55,
+        20,
+        301,
+        124
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_pink_night_360_1.0_0_testImage.png",
+      "master_sha256": "bf1d661f0a8c5f3714c62692ff79a67547f621dc038c5ea8b7032ec710c37396",
+      "actual_sha256": "8929a3c0a461e6c940158bdfe5de230a8452e4ea989ec84af04f61ab1207a892",
+      "changed_pixels": 12107,
+      "bounds": [
+        26,
+        20,
+        341,
+        258
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_pink_night_360_1.0_1_testImage.png",
+      "master_sha256": "f742fad4309911d98ac092f3f169c0e13ba55f49b8d249da78246e3014668d98",
+      "actual_sha256": "6524f6e42fa994b35ee9f07e6746987cdb2aa14ab9f0624d21c0e1ff298642da",
+      "changed_pixels": 862,
+      "bounds": [
+        309,
+        20,
+        341,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_pink_night_360_1.0_3_testImage.png",
+      "master_sha256": "2bb64ccd35766e8884cc4e69a4b178a6a571b797e4db6f218a3717051d03e1d9",
+      "actual_sha256": "69ac765852ae10db7b00cc1b483adbc2f3bd4b8232defbee804e970360bb507d",
+      "changed_pixels": 862,
+      "bounds": [
+        309,
+        20,
+        341,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_pink_night_360_1.0_4_testImage.png",
+      "master_sha256": "46668ef0e96ab0c9666af229c51eb3ca9f39f4fe32813e6e6cc0747d438d8c03",
+      "actual_sha256": "fe32a206da33d81ef766aa2e91a235c47b0472b1e34862655dfe55ca1ab3d3c0",
+      "changed_pixels": 862,
+      "bounds": [
+        309,
+        20,
+        341,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_pink_night_360_1.0_5_testImage.png",
+      "master_sha256": "268374205c5d678250e09bd7813be3b4bb53446f14acec339ab74765aaa1dc63",
+      "actual_sha256": "b23b8302afb758d9d77b145ef17bdd833a618306f72ef5db7f8cb51f7e2240c2",
+      "changed_pixels": 12060,
+      "bounds": [
+        27,
+        20,
+        341,
+        258
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_pink_night_360_1.0_6_testImage.png",
+      "master_sha256": "8ec7ae07162024440625f31a654c5c6c6b762a032c7edcb3b0be68044b642c53",
+      "actual_sha256": "21ee836b090f08da51d4316c5ae2ad939eb993ec48b3907a85289d687a78d083",
+      "changed_pixels": 1613,
+      "bounds": [
+        61,
+        20,
+        341,
+        124
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_pink_night_390_1.0_0_testImage.png",
+      "master_sha256": "791a51352c488d0ac695b6c085d4cdbe11c307873437abf1c53ca7fb86e463d4",
+      "actual_sha256": "12ba9702a53281cf180751738b5d16a7156721528c276f3e32d33dff7934ff6d",
+      "changed_pixels": 12968,
+      "bounds": [
+        26,
+        20,
+        371,
+        258
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_pink_night_390_1.0_1_testImage.png",
+      "master_sha256": "5bec02ab257ed03815f2799677b645ac5fe212df597b3f50b44281de2456ddee",
+      "actual_sha256": "417b00953f02b4c72bd92ef71068adf58384fcb1d1ae490cbc65252621e9e944",
+      "changed_pixels": 844,
+      "bounds": [
+        339,
+        20,
+        371,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_pink_night_390_1.0_3_testImage.png",
+      "master_sha256": "8eb70afeadd5322a4551e99e6a213470dba3ca2f9c51dd87f3628df88dc53449",
+      "actual_sha256": "2284ceabd9b8cfcd94b02cf16b97a2a96b07ff183490225fb1607eb02d619f1b",
+      "changed_pixels": 844,
+      "bounds": [
+        339,
+        20,
+        371,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_pink_night_390_1.0_4_testImage.png",
+      "master_sha256": "29bfddc4925452c3a3e633c4053ef7b2a0733742bdf24376d35cc6765744861e",
+      "actual_sha256": "e911dc6f2e71d8417164be5a1583123c8a17ecf28548121e8950309d7a9cf305",
+      "changed_pixels": 844,
+      "bounds": [
+        339,
+        20,
+        371,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_pink_night_390_1.0_5_testImage.png",
+      "master_sha256": "267031854c5d7fc14192d72d14ecb5adeeb2fdcca76f2cfa59ca29ecb17193a2",
+      "actual_sha256": "4162b81a288f9592d6dc4f964be593c1af6dba22b940a533b33ea71d6f044f0b",
+      "changed_pixels": 12914,
+      "bounds": [
+        26,
+        20,
+        371,
+        258
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_pink_night_390_1.0_6_testImage.png",
+      "master_sha256": "a7096a1e83e587050e43e2a54ad11ad949677014bffb7f2358664fee496e4c5b",
+      "actual_sha256": "4d3a570e92b7935f26f3a1c83d68bdd45b3688d69f75ca8decff5c3351081b97",
+      "changed_pixels": 1648,
+      "bounds": [
+        67,
+        20,
+        371,
+        124
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_pink_night_430_1.0_0_testImage.png",
+      "master_sha256": "fd1e36ede646a5e3607144c7e3be9f76e4e47b878b42eab416e6f3a4991b65e3",
+      "actual_sha256": "38a2988e3d7a8810291feef04d2ebd441c9b10c062a563a4cedf75beeb29da8e",
+      "changed_pixels": 13753,
+      "bounds": [
+        26,
+        20,
+        411,
+        258
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_pink_night_430_1.0_1_testImage.png",
+      "master_sha256": "fea6e12c8abd059bc35b55e00a41a4da7b2fb0eda25210ad4e2ce5e0e09fa8d1",
+      "actual_sha256": "8306a527eea6b7442f6f2afd7111a1a15ea8094d911eb623fbcdd3e902e47923",
+      "changed_pixels": 862,
+      "bounds": [
+        379,
+        20,
+        411,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_pink_night_430_1.0_3_testImage.png",
+      "master_sha256": "40f5fc0855b447214d7dc78b12b7c1a8585eded754d3285843ca16433b90590f",
+      "actual_sha256": "96f099addd484952211d5a7c48c0752a3c383ac16691ebcb7d87fd6df8198906",
+      "changed_pixels": 862,
+      "bounds": [
+        379,
+        20,
+        411,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_pink_night_430_1.0_4_testImage.png",
+      "master_sha256": "ab5034cc2c350673d520c6474a2b09bbdf2226489bd0231e993f74ec1e87ba70",
+      "actual_sha256": "ecc059fe1e806bab00f41f8d36bc97bfae2005daee5cc456512bbdc8bd63ac25",
+      "changed_pixels": 862,
+      "bounds": [
+        379,
+        20,
+        411,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_pink_night_430_1.0_5_testImage.png",
+      "master_sha256": "0483d1b6a623b96cb21ea7263438598edf0aaee3927de6ebfa9fa3033d7034e0",
+      "actual_sha256": "4d2f345dfcbc0e4b4f10790f5dea604df869bb506f0720111bb77177c2def98c",
+      "changed_pixels": 13690,
+      "bounds": [
+        28,
+        20,
+        411,
+        258
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_pink_night_430_1.0_6_testImage.png",
+      "master_sha256": "445a016b7edebedb347dc6bffc8cd9cabaa9d16cf1b3ed268cc4de3a4ca180dd",
+      "actual_sha256": "7cedff39429aea75e7e08ecba915185a5db3d8d3d9acb8b40f363a22f65320c0",
+      "changed_pixels": 1833,
+      "bounds": [
+        69,
+        20,
+        411,
+        124
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_pink_night_600_1.0_0_testImage.png",
+      "master_sha256": "e4054cb89f788a3258f77a9b7fcf339474fd65cf5a057cb6eafd1096c93a5d31",
+      "actual_sha256": "cfc91b3b759552bbe32e69a82840228f690e4c8d462dfa8330074cd0d510059c",
+      "changed_pixels": 13753,
+      "bounds": [
+        26,
+        20,
+        581,
+        258
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_pink_night_600_1.0_1_testImage.png",
+      "master_sha256": "4c79d33e2efc3dee1735dc55e199c90a9db61bb7242aa90a093cc0722a9234e3",
+      "actual_sha256": "819c3a1ade55b47cac140cc2f2ecb368d413ab2025092badf855647a7fc0739e",
+      "changed_pixels": 862,
+      "bounds": [
+        549,
+        20,
+        581,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_pink_night_600_1.0_3_testImage.png",
+      "master_sha256": "3f26c6dc17ab02510946467ba915460a5e4ad2b46eeddb26b298f1a75d6dc3c1",
+      "actual_sha256": "c44028ad12ed3c62c49065f9b668eab0c62972a6b1cf8265768bd0e49553d076",
+      "changed_pixels": 862,
+      "bounds": [
+        549,
+        20,
+        581,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_pink_night_600_1.0_4_testImage.png",
+      "master_sha256": "fbddf836247b0531baa39ddaa78f4c76048aa69f41092f8247ca5920371881ac",
+      "actual_sha256": "ba6d92d70f9aabdbe25a1815de81244b8a5d4f5967b7135c79779e83cc811c4d",
+      "changed_pixels": 862,
+      "bounds": [
+        549,
+        20,
+        581,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_pink_night_600_1.0_5_testImage.png",
+      "master_sha256": "296919196432e7eecbd6d7f6ad0fd5dff8ce5c285ec948664132e11c8793864d",
+      "actual_sha256": "8336559aae1a9f47a53d76b3ce9229fa2970b7cbd30778426208c3886b665ee0",
+      "changed_pixels": 13678,
+      "bounds": [
+        26,
+        20,
+        581,
+        258
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_pink_night_600_1.0_6_testImage.png",
+      "master_sha256": "bb151fb68abfd3582ef78d166e36e3d05207e29c10069700f1bf6cef81515922",
+      "actual_sha256": "d47d89bdcb9cb6b8b99e78b5b73618551434a4414a94004e0bd92b671346d353",
+      "changed_pixels": 1830,
+      "bounds": [
+        69,
+        20,
+        581,
+        124
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_pink_night_800_1.0_0_testImage.png",
+      "master_sha256": "515f6274554c14bc439d9023918bdeb11be981c58bed0264fe942e03a7a1136f",
+      "actual_sha256": "6918c6879d2e72d8c8520872a365e669e168ffb9960d8d4c60ab8f9a982adf27",
+      "changed_pixels": 13753,
+      "bounds": [
+        26,
+        20,
+        781,
+        258
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_pink_night_800_1.0_1_testImage.png",
+      "master_sha256": "dcaa89176172a152577b1e226e50c40f1ae8cee7cc3439f9b68fdf22325ad4f6",
+      "actual_sha256": "4a318ad688c6ce67be8e0b435a96e24007a8c3e05b83274950f60c8f6e9aa91f",
+      "changed_pixels": 862,
+      "bounds": [
+        749,
+        20,
+        781,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_pink_night_800_1.0_3_testImage.png",
+      "master_sha256": "05dc5603050677046309688fc485977e9706e595400736da0855676d2793d4f4",
+      "actual_sha256": "2be7d39bed66c165b2d5724635e519c0100a2fbb98fc7b46910af275823dae2a",
+      "changed_pixels": 862,
+      "bounds": [
+        749,
+        20,
+        781,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_pink_night_800_1.0_4_testImage.png",
+      "master_sha256": "006bc571bf1fa7ae1a13ad906e6935a89c7dbbada69de45e0d76a5d1538f8585",
+      "actual_sha256": "f95eceac05f98345bbb688835b7919ba6ccb6d8fedffc45551bcdbeb9fdeb4ac",
+      "changed_pixels": 862,
+      "bounds": [
+        749,
+        20,
+        781,
+        56
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_pink_night_800_1.0_5_testImage.png",
+      "master_sha256": "b3f8dcec1b99f249568c9c08e484d55647d1546e77cc66a6e236e769d9c9f1e7",
+      "actual_sha256": "0998a15a72e407dff4d0db5718dedf6281a964e35af7282940c434700e5f769b",
+      "changed_pixels": 13676,
+      "bounds": [
+        26,
+        20,
+        781,
+        258
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/merchant_pink_night_800_1.0_6_testImage.png",
+      "master_sha256": "62561dabd00bda3105ff748b433b6a0d06216a51e7589336693db852f03ed0d2",
+      "actual_sha256": "075a0f35e3dc41bfa3d8b41ccdaef69e60cb05b92096d635a6a1f1f0457bf9b5",
+      "changed_pixels": 6201,
+      "bounds": [
+        26,
+        20,
+        781,
+        258
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/registration_blue_day_320_1.0_testImage.png",
+      "master_sha256": "68345f63285ec2fd32f491170653e443095e98691b3f9d31afeb09609b48f596",
+      "actual_sha256": "f80a813a02c460fc4d5813c26e8186fb91055a5032a77a3b61c333a4eb128f77",
+      "changed_pixels": 33424,
+      "bounds": [
+        22,
+        65,
+        315,
+        227
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/registration_blue_day_360_1.0_testImage.png",
+      "master_sha256": "94df8a16fdc03fe0713368bfb9505618882c2248d38107e8f43e102875d66285",
+      "actual_sha256": "23bb7bd992e5217755c5cae12ec9e0e27a4f282e4bccda8291438b150f77b1cf",
+      "changed_pixels": 36385,
+      "bounds": [
+        31,
+        65,
+        356,
+        227
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/registration_blue_day_390_1.0_testImage.png",
+      "master_sha256": "fbd73d0b2abb0d0cae695839da4ff350958d9eeab95567da40f3977ec4971c21",
+      "actual_sha256": "825de5a86599297c04760aa8560f417ff1a723b071bb4a28aa5f7d122f0a74d9",
+      "changed_pixels": 39750,
+      "bounds": [
+        32,
+        65,
+        374,
+        227
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/registration_blue_day_430_1.0_testImage.png",
+      "master_sha256": "55f4ccda9807c4675231eb6e624f85480cbae2b5930b05d5a2e6ff7ffd851606",
+      "actual_sha256": "130c99c2beb3e028fb1de72de6efab4ea981e38f02374fb49104a13f3209a3d2",
+      "changed_pixels": 45150,
+      "bounds": [
+        32,
+        65,
+        414,
+        227
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/registration_blue_day_600_1.0_testImage.png",
+      "master_sha256": "732f94a325b2afefca11a961674f8d4f54de859a1ed7762d0dbe316c5171b512",
+      "actual_sha256": "554bb63a364af645c80095007ca2a81e8516a353f3ddd69101ea7a8d3639bbcc",
+      "changed_pixels": 53520,
+      "bounds": [
+        86,
+        65,
+        530,
+        227
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/registration_blue_day_800_1.0_testImage.png",
+      "master_sha256": "b0d3ddad572919896dfd744f1e92539cf671371148ee77edfe823bdc37201b8e",
+      "actual_sha256": "26fb975f894e6c467e25b12275a736c3139c9533ba5f798b32a49205ec5b0b04",
+      "changed_pixels": 53520,
+      "bounds": [
+        186,
+        65,
+        630,
+        227
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/registration_blue_night_320_1.0_testImage.png",
+      "master_sha256": "e26c6cc9a2b1f68de0a578393c2fbe59db65b14d11cee1c036b666885864e26c",
+      "actual_sha256": "b07a5efaf1c4176e97acee745e38811b06e3c53cc38cbc7f71f04a192e9df89e",
+      "changed_pixels": 33429,
+      "bounds": [
+        22,
+        65,
+        314,
+        227
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/registration_blue_night_360_1.0_testImage.png",
+      "master_sha256": "6b156ec8df53432da861320a4c8b39246dda2ab6ba73d1c814ae2620f697351e",
+      "actual_sha256": "10e3d8d5a751de1f5ddffce617667be7d4a5972457b08e96c5bb0241315e904d",
+      "changed_pixels": 36366,
+      "bounds": [
+        31,
+        65,
+        355,
+        227
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/registration_blue_night_390_1.0_testImage.png",
+      "master_sha256": "1111a296b85e8d0a4138eef022e474fd2ab8e01ca54f5522e2d150218135cd5f",
+      "actual_sha256": "cfa058e4ac29099d5c4a2e699c844d1af89ae0891cd408b84b99a96afd27ac32",
+      "changed_pixels": 39826,
+      "bounds": [
+        32,
+        65,
+        374,
+        227
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/registration_blue_night_430_1.0_testImage.png",
+      "master_sha256": "cd98dd96b044e9d6136d146b6aa5ced11e5669a86579e3121c6e6bc3699f5b1c",
+      "actual_sha256": "f303bd6dba67c87264f2d47f4c388a83ffcd96b9a327ad123b45464273b462bd",
+      "changed_pixels": 45226,
+      "bounds": [
+        32,
+        65,
+        414,
+        227
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/registration_blue_night_600_1.0_testImage.png",
+      "master_sha256": "a8c9f382f27e12df11960265d835e5a330aca60abe3fa2d2bba359028c41149c",
+      "actual_sha256": "b23970cdd95d51ed0b00e6f0619febe181d3ea8e44dfea9e43cb53d51a987807",
+      "changed_pixels": 53596,
+      "bounds": [
+        86,
+        65,
+        530,
+        227
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/registration_blue_night_800_1.0_testImage.png",
+      "master_sha256": "76873e3b66b589671ddaec8e3402ac9aab9a86f0978f5274c464a30c3e94adcc",
+      "actual_sha256": "02da2e905e77370042d5b61b9349877fa467a936445f1a4e213c116dcd5c1dbe",
+      "changed_pixels": 53596,
+      "bounds": [
+        186,
+        65,
+        630,
+        227
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/registration_pink_day_320_1.0_testImage.png",
+      "master_sha256": "4fbbe427f083b96dd0bbca823a9ecb563e16b717d28a1f624fbb440d6143f17f",
+      "actual_sha256": "13a8b69e2e590f0f70f9d4bfef8dbc48ef51e11ca9d5fac7ed31fee4d19fa3b9",
+      "changed_pixels": 33298,
+      "bounds": [
+        20,
+        65,
+        315,
+        227
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/registration_pink_day_360_1.0_testImage.png",
+      "master_sha256": "424fc2fdb2ee98674caef5bbcfbe71e97318050bb7ab41a14096cb5eb41deaac",
+      "actual_sha256": "4f3951332cd72b69f28ac4d3a863248bc5fb3663105dda508d83cf5d3f7ec9f3",
+      "changed_pixels": 36756,
+      "bounds": [
+        27,
+        65,
+        356,
+        227
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/registration_pink_day_390_1.0_testImage.png",
+      "master_sha256": "fe95b7bc490144552f09f61bb6fab819fff8c32217eabcef3ca8028eb6982721",
+      "actual_sha256": "99a5156fdbd135b18ca81d65c40806a538ec71b6e69c859ef7c60a7d84d05610",
+      "changed_pixels": 40134,
+      "bounds": [
+        28,
+        65,
+        374,
+        227
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/registration_pink_day_430_1.0_testImage.png",
+      "master_sha256": "1192543011bf4cb96386697f6b029a24c01321225060d40b2ddfe3c12c4ee414",
+      "actual_sha256": "d063a13531a91dd0bf6924f052a8b85d027660ecb4c3d92a47fb644fdba482a6",
+      "changed_pixels": 45534,
+      "bounds": [
+        28,
+        65,
+        414,
+        227
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/registration_pink_day_600_1.0_testImage.png",
+      "master_sha256": "28619eefa9a19ce3b88b1a6e1a544dc44b9a51cd26ba68abcb49d204db17a5b3",
+      "actual_sha256": "eed45e29011a51d15f2a58af9ceb9034af97c911077e20d7b6095383959d88cc",
+      "changed_pixels": 53904,
+      "bounds": [
+        82,
+        65,
+        530,
+        227
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/registration_pink_day_800_1.0_testImage.png",
+      "master_sha256": "9720bbd8bf79f94adab1c1ae05f9609ca15418a9f66c23fa1d83ce89836410bc",
+      "actual_sha256": "c3a684599db409d9b6bb21063bac501761abbe81fb9b72d329a926bb0fdacf3f",
+      "changed_pixels": 53904,
+      "bounds": [
+        182,
+        65,
+        630,
+        227
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/registration_pink_night_320_1.0_testImage.png",
+      "master_sha256": "8472f46df7b71f9e5df0de4ec93ddb599439accc54c03a4aca4844497daadb62",
+      "actual_sha256": "f5e0c05ba7b1c5d2212ca1300543d33b938ec7e66a7a5439d23ef92fcc7982e0",
+      "changed_pixels": 33320,
+      "bounds": [
+        20,
+        65,
+        315,
+        227
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/registration_pink_night_360_1.0_testImage.png",
+      "master_sha256": "4ef6b1f78e33a623ba6cbe49c88d0c6941179636e77f85632a2c590b1df0328b",
+      "actual_sha256": "4b170a8732896d055288c3352c9c979ce45f75c8ae009663ceba3dd98cbdb792",
+      "changed_pixels": 36764,
+      "bounds": [
+        27,
+        65,
+        355,
+        227
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/registration_pink_night_390_1.0_testImage.png",
+      "master_sha256": "50ac46d8d01ff9f09e5d5f778bb5ccf7cb60fd765dfeacd52761cb80cf6a78f9",
+      "actual_sha256": "c29ab082f3baf4d3a5223101e3981f100fb8447679d6fdeec4d6e854a8bddf37",
+      "changed_pixels": 40185,
+      "bounds": [
+        28,
+        65,
+        374,
+        227
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/registration_pink_night_430_1.0_testImage.png",
+      "master_sha256": "c09d9ffcfea9be154a6b1e43eb61c0e2e1245fc0b01d2a84d32e087b3f3e310e",
+      "actual_sha256": "3b0704ef8b3e97a76f27b611d622ba9f646b6ec0595c2f715a7b39bb3982655b",
+      "changed_pixels": 45585,
+      "bounds": [
+        28,
+        65,
+        414,
+        227
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/registration_pink_night_600_1.0_testImage.png",
+      "master_sha256": "a9d35bb7e2dc1a1744613089ac42ffa2f3eaec21fe9816683dd4dcd736ba3ad6",
+      "actual_sha256": "f15d3e624217477137340b3b60ac23ba08880e3aad3052d63d1d310a737bd30b",
+      "changed_pixels": 53955,
+      "bounds": [
+        82,
+        65,
+        530,
+        227
+      ]
+    },
+    {
+      "actual": "test/ui_audit/failures/registration_pink_night_800_1.0_testImage.png",
+      "master_sha256": "39c87d98ac59147060af197f452001a531764af114106b695f699567e6aa07ff",
+      "actual_sha256": "2d8788614b97fe831bf53120bbf8ee7881bda6282182f0d10c1de02d298774db",
+      "changed_pixels": 53955,
+      "bounds": [
+        182,
+        65,
+        630,
+        227
+      ]
+    }
+  ]
+}
