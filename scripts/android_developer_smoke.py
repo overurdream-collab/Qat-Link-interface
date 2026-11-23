@@ -4,13 +4,14 @@ No fixture records, identity, token or live gateway are injected. This tests
 native rendering/navigation of available offline states, never financial E2E.
 """
 import json
+import os
 import re
 import subprocess
 import time
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
-PACKAGE = 'com.maqwatilink.ui_audit_developer'
+PACKAGE = os.environ.get('ANDROID_PREVIEW_PACKAGE', 'com.maqwatilink.ui_audit_developer')
 OUT = Path('build/android-developer-smoke')
 OUT.mkdir(parents=True, exist_ok=True)
 
