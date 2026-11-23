@@ -1,0 +1,25 @@
+{
+  "source": "Owner attachment in current conversation",
+  "dimensions": [
+    1280,
+    853
+  ],
+  "sha256": "16c6242f097ae4694801be1b2df9fdce56808f88a85402a3462bb07ac0faf7c1",
+  "background": "opaque white JPEG; not separate transparent masters",
+  "preservation": "Original bytes retained. No character regeneration authorized.",
+  "status": "Original received and archived; not yet installed as runtime cutouts",
+  "candidate_background_removal": {
+    "accepted": false,
+    "source_size": [
+      1280,
+      853
+    ],
+    "output_size": [
+      1536,
+      1024
+    ],
+    "alpha_max": 254,
+    "reason": "Resampled output, modified RGB samples and non-opaque interiors; pixel-preserving extraction not established. Candidate remains outside repository assets."
+  },
+  "next_required": "Separate male, female and logo with a deterministic original-pixel mask, or receive transparent original masters. No regeneration or invented detail."
+}
