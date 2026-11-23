@@ -2,13 +2,14 @@
 No credentials, SMS, user session or financial authority are supplied.
 """
 import json
+import os
 import re
 import subprocess
 import time
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
-PACKAGE = 'com.maqwatilink.ui_audit_preview'
+PACKAGE = os.environ.get('ANDROID_PREVIEW_PACKAGE', 'com.maqwatilink.ui_audit_preview')
 OUT = Path('build/android-smoke')
 OUT.mkdir(parents=True, exist_ok=True)
 
