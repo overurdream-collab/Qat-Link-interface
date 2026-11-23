@@ -34,6 +34,10 @@
 
 طلب المالك توليد صور منفصلة عالية الدقة ثم أذن بالدمج، وأرسل مرجع رجل أحدث. [سجل الأصول](design_reference/adopted_brand_assets_20261123.json)، [المطابقة والفروق](APPROVED_VISUAL_PARITY_REPORT.md)، [اعتماد Golden بعد المراجعة](HD_ARTWORK_BASELINE_REVIEW.md). لا تساوي هذه المشتقات بكسلات الأصل أو موافقة نهائية على التطابق الفني.
 
+## روابط تنزيل عامة مصححة — 2026-11-23
+
+[تنزيل APK الدخول مباشرة](https://github.com/overurdream-collab/Qat-Link-interface/releases/download/maqwati-test-45116030353/maqwati-test-login.apk) · [تنزيل APK تصفح التاجر والعميل مباشرة](https://github.com/overurdream-collab/Qat-Link-interface/releases/download/maqwati-test-45116030353/maqwati-test-browse.apk). نُزّل الملفان كاملاً دون تسجيل دخول: HTTP200، وفُحصت البصمات والأصول. مصدرهما80636f8 يطابق كود Dart وأصول3464f45، مع هويتين واسمي Android مستقلين؛ بصماتهما تختلف عن حزم3464f45 المذكورة أدناه. [تفاصيل التنزيل والمصدر والتحقق](APK_DOWNLOADS.md). تبقى روابط Artifacts أدلة للبناء السابق، والبوابات غير المكتملة كما هي.
+
 ## GitHub والبناء الحالي
 
 - الفرع: `feat/maqwati-comprehensive-ui-audit-20261122`، مشتق من4bbaba1958f25099583637df5a7db2437aeae21d. [PR #72 — مسودة دون دمج](https://github.com/overurdream-collab/Qat-Link-interface/pull/72). لم تُدمج PR70/71/73 المتداخلة.
