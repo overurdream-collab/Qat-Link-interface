@@ -147,39 +147,7 @@
     },
     {
       "path": "lib/widgets/auth/auth_brand_hero.dart",
-      "line": 65,
-      "argb": "FFF2A7D0",
-      "candidate_role": "identity selection or decorative wordmark/wave; exact parity unverified",
-      "context": "? const Color(0xFFF2A7D0)",
-      "certification": "NOT VERIFIED for every rendered combination"
-    },
-    {
-      "path": "lib/widgets/auth/auth_brand_hero.dart",
-      "line": 66,
-      "argb": "FFAD3379",
-      "candidate_role": "identity selection or decorative wordmark/wave; exact parity unverified",
-      "context": ": const Color(0xFFAD3379))",
-      "certification": "NOT VERIFIED for every rendered combination"
-    },
-    {
-      "path": "lib/widgets/auth/auth_brand_hero.dart",
-      "line": 68,
-      "argb": "FFD7B7FF",
-      "candidate_role": "identity selection or decorative wordmark/wave; exact parity unverified",
-      "context": "? const Color(0xFFD7B7FF)",
-      "certification": "NOT VERIFIED for every rendered combination"
-    },
-    {
-      "path": "lib/widgets/auth/auth_brand_hero.dart",
-      "line": 69,
-      "argb": "FF5730C4",
-      "candidate_role": "identity selection or decorative wordmark/wave; exact parity unverified",
-      "context": ": const Color(0xFF5730C4)),",
-      "certification": "NOT VERIFIED for every rendered combination"
-    },
-    {
-      "path": "lib/widgets/auth/auth_brand_hero.dart",
-      "line": 112,
+      "line": 97,
       "argb": "FFF8DCEB",
       "candidate_role": "identity selection or decorative wordmark/wave; exact parity unverified",
       "context": "? const [Color(0xFFF8DCEB), Color(0xFF8551B2)]",
@@ -187,7 +155,7 @@
     },
     {
       "path": "lib/widgets/auth/auth_brand_hero.dart",
-      "line": 112,
+      "line": 97,
       "argb": "FF8551B2",
       "candidate_role": "identity selection or decorative wordmark/wave; exact parity unverified",
       "context": "? const [Color(0xFFF8DCEB), Color(0xFF8551B2)]",
@@ -195,7 +163,7 @@
     },
     {
       "path": "lib/widgets/auth/auth_brand_hero.dart",
-      "line": 113,
+      "line": 98,
       "argb": "FFDAADFA",
       "candidate_role": "identity selection or decorative wordmark/wave; exact parity unverified",
       "context": ": const [Color(0xFFDAADFA), Color(0xFF82C9FF)],",
@@ -203,178 +171,10 @@
     },
     {
       "path": "lib/widgets/auth/auth_brand_hero.dart",
-      "line": 113,
+      "line": 98,
       "argb": "FF82C9FF",
       "candidate_role": "identity selection or decorative wordmark/wave; exact parity unverified",
       "context": ": const [Color(0xFFDAADFA), Color(0xFF82C9FF)],",
-      "certification": "NOT VERIFIED for every rendered combination"
-    },
-    {
-      "path": "lib/widgets/auth/auth_brand_hero.dart",
-      "line": 186,
-      "argb": "FF632450",
-      "candidate_role": "identity selection or decorative wordmark/wave; exact parity unverified",
-      "context": "? const Color(0xFF632450)",
-      "certification": "NOT VERIFIED for every rendered combination"
-    },
-    {
-      "path": "lib/widgets/auth/auth_brand_hero.dart",
-      "line": 187,
-      "argb": "FF171C98",
-      "candidate_role": "identity selection or decorative wordmark/wave; exact parity unverified",
-      "context": ": const Color(0xFF171C98),",
-      "certification": "NOT VERIFIED for every rendered combination"
-    },
-    {
-      "path": "lib/widgets/auth/auth_brand_hero.dart",
-      "line": 190,
-      "argb": "6A2C2B9A",
-      "candidate_role": "identity selection or decorative wordmark/wave; exact parity unverified",
-      "context": "color: Color(0x6A2C2B9A),",
-      "certification": "NOT VERIFIED for every rendered combination"
-    },
-    {
-      "path": "lib/widgets/auth/auth_brand_hero.dart",
-      "line": 202,
-      "argb": "FFF8DCEB",
-      "candidate_role": "identity selection or decorative wordmark/wave; exact parity unverified",
-      "context": "? const Color(0xFFF8DCEB)",
-      "certification": "NOT VERIFIED for every rendered combination"
-    },
-    {
-      "path": "lib/widgets/auth/auth_brand_hero.dart",
-      "line": 212,
-      "argb": "FFF8DCEB",
-      "candidate_role": "identity selection or decorative wordmark/wave; exact parity unverified",
-      "context": "Color(0xFFF8DCEB),",
-      "certification": "NOT VERIFIED for every rendered combination"
-    },
-    {
-      "path": "lib/widgets/auth/auth_brand_hero.dart",
-      "line": 213,
-      "argb": "FFF2A7D0",
-      "candidate_role": "identity selection or decorative wordmark/wave; exact parity unverified",
-      "context": "Color(0xFFF2A7D0),",
-      "certification": "NOT VERIFIED for every rendered combination"
-    },
-    {
-      "path": "lib/widgets/auth/auth_brand_hero.dart",
-      "line": 214,
-      "argb": "FFC2A4FF",
-      "candidate_role": "identity selection or decorative wordmark/wave; exact parity unverified",
-      "context": "Color(0xFFC2A4FF)",
-      "certification": "NOT VERIFIED for every rendered combination"
-    },
-    {
-      "path": "lib/widgets/auth/auth_brand_hero.dart",
-      "line": 217,
-      "argb": "FF73DCF6",
-      "candidate_role": "identity selection or decorative wordmark/wave; exact parity unverified",
-      "context": "Color(0xFF73DCF6),",
-      "certification": "NOT VERIFIED for every rendered combination"
-    },
-    {
-      "path": "lib/widgets/auth/auth_brand_hero.dart",
-      "line": 218,
-      "argb": "FF8FB8FF",
-      "candidate_role": "identity selection or decorative wordmark/wave; exact parity unverified",
-      "context": "Color(0xFF8FB8FF),",
-      "certification": "NOT VERIFIED for every rendered combination"
-    },
-    {
-      "path": "lib/widgets/auth/auth_brand_hero.dart",
-      "line": 219,
-      "argb": "FFC2A4FF",
-      "candidate_role": "identity selection or decorative wordmark/wave; exact parity unverified",
-      "context": "Color(0xFFC2A4FF)",
-      "certification": "NOT VERIFIED for every rendered combination"
-    },
-    {
-      "path": "lib/widgets/auth/auth_brand_hero.dart",
-      "line": 223,
-      "argb": "FFF8DCEB",
-      "candidate_role": "identity selection or decorative wordmark/wave; exact parity unverified",
-      "context": "Color(0xFFF8DCEB),",
-      "certification": "NOT VERIFIED for every rendered combination"
-    },
-    {
-      "path": "lib/widgets/auth/auth_brand_hero.dart",
-      "line": 224,
-      "argb": "FFAD4389",
-      "candidate_role": "identity selection or decorative wordmark/wave; exact parity unverified",
-      "context": "Color(0xFFAD4389),",
-      "certification": "NOT VERIFIED for every rendered combination"
-    },
-    {
-      "path": "lib/widgets/auth/auth_brand_hero.dart",
-      "line": 225,
-      "argb": "FFAD3379",
-      "candidate_role": "identity selection or decorative wordmark/wave; exact parity unverified",
-      "context": "Color(0xFFAD3379),",
-      "certification": "NOT VERIFIED for every rendered combination"
-    },
-    {
-      "path": "lib/widgets/auth/auth_brand_hero.dart",
-      "line": 226,
-      "argb": "FF8551B2",
-      "candidate_role": "identity selection or decorative wordmark/wave; exact parity unverified",
-      "context": "Color(0xFF8551B2)",
-      "certification": "NOT VERIFIED for every rendered combination"
-    },
-    {
-      "path": "lib/widgets/auth/auth_brand_hero.dart",
-      "line": 230,
-      "argb": "FF8DEBFF",
-      "candidate_role": "identity selection or decorative wordmark/wave; exact parity unverified",
-      "context": "Color(0xFF8DEBFF),",
-      "certification": "NOT VERIFIED for every rendered combination"
-    },
-    {
-      "path": "lib/widgets/auth/auth_brand_hero.dart",
-      "line": 231,
-      "argb": "FF268EFF",
-      "candidate_role": "identity selection or decorative wordmark/wave; exact parity unverified",
-      "context": "Color(0xFF268EFF),",
-      "certification": "NOT VERIFIED for every rendered combination"
-    },
-    {
-      "path": "lib/widgets/auth/auth_brand_hero.dart",
-      "line": 232,
-      "argb": "FF174DCB",
-      "candidate_role": "identity selection or decorative wordmark/wave; exact parity unverified",
-      "context": "Color(0xFF174DCB)",
-      "certification": "NOT VERIFIED for every rendered combination"
-    },
-    {
-      "path": "lib/widgets/auth/auth_brand_hero.dart",
-      "line": 235,
-      "argb": "FF8CF6FF",
-      "candidate_role": "identity selection or decorative wordmark/wave; exact parity unverified",
-      "context": "Color(0xFF8CF6FF),",
-      "certification": "NOT VERIFIED for every rendered combination"
-    },
-    {
-      "path": "lib/widgets/auth/auth_brand_hero.dart",
-      "line": 236,
-      "argb": "FF0FA7F9",
-      "candidate_role": "identity selection or decorative wordmark/wave; exact parity unverified",
-      "context": "Color(0xFF0FA7F9),",
-      "certification": "NOT VERIFIED for every rendered combination"
-    },
-    {
-      "path": "lib/widgets/auth/auth_brand_hero.dart",
-      "line": 237,
-      "argb": "FF0752E6",
-      "candidate_role": "identity selection or decorative wordmark/wave; exact parity unverified",
-      "context": "Color(0xFF0752E6),",
-      "certification": "NOT VERIFIED for every rendered combination"
-    },
-    {
-      "path": "lib/widgets/auth/auth_brand_hero.dart",
-      "line": 238,
-      "argb": "FF2533AE",
-      "candidate_role": "identity selection or decorative wordmark/wave; exact parity unverified",
-      "context": "Color(0xFF2533AE)",
       "certification": "NOT VERIFIED for every rendered combination"
     },
     {
@@ -739,7 +539,7 @@
     },
     {
       "path": "lib/widgets/customers/pdf_brand_mascot.dart",
-      "line": 52,
+      "line": 56,
       "argb": "FFD4A13E",
       "candidate_role": "print palette or semantic report color; light paper exception",
       "context": "..color = const ui.Color(0xFFD4A13E));",
@@ -1443,7 +1243,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 6,
+      "line": 7,
       "argb": "FFF2F3FF",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "static const Color canvas = Color(0xFFF2F3FF);",
@@ -1451,7 +1251,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 7,
+      "line": 8,
       "argb": "FF111A4B",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "static const Color ink = Color(0xFF111A4B);",
@@ -1459,7 +1259,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 8,
+      "line": 9,
       "argb": "FF59638C",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "static const Color secondaryInk = Color(0xFF59638C);",
@@ -1467,7 +1267,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 9,
+      "line": 10,
       "argb": "FF328BF5",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "static const Color blue = Color(0xFF328BF5);",
@@ -1475,7 +1275,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 10,
+      "line": 11,
       "argb": "FF7939EA",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "static const Color violet = Color(0xFF7939EA);",
@@ -1483,7 +1283,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 11,
+      "line": 12,
       "argb": "FFC2A4FF",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "static const Color lilac = Color(0xFFC2A4FF);",
@@ -1491,7 +1291,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 12,
+      "line": 13,
       "argb": "FF73DCF6",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "static const Color aqua = Color(0xFF73DCF6);",
@@ -1499,7 +1299,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 13,
+      "line": 14,
       "argb": "FF6CC04A",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "static const Color brandGreen = Color(0xFF6CC04A);",
@@ -1507,7 +1307,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 14,
+      "line": 15,
       "argb": "FFC42F52",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "static const Color danger = Color(0xFFC42F52);",
@@ -1515,7 +1315,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 15,
+      "line": 16,
       "argb": "FF8753C8",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "static const Color pending = Color(0xFF8753C8);",
@@ -1523,7 +1323,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 19,
+      "line": 20,
       "argb": "FF4358F5",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "colors: [violet, Color(0xFF4358F5), aqua],",
@@ -1531,7 +1331,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 24,
+      "line": 25,
       "argb": "FF6E68E8",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "colors: [Color(0xFF6E68E8), Color(0xFF488BFA), Color(0xFF8ADDFB)],",
@@ -1539,7 +1339,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 24,
+      "line": 25,
       "argb": "FF488BFA",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "colors: [Color(0xFF6E68E8), Color(0xFF488BFA), Color(0xFF8ADDFB)],",
@@ -1547,7 +1347,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 24,
+      "line": 25,
       "argb": "FF8ADDFB",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "colors: [Color(0xFF6E68E8), Color(0xFF488BFA), Color(0xFF8ADDFB)],",
@@ -1555,7 +1355,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 29,
+      "line": 30,
       "argb": "FFE9EAFF",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "colors: [Color(0xFFE9EAFF), Color(0xFFF7F7FF), Color(0xFFE5EEFF)],",
@@ -1563,7 +1363,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 29,
+      "line": 30,
       "argb": "FFF7F7FF",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "colors: [Color(0xFFE9EAFF), Color(0xFFF7F7FF), Color(0xFFE5EEFF)],",
@@ -1571,7 +1371,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 29,
+      "line": 30,
       "argb": "FFE5EEFF",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "colors: [Color(0xFFE9EAFF), Color(0xFFF7F7FF), Color(0xFFE5EEFF)],",
@@ -1579,7 +1379,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 34,
+      "line": 35,
       "argb": "FF1C2149",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "colors: [Color(0xFF1C2149), Color(0xFF171A3C), Color(0xFF27224B)],",
@@ -1587,7 +1387,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 34,
+      "line": 35,
       "argb": "FF171A3C",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "colors: [Color(0xFF1C2149), Color(0xFF171A3C), Color(0xFF27224B)],",
@@ -1595,7 +1395,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 34,
+      "line": 35,
       "argb": "FF27224B",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "colors: [Color(0xFF1C2149), Color(0xFF171A3C), Color(0xFF27224B)],",
@@ -1603,7 +1403,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 36,
+      "line": 37,
       "argb": "FFF3F3FF",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "static const Color darkInk = Color(0xFFF3F3FF);",
@@ -1611,7 +1411,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 37,
+      "line": 38,
       "argb": "FFC6C9E7",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "static const Color darkSecondaryInk = Color(0xFFC6C9E7);",
@@ -1619,7 +1419,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 40,
+      "line": 41,
       "argb": "FF737AB7",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "color: const Color(0xFF737AB7).withValues(alpha: .16),",
@@ -1627,7 +1427,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 88,
+      "line": 89,
       "argb": "0D000000",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "adjusted = Color.alphaBlend(const Color(0x0D000000), adjusted);",
@@ -1635,7 +1435,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 108,
+      "line": 109,
       "argb": "FFAAB8FF",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "colors: [Color(0xFFAAB8FF), Color(0xFF7478F0), Color(0xFF689CF5)]),",
@@ -1643,7 +1443,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 108,
+      "line": 109,
       "argb": "FF7478F0",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "colors: [Color(0xFFAAB8FF), Color(0xFF7478F0), Color(0xFF689CF5)]),",
@@ -1651,7 +1451,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 108,
+      "line": 109,
       "argb": "FF689CF5",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "colors: [Color(0xFFAAB8FF), Color(0xFF7478F0), Color(0xFF689CF5)]),",
@@ -1659,7 +1459,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 110,
+      "line": 111,
       "argb": "FF6F6CE8",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "colors: [Color(0xFF6F6CE8), Color(0xFF4B88F4), Color(0xFF83D5F8)]),",
@@ -1667,7 +1467,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 110,
+      "line": 111,
       "argb": "FF4B88F4",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "colors: [Color(0xFF6F6CE8), Color(0xFF4B88F4), Color(0xFF83D5F8)]),",
@@ -1675,7 +1475,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 110,
+      "line": 111,
       "argb": "FF83D5F8",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "colors: [Color(0xFF6F6CE8), Color(0xFF4B88F4), Color(0xFF83D5F8)]),",
@@ -1683,7 +1483,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 112,
+      "line": 113,
       "argb": "FF45A3D9",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "colors: [Color(0xFF45A3D9), Color(0xFF76D8F1), Color(0xFFA8E4EF)]),",
@@ -1691,7 +1491,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 112,
+      "line": 113,
       "argb": "FF76D8F1",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "colors: [Color(0xFF45A3D9), Color(0xFF76D8F1), Color(0xFFA8E4EF)]),",
@@ -1699,7 +1499,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 112,
+      "line": 113,
       "argb": "FFA8E4EF",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "colors: [Color(0xFF45A3D9), Color(0xFF76D8F1), Color(0xFFA8E4EF)]),",
@@ -1707,7 +1507,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 114,
+      "line": 115,
       "argb": "FF7458D1",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "colors: [Color(0xFF7458D1), Color(0xFF997DF6), Color(0xFFB9A9F7)]),",
@@ -1715,7 +1515,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 114,
+      "line": 115,
       "argb": "FF997DF6",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "colors: [Color(0xFF7458D1), Color(0xFF997DF6), Color(0xFFB9A9F7)]),",
@@ -1723,7 +1523,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 114,
+      "line": 115,
       "argb": "FFB9A9F7",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "colors: [Color(0xFF7458D1), Color(0xFF997DF6), Color(0xFFB9A9F7)]),",
@@ -1731,7 +1531,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 118,
+      "line": 119,
       "argb": "CCFFFFFF",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "surface: Color(0xCCFFFFFF),",
@@ -1739,7 +1539,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 119,
+      "line": 120,
       "argb": "FFEEF0FF",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "outline: Color(0xFFEEF0FF),",
@@ -1747,7 +1547,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 120,
+      "line": 121,
       "argb": "FFE4E6FF",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "selected: Color(0xFFE4E6FF),",
@@ -1755,7 +1555,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 121,
+      "line": 122,
       "argb": "27737AB7",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "shadow: Color(0x27737AB7),",
@@ -1763,7 +1563,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 128,
+      "line": 129,
       "argb": "FF4C459A",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "colors: [Color(0xFF4C459A), Color(0xFF364FA9), Color(0xFF36649C)]),",
@@ -1771,7 +1571,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 128,
+      "line": 129,
       "argb": "FF364FA9",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "colors: [Color(0xFF4C459A), Color(0xFF364FA9), Color(0xFF36649C)]),",
@@ -1779,7 +1579,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 128,
+      "line": 129,
       "argb": "FF36649C",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "colors: [Color(0xFF4C459A), Color(0xFF364FA9), Color(0xFF36649C)]),",
@@ -1787,7 +1587,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 130,
+      "line": 131,
       "argb": "FF514CA8",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "colors: [Color(0xFF514CA8), Color(0xFF355BAB), Color(0xFF3977A6)]),",
@@ -1795,7 +1595,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 130,
+      "line": 131,
       "argb": "FF355BAB",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "colors: [Color(0xFF514CA8), Color(0xFF355BAB), Color(0xFF3977A6)]),",
@@ -1803,7 +1603,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 130,
+      "line": 131,
       "argb": "FF3977A6",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "colors: [Color(0xFF514CA8), Color(0xFF355BAB), Color(0xFF3977A6)]),",
@@ -1811,7 +1611,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 132,
+      "line": 133,
       "argb": "FF27769A",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "colors: [Color(0xFF27769A), Color(0xFF428BA6), Color(0xFF3D768D)]),",
@@ -1819,7 +1619,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 132,
+      "line": 133,
       "argb": "FF428BA6",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "colors: [Color(0xFF27769A), Color(0xFF428BA6), Color(0xFF3D768D)]),",
@@ -1827,7 +1627,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 132,
+      "line": 133,
       "argb": "FF3D768D",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "colors: [Color(0xFF27769A), Color(0xFF428BA6), Color(0xFF3D768D)]),",
@@ -1835,7 +1635,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 134,
+      "line": 135,
       "argb": "FF6144A2",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "colors: [Color(0xFF6144A2), Color(0xFF7359C0), Color(0xFF7366B8)]),",
@@ -1843,7 +1643,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 134,
+      "line": 135,
       "argb": "FF7359C0",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "colors: [Color(0xFF6144A2), Color(0xFF7359C0), Color(0xFF7366B8)]),",
@@ -1851,7 +1651,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 134,
+      "line": 135,
       "argb": "FF7366B8",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "colors: [Color(0xFF6144A2), Color(0xFF7359C0), Color(0xFF7366B8)]),",
@@ -1859,7 +1659,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 135,
+      "line": 136,
       "argb": "FFAAB7FF",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "accent: Color(0xFFAAB7FF),",
@@ -1867,7 +1667,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 138,
+      "line": 139,
       "argb": "FF292D55",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "surface: Color(0xFF292D55),",
@@ -1875,7 +1675,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 139,
+      "line": 140,
       "argb": "FF424775",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "outline: Color(0xFF424775),",
@@ -1883,7 +1683,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 140,
+      "line": 141,
       "argb": "FF414B83",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "selected: Color(0xFF414B83),",
@@ -1891,7 +1691,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 141,
+      "line": 142,
       "argb": "55000000",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "shadow: Color(0x55000000),",
@@ -1899,7 +1699,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 151,
+      "line": 152,
       "argb": "FFFFEFF6",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "colors: [Color(0xFFFFEFF6), Color(0xFFFFF9FC), Color(0xFFF3EFFF)]),",
@@ -1907,7 +1707,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 151,
+      "line": 152,
       "argb": "FFFFF9FC",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "colors: [Color(0xFFFFEFF6), Color(0xFFFFF9FC), Color(0xFFF3EFFF)]),",
@@ -1915,7 +1715,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 151,
+      "line": 152,
       "argb": "FFF3EFFF",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "colors: [Color(0xFFFFEFF6), Color(0xFFFFF9FC), Color(0xFFF3EFFF)]),",
@@ -1923,7 +1723,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 155,
+      "line": 156,
       "argb": "FFAD3379",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "colors: [Color(0xFFAD3379), Color(0xFFAD4389), Color(0xFF8551B2)]),",
@@ -1931,7 +1731,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 155,
+      "line": 156,
       "argb": "FFAD4389",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "colors: [Color(0xFFAD3379), Color(0xFFAD4389), Color(0xFF8551B2)]),",
@@ -1939,7 +1739,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 155,
+      "line": 156,
       "argb": "FF8551B2",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "colors: [Color(0xFFAD3379), Color(0xFFAD4389), Color(0xFF8551B2)]),",
@@ -1947,7 +1747,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 159,
+      "line": 160,
       "argb": "FFB03F80",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "colors: [Color(0xFFB03F80), Color(0xFFA5458F), Color(0xFF8356B2)]),",
@@ -1955,7 +1755,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 159,
+      "line": 160,
       "argb": "FFA5458F",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "colors: [Color(0xFFB03F80), Color(0xFFA5458F), Color(0xFF8356B2)]),",
@@ -1963,7 +1763,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 159,
+      "line": 160,
       "argb": "FF8356B2",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "colors: [Color(0xFFB03F80), Color(0xFFA5458F), Color(0xFF8356B2)]),",
@@ -1971,7 +1771,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 161,
+      "line": 162,
       "argb": "FFA23478",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "colors: [Color(0xFFA23478), Color(0xFFAC3E81), Color(0xFFB7468A)]),",
@@ -1979,7 +1779,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 161,
+      "line": 162,
       "argb": "FFAC3E81",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "colors: [Color(0xFFA23478), Color(0xFFAC3E81), Color(0xFFB7468A)]),",
@@ -1987,7 +1787,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 161,
+      "line": 162,
       "argb": "FFB7468A",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "colors: [Color(0xFFA23478), Color(0xFFAC3E81), Color(0xFFB7468A)]),",
@@ -1995,7 +1795,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 163,
+      "line": 164,
       "argb": "FF963E77",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "colors: [Color(0xFF963E77), Color(0xFFA74A82), Color(0xFFAD5388)]),",
@@ -2003,7 +1803,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 163,
+      "line": 164,
       "argb": "FFA74A82",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "colors: [Color(0xFF963E77), Color(0xFFA74A82), Color(0xFFAD5388)]),",
@@ -2011,7 +1811,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 163,
+      "line": 164,
       "argb": "FFAD5388",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "colors: [Color(0xFF963E77), Color(0xFFA74A82), Color(0xFFAD5388)]),",
@@ -2019,7 +1819,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 165,
+      "line": 166,
       "argb": "FF69429D",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "colors: [Color(0xFF69429D), Color(0xFF7D4BA8), Color(0xFF8B56B6)]),",
@@ -2027,7 +1827,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 165,
+      "line": 166,
       "argb": "FF7D4BA8",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "colors: [Color(0xFF69429D), Color(0xFF7D4BA8), Color(0xFF8B56B6)]),",
@@ -2035,7 +1835,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 165,
+      "line": 166,
       "argb": "FF8B56B6",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "colors: [Color(0xFF69429D), Color(0xFF7D4BA8), Color(0xFF8B56B6)]),",
@@ -2043,7 +1843,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 166,
+      "line": 167,
       "argb": "FFAD3379",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "accent: Color(0xFFAD3379),",
@@ -2051,7 +1851,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 167,
+      "line": 168,
       "argb": "FF45233D",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "ink: Color(0xFF45233D),",
@@ -2059,7 +1859,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 168,
+      "line": 169,
       "argb": "FF71576D",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "muted: Color(0xFF71576D),",
@@ -2067,7 +1867,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 169,
+      "line": 170,
       "argb": "EFFFFFFF",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "surface: Color(0xEFFFFFFF),",
@@ -2075,7 +1875,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 170,
+      "line": 171,
       "argb": "FFF3D6E7",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "outline: Color(0xFFF3D6E7),",
@@ -2083,7 +1883,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 171,
+      "line": 172,
       "argb": "FFF8DCEB",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "selected: Color(0xFFF8DCEB),",
@@ -2091,7 +1891,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 172,
+      "line": 173,
       "argb": "2B9D557D",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "shadow: Color(0x2B9D557D),",
@@ -2099,7 +1899,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 180,
+      "line": 181,
       "argb": "FF332036",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "colors: [Color(0xFF332036), Color(0xFF251B30), Color(0xFF33253E)]),",
@@ -2107,7 +1907,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 180,
+      "line": 181,
       "argb": "FF251B30",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "colors: [Color(0xFF332036), Color(0xFF251B30), Color(0xFF33253E)]),",
@@ -2115,7 +1915,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 180,
+      "line": 181,
       "argb": "FF33253E",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "colors: [Color(0xFF332036), Color(0xFF251B30), Color(0xFF33253E)]),",
@@ -2123,7 +1923,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 182,
+      "line": 183,
       "argb": "FF9F367B",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "colors: [Color(0xFF9F367B), Color(0xFFB84C94), Color(0xFF8060B8)]),",
@@ -2131,7 +1931,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 182,
+      "line": 183,
       "argb": "FFB84C94",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "colors: [Color(0xFF9F367B), Color(0xFFB84C94), Color(0xFF8060B8)]),",
@@ -2139,7 +1939,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 182,
+      "line": 183,
       "argb": "FF8060B8",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "colors: [Color(0xFF9F367B), Color(0xFFB84C94), Color(0xFF8060B8)]),",
@@ -2147,7 +1947,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 184,
+      "line": 185,
       "argb": "FF823E78",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "colors: [Color(0xFF823E78), Color(0xFF913F86), Color(0xFF63468E)]),",
@@ -2155,7 +1955,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 184,
+      "line": 185,
       "argb": "FF913F86",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "colors: [Color(0xFF823E78), Color(0xFF913F86), Color(0xFF63468E)]),",
@@ -2163,7 +1963,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 184,
+      "line": 185,
       "argb": "FF63468E",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "colors: [Color(0xFF823E78), Color(0xFF913F86), Color(0xFF63468E)]),",
@@ -2171,7 +1971,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 186,
+      "line": 187,
       "argb": "FF8C3F79",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "colors: [Color(0xFF8C3F79), Color(0xFFA35385), Color(0xFFAD6E98)]),",
@@ -2179,7 +1979,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 186,
+      "line": 187,
       "argb": "FFA35385",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "colors: [Color(0xFF8C3F79), Color(0xFFA35385), Color(0xFFAD6E98)]),",
@@ -2187,7 +1987,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 186,
+      "line": 187,
       "argb": "FFAD6E98",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "colors: [Color(0xFF8C3F79), Color(0xFFA35385), Color(0xFFAD6E98)]),",
@@ -2195,7 +1995,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 188,
+      "line": 189,
       "argb": "FF854A83",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "colors: [Color(0xFF854A83), Color(0xFFA66A9B), Color(0xFFB47DA5)]),",
@@ -2203,7 +2003,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 188,
+      "line": 189,
       "argb": "FFA66A9B",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "colors: [Color(0xFF854A83), Color(0xFFA66A9B), Color(0xFFB47DA5)]),",
@@ -2211,7 +2011,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 188,
+      "line": 189,
       "argb": "FFB47DA5",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "colors: [Color(0xFF854A83), Color(0xFFA66A9B), Color(0xFFB47DA5)]),",
@@ -2219,7 +2019,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 190,
+      "line": 191,
       "argb": "FF67418E",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "colors: [Color(0xFF67418E), Color(0xFF8253A2), Color(0xFF9975AF)]),",
@@ -2227,7 +2027,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 190,
+      "line": 191,
       "argb": "FF8253A2",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "colors: [Color(0xFF67418E), Color(0xFF8253A2), Color(0xFF9975AF)]),",
@@ -2235,7 +2035,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 190,
+      "line": 191,
       "argb": "FF9975AF",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "colors: [Color(0xFF67418E), Color(0xFF8253A2), Color(0xFF9975AF)]),",
@@ -2243,7 +2043,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 191,
+      "line": 192,
       "argb": "FFF2A7D0",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "accent: Color(0xFFF2A7D0),",
@@ -2251,7 +2051,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 192,
+      "line": 193,
       "argb": "FFFFEFF7",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "ink: Color(0xFFFFEFF7),",
@@ -2259,7 +2059,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 193,
+      "line": 194,
       "argb": "FFDCC1D6",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "muted: Color(0xFFDCC1D6),",
@@ -2267,7 +2067,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 194,
+      "line": 195,
       "argb": "FF392B3D",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "surface: Color(0xFF392B3D),",
@@ -2275,7 +2075,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 195,
+      "line": 196,
       "argb": "FF60445D",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "outline: Color(0xFF60445D),",
@@ -2283,7 +2083,7 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 196,
+      "line": 197,
       "argb": "FF55314D",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "selected: Color(0xFF55314D),",
@@ -2291,11 +2091,12 @@
     },
     {
       "path": "lib/theme/premium_tokens.dart",
-      "line": 197,
+      "line": 198,
       "argb": "660C0716",
       "candidate_role": "shared theme token; tested pairs only, not all usages",
       "context": "shadow: Color(0x660C0716),",
       "certification": "NOT VERIFIED for every rendered combination"
     }
-  ]
+  ],
+  "source_commit": "3464f459672f941c311fc9e03f0bf167597f1c1b"
 }

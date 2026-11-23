@@ -1597,67 +1597,47 @@ Analyzing maqwati...
    info • Use 'const' with the constructor to improve performance. Try adding the 'const' keyword to the constructor invocation • lib/theme/app_theme.dart:143:24 • prefer_const_constructors
    info • Use 'const' with the constructor to improve performance. Try adding the 'const' keyword to the constructor invocation • lib/theme/app_theme.dart:143:47 • prefer_const_constructors
    info • Missing a required trailing comma. Try adding a trailing comma • lib/theme/app_theme.dart:143:78 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • lib/theme/premium_tokens.dart:42:36 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • lib/theme/premium_tokens.dart:46:37 • require_trailing_commas
-   info • Use the end-of-line form ('///') for doc comments. Try rewriting the comment to use '///' • lib/theme/premium_tokens.dart:50:1 • slash_for_doc_comments
-   info • Missing a required trailing comma. Try adding a trailing comma • lib/theme/premium_tokens.dart:79:38 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • lib/theme/premium_tokens.dart:108:74 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • lib/theme/premium_tokens.dart:110:74 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • lib/theme/premium_tokens.dart:112:74 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • lib/theme/premium_tokens.dart:114:74 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • lib/theme/premium_tokens.dart:128:74 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • lib/theme/premium_tokens.dart:130:74 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • lib/theme/premium_tokens.dart:132:74 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • lib/theme/premium_tokens.dart:134:74 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • lib/theme/premium_tokens.dart:151:74 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • lib/theme/premium_tokens.dart:155:74 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • lib/theme/premium_tokens.dart:159:74 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • lib/theme/premium_tokens.dart:161:74 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • lib/theme/premium_tokens.dart:163:74 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • lib/theme/premium_tokens.dart:165:74 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • lib/theme/premium_tokens.dart:180:74 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • lib/theme/premium_tokens.dart:182:74 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • lib/theme/premium_tokens.dart:184:74 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • lib/theme/premium_tokens.dart:186:74 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • lib/theme/premium_tokens.dart:188:74 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • lib/theme/premium_tokens.dart:190:74 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • lib/theme/premium_tokens.dart:201:50 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • lib/theme/premium_tokens.dart:239:60 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • lib/theme/premium_tokens.dart:275:23 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • lib/theme/premium_tokens.dart:291:80 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • lib/theme/premium_tokens.dart:292:9 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • lib/theme/premium_tokens.dart:301:74 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • lib/theme/premium_tokens.dart:330:53 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • lib/theme/premium_tokens.dart:331:21 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • lib/theme/premium_tokens.dart:331:22 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • lib/theme/premium_tokens.dart:43:36 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • lib/theme/premium_tokens.dart:47:37 • require_trailing_commas
+   info • Use the end-of-line form ('///') for doc comments. Try rewriting the comment to use '///' • lib/theme/premium_tokens.dart:51:1 • slash_for_doc_comments
+   info • Missing a required trailing comma. Try adding a trailing comma • lib/theme/premium_tokens.dart:80:38 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • lib/theme/premium_tokens.dart:109:74 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • lib/theme/premium_tokens.dart:111:74 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • lib/theme/premium_tokens.dart:113:74 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • lib/theme/premium_tokens.dart:115:74 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • lib/theme/premium_tokens.dart:129:74 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • lib/theme/premium_tokens.dart:131:74 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • lib/theme/premium_tokens.dart:133:74 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • lib/theme/premium_tokens.dart:135:74 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • lib/theme/premium_tokens.dart:152:74 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • lib/theme/premium_tokens.dart:156:74 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • lib/theme/premium_tokens.dart:160:74 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • lib/theme/premium_tokens.dart:162:74 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • lib/theme/premium_tokens.dart:164:74 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • lib/theme/premium_tokens.dart:166:74 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • lib/theme/premium_tokens.dart:181:74 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • lib/theme/premium_tokens.dart:183:74 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • lib/theme/premium_tokens.dart:185:74 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • lib/theme/premium_tokens.dart:187:74 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • lib/theme/premium_tokens.dart:189:74 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • lib/theme/premium_tokens.dart:191:74 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • lib/theme/premium_tokens.dart:202:50 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • lib/theme/premium_tokens.dart:240:60 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • lib/theme/premium_tokens.dart:276:23 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • lib/theme/premium_tokens.dart:292:80 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • lib/theme/premium_tokens.dart:293:9 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • lib/theme/premium_tokens.dart:302:74 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • lib/theme/premium_tokens.dart:331:53 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • lib/theme/premium_tokens.dart:332:21 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • lib/theme/premium_tokens.dart:332:22 • require_trailing_commas
    info • Missing a required trailing comma. Try adding a trailing comma • lib/widgets/account_settings_sheet.dart:57:14 • require_trailing_commas
    info • Missing a required trailing comma. Try adding a trailing comma • lib/widgets/account_settings_sheet.dart:127:6 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • lib/widgets/app_chrome.dart:61:22 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • lib/widgets/app_chrome.dart:189:56 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • lib/widgets/app_chrome.dart:271:16 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • lib/widgets/app_chrome.dart:283:46 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • lib/widgets/auth/auth_brand_hero.dart:14:34 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • lib/widgets/auth/auth_brand_hero.dart:54:57 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • lib/widgets/auth/auth_brand_hero.dart:82:74 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • lib/widgets/auth/auth_brand_hero.dart:82:75 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • lib/widgets/auth/auth_brand_hero.dart:123:64 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • lib/widgets/auth/auth_brand_hero.dart:133:10 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • lib/widgets/auth/auth_brand_hero.dart:143:34 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • lib/widgets/auth/auth_brand_hero.dart:168:13 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • lib/widgets/auth/auth_brand_hero.dart:168:14 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • lib/widgets/auth/auth_brand_hero.dart:171:25 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • lib/widgets/auth/auth_brand_hero.dart:192:38 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • lib/widgets/auth/auth_brand_hero.dart:194:18 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • lib/widgets/auth/auth_brand_hero.dart:203:47 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • lib/widgets/auth/auth_brand_hero.dart:203:48 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • lib/widgets/auth/auth_brand_hero.dart:215:29 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • lib/widgets/auth/auth_brand_hero.dart:220:29 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • lib/widgets/auth/auth_brand_hero.dart:227:29 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • lib/widgets/auth/auth_brand_hero.dart:233:33 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • lib/widgets/auth/auth_brand_hero.dart:239:33 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • lib/widgets/auth/auth_brand_hero.dart:242:72 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • lib/widgets/auth/auth_brand_hero.dart:260:59 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • lib/widgets/auth/auth_brand_hero.dart:267:40 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • lib/widgets/app_chrome.dart:63:22 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • lib/widgets/app_chrome.dart:191:56 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • lib/widgets/app_chrome.dart:273:16 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • lib/widgets/app_chrome.dart:285:46 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • lib/widgets/auth/auth_brand_hero.dart:108:64 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • lib/widgets/auth/auth_brand_hero.dart:120:10 • require_trailing_commas
    info • Missing a required trailing comma. Try adding a trailing comma • lib/widgets/customers/customer_invitation_sheet.dart:71:8 • require_trailing_commas
    info • Missing a required trailing comma. Try adding a trailing comma • lib/widgets/customers/customer_invitation_sheet.dart:96:78 • require_trailing_commas
    info • Missing a required trailing comma. Try adding a trailing comma • lib/widgets/customers/customer_invitation_sheet.dart:98:12 • require_trailing_commas
@@ -1771,8 +1751,8 @@ Analyzing maqwati...
    info • Missing a required trailing comma. Try adding a trailing comma • lib/widgets/customers/pdf_brand_mascot.dart:12:57 • require_trailing_commas
    info • Missing a required trailing comma. Try adding a trailing comma • lib/widgets/customers/pdf_brand_mascot.dart:36:43 • require_trailing_commas
    info • Missing a required trailing comma. Try adding a trailing comma • lib/widgets/customers/pdf_brand_mascot.dart:41:57 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • lib/widgets/customers/pdf_brand_mascot.dart:45:58 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • lib/widgets/customers/pdf_brand_mascot.dart:52:47 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • lib/widgets/customers/pdf_brand_mascot.dart:49:60 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • lib/widgets/customers/pdf_brand_mascot.dart:56:47 • require_trailing_commas
    info • Missing a required trailing comma. Try adding a trailing comma • lib/widgets/home/hero_carousel.dart:22:68 • require_trailing_commas
    info • Missing a required trailing comma. Try adding a trailing comma • lib/widgets/home/hero_carousel.dart:24:76 • require_trailing_commas
    info • Missing a required trailing comma. Try adding a trailing comma • lib/widgets/home/hero_carousel.dart:26:66 • require_trailing_commas
@@ -1997,9 +1977,14 @@ Analyzing maqwati...
    info • Missing a required trailing comma. Try adding a trailing comma • lib/widgets/quick_actions/quick_actions_sheet.dart:678:59 • require_trailing_commas
    info • Missing a required trailing comma. Try adding a trailing comma • lib/widgets/quick_actions/quick_actions_sheet.dart:683:20 • require_trailing_commas
    info • Missing a required trailing comma. Try adding a trailing comma • lib/widgets/quick_actions/quick_actions_sheet.dart:684:12 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/premium/approved_login_20261122_test.dart:14:6 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/premium/approved_login_20261122_test.dart:17:23 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/premium/approved_login_20261122_test.dart:35:6 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/helpers/brand_artwork_expectations.dart:26:64 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/helpers/brand_artwork_expectations.dart:27:21 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/premium/approved_login_20261122_test.dart:16:6 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/premium/approved_login_20261122_test.dart:19:23 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/premium/approved_login_20261122_test.dart:22:67 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/premium/approved_login_20261122_test.dart:32:23 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/premium/approved_login_20261122_test.dart:49:6 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/premium/approved_login_20261122_test.dart:63:23 • require_trailing_commas
    info • Missing a required trailing comma. Try adding a trailing comma • test/premium/credit_balance_test.dart:19:10 • require_trailing_commas
    info • Missing a required trailing comma. Try adding a trailing comma • test/premium/credit_balance_test.dart:20:8 • require_trailing_commas
    info • Missing a required trailing comma. Try adding a trailing comma • test/premium/credit_balance_test.dart:21:6 • require_trailing_commas
@@ -2012,11 +1997,12 @@ Analyzing maqwati...
    info • Missing a required trailing comma. Try adding a trailing comma • test/premium/hero_responsive_test.dart:22:8 • require_trailing_commas
    info • Missing a required trailing comma. Try adding a trailing comma • test/premium/login_premium_test.dart:17:6 • require_trailing_commas
    info • Missing a required trailing comma. Try adding a trailing comma • test/premium/wallet_premium_test.dart:27:6 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/screens/approved_login_glass_frame_test.dart:32:12 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/screens/approved_login_glass_frame_test.dart:34:29 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/screens/approved_login_glass_frame_test.dart:36:66 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/screens/approved_login_glass_frame_test.dart:42:50 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/screens/approved_login_glass_frame_test.dart:47:67 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/screens/approved_login_glass_frame_test.dart:33:12 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/screens/approved_login_glass_frame_test.dart:35:29 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/screens/approved_login_glass_frame_test.dart:37:66 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/screens/approved_login_glass_frame_test.dart:43:50 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/screens/approved_login_glass_frame_test.dart:52:67 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/screens/approved_login_glass_frame_test.dart:54:78 • require_trailing_commas
    info • Missing a required trailing comma. Try adding a trailing comma • test/screens/client_store_booking_sheet_widget_test.dart:21:60 • require_trailing_commas
    info • Missing a required trailing comma. Try adding a trailing comma • test/screens/client_store_booking_sheet_widget_test.dart:23:60 • require_trailing_commas
    info • Missing a required trailing comma. Try adding a trailing comma • test/screens/client_store_booking_sheet_widget_test.dart:34:38 • require_trailing_commas
@@ -2181,10 +2167,10 @@ Analyzing maqwati...
    info • Missing a required trailing comma. Try adding a trailing comma • test/screens/green_customer_layout_refresh_test.dart:100:49 • require_trailing_commas
    info • Missing a required trailing comma. Try adding a trailing comma • test/screens/green_customer_layout_refresh_test.dart:114:59 • require_trailing_commas
    info • Missing a required trailing comma. Try adding a trailing comma • test/screens/green_customer_layout_refresh_test.dart:116:19 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/screens/green_identity_test.dart:21:78 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/screens/green_identity_test.dart:31:23 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/screens/green_identity_test.dart:39:66 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/screens/green_identity_test.dart:40:26 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/screens/green_identity_test.dart:22:78 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/screens/green_identity_test.dart:32:23 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/screens/green_identity_test.dart:40:66 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/screens/green_identity_test.dart:41:26 • require_trailing_commas
    info • Missing a required trailing comma. Try adding a trailing comma • test/screens/home_financial_assistant_navigation_test.dart:15:6 • require_trailing_commas
    info • Missing a required trailing comma. Try adding a trailing comma • test/screens/home_financial_assistant_navigation_test.dart:25:23 • require_trailing_commas
    info • Use 'const' with the constructor to improve performance. Try adding the 'const' keyword to the constructor invocation • test/screens/login_feature_highlights_test.dart:24:19 • prefer_const_constructors
@@ -2225,14 +2211,22 @@ Analyzing maqwati...
    info • Missing a required trailing comma. Try adding a trailing comma • test/screens/movement_screen_widget_test.dart:57:29 • require_trailing_commas
    info • Missing a required trailing comma. Try adding a trailing comma • test/screens/phone_preview_asset_and_layout_test.dart:12:74 • require_trailing_commas
    info • Missing a required trailing comma. Try adding a trailing comma • test/screens/phone_preview_asset_and_layout_test.dart:14:70 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/screens/phone_preview_asset_and_layout_test.dart:42:36 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/screens/phone_preview_asset_and_layout_test.dart:60:23 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/screens/phone_preview_asset_and_layout_test.dart:74:74 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/screens/phone_preview_asset_and_layout_test.dart:45:74 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/screens/phone_preview_asset_and_layout_test.dart:58:56 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/screens/phone_preview_asset_and_layout_test.dart:60:61 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/screens/phone_preview_asset_and_layout_test.dart:72:36 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/screens/phone_preview_asset_and_layout_test.dart:90:23 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/screens/phone_preview_asset_and_layout_test.dart:104:74 • require_trailing_commas
    info • Missing a required trailing comma. Try adding a trailing comma • test/screens/reminder_quick_booking_sheet_widget_test.dart:64:8 • require_trailing_commas
    info • Missing a required trailing comma. Try adding a trailing comma • test/screens/reminder_quick_booking_sheet_widget_test.dart:65:6 • require_trailing_commas
    info • Missing a required trailing comma. Try adding a trailing comma • test/screens/reminder_quick_booking_sheet_widget_test.dart:115:6 • require_trailing_commas
    info • Missing a required trailing comma. Try adding a trailing comma • test/screens/reminder_quick_booking_sheet_widget_test.dart:140:6 • require_trailing_commas
    info • Missing a required trailing comma. Try adding a trailing comma • test/screens/reminder_quick_booking_sheet_widget_test.dart:163:6 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/screens/yemen_modern_fintech_brand_test.dart:13:23 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/screens/yemen_ui_preview_widget_test.dart:12:23 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/screens/yemen_ui_preview_widget_test.dart:43:78 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/screens/yemen_ui_preview_widget_test.dart:46:68 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/screens/yemen_ui_preview_widget_test.dart:47:26 • require_trailing_commas
    info • Missing a required trailing comma. Try adding a trailing comma • test/services/app_state_test.dart:14:72 • require_trailing_commas
    info • Missing a required trailing comma. Try adding a trailing comma • test/services/app_state_test.dart:21:73 • require_trailing_commas
    info • Missing a required trailing comma. Try adding a trailing comma • test/services/app_state_test.dart:24:53 • require_trailing_commas
@@ -2399,13 +2393,13 @@ Analyzing maqwati...
    info • Missing a required trailing comma. Try adding a trailing comma • test/theme/premium_identity_tokens_test.dart:22:70 • require_trailing_commas
    info • Missing a required trailing comma. Try adding a trailing comma • test/theme/premium_identity_tokens_test.dart:24:70 • require_trailing_commas
    info • Missing a required trailing comma. Try adding a trailing comma • test/theme/premium_identity_tokens_test.dart:26:70 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/theme/visual_theme_coverage_test.dart:24:14 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/theme/visual_theme_coverage_test.dart:26:10 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/theme/visual_theme_coverage_test.dart:29:27 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/theme/visual_theme_coverage_test.dart:53:18 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/theme/visual_theme_coverage_test.dart:54:16 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/theme/visual_theme_coverage_test.dart:56:12 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/theme/visual_theme_coverage_test.dart:61:53 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/theme/visual_theme_coverage_test.dart:25:14 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/theme/visual_theme_coverage_test.dart:27:10 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/theme/visual_theme_coverage_test.dart:30:27 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/theme/visual_theme_coverage_test.dart:54:18 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/theme/visual_theme_coverage_test.dart:55:16 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/theme/visual_theme_coverage_test.dart:57:12 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/theme/visual_theme_coverage_test.dart:62:53 • require_trailing_commas
    info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/currency_accessibility_test.dart:41:64 • require_trailing_commas
    info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/currency_accessibility_test.dart:41:65 • require_trailing_commas
    info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/currency_accessibility_test.dart:41:66 • require_trailing_commas
@@ -2426,14 +2420,17 @@ Analyzing maqwati...
    info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/login_matrix_test.dart:52:9 • require_trailing_commas
    info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/login_matrix_test.dart:69:72 • require_trailing_commas
    info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/login_matrix_test.dart:69:73 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/login_matrix_test.dart:94:76 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/login_matrix_test.dart:95:32 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/login_matrix_test.dart:102:51 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/login_matrix_test.dart:102:52 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/login_matrix_test.dart:103:14 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/login_matrix_test.dart:110:67 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/login_matrix_test.dart:110:68 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/login_matrix_test.dart:123:77 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/login_matrix_test.dart:97:76 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/login_matrix_test.dart:98:32 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/login_matrix_test.dart:105:51 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/login_matrix_test.dart:105:52 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/login_matrix_test.dart:106:14 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/login_matrix_test.dart:112:79 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/login_matrix_test.dart:114:74 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/login_matrix_test.dart:116:77 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/login_matrix_test.dart:121:67 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/login_matrix_test.dart:121:68 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/login_matrix_test.dart:134:77 • require_trailing_commas
    info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/navigation_accessibility_test.dart:23:35 • require_trailing_commas
    info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/navigation_accessibility_test.dart:23:36 • require_trailing_commas
    info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/navigation_accessibility_test.dart:23:37 • require_trailing_commas
@@ -2446,9 +2443,10 @@ Analyzing maqwati...
    info • 'pipelineOwner' is deprecated and shouldn't be used. Interact with the pipelineOwner tree rooted at RendererBinding.rootPipelineOwner instead. Or instead of accessing the SemanticsOwner of any PipelineOwner interact with the SemanticsBinding directly. This feature was deprecated after v3.10.0-12.0.pre. Try replacing the use of the deprecated member with the replacement • test/ui_audit/navigation_accessibility_test.dart:49:26 • deprecated_member_use
    info • 'hasFlag' is deprecated and shouldn't be used. Use flagsCollection instead. This feature was deprecated after v3.32.0-0.0.pre. Try replacing the use of the deprecated member with the replacement • test/ui_audit/navigation_accessibility_test.dart:53:46 • deprecated_member_use
    info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/navigation_accessibility_test.dart:54:21 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/pdf_identity_test.dart:13:51 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/pdf_identity_test.dart:19:74 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/pdf_identity_test.dart:19:75 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/pdf_identity_test.dart:14:51 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/pdf_identity_test.dart:22:69 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/pdf_identity_test.dart:28:74 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/pdf_identity_test.dart:28:75 • require_trailing_commas
    info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/populated_financial_matrix_test.dart:31:7 • require_trailing_commas
    info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/populated_financial_matrix_test.dart:31:8 • require_trailing_commas
    info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/populated_financial_matrix_test.dart:37:22 • require_trailing_commas
@@ -2750,4 +2748,4 @@ Analyzing maqwati...
    info • Missing a required trailing comma. Try adding a trailing comma • test/widgets/quick_actions/quick_action_sheets_widget_test.dart:191:6 • require_trailing_commas
    info • Missing a required trailing comma. Try adding a trailing comma • test/widgets/worker_preparation_pdf_test.dart:28:58 • require_trailing_commas
 
-2749 issues found. (ran in 4.4s)
+2747 issues found. (ran in 2.7s)

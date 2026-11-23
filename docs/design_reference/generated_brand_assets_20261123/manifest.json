@@ -5,7 +5,6 @@
   "method": "Three independent reference-guided image generation/editing calls with transparent background enabled. No post-generation pixel editing, resizing or upscaling. Source and generated originals preserved.",
   "status": "Generated derivatives for review; no claim of original-pixel fidelity or production adoption",
   "review": "Visually inspected on checkerboard; male attire/turban/jambiya, female tablet/thumbs-up/no-jambiya and Arabic spelling retained recognizably. Not a pixel-perfect copy; no automatic G4/G7 approval.",
-  "runtime_artwork_changed": false,
   "files": [
     {
       "file": "maqwati_male_hd.png",
@@ -55,5 +54,13 @@
       "alpha_253_to_255_pixels": 526789,
       "preserved_generated_bytes": true
     }
-  ]
+  ],
+  "generation_stage_runtime_artwork_changed": false,
+  "later_adoption": {
+    "authorized_by_owner": true,
+    "female": "adopted",
+    "logo": "adopted",
+    "male": "superseded by latest owner standalone portrait; not this earlier review candidate",
+    "runtime_manifest": "../adopted_brand_assets_20261123.json"
+  }
 }
