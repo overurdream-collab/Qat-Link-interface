@@ -1,0 +1,59 @@
+{
+  "source": "../approved_brand_sheet_owner_20261123.jpg",
+  "source_sha256": "16c6242f097ae4694801be1b2df9fdce56808f88a85402a3462bb07ac0faf7c1",
+  "authorization": "Owner: نفذ ماهو مفيد بحيث تولد صور منفصله عاليه الدقه",
+  "method": "Three independent reference-guided image generation/editing calls with transparent background enabled. No post-generation pixel editing, resizing or upscaling. Source and generated originals preserved.",
+  "status": "Generated derivatives for review; no claim of original-pixel fidelity or production adoption",
+  "review": "Visually inspected on checkerboard; male attire/turban/jambiya, female tablet/thumbs-up/no-jambiya and Arabic spelling retained recognizably. Not a pixel-perfect copy; no automatic G4/G7 approval.",
+  "runtime_artwork_changed": false,
+  "files": [
+    {
+      "file": "maqwati_male_hd.png",
+      "description": "male character, with jambiya",
+      "dimensions": [
+        1024,
+        1536
+      ],
+      "mode": "RGBA",
+      "bytes": 2348254,
+      "sha256": "db13dacbc6896d61d5f9446ca640c81bceafa2890730b67c1bed26443f7d51cd",
+      "alpha_min": 0,
+      "alpha_max": 254,
+      "zero_alpha_pixels": 685831,
+      "alpha_253_to_255_pixels": 766290,
+      "preserved_generated_bytes": true
+    },
+    {
+      "file": "maqwati_female_hd.png",
+      "description": "female character, tablet and thumbs-up, no jambiya",
+      "dimensions": [
+        1024,
+        1536
+      ],
+      "mode": "RGBA",
+      "bytes": 2793528,
+      "sha256": "3865559b25069dfc3f443380b537bdc67ee0b62458f569cef7cca3c531241e13",
+      "alpha_min": 0,
+      "alpha_max": 254,
+      "zero_alpha_pixels": 652560,
+      "alpha_253_to_255_pixels": 785982,
+      "preserved_generated_bytes": true
+    },
+    {
+      "file": "maqwati_logo_hd.png",
+      "description": "مقوتي لينك — كل يوم حكاية",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "mode": "RGBA",
+      "bytes": 1433564,
+      "sha256": "171af3e84e1d7146df1bf3e93c85cb1880f466fefc06a140ab94356f9aa8047f",
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "zero_alpha_pixels": 681488,
+      "alpha_253_to_255_pixels": 526789,
+      "preserved_generated_bytes": true
+    }
+  ]
+}
