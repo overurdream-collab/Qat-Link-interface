@@ -1,0 +1,591 @@
+﻿2026-11-23T02:14:24.4604713Z Current runner version: '2.338.2'
+2026-11-23T02:14:24.4629045Z ##[group]Runner Image Provisioner
+2026-11-23T02:14:24.4629907Z Hosted Compute Agent
+2026-11-23T02:14:24.4630554Z Version: 20261111.635
+2026-11-23T02:14:24.4631168Z Commit: b8a594ea514ff44cadb5342986c68b1eac6e22ed
+2026-11-23T02:14:24.4631912Z Build Date: 2026-11-11T01:49:01Z
+2026-11-23T02:14:24.4632540Z Worker ID: {695fd8f1-a0fd-4086-be18-729f564723d8}
+2026-11-23T02:14:24.4633167Z Region: westus3
+2026-11-23T02:14:24.4633698Z Cloud: Azure
+2026-11-23T02:14:24.4634208Z ##[endgroup]
+2026-11-23T02:14:24.4635788Z ##[group]Operating System
+2026-11-23T02:14:24.4636401Z Ubuntu
+2026-11-23T02:14:24.4636888Z 26.04.1
+2026-11-23T02:14:24.4637391Z LTS
+2026-11-23T02:14:24.4637881Z ##[endgroup]
+2026-11-23T02:14:24.4638517Z ##[group]Runner Image
+2026-11-23T02:14:24.4639573Z Image: ubuntu-26.04
+2026-11-23T02:14:24.4640362Z Version: 20261116.202.1
+2026-11-23T02:14:24.4641622Z Included Software: https://github.com/actions/runner-images/blob/ubuntu26/20261116.202/images/ubuntu/Ubuntu2604-Readme.md
+2026-11-23T02:14:24.4643009Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu26%2F20261116.202
+2026-11-23T02:14:24.4643906Z ##[endgroup]
+2026-11-23T02:14:24.4644993Z ##[group]GITHUB_TOKEN Permissions
+2026-11-23T02:14:24.4647063Z Contents: read
+2026-11-23T02:14:24.4647618Z Metadata: read
+2026-11-23T02:14:24.4648183Z ##[endgroup]
+2026-11-23T02:14:24.4650561Z Secret source: Actions
+2026-11-23T02:14:24.4651560Z Cache mode: write
+2026-11-23T02:14:24.4652204Z Prepare workflow directory
+2026-11-23T02:14:24.5109089Z Prepare all required actions
+2026-11-23T02:14:24.5157715Z Getting action download info
+2026-11-23T02:14:24.7890044Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-11-23T02:14:24.9035016Z Download action repository 'actions/setup-node@v4' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+2026-11-23T02:14:25.0651980Z Complete job name: backend
+2026-11-23T02:14:25.1204745Z ##[group]Checking docker version
+2026-11-23T02:14:25.1217594Z ##[command]/usr/bin/docker version --format '{{.Server.APIVersion}}'
+2026-11-23T02:14:25.4745393Z '1.54'
+2026-11-23T02:14:25.4756010Z Docker daemon API version: '1.54'
+2026-11-23T02:14:25.4757241Z ##[command]/usr/bin/docker version --format '{{.Client.APIVersion}}'
+2026-11-23T02:14:25.5014190Z '1.54'
+2026-11-23T02:14:25.5034774Z Docker client API version: '1.54'
+2026-11-23T02:14:25.5040870Z ##[endgroup]
+2026-11-23T02:14:25.5044423Z ##[group]Clean up resources from previous jobs
+2026-11-23T02:14:25.5050351Z ##[command]/usr/bin/docker ps --all --quiet --no-trunc --filter "label=4d950c"
+2026-11-23T02:14:25.5464114Z ##[command]/usr/bin/docker network prune --force --filter "label=4d950c"
+2026-11-23T02:14:25.5626279Z ##[endgroup]
+2026-11-23T02:14:25.5626913Z ##[group]Create local container network
+2026-11-23T02:14:25.5638210Z ##[command]/usr/bin/docker network create --label 4d950c github_network_c316adb1fdb54071bc65bf6ecbd3a406
+2026-11-23T02:14:25.6037658Z 4feba2521a2950c886731cfd0fe2f9fa898e79f2685925354d9a57166916aa61
+2026-11-23T02:14:25.6055875Z ##[endgroup]
+2026-11-23T02:14:25.6081881Z ##[group]Starting postgres service container
+2026-11-23T02:14:25.6103657Z ##[command]/usr/bin/docker pull postgres:16
+2026-11-23T02:14:26.3266734Z 16: Pulling from library/postgres
+2026-11-23T02:14:26.5575818Z a0a147a27498: Pulling fs layer
+2026-11-23T02:14:26.5577561Z 8c5b8924f0a2: Pulling fs layer
+2026-11-23T02:14:26.5579017Z 37fb86c2a767: Pulling fs layer
+2026-11-23T02:14:26.5580020Z a115041a3e47: Pulling fs layer
+2026-11-23T02:14:26.5581193Z 0bda6b874f77: Pulling fs layer
+2026-11-23T02:14:26.5582230Z a43692ded922: Pulling fs layer
+2026-11-23T02:14:26.5583268Z 4fefcc83b4c3: Pulling fs layer
+2026-11-23T02:14:26.5584434Z a37be121ef1e: Pulling fs layer
+2026-11-23T02:14:26.5585571Z 7ae4197f54cb: Pulling fs layer
+2026-11-23T02:14:26.5586583Z a71988767d8f: Pulling fs layer
+2026-11-23T02:14:26.5587610Z a160a6fee115: Pulling fs layer
+2026-11-23T02:14:26.5589013Z 893773e1f215: Pulling fs layer
+2026-11-23T02:14:26.5591187Z 57869d2f2b40: Pulling fs layer
+2026-11-23T02:14:26.7270709Z a0a147a27498: Download complete
+2026-11-23T02:14:26.7274287Z 893773e1f215: Download complete
+2026-11-23T02:14:26.8289843Z 57869d2f2b40: Download complete
+2026-11-23T02:14:26.8304995Z 8c5b8924f0a2: Download complete
+2026-11-23T02:14:26.8327560Z a115041a3e47: Download complete
+2026-11-23T02:14:26.8448027Z a43692ded922: Download complete
+2026-11-23T02:14:26.8450665Z 4fefcc83b4c3: Download complete
+2026-11-23T02:14:26.8453548Z 7ae4197f54cb: Download complete
+2026-11-23T02:14:26.8456446Z a160a6fee115: Download complete
+2026-11-23T02:14:26.8458983Z a37be121ef1e: Download complete
+2026-11-23T02:14:26.9260164Z a71988767d8f: Download complete
+2026-11-23T02:14:27.0262502Z 37fb86c2a767: Download complete
+2026-11-23T02:14:27.0263517Z 8c7e2d1cf628: Download complete
+2026-11-23T02:14:27.0264050Z 51d128040abb: Download complete
+2026-11-23T02:14:27.5262196Z 0bda6b874f77: Download complete
+2026-11-23T02:14:27.7284711Z a0a147a27498: Pull complete
+2026-11-23T02:14:27.7439221Z 37fb86c2a767: Pull complete
+2026-11-23T02:14:27.8271764Z 893773e1f215: Pull complete
+2026-11-23T02:14:27.8359074Z a43692ded922: Pull complete
+2026-11-23T02:14:27.9358953Z a71988767d8f: Pull complete
+2026-11-23T02:14:28.0268493Z 57869d2f2b40: Pull complete
+2026-11-23T02:14:28.0279101Z 8c5b8924f0a2: Pull complete
+2026-11-23T02:14:28.0358042Z a37be121ef1e: Pull complete
+2026-11-23T02:14:29.6265184Z a115041a3e47: Pull complete
+2026-11-23T02:14:29.6273117Z 4fefcc83b4c3: Pull complete
+2026-11-23T02:14:29.6285704Z 7ae4197f54cb: Pull complete
+2026-11-23T02:14:29.6329237Z a115041a3e47: Pull complete
+2026-11-23T02:14:29.6342640Z 4fefcc83b4c3: Pull complete
+2026-11-23T02:14:29.6356619Z 7ae4197f54cb: Pull complete
+2026-11-23T02:14:29.6369324Z a160a6fee115: Pull complete
+2026-11-23T02:14:29.6385108Z 0bda6b874f77: Pull complete
+2026-11-23T02:14:29.6386332Z Digest: sha256:3950ad7c3148ca2175ef1b6c36c9efbf78957ae8fbe8b3a5d7c35af50500382f
+2026-11-23T02:14:29.6387719Z Status: Downloaded newer image for postgres:16
+2026-11-23T02:14:29.6409791Z docker.io/library/postgres:16
+2026-11-23T02:14:29.6495786Z ##[command]/usr/bin/docker create --name babf55ffabf745fb971640a499e9005a_postgres16_338cc3 --label 4d950c --network github_network_c316adb1fdb54071bc65bf6ecbd3a406 --network-alias postgres -p 5432:5432 --health-cmd="pg_isready -U ui_audit -d ui_audit" --health-interval=5s --health-timeout=5s --health-retries=10 -e "POSTGRES_USER=ui_audit" -e "POSTGRES_PASSWORD=ui_audit_test_only" -e "POSTGRES_DB=ui_audit" -e GITHUB_ACTIONS=true -e CI=true postgres:16
+2026-11-23T02:14:31.1159855Z 70dcbd679c34f410b6150f49b796fa25b89abe39af788451e54a1aa9abf9c705
+2026-11-23T02:14:31.1183705Z ##[command]/usr/bin/docker start 70dcbd679c34f410b6150f49b796fa25b89abe39af788451e54a1aa9abf9c705
+2026-11-23T02:14:31.3158296Z 70dcbd679c34f410b6150f49b796fa25b89abe39af788451e54a1aa9abf9c705
+2026-11-23T02:14:31.3176294Z ##[command]/usr/bin/docker ps --all --filter id=70dcbd679c34f410b6150f49b796fa25b89abe39af788451e54a1aa9abf9c705 --filter status=running --no-trunc --format "{{.ID}} {{.Status}}"
+2026-11-23T02:14:31.3464803Z 70dcbd679c34f410b6150f49b796fa25b89abe39af788451e54a1aa9abf9c705 Up Less than a second (health: starting)
+2026-11-23T02:14:31.3484256Z ##[command]/usr/bin/docker port 70dcbd679c34f410b6150f49b796fa25b89abe39af788451e54a1aa9abf9c705
+2026-11-23T02:14:31.3631623Z 5432/tcp -> 0.0.0.0:5432
+2026-11-23T02:14:31.3633755Z 5432/tcp -> [::]:5432
+2026-11-23T02:14:31.3677626Z ##[endgroup]
+2026-11-23T02:14:31.3686721Z ##[group]Waiting for all services to be ready
+2026-11-23T02:14:31.3700253Z ##[command]/usr/bin/docker inspect --format="{{if .Config.Healthcheck}}{{print .State.Health.Status}}{{end}}" 70dcbd679c34f410b6150f49b796fa25b89abe39af788451e54a1aa9abf9c705
+2026-11-23T02:14:31.3861656Z starting
+2026-11-23T02:14:31.3897457Z postgres service is starting, waiting 2 seconds before checking again.
+2026-11-23T02:14:33.3893266Z ##[command]/usr/bin/docker inspect --format="{{if .Config.Healthcheck}}{{print .State.Health.Status}}{{end}}" 70dcbd679c34f410b6150f49b796fa25b89abe39af788451e54a1aa9abf9c705
+2026-11-23T02:14:33.4041371Z starting
+2026-11-23T02:14:33.4052559Z postgres service is starting, waiting 3 seconds before checking again.
+2026-11-23T02:14:37.1542929Z ##[command]/usr/bin/docker inspect --format="{{if .Config.Healthcheck}}{{print .State.Health.Status}}{{end}}" 70dcbd679c34f410b6150f49b796fa25b89abe39af788451e54a1aa9abf9c705
+2026-11-23T02:14:37.1681821Z healthy
+2026-11-23T02:14:37.1700928Z postgres service is healthy.
+2026-11-23T02:14:37.1701670Z ##[endgroup]
+2026-11-23T02:14:37.1984897Z ##[group]Run actions/checkout@v4
+2026-11-23T02:14:37.1985399Z with:
+2026-11-23T02:14:37.1985670Z   repository: overurdream-collab/Qat-Link-interface
+2026-11-23T02:14:37.1988131Z   token: ***
+2026-11-23T02:14:37.1988584Z   ssh-strict: true
+2026-11-23T02:14:37.1988811Z   ssh-user: git
+2026-11-23T02:14:37.1989040Z   persist-credentials: true
+2026-11-23T02:14:37.1989283Z   clean: true
+2026-11-23T02:14:37.1989503Z   sparse-checkout-cone-mode: true
+2026-11-23T02:14:37.1989778Z   fetch-depth: 1
+2026-11-23T02:14:37.1989978Z   fetch-tags: false
+2026-11-23T02:14:37.1990187Z   show-progress: true
+2026-11-23T02:14:37.1990391Z   lfs: false
+2026-11-23T02:14:37.1990577Z   submodules: false
+2026-11-23T02:14:37.1990782Z   set-safe-directory: true
+2026-11-23T02:14:37.1991024Z   allow-unsafe-pr-checkout: false
+2026-11-23T02:14:37.1991485Z env:
+2026-11-23T02:14:37.1991947Z   FIN08_TEST_DATABASE_URL: ***127.0.0.1:5432/ui_audit
+2026-11-23T02:14:37.1992248Z   PGPASSWORD: ui_audit_test_only
+2026-11-23T02:14:37.1992545Z ##[endgroup]
+2026-11-23T02:14:37.4699411Z Syncing repository: overurdream-collab/Qat-Link-interface
+2026-11-23T02:14:37.4701663Z ##[group]Getting Git version info
+2026-11-23T02:14:37.4702425Z Working directory is '/home/runner/work/Qat-Link-interface/Qat-Link-interface'
+2026-11-23T02:14:37.4703504Z [command]/usr/bin/git version
+2026-11-23T02:14:37.4703936Z git version 2.56.1
+2026-11-23T02:14:37.4718664Z ##[endgroup]
+2026-11-23T02:14:37.4735827Z Temporarily overriding HOME='/home/runner/work/_temp/6ddd747a-4b57-493b-85ee-3d1d6bc86add' before making global git config changes
+2026-11-23T02:14:37.4737324Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-23T02:14:37.4742391Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/Qat-Link-interface/Qat-Link-interface
+2026-11-23T02:14:37.4803089Z Deleting the contents of '/home/runner/work/Qat-Link-interface/Qat-Link-interface'
+2026-11-23T02:14:37.4806407Z ##[group]Initializing the repository
+2026-11-23T02:14:37.4810941Z [command]/usr/bin/git init /home/runner/work/Qat-Link-interface/Qat-Link-interface
+2026-11-23T02:14:37.4915446Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-11-23T02:14:37.4916507Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-11-23T02:14:37.4917362Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-11-23T02:14:37.4918041Z hint: call:
+2026-11-23T02:14:37.4918614Z hint:
+2026-11-23T02:14:37.4919116Z hint: 	git config --global init.defaultBranch <name>
+2026-11-23T02:14:37.4919664Z hint:
+2026-11-23T02:14:37.4920209Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-11-23T02:14:37.4921177Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-11-23T02:14:37.4921865Z hint:
+2026-11-23T02:14:37.4922263Z hint: 	git branch -m <name>
+2026-11-23T02:14:37.4922701Z hint:
+2026-11-23T02:14:37.4923329Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-11-23T02:14:37.4924791Z Initialized empty Git repository in /home/runner/work/Qat-Link-interface/Qat-Link-interface/.git/
+2026-11-23T02:14:37.4937129Z [command]/usr/bin/git remote add origin https://github.com/overurdream-collab/Qat-Link-interface
+2026-11-23T02:14:37.4985346Z ##[endgroup]
+2026-11-23T02:14:37.4986308Z ##[group]Disabling automatic garbage collection
+2026-11-23T02:14:37.4991318Z [command]/usr/bin/git config --local gc.auto 0
+2026-11-23T02:14:37.5020516Z ##[endgroup]
+2026-11-23T02:14:37.5021257Z ##[group]Setting up auth
+2026-11-23T02:14:37.5027346Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-23T02:14:37.5056852Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-23T02:14:37.5460943Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-23T02:14:37.5495390Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-23T02:14:37.5741173Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-23T02:14:37.5774891Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-23T02:14:37.5994467Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-11-23T02:14:37.6028722Z ##[endgroup]
+2026-11-23T02:14:37.6029464Z ##[group]Fetching the repository
+2026-11-23T02:14:37.6038942Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +30015ac5d35431d6c6f9d6ab20f11f75b00d7991:refs/remotes/pull/72/merge
+2026-11-23T02:14:41.5448540Z From https://github.com/overurdream-collab/Qat-Link-interface
+2026-11-23T02:14:41.5449445Z  * [new ref]         30015ac5d35431d6c6f9d6ab20f11f75b00d7991 -> pull/72/merge
+2026-11-23T02:14:41.5452736Z ##[endgroup]
+2026-11-23T02:14:41.5453314Z ##[group]Determining the checkout info
+2026-11-23T02:14:41.5456883Z ##[endgroup]
+2026-11-23T02:14:41.5471348Z [command]/usr/bin/git sparse-checkout disable
+2026-11-23T02:14:41.5521327Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-11-23T02:14:41.5546032Z ##[group]Checking out the ref
+2026-11-23T02:14:41.5550958Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/72/merge
+2026-11-23T02:14:41.9672543Z Note: switching to 'refs/remotes/pull/72/merge'.
+2026-11-23T02:14:41.9672809Z 
+2026-11-23T02:14:41.9673012Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-11-23T02:14:41.9673818Z changes and commit them, and you can discard any commits you make in this
+2026-11-23T02:14:41.9674600Z state without impacting any branches by switching back to a branch.
+2026-11-23T02:14:41.9675202Z 
+2026-11-23T02:14:41.9675528Z If you want to create a new branch to retain commits you create, you may
+2026-11-23T02:14:41.9676167Z do so (now or later) by using -c with the switch command. Example:
+2026-11-23T02:14:41.9676600Z 
+2026-11-23T02:14:41.9676761Z   git switch -c <new-branch-name>
+2026-11-23T02:14:41.9677037Z 
+2026-11-23T02:14:41.9677195Z Or undo this operation with:
+2026-11-23T02:14:41.9677489Z 
+2026-11-23T02:14:41.9677619Z   git switch -
+2026-11-23T02:14:41.9677887Z 
+2026-11-23T02:14:41.9678239Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-11-23T02:14:41.9678907Z 
+2026-11-23T02:14:41.9679462Z HEAD is now at 30015ac Merge 97607e5e629377fab2731b0081a56c978d7e3f5e into 4bbaba1958f25099583637df5a7db2437aeae21d
+2026-11-23T02:14:41.9696470Z ##[endgroup]
+2026-11-23T02:14:41.9743942Z [command]/usr/bin/git log -1 --format=%H
+2026-11-23T02:14:41.9764439Z 30015ac5d35431d6c6f9d6ab20f11f75b00d7991
+2026-11-23T02:14:41.9994371Z ##[group]Run actions/setup-node@v4
+2026-11-23T02:14:41.9994755Z with:
+2026-11-23T02:14:41.9994965Z   node-version: 22
+2026-11-23T02:14:41.9995173Z   always-auth: false
+2026-11-23T02:14:41.9995390Z   check-latest: false
+2026-11-23T02:14:41.9997636Z   token: ***
+2026-11-23T02:14:41.9997834Z env:
+2026-11-23T02:14:41.9998226Z   FIN08_TEST_DATABASE_URL: ***127.0.0.1:5432/ui_audit
+2026-11-23T02:14:41.9998861Z   PGPASSWORD: ui_audit_test_only
+2026-11-23T02:14:41.9999281Z ##[endgroup]
+2026-11-23T02:14:42.1442370Z (node:2814) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-23T02:14:42.1443274Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-23T02:14:42.1449261Z Found in cache @ /opt/hostedtoolcache/node/22.23.5/x64
+2026-11-23T02:14:42.1450146Z ##[group]Environment details
+2026-11-23T02:14:42.5411472Z node: v22.23.5
+2026-11-23T02:14:42.5411889Z npm: 10.9.9
+2026-11-23T02:14:42.5412290Z yarn: 1.22.22
+2026-11-23T02:14:42.5413080Z ##[endgroup]
+2026-11-23T02:14:42.5523844Z ##[group]Run npm install --no-audit --no-fund
+2026-11-23T02:14:42.5524296Z [36;1mnpm install --no-audit --no-fund[0m
+2026-11-23T02:14:42.5554919Z shell: /usr/bin/bash -e {0}
+2026-11-23T02:14:42.5555187Z env:
+2026-11-23T02:14:42.5555721Z   FIN08_TEST_DATABASE_URL: ***127.0.0.1:5432/ui_audit
+2026-11-23T02:14:42.5556040Z   PGPASSWORD: ui_audit_test_only
+2026-11-23T02:14:42.5556282Z ##[endgroup]
+2026-11-23T02:14:43.6777087Z 
+2026-11-23T02:14:43.6784093Z added 14 packages in 1s
+2026-11-23T02:14:43.7026256Z ##[group]Run npm run check
+2026-11-23T02:14:43.7026558Z [36;1mnpm run check[0m
+2026-11-23T02:14:43.7047284Z shell: /usr/bin/bash -e {0}
+2026-11-23T02:14:43.7047554Z env:
+2026-11-23T02:14:43.7048050Z   FIN08_TEST_DATABASE_URL: ***127.0.0.1:5432/ui_audit
+2026-11-23T02:14:43.7048533Z   PGPASSWORD: ui_audit_test_only
+2026-11-23T02:14:43.7048784Z ##[endgroup]
+2026-11-23T02:14:43.7961525Z 
+2026-11-23T02:14:43.7962901Z > qat-link-fin08-api@0.1.0 check
+2026-11-23T02:14:43.7966521Z > node --check src/index.mjs && node --check src/store.mjs && node --check src/http.mjs && node --check src/auth.mjs && node --check src/validation.mjs && node --check src/merchant_read.mjs && node --check src/customer_relationships.mjs && node --check src/ledger.mjs && node --check src/batch.mjs && node --check src/amendments.mjs && node --check src/credit_limits.mjs && node --check src/settlements.mjs && node --check src/decimal.mjs
+2026-11-23T02:14:43.7968203Z 
+2026-11-23T02:14:44.0979021Z ##[group]Run for schema in sql/00*.sql; do
+2026-11-23T02:14:44.0979374Z [36;1mfor schema in sql/00*.sql; do[0m
+2026-11-23T02:14:44.0979777Z [36;1m  psql -v ON_ERROR_STOP=1 -h 127.0.0.1 -U ui_audit -d ui_audit -f "$schema"[0m
+2026-11-23T02:14:44.0980150Z [36;1mdone[0m
+2026-11-23T02:14:44.1001332Z shell: /usr/bin/bash -e {0}
+2026-11-23T02:14:44.1001601Z env:
+2026-11-23T02:14:44.1002115Z   FIN08_TEST_DATABASE_URL: ***127.0.0.1:5432/ui_audit
+2026-11-23T02:14:44.1002424Z   PGPASSWORD: ui_audit_test_only
+2026-11-23T02:14:44.1002668Z ##[endgroup]
+2026-11-23T02:14:44.1716513Z CREATE TABLE
+2026-11-23T02:14:44.1757821Z CREATE TABLE
+2026-11-23T02:14:44.1767993Z CREATE INDEX
+2026-11-23T02:14:44.1812065Z CREATE TABLE
+2026-11-23T02:14:44.1822850Z CREATE INDEX
+2026-11-23T02:14:44.1850545Z CREATE TABLE
+2026-11-23T02:14:44.1860577Z CREATE INDEX
+2026-11-23T02:14:44.1885039Z CREATE TABLE
+2026-11-23T02:14:44.1894261Z CREATE INDEX
+2026-11-23T02:14:44.1999326Z CREATE TABLE
+2026-11-23T02:14:44.2003061Z CREATE TABLE
+2026-11-23T02:14:44.2005074Z CREATE TABLE
+2026-11-23T02:14:44.2030041Z CREATE TABLE
+2026-11-23T02:14:44.2040163Z CREATE INDEX
+2026-11-23T02:14:44.2355188Z BEGIN
+2026-11-23T02:14:44.2367251Z ALTER TABLE
+2026-11-23T02:14:44.2372785Z UPDATE 0
+2026-11-23T02:14:44.2377034Z ALTER TABLE
+2026-11-23T02:14:44.2381427Z ALTER TABLE
+2026-11-23T02:14:44.2384440Z ALTER TABLE
+2026-11-23T02:14:44.2403442Z ALTER TABLE
+2026-11-23T02:14:44.2404626Z ALTER TABLE
+2026-11-23T02:14:44.2409057Z ALTER TABLE
+2026-11-23T02:14:44.2419713Z CREATE INDEX
+2026-11-23T02:14:44.2440600Z CREATE INDEX
+2026-11-23T02:14:44.2487539Z CREATE TABLE
+2026-11-23T02:14:44.2498648Z ALTER TABLE
+2026-11-23T02:14:44.2507135Z CREATE INDEX
+2026-11-23T02:14:44.2515049Z CREATE INDEX
+2026-11-23T02:14:44.2537998Z CREATE TABLE
+2026-11-23T02:14:44.2562144Z CREATE TABLE
+2026-11-23T02:14:44.2570697Z CREATE FUNCTION
+2026-11-23T02:14:44.2574037Z psql:sql/002_fin13_unified_ledger.sql:96: NOTICE:  trigger "fin13_approved_movement_immutable" for relation "financial_movements" does not exist, skipping
+2026-11-23T02:14:44.2575441Z DROP TRIGGER
+2026-11-23T02:14:44.2575890Z CREATE TRIGGER
+2026-11-23T02:14:44.2579542Z COMMIT
+2026-11-23T02:14:44.2902092Z BEGIN
+2026-11-23T02:14:44.2913119Z ALTER TABLE
+2026-11-23T02:14:44.2927957Z CREATE INDEX
+2026-11-23T02:14:44.2933025Z ALTER TABLE
+2026-11-23T02:14:44.2937008Z ALTER TABLE
+2026-11-23T02:14:44.2941706Z ALTER TABLE
+2026-11-23T02:14:44.2952915Z CREATE INDEX
+2026-11-23T02:14:44.3003121Z CREATE TABLE
+2026-11-23T02:14:44.3011783Z CREATE INDEX
+2026-11-23T02:14:44.3020583Z CREATE INDEX
+2026-11-23T02:14:44.3030438Z CREATE INDEX
+2026-11-23T02:14:44.3040471Z CREATE INDEX
+2026-11-23T02:14:44.3044362Z COMMIT
+2026-11-23T02:14:44.3358174Z BEGIN
+2026-11-23T02:14:44.3398590Z CREATE TABLE
+2026-11-23T02:14:44.3425070Z CREATE TABLE
+2026-11-23T02:14:44.3435519Z CREATE INDEX
+2026-11-23T02:14:44.3439706Z COMMIT
+2026-11-23T02:14:44.3755714Z BEGIN
+2026-11-23T02:14:44.3817619Z CREATE TABLE
+2026-11-23T02:14:44.3828467Z CREATE INDEX
+2026-11-23T02:14:44.3836316Z CREATE INDEX
+2026-11-23T02:14:44.3871924Z CREATE TABLE
+2026-11-23T02:14:44.3879750Z CREATE INDEX
+2026-11-23T02:14:44.3891035Z CREATE INDEX
+2026-11-23T02:14:44.3899925Z CREATE INDEX
+2026-11-23T02:14:44.3907975Z CREATE FUNCTION
+2026-11-23T02:14:44.3910994Z psql:sql/005_fin17_payment_allocations.sql:57: NOTICE:  trigger "fin17_allocation_entry_immutable" for relation "financial_payment_allocation_entries" does not exist, skipping
+2026-11-23T02:14:44.3912044Z DROP TRIGGER
+2026-11-23T02:14:44.3912762Z CREATE TRIGGER
+2026-11-23T02:14:44.3915640Z CREATE FUNCTION
+2026-11-23T02:14:44.3917819Z psql:sql/005_fin17_payment_allocations.sql:85: NOTICE:  trigger "fin17_allocation_request_transition" for relation "financial_payment_allocation_requests" does not exist, skipping
+2026-11-23T02:14:44.3919003Z DROP TRIGGER
+2026-11-23T02:14:44.3919483Z CREATE TRIGGER
+2026-11-23T02:14:44.3925261Z COMMIT
+2026-11-23T02:14:44.3965643Z ##[group]Run npm test
+2026-11-23T02:14:44.3965888Z [36;1mnpm test[0m
+2026-11-23T02:14:44.3985371Z shell: /usr/bin/bash -e {0}
+2026-11-23T02:14:44.3985621Z env:
+2026-11-23T02:14:44.3986100Z   FIN08_TEST_DATABASE_URL: ***127.0.0.1:5432/ui_audit
+2026-11-23T02:14:44.3986403Z   PGPASSWORD: ui_audit_test_only
+2026-11-23T02:14:44.3986646Z ##[endgroup]
+2026-11-23T02:14:44.4950553Z 
+2026-11-23T02:14:44.4951325Z > qat-link-fin08-api@0.1.0 test
+2026-11-23T02:14:44.4952038Z > node --test
+2026-11-23T02:14:44.4952501Z 
+2026-11-23T02:14:44.5579841Z TAP version 13
+2026-11-23T02:14:44.7643946Z # Subtest: FIN-10: concurrent phone verification never loses invites and microsecond page cursors never skip claims
+2026-11-23T02:14:44.7650716Z ok 1 - FIN-10: concurrent phone verification never loses invites and microsecond page cursors never skip claims
+2026-11-23T02:14:44.7655071Z   ---
+2026-11-23T02:14:44.7655902Z   duration_ms: 150.080148
+2026-11-23T02:14:44.7664990Z   type: 'test'
+2026-11-23T02:14:44.7665706Z   ...
+2026-11-23T02:14:45.0355205Z # Subtest: FIN-13 PostgreSQL: legacy debts+payments, bilateral approval, exact ledger and customer credit
+2026-11-23T02:14:45.0359903Z ok 2 - FIN-13 PostgreSQL: legacy debts+payments, bilateral approval, exact ledger and customer credit
+2026-11-23T02:14:45.0361046Z   ---
+2026-11-23T02:14:45.0362683Z   duration_ms: 419.088227
+2026-11-23T02:14:45.0363272Z   type: 'test'
+2026-11-23T02:14:45.0363764Z   ...
+2026-11-23T02:14:45.0465488Z # Subtest: FIN-14 PostgreSQL selective batch consent: atomicity, tenant isolation, exact currencies and no prior auto-approval
+2026-11-23T02:14:45.0473563Z ok 3 - FIN-14 PostgreSQL selective batch consent: atomicity, tenant isolation, exact currencies and no prior auto-approval
+2026-11-23T02:14:45.0474856Z   ---
+2026-11-23T02:14:45.0475371Z   duration_ms: 284.060429
+2026-11-23T02:14:45.0475961Z   type: 'test'
+2026-11-23T02:14:45.0476353Z   ...
+2026-11-23T02:14:45.1453421Z # Subtest: FIN-14 cross-merchant selection and mixed debt/payment decisions are atomic and isolated
+2026-11-23T02:14:45.1532252Z ok 4 - FIN-14 cross-merchant selection and mixed debt/payment decisions are atomic and isolated
+2026-11-23T02:14:45.1578849Z   ---
+2026-11-23T02:14:45.1599322Z   duration_ms: 293.960128
+2026-11-23T02:14:45.1600044Z   type: 'test'
+2026-11-23T02:14:45.1600612Z   ...
+2026-11-23T02:14:45.2456884Z # Subtest: FIN-15: customer amount amendment preserves historic original, blocks competing consent and posts only approved replacement
+2026-11-23T02:14:45.2460685Z ok 5 - FIN-15: customer amount amendment preserves historic original, blocks competing consent and posts only approved replacement
+2026-11-23T02:14:45.2468754Z   ---
+2026-11-23T02:14:45.2472855Z   duration_ms: 288.094672
+2026-11-23T02:14:45.2473564Z   type: 'test'
+2026-11-23T02:14:45.2474067Z   ...
+2026-11-23T02:14:45.4118126Z # Subtest: FIN-15: modern pending debt amendment is mutually agreed and posted once, old movement never changes
+2026-11-23T02:14:45.4126915Z ok 6 - FIN-15: modern pending debt amendment is mutually agreed and posted once, old movement never changes
+2026-11-23T02:14:45.4138280Z   ---
+2026-11-23T02:14:45.4160878Z   duration_ms: 164.872172
+2026-11-23T02:14:45.4172067Z   type: 'test'
+2026-11-23T02:14:45.4196760Z   ...
+2026-11-23T02:14:45.4786497Z # Subtest: FIN-16: merchant currency limits block only new debts, retain pending risk and audited versioning
+2026-11-23T02:14:45.4794078Z ok 7 - FIN-16: merchant currency limits block only new debts, retain pending risk and audited versioning
+2026-11-23T02:14:45.4816265Z   ---
+2026-11-23T02:14:45.4826273Z   duration_ms: 371.177877
+2026-11-23T02:14:45.4829600Z   type: 'test'
+2026-11-23T02:14:45.4830046Z   ...
+2026-11-23T02:14:45.6560926Z # Subtest: FIN-17 PostgreSQL: bilateral allocations, unallocated credit, releases and reversal traceability
+2026-11-23T02:14:45.6594364Z ok 8 - FIN-17 PostgreSQL: bilateral allocations, unallocated credit, releases and reversal traceability
+2026-11-23T02:14:45.6619204Z   ---
+2026-11-23T02:14:45.6631060Z   duration_ms: 417.550933
+2026-11-23T02:14:45.6632756Z   type: 'test'
+2026-11-23T02:14:45.6633308Z   ...
+2026-11-23T02:14:45.6859860Z # Subtest: role separation: merchants cannot access previous claim inbox
+2026-11-23T02:14:45.6900105Z ok 9 - role separation: merchants cannot access previous claim inbox
+2026-11-23T02:14:45.6944137Z   ---
+2026-11-23T02:14:45.6969579Z   duration_ms: 63.243042
+2026-11-23T02:14:45.7019486Z   type: 'test'
+2026-11-23T02:14:45.7058195Z   ...
+2026-11-23T02:14:45.7089857Z # Subtest: customer inbox is derived from authenticated actor, not URL/customer ID
+2026-11-23T02:14:45.7119707Z ok 10 - customer inbox is derived from authenticated actor, not URL/customer ID
+2026-11-23T02:14:45.7120739Z   ---
+2026-11-23T02:14:45.7147845Z   duration_ms: 13.952297
+2026-11-23T02:14:45.7179877Z   type: 'test'
+2026-11-23T02:14:45.7180585Z   ...
+2026-11-23T02:14:45.7181629Z # Subtest: merchant claim requires JSON and does not perform automatic ledger posting
+2026-11-23T02:14:45.7182928Z ok 11 - merchant claim requires JSON and does not perform automatic ledger posting
+2026-11-23T02:14:45.7183762Z   ---
+2026-11-23T02:14:45.7184236Z   duration_ms: 13.346688
+2026-11-23T02:14:45.7184758Z   type: 'test'
+2026-11-23T02:14:45.7185223Z   ...
+2026-11-23T02:14:45.7186136Z # Subtest: identity-only phone proof endpoint cannot be called as merchant or customer
+2026-11-23T02:14:45.7187328Z ok 12 - identity-only phone proof endpoint cannot be called as merchant or customer
+2026-11-23T02:14:45.7190453Z   ---
+2026-11-23T02:14:45.7191173Z   duration_ms: 24.277037
+2026-11-23T02:14:45.7191758Z   type: 'test'
+2026-11-23T02:14:45.7192187Z   ...
+2026-11-23T02:14:45.7192933Z # Subtest: unauthenticated access is denied even with correct route
+2026-11-23T02:14:45.7193933Z ok 13 - unauthenticated access is denied even with correct route
+2026-11-23T02:14:45.7194552Z   ---
+2026-11-23T02:14:45.7194958Z   duration_ms: 8.397028
+2026-11-23T02:14:45.7195404Z   type: 'test'
+2026-11-23T02:14:45.7195826Z   ...
+2026-11-23T02:14:45.7196883Z # Subtest: merchant restoration list is scoped to verified actor and restricted to merchant role
+2026-11-23T02:14:45.7198763Z ok 14 - merchant restoration list is scoped to verified actor and restricted to merchant role
+2026-11-23T02:14:45.7199794Z   ---
+2026-11-23T02:14:45.7200399Z   duration_ms: 18.636998
+2026-11-23T02:14:45.7200916Z   type: 'test'
+2026-11-23T02:14:45.7201323Z   ...
+2026-11-23T02:14:45.7202072Z # Subtest: relationship inbox belongs to authenticated customer, never merchant
+2026-11-23T02:14:45.7203260Z ok 15 - relationship inbox belongs to authenticated customer, never merchant
+2026-11-23T02:14:45.7259294Z   ---
+2026-11-23T02:14:45.7259866Z   duration_ms: 15.89368
+2026-11-23T02:14:45.7260425Z   type: 'test'
+2026-11-23T02:14:45.7260923Z   ...
+2026-11-23T02:14:45.7261857Z # Subtest: FIN-15 route ownership: only verified customer requests changes and only merchant responds
+2026-11-23T02:14:45.7263228Z ok 16 - FIN-15 route ownership: only verified customer requests changes and only merchant responds
+2026-11-23T02:14:45.7264064Z   ---
+2026-11-23T02:14:45.7264425Z   duration_ms: 21.970776
+2026-11-23T02:14:45.7264846Z   type: 'test'
+2026-11-23T02:14:45.7265176Z   ...
+2026-11-23T02:14:45.9830285Z # Subtest: FIN-08 PostgreSQL E2E: historic claims, independent consent, durable ledger, isolation and fail closed
+2026-11-23T02:14:45.9831313Z ok 17 - FIN-08 PostgreSQL E2E: historic claims, independent consent, durable ledger, isolation and fail closed
+2026-11-23T02:14:45.9831868Z   ---
+2026-11-23T02:14:45.9832088Z   duration_ms: 406.650524
+2026-11-23T02:14:45.9832334Z   type: 'test'
+2026-11-23T02:14:45.9832543Z   ...
+2026-11-23T02:14:45.9916315Z # Subtest: FIN-09 merchant restores private contacts and every claim stage without cross-merchant disclosure
+2026-11-23T02:14:45.9917457Z ok 18 - FIN-09 merchant restores private contacts and every claim stage without cross-merchant disclosure
+2026-11-23T02:14:45.9925583Z   ---
+2026-11-23T02:14:45.9926253Z   duration_ms: 189.813886
+2026-11-23T02:14:45.9926895Z   type: 'test'
+2026-11-23T02:14:45.9927792Z   ...
+2026-11-23T02:14:46.0101453Z # Subtest: Yemeni local phone canonicalizes; international E.164 retained
+2026-11-23T02:14:46.0102542Z ok 19 - Yemeni local phone canonicalizes; international E.164 retained
+2026-11-23T02:14:46.0103131Z   ---
+2026-11-23T02:14:46.0103464Z   duration_ms: 1.42836
+2026-11-23T02:14:46.0103847Z   type: 'test'
+2026-11-23T02:14:46.0104181Z   ...
+2026-11-23T02:14:46.0107378Z # Subtest: money is DECIMAL text, never float; zero/negative/overflow blocked
+2026-11-23T02:14:46.0109054Z ok 20 - money is DECIMAL text, never float; zero/negative/overflow blocked
+2026-11-23T02:14:46.0110067Z   ---
+2026-11-23T02:14:46.0110457Z   duration_ms: 0.660414
+2026-11-23T02:14:46.0110890Z   type: 'test'
+2026-11-23T02:14:46.0111245Z   ...
+2026-11-23T02:14:46.0111845Z # Subtest: separate currency and independent decision only
+2026-11-23T02:14:46.0112733Z ok 21 - separate currency and independent decision only
+2026-11-23T02:14:46.0113258Z   ---
+2026-11-23T02:14:46.0113618Z   duration_ms: 0.385843
+2026-11-23T02:14:46.0114007Z   type: 'test'
+2026-11-23T02:14:46.0114365Z   ...
+2026-11-23T02:14:46.0115398Z # Subtest: signed cursor rejects tampering and cannot accept malformed payload
+2026-11-23T02:14:46.0116768Z ok 22 - signed cursor rejects tampering and cannot accept malformed payload
+2026-11-23T02:14:46.0117529Z   ---
+2026-11-23T02:14:46.0117954Z   duration_ms: 1.528567
+2026-11-23T02:14:46.0118565Z   type: 'test'
+2026-11-23T02:14:46.0118936Z   ...
+2026-11-23T02:14:46.0119673Z # Subtest: JWT verifies RS256 and rejects unsigned, wrong role and expired
+2026-11-23T02:14:46.0120798Z ok 23 - JWT verifies RS256 and rejects unsigned, wrong role and expired
+2026-11-23T02:14:46.0121504Z   ---
+2026-11-23T02:14:46.0121876Z   duration_ms: 47.24398
+2026-11-23T02:14:46.0122244Z   type: 'test'
+2026-11-23T02:14:46.0122542Z   ...
+2026-11-23T02:14:46.0123162Z # Subtest: FIN-12 rejects malformed JWT time claims and oversized bearer values
+2026-11-23T02:14:46.0124145Z ok 24 - FIN-12 rejects malformed JWT time claims and oversized bearer values
+2026-11-23T02:14:46.0124786Z   ---
+2026-11-23T02:14:46.0125547Z   duration_ms: 138.191764
+2026-11-23T02:14:46.0125931Z   type: 'test'
+2026-11-23T02:14:46.0126224Z   ...
+2026-11-23T02:14:46.0184128Z 1..24
+2026-11-23T02:14:46.0184912Z # tests 24
+2026-11-23T02:14:46.0185722Z # suites 0
+2026-11-23T02:14:46.0186036Z # pass 24
+2026-11-23T02:14:46.0186243Z # fail 0
+2026-11-23T02:14:46.0186501Z # cancelled 0
+2026-11-23T02:14:46.0186771Z # skipped 0
+2026-11-23T02:14:46.0187011Z # todo 0
+2026-11-23T02:14:46.0187268Z # duration_ms 1491.036539
+2026-11-23T02:14:46.0358634Z Post job cleanup.
+2026-11-23T02:14:46.1562496Z (node:3128) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-23T02:14:46.1563245Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-23T02:14:46.1736959Z Post job cleanup.
+2026-11-23T02:14:46.2650378Z [command]/usr/bin/git version
+2026-11-23T02:14:46.2700590Z git version 2.56.1
+2026-11-23T02:14:46.2746025Z Temporarily overriding HOME='/home/runner/work/_temp/d7f56c9f-ea15-4c68-b393-e8e0b2917362' before making global git config changes
+2026-11-23T02:14:46.2747255Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-23T02:14:46.2753189Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/Qat-Link-interface/Qat-Link-interface
+2026-11-23T02:14:46.2796028Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-23T02:14:46.2834012Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-23T02:14:46.3086231Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-23T02:14:46.3110042Z http.https://github.com/.extraheader
+2026-11-23T02:14:46.3122598Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-11-23T02:14:46.3177809Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-23T02:14:46.3445541Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-23T02:14:46.3502343Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-23T02:14:46.3915629Z Print service container logs: babf55ffabf745fb971640a499e9005a_postgres16_338cc3
+2026-11-23T02:14:46.3920630Z ##[command]/usr/bin/docker logs --details 70dcbd679c34f410b6150f49b796fa25b89abe39af788451e54a1aa9abf9c705
+2026-11-23T02:14:46.4050708Z  The files belonging to this database system will be owned by user "postgres".
+2026-11-23T02:14:46.4053672Z  initdb: warning: enabling "trust" authentication for local connections
+2026-11-23T02:14:46.4054839Z  initdb: hint: You can change this by editing pg_hba.conf or using the option -A, or --auth-local and --auth-host, the next time you run initdb.
+2026-11-23T02:14:46.4055545Z  This user must also own the server process.
+2026-11-23T02:14:46.4056506Z  2026-11-23 02:14:32.119 UTC [1] LOG:  starting PostgreSQL 16.16 (Debian 16.16-1.pgdg13+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit
+2026-11-23T02:14:46.4057207Z  2026-11-23 02:14:32.119 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+2026-11-23T02:14:46.4057765Z  2026-11-23 02:14:32.119 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+2026-11-23T02:14:46.4058266Z  2026-11-23 02:14:32.120 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+2026-11-23T02:14:46.4059199Z  2026-11-23 02:14:32.123 UTC [64] LOG:  database system was shut down at 2026-11-23 02:14:32 UTC
+2026-11-23T02:14:46.4059747Z  2026-11-23 02:14:32.127 UTC [1] LOG:  database system is ready to accept connections
+2026-11-23T02:14:46.4060263Z  2026-11-23 02:14:44.952 UTC [91] ERROR:  Approved ledger rows are immutable; post an audited reversal
+2026-11-23T02:14:46.4061176Z  2026-11-23 02:14:44.952 UTC [91] CONTEXT:  PL/pgSQL function fin13_immutable_approved_movement() line 3 at RAISE
+2026-11-23T02:14:46.4061795Z  2026-11-23 02:14:44.952 UTC [91] STATEMENT:  UPDATE financial_movements SET amount=999 WHERE id=$1
+2026-11-23T02:14:46.4062378Z  2026-11-23 02:14:45.615 UTC [99] ERROR:  Allocation history is immutable; submit an approved release request
+2026-11-23T02:14:46.4062994Z  2026-11-23 02:14:45.615 UTC [99] CONTEXT:  PL/pgSQL function fin17_immutable_allocation_entry() line 3 at RAISE
+2026-11-23T02:14:46.4063644Z  2026-11-23 02:14:45.615 UTC [99] STATEMENT:  UPDATE financial_payment_allocation_entries SET amount=1 WHERE request_id=$1
+2026-11-23T02:14:46.4064360Z  2026-11-23 02:14:45.633 UTC [101] ERROR:  Allocation request history is immutable; only one pending-to-final transition is allowed
+2026-11-23T02:14:46.4065634Z  2026-11-23 02:14:45.633 UTC [101] CONTEXT:  PL/pgSQL function fin17_allocation_request_transition() line 8 at RAISE
+2026-11-23T02:14:46.4066755Z  2026-11-23 02:14:45.633 UTC [101] STATEMENT:  UPDATE financial_payment_allocation_requests SET amount=1 WHERE id=$1
+2026-11-23T02:14:46.4067770Z  2026-11-23 02:14:45.650 UTC [102] ERROR:  Allocation request history is immutable
+2026-11-23T02:14:46.4068717Z  2026-11-23 02:14:45.650 UTC [102] CONTEXT:  PL/pgSQL function fin17_allocation_request_transition() line 4 at RAISE
+2026-11-23T02:14:46.4069345Z  2026-11-23 02:14:45.650 UTC [102] STATEMENT:  DELETE FROM financial_payment_allocation_requests WHERE id=$1
+2026-11-23T02:14:46.4069806Z  
+2026-11-23T02:14:46.4070078Z  The database cluster will be initialized with locale "en_US.utf8".
+2026-11-23T02:14:46.4070507Z  The default database encoding has accordingly been set to "UTF8".
+2026-11-23T02:14:46.4070909Z  The default text search configuration will be set to "english".
+2026-11-23T02:14:46.4071220Z  
+2026-11-23T02:14:46.4071433Z  Data page checksums are disabled.
+2026-11-23T02:14:46.4071682Z  
+2026-11-23T02:14:46.4071967Z  fixing permissions on existing directory /var/lib/postgresql/data ... ok
+2026-11-23T02:14:46.4072357Z  creating subdirectories ... ok
+2026-11-23T02:14:46.4072663Z  selecting dynamic shared memory implementation ... posix
+2026-11-23T02:14:46.4072990Z  selecting default max_connections ... 100
+2026-11-23T02:14:46.4073275Z  selecting default shared_buffers ... 128MB
+2026-11-23T02:14:46.4073552Z  selecting default time zone ... Etc/UTC
+2026-11-23T02:14:46.4074035Z  creating configuration files ... ok
+2026-11-23T02:14:46.4074314Z  running bootstrap script ... ok
+2026-11-23T02:14:46.4074612Z  performing post-bootstrap initialization ... ok
+2026-11-23T02:14:46.4074906Z  syncing data to disk ... ok
+2026-11-23T02:14:46.4075129Z  
+2026-11-23T02:14:46.4075295Z  
+2026-11-23T02:14:46.4075517Z  Success. You can now start the database server using:
+2026-11-23T02:14:46.4075801Z  
+2026-11-23T02:14:46.4076039Z      pg_ctl -D /var/lib/postgresql/data -l logfile start
+2026-11-23T02:14:46.4076329Z  
+2026-11-23T02:14:46.4076916Z  waiting for server to start....2026-11-23 02:14:31.832 UTC [48] LOG:  starting PostgreSQL 16.16 (Debian 16.16-1.pgdg13+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit
+2026-11-23T02:14:46.4077849Z  2026-11-23 02:14:31.832 UTC [48] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+2026-11-23T02:14:46.4078548Z  2026-11-23 02:14:31.835 UTC [51] LOG:  database system was shut down at 2026-11-23 02:14:31 UTC
+2026-11-23T02:14:46.4079079Z  2026-11-23 02:14:31.838 UTC [48] LOG:  database system is ready to accept connections
+2026-11-23T02:14:46.4079436Z   done
+2026-11-23T02:14:46.4079762Z  server started
+2026-11-23T02:14:46.4079975Z  CREATE DATABASE
+2026-11-23T02:14:46.4080169Z  
+2026-11-23T02:14:46.4080342Z  
+2026-11-23T02:14:46.4080654Z  /usr/local/bin/docker-entrypoint.sh: ignoring /docker-entrypoint-initdb.d/*
+2026-11-23T02:14:46.4081029Z  
+2026-11-23T02:14:46.4081378Z  waiting for server to shut down...2026-11-23 02:14:32.000 UTC [48] LOG:  received fast shutdown request
+2026-11-23T02:14:46.4081988Z  .2026-11-23 02:14:32.001 UTC [48] LOG:  aborting any active transactions
+2026-11-23T02:14:46.4082523Z  2026-11-23 02:14:32.003 UTC [48] LOG:  background worker "logical replication launcher" (PID 54) exited with exit code 1
+2026-11-23T02:14:46.4083031Z  2026-11-23 02:14:32.003 UTC [49] LOG:  shutting down
+2026-11-23T02:14:46.4083405Z  2026-11-23 02:14:32.003 UTC [49] LOG:  checkpoint starting: shutdown immediate
+2026-11-23T02:14:46.4084407Z  2026-11-23 02:14:32.016 UTC [49] LOG:  checkpoint complete: wrote 935 buffers (5.7%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.011 s, sync=0.002 s, total=0.014 s; sync files=301, longest=0.001 s, average=0.001 s; distance=4346 kB, estimate=4346 kB; lsn=0/1943060, redo lsn=0/1943060
+2026-11-23T02:14:46.4085394Z  2026-11-23 02:14:32.020 UTC [48] LOG:  database system is shut down
+2026-11-23T02:14:46.4085699Z   done
+2026-11-23T02:14:46.4085886Z  server stopped
+2026-11-23T02:14:46.4086077Z  
+2026-11-23T02:14:46.4086307Z  PostgreSQL init process complete; ready for start up.
+2026-11-23T02:14:46.4086597Z  
+2026-11-23T02:14:46.4092993Z Stop and remove container: babf55ffabf745fb971640a499e9005a_postgres16_338cc3
+2026-11-23T02:14:46.4097631Z ##[command]/usr/bin/docker rm --force 70dcbd679c34f410b6150f49b796fa25b89abe39af788451e54a1aa9abf9c705
+2026-11-23T02:14:46.5875332Z 70dcbd679c34f410b6150f49b796fa25b89abe39af788451e54a1aa9abf9c705
+2026-11-23T02:14:46.5900726Z Remove container network: github_network_c316adb1fdb54071bc65bf6ecbd3a406
+2026-11-23T02:14:46.5905267Z ##[command]/usr/bin/docker network rm github_network_c316adb1fdb54071bc65bf6ecbd3a406
+2026-11-23T02:14:46.6562289Z github_network_c316adb1fdb54071bc65bf6ecbd3a406
+2026-11-23T02:14:46.6637705Z Cleaning up orphan processes
+2026-11-23T02:14:46.6988193Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-node@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+

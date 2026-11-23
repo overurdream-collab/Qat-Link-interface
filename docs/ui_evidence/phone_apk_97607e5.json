@@ -1,0 +1,13 @@
+{
+  "ci_commit": "97607e5e629377fab2731b0081a56c978d7e3f5e",
+  "artifact_id": 14784911344,
+  "zip_bytes": 30809707,
+  "zip_sha256": "0da9eb5ee98f2935e8c7c97fcbaec10ae55677fe2bca477192dcb82a06054e9d",
+  "apk_bytes": 62861515,
+  "apk_sha256": "70fd8e8b5dd1c7b16e432685bcd03196ebf77eee7deb85a0e70ffe7648f8b32c",
+  "arabic_label": "مقوتي لينك",
+  "package": "com.maqwatilink.ui_audit_preview",
+  "internet_permission": false,
+  "character_assets_match_source": true,
+  "corrupt_legacy_asset_bundled": false
+}

@@ -19,7 +19,7 @@
     },
     {
       "path": "lib/screens/login_screen.dart",
-      "line": 646,
+      "line": 650,
       "argb": "FFEDB2E2",
       "candidate_role": "identity selection or decorative wordmark/wave; exact parity unverified",
       "context": "? const [Color(0xFFEDB2E2), Color(0xFFCD9DF5), Color(0xFFF5C6E1)]",
@@ -27,7 +27,7 @@
     },
     {
       "path": "lib/screens/login_screen.dart",
-      "line": 646,
+      "line": 650,
       "argb": "FFCD9DF5",
       "candidate_role": "identity selection or decorative wordmark/wave; exact parity unverified",
       "context": "? const [Color(0xFFEDB2E2), Color(0xFFCD9DF5), Color(0xFFF5C6E1)]",
@@ -35,7 +35,7 @@
     },
     {
       "path": "lib/screens/login_screen.dart",
-      "line": 646,
+      "line": 650,
       "argb": "FFF5C6E1",
       "candidate_role": "identity selection or decorative wordmark/wave; exact parity unverified",
       "context": "? const [Color(0xFFEDB2E2), Color(0xFFCD9DF5), Color(0xFFF5C6E1)]",
@@ -43,7 +43,7 @@
     },
     {
       "path": "lib/screens/login_screen.dart",
-      "line": 647,
+      "line": 651,
       "argb": "FFBA8CF5",
       "candidate_role": "identity selection or decorative wordmark/wave; exact parity unverified",
       "context": ": const [Color(0xFFBA8CF5), Color(0xFF8F80F6), Color(0xFF82CBFF)],",
@@ -51,7 +51,7 @@
     },
     {
       "path": "lib/screens/login_screen.dart",
-      "line": 647,
+      "line": 651,
       "argb": "FF8F80F6",
       "candidate_role": "identity selection or decorative wordmark/wave; exact parity unverified",
       "context": ": const [Color(0xFFBA8CF5), Color(0xFF8F80F6), Color(0xFF82CBFF)],",
@@ -59,7 +59,7 @@
     },
     {
       "path": "lib/screens/login_screen.dart",
-      "line": 647,
+      "line": 651,
       "argb": "FF82CBFF",
       "candidate_role": "identity selection or decorative wordmark/wave; exact parity unverified",
       "context": ": const [Color(0xFFBA8CF5), Color(0xFF8F80F6), Color(0xFF82CBFF)],",
@@ -67,7 +67,7 @@
     },
     {
       "path": "lib/screens/login_screen.dart",
-      "line": 655,
+      "line": 659,
       "argb": "FFCBA1FB",
       "candidate_role": "identity selection or decorative wordmark/wave; exact parity unverified",
       "context": "? const [Color(0xFFCBA1FB), Color(0xFFDE9DDE), Color(0xFFE9B7F5)]",
@@ -75,7 +75,7 @@
     },
     {
       "path": "lib/screens/login_screen.dart",
-      "line": 655,
+      "line": 659,
       "argb": "FFDE9DDE",
       "candidate_role": "identity selection or decorative wordmark/wave; exact parity unverified",
       "context": "? const [Color(0xFFCBA1FB), Color(0xFFDE9DDE), Color(0xFFE9B7F5)]",
@@ -83,7 +83,7 @@
     },
     {
       "path": "lib/screens/login_screen.dart",
-      "line": 655,
+      "line": 659,
       "argb": "FFE9B7F5",
       "candidate_role": "identity selection or decorative wordmark/wave; exact parity unverified",
       "context": "? const [Color(0xFFCBA1FB), Color(0xFFDE9DDE), Color(0xFFE9B7F5)]",
@@ -91,7 +91,7 @@
     },
     {
       "path": "lib/screens/login_screen.dart",
-      "line": 656,
+      "line": 660,
       "argb": "FFE1B6FB",
       "candidate_role": "identity selection or decorative wordmark/wave; exact parity unverified",
       "context": ": const [Color(0xFFE1B6FB), Color(0xFFA279F9), Color(0xFF70CAFA)],",
@@ -99,7 +99,7 @@
     },
     {
       "path": "lib/screens/login_screen.dart",
-      "line": 656,
+      "line": 660,
       "argb": "FFA279F9",
       "candidate_role": "identity selection or decorative wordmark/wave; exact parity unverified",
       "context": ": const [Color(0xFFE1B6FB), Color(0xFFA279F9), Color(0xFF70CAFA)],",
@@ -107,7 +107,7 @@
     },
     {
       "path": "lib/screens/login_screen.dart",
-      "line": 656,
+      "line": 660,
       "argb": "FF70CAFA",
       "candidate_role": "identity selection or decorative wordmark/wave; exact parity unverified",
       "context": ": const [Color(0xFFE1B6FB), Color(0xFFA279F9), Color(0xFF70CAFA)],",
@@ -147,7 +147,7 @@
     },
     {
       "path": "lib/widgets/auth/auth_brand_hero.dart",
-      "line": 64,
+      "line": 65,
       "argb": "FFF2A7D0",
       "candidate_role": "identity selection or decorative wordmark/wave; exact parity unverified",
       "context": "? const Color(0xFFF2A7D0)",
@@ -155,7 +155,7 @@
     },
     {
       "path": "lib/widgets/auth/auth_brand_hero.dart",
-      "line": 65,
+      "line": 66,
       "argb": "FFAD3379",
       "candidate_role": "identity selection or decorative wordmark/wave; exact parity unverified",
       "context": ": const Color(0xFFAD3379))",
@@ -163,7 +163,7 @@
     },
     {
       "path": "lib/widgets/auth/auth_brand_hero.dart",
-      "line": 67,
+      "line": 68,
       "argb": "FFD7B7FF",
       "candidate_role": "identity selection or decorative wordmark/wave; exact parity unverified",
       "context": "? const Color(0xFFD7B7FF)",
@@ -171,7 +171,7 @@
     },
     {
       "path": "lib/widgets/auth/auth_brand_hero.dart",
-      "line": 68,
+      "line": 69,
       "argb": "FF5730C4",
       "candidate_role": "identity selection or decorative wordmark/wave; exact parity unverified",
       "context": ": const Color(0xFF5730C4)),",
@@ -179,7 +179,7 @@
     },
     {
       "path": "lib/widgets/auth/auth_brand_hero.dart",
-      "line": 111,
+      "line": 112,
       "argb": "FFF8DCEB",
       "candidate_role": "identity selection or decorative wordmark/wave; exact parity unverified",
       "context": "? const [Color(0xFFF8DCEB), Color(0xFF8551B2)]",
@@ -187,7 +187,7 @@
     },
     {
       "path": "lib/widgets/auth/auth_brand_hero.dart",
-      "line": 111,
+      "line": 112,
       "argb": "FF8551B2",
       "candidate_role": "identity selection or decorative wordmark/wave; exact parity unverified",
       "context": "? const [Color(0xFFF8DCEB), Color(0xFF8551B2)]",
@@ -195,7 +195,7 @@
     },
     {
       "path": "lib/widgets/auth/auth_brand_hero.dart",
-      "line": 112,
+      "line": 113,
       "argb": "FFDAADFA",
       "candidate_role": "identity selection or decorative wordmark/wave; exact parity unverified",
       "context": ": const [Color(0xFFDAADFA), Color(0xFF82C9FF)],",
@@ -203,7 +203,7 @@
     },
     {
       "path": "lib/widgets/auth/auth_brand_hero.dart",
-      "line": 112,
+      "line": 113,
       "argb": "FF82C9FF",
       "candidate_role": "identity selection or decorative wordmark/wave; exact parity unverified",
       "context": ": const [Color(0xFFDAADFA), Color(0xFF82C9FF)],",
@@ -211,7 +211,7 @@
     },
     {
       "path": "lib/widgets/auth/auth_brand_hero.dart",
-      "line": 185,
+      "line": 186,
       "argb": "FF632450",
       "candidate_role": "identity selection or decorative wordmark/wave; exact parity unverified",
       "context": "? const Color(0xFF632450)",
@@ -219,7 +219,7 @@
     },
     {
       "path": "lib/widgets/auth/auth_brand_hero.dart",
-      "line": 186,
+      "line": 187,
       "argb": "FF171C98",
       "candidate_role": "identity selection or decorative wordmark/wave; exact parity unverified",
       "context": ": const Color(0xFF171C98),",
@@ -227,7 +227,7 @@
     },
     {
       "path": "lib/widgets/auth/auth_brand_hero.dart",
-      "line": 189,
+      "line": 190,
       "argb": "6A2C2B9A",
       "candidate_role": "identity selection or decorative wordmark/wave; exact parity unverified",
       "context": "color: Color(0x6A2C2B9A),",
@@ -235,7 +235,7 @@
     },
     {
       "path": "lib/widgets/auth/auth_brand_hero.dart",
-      "line": 201,
+      "line": 202,
       "argb": "FFF8DCEB",
       "candidate_role": "identity selection or decorative wordmark/wave; exact parity unverified",
       "context": "? const Color(0xFFF8DCEB)",
@@ -243,7 +243,7 @@
     },
     {
       "path": "lib/widgets/auth/auth_brand_hero.dart",
-      "line": 211,
+      "line": 212,
       "argb": "FFF8DCEB",
       "candidate_role": "identity selection or decorative wordmark/wave; exact parity unverified",
       "context": "Color(0xFFF8DCEB),",
@@ -251,7 +251,7 @@
     },
     {
       "path": "lib/widgets/auth/auth_brand_hero.dart",
-      "line": 212,
+      "line": 213,
       "argb": "FFF2A7D0",
       "candidate_role": "identity selection or decorative wordmark/wave; exact parity unverified",
       "context": "Color(0xFFF2A7D0),",
@@ -259,7 +259,7 @@
     },
     {
       "path": "lib/widgets/auth/auth_brand_hero.dart",
-      "line": 213,
+      "line": 214,
       "argb": "FFC2A4FF",
       "candidate_role": "identity selection or decorative wordmark/wave; exact parity unverified",
       "context": "Color(0xFFC2A4FF)",
@@ -267,7 +267,7 @@
     },
     {
       "path": "lib/widgets/auth/auth_brand_hero.dart",
-      "line": 216,
+      "line": 217,
       "argb": "FF73DCF6",
       "candidate_role": "identity selection or decorative wordmark/wave; exact parity unverified",
       "context": "Color(0xFF73DCF6),",
@@ -275,7 +275,7 @@
     },
     {
       "path": "lib/widgets/auth/auth_brand_hero.dart",
-      "line": 217,
+      "line": 218,
       "argb": "FF8FB8FF",
       "candidate_role": "identity selection or decorative wordmark/wave; exact parity unverified",
       "context": "Color(0xFF8FB8FF),",
@@ -283,7 +283,7 @@
     },
     {
       "path": "lib/widgets/auth/auth_brand_hero.dart",
-      "line": 218,
+      "line": 219,
       "argb": "FFC2A4FF",
       "candidate_role": "identity selection or decorative wordmark/wave; exact parity unverified",
       "context": "Color(0xFFC2A4FF)",
@@ -291,7 +291,7 @@
     },
     {
       "path": "lib/widgets/auth/auth_brand_hero.dart",
-      "line": 222,
+      "line": 223,
       "argb": "FFF8DCEB",
       "candidate_role": "identity selection or decorative wordmark/wave; exact parity unverified",
       "context": "Color(0xFFF8DCEB),",
@@ -299,7 +299,7 @@
     },
     {
       "path": "lib/widgets/auth/auth_brand_hero.dart",
-      "line": 223,
+      "line": 224,
       "argb": "FFAD4389",
       "candidate_role": "identity selection or decorative wordmark/wave; exact parity unverified",
       "context": "Color(0xFFAD4389),",
@@ -307,7 +307,7 @@
     },
     {
       "path": "lib/widgets/auth/auth_brand_hero.dart",
-      "line": 224,
+      "line": 225,
       "argb": "FFAD3379",
       "candidate_role": "identity selection or decorative wordmark/wave; exact parity unverified",
       "context": "Color(0xFFAD3379),",
@@ -315,7 +315,7 @@
     },
     {
       "path": "lib/widgets/auth/auth_brand_hero.dart",
-      "line": 225,
+      "line": 226,
       "argb": "FF8551B2",
       "candidate_role": "identity selection or decorative wordmark/wave; exact parity unverified",
       "context": "Color(0xFF8551B2)",
@@ -323,7 +323,7 @@
     },
     {
       "path": "lib/widgets/auth/auth_brand_hero.dart",
-      "line": 229,
+      "line": 230,
       "argb": "FF8DEBFF",
       "candidate_role": "identity selection or decorative wordmark/wave; exact parity unverified",
       "context": "Color(0xFF8DEBFF),",
@@ -331,7 +331,7 @@
     },
     {
       "path": "lib/widgets/auth/auth_brand_hero.dart",
-      "line": 230,
+      "line": 231,
       "argb": "FF268EFF",
       "candidate_role": "identity selection or decorative wordmark/wave; exact parity unverified",
       "context": "Color(0xFF268EFF),",
@@ -339,7 +339,7 @@
     },
     {
       "path": "lib/widgets/auth/auth_brand_hero.dart",
-      "line": 231,
+      "line": 232,
       "argb": "FF174DCB",
       "candidate_role": "identity selection or decorative wordmark/wave; exact parity unverified",
       "context": "Color(0xFF174DCB)",
@@ -347,7 +347,7 @@
     },
     {
       "path": "lib/widgets/auth/auth_brand_hero.dart",
-      "line": 234,
+      "line": 235,
       "argb": "FF8CF6FF",
       "candidate_role": "identity selection or decorative wordmark/wave; exact parity unverified",
       "context": "Color(0xFF8CF6FF),",
@@ -355,7 +355,7 @@
     },
     {
       "path": "lib/widgets/auth/auth_brand_hero.dart",
-      "line": 235,
+      "line": 236,
       "argb": "FF0FA7F9",
       "candidate_role": "identity selection or decorative wordmark/wave; exact parity unverified",
       "context": "Color(0xFF0FA7F9),",
@@ -363,7 +363,7 @@
     },
     {
       "path": "lib/widgets/auth/auth_brand_hero.dart",
-      "line": 236,
+      "line": 237,
       "argb": "FF0752E6",
       "candidate_role": "identity selection or decorative wordmark/wave; exact parity unverified",
       "context": "Color(0xFF0752E6),",
@@ -371,7 +371,7 @@
     },
     {
       "path": "lib/widgets/auth/auth_brand_hero.dart",
-      "line": 237,
+      "line": 238,
       "argb": "FF2533AE",
       "candidate_role": "identity selection or decorative wordmark/wave; exact parity unverified",
       "context": "Color(0xFF2533AE)",

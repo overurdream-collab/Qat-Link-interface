@@ -1,7 +1,3 @@
-Formatted lib/screens/customer_details_screen.dart
-Formatted lib/screens/login_screen.dart
-Formatted lib/screens/merchant_approval_center_screen.dart
-Formatted lib/widgets/auth/auth_brand_hero.dart
-Formatted test/ui_audit/populated_financial_matrix_test.dart
-Formatted test/ui_audit/login_matrix_test.dart
-Formatted 9 files (6 changed) in 0.28 seconds.
+Formatted test/ui_audit/navigation_accessibility_test.dart
+Formatted test/ui_audit/reference_controls_test.dart
+Formatted 8 files (2 changed) in 0.18 seconds.

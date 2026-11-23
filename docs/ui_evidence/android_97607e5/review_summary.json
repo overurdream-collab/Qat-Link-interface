@@ -1,0 +1,20 @@
+{
+  "run_id": 45099036723,
+  "commit": "97607e5e629377fab2731b0081a56c978d7e3f5e",
+  "url": "https://github.com/overurdream-collab/Qat-Link-interface/actions/runs/45099036723",
+  "jobs": [
+    "backend",
+    "verification",
+    "android",
+    "android-developer",
+    "android-smoke",
+    "android-developer-smoke"
+  ],
+  "conclusion": "success",
+  "native_captures": 119,
+  "login_captures": 27,
+  "developer_captures": 92,
+  "log_scan": "No RenderFlex / overflowed by / FATAL EXCEPTION / Unable to load asset matched in collected native logs. Release logging is not a substitute for widget layout tests.",
+  "manual_review": "Phone 24-image matrix, four developer 13-state contact sheets, keyboard and offline-gate full captures. Individual 40 extra home-size files decoded; not every pixel of every capture manually audited.",
+  "scope": "Offline login and unverified existing role shells. No authenticated financial E2E."
+}

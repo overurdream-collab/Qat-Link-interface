@@ -1,0 +1,93 @@
+{
+  "id": 45099036723,
+  "head_sha": "97607e5e629377fab2731b0081a56c978d7e3f5e",
+  "conclusion": "success",
+  "url": "https://github.com/overurdream-collab/Qat-Link-interface/actions/runs/45099036723",
+  "jobs": [
+    {
+      "id": 137445358653,
+      "name": "backend",
+      "conclusion": "success",
+      "started_at": "2026-11-23T02:14:23Z",
+      "completed_at": "2026-11-23T02:14:49Z",
+      "html_url": "https://github.com/overurdream-collab/Qat-Link-interface/actions/runs/45099036723/job/137445358653"
+    },
+    {
+      "id": 137445358937,
+      "name": "verification",
+      "conclusion": "success",
+      "started_at": "2026-11-23T02:14:23Z",
+      "completed_at": "2026-11-23T02:18:00Z",
+      "html_url": "https://github.com/overurdream-collab/Qat-Link-interface/actions/runs/45099036723/job/137445358937"
+    },
+    {
+      "id": 137446503138,
+      "name": "android-developer",
+      "conclusion": "success",
+      "started_at": "2026-11-23T02:18:02Z",
+      "completed_at": "2026-11-23T02:22:48Z",
+      "html_url": "https://github.com/overurdream-collab/Qat-Link-interface/actions/runs/45099036723/job/137446503138"
+    },
+    {
+      "id": 137446503209,
+      "name": "android",
+      "conclusion": "success",
+      "started_at": "2026-11-23T02:18:01Z",
+      "completed_at": "2026-11-23T02:21:54Z",
+      "html_url": "https://github.com/overurdream-collab/Qat-Link-interface/actions/runs/45099036723/job/137446503209"
+    },
+    {
+      "id": 137447694278,
+      "name": "android-smoke",
+      "conclusion": "success",
+      "started_at": "2026-11-23T02:21:56Z",
+      "completed_at": "2026-11-23T02:25:57Z",
+      "html_url": "https://github.com/overurdream-collab/Qat-Link-interface/actions/runs/45099036723/job/137447694278"
+    },
+    {
+      "id": 137447966378,
+      "name": "android-developer-smoke",
+      "conclusion": "success",
+      "started_at": "2026-11-23T02:22:49Z",
+      "completed_at": "2026-11-23T02:28:48Z",
+      "html_url": "https://github.com/overurdream-collab/Qat-Link-interface/actions/runs/45099036723/job/137447966378"
+    }
+  ],
+  "artifacts": [
+    {
+      "id": 14784937928,
+      "name": "android-developer-smoke-evidence",
+      "size_in_bytes": 18137011,
+      "digest": "sha256:2326f98401baa86364b470d11c6968dcf683c18dabbff4d1095215c02f857127",
+      "expires_at": "2026-11-30T02:28:45Z"
+    },
+    {
+      "id": 14784911344,
+      "name": "maqwati-ui-audit-offline-apk",
+      "size_in_bytes": 30809707,
+      "digest": "sha256:0da9eb5ee98f2935e8c7c97fcbaec10ae55677fe2bca477192dcb82a06054e9d",
+      "expires_at": "2026-11-30T02:21:49Z"
+    },
+    {
+      "id": 14784264088,
+      "name": "android-smoke-evidence",
+      "size_in_bytes": 4012265,
+      "digest": "sha256:bb4ec3fe61d971baade8d0e54b2a3a3aa69327611ba8400f25f14c757cd94272",
+      "expires_at": "2026-11-30T02:25:55Z"
+    },
+    {
+      "id": 14784024879,
+      "name": "maqwati-ui-audit-developer-apk",
+      "size_in_bytes": 30812301,
+      "digest": "sha256:8896b9d6f475cc4d7346ffd7be6fdd2175422db126c084516c56eff9e3d816d7",
+      "expires_at": "2026-11-30T02:22:40Z"
+    },
+    {
+      "id": 14783869448,
+      "name": "ui-audit-evidence",
+      "size_in_bytes": 77112173,
+      "digest": "sha256:2e6f36099b3982253966e7e3e316869ad70080902cb3546df0cdc73627ac6c93",
+      "expires_at": "2026-11-30T02:17:53Z"
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "installed": true,
+  "launched": true,
+  "themes": 4,
+  "widths": [
+    320,
+    360,
+    390,
+    430,
+    600,
+    800
+  ],
+  "captures": 27,
+  "theme_size_captures": 24,
+  "form_flow_captures": 3,
+  "offline_gate": true,
+  "remember_label_toggle": true,
+  "scope": "offline login; no authentication or financial E2E"
+}
