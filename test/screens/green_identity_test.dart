@@ -1,3 +1,4 @@
+import '../helpers/brand_artwork_expectations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:qat_link/main_ui_preview.dart' show MaqwatiUiPreview;
@@ -29,7 +30,7 @@ void main() {
     await tester.pumpWidget(const MaqwatiUiPreview());
     expect(find.byKey(const Key('approved_blue_3d_maqwati_wordmark')),
         findsOneWidget);
-    expect(find.text('كل يوم حكاية'), findsOneWidget);
+    expectApprovedBrandArtwork(tester);
     expect(find.byKey(const Key('login_submit')), findsOneWidget);
     expect(find.byKey(const Key('login_phone')), findsOneWidget);
     final app = tester.widget<MaterialApp>(find.byType(MaterialApp));

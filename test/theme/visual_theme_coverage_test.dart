@@ -1,3 +1,4 @@
+import '../helpers/brand_artwork_expectations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:qat_link/models/app_models.dart';
@@ -27,7 +28,7 @@ void main() {
         expect(actual.accent, palette.accent);
         expect(find.byKey(const Key('approved_blue_3d_maqwati_wordmark')),
             findsOneWidget);
-        expect(find.text('كل يوم حكاية'), findsOneWidget);
+        expectApprovedBrandArtwork(tester);
         expect(tester.takeException(), isNull);
       });
 

@@ -1,3 +1,4 @@
+import '../helpers/brand_artwork_expectations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:qat_link/main.dart';
@@ -8,8 +9,9 @@ void main() {
       (tester) async {
     await tester.pumpWidget(const QatLinkApp());
 
-    expect(find.byKey(const Key('approved_blue_3d_maqwati_wordmark')), findsOneWidget);
-    expect(find.text('كل يوم حكاية'), findsOneWidget);
+    expect(find.byKey(const Key('approved_blue_3d_maqwati_wordmark')),
+        findsOneWidget);
+    expectApprovedBrandArtwork(tester);
     expect(find.text('مقوتي لنك'), findsNothing);
     expect(find.byKey(const Key('login_phone')), findsOneWidget);
     expect(find.byKey(const Key('login_pin')), findsOneWidget);
@@ -47,8 +49,7 @@ void main() {
     );
   });
 
-  testWidgets('login remains usable at narrow Android width',
-      (tester) async {
+  testWidgets('login remains usable at narrow Android width', (tester) async {
     tester.view.physicalSize = const Size(320, 700);
     tester.view.devicePixelRatio = 1;
     addTearDown(() {

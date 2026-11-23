@@ -1,0 +1,32 @@
+00:00 +0: loading /workspace/maqwati/test/screens/yemen_ui_preview_widget_test.dart
+00:00 +0: /workspace/maqwati/test/screens/yemen_ui_preview_widget_test.dart: offline preview starts on correct Arabic login and RTL
+00:01 +1: /workspace/maqwati/test/screens/yemen_ui_preview_widget_test.dart: preview female option changes global theme without changing debt colors
+00:02 +2: /workspace/maqwati/test/screens/yemen_ui_preview_widget_test.dart: customer preview stays RTL, private-account-safe and pink
+00:03 +3: /workspace/maqwati/test/screens/yemen_ui_preview_widget_test.dart: merchant preview has shared navigation but no live identity
+00:03 +4: loading /workspace/maqwati/test/screens/yemen_modern_fintech_brand_test.dart
+00:04 +4: /workspace/maqwati/test/screens/yemen_modern_fintech_brand_test.dart: Arabic onboarding uses the corrected brand and Yemeni tagline
+00:05 +5: /workspace/maqwati/test/screens/yemen_modern_fintech_brand_test.dart: onboarding layout remains RTL independently of system locale
+00:05 +6: /workspace/maqwati/test/screens/yemen_modern_fintech_brand_test.dart: female onboarding switches brand pink but keeps finance red
+00:07 +7: /workspace/maqwati/test/screens/yemen_modern_fintech_brand_test.dart: login remains usable at narrow Android width
+00:07 +8: loading /workspace/maqwati/test/screens/green_identity_test.dart
+00:08 +8: /workspace/maqwati/test/screens/green_identity_test.dart: the independent premium concept matches its design tokens
+00:08 +9: /workspace/maqwati/test/screens/green_identity_test.dart: premium concept opens Arabic login with the mascot and tagline
+00:09 +10: /workspace/maqwati/test/screens/green_identity_test.dart: female profile still uses pink rather than forcing premium
+00:09 +11: loading /workspace/maqwati/test/theme/visual_theme_coverage_test.dart
+00:10 +11: /workspace/maqwati/test/theme/visual_theme_coverage_test.dart: blue light uses an active premium palette on the brand header
+00:11 +12: /workspace/maqwati/test/theme/visual_theme_coverage_test.dart: blue light applies its own YER gradient
+00:11 +13: /workspace/maqwati/test/theme/visual_theme_coverage_test.dart: blue light applies its own SAR gradient
+00:11 +14: /workspace/maqwati/test/theme/visual_theme_coverage_test.dart: blue light applies its own USD gradient
+00:11 +15: /workspace/maqwati/test/theme/visual_theme_coverage_test.dart: blue dark uses an active premium palette on the brand header
+00:11 +16: /workspace/maqwati/test/theme/visual_theme_coverage_test.dart: blue dark applies its own YER gradient
+00:11 +17: /workspace/maqwati/test/theme/visual_theme_coverage_test.dart: blue dark applies its own SAR gradient
+00:11 +18: /workspace/maqwati/test/theme/visual_theme_coverage_test.dart: blue dark applies its own USD gradient
+00:11 +19: /workspace/maqwati/test/theme/visual_theme_coverage_test.dart: pink light uses an active premium palette on the brand header
+00:11 +20: /workspace/maqwati/test/theme/visual_theme_coverage_test.dart: pink light applies its own YER gradient
+00:11 +21: /workspace/maqwati/test/theme/visual_theme_coverage_test.dart: pink light applies its own SAR gradient
+00:11 +22: /workspace/maqwati/test/theme/visual_theme_coverage_test.dart: pink light applies its own USD gradient
+00:11 +23: /workspace/maqwati/test/theme/visual_theme_coverage_test.dart: pink dark uses an active premium palette on the brand header
+00:12 +24: /workspace/maqwati/test/theme/visual_theme_coverage_test.dart: pink dark applies its own YER gradient
+00:12 +25: /workspace/maqwati/test/theme/visual_theme_coverage_test.dart: pink dark applies its own SAR gradient
+00:12 +26: /workspace/maqwati/test/theme/visual_theme_coverage_test.dart: pink dark applies its own USD gradient
+00:12 +27: All tests passed!
