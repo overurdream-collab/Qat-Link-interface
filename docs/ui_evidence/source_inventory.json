@@ -2,7 +2,7 @@
   "files": [
     {
       "path": "lib/screens/customer_app_shell.dart",
-      "lines": 2079,
+      "lines": 2081,
       "classes": [
         "CustomerAppShell",
         "_CustomerAppShellState",
@@ -134,7 +134,7 @@
     },
     {
       "path": "lib/screens/login_screen.dart",
-      "lines": 664,
+      "lines": 668,
       "classes": [
         "LoginScreen",
         "_LoginScreenState",
@@ -237,7 +237,7 @@
     },
     {
       "path": "lib/widgets/app_chrome.dart",
-      "lines": 300,
+      "lines": 302,
       "classes": [
         "AppTopBar",
         "AppSquareIconButton",
@@ -250,7 +250,7 @@
     },
     {
       "path": "lib/widgets/auth/auth_brand_hero.dart",
-      "lines": 272,
+      "lines": 273,
       "classes": [
         "AuthBrandHero",
         "_RaisedMaqwatiWordmark",
@@ -261,7 +261,7 @@
     },
     {
       "path": "lib/widgets/auth/login_feature_highlights.dart",
-      "lines": 102,
+      "lines": 103,
       "classes": [
         "LoginFeatureHighlights"
       ],
@@ -391,7 +391,7 @@
     },
     {
       "path": "lib/widgets/home/premium_home_hero.dart",
-      "lines": 140,
+      "lines": 141,
       "classes": [
         "PremiumHomeHero"
       ],

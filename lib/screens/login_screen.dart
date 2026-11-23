@@ -317,6 +317,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                       TextFormField(
                                         key: const Key('login_phone'),
                                         controller: _phone,
+                                        autovalidateMode:
+                                            AutovalidateMode.onUserInteraction,
                                         keyboardType: TextInputType.phone,
                                         textDirection: TextDirection.ltr,
                                         textAlign: TextAlign.right,
@@ -363,6 +365,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                       TextFormField(
                                         key: const Key('login_pin'),
                                         controller: _pin,
+                                        autovalidateMode:
+                                            AutovalidateMode.onUserInteraction,
                                         keyboardType: TextInputType.number,
                                         maxLength: 4,
                                         obscureText: !_showPin,

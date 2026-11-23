@@ -26,6 +26,7 @@ class AuthBrandHero extends StatelessWidget {
     final height = displayHeight ?? (compact ? 162.0 : 236.0);
     return Semantics(
       container: true,
+      excludeSemantics: true,
       label: 'مقوتي لينك، كل يوم حكاية',
       child: SizedBox(
         height: height,

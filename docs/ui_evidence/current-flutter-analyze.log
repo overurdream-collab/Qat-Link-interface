@@ -2418,56 +2418,60 @@ Analyzing maqwati...
    info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/currency_accessibility_test.dart:54:86 • require_trailing_commas
    info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/currency_accessibility_test.dart:56:66 • require_trailing_commas
    info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/currency_accessibility_test.dart:62:33 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/login_matrix_test.dart:38:9 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/login_matrix_test.dart:51:9 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/login_matrix_test.dart:68:72 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/login_matrix_test.dart:68:73 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/login_matrix_test.dart:92:76 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/login_matrix_test.dart:93:32 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/login_matrix_test.dart:100:51 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/login_matrix_test.dart:100:52 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/login_matrix_test.dart:101:14 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/login_matrix_test.dart:107:67 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/login_matrix_test.dart:107:68 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/login_matrix_test.dart:118:77 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/image_audit.dart:11:51 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/image_audit.dart:11:52 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/image_audit.dart:13:61 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/image_audit.dart:18:75 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/login_matrix_test.dart:39:9 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/login_matrix_test.dart:52:9 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/login_matrix_test.dart:69:72 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/login_matrix_test.dart:69:73 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/login_matrix_test.dart:94:76 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/login_matrix_test.dart:95:32 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/login_matrix_test.dart:102:51 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/login_matrix_test.dart:102:52 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/login_matrix_test.dart:103:14 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/login_matrix_test.dart:110:67 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/login_matrix_test.dart:110:68 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/login_matrix_test.dart:123:77 • require_trailing_commas
    info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/pdf_identity_test.dart:13:51 • require_trailing_commas
    info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/pdf_identity_test.dart:19:74 • require_trailing_commas
    info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/pdf_identity_test.dart:19:75 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/populated_financial_matrix_test.dart:30:7 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/populated_financial_matrix_test.dart:30:8 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/populated_financial_matrix_test.dart:36:22 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/populated_financial_matrix_test.dart:45:22 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/populated_financial_matrix_test.dart:51:22 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/populated_financial_matrix_test.dart:65:34 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/populated_financial_matrix_test.dart:81:32 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/populated_financial_matrix_test.dart:82:11 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/populated_financial_matrix_test.dart:82:12 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/populated_financial_matrix_test.dart:82:13 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/populated_financial_matrix_test.dart:89:28 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/populated_financial_matrix_test.dart:99:67 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/populated_financial_matrix_test.dart:99:68 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/populated_financial_matrix_test.dart:125:11 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/populated_financial_matrix_test.dart:144:42 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/populated_financial_matrix_test.dart:149:69 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/populated_financial_matrix_test.dart:157:77 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/populated_financial_matrix_test.dart:162:52 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/populated_financial_matrix_test.dart:168:29 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/populated_financial_matrix_test.dart:170:49 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/populated_financial_matrix_test.dart:176:29 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/populated_financial_matrix_test.dart:179:51 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/populated_financial_matrix_test.dart:198:75 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/populated_financial_matrix_test.dart:199:48 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/populated_financial_matrix_test.dart:199:49 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/populated_financial_matrix_test.dart:200:55 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/populated_financial_matrix_test.dart:200:56 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/populated_financial_matrix_test.dart:209:74 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/populated_financial_matrix_test.dart:211:39 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/populated_financial_matrix_test.dart:213:77 • require_trailing_commas
-   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • test/ui_audit/populated_financial_matrix_test.dart:218:25 • curly_braces_in_flow_control_structures
-   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/populated_financial_matrix_test.dart:220:75 • require_trailing_commas
-   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • test/ui_audit/populated_financial_matrix_test.dart:223:25 • curly_braces_in_flow_control_structures
-   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/populated_financial_matrix_test.dart:225:76 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/populated_financial_matrix_test.dart:228:23 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/populated_financial_matrix_test.dart:31:7 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/populated_financial_matrix_test.dart:31:8 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/populated_financial_matrix_test.dart:37:22 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/populated_financial_matrix_test.dart:46:22 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/populated_financial_matrix_test.dart:52:22 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/populated_financial_matrix_test.dart:66:34 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/populated_financial_matrix_test.dart:82:32 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/populated_financial_matrix_test.dart:83:11 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/populated_financial_matrix_test.dart:83:12 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/populated_financial_matrix_test.dart:83:13 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/populated_financial_matrix_test.dart:90:28 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/populated_financial_matrix_test.dart:100:67 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/populated_financial_matrix_test.dart:100:68 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/populated_financial_matrix_test.dart:126:11 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/populated_financial_matrix_test.dart:145:42 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/populated_financial_matrix_test.dart:150:69 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/populated_financial_matrix_test.dart:158:77 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/populated_financial_matrix_test.dart:163:52 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/populated_financial_matrix_test.dart:169:29 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/populated_financial_matrix_test.dart:171:49 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/populated_financial_matrix_test.dart:177:29 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/populated_financial_matrix_test.dart:180:51 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/populated_financial_matrix_test.dart:199:75 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/populated_financial_matrix_test.dart:200:48 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/populated_financial_matrix_test.dart:200:49 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/populated_financial_matrix_test.dart:201:55 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/populated_financial_matrix_test.dart:201:56 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/populated_financial_matrix_test.dart:211:74 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/populated_financial_matrix_test.dart:213:39 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/populated_financial_matrix_test.dart:215:77 • require_trailing_commas
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • test/ui_audit/populated_financial_matrix_test.dart:221:25 • curly_braces_in_flow_control_structures
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/populated_financial_matrix_test.dart:223:75 • require_trailing_commas
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • test/ui_audit/populated_financial_matrix_test.dart:226:25 • curly_braces_in_flow_control_structures
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/populated_financial_matrix_test.dart:228:76 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/populated_financial_matrix_test.dart:231:23 • require_trailing_commas
    info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/reference_controls_test.dart:36:45 • require_trailing_commas
    info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/reference_controls_test.dart:36:46 • require_trailing_commas
    info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/reference_controls_test.dart:36:47 • require_trailing_commas
@@ -2477,40 +2481,40 @@ Analyzing maqwati...
    info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/reference_controls_test.dart:49:46 • require_trailing_commas
    info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/reference_controls_test.dart:57:36 • require_trailing_commas
    info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/reference_controls_test.dart:71:19 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/role_layout_matrix_test.dart:31:11 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/role_layout_matrix_test.dart:60:73 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/role_layout_matrix_test.dart:62:32 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/role_layout_matrix_test.dart:69:57 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/role_layout_matrix_test.dart:74:100 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/role_layout_matrix_test.dart:76:26 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/role_layout_matrix_test.dart:80:79 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/role_layout_matrix_test.dart:87:27 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/role_layout_matrix_test.dart:90:64 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/role_layout_matrix_test.dart:90:65 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/role_layout_matrix_test.dart:100:73 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/role_layout_matrix_test.dart:106:78 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/role_layout_matrix_test.dart:110:25 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/screen_catalog_matrix_test.dart:58:3 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/screen_catalog_matrix_test.dart:84:59 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/screen_catalog_matrix_test.dart:90:59 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/screen_catalog_matrix_test.dart:97:52 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/screen_catalog_matrix_test.dart:99:76 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/screen_catalog_matrix_test.dart:104:52 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/screen_catalog_matrix_test.dart:117:66 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/screen_catalog_matrix_test.dart:119:56 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/screen_catalog_matrix_test.dart:121:63 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/screen_catalog_matrix_test.dart:123:59 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/screen_catalog_matrix_test.dart:128:59 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/screen_catalog_matrix_test.dart:130:79 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/screen_catalog_matrix_test.dart:134:50 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/screen_catalog_matrix_test.dart:142:55 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/screen_catalog_matrix_test.dart:144:45 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/screen_catalog_matrix_test.dart:161:42 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/screen_catalog_matrix_test.dart:164:58 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/screen_catalog_matrix_test.dart:165:24 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/screen_catalog_matrix_test.dart:171:73 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/screen_catalog_matrix_test.dart:177:76 • require_trailing_commas
-   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/screen_catalog_matrix_test.dart:181:23 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/role_layout_matrix_test.dart:32:11 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/role_layout_matrix_test.dart:61:73 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/role_layout_matrix_test.dart:63:32 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/role_layout_matrix_test.dart:70:57 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/role_layout_matrix_test.dart:75:100 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/role_layout_matrix_test.dart:77:26 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/role_layout_matrix_test.dart:82:79 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/role_layout_matrix_test.dart:89:27 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/role_layout_matrix_test.dart:92:64 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/role_layout_matrix_test.dart:92:65 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/role_layout_matrix_test.dart:103:73 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/role_layout_matrix_test.dart:109:78 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/role_layout_matrix_test.dart:113:25 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/screen_catalog_matrix_test.dart:59:3 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/screen_catalog_matrix_test.dart:85:59 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/screen_catalog_matrix_test.dart:91:59 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/screen_catalog_matrix_test.dart:98:52 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/screen_catalog_matrix_test.dart:100:76 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/screen_catalog_matrix_test.dart:105:52 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/screen_catalog_matrix_test.dart:118:66 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/screen_catalog_matrix_test.dart:120:56 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/screen_catalog_matrix_test.dart:122:63 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/screen_catalog_matrix_test.dart:124:59 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/screen_catalog_matrix_test.dart:129:59 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/screen_catalog_matrix_test.dart:131:79 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/screen_catalog_matrix_test.dart:135:50 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/screen_catalog_matrix_test.dart:143:55 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/screen_catalog_matrix_test.dart:145:45 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/screen_catalog_matrix_test.dart:162:42 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/screen_catalog_matrix_test.dart:165:58 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/screen_catalog_matrix_test.dart:166:24 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/screen_catalog_matrix_test.dart:173:73 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/screen_catalog_matrix_test.dart:179:76 • require_trailing_commas
+   info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/screen_catalog_matrix_test.dart:183:23 • require_trailing_commas
    info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/scroll_audit.dart:10:56 • require_trailing_commas
    info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/scroll_audit.dart:19:69 • require_trailing_commas
    info • Missing a required trailing comma. Try adding a trailing comma • test/ui_audit/scroll_audit.dart:24:78 • require_trailing_commas
@@ -2731,4 +2735,4 @@ Analyzing maqwati...
    info • Missing a required trailing comma. Try adding a trailing comma • test/widgets/quick_actions/quick_action_sheets_widget_test.dart:191:6 • require_trailing_commas
    info • Missing a required trailing comma. Try adding a trailing comma • test/widgets/worker_preparation_pdf_test.dart:28:58 • require_trailing_commas
 
-2730 issues found. (ran in 5.8s)
+2734 issues found. (ran in 3.5s)

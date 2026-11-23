@@ -11,6 +11,7 @@ class PremiumHomeHero extends StatelessWidget {
   Widget build(BuildContext context) {
     return Semantics(
       container: true,
+      excludeSemantics: true,
       label: 'مقوتي لينك، حسابات واضحة وتعاملات بثقة، كل عملية بموافقة الطرفين',
       child: Container(
         height: 174,

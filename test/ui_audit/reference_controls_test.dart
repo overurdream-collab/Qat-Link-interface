@@ -69,6 +69,24 @@ void main() {
                 .widget<Checkbox>(find.byKey(const Key('login_remember_me')))
                 .value,
             isTrue);
+        await tester.ensureVisible(find.byKey(const Key('login_submit')));
+        await tester.tap(find.byKey(const Key('login_submit')));
+        await tester.pumpAndSettle();
+        expect(find.text('أدخل رقم الجوال'), findsOneWidget);
+        await tester.ensureVisible(find.byKey(const Key('login_phone')));
+        await tester.enterText(
+            find.byKey(const Key('login_phone')), '771234567');
+        await tester.pumpAndSettle();
+        expect(find.text('أدخل رقم الجوال'), findsNothing);
+        await tester.ensureVisible(find.byKey(const Key('login_pin')));
+        await tester.enterText(find.byKey(const Key('login_pin')), '1234');
+        await tester.pumpAndSettle();
+        expect(
+            tester
+                .state<FormFieldState<String>>(
+                    find.byKey(const Key('login_pin')))
+                .hasError,
+            isFalse);
         expect(tester.takeException(), isNull);
       });
     }

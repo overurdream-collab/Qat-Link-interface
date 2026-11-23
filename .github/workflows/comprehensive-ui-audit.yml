@@ -95,6 +95,10 @@ jobs:
           old = 'applicationId = "com.maqwatilink.qat_link"'
           assert old in s
           p.write_text(s.replace(old, 'applicationId = "com.maqwatilink.ui_audit_preview"'))
+          manifest = Path('android/app/src/main/AndroidManifest.xml')
+          xml = manifest.read_text()
+          assert 'android:label="qat_link"' in xml
+          manifest.write_text(xml.replace('android:label="qat_link"', 'android:label="مقوتي لينك"'))
           PY
       - run: flutter build apk --release -t lib/main_phone_preview.dart
       - name: Verify APK identity, bundled mascots and offline permission
@@ -177,6 +181,10 @@ jobs:
           old = 'applicationId = "com.maqwatilink.qat_link"'
           assert old in s
           p.write_text(s.replace(old, 'applicationId = "com.maqwatilink.ui_audit_developer"'))
+          manifest = Path('android/app/src/main/AndroidManifest.xml')
+          xml = manifest.read_text()
+          assert 'android:label="qat_link"' in xml
+          manifest.write_text(xml.replace('android:label="qat_link"', 'android:label="مقوتي لينك — فحص"'))
           PY
       - run: flutter build apk --release -t lib/main_ui_preview.dart
       - name: Verify APK identity, bundled mascots and offline permission

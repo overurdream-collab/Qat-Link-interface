@@ -394,6 +394,8 @@ class _CustomerBottomBar extends StatelessWidget {
               label: 'استديو',
               selected: selectedIndex == 2,
               button: true,
+              excludeSemantics: true,
+              onTap: () => onSelect(2),
               child: Tooltip(
                 message: 'استديو',
                 child: Material(
@@ -514,7 +516,7 @@ class CustomerHomeScreen extends StatelessWidget {
                         children: [
                           Text('كيف يظهر الرصيد؟',
                               style: TextStyle(
-                                  color: c.petrol,
+                                  color: c.link,
                                   fontWeight: FontWeight.w900,
                                   fontSize: 13)),
                           const SizedBox(height: 6),

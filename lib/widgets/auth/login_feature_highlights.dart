@@ -36,6 +36,7 @@ class LoginFeatureHighlights extends StatelessWidget {
 
     return Semantics(
       container: true,
+      excludeSemantics: true,
       label: 'مميزات مقوتي لينك: دفتر حسابات، استوديو، حجوزات، مؤشرات مالية',
       child: Row(
         key: const Key('login_feature_highlights'),

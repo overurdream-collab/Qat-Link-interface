@@ -1,0 +1,8 @@
+00:00 +0: loading /workspace/maqwati/test/ui_audit/reference_controls_test.dart
+00:00 +0: (setUpAll)
+00:00 +0: reference login controls pink=false dark=false
+00:01 +1: reference login controls pink=false dark=true
+00:02 +2: reference login controls pink=true dark=false
+00:02 +3: reference login controls pink=true dark=true
+00:03 +4: (tearDownAll)
+00:03 +4: All tests passed!

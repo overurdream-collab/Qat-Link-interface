@@ -214,6 +214,8 @@ class AppBottomBar extends StatelessWidget {
         button: true,
         selected: active,
         label: label,
+        excludeSemantics: true,
+        onTap: () => onSelect(index),
         child: InkWell(
           onTap: () => onSelect(index),
           borderRadius: BorderRadius.circular(18),

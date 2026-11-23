@@ -1,0 +1,10 @@
+00:00 +0: loading /workspace/maqwati/test/ui_audit/navigation_accessibility_test.dart
+00:00 +0: merchant navigation announces once and accepts assistive tap pink=false dark=false
+00:00 +1: customer studio announces once and accepts assistive tap pink=false dark=false
+00:01 +2: merchant navigation announces once and accepts assistive tap pink=false dark=true
+00:01 +3: customer studio announces once and accepts assistive tap pink=false dark=true
+00:01 +4: merchant navigation announces once and accepts assistive tap pink=true dark=false
+00:01 +5: customer studio announces once and accepts assistive tap pink=true dark=false
+00:01 +6: merchant navigation announces once and accepts assistive tap pink=true dark=true
+00:02 +7: customer studio announces once and accepts assistive tap pink=true dark=true
+00:02 +8: All tests passed!

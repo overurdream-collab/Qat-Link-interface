@@ -68,7 +68,7 @@ try:
                 tap('الوضع الليلي')
             theme = f'{gender}_{mode}'
             for role, tabs in [('merchant', ['الرئيسية', 'الحركة', 'العملاء', 'مساحتي']),
-                               ('customer', ['الرئيسية', 'الحركة', 'استديو', 'التجار', 'المتاجر'])]:
+                               ('customer', ['الرئيسية', 'الحركة', 'استديو', 'التجار', 'اكتشف'])]:
                 tap('تاجر' if role == 'merchant' else 'عميل')
                 for index, label in enumerate(tabs):
                     tap(label, bottom=True)
