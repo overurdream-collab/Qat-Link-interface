@@ -3,6 +3,9 @@ import 'package:flutter/services.dart';
 
 import '../features/auth/auth_input_validation.dart';
 import '../features/auth/registration_role.dart';
+import '../services/fin25_otp_client.dart';
+import '../services/maqwati_api_config.dart';
+import 'fin25_otp_screen.dart';
 import '../theme/app_colors.dart';
 import '../widgets/auth/auth_brand_hero.dart';
 
@@ -46,15 +49,31 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   void _submit() {
     if (!_formKey.currentState!.validate()) return;
-    // No client-side privilege grant, account creation, or PIN persistence.
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text(
-          'تم التحقق من المدخلات فقط. إنشاء الحساب يحتاج '
-          'خدمة تسجيل آمنة وتحقق رقم الجوال قبل تفعيل أي دور.',
-        ),
-      ),
-    );
+    if (_selectedRole == RegistrationRole.supplier) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('حساب المورد غير مدعوم حالياً في خدمة الهوية.')));
+      return;
+    }
+    final String phone;
+    try {
+      phone = Fin25OtpClient.normalizeYemeniPhone(_phone.text);
+    } on Fin25OtpException catch (error) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(error.message)));
+      return;
+    }
+    final origin = MaqwatiApiConfig.origin;
+    if (origin == null) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('خادم مقوتي الآمن غير مهيأ لإنشاء الحساب.')));
+      return;
+    }
+    // Role remains a request for the trusted server; never transmit local PIN.
+    Navigator.of(context).push(MaterialPageRoute<void>(
+      builder: (_) => Fin25OtpScreen(
+        phone: phone, baseUri: origin, identityBaseUri: origin,
+        requestedRole: _selectedRole.name, displayName: _name.text.trim()),
+    ));
   }
 
   @override

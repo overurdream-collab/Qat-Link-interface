@@ -8,6 +8,9 @@ import '../theme/premium_tokens.dart';
 import '../widgets/auth/auth_brand_hero.dart';
 import '../widgets/auth/login_feature_highlights.dart';
 import 'registration_screen.dart';
+import '../services/fin25_otp_client.dart';
+import '../services/maqwati_api_config.dart';
+import 'fin25_otp_screen.dart';
 
 /// App entry point. UI only: no PIN is persisted, sent, or accepted without
 /// server authentication. Never navigate to private finance pages on form
@@ -70,10 +73,25 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _signIn() {
-    if (!_formKey.currentState!.validate()) return;
-    // Deliberately no onAuthenticated call, persistent token, local PIN
-    // storage, or navigation to the financial dashboard.
-    _notConnected('تسجيل الدخول');
+    final String phone;
+    try {
+      phone = Fin25OtpClient.normalizeYemeniPhone(_phone.text);
+    } on Fin25OtpException catch (error) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(error.message)));
+      return;
+    }
+    final origin = MaqwatiApiConfig.origin;
+    if (origin == null) {
+      _notConnected('تسجيل الدخول');
+      return;
+    }
+    // Local PIN fields never authenticate, leave the device, or unlock finance.
+    // FIN25 proves the phone; Identity must exchange proof and verify /me.
+    Navigator.of(context).push(MaterialPageRoute<void>(
+      builder: (_) => Fin25OtpScreen(
+        phone: phone, baseUri: origin, identityBaseUri: origin),
+    ));
   }
 
   @override
@@ -467,7 +485,7 @@ class _ApprovedLoginWavesPainter extends CustomPainter {
       Paint()..shader = LinearGradient(
         colors: pink
             ? const [Color(0xFFEDB2E2), Color(0xFFCD9DF5), Color(0xFFF5C6E1)]
-            : const [Color(0xFFBA8CF5), Color(0xFF8F80F6), Color(0xFF82CBFF)],
+            : const [AppColors.cyan, AppColors.mint, AppColors.sea],
       ).createShader(Offset.zero & size),
     );
     canvas.drawPath(
@@ -475,7 +493,7 @@ class _ApprovedLoginWavesPainter extends CustomPainter {
       Paint()..shader = LinearGradient(
         colors: pink
             ? const [Color(0xFFCBA1FB), Color(0xFFDE9DDE), Color(0xFFE9B7F5)]
-            : const [Color(0xFFE1B6FB), Color(0xFFA279F9), Color(0xFF70CAFA)],
+            : const [AppColors.pale, AppColors.cyan, AppColors.mint],
       ).createShader(Offset.zero & size),
     );
   }

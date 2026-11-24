@@ -108,7 +108,7 @@ abstract final class AppTheme {
       ),
       filledButtonTheme: FilledButtonThemeData(
         style: FilledButton.styleFrom(
-          // Premium blue-violet / orchid buttons with legible light foreground.
+          // Base green and optional female buttons retain legible foreground.
           foregroundColor: isDark ? c.background : Colors.white,
           backgroundColor: c.petrol,
           minimumSize: const Size(48, 48),

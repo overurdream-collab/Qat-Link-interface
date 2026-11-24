@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
 import '../../theme/premium_tokens.dart';
+import '../../theme/app_colors.dart';
 
 /// Approved Maqwati Link login header, 2026-11-22.
-/// Character on the left, blue raised logotype and «كل يوم حكاية» on the right.
+/// Character on the left, green raised logotype and «كل يوم حكاية» on the right.
 /// No checkmark badge or extra circle above the app name.
 class AuthBrandHero extends StatelessWidget {
   const AuthBrandHero({super.key, this.compact = false});
@@ -49,7 +50,7 @@ class AuthBrandHero extends StatelessWidget {
                           style: TextStyle(
                             color: feminine
                                 ? (dark ? const Color(0xFFF2A7D0) : const Color(0xFFAD3379))
-                                : (dark ? const Color(0xFFD7B7FF) : const Color(0xFF5730C4)),
+                                : (dark ? AppColors.darkPetrol : AppColors.petrol),
                             fontSize: compact ? 16 : 21,
                             fontWeight: FontWeight.w900,
                             height: 1.3,
@@ -86,7 +87,7 @@ class AuthBrandHero extends StatelessWidget {
                           gradient: LinearGradient(
                             colors: feminine
                                 ? const [Color(0xFFF8DCEB), Color(0xFF8551B2)]
-                                : const [Color(0xFFDAADFA), Color(0xFF82C9FF)],
+                                : const [AppColors.pale, AppColors.cyan],
                           ),
                         ),
                       ),
@@ -148,9 +149,9 @@ class _RaisedMaqwatiWordmark extends StatelessWidget {
                 child: Text(title,
                   textDirection: TextDirection.rtl,
                   style: base.copyWith(
-                    color: feminine ? const Color(0xFF632450) : const Color(0xFF171C98),
+                    color: feminine ? const Color(0xFF632450) : AppColors.petrol,
                     shadows: const [
-                      Shadow(color: Color(0x6A2C2B9A),
+                      Shadow(color: Color(0x6A2E7D32),
                           offset: Offset(1, 7), blurRadius: 7),
                     ],
                   ),
@@ -165,9 +166,9 @@ class _RaisedMaqwatiWordmark extends StatelessWidget {
                       ? const [Color(0xFFF8DCEB), Color(0xFFAD4389),
                           Color(0xFFAD3379), Color(0xFF8551B2)]
                       : (isDark
-                          ? const [Color(0xFF8DEBFF), Color(0xFF268EFF), Color(0xFF174DCB)]
-                          : const [Color(0xFF8CF6FF), Color(0xFF0FA7F9),
-                              Color(0xFF0752E6), Color(0xFF2533AE)]),
+                          ? const [AppColors.darkPetrol, AppColors.darkMint, AppColors.sea]
+                          : const [AppColors.cyan, AppColors.mint,
+                              AppColors.sea, AppColors.petrol]),
                 ).createShader(bounds),
                 child: Text(
                   title,

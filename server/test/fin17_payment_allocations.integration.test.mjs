@@ -114,7 +114,11 @@ test('FIN-17 PostgreSQL: bilateral allocations, unallocated credit, releases and
         'UPDATE financial_payment_allocation_entries SET amount=1 WHERE request_id=$1',[first.request_id]),/immutable/i);
       await assert.rejects(()=>pool.query(
         'UPDATE financial_payment_allocation_requests SET amount=1 WHERE id=$1',[first.request_id]),/immutable/i);
+      // Both boundaries must reject deletion: a restricted runtime role is
+      // denied DELETE (42501); a privileged test role reaches immutability (P0001).
       await assert.rejects(()=>pool.query(
-        'DELETE FROM financial_payment_allocation_requests WHERE id=$1',[first.request_id]),/immutable/i);
+        'DELETE FROM financial_payment_allocation_requests WHERE id=$1',[first.request_id]),
+        error => error.code === '42501' ||
+          (error.code === 'P0001' && /immutable/i.test(error.message)));
     }finally{await pool.end();}
   });
