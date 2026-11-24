@@ -6,6 +6,8 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 
+import '../auth/maqwati_report_brand.dart';
+
 import 'merchant_space_models.dart';
 
 /// Daily preparation report — generates a genuine A4 PDF, locally, with
@@ -118,7 +120,8 @@ abstract final class ReservationDailyPdf {
 
     fill(0,0,_width,_height,white);
     fill(0,0,_width,108,petrol);
-    label('مقوتي لنك • كشف تجهيز الحجوزات', 755, 14, 665,
+    await paintMaqwatiReportLogo(canvas, x: 16, y: 11, width: 245, height: 82);
+    label('مقوتي لينك • كشف تجهيز الحجوزات', 755, 14, 665,
       size: 28, bold: true, color: white);
     label('نسخة محلية غير متزامنة — ليست إثبات حجز مؤكد',
       749, 65, 695, size: 14, color: white);

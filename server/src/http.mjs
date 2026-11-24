@@ -61,12 +61,16 @@ export function createApi({store,verify}) {
       }
       if(method==='GET' && path==='/v1/merchant/contacts'){
         requireRole(actor,'merchant');
-        return json(res,200,await store.listContacts(actor,{limit:page(url.searchParams.get('limit')??undefined),cursor:url.searchParams.get('cursor')}));
+        return json(res,200,await store.listContacts(actor,{limit:page(url.searchParams.get('limit')??undefined),cursor:url.searchParams.get('cursor'),q:url.searchParams.get('q')}));
+      }
+      if(method==='GET' && path==='/v1/merchant/relationships'){
+        requireRole(actor,'merchant');
+        return json(res,200,await store.listMerchantRelationships(actor,{limit:page(url.searchParams.get('limit')??undefined),cursor:url.searchParams.get('cursor')}));
       }
       const merchantContactClaims=path.match(/^\/v1\/merchant\/contacts\/([\w-]+)\/claims$/);
       if(method==='GET' && merchantContactClaims){
         requireRole(actor,'merchant');
-        return json(res,200,await store.listContactClaims(actor,merchantContactClaims[1],{limit:page(url.searchParams.get('limit')??undefined),cursor:url.searchParams.get('cursor')}));
+        return json(res,200,await store.listContactClaims(actor,merchantContactClaims[1],{limit:page(url.searchParams.get('limit')??undefined),cursor:url.searchParams.get('cursor'),q:url.searchParams.get('q'),type:url.searchParams.get('type'),currency:url.searchParams.get('currency'),from:url.searchParams.get('from'),to:url.searchParams.get('to'),sort:url.searchParams.get('sort')}));
       }
       if(method==='GET' && path==='/v1/merchant/claims/summary'){
         requireRole(actor,'merchant');return json(res,200,await store.summary(actor));

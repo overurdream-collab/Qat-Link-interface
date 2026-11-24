@@ -1,5 +1,7 @@
 # مقتني لينك Qat-Link
 
+> **تحديث الاستلام — 2026-11-22:** تم تدقيق الفرع `integration/fin25-identity-consolidation-20261121` عند `58baff8`. الخلاصة: النواة المالية والمصادقة الخادمية موجودة، لكن الدخول لا يفتح الواجهة التشغيلية الحقيقية، وشاشات FIN غير موصولة، ومجالات QR/المتاجر/الحجوزات/الإشعارات/الاشتراكات/الإدارة غير منفذة. **لا إطلاق قبل استيفاء بوابات القبول.** ابدأ من [تقرير الاستلام](docs/PROJECT_FULL_HANDOVER_AUDIT_AR.md) و[مصفوفة التتبع](docs/REQUIREMENTS_TRACEABILITY_AR.md) و[خطة الاستكمال](docs/PROJECT_COMPLETION_PLAN_AR.md).
+
 **آخر خط أساس موثّق — 2026-11-16:** `main` عند `80bcae1e401324fcb9da4cc709e7cfff6d5ca9ee`. دُمج FIN-10 (#22 و#25)، FIN-11 (#27)، وتحسين JWT في FIN-12 (#28). نجحت فحوص Flutter على `main` [#43857770973](https://github.com/overurdream-collab/Qat-Link-interface/actions/runs/43857770973) ونجحت Backend/PostgreSQL بعد FIN-12 [#43856631439](https://github.com/overurdream-collab/Qat-Link-interface/actions/runs/43856631439). **Login/OTP غير متصل، ولم يُختبر جهازان حقيقيان أو دفتر حركات شامل؛ لا تطلق الخدمة بعد.**
 
 

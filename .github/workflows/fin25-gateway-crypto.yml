@@ -1,0 +1,24 @@
+name: FIN25 gateway crypto
+on:
+  pull_request:
+    paths:
+      - 'server/src/gateway_device_crypto.mjs'
+      - 'server/test/gateway_device_crypto.test.mjs'
+      - '.github/workflows/fin25-gateway-crypto.yml'
+  push:
+    branches:
+      - 'integration/fin25-samsung-otp-secure-20261117'
+jobs:
+  crypto:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node --check server/src/gateway_device_crypto.mjs
+      - run: node --check server/src/fin25_gateway_enrollment.mjs
+      - run: node --check server/src/fin25_otp_transport.mjs
+      - run: node --test server/test/gateway_device_crypto.test.mjs

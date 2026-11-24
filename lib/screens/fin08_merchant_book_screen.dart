@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:decimal/decimal.dart';
@@ -15,9 +16,11 @@ import '../widgets/finance_display.dart';
 /// Requires a real merchant JWT from trusted authentication. Not the full
 /// approved financial ledger; never labels claim sums as total debt balance.
 class Fin08MerchantBookScreen extends StatefulWidget {
-  const Fin08MerchantBookScreen({super.key,required this.gateway,this.amendmentGateway});
+  const Fin08MerchantBookScreen({super.key,required this.gateway,this.amendmentGateway,
+    this.onOpenLedger});
   final Fin08ClaimsGateway gateway;
   final Fin15AmendmentGateway? amendmentGateway;
+  final void Function(String relationshipId)? onOpenLedger;
   @override
   State<Fin08MerchantBookScreen> createState() => _Fin08MerchantBookScreenState();
 }
@@ -28,6 +31,14 @@ class _Fin08MerchantBookScreenState extends State<Fin08MerchantBookScreen> {
   List<Fin08CurrencyBuckets> _summary=const [];
   String? _contactsCursor;
   String? _claimsCursor;
+  final _contactSearch=TextEditingController();
+  final _claimSearch=TextEditingController();
+  Timer? _contactDebounce;
+  Timer? _claimDebounce;
+  MovementType? _claimType;
+  CurrencyCode? _claimCurrency;
+  DateTimeRange? _claimRange;
+  String _claimSort='newest';
   Fin08MerchantContact? _selected;
   String? _error;
   bool _loading=false;
@@ -36,11 +47,84 @@ class _Fin08MerchantBookScreenState extends State<Fin08MerchantBookScreen> {
   @override
   void initState(){super.initState();_loadContacts();}
 
+  @override
+  void dispose(){
+    _contactDebounce?.cancel();
+    _claimDebounce?.cancel();
+    _contactSearch.dispose();
+    _claimSearch.dispose();
+    super.dispose();
+  }
+
+  String get _contactQuery=>_contactSearch.text.trim();
+  String get _claimQuery=>_claimSearch.text.trim();
+
+  void _onContactSearchChanged(String _){
+    _contactDebounce?.cancel();
+    _contactDebounce=Timer(const Duration(milliseconds:350),(){
+      if(mounted && !_loading)_loadContacts();
+    });
+  }
+
+  void _onClaimSearchChanged(String _){
+    _claimDebounce?.cancel();
+    _claimDebounce=Timer(const Duration(milliseconds:350),(){
+      final selected=_selected;
+      if(mounted && !_loading && selected!=null)_select(selected);
+    });
+  }
+
+  void _clearContactSearch(){
+    if(_contactSearch.text.isEmpty)return;
+    _contactSearch.clear();
+    _contactDebounce?.cancel();
+    if(!_loading)_loadContacts();
+  }
+
+  static String _dateOnly(DateTime value)=>
+    '${value.year.toString().padLeft(4,'0')}-'
+    '${value.month.toString().padLeft(2,'0')}-'
+    '${value.day.toString().padLeft(2,'0')}';
+
+  Future<void> _pickClaimRange() async {
+    final now=DateTime.now();
+    final range=await showDateRangePicker(
+      context:context,
+      firstDate:DateTime(2020),
+      lastDate:now,
+      initialDateRange:_claimRange,
+      helpText:'تصفية المطالبات حسب التاريخ',
+      saveText:'تطبيق',
+    );
+    if(!mounted || range==null)return;
+    setState(()=>_claimRange=range);
+    final selected=_selected;
+    if(selected!=null)_select(selected);
+  }
+
+  void _setClaimFilter({MovementType? type, bool changeType=false, CurrencyCode? currency, bool changeCurrency=false}){
+    if(_loading)return;
+    setState(() {
+      if(changeType)_claimType=type;
+      if(changeCurrency)_claimCurrency=currency;
+    });
+    final selected=_selected;
+    if(selected!=null)_select(selected);
+  }
+
+  void _clearClaimSearch(){
+    if(_claimSearch.text.isEmpty)return;
+    _claimSearch.clear();
+    _claimDebounce?.cancel();
+    final selected=_selected;
+    if(!_loading && selected!=null)_select(selected);
+  }
+
   Future<void> _loadContacts({bool more=false}) async {
     if(_loading) return;
     setState(() {_loading=true;_error=null;});
     try {
-      final page=await widget.gateway.merchantContacts(cursor:more?_contactsCursor:null);
+      final page=await widget.gateway.merchantContacts(cursor:more?_contactsCursor:null,search:_contactQuery.isEmpty?null:_contactQuery);
       final totals=await widget.gateway.merchantClaimSummary();
       if(!mounted)return;
       setState(() {
@@ -60,7 +144,11 @@ class _Fin08MerchantBookScreenState extends State<Fin08MerchantBookScreen> {
     });
     try {
       if(contact==null){setState((){_claims=const [];_claimsCursor=null;});return;}
-      final page=await widget.gateway.merchantClaims(contact.id,cursor:more?_claimsCursor:null);
+      final page=await widget.gateway.merchantClaims(contact.id,cursor:more?_claimsCursor:null,
+        search:_claimQuery.isEmpty?null:_claimQuery,type:_claimType,currency:_claimCurrency,
+        from:_claimRange==null?null:_dateOnly(_claimRange!.start),
+        to:_claimRange==null?null:_dateOnly(_claimRange!.end),
+        sort:_claimSort);
       if(!mounted)return;
       setState((){
         _claims=more?List.unmodifiable([..._claims,...page.items]):page.items;
@@ -86,8 +174,10 @@ class _Fin08MerchantBookScreenState extends State<Fin08MerchantBookScreen> {
             title:const Text('إضافة عميل إلى سجل التاجر'),
             content:Column(mainAxisSize:MainAxisSize.min,children:[
               const Text('جهة اتصال خاصة، وليست حساباً أو مديونية معتمدة.'),
-              TextField(onChanged:(v)=>name=v,decoration:const InputDecoration(labelText:'اسم العميل')),
-              TextField(onChanged:(v)=>phone=v,keyboardType:TextInputType.phone,
+              TextField(key:const Key('fin08_contact_name'),onChanged:(v)=>name=v,
+                decoration:const InputDecoration(labelText:'اسم العميل')),
+              TextField(key:const Key('fin08_contact_phone'),onChanged:(v)=>phone=v,
+                keyboardType:TextInputType.phone,
                 decoration:const InputDecoration(labelText:'رقم الجوال')),
               if(failure!=null)Text(failure!,style:TextStyle(color:Theme.of(ctx).colorScheme.error)),
             ]),
@@ -137,13 +227,14 @@ class _Fin08MerchantBookScreenState extends State<Fin08MerchantBookScreen> {
               Text(type==MovementType.payment
                 ?'هذه دفعة مسجلة من طرف التاجر؛ لا تخصم من الرصيد المعتمد قبل موافقة العميل والعلاقة.'
                 :'لا يُضاف الدين إلى الرصيد المعتمد قبل موافقة العميل والعلاقة.'),
-              TextField(onChanged:(v)=>amountText=v,keyboardType:const TextInputType.numberWithOptions(decimal:true),
+              TextField(key:const Key('fin08_claim_amount'),onChanged:(v)=>amountText=v,
+                keyboardType:const TextInputType.numberWithOptions(decimal:true),
                 decoration:const InputDecoration(labelText:'المبلغ')),
               DropdownButton<CurrencyCode>(value:currency,isExpanded:true,
                 items:CurrencyCode.values.map((c)=>DropdownMenuItem(
                   value:c,child:Text(c.name.toUpperCase()))).toList(),
                 onChanged:saving?null:(next){if(next!=null)setDialog(()=>currency=next);}),
-              TextField(onChanged:(v)=>descriptionText=v,
+              TextField(key:const Key('fin08_claim_description'),onChanged:(v)=>descriptionText=v,
                 decoration:const InputDecoration(labelText:'الوصف (اختياري)')),
               if(failure!=null)Text(failure!,style:TextStyle(color:Theme.of(ctx).colorScheme.error)),
             ]),
@@ -329,6 +420,21 @@ class _Fin08MerchantBookScreenState extends State<Fin08MerchantBookScreen> {
             const SizedBox(height:12),
           ],
           if(_selected==null) ...[
+            TextField(
+              key:const Key('fin08_contact_search'),
+              controller:_contactSearch,
+              textInputAction:TextInputAction.search,
+              onChanged:_onContactSearchChanged,
+              decoration:InputDecoration(
+                hintText:'ابحث بالاسم أو رقم الهاتف',
+                prefixIcon:const Icon(Icons.search),
+                suffixIcon:_contactQuery.isEmpty?null:IconButton(
+                  key:const Key('fin08_clear_contact_search'),
+                  tooltip:'مسح البحث',icon:const Icon(Icons.close),
+                  onPressed:_clearContactSearch),
+              ),
+            ),
+            const SizedBox(height:10),
             for(final bucket in _summary) Card(child:Padding(
               padding:const EdgeInsets.all(12),child:Column(crossAxisAlignment:CrossAxisAlignment.start,children:[
                 Text(bucket.currency.name.toUpperCase(),style:const TextStyle(fontWeight:FontWeight.bold)),
@@ -341,26 +447,132 @@ class _Fin08MerchantBookScreenState extends State<Fin08MerchantBookScreen> {
               ]))),
             const SizedBox(height:12),
             if(!_loading && _contacts.isEmpty && _error==null)
-              const Text('لا توجد جهات اتصال محفوظة لدى الخادم.'),
+              Text(_contactQuery.isEmpty
+                ?'لا توجد جهات اتصال محفوظة لدى الخادم.'
+                :'لا توجد نتائج مطابقة لبحثك لدى الخادم.'),
             for(final contact in _contacts) Card(child:ListTile(
               key:Key('fin08_contact_${contact.id}'),
               title:Text(contact.name),subtitle:Text(contact.phone),
               trailing:const Icon(Icons.chevron_left),
-              onTap:()=>_select(contact),
+              onTap:(){
+                _claimSearch.clear();
+                _claimDebounce?.cancel();
+                _claimType=null;
+                _claimCurrency=null;
+                _claimRange=null;
+                _claimSort='newest';
+                _select(contact);
+              },
             )),
             if(_contactsCursor!=null && !_loading)
               TextButton(key:const Key('fin08_more_contacts'),
                 onPressed:()=>_loadContacts(more:true),child:const Text('المزيد من العملاء')),
           ] else ...[
+            TextField(
+              key:const Key('fin08_claim_search'),
+              controller:_claimSearch,
+              textInputAction:TextInputAction.search,
+              onChanged:_onClaimSearchChanged,
+              decoration:InputDecoration(
+                hintText:'ابحث في وصف المطالبات أو مبلغها',
+                prefixIcon:const Icon(Icons.search),
+                suffixIcon:_claimQuery.isEmpty?null:IconButton(
+                  key:const Key('fin08_clear_claim_search'),
+                  tooltip:'مسح البحث',icon:const Icon(Icons.close),
+                  onPressed:_clearClaimSearch),
+              ),
+            ),
+            const SizedBox(height:8),
+            Row(children:[
+              Expanded(child:DropdownButtonFormField<MovementType?>(
+                key:const Key('fin08_claim_type_filter'),
+                value:_claimType,
+                isExpanded:true,
+                decoration:const InputDecoration(labelText:'نوع المطالبة'),
+                items:const [
+                  DropdownMenuItem<MovementType?>(value:null,child:Text('كل الأنواع')),
+                  DropdownMenuItem<MovementType?>(value:MovementType.debt,child:Text('ديون')),
+                  DropdownMenuItem<MovementType?>(value:MovementType.payment,child:Text('دفعات')),
+                ],
+                onChanged:_loading?null:(value)=>_setClaimFilter(
+                  type:value,changeType:true),
+              )),
+              const SizedBox(width:8),
+              Expanded(child:DropdownButtonFormField<CurrencyCode?>(
+                key:const Key('fin08_claim_currency_filter'),
+                value:_claimCurrency,
+                isExpanded:true,
+                decoration:const InputDecoration(labelText:'العملة'),
+                items:[
+                  const DropdownMenuItem<CurrencyCode?>(value:null,child:Text('كل العملات')),
+                  for(final unit in CurrencyCode.values)
+                    DropdownMenuItem<CurrencyCode?>(value:unit,
+                      child:Text(FinanceDisplay.currencyCode(unit))),
+                ],
+                onChanged:_loading?null:(value)=>_setClaimFilter(
+                  currency:value,changeCurrency:true),
+              )),
+            ]),
+            const SizedBox(height:8),
+            Row(children:[
+              Expanded(child:OutlinedButton.icon(
+                key:const Key('fin08_claim_date_filter'),
+                onPressed:_loading?null:_pickClaimRange,
+                icon:const Icon(Icons.date_range_outlined),
+                label:Text(_claimRange==null?'كل التواريخ'
+                  :'${_dateOnly(_claimRange!.start)} → ${_dateOnly(_claimRange!.end)}',
+                  maxLines:1,overflow:TextOverflow.ellipsis),
+              )),
+              if(_claimRange!=null)IconButton(
+                key:const Key('fin08_clear_claim_date'),
+                tooltip:'مسح التاريخ',
+                onPressed:_loading?null:(){
+                  setState(()=>_claimRange=null);
+                  final selected=_selected;
+                  if(selected!=null)_select(selected);
+                },
+                icon:const Icon(Icons.close),
+              ),
+              const SizedBox(width:8),
+              Expanded(child:DropdownButtonFormField<String>(
+                key:const Key('fin08_claim_sort'),
+                value:_claimSort,
+                isExpanded:true,
+                decoration:const InputDecoration(labelText:'الترتيب'),
+                items:const [
+                  DropdownMenuItem(value:'newest',child:Text('الأحدث أولاً')),
+                  DropdownMenuItem(value:'oldest',child:Text('الأقدم أولاً')),
+                  DropdownMenuItem(value:'amount_desc',child:Text('المبلغ الأعلى')),
+                  DropdownMenuItem(value:'amount_asc',child:Text('المبلغ الأدنى')),
+                ],
+                onChanged:_loading?null:(value){
+                  if(value==null)return;
+                  setState(()=>_claimSort=value);
+                  final selected=_selected;
+                  if(selected!=null)_select(selected);
+                },
+              )),
+            ]),
+            const SizedBox(height:10),
             for(final claim in _claims) Card(
               key:Key('fin08_merchant_claim_${claim.id}'),
               child:ListTile(
                 title:Text('${FinanceDisplay.amount(claim.amount)} ${FinanceDisplay.currencyCode(claim.currency)}'),
                 subtitle:Text('${claim.type==MovementType.payment?'دفعة':'دين'} | ${claim.description??'مبلغ سجله التاجر'}\n${claim.stage.labelFor(claim.type)}'),
+                trailing: claim.relationshipStatus=='approved' &&
+                    claim.relationshipId!=null && widget.onOpenLedger!=null
+                  ? IconButton(
+                      key:Key('fin13_open_ledger_claim_${claim.id}'),
+                      tooltip:'فتح الدفتر',
+                      icon:const Icon(Icons.menu_book_outlined),
+                      onPressed:()=>widget.onOpenLedger!(claim.relationshipId!))
+                  : null,
               ),
             ),
             if(!_loading && _claims.isEmpty && _error==null)
-              const Text('لا توجد مطالبات لهذا العميل.'),
+              Text(_claimQuery.isEmpty
+                ?'لا توجد مطالبات لهذا العميل.'
+                :'لا توجد مطالبات مطابقة لبحثك لدى الخادم.'),
             if(_claimsCursor!=null && !_loading)
               TextButton(key:const Key('fin08_more_claims'),
                 onPressed:()=>_select(_selected,more:true),child:const Text('المزيد من المطالبات')),

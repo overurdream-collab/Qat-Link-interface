@@ -18,6 +18,8 @@ ALTER TABLE financial_movements
   ADD COLUMN IF NOT EXISTS source_operation_id uuid UNIQUE,
   ADD COLUMN IF NOT EXISTS reversal_of_movement_id uuid REFERENCES financial_movements(id);
 ALTER TABLE financial_movements ALTER COLUMN source_claim_id DROP NOT NULL;
+ALTER TABLE financial_movements DROP CONSTRAINT IF EXISTS financial_movement_exactly_one_source;
+ALTER TABLE financial_movements DROP CONSTRAINT IF EXISTS financial_movement_reversal_distinct;
 ALTER TABLE financial_movements
   ADD CONSTRAINT financial_movement_exactly_one_source
     CHECK ((source_claim_id IS NOT NULL) <> (source_operation_id IS NOT NULL)),
@@ -56,6 +58,7 @@ CREATE TABLE IF NOT EXISTS relationship_operations (
   UNIQUE(created_by,idempotency_key),
   UNIQUE(relationship_id,id)
 );
+ALTER TABLE financial_movements DROP CONSTRAINT IF EXISTS financial_movements_source_operation_fk;
 ALTER TABLE financial_movements
   ADD CONSTRAINT financial_movements_source_operation_fk
     FOREIGN KEY (source_operation_id) REFERENCES relationship_operations(id);

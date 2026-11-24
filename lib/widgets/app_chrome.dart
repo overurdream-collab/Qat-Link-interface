@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../theme/app_colors.dart';
+import 'auth/auth_brand_hero.dart';
 
 /// Fixed header shared by all merchant screens (RTL):
 /// profile / greeting on the right; settings, notifications, night mode
@@ -38,16 +39,48 @@ class AppTopBar extends StatelessWidget {
               border: Border.all(color: c.mint, width: 2),
             ),
             alignment: Alignment.center,
-            child: Icon(Icons.person_rounded, color: c.petrol, size: 24),
+            child: ClipOval(
+              child: Image.asset(
+                MaqwatiBrandAssets.horizontalLogo,
+                key: const Key('maqwati_header_mascot'),
+                width: 36, height: 36,
+                fit: BoxFit.cover,
+                alignment: Alignment.centerLeft,
+                errorBuilder: (context, error, stackTrace) =>
+                    Icon(Icons.person_rounded, color: c.petrol, size: 24),
+              ),
+            ),
           ),
           const SizedBox(width: 7),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(greeting, style: TextStyle(
-                  color: c.muted, fontSize: 12, fontWeight: FontWeight.w600,
-                )),
+                Row(
+                  children: [
+                    SizedBox(
+                      width: 104,
+                      height: 29,
+                      child: Image.asset(
+                        MaqwatiBrandAssets.horizontalLogo,
+                        key: const Key('app_header_wordmark'),
+                        fit: BoxFit.contain,
+                        errorBuilder: (_, __, ___) => Text(
+                          'مقوتي لينك',
+                          style: TextStyle(color: c.petrol,
+                            fontWeight: FontWeight.w900, fontSize: 12),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 5),
+                    Flexible(
+                      child: Text(greeting,
+                        maxLines: 1, overflow: TextOverflow.ellipsis,
+                        style: TextStyle(color: c.muted, fontSize: 11),
+                      ),
+                    ),
+                  ],
+                ),
                 Text(
                   accountName,
                   maxLines: 1,

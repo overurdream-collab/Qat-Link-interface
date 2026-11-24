@@ -10,6 +10,7 @@ const store={
   createClaim:async(a,b,key)=>({claim:{merchant:a.id,currency:b.currency,amount:b.amount,key},replayed:false}),
   claimsInbox:async(a)=>({items:[{claim_id:'previous-claim',customer:a.id}],next_cursor:null}),
   listCustomerRelationships:async(a)=>({items:[{relationship_id:'relation',customer:a.id}],next_cursor:null}),
+  listMerchantRelationships:async(a)=>({items:[{relationship_id:'relation',merchant:a.id}],next_cursor:null}),
   decideClaim:async(a,id,b)=>({customer:a.id,claim_id:id,decision:b.decision,ledger_posted:false}),
   listContacts:async(a)=>({items:[{contact_id:'sample',merchant:a.id}],next_cursor:null}),
   listContactClaims:async(a,id)=>({items:[{claim_id:'x',contact_id:id,merchant:a.id}],next_cursor:null}),
@@ -63,6 +64,16 @@ test('unauthenticated access is denied even with correct route',async()=>{
  });
 });
 
+test('merchant relationship list is scoped to the authenticated merchant only',async()=>{
+  await withApi(merchant,async base=>{
+    const r=await request(base,'/v1/merchant/relationships?merchant_id=attacker');
+    assert.equal(r.status,200);
+    assert.equal((await r.json()).items[0].merchant,'merchant-A');
+  });
+  await withApi(customer,async base=>{
+    const r=await request(base,'/v1/merchant/relationships');assert.equal(r.status,403);
+  });
+});
 test('merchant restoration list is scoped to verified actor and restricted to merchant role',async()=>{
   await withApi(merchant,async base=>{
     const r=await request(base,'/v1/merchant/contacts?merchant_id=attacker');

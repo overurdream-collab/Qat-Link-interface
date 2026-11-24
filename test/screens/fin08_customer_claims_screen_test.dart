@@ -45,10 +45,10 @@ class FakeFin08Gateway implements Fin08ClaimsGateway {
   Future<Fin08RelationshipReceipt> decideRelationship(String relationshipId,{required bool accept}) async =>
     throw UnimplementedError();
   @override
-  Future<Fin08Page<Fin08MerchantContact>> merchantContacts({String? cursor,int limit=50}) async =>
+  Future<Fin08Page<Fin08MerchantContact>> merchantContacts({String? cursor,int limit=50,String? search,MovementType? type,CurrencyCode? currency,String? from,String? to,String sort='newest'}) async =>
       throw UnimplementedError();
   @override
-  Future<Fin08Page<Fin08MerchantClaim>> merchantClaims(String contactId,{String? cursor,int limit=50}) async =>
+  Future<Fin08Page<Fin08MerchantClaim>> merchantClaims(String contactId,{String? cursor,int limit=50,String? search,MovementType? type,CurrencyCode? currency,String? from,String? to,String sort='newest'}) async =>
       throw UnimplementedError();
   @override
   Future<Fin08MerchantContact> createMerchantContact({required String name,required String phone}) async =>

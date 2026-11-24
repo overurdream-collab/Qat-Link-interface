@@ -5,8 +5,10 @@ import '../services/fin08_api_client.dart';
 /// A verified customer's relationship inbox, separate from debt claim consent.
 /// No navigation to this screen is allowed before real server-side login.
 class Fin08CustomerRelationshipsScreen extends StatefulWidget {
-  const Fin08CustomerRelationshipsScreen({super.key,required this.gateway});
+  const Fin08CustomerRelationshipsScreen({super.key,required this.gateway,
+    this.onOpenLedger});
   final Fin08ClaimsGateway gateway;
+  final void Function(Fin08CustomerRelationship relationship)? onOpenLedger;
   @override
   State<Fin08CustomerRelationshipsScreen> createState()=>_Fin08CustomerRelationshipsScreenState();
 }
@@ -105,6 +107,14 @@ class _Fin08CustomerRelationshipsScreenState extends State<Fin08CustomerRelation
                       onPressed:_deciding.contains(item.id)?null:()=>_decide(item,false),
                       child:const Text('رفض الارتباط'))),
                   ]),
+                ],
+                if(item.status=='approved' && widget.onOpenLedger!=null)...[
+                  const SizedBox(height:10),
+                  OutlinedButton.icon(
+                    key:Key('fin13_open_ledger_${item.id}'),
+                    onPressed:()=>widget.onOpenLedger!(item),
+                    icon:const Icon(Icons.menu_book_outlined),
+                    label:const Text('فتح الدفتر')),
                 ],
               ],
             )),

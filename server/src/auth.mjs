@@ -42,10 +42,14 @@ export function createVerifier({ publicKey, issuer, audience, maxAgeSeconds = 36
         (claims.nbf !== undefined && (claims.nbf > now + 30 || claims.nbf >= claims.exp)) ||
         claims.exp <= claims.iat || claims.exp - claims.iat > maxAgeSeconds ||
         !['merchant', 'customer', 'identity_service'].includes(claims.role) ||
-        typeof claims.sub !== 'string' || !claims.sub.trim() || claims.sub.length > 200) {
+        typeof claims.sub !== 'string' || !claims.sub.trim() || claims.sub.length > 200 ||
+        (claims.sid !== undefined &&
+          (typeof claims.sid !== 'string' || !/^[a-f0-9-]{36}$/i.test(claims.sid))) ||
+        (claims.jti !== undefined &&
+          (typeof claims.jti !== 'string' || claims.jti.length > 200))) {
       throw new ApiError(401, 'unauthorized', 'Invalid or expired session');
     }
-    return { id: claims.sub, role: claims.role };
+    return { id: claims.sub, role: claims.role, ...(claims.sid ? { sid: claims.sid } : {}) };
   };
 }
 export function requireRole(actor, role) {

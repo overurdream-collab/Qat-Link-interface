@@ -27,6 +27,77 @@ void main() {
     expect(calls,0);
   });
 
+  test('merchant relationship list uses the scoped endpoint and parses status', () async {
+    final api=Fin08HttpClaimsGateway(
+      baseUri:Uri.parse('https://qatlink.example/'),
+      accessToken:() async=>'jwt-verified-by-real-issuer',
+      client:MockClient((req) async {
+        expect(req.url.path,'/v1/merchant/relationships');
+        return http.Response(jsonEncode({
+          'next_cursor':null,
+          'items':[{
+            'relationship_id':'relationship-1','contact_id':'contact-1',
+            'contact_display_name':'عميل التاجر','status':'approved',
+            'created_at':'2026-11-20T10:00:00.000Z',
+            'decided_at':'2026-11-21T10:00:00.000Z',
+          }],
+        }),200,headers:{'content-type':'application/json'});
+      }),
+    );
+    final page=await api.merchantRelationships();
+    expect(page.items.single.id,'relationship-1');
+    expect(page.items.single.contactName,'عميل التاجر');
+    expect(page.items.single.canOpenLedger,true);
+  });
+
+  test('merchant contact and claim search are sent as server query terms', () async {
+    final urls=<Uri>[];
+    final api=Fin08HttpClaimsGateway(
+      baseUri:Uri.parse('https://qatlink.example/'),
+      accessToken:() async=>'jwt-verified-by-real-issuer',
+      client:MockClient((req) async {
+        urls.add(req.url);
+        return http.Response(jsonEncode({'next_cursor':null,'items':[]}),200,
+          headers:{'content-type':'application/json'});
+      }),
+    );
+    await api.merchantContacts(search:'  أحمد  ');
+    await api.merchantClaims('contact-1',search:' 75 ',
+      type:MovementType.payment,currency:CurrencyCode.usd,
+      from:'2026-11-01',to:'2026-11-30',sort:'amount_desc');
+    expect(urls[0].path,'/v1/merchant/contacts');
+    expect(urls[0].queryParameters['q'],'أحمد');
+    expect(urls[1].path,'/v1/merchant/contacts/contact-1/claims');
+    expect(urls[1].queryParameters['q'],'75');
+    expect(urls[1].queryParameters['type'],'payment');
+    expect(urls[1].queryParameters['currency'],'USD');
+    expect(urls[1].queryParameters['from'],'2026-11-01');
+    expect(urls[1].queryParameters['to'],'2026-11-30');
+    expect(urls[1].queryParameters['sort'],'amount_desc');
+  });
+
+  test('merchant claims expose the approved relationship for ledger access', () async {
+    final api=Fin08HttpClaimsGateway(
+      baseUri:Uri.parse('https://qatlink.example/'),
+      accessToken:() async=>'jwt-verified-by-real-issuer',
+      client:MockClient((req) async {
+        expect(req.url.path,'/v1/merchant/contacts/contact-1/claims');
+        return http.Response(jsonEncode({
+          'next_cursor':null,
+          'items':[{
+            'claim_id':'claim-1','contact_id':'contact-1',
+            'amount':'75.0000','currency':'YER','description':null,
+            'created_at':'2026-11-16T10:00:00.000Z','stage':'approved',
+            'relationship_id':'relationship-1','relationship_status':'approved',
+          }],
+        }),200,headers:{'content-type':'application/json'});
+      }),
+    );
+    final page=await api.merchantClaims('contact-1');
+    expect(page.items.single.relationshipId,'relationship-1');
+    expect(page.items.single.relationshipStatus,'approved');
+  });
+
   test('loads every page of verified historical claims and preserves per-claim stage', () async {
     final paths=<String>[];
     final api=Fin08HttpClaimsGateway(

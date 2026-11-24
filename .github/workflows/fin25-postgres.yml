@@ -1,0 +1,40 @@
+name: FIN25 PostgreSQL isolated integration
+on:
+  push:
+    branches: ['integration/fin25-samsung-otp-secure-20261117']
+    paths:
+      - 'server/sql/009_fin25_gateway_isolated.sql'
+      - 'server/sql/010_fin25_otp_isolated.sql'
+      - 'server/fin25_postgres_integration.mjs'
+      - '.github/workflows/fin25-postgres.yml'
+  pull_request:
+    paths:
+      - 'server/sql/009_fin25_gateway_isolated.sql'
+      - 'server/sql/010_fin25_otp_isolated.sql'
+      - 'server/fin25_postgres_integration.mjs'
+      - '.github/workflows/fin25-postgres.yml'
+jobs:
+  integration:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: fin25
+          POSTGRES_PASSWORD: fin25_test_only
+          POSTGRES_DB: fin25_test
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd "pg_isready -U fin25 -d fin25_test"
+          --health-interval 5s --health-timeout 5s --health-retries 10
+    env:
+      DATABASE_URL: postgresql://fin25:fin25_test_only@127.0.0.1:5432/fin25_test
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install --no-package-lock --ignore-scripts --no-audit --no-fund
+        working-directory: server
+      - run: node fin25_postgres_integration.mjs
+        working-directory: server

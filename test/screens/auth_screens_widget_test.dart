@@ -6,10 +6,26 @@ void main() {
   testWidgets('app opens login without exposing private finance tabs', (tester) async {
     await tester.pumpWidget(const QatLinkApp());
     expect(find.text('أهلاً بعودتك'), findsOneWidget);
-    expect(find.text('رقم الجوال'), findsOneWidget);
+    expect(find.text('رقم الجوال اليمني'), findsOneWidget);
     expect(find.text('رمز الدخول'), findsOneWidget);
     expect(find.byKey(const Key('open_registration')), findsOneWidget);
     expect(find.text('الحركة'), findsNothing);
+    expect(find.text('إجمالي الديون المعتمدة'), findsNothing);
+  });
+
+  testWidgets('reference-inspired login preserves phone OTP as primary and two-party approval',
+      (tester) async {
+    await tester.pumpWidget(const QatLinkApp());
+    expect(find.byKey(const Key('maqwati_brand_tagline')), findsOneWidget);
+    expect(find.byKey(const Key('maqwati_brand_promise')), findsOneWidget);
+    expect(find.text('لتجارة أنجح'), findsOneWidget);
+    expect(find.byKey(const Key('bilateral_approval_message')), findsOneWidget);
+    expect(find.text('التاجر يسجّل، والعميل يعتمد'), findsOneWidget);
+    expect(find.byKey(const Key('login_with_otp')), findsOneWidget);
+    expect(find.text('الدخول بالرمز الخاص (قيد التطوير)'), findsOneWidget);
+    // The visual redesign must never sneak in an unconnected email login.
+    expect(find.text('البريد الإلكتروني أو اسم المستخدم'), findsNothing);
+    expect(find.text('كلمة المرور'), findsNothing);
     expect(find.text('إجمالي الديون المعتمدة'), findsNothing);
   });
 
@@ -30,6 +46,44 @@ void main() {
     expect(find.text('أتابع حساباتي وأراجع طلبات التجار'), findsOneWidget);
   });
 
+  testWidgets('signup fails closed without a configured HTTPS API',
+      (tester) async {
+    await tester.pumpWidget(const QatLinkApp());
+    await tester.ensureVisible(find.byKey(const Key('open_registration')));
+    await tester.tap(find.byKey(const Key('open_registration')));
+    await tester.pumpAndSettle();
+
+    await tester.enterText(find.byKey(const Key('register_name')),
+        'محمد علي');
+    await tester.enterText(find.byKey(const Key('register_phone')),
+        '771234567');
+    await tester.enterText(find.byKey(const Key('register_pin')), '1234');
+    await tester.enterText(find.byKey(const Key('register_confirm_pin')),
+        '1234');
+    await tester.ensureVisible(find.byKey(const Key('register_submit')));
+    await tester.tap(find.byKey(const Key('register_submit')));
+    await tester.pumpAndSettle();
+
+    expect(find.textContaining('خادم مقوتي الآمن غير مهيأ'), findsOneWidget);
+    expect(find.byKey(const Key('pilot_url')), findsNothing);
+    expect(find.byKey(const Key('otp_request')), findsNothing);
+    expect(find.text('الحركة'), findsNothing);
+    expect(find.textContaining('تم إنشاء الحساب'), findsNothing);
+  });
+
+  testWidgets('SMS account login blocks unconfigured HTTPS API',
+      (tester) async {
+    await tester.pumpWidget(const QatLinkApp());
+    await tester.enterText(find.byKey(const Key('login_phone')), '771234567');
+    await tester.ensureVisible(find.byKey(const Key('login_with_otp')));
+    await tester.tap(find.byKey(const Key('login_with_otp')));
+    await tester.pumpAndSettle();
+    expect(find.textContaining('لم يُجهَّز عنوان خدمة تسجيل الدخول'), findsOneWidget);
+    expect(find.byKey(const Key('pilot_phone')), findsNothing);
+    expect(find.byKey(const Key('otp_request')), findsNothing);
+    expect(find.text('الحركة'), findsNothing);
+  });
+
   testWidgets('login form does not grant a session on valid local inputs', (tester) async {
     await tester.pumpWidget(const QatLinkApp());
     await tester.enterText(
@@ -42,6 +96,13 @@ void main() {
     expect(find.text('أهلاً بعودتك'), findsOneWidget);
     expect(find.textContaining('لا تُفتح الحسابات'), findsWidgets);
     expect(find.text('الحركة'), findsNothing);
+  });
+
+  testWidgets('primary login has no alternative manual OTP server chooser', (tester) async {
+    await tester.pumpWidget(const QatLinkApp());
+    expect(find.byKey(const Key('fin25_otp_test')), findsNothing);
+    expect(find.byKey(const Key('fin25_otp_server_url')), findsNothing);
+    expect(find.byKey(const Key('login_with_otp')), findsOneWidget);
   });
 
   testWidgets('login supports the approved night theme', (tester) async {
