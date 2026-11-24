@@ -50,7 +50,7 @@ void main() {
     expect(AppThemeColors.pinkDark.pendingText, AppThemeColors.dark.pendingText);
   });
 
-  testWidgets('Non-female account retains original blue-violet palette', (tester) async {
+  testWidgets('Non-female account retains approved green palette', (tester) async {
     late PremiumVisualPalette palette;
     await tester.pumpWidget(MaterialApp(
       theme: AppTheme.build(dark: false),
@@ -60,6 +60,6 @@ void main() {
       }),
     ));
     expect(palette.accent, PremiumTokens.violet);
-    expect(palette.yer.colors.first, const Color(0xFF6F6CE8));
+    expect(palette.yer.colors.first, const Color(0xFF2E7D32));
   });
 }

@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 
-/// Owner-approved blue/lavender and female pink visual identity.
+/// Owner-approved green identity with the existing optional female palette.
 /// Semantic money/status colors remain separate from the branding palette.
 abstract final class AppColors {
-  // The legacy green concept remains in Git history; this isolated branch now previews
-  // the latest approved Premium Soft UI blue/purple identity.
-  static const Color petrol = Color(0xFF328BF5);
-  static const Color mint = Color(0xFF7939EA);
-  static const Color cyan = Color(0xFF73DCF6);
-  static const Color sea = Color(0xFF4358F5);
-  static const Color ink = Color(0xFF111A4B);
-  static const Color muted = Color(0xFF767FAE);
-  static const Color background = Color(0xFFF2F3FF);
+  // Restored from the approved green reference at 1c6bdc93.
+  // Preserve the newer screen structure and optional female theme.
+  static const Color petrol = Color(0xFF2E7D32);
+  static const Color mint = Color(0xFF6CC04A);
+  static const Color cyan = Color(0xFF8AD15A);
+  static const Color sea = Color(0xFF4EAD3D);
+  static const Color ink = Color(0xFF1F2937);
+  static const Color muted = Color(0xFF6B7280);
+  static const Color background = Color(0xFFF7FBF5);
   static const Color card = Color(0xFFFFFFFF);
-  static const Color cardBorder = Color(0xFFE0E3F9);
-  static const Color pale = Color(0xFFC2A4FF);
+  static const Color cardBorder = Color(0xFFE5E7EB);
+  static const Color pale = Color(0xFFEDF9E8);
   static const Color success = Color(0xFF16845B);
   static const Color red = Color(0xFFC04444);
   static const Color amber = Color(0xFF92400E);
@@ -45,25 +45,25 @@ abstract final class AppColors {
   static const Color green = success;
 
   // Approved night mode palette (exact CSS custom properties).
-  static const Color darkPetrol = Color(0xFF8FB8FF);
-  static const Color darkMint = Color(0xFFA18BFF);
-  static const Color darkCyan = Color(0xFF73DCF6);
-  static const Color darkInk = Color(0xFFF3F3FF);
-  static const Color darkMuted = Color(0xFFBEC4E8);
-  static const Color darkBackground = Color(0xFF171A3C);
-  static const Color darkCard = Color(0xFF25294C);
-  static const Color darkBorder = Color(0xFF474D7C);
-  static const Color darkPale = Color(0xFF34396B);
+  static const Color darkPetrol = Color(0xFFB4F28D);
+  static const Color darkMint = Color(0xFF8DDF5E);
+  static const Color darkCyan = Color(0xFFC0F28F);
+  static const Color darkInk = Color(0xFFF0FFE9);
+  static const Color darkMuted = Color(0xFFA5BAC6);
+  static const Color darkBackground = Color(0xFF15261B);
+  static const Color darkCard = Color(0xFF203629);
+  static const Color darkBorder = Color(0xFF45674B);
+  static const Color darkPale = Color(0xFF294C30);
   static const Color darkSuccess = Color(0xFF4EE1A0);
   static const Color darkCanvas = darkBackground;
   static const Color darkSurface = darkCard;
-  static const Color darkSurfaceElevated = Color(0xFF30365E);
+  static const Color darkSurfaceElevated = Color(0xFF294C30);
   static const Color darkOutline = darkBorder;
   static const Color darkText = darkInk;
 
   static const List<BoxShadow> cardShadow = [
     BoxShadow(
-      color: Color(0x267939EA),
+      color: Color(0x182E7D32),
       blurRadius: 17,
       offset: Offset(0, 7),
     ),
@@ -224,9 +224,9 @@ abstract final class AppGradients {
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
     colors: [
-      Color(0xFF7939EA),
-      Color(0xFF328BF5),
-      Color(0xFF73DCF6),
+      Color(0xFF8AD15A),
+      Color(0xFF6CC04A),
+      Color(0xFF4EAD3D),
     ],
     stops: [0.0, 0.5, 1.0],
   );
@@ -234,20 +234,20 @@ abstract final class AppGradients {
   static const LinearGradient yer = LinearGradient(
     begin: Alignment.centerRight,
     end: Alignment.centerLeft,
-    colors: [Color(0xFF6F6CE8), Color(0xFF4B88F4), Color(0xFF83D5F8)],
+    colors: [AppColors.petrol, AppColors.mint, AppColors.sea],
     stops: [0.0, 0.55, 1.0],
   );
 
   static const LinearGradient sar = LinearGradient(
     begin: Alignment.centerRight,
     end: Alignment.centerLeft,
-    colors: [Color(0xFF45A3D9), Color(0xFF76D8F1), Color(0xFFA8E4EF)],
+    colors: [AppColors.petrol, AppColors.cyan, AppColors.mint],
   );
 
   static const LinearGradient usd = LinearGradient(
     begin: Alignment.centerRight,
     end: Alignment.centerLeft,
-    colors: [Color(0xFF7458D1), Color(0xFF997DF6), Color(0xFFB9A9F7)],
+    colors: [Color(0xFF2D6030), AppColors.petrol, AppColors.cyan],
   );
 
   static const LinearGradient pinkYer = LinearGradient(

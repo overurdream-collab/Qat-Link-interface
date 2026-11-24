@@ -5,15 +5,15 @@ import 'package:qat_link/theme/app_colors.dart';
 import 'package:qat_link/theme/app_theme.dart';
 
 void main() {
-  test('the independent premium concept matches its design tokens', () {
-    expect(AppColors.petrol, const Color(0xFF328BF5));
-    expect(AppColors.mint, const Color(0xFF7939EA));
-    expect(AppColors.pale, const Color(0xFFC2A4FF));
-    expect(AppColors.ink, const Color(0xFF111A4B));
-    expect(AppColors.muted, const Color(0xFF767FAE));
-    expect(AppColors.cardBorder, const Color(0xFFE0E3F9));
+  test('the approved green identity matches its design tokens', () {
+    expect(AppColors.petrol, const Color(0xFF2E7D32));
+    expect(AppColors.mint, const Color(0xFF6CC04A));
+    expect(AppColors.pale, const Color(0xFFEDF9E8));
+    expect(AppColors.ink, const Color(0xFF1F2937));
+    expect(AppColors.muted, const Color(0xFF6B7280));
+    expect(AppColors.cardBorder, const Color(0xFFE5E7EB));
     expect(AppGradients.hero.colors, const [
-      Color(0xFF7939EA), Color(0xFF328BF5), Color(0xFF73DCF6),
+      Color(0xFF8AD15A), Color(0xFF6CC04A), Color(0xFF4EAD3D),
     ]);
     expect(AppTheme.build(dark: false).textTheme.bodyMedium?.fontFamily, 'Cairo');
     // Semantic ledger colors remain unchanged by the visual concept.

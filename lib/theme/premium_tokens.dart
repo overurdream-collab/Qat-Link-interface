@@ -1,42 +1,37 @@
 import 'package:flutter/material.dart';
 
-/// MAQWATI LINK premium soft-UI tokens imported from the dedicated source branch.
+import 'app_colors.dart';
+
+/// Shared screen tokens using the owner-approved green brand.
 /// Decorative gradients never encode financial approval state.
 abstract final class PremiumTokens {
-  static const Color canvas = Color(0xFFF2F3FF);
-  static const Color ink = Color(0xFF111A4B);
-  static const Color secondaryInk = Color(0xFF767FAE);
-  static const Color blue = Color(0xFF328BF5);
-  static const Color violet = Color(0xFF7939EA);
-  static const Color lilac = Color(0xFFC2A4FF);
-  static const Color aqua = Color(0xFF73DCF6);
-  static const Color brandGreen = Color(0xFF6CC04A);
+  static const Color canvas = AppColors.background;
+  static const Color ink = AppColors.ink;
+  static const Color secondaryInk = AppColors.muted;
+  // Compatibility names retained so existing screens keep their structure.
+  static const Color blue = AppColors.petrol;
+  static const Color violet = AppColors.petrol;
+  static const Color lilac = AppColors.pale;
+  static const Color aqua = AppColors.cyan;
+  static const Color brandGreen = AppColors.mint;
   static const Color danger = Color(0xFFC42F52);
-  static const Color pending = Color(0xFF8753C8);
-  static const LinearGradient action = LinearGradient(
-    begin: Alignment.centerRight,
-    end: Alignment.centerLeft,
-    colors: [violet, Color(0xFF4358F5), aqua],
-  );
-  static const LinearGradient wallet = LinearGradient(
-    begin: Alignment.topRight,
-    end: Alignment.bottomLeft,
-    colors: [Color(0xFF6E68E8), Color(0xFF488BFA), Color(0xFF8ADDFB)],
-  );
+  static const Color pending = AppColors.amber;
+  static const LinearGradient action = AppGradients.hero;
+  static const LinearGradient wallet = AppGradients.yer;
   static const LinearGradient canvasGradient = LinearGradient(
     begin: Alignment.topRight,
     end: Alignment.bottomLeft,
-    colors: [Color(0xFFE9EAFF), Color(0xFFF7F7FF), Color(0xFFE5EEFF)],
+    colors: [AppColors.pale, AppColors.background, AppColors.card],
   );
   static const LinearGradient darkCanvasGradient = LinearGradient(
     begin: Alignment.topRight,
     end: Alignment.bottomLeft,
-    colors: [Color(0xFF1C2149), Color(0xFF171A3C), Color(0xFF27224B)],
+    colors: [AppColors.darkCard, AppColors.darkBackground, AppColors.darkPale],
   );
-  static const Color darkInk = Color(0xFFF3F3FF);
-  static const Color darkSecondaryInk = Color(0xFFC6C9E7);
+  static const Color darkInk = AppColors.darkInk;
+  static const Color darkSecondaryInk = AppColors.darkMuted;
   static final List<BoxShadow> floatingShadow = [
-    BoxShadow(color: const Color(0xFF737AB7).withValues(alpha: .16), blurRadius: 26, offset: const Offset(0, 13)),
+    BoxShadow(color: const Color(0xFF2E7D32).withValues(alpha: .16), blurRadius: 26, offset: const Offset(0, 13)),
     BoxShadow(color: Colors.white.withValues(alpha: .9), blurRadius: 4, offset: const Offset(-2, -3)),
   ];
 }
@@ -68,28 +63,27 @@ class PremiumVisualPalette extends ThemeExtension<PremiumVisualPalette> {
   static const premium = PremiumVisualPalette(
     canvas: PremiumTokens.canvasGradient,
     action: PremiumTokens.action,
-    hero: LinearGradient(begin: Alignment.topRight, end: Alignment.bottomLeft,
-      colors: [Color(0xFFAAB8FF), Color(0xFF7478F0), Color(0xFF689CF5)]),
-    yer: LinearGradient(colors: [Color(0xFF6F6CE8), Color(0xFF4B88F4), Color(0xFF83D5F8)]),
-    sar: LinearGradient(colors: [Color(0xFF45A3D9), Color(0xFF76D8F1), Color(0xFFA8E4EF)]),
-    usd: LinearGradient(colors: [Color(0xFF7458D1), Color(0xFF997DF6), Color(0xFFB9A9F7)]),
-    accent: PremiumTokens.violet, ink: PremiumTokens.ink,
-    muted: PremiumTokens.secondaryInk,
-    surface: Color(0xCCFFFFFF), outline: Color(0xFFEEF0FF),
-    selected: Color(0xFFE4E6FF), shadow: Color(0x27737AB7),
+    hero: AppGradients.hero,
+    yer: AppGradients.yer,
+    sar: AppGradients.sar,
+    usd: AppGradients.usd,
+    accent: AppColors.petrol, ink: AppColors.ink,
+    muted: AppColors.muted,
+    surface: Color(0xCCFFFFFF), outline: AppColors.cardBorder,
+    selected: AppColors.pale, shadow: Color(0x272E7D32),
   );
 
   static const premiumDark = PremiumVisualPalette(
     canvas: PremiumTokens.darkCanvasGradient,
-    action: PremiumTokens.action,
-    hero: LinearGradient(colors: [Color(0xFF4C459A), Color(0xFF364FA9), Color(0xFF36649C)]),
-    yer: LinearGradient(colors: [Color(0xFF514CA8), Color(0xFF355BAB), Color(0xFF3977A6)]),
-    sar: LinearGradient(colors: [Color(0xFF27769A), Color(0xFF428BA6), Color(0xFF3D768D)]),
-    usd: LinearGradient(colors: [Color(0xFF6144A2), Color(0xFF7359C0), Color(0xFF7366B8)]),
-    accent: Color(0xFFAAB7FF), ink: PremiumTokens.darkInk,
-    muted: PremiumTokens.darkSecondaryInk,
-    surface: Color(0xFF292D55), outline: Color(0xFF424775),
-    selected: Color(0xFF414B83), shadow: Color(0x55000000),
+    action: AppGradients.hero,
+    hero: LinearGradient(colors: [AppColors.darkPale, AppColors.petrol, AppColors.sea]),
+    yer: AppGradients.yer,
+    sar: AppGradients.sar,
+    usd: AppGradients.usd,
+    accent: AppColors.darkPetrol, ink: AppColors.darkInk,
+    muted: AppColors.darkMuted,
+    surface: AppColors.darkCard, outline: AppColors.darkBorder,
+    selected: AppColors.darkPale, shadow: Color(0x55000000),
   );
 
   /// Female premium theme: dusty rose, raspberry, blush, orchid and lilac.
