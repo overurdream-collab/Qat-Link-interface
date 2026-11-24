@@ -1,17 +1,34 @@
 name: FIN-08 Backend Contract and PostgreSQL Integration
+
 on:
   pull_request:
     paths:
       - 'server/**'
+      - 'scripts/release-readiness/**'
       - '.github/workflows/fin08-api.yml'
   push:
-    branches: [main]
+    branches: [main, release/maqwati-green-secure]
     paths:
       - 'server/**'
+      - 'scripts/release-readiness/**'
       - '.github/workflows/fin08-api.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: fin08-${{ github.ref }}
+  cancel-in-progress: false
+
+defaults:
+  run:
+    shell: bash
+
 jobs:
   backend:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     services:
       postgres:
         image: postgres:16
@@ -27,25 +44,29 @@ jobs:
           --health-retries=10
     env:
       FIN08_TEST_DATABASE_URL: postgres://fin08:fin08_test_only@127.0.0.1:5432/qatlink_test
+      IDENTITY_CI_DATABASE_URL: postgres://fin08:fin08_test_only@127.0.0.1:5432/identity_test
+      FIN08_RUNTIME_DATABASE_URL: postgres://maqwati_runtime:runtime_test_only@127.0.0.1:5432/qatlink_test
+      FIN08_RESTORE_DATABASE_URL: postgres://fin08:fin08_test_only@127.0.0.1:5432/qatlink_restore
+      PGHOST: 127.0.0.1
+      PGUSER: fin08
       PGPASSWORD: fin08_test_only
-    defaults:
-      run:
-        working-directory: server
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - run: npm install --no-audit --no-fund
-      - run: npm run check
-      - name: Apply FIN08 schema to ephemeral PostgreSQL
-        run: psql -v ON_ERROR_STOP=1 -h 127.0.0.1 -U fin08 -d qatlink_test -f sql/001_fin08.sql
-      - name: Apply FIN13 additive ledger migration
-        run: psql -v ON_ERROR_STOP=1 -h 127.0.0.1 -U fin08 -d qatlink_test -f sql/002_fin13_unified_ledger.sql
-      - name: Apply FIN15 amendment migration
-        run: psql -v ON_ERROR_STOP=1 -h 127.0.0.1 -U fin08 -d qatlink_test -f sql/003_fin15_amendments.sql
-      - name: Apply FIN16 credit limit migration
-        run: psql -v ON_ERROR_STOP=1 -h 127.0.0.1 -U fin08 -d qatlink_test -f sql/004_fin16_credit_limits.sql
-      - name: Apply FIN17 payment allocation migration
-        run: psql -v ON_ERROR_STOP=1 -h 127.0.0.1 -U fin08 -d qatlink_test -f sql/005_fin17_payment_allocations.sql
-      - run: npm test
+          cache: npm
+          cache-dependency-path: server/package-lock.json
+      - name: Install locked dependencies without lifecycle scripts
+        working-directory: server
+        run: npm ci --ignore-scripts --no-audit --no-fund
+      - name: Validate syntax, migrations, full suite and restore
+        run: bash scripts/release-readiness/verify-postgres.sh
+      - name: Preserve execution evidence including failure logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: fin08-postgres-evidence-${{ github.run_id }}
+          path: build/release-readiness/
+          if-no-files-found: error
+          retention-days: 7
