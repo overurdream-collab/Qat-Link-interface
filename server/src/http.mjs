@@ -1,9 +1,18 @@
 import { createServer } from 'node:http';
+import { randomUUID } from 'node:crypto';
 import { ApiError, page } from './validation.mjs';
 import { requireRole } from './auth.mjs';
 
 const json = (res,status,payload)=> {
-  res.writeHead(status,{'content-type':'application/json; charset=utf-8','cache-control':'no-store','x-content-type-options':'nosniff'});
+  res.writeHead(status,{
+    'content-type':'application/json; charset=utf-8',
+    'cache-control':'no-store, private',
+    'x-content-type-options':'nosniff',
+    'referrer-policy':'no-referrer',
+    'x-frame-options':'DENY',
+    'content-security-policy':"default-src 'none'; frame-ancestors 'none'; base-uri 'none'",
+    'cross-origin-resource-policy':'same-origin',
+  });
   res.end(JSON.stringify(payload));
 };
 async function readBody(req) {
@@ -25,11 +34,25 @@ function requireParticipant(actor){
     throw new ApiError(403,'forbidden','Financial participant role required');
   }
 }
-export function createApi({store,verify}) {
+export function createApi({store,verify,monitor,readiness}) {
   if(typeof verify!=='function') throw new Error('Verified authentication provider required');
   const handler=async (req,res)=>{
+    // Server-generated correlation ID; never trust user-supplied IDs or log
+    // auth headers, payloads, unredacted paths, phone numbers or balances.
+    const incidentId = randomUUID();
+    res.setHeader('x-request-id', incidentId);
+    if (monitor) res.once('finish', () => monitor.observe(res.statusCode));
     try{
       if(req.url==='/healthz' && req.method==='GET') return json(res,200,{status:'ok',verified_auth:'required'});
+      if(req.url==='/readyz' && req.method==='GET') {
+        try {
+          if(typeof readiness!=='function') throw new Error('Not configured');
+          await readiness();
+          return json(res,200,{status:'ready'});
+        } catch {
+          return json(res,503,{status:'unavailable'});
+        }
+      }
       if(!req.url || req.url.length>2048) throw new ApiError(400,'bad_url','Invalid URL');
       const url=new URL(req.url,'http://localhost');
       const path=url.pathname;
@@ -202,9 +225,26 @@ export function createApi({store,verify}) {
     }catch(err){
       if(err instanceof ApiError) return json(res,err.status,{error:err.code,message:err.message});
       // Never leak SQL, phone, token, personal data or implementation details.
-      console.error('[fin08] internal request error',err?.code ?? err?.name ?? 'Error');
+      // Fixed-shape incident metadata supports infrastructure alerting
+      // without putting personal or financial data into stdout.
+      // Only fixed known categories are safe: arbitrary err.code values can
+      // contain OTP/phone data even when they match an alphanumeric regex.
+      const safeKinds = new Set(['23505', '23503', '23514', '40001', '40P01',
+        '57014', '53300', '57P01', 'ECONNRESET', 'ECONNREFUSED', 'ETIMEDOUT']);
+      const kind = safeKinds.has(err?.code) ? err.code : 'unexpected';
+      console.error(JSON.stringify({
+        component: 'fin08_api', event: 'internal_error',
+        incident_id: incidentId, kind,
+      }));
       return json(res,500,{error:'internal_error',message:'Request could not be completed'});
     }
   };
-  return createServer(handler);
+  const server = createServer({maxHeaderSize: 8192}, handler);
+  // Bound slow clients and idle connections to limit resource exhaustion.
+  // A reverse proxy must additionally impose global/IP/user rate limits.
+  server.headersTimeout = 10000;
+  server.requestTimeout = 15000;
+  server.keepAliveTimeout = 5000;
+  server.maxRequestsPerSocket = 100;
+  return server;
 }
