@@ -1,0 +1,45 @@
+:443 {
+ tls /etc/caddy/certs/server.crt /etc/caddy/certs/server.key
+ @enroll path /v1/gateway/enrollment/request /v1/gateway/enroll /v1/gateway/challenge /v1/gateway/prove /v1/gateway/approve /v1/gateway/revoke /v1/gateway/heartbeat
+ handle @enroll {
+   reverse_proxy enrollment:8082
+ }
+ @localOtpRequest {
+   path /v1/auth/otp/request
+   remote_ip 127.0.0.1 ::1
+ }
+ handle @localOtpRequest {
+   reverse_proxy otp:8083
+ }
+ @blockedOtpRequest path /v1/auth/otp/request
+ handle @blockedOtpRequest {
+   respond 403
+ }
+ # Single public origin for the Maqwati app: FIN25 OTP + P0 Identity.
+ # This is the EXISTING Caddy gateway, not another service or tunnel.
+ # /public-request stays closed at the OTP service until operator enablement,
+ # global SQL SMS budget and edge anti-abuse controls are verified.
+ @publicOtp path /v1/auth/otp/public-request
+ handle @publicOtp {
+   reverse_proxy otp:8083
+ }
+ @identity path /healthz /v1/identity/session /v1/identity/me
+ handle @identity {
+   reverse_proxy identity:8090
+ }
+ # FIN08 read-only routes, forwarded via existing Identity service;
+ # POST/PUT/DELETE finance paths are NOT exposed.
+ @financeRead {
+   method GET
+   path /v1/merchant/contacts /v1/merchant/contacts/*/claims /v1/merchant/claims/summary /v1/customer/relationships /v1/customer/previous-claims
+ }
+ handle @financeRead {
+   reverse_proxy identity:8090
+ }
+ @otp path /v1/gateway/poll /v1/gateway/result /v1/auth/otp/verify
+ handle @otp {
+   reverse_proxy otp:8083
+ }
+ # /v1/internal/otp/proof is private service-to-service: never proxy publicly.
+ respond 404
+}
