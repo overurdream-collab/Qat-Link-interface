@@ -1,0 +1,12 @@
+node_modules/
+.dart_tool/
+build/
+.flutter-plugins-dependencies
+android/local.properties
+*.env
+!*.env.example
+*.pem
+*.key
+*.jks
+*.keystore
+coverage/
