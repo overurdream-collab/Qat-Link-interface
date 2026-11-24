@@ -1,3 +1,4 @@
+import { databaseTls } from './service_security.mjs';
 import { Pool } from 'pg';
 import { createVerifier } from './auth.mjs';
 import { Fin08Store } from './store.mjs';
@@ -8,10 +9,7 @@ const required=['DATABASE_URL','AUTH_PUBLIC_KEY_PEM','AUTH_ISSUER','AUTH_AUDIENC
 for(const name of required) if(!process.env[name]) throw new Error(`Missing required configuration: ${name}`);
 // Production must fail closed if the database connection could be plaintext.
 // Private-network isolation alone does not substitute for authenticated TLS.
-if (process.env.NODE_ENV === 'production' && process.env.PG_SSL !== 'true') {
-  throw new Error('Production requires PG_SSL=true with certificate verification');
-}
-const pool=new Pool({connectionString:process.env.DATABASE_URL,ssl:process.env.PG_SSL==='true'?{rejectUnauthorized:true}:undefined,max:10,connectionTimeoutMillis:5000,query_timeout:10000,statement_timeout:10000});
+const pool=new Pool({connectionString:process.env.DATABASE_URL,ssl:databaseTls(process.env),max:10,connectionTimeoutMillis:5000,query_timeout:10000,statement_timeout:10000});
 const verify=createVerifier({
   publicKey:process.env.AUTH_PUBLIC_KEY_PEM.replace(/\\n/g,'\n'),
   issuer:process.env.AUTH_ISSUER,
